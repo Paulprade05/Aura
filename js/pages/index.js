@@ -143,20 +143,16 @@
   }
 
   /* La familia de la tarjeta que hay en el punto de ajuste `index` pasa a ser
-     la elegida. Marcar un radio desde JS no lanza `change` ni toca atributos,
-     así que la pastilla deslizante del segmentado (aura-ui.js) no se
-     enteraría: se le avisa con un `change` en el propio control, que el
-     manejador de abajo ignora (no viene de un radio). */
+     la elegida. La pastilla del segmentado (aura-ui.js) sigue también a
+     `input.checked = …` hecho desde JS: no hace falta avisarla. */
   function markFamily(index) {
     if (!products.length) { return; }
     var p = products[Math.max(0, Math.min(index, products.length - 1))];
     if (families) {
-      var moved = false;
       all('input[type="radio"]', families).forEach(function (input) {
         var on = input.value === p.family;
-        if (input.checked !== on) { input.checked = on; moved = true; }
+        if (input.checked !== on) { input.checked = on; }
       });
-      if (moved) { families.dispatchEvent(new Event('change')); }
     }
     setCompare(p.family);
   }
@@ -169,7 +165,7 @@
     });
 
     families.addEventListener('change', function (e) {
-      if (e.target === families) { return; }          // el aviso de markFamily
+      if (e.target === families) { return; }          // solo los cambios de un radio
       var start = familyStart(e.target && e.target.value);
       if (start < 0) { return; }
       setCompare(e.target.value);

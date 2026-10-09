@@ -1014,9 +1014,11 @@
       paySheet.open(realizar);
       return;
     }
-    var restore = ui.busy ? ui.busy(realizar, 'Realizando pedido…') : function () {};
-    /* Estado visible mientras «se procesa» el pago simulado. */
-    window.setTimeout(function () { restore(); placeOrder(); }, 700);
+    /* El pago es simulado: no hay nada que esperar. La confirmación y la
+       háptica de éxito llegan en el mismo instante que el toque (skill §1: sin
+       temporizadores artificiales en la ruta de la entrada). placeOrder()
+       marca el pedido como hecho, así que un segundo toque no repite nada. */
+    placeOrder();
   });
 
   var payConfirm = co('pay-confirmar');
@@ -1024,12 +1026,10 @@
     payConfirm.innerHTML = '<i class="bi ' + (bioName() === 'Touch ID' ? 'bi-fingerprint' : 'bi-person-bounding-box') + '" aria-hidden="true"></i>Confirmar con ' + bioName();
     payConfirm.addEventListener('click', function () {
       if (placed) { return; }
-      var restore = ui.busy ? ui.busy(payConfirm, 'Comprobando…') : function () {};
-      window.setTimeout(function () {
-        restore();
-        if (paySheet) { paySheet.close(); }
-        placeOrder();
-      }, 800);
+      /* Confirmación simulada (la hoja lo dice): sin espera artificial. La hoja
+         se cierra por donde vino mientras la confirmación ya está debajo. */
+      if (paySheet) { paySheet.close(); }
+      placeOrder();
     });
   }
 

@@ -239,11 +239,12 @@
 
 
 /* --------------------------------------------------------------------------
-   Cabecera de columnas flotante: material regular (.aura-material, con su
-   vibrancia), como las barras. Sale de debajo de la barra global y vuelve
-   por el mismo camino. Bajo ella no hay una línea fija: el contenido que pasa
-   por debajo se oscurece en un degradado corto (efecto de borde, como el de
-   la barra global); la línea vuelve con menos transparencia o más contraste.
+   Cabecera de columnas flotante: barra de cristal de la base
+   (.aura-glass-bar: material regular en ::before, con su vibrancia), como las
+   barras. Sale de debajo de la barra global y vuelve por el mismo camino.
+   Bajo ella no hay una línea fija: el efecto de borde desenfoca lo que pasa
+   por debajo, como el de la barra global; la línea vuelve con menos
+   transparencia o más contraste. Vive fuera de <main> (comparar.html).
    -------------------------------------------------------------------------- */
 
 .cmp-bar {
@@ -264,16 +265,8 @@
   transform: none;
   transition: transform var(--dur-3) var(--ease-out), opacity var(--dur-2) var(--ease-out);
 }
-.cmp-bar::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  height: 1rem;
-  pointer-events: none;
-  background: linear-gradient(to bottom, color-mix(in srgb, var(--bg-main) 35%, transparent), transparent);
-}
+/* Cristal en ::before y efecto de borde con desenfoque progresivo en ::after:
+   los pone .aura-glass-bar (base). */
 /* Mientras una tarea modal (buscador) empuja la página hacia atrás, la
    cabecera flotante de la página se aparta con ella. */
 html.aura-recede .cmp-bar.is-visible { opacity: 0; }

@@ -58,9 +58,9 @@
    formulario y, en una ventana baja, pegada recortaba la ficha. */
 .soporte-tienda__foto { aspect-ratio: 4 / 3; }
 /* Cuando la columna recorta la foto en vertical (tableta y escritorio), el
-   encuadre se queda con el cliente, el especialista y el expositor: la bolsa
-   y el jersey del lado derecho, con marcas ajenas, quedan fuera. */
-.soporte-tienda__foto > .aura-img { object-position: 16% 50%; }
+   encuadre se queda con el cliente, el especialista y el expositor (punto
+   focal de la base, --photo-focus). */
+.soporte-tienda__foto { --photo-focus: 16% 50%; }
 @media (min-width: 768px) and (max-width: 991.98px) {
   .soporte-tienda { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .soporte-tienda__foto { aspect-ratio: auto; min-height: 12rem; }   /* tan alta como la ficha */
@@ -73,11 +73,8 @@
   .soporte-tienda__foto { aspect-ratio: auto; }
 }
 
-/* El correo de la ficha es una sola «palabra» larga y no es un enlace (es
-   ficticio): con texto grande se parte donde haga falta en lugar de salirse
-   de la tarjeta (break-word de la base no reduce su ancho mínimo en la
-   rejilla de .aura-feature--inline). */
-.soporte-correo { overflow-wrap: anywhere; }
+/* El correo de la ficha (una sola «palabra» larga) se parte con texto grande:
+   lo hace la base (.aura-feature__text). */
 
 /* Textos sin palabras huérfanas: lo hace la base (text-wrap en las clases de texto). */
 /* Las preguntas son titulares: .aura-accordion__summary ya va equilibrado en la base. */
