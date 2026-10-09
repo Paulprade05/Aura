@@ -48,6 +48,7 @@
   --accent: #0071e3;
   --accent-hover: #0074e8;            /* más luminoso y aún AA con texto blanco */
   --accent-link: #2997ff;             /* azul para TEXTO sobre negro (6,9:1) */
+  --accent-bright: #1787f7;           /* hover de la guía §03: solo trazos (borde del secundario), nunca relleno con texto blanco */
   --accent-soft: rgba(0, 113, 227, .16);
   --accent-ring: rgba(0, 113, 227, .4);
   --gold: #e5a93c;
@@ -68,6 +69,7 @@
   --fill-2: rgba(255, 255, 255, .08);
   --fill-3: rgba(255, 255, 255, .12);
   --fill-selected: rgba(255, 255, 255, .16);  /* pastilla elegida del segmentado */
+  --fill-disabled: #252528;                    /* botón desactivado (guía §03), igual en primario, secundario e inverso */
 
   /* Campos (guía §04): sobre la Base negra el reposo se ve como #161617 y el
      foco gana «cristal» (≈ #1f1f24). Dentro de una tarjeta, hoja o popover
@@ -1043,6 +1045,13 @@ html:has(.aura-ribbon) { --ribbon-h: 2.6875rem; }
   gap: 1rem;
   height: 100%;
 }
+/* En el teléfono, y antes si el texto es grande (umbral en em: crece con el
+   tamaño de letra), los huecos se estrechan para que el título («¿dónde
+   estoy?») quepa entero junto al chevrón y la acción: el chevrón ya tiene
+   aire propio (su icono va centrado en 44 px). */
+@media (max-width: 30em) {
+  .aura-localnav__inner { gap: .5rem; }
+}
 /* El título ocupa todo el alto de la barra (52 px): objetivo táctil de sobra.
    Es lo único que cede si no cabe todo (texto grande en el teléfono): se
    recorta con puntos suspensivos y «Comprar» nunca se sale de la pantalla. */
@@ -1318,9 +1327,13 @@ body:has(.aura-localnav) .aura-nav .aura-popover {
   pointer-events: none;
   transition: opacity var(--dur-1) ease;
 }
+/* Contorno en el azul de la guía (#0071e3: 4,5:1 sobre negro y 3,9:1 sobre
+   #161617 como límite de control); al pasar el ratón, el borde gana
+   luminosidad (#1787f7, guía §03) y el fondo, el tinte azul. Etiqueta en el
+   azul para texto (--accent-link), que es el que llega a AA. */
 .aura-btn--secondary {
   --btn-fg: var(--accent-link);
-  --btn-border: rgba(41, 151, 255, .7);
+  --btn-border: var(--accent);
   --btn-hover: var(--accent-soft);
 }
 .aura-btn--inverse {
@@ -1352,6 +1365,7 @@ body:has(.aura-localnav) .aura-nav .aura-popover {
 @media (hover: hover) {
   .aura-btn:hover::before { opacity: 1; }
   .aura-btn--primary:hover::after { opacity: 1; }
+  .aura-btn--secondary:hover { border-color: var(--accent-bright); }
 }
 .aura-btn:focus-visible::before { opacity: 1; }
 
@@ -1362,13 +1376,14 @@ body:has(.aura-localnav) .aura-nav .aura-popover {
 /* Un botón en carga (AURA.ui.busy) también lleva aria-disabled, pero conserva
    su aspecto: está trabajando, no desactivado. */
 /* Desactivado: la guía pinta los tres (primario, secundario, inverso) igual:
-   relleno neutro, sin borde y etiqueta con menos contraste pero legible
-   (#6e6e73 en lugar del #4d4d51 de la guía, por accesibilidad). Solo la
-   destructiva conserva su contorno, para que no se confunda con otra acción. */
+   relleno neutro #252528 (--fill-disabled), sin borde y etiqueta con menos
+   contraste pero legible (#6e6e73 en lugar del #4d4d51 de la guía, por
+   accesibilidad). Solo la destructiva conserva su contorno, para que no se
+   confunda con otra acción. */
 .aura-btn:disabled,
 .aura-btn[aria-disabled="true"]:not(.is-loading),
 .aura-btn.is-disabled {
-  --btn-bg: var(--fill-2);
+  --btn-bg: var(--fill-disabled);
   --btn-fg: var(--text-disabled);     /* menos contraste, etiqueta aún legible */
   --btn-border: transparent;
   cursor: not-allowed;
@@ -1389,6 +1404,7 @@ body:has(.aura-localnav) .aura-nav .aura-popover {
 /* Estados forzados para la guía viva */
 .aura-btn.is-hover::before { opacity: 1; }
 .aura-btn--primary.is-hover::after { opacity: 1; }
+.aura-btn--secondary.is-hover { border-color: var(--accent-bright); }
 
 .aura-spinner {
   flex: none;
@@ -1799,6 +1815,53 @@ a.aura-card:active, .aura-card--interactive:active, .aura-card.is-pressed {
   z-index: 1;
   padding: clamp(1rem, 3vw, 1.75rem);
   background: linear-gradient(to top, rgba(0, 0, 0, .88) 30%, transparent);
+}
+/* --glass: el panel de cristal del prototipo (cifras sobre la foto de
+   Cupertino en inicio y en acerca): material regular, separado de los bordes
+   de la foto, con su filo de luz arriba. Lo mismo se ve igual en las dos
+   páginas (skill §16). Lleva la vibrancia del material. */
+.aura-media__overlay--glass {
+  left: clamp(.75rem, 2.5vw, 2.25rem);
+  right: clamp(.75rem, 2.5vw, 2.25rem);
+  bottom: clamp(.75rem, 2.5vw, 2.25rem);
+  padding: clamp(.875rem, 2vw, 1.5rem) clamp(1rem, 2.2vw, 1.5rem);
+  border: 1px solid var(--hairline);
+  border-top-color: var(--edge-light);
+  border-radius: var(--radius-md);
+  background: var(--glass-regular-bg);
+  -webkit-backdrop-filter: var(--glass-regular-filter);
+  backdrop-filter: var(--glass-regular-filter);
+  box-shadow: var(--shadow-2);
+  --text-secondary: var(--vibrant-secondary);
+  --text-tertiary: var(--vibrant-tertiary);
+  container-type: inline-size;
+}
+/* Las cifras del panel: tres en fila, y la cifra escala con el ancho del
+   panel (no de la ventana: en el teléfono y en un héroe partido de 1024 px el
+   panel es igual de estrecho). Las cifras tienen tamaño libre en la guía. */
+.aura-media__overlay--glass .aura-stats {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .75rem clamp(.75rem, 2vw, 1.5rem);
+}
+.aura-media__overlay--glass .aura-stat__value {
+  font-size: clamp(1.125rem, 7cqi, 2.375rem);
+  white-space: nowrap;
+}
+/* Con texto grande, o en un panel muy estrecho (consulta en rem: sigue al
+   tamaño de letra), las tres no caben en fila: pasan a una lista, cifra y
+   etiqueta en la misma línea, con las etiquetas en una sola vertical. */
+@container (max-width: 16rem) {
+  .aura-media__overlay--glass .aura-stats {
+    grid-template-columns: max-content minmax(0, 1fr);
+    gap: .625rem .875rem;
+  }
+  .aura-media__overlay--glass .aura-stat {
+    grid-column: 1 / -1;
+    grid-template-columns: max-content minmax(0, 1fr);
+    grid-template-columns: subgrid;
+    align-items: baseline;
+    gap: 0 .875rem;
+  }
 }
 
 /* Imagen y hueco de imagen */
@@ -2296,6 +2359,11 @@ a.aura-card:active, .aura-card--interactive:active, .aura-card.is-pressed {
   color: var(--text-secondary);
   overflow-wrap: break-word;            /* un correo o una URL larga se parte antes que invadir el relleno */
 }
+/* La rejilla alinea sus hijos al inicio (justify-items: start): cada uno
+   mide lo que su contenido, y una palabra larga (un correo con texto grande)
+   lo ensanchaba más allá de su columna. Con max-width: 100% no pasa de la
+   columna y break-word la parte dentro. */
+.aura-feature > * { max-width: 100%; }
 .aura-feature--card {
   padding: 1.25rem;
   border: 1px solid var(--hairline);
@@ -4468,7 +4536,8 @@ body.has-buybar:not(:has(.aura-footer)) { padding-bottom: var(--buybar-h, calc(4
 .aura-menu,
 .aura-buybar,
 .aura-card--glass,
-.aura-material {
+.aura-material,
+.aura-glass-bar {
   --text-secondary: var(--vibrant-secondary);
   --text-tertiary: var(--vibrant-tertiary);
   --text-placeholder: var(--vibrant-tertiary);
@@ -4492,6 +4561,39 @@ body.has-buybar:not(:has(.aura-footer)) { padding-bottom: var(--buybar-h, calc(4
   background: var(--glass-thick-bg);
   -webkit-backdrop-filter: var(--glass-thick-filter);
   backdrop-filter: var(--glass-thick-filter);
+}
+
+/* Barra flotante de cristal propia de una página (cabecera de comparar,
+   barra de herramientas). Como la barra global: el cristal regular va en
+   ::before, así la barra no es «raíz de fondo» y su efecto de borde (::after)
+   desenfoca de verdad lo que pasa por debajo: un desenfoque progresivo de
+   1 rem, no una línea (skill §12). Con .aura-material el filtro iría en el
+   propio elemento y un ::after con desenfoque no vería la página. Lleva la
+   vibrancia. Posición, relleno y z-index los pone la página; si es
+   position: fixed, va fuera de <main> o con data-aura-relocate (§1). */
+.aura-glass-bar { isolation: isolate; }
+.aura-glass-bar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--glass-regular-bg);
+  -webkit-backdrop-filter: var(--glass-regular-filter);
+  backdrop-filter: var(--glass-regular-filter);
+}
+.aura-glass-bar::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  height: 1rem;
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, .35), transparent);
+  -webkit-backdrop-filter: var(--glass-regular-filter);
+  backdrop-filter: var(--glass-regular-filter);
+  -webkit-mask-image: linear-gradient(to bottom, #000, transparent);
+  mask-image: linear-gradient(to bottom, #000, transparent);
 }
 
 .aura-scrim {
@@ -5343,7 +5445,8 @@ html.aura-lock .aura-toast {
   .aura-media__tag { background: #000; }
   /* Sin filtro, el efecto de borde vuelve a ser la línea --hairline (sin máscara). */
   .aura-nav::after,
-  .aura-localnav::after {
+  .aura-localnav::after,
+  .aura-glass-bar::after {
     opacity: 1;
     box-shadow: inset 0 1px 0 var(--hairline);
     -webkit-mask-image: none;
@@ -5392,7 +5495,8 @@ html.aura-lock .aura-toast {
   .aura-menu,
   .aura-buybar,
   .aura-card--glass,
-  .aura-material {
+  .aura-material,
+  .aura-glass-bar {
     --text-secondary: #d6d6db;
     --text-tertiary: #c2c2c8;
     --text-placeholder: #c2c2c8;
@@ -5400,7 +5504,8 @@ html.aura-lock .aura-toast {
   .aura-menu { background: #000; }
   /* Sin filtro, el efecto de borde vuelve a ser la línea --hairline (sin máscara). */
   .aura-nav::after,
-  .aura-localnav::after {
+  .aura-localnav::after,
+  .aura-glass-bar::after {
     opacity: 1;
     box-shadow: inset 0 1px 0 var(--hairline);
     -webkit-mask-image: none;

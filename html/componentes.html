@@ -67,7 +67,7 @@
     <section class="aura-hero aura-hero--split" aria-labelledby="guia-titulo">
       <div class="aura-container aura-hero__inner">
         <div class="aura-hero__copy">
-          <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--blue">AURA Design System · v1.0</p>
+          <p class="aura-eyebrow aura-eyebrow--mono">AURA Design System · v1.4</p>
           <h1 class="aura-display" id="guia-titulo">Sistema de diseño AURA.</h1>
           <p class="aura-lead">La referencia viva para construir cada página de AURA con precisión, profundidad y una sola fuente de energía: el azul.</p>
           <div class="aura-hero__actions">
@@ -130,7 +130,7 @@
           </div>
           <div class="aura-grid aura-grid--3">
             <div class="ds-surface ds-surface--base">
-              <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--blue">Base / 00</p>
+              <p class="aura-eyebrow aura-eyebrow--mono">Base / 00</p>
               <p class="aura-body">El vacío inmersivo donde vive la experiencia.</p>
             </div>
             <div class="aura-card ds-surface">
@@ -173,7 +173,6 @@
           <div class="ds-specimen"><div class="ds-specimen__meta"><span class="aura-mono">.aura-eyebrow</span><span class="aura-caption aura-caption--muted">Inter 650 · 12 px · +0,04em</span></div>
             <div class="aura-cluster" style="--cluster:.75rem 1.5rem">
               <p class="aura-eyebrow">auraPhone Duo</p>
-              <p class="aura-eyebrow aura-eyebrow--blue">Ingeniería AURA</p>
               <p class="aura-eyebrow aura-eyebrow--ok">Autonomía de nueva generación</p>
               <p class="aura-eyebrow aura-eyebrow--mono">Novedades / 2026</p>
               <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain aura-eyebrow--muted">Comparativa / AURA Labs</p>
@@ -258,7 +257,7 @@
 
         <div class="ds-block">
           <div class="ds-block__head">
-            <h3 class="aura-h3">Tamaños, iconos y carga</h3>
+            <h3 class="aura-h3">Un solo tamaño, iconos y carga</h3>
           </div>
           <div class="aura-cluster">
             <button class="aura-btn aura-btn--primary" type="button">Comprar</button>
@@ -270,13 +269,13 @@
           <div class="ds-frame ds-frame--narrow">
             <button class="aura-btn aura-btn--primary aura-btn--block" type="button">Iniciar sesión en AURA</button>
           </div>
-          <p class="aura-caption">Desactivado: primario, secundario e inverso comparten relleno neutro, sin borde, y etiqueta con menos contraste pero legible; el destructivo conserva su contorno. El hover del inverso es <code>--inverse-hover</code> (#e8e8ed, guía §03). Un botón solo se parte en dos líneas (equilibradas) cuando no cabe, p. ej. con el texto al 150&nbsp;% en el teléfono: los 48&nbsp;px son un mínimo y crece en alto, con el mismo radio y relleno.</p>
+          <p class="aura-caption">Todos los botones miden 48&nbsp;px, radio 999 y 24&nbsp;px de relleno (guía §03): no hay variante pequeña; donde un botón sobra (la barra local), la acción es el enlace contextual. Secundario con el contorno <code>--accent</code> de la guía; al pasar el ratón, el contorno gana luminosidad (<code>--accent-bright</code>, #1787f7) y el fondo, el tinte azul. Desactivado: primario, secundario e inverso comparten relleno neutro <code>--fill-disabled</code> (#252528), sin borde, y etiqueta con menos contraste pero legible; el destructivo conserva su contorno. El hover del inverso es <code>--inverse-hover</code> (#e8e8ed, guía §03). Un botón solo se parte en dos líneas (equilibradas) cuando no cabe, p. ej. con el texto al 150&nbsp;% en el teléfono: los 48&nbsp;px son un mínimo y crece en alto, con el mismo radio y relleno.</p>
         </div>
 
         <div class="ds-block">
           <div class="ds-block__head">
             <h3 class="aura-h3">Enlace contextual y botones de icono</h3>
-            <p class="aura-caption">Acción de baja intensidad dentro del flujo. Un enlace suelto (como estos, en un <code>.aura-cluster</code>) mide 44 px de alto en pantallas táctiles; dentro de una frase sigue la línea. Si va solo dentro de un <code>&lt;p&gt;</code>, lleva <code>.aura-link--control</code>. Los botones de icono miden 44 px.</p>
+            <p class="aura-caption">Acción de baja intensidad dentro del flujo. Un enlace suelto (como estos, en un <code>.aura-cluster</code>) mide 44 px de alto en pantallas táctiles; dentro de una frase sigue la línea. Si va solo dentro de un <code>&lt;p&gt;</code>, lleva <code>.aura-link--control</code>. Es también la acción de la barra local (<code>.aura-localnav__action</code>: «Comprar ›» en las familias, «Contactar ›» en soporte), que ocupa todo el alto de la barra. Los botones de icono miden 44 px.</p>
           </div>
           <div class="aura-cluster" style="--cluster:1rem 2rem">
             <a class="aura-link" href="trade-in.html">Comprobar valor cuántico</a>
@@ -314,7 +313,7 @@
             <span class="aura-badge aura-badge--mono aura-badge--ok">Entregado</span>
             <span class="aura-badge aura-badge--mono aura-badge--neutral">AU-2026-000123</span>
           </div>
-          <p class="aura-caption">Segmentado (v1.3): la selección es una sola pastilla (<code>.aura-segmented__thumb</code>, la crea <code>aura-ui.js</code>) que se desliza de un ítem a otro con un muelle crítico y se puede interrumpir. En radios y botones también se arrastra: 1:1 con el dedo, goma en los extremos y, al soltar, el ítem más cercano a donde iba. La pastilla sigue al estado (<code>:checked</code>, <code>.is-active</code>, <code>aria-current</code>, <code>aria-pressed</code>, <code>aria-selected</code>) lo ponga quien lo ponga. Con «reducir movimiento», aparece en su sitio con un fundido.</p>
+          <p class="aura-caption">Segmentado (v1.3, v1.4): la selección es una sola pastilla (<code>.aura-segmented__thumb</code>, la crea <code>aura-ui.js</code>) que se desliza de un ítem a otro con un muelle crítico y se puede interrumpir; solo anima <code>transform</code> (avance y <code>scaleX</code> del ancho). En radios y botones también se arrastra: 1:1 con el dedo, goma en los extremos y, al soltar, el ítem más cercano a donde iba. La pastilla sigue al estado (<code>:checked</code> —también <code>input.checked = …</code> desde JS—, <code>.is-active</code>, <code>aria-current</code>, <code>aria-pressed</code>, <code>aria-selected</code>) lo ponga quien lo ponga. Si no cabe en una fila (texto grande, el ejemplo estrecho de abajo), se reparte en filas (<code>.is-wrapped</code>) y la pastilla viaja también en vertical. Con «reducir movimiento», aparece en su sitio con un fundido.</p>
           <div class="aura-stack">
             <span class="aura-mono">Segmentado · radios · enlaces · botones (pestañas)</span>
             <div class="aura-segmented" role="radiogroup" aria-label="Familia para comparar">
@@ -331,6 +330,14 @@
               <button class="aura-segmented__item" type="button" aria-pressed="true">Pedidos</button>
               <button class="aura-segmented__item" type="button" aria-pressed="false">Datos<span class="d-none d-sm-inline">&nbsp;personales</span></button>
               <button class="aura-segmented__item" type="button" aria-pressed="false">Seguridad</button>
+            </div>
+            <span class="aura-mono">Repartido en filas (no cabe en una: <code>.is-wrapped</code>)</span>
+            <div style="max-width:15rem">
+              <div class="aura-segmented" role="radiogroup" aria-label="Familia (ejemplo estrecho)">
+                <label class="aura-segmented__item"><input type="radio" name="ds-familia-filas" value="auraphone"><span>auraPhone</span></label>
+                <label class="aura-segmented__item"><input type="radio" name="ds-familia-filas" value="aurapad" checked><span>auraPad</span></label>
+                <label class="aura-segmented__item"><input type="radio" name="ds-familia-filas" value="aurabook"><span>auraBook</span></label>
+              </div>
             </div>
           </div>
         </div>
@@ -814,7 +821,7 @@
                 <div class="aura-tile__media">
                   <div class="aura-slot" role="img" aria-label="Primer plano de la Dynamic Island de un auraPhone" data-slot="auraphone-dynamic-island" style="--w:1600;--h:1200"><div class="aura-slot__inner"><i class="aura-slot__icon bi bi-image" aria-hidden="true"></i><span class="aura-slot__path">img/auraphone-dynamic-island.webp</span><span class="aura-slot__size">1600 × 1200 px</span></div></div>
                 </div>
-                <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--blue aura-tile__tag">Ingeniería AURA</p>
+                <p class="aura-eyebrow aura-eyebrow--mono aura-tile__tag">Ingeniería AURA</p>
                 <div class="aura-tile__copy">
                   <h4 class="aura-h3">Dynamic Island. En primer plano.</h4>
                   <p class="aura-tile__text">Alertas y actividades en vivo se expanden con fluidez sin interrumpir lo que estás haciendo.</p>
@@ -1000,8 +1007,26 @@
 
         <div class="ds-block">
           <div class="ds-block__head">
+            <h3 class="aura-h3">Cifras sobre una foto y encuadre</h3>
+            <p class="aura-caption"><code>.aura-media__overlay--glass</code> (v1.4): el panel de cristal del prototipo, igual en inicio y acerca. Las cifras escalan con el ancho del panel y, con texto grande, pasan a una lista. El encuadre de una foto recortada se elige con <code>--photo-focus</code> o <code>.aura-photo-top</code> / <code>-bottom</code> / <code>-left</code> / <code>-right</code> (aquí, <code>.aura-photo-bottom</code>), nunca con un <code>object-position</code> propio.</p>
+          </div>
+          <figure class="aura-media aura-media--fill aura-media--halo m-0 aura-photo-bottom" style="aspect-ratio:16/10">
+            <span class="aura-media__tag">Cupertino / 37,3349°&nbsp;N</span>
+            <img class="aura-img" src="../img/inicio-acerca.webp" data-slot="inicio-acerca" width="1600" height="1200" alt="Fachada de cristal azul de un edificio de oficinas de noche, con varias plantas iluminadas en luz cálida" loading="lazy" decoding="async">
+            <figcaption class="aura-media__overlay aura-media__overlay--glass">
+              <ul class="aura-stats">
+                <li class="aura-stat"><p class="aura-stat__value">1976</p><p class="aura-stat__label">Año de fundación</p></li>
+                <li class="aura-stat"><p class="aura-stat__value">+2000&nbsp;M</p><p class="aura-stat__label">Dispositivos activos</p></li>
+                <li class="aura-stat"><p class="aura-stat__value">100&nbsp;%</p><p class="aura-stat__label">Energía renovable</p></li>
+              </ul>
+            </figcaption>
+          </figure>
+        </div>
+
+        <div class="ds-block">
+          <div class="ds-block__head">
             <h3 class="aura-h3">Material propio y vibrancia</h3>
-            <p class="aura-caption"><code>.aura-material</code> (+ <code>--thin</code>, <code>--thick</code>) para una superficie de cristal propia de una página: fondo y desenfoque del nivel elegido y el texto secundario con vibrancia (<code>--vibrant-label</code>, <code>--vibrant-secondary</code>, <code>--vibrant-tertiary</code>). Solo sobre fondos opacos.</p>
+            <p class="aura-caption"><code>.aura-material</code> (+ <code>--thin</code>, <code>--thick</code>) para una superficie de cristal propia de una página: fondo y desenfoque del nivel elegido y el texto secundario con vibrancia (<code>--vibrant-label</code>, <code>--vibrant-secondary</code>, <code>--vibrant-tertiary</code>). Solo sobre fondos opacos. Para una <strong>barra flotante</strong> de página, <code>.aura-glass-bar</code> (v1.4): el cristal va en <code>::before</code> y el efecto de borde de <code>::after</code> desenfoca lo que pasa por debajo (con <code>.aura-material</code> no podría). Si es fija, fuera de <code>&lt;main&gt;</code> o con <code>data-aura-relocate</code>.</p>
           </div>
           <div class="ds-frame ds-frame--photo">
             <div class="aura-material aura-material--thin" style="max-width:26rem;padding:1.25rem 1.5rem;border-radius:var(--radius-lg);border-top:1px solid var(--edge-light);box-shadow:var(--shadow-2)">
@@ -1009,6 +1034,12 @@
                 <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">.aura-material--thin</p>
                 <p class="aura-h4">auraPhone Duo</p>
                 <p class="aura-caption">Texto secundario sobre cristal: blanco translúcido, nunca gris plano.</p>
+              </div>
+            </div>
+            <div class="aura-glass-bar mt-4" style="position:relative;padding:.75rem 1.25rem">
+              <div class="aura-cluster" style="--cluster:.25rem 2rem">
+                <p class="aura-caption m-0"><strong class="aura-text-primary">.aura-glass-bar</strong></p>
+                <p class="aura-caption m-0">Cristal en ::before · borde que desenfoca en ::after</p>
               </div>
             </div>
           </div>

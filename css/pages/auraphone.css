@@ -10,12 +10,12 @@
 .auraphone-frases > span { display: block; }
 
 /* Foto del héroe: encuadre del módulo de cámaras. La foto es la trasera
-   entera de un teléfono real y en el centro asoma, tenue, el logotipo de su
-   fabricante; se amplía al doble desde arriba (se ve la mitad superior de la
-   foto, el logotipo empieza al 55 %) y el borde inferior del marco se funde
+   entera del teléfono (ya sin logotipo: retocada); se amplía al doble desde
+   arriba, de modo que la triple cámara protagoniza el héroe como en el
+   prototipo (el alt lo describe así), y el borde inferior del marco se funde
    con el negro, como el resto de las fotos de héroe. El halo de
-   .aura-media--halo queda detrás. Es un ajuste de ESTA foto: si se cambia
-   auraphone-hero.webp por una sin logotipo, sobra este bloque. */
+   .aura-media--halo queda detrás. Es un encuadre de ESTA foto: si se cambia
+   auraphone-hero.webp, revisa este bloque y el alt. */
 .auraphone-heroe__foto {
   aspect-ratio: 4 / 3;
   -webkit-mask-image: var(--photo-feather-y);

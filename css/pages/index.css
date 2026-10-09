@@ -49,18 +49,8 @@
 .index-links { --cluster: 0 1.5rem; }
 
 /* Teselas con un aparato recortado sobre negro puro (auraBook y auraPad
-   flotando): sin la ventana negra de .aura-tile__media, el aparato queda sobre
-   la propia tesela (Elevación/01) y «aclarar» convierte el negro de la foto
-   en el gris de la tarjeta, como hace la base con la tarjeta de modelo. Las
-   fotos con ambiente (cámara, teleobjetivo) conservan su marco. Hasta que la
-   base tenga un modificador para esto, vive aquí. */
-.index-tile-media--blend { background: transparent; }
-.index-tile-media--blend > .aura-img { mix-blend-mode: lighten; }
-/* Sin el gris de la tesela debajo (impresión sin fondos, colores forzados
-   claros), «aclarar» sobre blanco borraría la foto: se ve tal cual. */
-@media print, (forced-colors: active) {
-  .index-tile-media--blend > .aura-img { mix-blend-mode: normal; }
-}
+   flotando): .aura-tile__media--blend de la base (las fotos con ambiente
+   —cámara, teleobjetivo— conservan su marco). */
 
 /* --------------------------------------------------------------------------
    2. «Toda la gama»: unas tres tarjetas y el asomo de la siguiente en
@@ -85,13 +75,9 @@
       en una fila sobre la foto (taparían media imagen): pasan debajo, sobre
       la superficie de tarjeta.
    -------------------------------------------------------------------------- */
-.index-about-media { aspect-ratio: 4 / 3; container-type: inline-size; }
-/* Las tres cifras van en una fila sobre la foto: se miden con la foto, no con
-   la ventana (como los titulares en dos columnas, §2). Entre 992 y ~1150 px la
-   columna mide ~410 px y, a tamaño de ventana, «+2000 M» quedaba a 2 px de
-   «100 %». Las cifras tienen tamaño libre en la guía; mínimo y máximo, los de
-   .aura-stat__value. */
-.index-about-media .aura-stat__value { font-size: clamp(1.625rem, 8.8cqi - .6rem, 2.375rem); }
+/* Las tres cifras van en el panel de cristal de la base
+   (.aura-media__overlay--glass), igual que en acerca: se miden con el panel. */
+.index-about-media { aspect-ratio: 4 / 3; }
 @media (max-width: 575.98px) {
   .index-about-media {
     aspect-ratio: auto;
@@ -106,8 +92,16 @@
     aspect-ratio: 4 / 3;
     border-radius: 0;
   }
+  /* En el teléfono las cifras pasan bajo la foto, sobre la tarjeta: ahí ya no
+     son una capa flotante y no llevan el panel de cristal (--glass). */
   .index-about-media > .aura-media__overlay {
     position: static;
+    padding: clamp(1rem, 3vw, 1.75rem);
+    border: 0;
+    border-radius: 0;
     background: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    box-shadow: none;
   }
 }

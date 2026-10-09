@@ -656,7 +656,9 @@
   /* Hojas y barras fijas no pueden vivir dentro de lo que se escala (un
      position: fixed dentro de un ancestro con transform se recoloca respecto
      a él): se sacan una vez, justo detrás de <main>, sin cambiar el orden de
-     lectura. Las páginas las buscan por id o atributo en `document`. */
+     lectura. Las páginas las buscan por id o atributo en `document`. Lo
+     mismo para cualquier barra fija propia de una página que lleve
+     [data-aura-relocate] (o que la página ya ponga fuera de <main>). */
   function relocate(el) {
     if (!el || !el.parentNode) { return; }
     var host = closest(el.parentNode, 'main, aura-footer');
@@ -3235,6 +3237,7 @@
     each(scope.querySelectorAll('[data-aura-buybar]'), function (el) { safe(function () { initBuybar(el); }); });
     each(scope.querySelectorAll('.aura-buybar'), function (el) { safe(function () { initBuybarBox(el); }); });
     each(scope.querySelectorAll('.aura-segmented'), function (el) { safe(function () { initSegmented(el); }); });
+    each(scope.querySelectorAll('[data-aura-relocate]'), function (el) { safe(function () { relocate(el); }); });
     safe(function () { reveal(scope); });
     safe(function () { if (AURA.slots) { AURA.slots.scan(scope); } });
   }
@@ -3242,7 +3245,7 @@
 
   /* Red de seguridad: el HTML que una página inserte más tarde con JS se
      inicializa solo (si no, un [data-aura-reveal] nuevo se quedaría invisible). */
-  var AUTO = '[data-aura-reveal], [data-aura-carousel], [data-aura-sheet], [data-aura-lineup], [data-aura-compare], [data-aura-localnav], .aura-localnav, [data-aura-buybar], .aura-buybar, .aura-segmented';
+  var AUTO = '[data-aura-reveal], [data-aura-carousel], [data-aura-sheet], [data-aura-lineup], [data-aura-compare], [data-aura-localnav], .aura-localnav, [data-aura-buybar], .aura-buybar, .aura-segmented, [data-aura-relocate]';
 
   function initAdded(node) {
     if (!node || node.nodeType !== 1 || !node.querySelectorAll) { return; }
@@ -3260,6 +3263,7 @@
       if (node.hasAttribute('data-aura-buybar')) { initBuybar(node); }
       if (node.classList.contains('aura-buybar')) { initBuybarBox(node); }
       if (node.classList.contains('aura-segmented')) { initSegmented(node); }
+      if (node.hasAttribute('data-aura-relocate') && !node._auraRelocated) { relocate(node); }
     }
     each(node.querySelectorAll('[data-aura-lineup]'), function (el) { if (!el.children.length) { safe(function () { renderLineup(el); }); } });
     each(node.querySelectorAll('[data-aura-compare]'), function (el) { if (!el.children.length) { safe(function () { renderCompare(el); }); } });
@@ -3269,6 +3273,7 @@
     each(node.querySelectorAll('[data-aura-buybar]'), function (el) { safe(function () { initBuybar(el); }); });
     each(node.querySelectorAll('.aura-buybar'), function (el) { safe(function () { initBuybarBox(el); }); });
     each(node.querySelectorAll('.aura-segmented'), function (el) { safe(function () { initSegmented(el); }); });
+    each(node.querySelectorAll('[data-aura-relocate]'), function (el) { if (!el._auraRelocated) { safe(function () { relocate(el); }); } });
     reveal(node);
   }
 

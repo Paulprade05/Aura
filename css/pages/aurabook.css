@@ -50,15 +50,10 @@
 }
 
 /* Perfiles · «Fotografía»: la foto trae el portátil arriba y la mitad baja
-   en negro, que es donde va el texto. En una tesela estrecha (~300 px, entre
-   992 y 1199 px y en el teléfono) el recorte a lo alto de .aura-tile--cover
-   subía el titular hasta la pantalla iluminada (medido: 1,7–2,2:1). Se ve
-   entera, ajustada al ancho y pegada arriba: el titular queda siempre sobre
-   el negro de la propia foto, a cualquier ancho y tamaño de letra. */
-.aura-tile__media.aurabook-media-top > .aura-img {
-  object-fit: contain;
-  object-position: 50% 0;
-}
+   en negro, que es donde va el texto. En una tesela estrecha (~300 px) el
+   recorte a lo alto de .aura-tile--cover subía el titular hasta la pantalla
+   iluminada: la foto va entera y pegada arriba con los modificadores de la
+   base (.aura-tile__media--contain .aura-photo-top, en aurabook.html). */
 
 /* Fila de cifras: una columna por elemento, todas iguales (tres modelos en
    la autonomía, tres cifras del auraBook Pro 16″). Si el catálogo trae menos,

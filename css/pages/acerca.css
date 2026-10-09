@@ -21,48 +21,18 @@
   align-content: end;
   min-height: min-content;
 }
+/* El panel de cristal y sus cifras son los de la base
+   (.aura-media__overlay--glass, como en inicio). Aquí solo cambia dónde va:
+   en el flujo, en la misma celda que la foto (no en posición absoluta), con
+   sitio arriba para la etiqueta. */
 .acerca-hero__cifras {
   position: relative;
   inset: auto;
   grid-area: 1 / 1;
   margin: 3.5rem clamp(.75rem, 2.5vw, 2.25rem) clamp(.75rem, 2.5vw, 2.25rem);
-  padding: clamp(.875rem, 2vw, 1.5rem) clamp(1rem, 2.2vw, 1.5rem);
-  border: 1px solid var(--hairline);
-  border-top-color: var(--edge-light);           /* la luz toca el borde superior del material */
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-2);
-}
-/* Tres cifras en fila mientras quepan (nunca dos y una huérfana debajo). La
-   cifra escala con el ancho del panel, no de la ventana: en 360 px y en el
-   héroe partido de 1024 px el panel es igual de estrecho. */
-.acerca-hero__cifras { container-type: inline-size; }
-.acerca-hero__cifras .aura-stats {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: .75rem clamp(.75rem, 2vw, 1.5rem);
-}
-.acerca-hero__cifras .aura-stat__value {
-  font-size: clamp(1.125rem, 7cqi, 2.375rem);
-  white-space: nowrap;
 }
 @media (max-width: 575.98px) {
   .acerca-hero__cifras .aura-stat__label { font-size: .75rem; }
-}
-/* Con texto grande, o en un panel muy estrecho (la consulta va en rem, así
-   que sigue al tamaño de letra del navegador), las tres no caben en fila:
-   pasan a una lista, cifra y etiqueta en la misma línea, con las etiquetas
-   alineadas en una sola vertical. */
-@container (max-width: 16rem) {
-  .acerca-hero__cifras .aura-stats {
-    grid-template-columns: max-content minmax(0, 1fr);
-    gap: .625rem .875rem;
-  }
-  .acerca-hero__cifras .aura-stat {
-    grid-column: 1 / -1;
-    grid-template-columns: max-content minmax(0, 1fr);
-    grid-template-columns: subgrid;
-    align-items: baseline;
-    gap: 0 .875rem;
-  }
 }
 /* Héroe partido en pantallas medianas: más sitio para el titular (con 1 : 1,1
    el h1 se partía en cinco líneas a 1024 px) */

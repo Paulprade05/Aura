@@ -33,7 +33,7 @@ Hace falta conexión a internet la primera vez, para las fuentes, Bootstrap y lo
 
 ## La gama: «siempre los tres mejores»
 
-Todo el catálogo vive en **`assets/js/data.js`** (datos reales de España a 3 de octubre de 2026, con nombres AURA). Las tarjetas, comparativas, el configurador, el buscador y los precios se pintan desde ahí. Para cambiar un modelo cuando salga una generación nueva basta con editar ese archivo; las instrucciones están en su cabecera.
+Todo el catálogo vive en **`js/data.js`** (datos reales de España a 3 de octubre de 2026, con nombres AURA). Las tarjetas, comparativas, el configurador, el buscador y los precios se pintan desde ahí. Para cambiar un modelo cuando salga una generación nueva basta con editar ese archivo; las instrucciones están en su cabecera.
 
 | Familia | Rank 1 | Rank 2 | Rank 3 |
 |---|---|---|---|
@@ -53,7 +53,7 @@ Para probar otro día sin esperar, añade `?hoy=AAAA-MM-DD` a la URL (por ejempl
 
 ## Imágenes
 
-Las fotos de producto y de cada sección están en `img/`. La lista completa, con nombres, tamaños y qué debe mostrar cada una, está en **[`img/LEEME.md`](img/LEEME.md)**. Mientras falte una, la web enseña un marcador con su ruta y tamaño. El logotipo (`img/aura.png`) ya está colocado.
+Las 57 fotos de `img/` (WebP) son fotos reales de Unsplash con licencia libre, recortadas y ajustadas de tono para el fondo negro; en algunas se han borrado logotipos o textos de la pantalla. Sus autores y licencias aparecen en `html/legal.html#imagenes`. Para cambiar una, sustituye el archivo con el mismo nombre (lista completa en **[`img/LEEME.md`](img/LEEME.md)**); si falta alguna, la web muestra un marcador con su ruta y tamaño. El logotipo (`img/aura.png`) no cambia.
 
 ## Tienda simulada
 
