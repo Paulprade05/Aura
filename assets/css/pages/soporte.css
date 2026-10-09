@@ -1,0 +1,83 @@
+/* ==========================================================================
+   AURA — soporte.html
+   Solo maquetación propia de la página; colores, radios y tipografía salen
+   de los tokens y componentes de aura.css.
+   ========================================================================== */
+
+/* Buscador local: un bloque centrado bajo el titular, con un solo borde
+   izquierdo para etiqueta, campo, ayuda y sugerencias */
+.soporte-buscador {
+  display: grid;
+  gap: 1.25rem;
+  width: 100%;
+  max-width: 38rem;
+  margin-top: .5rem;
+  text-align: left;
+}
+/* El sitio para «Borrar la búsqueda» lo reserva la base
+   (.aura-field__control:has(.aura-field__toggle)). */
+.soporte-buscador__sugerencias {
+  display: grid;
+  gap: .625rem;
+}
+
+/* Temas: dos grupos con su rótulo */
+.soporte-grupo + .soporte-grupo { margin-top: clamp(2.5rem, 5vw, 3.5rem); }
+.soporte-grupo__titulo { margin-bottom: 1rem; }
+
+/* Tarjetas por producto: los enlaces siempre al pie, a la misma altura en
+   las tres, aunque la lista de modelos ocupe más o menos líneas */
+.soporte-tema {
+  display: flex;
+  flex-direction: column;
+}
+.soporte-tema > .aura-stack {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.soporte-tema__acciones { margin-top: auto; }
+.soporte-modelo { white-space: nowrap; }                  /* un nombre de modelo nunca se parte */
+
+/* Por tema: seis tarjetas. En tableta (768–991 px), tres por fila partían la
+   mitad de los titulares y desalineaban los textos de una misma fila; dos
+   por fila, no. Por debajo de 768 px, una por fila, como las de producto. */
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .soporte-temas.aura-grid--3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* Preguntas */
+.soporte-faq__mas { margin-top: 2rem; }
+
+/* Contacto: en tableta (768–991 px), foto y ficha de la tienda lado a lado
+   bajo el formulario (más estrecho, la ficha no cabe en media columna). En
+   escritorio, columna junto al formulario que termina a su misma altura: la
+   foto absorbe la diferencia (también cuando el formulario crece con los
+   mensajes de error). Sin sticky: la columna mide lo mismo que el
+   formulario y, en una ventana baja, pegada recortaba la ficha. */
+.soporte-tienda__foto { aspect-ratio: 4 / 3; }
+/* Cuando la columna recorta la foto en vertical (tableta y escritorio), el
+   encuadre se queda con el cliente, el especialista y el expositor: la bolsa
+   y el jersey del lado derecho, con marcas ajenas, quedan fuera. */
+.soporte-tienda__foto > .aura-img { object-position: 16% 50%; }
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .soporte-tienda { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .soporte-tienda__foto { aspect-ratio: auto; min-height: 12rem; }   /* tan alta como la ficha */
+}
+@media (min-width: 992px) {
+  .soporte-tienda {
+    align-self: stretch;
+    grid-template-rows: minmax(12rem, 1fr) auto;
+  }
+  .soporte-tienda__foto { aspect-ratio: auto; }
+}
+
+/* El correo de la ficha es una sola «palabra» larga y no es un enlace (es
+   ficticio): con texto grande se parte donde haga falta en lugar de salirse
+   de la tarjeta (break-word de la base no reduce su ancho mínimo en la
+   rejilla de .aura-feature--inline). */
+.soporte-correo { overflow-wrap: anywhere; }
+
+/* Textos sin palabras huérfanas: lo hace la base (text-wrap en las clases de texto). */
+/* Las preguntas son titulares: .aura-accordion__summary ya va equilibrado en la base. */

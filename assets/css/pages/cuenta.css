@@ -1,0 +1,191 @@
+/* ==========================================================================
+   AURA — ID de AURA (assets/css/pages/cuenta.css)
+   Hoja de las páginas del ID de AURA: login.html, registro.html y cuenta.html.
+   Solo lo que el sistema no trae: el ritmo vertical de la tarjeta de acceso
+   (como los prototipos), el avatar, las pestañas a todo el ancho en móvil,
+   la tarjeta de pedido y las filas agrupadas de Seguridad.
+   Todo con los tokens de aura.css.
+   ========================================================================== */
+
+/* ---- Tarjeta de acceso (login y registro) ------------------------------- */
+
+/* Campos de 56 px y textos sin palabras huérfanas: ya los da la base. */
+
+/* La casilla «Mantener la sesión…» y el enlace «¿Has olvidado…?» miden 44 px
+   (objetivo táctil), pero en el prototipo su texto queda a ~20 px del campo y
+   del botón. Se recupera ese ritmo solapando el aire de su propia caja con el
+   hueco del formulario: el objetivo sigue midiendo 44 px y no pisa a nadie. */
+.aura-auth-card .aura-form > .aura-check,
+.aura-auth-card .aura-form > .cuenta-acceso__olvido { margin-block: -.625rem; }
+.cuenta-acceso__olvido {
+  margin: 0;
+  text-align: center;
+}
+.cuenta-acceso__olvido .aura-link { text-align: center; text-wrap: balance; }
+
+/* Vista «ya has iniciado sesión» del login */
+.cuenta-acceso__sesion > p { margin: 0; text-align: center; }
+
+/* ---- Cabecera de la cuenta ---------------------------------------------- */
+
+.cuenta-hero { padding-bottom: clamp(2rem, 4vw, 3rem); }
+.cuenta-hero__head { gap: .75rem; margin-bottom: 0; }
+.cuenta-paneles { padding-top: clamp(2rem, 4vw, 3rem); }
+
+.cuenta-avatar {
+  display: grid;
+  place-items: center;
+  width: 4.5rem;
+  height: 4.5rem;
+  margin-bottom: .25rem;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 30%, var(--accent-soft), transparent 72%), var(--bg-elevated);
+  box-shadow: inset 0 0 0 1px var(--hairline-strong), inset 0 1px 0 var(--edge-light), var(--shadow-2);
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: 1.625rem;
+  font-weight: 500;
+  line-height: 1;
+}
+
+/* ---- Pestañas (segmentado con role="tablist") --------------------------- */
+
+.cuenta-tabs-wrap {
+  display: flex;
+  justify-content: center;
+  min-width: 0;
+  margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
+}
+/* En móvil, el control ocupa todo el ancho y las cuatro pestañas se reparten
+   el espacio (como un segmentado del sistema). */
+@media (max-width: 575.98px) {
+  .cuenta-tabs { display: flex; width: 100%; }
+  .cuenta-tabs .aura-segmented__item { flex: 1 1 auto; padding-inline: .625rem; }
+}
+
+/* ---- Paneles ------------------------------------------------------------ */
+
+.cuenta-panel { outline-offset: 6px; border-radius: var(--radius-xs); }
+.cuenta-panel:focus:not(:focus-visible) { outline: 0; }
+.cuenta-panel__head { margin-bottom: clamp(1.5rem, 3vw, 2rem); }
+/* «Ayuda con un pedido ›» en la línea base del texto: .aura-section-head--split de la base. */
+.cuenta-panel__head .aura-body { max-width: 52ch; }
+/* Sin palabras huérfanas: .aura-body ya lleva text-wrap: pretty en la base. */
+
+/* Correos largos: que partan antes que desbordar */
+.cuenta-cortar { overflow-wrap: anywhere; }
+
+/* ---- Pedido ------------------------------------------------------------- */
+
+.cuenta-pedido {
+  display: grid;
+  gap: 1.25rem;
+}
+.cuenta-pedido__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: .75rem 1rem;
+}
+.cuenta-pedido__titulo {
+  display: grid;
+  gap: .25rem;
+  min-width: 0;
+}
+.cuenta-pedido__num { font-variant-numeric: tabular-nums; }
+.cuenta-pedido__lineas {
+  gap: 1rem;
+  padding-block: 1.25rem;
+  border-block: 1px solid var(--hairline);
+}
+/* Los datos de la configuración van enteros (espacios duros en cuenta.js);
+   si uno solo no cabe en la línea, que parta antes que desbordar. */
+.cuenta-pedido__lineas .aura-bag-line__meta { overflow-wrap: anywhere; }
+/* En móvil el precio baja bajo el detalle: el texto de la configuración respira */
+@media (max-width: 575.98px) {
+  .cuenta-pedido__lineas .aura-bag-line--compact {
+    grid-template-columns: 3.5rem minmax(0, 1fr);
+    grid-template-areas: "media info" "media price";
+    align-items: start;
+    row-gap: .25rem;
+  }
+  .cuenta-pedido__lineas .aura-bag-line--compact .aura-bag-line__price { justify-items: start; text-align: left; }
+}
+/* Pie del pedido: entrega y pago (etiqueta sobre valor) y, al lado desde
+   768 px, las cifras. En móvil, uno debajo de otro con una línea entre ambos. */
+.cuenta-pedido__pie {
+  display: grid;
+  gap: 1.25rem;
+}
+.cuenta-pedido__datos {
+  display: grid;
+  gap: .875rem;
+  margin: 0;
+}
+.cuenta-pedido__datos > div { display: grid; gap: .125rem; min-width: 0; }
+.cuenta-pedido__datos dt {
+  font-size: .8125rem;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--text-secondary);
+}
+.cuenta-pedido__datos dd {
+  margin: 0;
+  font-size: .9375rem;
+  line-height: 1.45;
+  color: var(--text-primary);
+  overflow-wrap: anywhere;
+}
+.cuenta-pedido__datos + .cuenta-pedido__totales {
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--hairline);
+}
+/* Solo el total (sin envío ni Trade In): una línea, no dos */
+.cuenta-pedido__totales > .aura-summary__row--total:first-child { padding-top: 0; border-top: 0; }
+@media (min-width: 768px) {
+  .cuenta-pedido__pie {
+    grid-template-columns: minmax(0, 1fr) minmax(15rem, 19rem);
+    align-items: start;
+    gap: 2.5rem;
+  }
+  .cuenta-pedido__totales:only-child { grid-column: 1 / -1; }
+  .cuenta-pedido__datos + .cuenta-pedido__totales { padding-top: 0; border-top: 0; }
+}
+
+/* ---- Crédito de AURA Trade In ------------------------------------------- */
+
+/* La cifra es la .aura-stat--md del sistema, la misma que el resultado de la
+   calculadora de Trade In (lo que es igual se ve igual). Con sitio, a la
+   izquierda del texto; la consulta va en rem, así que con texto grande la
+   cifra vuelve a ir encima antes de apretar el texto. */
+.cuenta-tradein { container-type: inline-size; }
+.cuenta-credito {
+  display: grid;
+  gap: 1.5rem;
+  align-items: center;
+}
+.cuenta-credito__acciones { margin-top: .25rem; }
+@container (min-width: 32rem) {
+  .cuenta-credito { grid-template-columns: max-content minmax(0, 1fr); gap: 2rem; }
+}
+
+/* ---- Filas agrupadas (Seguridad) ---------------------------------------- */
+
+.cuenta-filas { display: grid; padding-block: .5rem; }
+.cuenta-filas > * { padding-block: 1.25rem; }
+.cuenta-filas > * + * { border-top: 1px solid var(--hairline); }
+.cuenta-fila__dato { color: var(--text-tertiary); }
+.cuenta-fila__accion { justify-self: start; margin-top: .5rem; }
+
+/* Icono de la fila destructiva: el rojo del sistema, con la misma pastilla
+   que los iconos neutros de las demás filas. */
+.cuenta-icono-peligro {
+  background: color-mix(in srgb, var(--error) 14%, transparent);
+  color: var(--error);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--error) 30%, transparent);
+}
+
+/* ---- Estado final (sesión cerrada, ID eliminado) ------------------------- */
+
+.cuenta-estado .aura-empty__title:focus { outline: 0; }

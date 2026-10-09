@@ -1,0 +1,351 @@
+/* ==========================================================================
+   AURA — Tramitar pedido (checkout.html)
+   Solo la colocación propia del checkout. Componentes, colores, radios,
+   objetivos táctiles y movimiento salen de aura.css (tokens var(--…)).
+   ========================================================================== */
+
+/* Cabecera y pasos */
+.checkout-head { margin-bottom: clamp(1.5rem, 3vw, 2.25rem); }
+/* «Ver el resumen»: solo cuando el resumen queda debajo (en escritorio está
+   a la vista, en su columna). Selector con el peso suficiente para ganar al
+   display de a.aura-link suelto. */
+@media (min-width: 992px) {
+  .checkout-head > a.aura-link.checkout-head__summary { display: none; }
+}
+.checkout-steps {
+  max-width: 46rem;
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+.checkout-main { min-width: 0; }
+
+/* Paso: entra desde el lado hacia el que avanza el pedido (y vuelve por el
+   contrario). Solo transform y opacity; con «reducir movimiento», solo fundido. */
+.checkout-step {
+  display: grid;
+  gap: 1.5rem;
+  min-width: 0;
+  transition: opacity var(--dur-2) var(--ease-out), transform var(--dur-3) var(--ease-out);
+}
+.checkout-step.is-entering {
+  opacity: 0;
+  transform: translate3d(1.5rem, 0, 0);
+  transition: none;
+}
+.checkout-step.is-entering.is-back { transform: translate3d(-1.5rem, 0, 0); }
+.checkout-step__head {
+  display: grid;
+  gap: .5rem;
+  justify-items: start;
+}
+.checkout-step__head > * { margin: 0; }
+.checkout-step__head [tabindex="-1"]:focus { outline: 0; }
+
+/* Bloques condicionales (tienda, dirección, tarjeta, AURA Pay): el que sobra
+   se va (150 ms, --ease-in) y después entra el nuevo (--ease-out) por el
+   mismo camino, espejado: un poco desde arriba y fundiéndose. checkout.js
+   pone .is-leaving / .is-entering. Solo transform y opacity. */
+.checkout-bloque { transition: opacity var(--dur-2) var(--ease-out), transform var(--dur-2) var(--ease-out); }
+.checkout-bloque.is-entering {
+  opacity: 0;
+  transform: translate3d(0, -.375rem, 0);
+  transition: none;
+}
+.checkout-bloque.is-leaving {
+  opacity: 0;
+  transform: translate3d(0, -.375rem, 0);
+  pointer-events: none;
+  transition: opacity 150ms var(--ease-in), transform 150ms var(--ease-in);
+}
+
+/* Paso 1 · Contacto */
+.checkout-contact { display: grid; gap: 1rem; }
+@media (min-width: 768px) {
+  .checkout-contact:not(.is-single) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+.checkout-contact__card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+}
+.checkout-contact__card > .aura-btn,
+.checkout-contact__form { align-self: stretch; }
+.checkout-contact__intro { display: grid; gap: 1rem; justify-items: start; }
+.checkout-contact__intro > *,
+.checkout-contact__card > h3 { margin: 0; }
+.checkout-contact__intro > .aura-caption,
+.checkout-contact__card > h3 + .aura-caption { margin-top: -.5rem; }
+.checkout-contact__icon {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius-sm);
+  background: var(--fill-2);
+  color: var(--text-secondary);
+  font-size: 1.125rem;
+}
+.checkout-user {
+  display: flex;
+  align-items: center;
+  gap: .875rem;
+}
+.checkout-user__avatar {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent-link);
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+.checkout-user__text { display: grid; gap: .125rem; }
+.checkout-user__text > * { margin: 0; }
+.checkout-user__name {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+/* Formularios de los pasos */
+.checkout-form { gap: 2rem; }
+.checkout-address { display: grid; gap: 1.125rem; }
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .checkout-address__row { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .checkout-address__row > :last-child { grid-column: 1 / -1; }
+}
+
+/* Método de pago: icono + texto + importe */
+.checkout-pay .aura-option__body { flex: 1 1 auto; }
+.checkout-pay__icon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: .625rem;
+  background: var(--fill-2);
+  color: var(--text-primary);
+  font-size: 1.0625rem;
+}
+.checkout-card { display: grid; gap: 1.25rem; }
+
+/* Acciones del paso: «Volver» a la izquierda, la principal a la derecha.
+   En móvil, la principal arriba y a todo el ancho. */
+.checkout-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem 1rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--hairline);
+}
+/* «Volver a…»: el enlace contextual de la guía (baja intensidad), con el
+   chevrón delante y espejado: el «›» del enlace señala hacia delante; el
+   «‹», hacia atrás (se desplaza hacia la izquierda al pasar el ratón). */
+.checkout-back::before {
+  content: "‹";
+  display: inline-block;
+  margin-right: .3em;
+  transition: transform var(--dur-1) var(--ease-out);
+}
+@media (hover: hover) {
+  .checkout-back:hover::before { transform: translate3d(-.15em, 0, 0); }
+}
+@media (max-width: 575.98px) {
+  .checkout-actions { flex-direction: column-reverse; align-items: stretch; }
+  .checkout-actions > .checkout-back { align-self: center; }
+}
+
+/* Paso 4 · Revisión */
+.checkout-review {
+  display: grid;
+  padding-block: .5rem;
+}
+.checkout-review__row {
+  display: grid;
+  grid-template-columns: minmax(0, 8rem) minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: .25rem 1.5rem;
+  padding-block: 1.125rem;
+  border-bottom: 1px solid var(--hairline);
+}
+.checkout-review__row:last-child { border-bottom: 0; }
+.checkout-review__label {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: .9375rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--text-primary);
+}
+.checkout-review__value {
+  display: grid;
+  gap: .125rem;
+  min-width: 0;
+  font-size: .9375rem;
+  line-height: 1.5;
+  color: var(--text-primary);
+  overflow-wrap: anywhere;
+}
+.checkout-review__value p { margin: 0; }
+.checkout-review__row > .aura-link { margin-block: -.75rem; }
+@media (max-width: 575.98px) {
+  .checkout-review__row { grid-template-columns: minmax(0, 1fr) auto; }
+  .checkout-review__value { grid-column: 1 / -1; grid-row: 2; }
+}
+.checkout-legal { margin: 0; }
+.checkout-legal a { text-decoration: underline; text-underline-offset: .2em; white-space: nowrap; }
+.checkout-demo {
+  display: flex;
+  align-items: baseline;
+  gap: .5rem;
+  margin: 0;
+  color: var(--text-tertiary);
+}
+
+/* Resumen lateral */
+.checkout-summary__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: .5rem 1rem;
+}
+.checkout-summary__lines { --stack: 1rem; }
+.checkout-summary__count { color: var(--text-tertiary); }
+.checkout-summary__device {
+  display: block;
+  font-size: .8125rem;
+  line-height: 1.45;
+  color: var(--text-tertiary);
+}
+.checkout-summary__check {
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--hairline);
+  font-size: .8125rem;
+}
+/* Líneas compactas (resumen y confirmación): texto e importe alineados arriba
+   con la miniatura aunque la configuración ocupe varias líneas; cada dato de
+   la configuración no se parte. */
+.checkout-summary__lines .aura-bag-line__info { padding-top: .125rem; }
+.checkout-summary__lines .aura-bag-line__price { padding-top: .125rem; }
+.checkout-line__part { display: inline-block; max-width: 100%; }
+/* En móvil el importe baja bajo la configuración (como en la bolsa): el nombre
+   y los datos no se estrujan en una columna de dos palabras. */
+@media (max-width: 575.98px) {
+  .checkout-summary__lines > .aura-bag-line--compact {
+    grid-template-columns: 3.5rem minmax(0, 1fr);
+    grid-template-areas: "media info" "media price";
+    row-gap: .25rem;
+  }
+  .checkout-summary__lines .aura-bag-line__price {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0 .5rem;
+    padding-top: 0;
+    text-align: left;
+  }
+}
+.checkout-line__qty {
+  font-size: .75rem;
+  line-height: 1.45;
+  letter-spacing: .012em;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+.checkout-line__reserva {
+  display: flex;
+  align-items: baseline;
+  gap: .375rem;
+}
+.checkout-line__reserva > .bi { flex: none; color: var(--gold); }
+
+/* Hoja de AURA Pay */
+.checkout-pay-sheet__rows { padding-top: .5rem; }
+
+/* Confirmación */
+.checkout-confirm__head {
+  display: grid;
+  justify-items: center;
+  gap: 1rem;
+  margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
+  text-align: center;
+}
+.checkout-confirm__head > * { margin: 0; }
+.checkout-confirm__head > .aura-lead { max-width: 36rem; text-wrap: balance; }
+.checkout-confirm__head [tabindex="-1"]:focus { outline: 0; }
+.checkout-confirm__icon {
+  display: grid;
+  place-items: center;
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 50%;
+  background: var(--fill-2);
+  background: color-mix(in srgb, var(--ok) 16%, transparent);
+  color: var(--ok);
+  font-size: 2rem;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ok) 40%, transparent);
+}
+.checkout-confirm__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .75rem;
+  margin-top: .5rem;
+}
+.checkout-confirm__card { display: grid; gap: 1.5rem; }
+.checkout-confirm__meta {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.25rem 1.5rem;
+  margin: 0;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--hairline);
+}
+.checkout-confirm__meta:last-child { padding-bottom: 0; border-bottom: 0; }
+@media (min-width: 576px) {
+  .checkout-confirm__meta { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+.checkout-confirm__meta dt {
+  font-size: .8125rem;
+  font-weight: 400;
+  letter-spacing: .006em;
+  color: var(--text-secondary);
+}
+.checkout-confirm__meta dd {
+  margin: .125rem 0 0;
+  font-size: .9375rem;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.checkout-confirm__subtitle { margin: 0; }
+.checkout-confirm__notes { display: grid; gap: 1rem; margin-top: 1.5rem; }
+.checkout-confirm__notes .aura-link { white-space: nowrap; }
+.checkout-confirm__demo {
+  margin: 1.5rem auto 0;
+  max-width: 60ch;
+  color: var(--text-tertiary);
+  text-align: center;
+  text-wrap: balance;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .checkout-step { transition: opacity 200ms ease; }
+  .checkout-step.is-entering,
+  .checkout-step.is-entering.is-back { transform: none; }
+  .checkout-bloque { transition: opacity 200ms ease; }
+  .checkout-bloque.is-entering,
+  .checkout-bloque.is-leaving { transform: none; }
+  .checkout-bloque.is-leaving { transition: opacity 150ms ease; }
+  .checkout-back::before,
+  .checkout-back:hover::before { transform: none; transition: none; }
+}

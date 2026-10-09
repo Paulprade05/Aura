@@ -1,0 +1,534 @@
+<!doctype html>
+<html lang="es" data-bs-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Tramitar pedido — AURA</title>
+  <meta name="description" content="Tramita tu pedido de AURA en cuatro pasos: contacto, entrega, pago y revisión. Envío estándar gratuito, recogida en AURA Store y financiación sin intereses.">
+  <meta name="theme-color" content="#000000">
+  <link rel="icon" type="image/png" href="assets/img/aura.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&family=Kanit:wght@500;600&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="assets/css/aura.css" rel="stylesheet">
+  <link href="assets/css/pages/checkout.css" rel="stylesheet">
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/aura-core.js"></script>
+</head>
+<body>
+  <a class="aura-skip" href="#contenido">Saltar al contenido</a>
+  <aura-header active="bolsa" ribbon="off"></aura-header>
+
+  <main id="contenido">
+
+    <section class="aura-section aura-section--tight checkout" id="checkout" aria-labelledby="checkout-titulo">
+      <div class="aura-container">
+
+        <div class="aura-section-head aura-section-head--split checkout-head">
+          <div class="aura-section-head__text">
+            <p class="aura-eyebrow aura-eyebrow--mono">Bolsa / Tramitar pedido</p>
+            <h1 class="aura-h2" id="checkout-titulo">Finaliza tu pedido.</h1>
+          </div>
+          <a class="aura-link checkout-head__summary" href="#resumen">Ver el resumen&nbsp;·&nbsp;<span data-co="total-corto"></span></a>
+        </div>
+
+        <ol class="aura-steps checkout-steps" aria-label="Pasos del pedido">
+          <li class="aura-steps__item is-current" aria-current="step" data-co-step="1"><span class="aura-steps__num" aria-hidden="true">1</span><span class="aura-steps__label">Contacto<span class="visually-hidden" data-co-done></span></span></li>
+          <li class="aura-steps__item" data-co-step="2"><span class="aura-steps__num" aria-hidden="true">2</span><span class="aura-steps__label">Entrega<span class="visually-hidden" data-co-done></span></span></li>
+          <li class="aura-steps__item" data-co-step="3"><span class="aura-steps__num" aria-hidden="true">3</span><span class="aura-steps__label">Pago<span class="visually-hidden" data-co-done></span></span></li>
+          <li class="aura-steps__item" data-co-step="4"><span class="aura-steps__num" aria-hidden="true">4</span><span class="aura-steps__label">Revisión<span class="visually-hidden" data-co-done></span></span></li>
+        </ol>
+        <p class="visually-hidden" role="status" aria-live="polite" id="checkout-estado"></p>
+
+        <div class="aura-layout aura-layout--aside">
+          <div class="checkout-main">
+
+            <!-- ============ Paso 1 · Contacto ============ -->
+            <section class="checkout-step" id="paso-1" data-co-panel="1" aria-labelledby="paso-1-titulo">
+              <header class="checkout-step__head">
+                <h2 class="aura-h3" id="paso-1-titulo" tabindex="-1">¿Cómo quieres continuar?</h2>
+              </header>
+
+              <div class="checkout-contact" data-co="contacto">
+                <div class="aura-card checkout-contact__card">
+                  <div class="checkout-user" data-co="usuario" hidden>
+                    <span class="checkout-user__avatar" aria-hidden="true" data-co="usuario-inicial"></span>
+                    <div class="checkout-user__text">
+                      <p class="checkout-user__name" data-co="usuario-nombre"></p>
+                      <p class="aura-caption">Has iniciado sesión con tu ID de AURA. El pedido aparecerá en <a href="cuenta.html">Tu cuenta</a>.</p>
+                    </div>
+                  </div>
+                  <div class="checkout-contact__intro" data-co="invitado">
+                    <span class="checkout-contact__icon" aria-hidden="true"><i class="bi bi-bag-check"></i></span>
+                    <h3 class="aura-h4">Continuar como invitado</h3>
+                    <p class="aura-caption">Solo necesitamos tu correo para enviarte la confirmación y el seguimiento del pedido.</p>
+                  </div>
+                  <form class="aura-form checkout-contact__form" id="form-contacto" novalidate>
+                    <div class="aura-field">
+                      <label class="aura-field__label" for="co-email">Correo electrónico</label>
+                      <div class="aura-field__control">
+                        <i class="aura-field__icon bi bi-envelope" aria-hidden="true"></i>
+                        <input class="aura-input" id="co-email" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" placeholder="nombre@correo.com" aria-describedby="co-email-error">
+                      </div>
+                      <p class="aura-field__error" id="co-email-error"></p>
+                    </div>
+                    <button class="aura-btn aura-btn--primary aura-btn--block" type="submit" data-co="contacto-enviar">Continuar como invitado</button>
+                  </form>
+                </div>
+
+                <div class="aura-card checkout-contact__card" data-co="login">
+                  <span class="checkout-contact__icon" aria-hidden="true"><i class="bi bi-person-circle"></i></span>
+                  <h3 class="aura-h4">¿Tienes ID de AURA?</h3>
+                  <p class="aura-caption">Inicia sesión para tramitar más rápido y seguir el pedido desde Tu cuenta.</p>
+                  <a class="aura-btn aura-btn--secondary aura-btn--block" href="login.html?volver=checkout.html">Iniciar sesión</a>
+                  <a class="aura-link" href="registro.html?volver=checkout.html">Crear un ID de AURA</a>
+                </div>
+              </div>
+            </section>
+
+            <!-- ============ Paso 2 · Entrega ============ -->
+            <section class="checkout-step" id="paso-2" data-co-panel="2" aria-labelledby="paso-2-titulo" hidden>
+              <header class="checkout-step__head">
+                <h2 class="aura-h3" id="paso-2-titulo" tabindex="-1">¿Cómo quieres recibir tu pedido?</h2>
+              </header>
+
+              <!-- Solo si el pedido incluye una reserva (checkout.js lo rellena con las fechas del catálogo) -->
+              <div class="aura-alert checkout-reserva" data-co="reserva-aviso" hidden>
+                <i class="bi bi-calendar-event" aria-hidden="true"></i>
+                <p class="aura-alert__title" data-co="reserva-titulo"></p>
+                <p class="aura-alert__text" data-co="reserva-texto"></p>
+              </div>
+
+              <form class="aura-form checkout-form" id="form-entrega" novalidate>
+                <fieldset class="aura-fieldset">
+                  <legend class="aura-legend">Método de entrega</legend>
+                  <div class="aura-option-group">
+                    <label class="aura-option">
+                      <input class="aura-option__input" type="radio" name="metodo" value="estandar" checked>
+                      <span class="aura-option__card">
+                        <span class="aura-option__body">
+                          <span class="aura-option__title">Envío estándar</span>
+                          <span class="aura-option__note" data-co-fecha="estandar">2–3 días laborables</span>
+                        </span>
+                        <span class="aura-option__price" data-co="precio-estandar"></span>
+                      </span>
+                    </label>
+                    <label class="aura-option" data-co="opcion-expres">
+                      <input class="aura-option__input" type="radio" name="metodo" value="expres">
+                      <span class="aura-option__card">
+                        <span class="aura-option__body">
+                          <span class="aura-option__title">Envío exprés</span>
+                          <span class="aura-option__note" data-co-fecha="expres">Al día siguiente laborable</span>
+                        </span>
+                        <span class="aura-option__price" data-co="precio-expres"></span>
+                      </span>
+                    </label>
+                    <label class="aura-option">
+                      <input class="aura-option__input" type="radio" name="metodo" value="recogida">
+                      <span class="aura-option__card">
+                        <span class="aura-option__body">
+                          <span class="aura-option__title">Recogida en AURA Store</span>
+                          <span class="aura-option__note" data-co-fecha="recogida">Te avisamos cuando esté listo</span>
+                        </span>
+                        <span class="aura-option__price">Gratis</span>
+                      </span>
+                    </label>
+                  </div>
+                  <p class="aura-field__error" id="co-metodo-error"></p>
+                </fieldset>
+
+                <!-- Solo con «Recogida en AURA Store». Oculto con `hidden`: AURA.ui.form no lo valida mientras no se ve. -->
+                <fieldset class="aura-fieldset checkout-bloque" data-co-bloque="tienda" hidden>
+                  <legend class="aura-legend">Elige tu AURA Store</legend>
+                  <div class="aura-option-group aura-option-group--2">
+                    <label class="aura-option">
+                      <input class="aura-option__input" type="radio" name="tienda" value="madrid-sol">
+                      <span class="aura-option__card">
+                        <span class="aura-option__body">
+                          <span class="aura-option__title">AURA Store Madrid</span>
+                          <span class="aura-option__note">Puerta del Sol · 10:00–22:00</span>
+                        </span>
+                      </span>
+                    </label>
+                    <label class="aura-option">
+                      <input class="aura-option__input" type="radio" name="tienda" value="barcelona-gracia">
+                      <span class="aura-option__card">
+                        <span class="aura-option__body">
+                          <span class="aura-option__title">AURA Store Barcelona</span>
+                          <span class="aura-option__note">Passeig de Gràcia · 10:00–21:00</span>
+                        </span>
+                      </span>
+                    </label>
+                    <label class="aura-option">
+                      <input class="aura-option__input" type="radio" name="tienda" value="valencia-colon">
+                      <span class="aura-option__card">
+                        <span class="aura-option__body">
+                          <span class="aura-option__title">AURA Store Valencia</span>
+                          <span class="aura-option__note">Calle Colón · 10:00–21:30</span>
+                        </span>
+                      </span>
+                    </label>
+                    <label class="aura-option">
+                      <input class="aura-option__input" type="radio" name="tienda" value="sevilla-nervion">
+                      <span class="aura-option__card">
+                        <span class="aura-option__body">
+                          <span class="aura-option__title">AURA Store Sevilla</span>
+                          <span class="aura-option__note">Nervión · 10:00–21:30</span>
+                        </span>
+                      </span>
+                    </label>
+                  </div>
+                  <p class="aura-field__error" id="co-tienda-error"></p>
+                  <p class="aura-caption">Lleva un documento de identidad. Guardamos tu pedido 14 días.</p>
+                </fieldset>
+
+                <fieldset class="aura-fieldset">
+                  <legend class="aura-legend" data-co="legend-datos">Dirección de envío</legend>
+                  <div class="aura-form__row">
+                    <div class="aura-field">
+                      <label class="aura-field__label" for="co-nombre">Nombre</label>
+                      <div class="aura-field__control">
+                        <input class="aura-input" id="co-nombre" name="nombre" type="text" autocomplete="given-name" aria-describedby="co-nombre-error">
+                      </div>
+                      <p class="aura-field__error" id="co-nombre-error"></p>
+                    </div>
+                    <div class="aura-field">
+                      <label class="aura-field__label" for="co-apellidos">Apellidos</label>
+                      <div class="aura-field__control">
+                        <input class="aura-input" id="co-apellidos" name="apellidos" type="text" autocomplete="family-name" aria-describedby="co-apellidos-error">
+                      </div>
+                      <p class="aura-field__error" id="co-apellidos-error"></p>
+                    </div>
+                  </div>
+
+                  <!-- Solo con envío a domicilio (oculto con `hidden` si se recoge en tienda) -->
+                  <div class="checkout-address checkout-bloque" data-co-bloque="direccion">
+                    <div class="aura-field">
+                      <label class="aura-field__label" for="co-direccion">Dirección</label>
+                      <div class="aura-field__control">
+                        <i class="aura-field__icon bi bi-geo-alt" aria-hidden="true"></i>
+                        <input class="aura-input" id="co-direccion" name="direccion" type="text" autocomplete="address-line1" placeholder="Calle y número" aria-describedby="co-direccion-error">
+                      </div>
+                      <p class="aura-field__error" id="co-direccion-error"></p>
+                    </div>
+                    <div class="aura-field">
+                      <label class="aura-field__label" for="co-piso">Piso, puerta, escalera <span class="aura-field__hint">Opcional</span></label>
+                      <div class="aura-field__control">
+                        <input class="aura-input" id="co-piso" name="piso" type="text" autocomplete="address-line2">
+                      </div>
+                    </div>
+                    <div class="aura-form__row aura-form__row--3 checkout-address__row">
+                      <div class="aura-field">
+                        <label class="aura-field__label" for="co-cp">Código postal</label>
+                        <div class="aura-field__control">
+                          <input class="aura-input" id="co-cp" name="cp" type="text" inputmode="numeric" autocomplete="postal-code" maxlength="5" aria-describedby="co-cp-error">
+                        </div>
+                        <p class="aura-field__error" id="co-cp-error"></p>
+                      </div>
+                      <div class="aura-field">
+                        <label class="aura-field__label" for="co-ciudad">Ciudad</label>
+                        <div class="aura-field__control">
+                          <input class="aura-input" id="co-ciudad" name="ciudad" type="text" autocomplete="address-level2" aria-describedby="co-ciudad-error">
+                        </div>
+                        <p class="aura-field__error" id="co-ciudad-error"></p>
+                      </div>
+                      <div class="aura-field">
+                        <label class="aura-field__label" for="co-provincia">Provincia</label>
+                        <div class="aura-field__control">
+                          <select class="aura-select" id="co-provincia" name="provincia" autocomplete="address-level1" aria-describedby="co-provincia-error">
+                            <option value="">Elige una</option>
+                            <option value="15">A Coruña</option>
+                            <option value="01">Álava</option>
+                            <option value="02">Albacete</option>
+                            <option value="03">Alicante</option>
+                            <option value="04">Almería</option>
+                            <option value="33">Asturias</option>
+                            <option value="05">Ávila</option>
+                            <option value="06">Badajoz</option>
+                            <option value="08">Barcelona</option>
+                            <option value="48">Bizkaia</option>
+                            <option value="09">Burgos</option>
+                            <option value="10">Cáceres</option>
+                            <option value="11">Cádiz</option>
+                            <option value="39">Cantabria</option>
+                            <option value="12">Castellón</option>
+                            <option value="51">Ceuta</option>
+                            <option value="13">Ciudad Real</option>
+                            <option value="14">Córdoba</option>
+                            <option value="16">Cuenca</option>
+                            <option value="20">Gipuzkoa</option>
+                            <option value="17">Girona</option>
+                            <option value="18">Granada</option>
+                            <option value="19">Guadalajara</option>
+                            <option value="21">Huelva</option>
+                            <option value="22">Huesca</option>
+                            <option value="07">Illes Balears</option>
+                            <option value="23">Jaén</option>
+                            <option value="26">La Rioja</option>
+                            <option value="35">Las Palmas</option>
+                            <option value="24">León</option>
+                            <option value="25">Lleida</option>
+                            <option value="27">Lugo</option>
+                            <option value="28">Madrid</option>
+                            <option value="29">Málaga</option>
+                            <option value="52">Melilla</option>
+                            <option value="30">Murcia</option>
+                            <option value="31">Navarra</option>
+                            <option value="32">Ourense</option>
+                            <option value="34">Palencia</option>
+                            <option value="36">Pontevedra</option>
+                            <option value="37">Salamanca</option>
+                            <option value="38">Santa Cruz de Tenerife</option>
+                            <option value="40">Segovia</option>
+                            <option value="41">Sevilla</option>
+                            <option value="42">Soria</option>
+                            <option value="43">Tarragona</option>
+                            <option value="44">Teruel</option>
+                            <option value="45">Toledo</option>
+                            <option value="46">Valencia</option>
+                            <option value="47">Valladolid</option>
+                            <option value="49">Zamora</option>
+                            <option value="50">Zaragoza</option>
+                          </select>
+                        </div>
+                        <p class="aura-field__error" id="co-provincia-error"></p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="aura-field">
+                    <label class="aura-field__label" for="co-telefono">Teléfono</label>
+                    <div class="aura-field__control">
+                      <i class="aura-field__icon bi bi-telephone" aria-hidden="true"></i>
+                      <input class="aura-input" id="co-telefono" name="telefono" type="tel" inputmode="tel" autocomplete="tel" aria-describedby="co-telefono-ayuda co-telefono-error">
+                    </div>
+                    <p class="aura-field__help" id="co-telefono-ayuda">Solo para avisarte de la entrega.</p>
+                    <p class="aura-field__error" id="co-telefono-error"></p>
+                  </div>
+                </fieldset>
+
+                <div class="checkout-actions">
+                  <button class="aura-link aura-link--plain aura-link--control checkout-back" type="button" data-co-back="1">Volver a contacto</button>
+                  <button class="aura-btn aura-btn--primary" type="submit" data-co-next>Continuar al pago</button>
+                </div>
+              </form>
+            </section>
+
+            <!-- ============ Paso 3 · Pago ============ -->
+            <section class="checkout-step" id="paso-3" data-co-panel="3" aria-labelledby="paso-3-titulo" hidden>
+              <header class="checkout-step__head">
+                <h2 class="aura-h3" id="paso-3-titulo" tabindex="-1">¿Cómo quieres pagar?</h2>
+              </header>
+
+              <form class="aura-form checkout-form" id="form-pago" novalidate autocomplete="off">
+                <fieldset class="aura-fieldset">
+                  <legend class="aura-legend">Método de pago</legend>
+                  <div class="aura-option-group checkout-pay">
+                    <label class="aura-option">
+                      <input class="aura-option__input" type="radio" name="pago" value="aura-pay" checked>
+                      <span class="aura-option__card">
+                        <span class="checkout-pay__icon" aria-hidden="true"><i class="bi bi-wallet2"></i></span>
+                        <span class="aura-option__body">
+                          <span class="aura-option__title">AURA Pay</span>
+                          <span class="aura-option__note">Confírmalo con Face ID o Touch ID en un instante.</span>
+                        </span>
+                      </span>
+                    </label>
+                    <label class="aura-option">
+                      <input class="aura-option__input" type="radio" name="pago" value="tarjeta">
+                      <span class="aura-option__card">
+                        <span class="checkout-pay__icon" aria-hidden="true"><i class="bi bi-credit-card"></i></span>
+                        <span class="aura-option__body">
+                          <span class="aura-option__title">Tarjeta de crédito o débito</span>
+                          <span class="aura-option__note">Visa, Mastercard o American Express.</span>
+                        </span>
+                      </span>
+                    </label>
+                    <label class="aura-option">
+                      <input class="aura-option__input" type="radio" name="pago" value="financiacion">
+                      <span class="aura-option__card">
+                        <span class="checkout-pay__icon" aria-hidden="true"><i class="bi bi-calendar2-check"></i></span>
+                        <span class="aura-option__body">
+                          <span class="aura-option__title">Financiación a <span data-co="meses"></span> meses</span>
+                          <span class="aura-option__note">Sin intereses (0&nbsp;% TAE). Las cuotas se cargan en tu tarjeta.</span>
+                        </span>
+                        <span class="aura-option__price" data-co-pago-precio="cuota"></span>
+                      </span>
+                    </label>
+                  </div>
+                  <p class="aura-field__error" id="co-pago-error"></p>
+                </fieldset>
+
+                <!-- Solo con AURA Pay -->
+                <div class="aura-note checkout-bloque" data-co-bloque="aurapay">
+                  <span class="aura-note__icon"><i class="bi bi-wallet2" aria-hidden="true"></i></span>
+                  <p class="aura-note__title">Lo confirmarás al final</p>
+                  <p class="aura-note__text">Al realizar el pedido se abrirá AURA Pay para que lo confirmes. Es una simulación: no se cobra nada.</p>
+                </div>
+
+                <!-- Solo con tarjeta o financiación (oculto con `hidden` con AURA Pay: AURA.ui.form no lo valida).
+                     Formulario de DEMOSTRACIÓN: comprueba el formato aquí mismo y nunca guarda ni envía los datos. -->
+                <div class="checkout-card checkout-bloque" data-co-bloque="tarjeta" hidden>
+                  <div class="aura-alert aura-alert--warn">
+                    <i class="bi bi-exclamation-triangle-fill" aria-hidden="true"></i>
+                    <p class="aura-alert__title">Pago simulado: no escribas los datos de una tarjeta real</p>
+                    <p class="aura-alert__text">Usa la tarjeta de prueba 4242 4242 4242 4242, cualquier fecha futura y cualquier CVC. Solo comprobamos el formato en tu navegador: los datos de la tarjeta nunca se guardan ni se envían.</p>
+                  </div>
+                  <fieldset class="aura-fieldset">
+                    <legend class="aura-legend">Datos de la tarjeta</legend>
+                    <div class="aura-field">
+                      <label class="aura-field__label" for="co-numero">Número de tarjeta <span class="aura-field__hint" data-co="marca"></span></label>
+                      <div class="aura-field__control">
+                        <i class="aura-field__icon bi bi-credit-card" aria-hidden="true"></i>
+                        <input class="aura-input" id="co-numero" name="numero" type="text" inputmode="numeric" autocomplete="off" autocorrect="off" spellcheck="false" maxlength="23" placeholder="1234 1234 1234 1234" aria-describedby="co-numero-error">
+                      </div>
+                      <p class="aura-field__error" id="co-numero-error"></p>
+                    </div>
+                    <div class="aura-field">
+                      <label class="aura-field__label" for="co-titular">Nombre del titular</label>
+                      <div class="aura-field__control">
+                        <input class="aura-input" id="co-titular" name="titular" type="text" autocomplete="off" spellcheck="false" placeholder="Como aparece en la tarjeta" aria-describedby="co-titular-error">
+                      </div>
+                      <p class="aura-field__error" id="co-titular-error"></p>
+                    </div>
+                    <div class="aura-form__row">
+                      <div class="aura-field">
+                        <label class="aura-field__label" for="co-caducidad">Caducidad</label>
+                        <div class="aura-field__control">
+                          <input class="aura-input" id="co-caducidad" name="caducidad" type="text" inputmode="numeric" autocomplete="off" maxlength="5" placeholder="MM/AA" aria-describedby="co-caducidad-error">
+                        </div>
+                        <p class="aura-field__error" id="co-caducidad-error"></p>
+                      </div>
+                      <div class="aura-field">
+                        <label class="aura-field__label" for="co-cvc">Código de seguridad (CVC)</label>
+                        <div class="aura-field__control">
+                          <i class="aura-field__icon bi bi-lock" aria-hidden="true"></i>
+                          <input class="aura-input" id="co-cvc" name="cvc" type="text" inputmode="numeric" autocomplete="off" maxlength="4" placeholder="123" aria-describedby="co-cvc-ayuda co-cvc-error">
+                        </div>
+                        <p class="aura-field__help" id="co-cvc-ayuda" data-co="cvc-ayuda">Las 3 cifras del dorso de la tarjeta.</p>
+                        <p class="aura-field__error" id="co-cvc-error"></p>
+                      </div>
+                    </div>
+                  </fieldset>
+                </div>
+
+                <div class="checkout-actions">
+                  <button class="aura-link aura-link--plain aura-link--control checkout-back" type="button" data-co-back="2">Volver a la entrega</button>
+                  <button class="aura-btn aura-btn--primary" type="submit" data-co-next>Revisar el pedido</button>
+                </div>
+              </form>
+            </section>
+
+            <!-- ============ Paso 4 · Revisión ============ -->
+            <section class="checkout-step" id="paso-4" data-co-panel="4" aria-labelledby="paso-4-titulo" hidden>
+              <header class="checkout-step__head">
+                <h2 class="aura-h3" id="paso-4-titulo" tabindex="-1">Revisa tu pedido.</h2>
+                <p class="aura-caption">Puedes cambiar cualquier paso antes de realizarlo.</p>
+              </header>
+
+              <div class="aura-card checkout-review">
+                <div class="checkout-review__row">
+                  <h3 class="checkout-review__label">Contacto</h3>
+                  <div class="checkout-review__value" data-co="rev-contacto"></div>
+                  <button class="aura-link aura-link--plain" type="button" data-co-edit="1" aria-label="Editar el contacto">Editar</button>
+                </div>
+                <div class="checkout-review__row">
+                  <h3 class="checkout-review__label">Entrega</h3>
+                  <div class="checkout-review__value" data-co="rev-entrega"></div>
+                  <button class="aura-link aura-link--plain" type="button" data-co-edit="2" aria-label="Editar la entrega">Editar</button>
+                </div>
+                <div class="checkout-review__row">
+                  <h3 class="checkout-review__label">Pago</h3>
+                  <div class="checkout-review__value" data-co="rev-pago"></div>
+                  <button class="aura-link aura-link--plain" type="button" data-co-edit="3" aria-label="Editar el pago">Editar</button>
+                </div>
+                <div class="checkout-review__row">
+                  <h3 class="checkout-review__label">Artículos</h3>
+                  <div class="checkout-review__value" data-co="rev-articulos"></div>
+                  <a class="aura-link aura-link--plain" href="bolsa.html" data-co-hoy aria-label="Editar los artículos en la bolsa">Editar</a>
+                </div>
+              </div>
+
+              <p class="aura-caption checkout-legal">Al realizar el pedido aceptas las <a href="legal.html#condiciones">Condiciones de uso</a> y la <a href="legal.html#privacidad">Política de privacidad</a> de AURA.</p>
+
+              <div class="checkout-actions">
+                <button class="aura-link aura-link--plain aura-link--control checkout-back" type="button" data-co-back="3">Volver al pago</button>
+                <button class="aura-btn aura-btn--primary" type="button" data-co="realizar">Realizar pedido</button>
+              </div>
+              <p class="aura-caption checkout-demo"><i class="bi bi-info-circle" aria-hidden="true"></i><span>Pedido de demostración: no se cobra nada ni se envía nada.</span></p>
+            </section>
+
+          </div>
+
+          <aside class="aura-summary" id="resumen" aria-labelledby="resumen-titulo">
+            <div class="checkout-summary__head">
+              <h2 class="aura-summary__title" id="resumen-titulo">Tu pedido</h2>
+              <a class="aura-link" href="bolsa.html" data-co-hoy>Editar bolsa</a>
+            </div>
+            <ul class="aura-bag-list aura-stack aura-stack--stretch checkout-summary__lines" data-co="lineas" aria-label="Artículos del pedido"></ul>
+            <dl class="aura-summary__rows">
+              <div class="aura-summary__row"><dt>Subtotal <span class="checkout-summary__count" data-co="sum-count"></span></dt><dd data-co="sum-subtotal"></dd></div>
+              <div class="aura-summary__row aura-summary__row--discount" data-co="sum-trade" hidden><dt>AURA Trade In <span class="checkout-summary__device" data-co="sum-trade-device"></span></dt><dd data-co="sum-descuento"></dd></div>
+              <div class="aura-summary__row"><dt data-co="sum-envio-label">Envío</dt><dd data-co="sum-envio"></dd></div>
+              <div class="aura-summary__row aura-summary__row--total"><dt>Total</dt><dd data-co="sum-total"></dd></div>
+            </dl>
+            <p class="aura-summary__note" data-co="sum-nota"></p>
+            <ul class="aura-checklist checkout-summary__check">
+              <li>Devolución gratuita en 14 días</li>
+              <li>Pago simulado: no se cobra nada</li>
+            </ul>
+          </aside>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Letra pequeña (checkout.js rellena las cifras desde el catálogo) -->
+    <section class="aura-section aura-section--tight aura-footnotes" aria-labelledby="notas-titulo">
+      <div class="aura-container">
+        <h2 class="visually-hidden" id="notas-titulo">Notas</h2>
+        <ul class="aura-footnotes__list">
+          <li><span data-aura-legal="precios">Precios de venta recomendados en España, IVA incluido.</span> <span data-co="nota-envio">El envío estándar y la recogida en AURA Store son gratuitos.</span> Puedes devolver lo que compres, sin coste, en los 14&nbsp;días siguientes a recibirlo.</li>
+          <li data-aura-legal="financiacion">Financiación sin intereses, sujeta a la aprobación de la entidad financiera.</li>
+          <li data-aura-legal="reservas">Los productos en reserva se entregan a partir de su fecha de lanzamiento.</li>
+          <li data-aura-legal="tradein">El valor de AURA Trade In depende del modelo y del estado del dispositivo.</li>
+          <li data-aura-legal="demo">AURA es un proyecto de demostración.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- AURA Pay (simulado): hoja inferior del sistema, se abre desde «Realizar pedido» -->
+    <div class="aura-sheet aura-sheet--bottom" id="aurapay-hoja" data-aura-sheet aria-hidden="true">
+      <div class="aura-scrim" data-aura-sheet-close></div>
+      <section class="aura-sheet__panel" role="dialog" aria-modal="true" aria-labelledby="aurapay-titulo" tabindex="-1">
+        <div class="aura-sheet__grabber" aria-hidden="true"></div>
+        <header class="aura-sheet__header">
+          <h2 class="aura-sheet__title" id="aurapay-titulo">AURA Pay</h2>
+          <button class="aura-icon-btn" type="button" data-aura-sheet-close aria-label="Cancelar el pago"><i class="bi bi-x-lg" aria-hidden="true"></i></button>
+        </header>
+        <div class="aura-sheet__body">
+          <dl class="aura-summary__rows checkout-pay-sheet__rows">
+            <div class="aura-summary__row"><dt>Pagar a</dt><dd>AURA Store</dd></div>
+            <div class="aura-summary__row"><dt>Entrega</dt><dd data-co="pay-entrega"></dd></div>
+            <div class="aura-summary__row"><dt>Tarjeta</dt><dd>AURA Card · simulada</dd></div>
+            <div class="aura-summary__row aura-summary__row--total"><dt>Total</dt><dd data-co="pay-total"></dd></div>
+          </dl>
+        </div>
+        <footer class="aura-sheet__footer">
+          <button class="aura-btn aura-btn--primary aura-btn--block" type="button" data-co="pay-confirmar"><i class="bi bi-person-bounding-box" aria-hidden="true"></i>Confirmar con Face ID</button>
+          <p class="aura-caption text-center m-0">Simulación: no se cobra nada.</p>
+        </footer>
+      </section>
+    </div>
+
+  </main>
+
+  <aura-footer crumbs="Bolsa|bolsa.html;Tramitar pedido"></aura-footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/aura-ui.js"></script>
+  <script src="assets/js/pages/checkout.js"></script>
+</body>
+</html>

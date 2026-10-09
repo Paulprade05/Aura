@@ -1,0 +1,226 @@
+/* ==========================================================================
+   AURA — comprar.html (configurador)
+   Solo lo que los componentes del sistema no cubren: ritmo entre pasos,
+   cabecera de compra con su estado de disponibilidad, línea de entrega y
+   confirmaciones del resumen, y el precio de la barra de compra. Los
+   objetivos táctiles, la leyenda y la barra --always en escritorio los pone
+   aura.css. Todo con sus tokens.
+   ========================================================================== */
+
+/* Cabecera: dónde estoy (familia, modelo, precio, disponibilidad) y adónde puedo ir */
+.comprar-head { margin-bottom: clamp(1.75rem, 3.5vw, 3rem); }
+.comprar-head__text { gap: .75rem; max-width: 52rem; }
+.comprar-head__desde { font-variant-numeric: tabular-nums; }
+.comprar-head__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .25rem 1.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Estado de disponibilidad («Próximamente · Reserva a partir del…»): el
+   mismo icono que la línea de entrega del resumen, en dorado. */
+.comprar-estado {
+  display: flex;
+  align-items: flex-start;
+  gap: .5rem;
+  margin: 0;
+  font-size: .9375rem;
+  line-height: 1.45;
+  color: var(--text-secondary);
+}
+.comprar-estado > .bi { flex: none; margin-top: .0625rem; color: var(--gold); }
+
+/* Aviso de estado (sin modelo en la dirección o modelo inexistente) */
+.comprar-aviso {
+  max-width: 46rem;
+  margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+/* Galería y su nota: pegajosas juntas desde 992 px (como .aura-gallery--sticky). */
+.comprar-visual { display: grid; gap: .625rem; min-width: 0; }
+@media (min-width: 992px) {
+  .comprar-visual { position: sticky; top: calc(var(--sticky-top) + 1.5rem); }
+}
+/* En una columna nunca ocupa más que la pantalla */
+@media (max-width: 991.98px) {
+  .comprar-galeria { max-height: min(34rem, 62vh); }
+}
+/* «Imagen en azul glacial · Tu acabado: negro»: su línea está siempre
+   reservada (las muestras no se mueven bajo el dedo); sin nada que decir, se
+   oculta sin dejar de ocupar su sitio. */
+.comprar-galeria-nota {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  min-height: 1lh;
+  margin: 0;
+  text-wrap: pretty;
+}
+.comprar-galeria-nota.is-off { visibility: hidden; }
+.comprar-galeria-nota > .aura-swatch-list__dot { flex: none; }
+
+/* Columna de pasos: aire generoso entre pasos, ajustado dentro de cada uno */
+.comprar-columna,
+.comprar-pasos {
+  display: grid;
+  gap: clamp(2.75rem, 5vw, 3.75rem);
+  min-width: 0;
+}
+.comprar-opciones { display: contents; }
+.comprar-paso {
+  display: grid;
+  gap: 1rem;
+  min-width: 0;
+}
+.comprar-paso > .comprar-paso__titulo { margin-bottom: .25rem; }
+/* «Almacenamiento.» y su pregunta: si no caben en una línea, la pregunta
+   baja entera («¿Brillo intenso o cero reflejos?»), nunca partida por la
+   mitad tras el nombre del paso. */
+.comprar-paso__titulo > .aura-text-secondary { display: inline-block; }
+.comprar-paso__texto { font-size: .9375rem; }
+
+/* Familia (solo cuando la dirección no trae un modelo válido) */
+.comprar-familias {
+  display: grid;
+  gap: .5rem;
+  justify-items: start;
+  margin-bottom: .25rem;
+}
+
+/* Insignia de disponibilidad junto al nombre del modelo; si no cabe, baja
+   alineada con el nombre (sin sangría). */
+.comprar-modelo .aura-option__title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .25rem .5rem;
+}
+/* Notas de las opciones sin una palabra sola en la última línea; las
+   listas «CPU 18 núcleos · GPU 20 núcleos» (también la del resumen) se
+   parten entre elementos, nunca dentro de uno. */
+.comprar-pasos .aura-option__note { text-wrap: pretty; }
+.comprar-pieza { white-space: nowrap; }
+
+/* AURA Trade In: título equilibrado (la llamada a la nota no queda sola) y
+   acciones dentro de la nota */
+.comprar-trade .aura-note__title { text-wrap: balance; }
+.comprar-trade__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 1.5rem;
+  margin-top: .25rem;
+}
+
+/* Resumen */
+.comprar-resumen__head {
+  display: grid;
+  gap: .375rem;
+}
+.comprar-entrega {
+  display: flex;
+  align-items: flex-start;
+  gap: .625rem;
+  margin: 0;
+  font-size: .875rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  text-wrap: pretty;
+}
+.comprar-entrega > .bi {
+  flex: none;
+  font-size: 1.125rem;
+  line-height: 1.2;
+  color: var(--text-secondary);
+}
+.comprar-entrega--fecha > .bi { color: var(--gold); }
+.comprar-entrega strong { font-weight: 600; color: var(--text-primary); }
+
+/* La etiqueta larga («Avísame cuando abran las reservas»): en el móvil, sin la
+   campana, para que quepa en una línea con el relleno de 24 px de la guía; si
+   aun así no cabe, el botón de la base se parte en dos líneas equilibradas. */
+@media (max-width: 575.98px) {
+  .comprar-accion[data-modo="avisar"] > .bi { display: none; }
+}
+
+/* Confirmaciones bajo el botón: «En tu bolsa…» y la del aviso de reservas */
+.comprar-hecho {
+  display: grid;
+  gap: .125rem;
+  margin-top: -.25rem;
+}
+.comprar-hecho__texto {
+  display: flex;
+  align-items: flex-start;
+  gap: .5rem;
+  margin: 0;
+  font-size: .875rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+.comprar-hecho__texto > .bi { flex: none; margin-top: .0625rem; color: var(--ok); }
+.comprar-hecho--aviso .comprar-hecho__texto > .bi { color: var(--text-secondary); }
+/* La confirmación llega en el mismo instante que el aviso y la háptica: se
+   funde bajo el botón que la causó (solo opacidad y un leve descenso). */
+.comprar-hecho:not([hidden]) { animation: comprar-hecho-in var(--dur-2) var(--ease-out); }
+@keyframes comprar-hecho-in {
+  from { opacity: 0; transform: translate3d(0, -.25rem, 0); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  @keyframes comprar-hecho-in { from { opacity: 0; } to { opacity: 1; } }
+}
+.comprar-hecho__links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 1.5rem;
+  margin: 0;
+  padding: 0 0 0 1.375rem;          /* alineado con el texto: icono (14 px) + hueco (8 px) */
+  list-style: none;
+}
+
+/* Ventajas y preguntas */
+.comprar-ventajas {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+/* Tarjetas de la misma fila con la misma altura: el enlace, abajo del todo. */
+.comprar-ventajas > .aura-feature { grid-template-rows: auto auto 1fr auto; }
+/* Preguntas frecuentes: la columna estrecha común (sin reglas propias). */
+
+/* Notas al pie: la lista de fechas, a continuación de la numerada */
+.comprar-notas-fechas { margin-top: .625rem; }
+
+/* Precio y cuota en la barra de compra (la cuota, solo si cabe) */
+.comprar-buybar__precio {
+  display: flex;
+  align-items: baseline;
+  gap: .625rem;
+  min-width: 0;
+}
+.comprar-buybar__cuota { white-space: nowrap; }
+@media (max-width: 575.98px) {
+  .comprar-buybar__cuota { display: none; }
+}
+/* «Avísame»: en el móvil, la forma corta; desde 768 px, la etiqueta entera */
+@media (max-width: 767.98px) {
+  .comprar-accion__resto { display: none; }
+}
+
+/* `hidden` manda sobre el display de estos bloques (también si el CSS de
+   Bootstrap no llegara a cargar). */
+.comprar-estado[hidden],
+.comprar-head__links[hidden],
+.comprar-layout[hidden],
+.comprar-buybar[hidden],
+.comprar-familias[hidden],
+.comprar-paso[hidden],
+.comprar-hecho[hidden],
+.comprar-notas-fechas[hidden],
+.comprar-galeria-nota[hidden],
+.aura-footnotes[hidden] { display: none; }

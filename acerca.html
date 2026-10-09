@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="es" data-bs-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Acerca de AURA — AURA</title>
+  <meta name="description" content="Desde un garaje en Cupertino en 1976 hasta el primer auraPhone plegable: la historia, los valores, la sala de prensa y las ofertas de empleo de AURA.">
+  <meta name="theme-color" content="#000000">
+  <link rel="icon" type="image/png" href="assets/img/aura.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&family=Kanit:wght@500;600&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="assets/css/aura.css" rel="stylesheet">
+  <link href="assets/css/pages/acerca.css" rel="stylesheet">
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/aura-core.js"></script>
+</head>
+<body class="has-localnav">
+  <a class="aura-skip" href="#contenido">Saltar al contenido</a>
+  <aura-header active="acerca"></aura-header>
+
+  <main id="contenido">
+
+    <nav class="aura-localnav" aria-label="Acerca de AURA" data-aura-localnav>
+      <div class="aura-container aura-localnav__inner">
+        <a class="aura-localnav__title" href="acerca.html">Acerca de AURA</a>
+        <div class="aura-localnav__links">
+          <a class="aura-localnav__link" href="#historia">Historia</a>
+          <a class="aura-localnav__link" href="#valores">Valores</a>
+          <a class="aura-localnav__link" href="#newsroom">Newsroom</a>
+          <a class="aura-localnav__link" href="#oportunidades">Oportunidades</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Héroe: el bloque «About us / Cupertino» del prototipo -->
+    <section class="aura-hero aura-hero--split acerca-hero" aria-labelledby="acerca-titulo">
+      <div class="aura-container aura-hero__inner">
+        <div class="aura-hero__copy">
+          <p class="aura-eyebrow aura-eyebrow--mono">Acerca de AURA / Cupertino</p>
+          <h1 class="aura-h1" id="acerca-titulo">En la encrucijada entre la tecnología, el ego y la elegancia.</h1>
+          <p class="aura-lead">Fundada en 1976 en Cupertino, AURA nació con una idea radical: la tecnología más avanzada debía sentirse humana, personal y profundamente bella.</p>
+          <p class="aura-body">Desde aquel primer garaje hasta los laboratorios de hoy, integramos hardware, software y servicios como una sola experiencia. El legado no es mirar atrás, sino construir productos responsables que parezcan venir del futuro.</p>
+          <div class="aura-hero__actions">
+            <a class="aura-btn aura-btn--secondary" href="#historia">Conocer nuestra historia</a>
+          </div>
+        </div>
+        <figure class="aura-hero__media aura-media aura-media--fill aura-media--halo acerca-hero__media">
+          <span class="aura-media__tag">Cupertino / 37,3349°&nbsp;N</span>
+          <img class="aura-img" src="assets/img/acerca-hero.webp" data-slot="acerca-hero" width="1600" height="1200" alt="Edificio de techo circular de noche, con un anillo de luz azulada que recorre todo su borde" loading="eager" fetchpriority="high" decoding="async">
+          <!-- Las cifras van sobre la foto en un panel de material, como en el prototipo -->
+          <div class="aura-media__overlay aura-material acerca-hero__cifras">
+            <ul class="aura-stats" aria-label="AURA en cifras">
+              <li class="aura-stat"><p class="aura-stat__value">1976</p><p class="aura-stat__label">Año de fundación</p></li>
+              <li class="aura-stat"><p class="aura-stat__value">+2000&nbsp;M</p><p class="aura-stat__label">Dispositivos activos<sup class="aura-footnote-ref"><a href="#nota-1" id="ref-1" aria-label="Nota 1">1</a></sup></p></li>
+              <li class="aura-stat"><p class="aura-stat__value">100&nbsp;%</p><p class="aura-stat__label">Energía renovable<sup class="aura-footnote-ref"><a href="#nota-2" id="ref-2" aria-label="Nota 2">2</a></sup></p></li>
+            </ul>
+          </div>
+        </figure>
+      </div>
+    </section>
+
+    <!-- Historia -->
+    <section class="aura-section aura-section--band" id="historia" aria-labelledby="historia-titulo">
+      <div class="aura-container">
+        <div class="aura-section-head">
+          <p class="aura-eyebrow aura-eyebrow--mono">Historia / 1976–2026</p>
+          <h2 class="aura-h2" id="historia-titulo">Cincuenta años. Una sola obsesión.</h2>
+          <p class="aura-lead">De un garaje con mala iluminación al primer auraPhone que se pliega. Esta es la versión corta: la larga ocupa dos mil diapositivas.</p>
+        </div>
+
+        <div class="acerca-historia">
+          <ol class="aura-timeline">
+            <li class="aura-timeline__item" data-aura-reveal>
+              <p class="aura-timeline__when">1976</p>
+              <h3 class="aura-timeline__title">Un garaje en Cupertino y una idea radical</h3>
+              <p class="aura-timeline__text">Dos amigos, un soldador y una convicción: la tecnología más avanzada tenía que sentirse humana. También concluyeron que el garaje necesitaba mejor luz, y de ahí salió el nombre.</p>
+            </li>
+            <li class="aura-timeline__item" data-aura-reveal>
+              <p class="aura-timeline__when">1977</p>
+              <h3 class="aura-timeline__title">AURA I</h3>
+              <p class="aura-timeline__text">El primer ordenador AURA: carcasa de madera, teclado propio y una frecuencia vibracional que nadie supo medir. Se montaron a mano, uno a uno, en la mesa de la cocina.</p>
+            </li>
+            <li class="aura-timeline__item" data-aura-reveal>
+              <p class="aura-timeline__when">Años 80</p>
+              <h3 class="aura-timeline__title">El ratón que pedía perdón</h3>
+              <p class="aura-timeline__text">Llegaron las ventanas, los iconos y un ratón de un solo botón tan educado que parecía disculparse cada vez que lo arrastrabas por la mesa. Fue una década muy cortés.</p>
+            </li>
+            <li class="aura-timeline__item" data-aura-reveal>
+              <p class="aura-timeline__when">2007</p>
+              <h3 class="aura-timeline__title">El auraPhone original</h3>
+              <p class="aura-timeline__text">Un teléfono, un reproductor de música y un navegador en una sola lámina de cristal. El dispositivo que nadie pidió y todos necesitaron.</p>
+            </li>
+            <li class="aura-timeline__item" data-aura-reveal>
+              <p class="aura-timeline__when">2020</p>
+              <h3 class="aura-timeline__title">AURA Silicon</h3>
+              <p class="aura-timeline__text">Empezamos a diseñar nuestros propios chips para que el hardware y el software hablaran el mismo idioma. Desde entonces, los auraBook no se calientan: se concentran.</p>
+            </li>
+            <li class="aura-timeline__item" data-aura-reveal>
+              <p class="aura-timeline__when">2026 · Hoy</p>
+              <h3 class="aura-timeline__title">El primer auraPhone plegable</h3>
+              <p class="aura-timeline__text">El auraPhone Duo: dos pantallas, un solo gesto y una bisagra de titanio. Cincuenta años después, seguimos doblando las reglas. Esta vez, literalmente.</p>
+              <p class="m-0"><a class="aura-link aura-link--control" href="auraphone.html">Descubrir el auraPhone Duo</a></p>
+            </li>
+          </ol>
+
+          <div class="acerca-historia__aside">
+            <div class="aura-stat aura-stat--xl" data-aura-reveal="fade">
+              <p class="aura-stat__value">50</p>
+              <p class="aura-stat__label">Años en la encrucijada</p>
+            </div>
+            <figure class="aura-media aura-media--frame m-0" data-aura-reveal="scale">
+              <img class="aura-img" src="assets/img/acerca-historia.webp" data-slot="acerca-historia" width="1600" height="1200" alt="Un ordenador antiguo de color beige, con monitor de tubo y teclado integrado, iluminado en la penumbra" loading="lazy" decoding="async">
+              <figcaption class="aura-media__caption">Un AURA de los años 80, en el archivo de Cupertino. Todavía arranca.</figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cita del fundador -->
+    <section class="aura-section aura-section--center acerca-cita" aria-label="Palabras del fundador">
+      <div class="aura-halo" aria-hidden="true"></div>
+      <div class="aura-container">
+        <div class="acerca-cita__inner">
+          <div class="aura-glow aura-glow--sm" aria-hidden="true"></div>
+          <figure class="aura-quote" data-aura-reveal="fade">
+            <blockquote class="aura-quote__text">La elegancia es saber qué botón quitar. El&nbsp;ego es quitarlos todos y llamarlo revolución.</blockquote>
+            <figcaption class="aura-quote__cite"><strong>Teodoro Lumen</strong> · Cofundador de AURA, en la presentación del auraPhone original</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- Valores -->
+    <section class="aura-section aura-section--band" id="valores" aria-labelledby="valores-titulo">
+      <div class="aura-container">
+        <div class="aura-section-head">
+          <p class="aura-eyebrow aura-eyebrow--mono">Valores</p>
+          <h2 class="aura-h2" id="valores-titulo">Lo que defendemos. También cuando nadie mira.</h2>
+          <p class="aura-lead">Cuatro compromisos que pesan tanto como el diseño. A veces, más&nbsp;que&nbsp;el&nbsp;titanio.</p>
+        </div>
+
+        <div class="aura-bento">
+          <div class="aura-bento__col">
+            <article class="aura-tile aura-tile--tall" id="accesibilidad" aria-labelledby="accesibilidad-titulo" data-aura-reveal>
+              <div class="aura-tile__copy">
+                <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">Accesibilidad</p>
+                <h3 class="aura-h3" id="accesibilidad-titulo">Diseñado para todas las manos.</h3>
+                <p class="aura-tile__text">Lector de pantalla, control por voz, texto a la medida de tus ojos y subtítulos en directo vienen de serie en auraOS. Y esta web respeta tus ajustes de movimiento, transparencia y contraste.</p>
+                <a class="aura-link" href="soporte.html?tema=accesibilidad#contacto">Pedir ayuda con la accesibilidad</a>
+              </div>
+              <div class="aura-tile__media">
+                <img class="aura-img" src="assets/img/acerca-accesibilidad.webp" data-slot="acerca-accesibilidad" width="1600" height="1200" alt="Dos manos sostienen un auraPhone y un dedo se acerca al teclado de la pantalla, sobre fondo oscuro" loading="lazy" decoding="async">
+              </div>
+            </article>
+
+            <article class="aura-tile acerca-tile--texto" id="privacidad" aria-labelledby="privacidad-titulo" data-aura-reveal style="--i:1">
+              <div class="aura-tile__copy">
+                <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">Privacidad</p>
+                <h3 class="aura-h3" id="privacidad-titulo">Tus datos, en tu dispositivo.</h3>
+                <p class="aura-tile__text">Procesamos en el dispositivo siempre que es posible y pedimos solo lo imprescindible. En esta demostración vamos más lejos: ni siquiera tenemos servidor.</p>
+                <a class="aura-link" href="legal.html#privacidad">Leer la política de privacidad</a>
+              </div>
+            </article>
+          </div>
+
+          <div class="aura-bento__col">
+            <article class="aura-tile acerca-tile--texto" id="medio-ambiente" aria-labelledby="medio-ambiente-titulo" data-aura-reveal style="--i:1">
+              <div class="aura-tile__copy">
+                <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">Medio ambiente</p>
+                <h3 class="aura-h3" id="medio-ambiente-titulo">100&nbsp;% renovable. 0&nbsp;% excusas.</h3>
+                <p class="aura-tile__text">Oficinas, tiendas y centros de datos funcionan con electricidad renovable. Usamos aluminio, cobalto y tierras raras reciclados, y con AURA Trade In tu dispositivo anterior tiene una segunda vida o se recicla con cuidado.</p>
+              </div>
+              <ul class="aura-stats" aria-label="Medio ambiente en cifras">
+                <li class="aura-stat aura-stat--card"><p class="aura-stat__value">100&nbsp;%</p><p class="aura-stat__label">Electricidad renovable<sup class="aura-footnote-ref"><a href="#nota-2" id="ref-2b" aria-label="Nota 2">2</a></sup></p></li>
+                <li class="aura-stat aura-stat--card"><p class="aura-stat__value">2030</p><p class="aura-stat__label">Huella neutra en toda la cadena<sup class="aura-footnote-ref"><a href="#nota-3" id="ref-3" aria-label="Nota 3">3</a></sup></p></li>
+              </ul>
+              <a class="aura-link" href="trade-in.html">Valorar mi dispositivo</a>
+            </article>
+
+            <article class="aura-tile aura-tile--tall" id="proveedores" aria-labelledby="proveedores-titulo" data-aura-reveal style="--i:2">
+              <div class="aura-tile__copy">
+                <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">Proveedores</p>
+                <h3 class="aura-h3" id="proveedores-titulo">Exigimos lo mismo a quien nos fabrica.</h3>
+                <p class="aura-tile__text">Auditorías independientes, salarios dignos y tolerancia cero con el trabajo forzoso. Publicamos cada año la lista completa de proveedores, aunque sea más larga que este párrafo.</p>
+                <a class="aura-link" href="soporte.html?tema=responsabilidad#contacto">Contactar con el equipo</a>
+              </div>
+              <div class="aura-tile__media">
+                <img class="aura-img" src="assets/img/acerca-proveedores.webp" data-slot="acerca-proveedores" width="1600" height="1200" alt="Primer plano de una placa base azul oscuro sin componentes, con pistas y contactos dorados" loading="lazy" decoding="async">
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Newsroom -->
+    <section class="aura-section" id="newsroom" aria-labelledby="newsroom-titulo">
+      <div class="aura-container">
+        <div class="aura-section-head aura-section-head--split">
+          <div class="aura-section-head__text">
+            <p class="aura-eyebrow aura-eyebrow--mono">Newsroom</p>
+            <h2 class="aura-h2" id="newsroom-titulo">Lo último de AURA.</h2>
+            <p class="aura-lead">Notas de prensa, anuncios y algún que otro superlativo.</p>
+          </div>
+          <a class="aura-link" href="soporte.html?tema=prensa#contacto">Contacto de prensa</a>
+        </div>
+
+        <div class="aura-grid aura-grid--3 acerca-newsroom">
+          <article class="aura-tile acerca-nota" aria-labelledby="nota-1-titulo" data-aura-reveal>
+            <div class="aura-tile__media acerca-nota__media">
+              <img class="aura-img" src="assets/img/acerca-newsroom-1.webp" data-slot="acerca-newsroom-1" width="1600" height="1200" alt="Vista aérea de una planta solar que refleja la luz dorada del atardecer bajo un cielo con nubes" loading="lazy" decoding="async">
+            </div>
+            <div class="aura-tile__copy">
+              <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">Nota de prensa</p>
+              <h3 class="aura-h4" id="nota-1-titulo">AURA publica su Informe de Medio Ambiente&nbsp;2026</h3>
+              <p class="aura-caption aura-caption--muted acerca-nota__fecha"><time datetime="2026-10-01">1 de octubre de 2026</time></p>
+              <p class="aura-tile__text">Toda la electricidad de oficinas, tiendas y centros de datos ya es renovable. El informe repasa el camino hacia 2030 y cuántos dispositivos se han reciclado con AURA Trade In.</p>
+              <a class="aura-link" href="#medio-ambiente">Nuestro compromiso</a>
+            </div>
+          </article>
+
+          <article class="aura-tile acerca-nota" aria-labelledby="nota-2-titulo" data-aura-reveal style="--i:1">
+            <div class="aura-tile__media acerca-nota__media">
+              <img class="aura-img" src="assets/img/acerca-newsroom-2.webp" data-slot="acerca-newsroom-2" width="1600" height="1200" alt="Un procesador visto por su cara de contactos dorados, apoyado sobre una superficie negra" loading="lazy" decoding="async">
+            </div>
+            <div class="aura-tile__copy">
+              <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">Nota de prensa</p>
+              <h3 class="aura-h4" id="nota-2-titulo">El chip AURA&nbsp;M5 llega a los auraPad&nbsp;Pro y auraBook&nbsp;Pro</h3>
+              <p class="aura-caption aura-caption--muted acerca-nota__fecha"><time datetime="2026-09-22">22 de septiembre de 2026</time></p>
+              <p class="aura-tile__text">Más potencia para la IA en el propio dispositivo, el auraPad más fino que hemos hecho y hasta 24 horas de autonomía en el auraBook Pro. Silencio incluido.</p>
+              <a class="aura-link" href="aurabook.html">Ver auraBook</a>
+            </div>
+          </article>
+
+          <article class="aura-tile acerca-nota" aria-labelledby="nota-3-titulo" data-aura-reveal style="--i:2">
+            <div class="aura-tile__media acerca-nota__media">
+              <img class="aura-img" src="assets/img/acerca-newsroom-3.webp" data-slot="acerca-newsroom-3" width="1600" height="1200" alt="El módulo de triple cámara de un auraPhone Pro negro surge de la oscuridad con un destello de luz" loading="lazy" decoding="async">
+            </div>
+            <div class="aura-tile__copy">
+              <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">Nota de prensa</p>
+              <h3 class="aura-h4" id="nota-3-titulo">AURA presenta el auraPhone&nbsp;Duo y los auraPhone&nbsp;18&nbsp;Pro</h3>
+              <p class="aura-caption aura-caption--muted acerca-nota__fecha"><time datetime="2026-09-09">9 de septiembre de 2026</time></p>
+              <p class="aura-tile__text">El primer auraPhone plegable llega con el chip AURA A20 Pro. A su lado, los auraPhone 18 Pro y 18 Pro Max estrenan la primera cámara de apertura variable de AURA.</p>
+              <a class="aura-link" href="auraphone.html">Ver auraPhone</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Oportunidades -->
+    <section class="aura-section aura-section--band" id="oportunidades" aria-labelledby="oportunidades-titulo">
+      <div class="aura-container">
+        <div class="aura-split">
+          <div class="aura-split__copy">
+            <p class="aura-eyebrow aura-eyebrow--mono">Oportunidades / Empleo</p>
+            <h2 class="aura-h2" id="oportunidades-titulo">Trabaja donde las esquinas se redondean a mano.</h2>
+            <p class="aura-body">Buscamos personas con criterio, curiosidad y una tolerancia razonable al minimalismo. Si te emociona quitar cosas hasta que solo quede lo esencial, ya hablas nuestro idioma.</p>
+            <ul class="aura-checklist">
+              <li>Formación continua y un mentor que no cree en las reuniones largas</li>
+              <li>Descuento en productos AURA para ti y tu familia</li>
+              <li>Horario flexible y teletrabajo en los puestos que lo permiten</li>
+            </ul>
+            <div class="aura-cluster mt-2">
+              <a class="aura-btn aura-btn--primary" href="soporte.html?tema=empleo#contacto">Enviar mi candidatura <i class="bi bi-arrow-right" aria-hidden="true"></i></a>
+            </div>
+            <p class="aura-caption aura-caption--muted">Te llevamos al formulario de contacto con el tema «Empleo» ya elegido. Las candidaturas, como todo en AURA, son de demostración.</p>
+          </div>
+          <figure class="aura-split__media aura-media aura-media--fill aura-media--frame acerca-oportunidades__media" data-aura-reveal="scale">
+            <img class="aura-img" src="assets/img/acerca-oportunidades.webp" data-slot="acerca-oportunidades" width="1600" height="1200" alt="Un equipo revisa diseños de pantallas en un portátil, ante una estantería iluminada con luz cálida" loading="lazy" decoding="async">
+          </figure>
+        </div>
+
+        <h3 class="aura-h3 acerca-puestos__titulo" id="puestos-titulo">Puestos abiertos</h3>
+        <ul class="aura-grid aura-grid--2 list-unstyled m-0" aria-labelledby="puestos-titulo">
+          <li data-aura-reveal>
+            <article class="aura-card acerca-puesto" aria-labelledby="puesto-1">
+              <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">Cupertino · Jornada completa</p>
+              <h4 class="aura-h4" id="puesto-1">Ingeniero/a de frecuencias vibracionales</h4>
+              <p class="aura-body">Afinarás la frecuencia vibracional de cada auraPhone hasta que suene a silencio. Se valora oído absoluto y paciencia infinita con los diapasones.</p>
+              <p class="aura-caption aura-caption--muted acerca-puesto__ref">Hardware · Ref. AU-0412</p>
+              <a class="aura-link" href="soporte.html?tema=empleo&amp;puesto=AU-0412#contacto" aria-label="Solicitar este puesto: Ingeniero/a de frecuencias vibracionales">Solicitar este puesto</a>
+            </article>
+          </li>
+          <li data-aura-reveal style="--i:1">
+            <article class="aura-card acerca-puesto" aria-labelledby="puesto-2">
+              <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">Madrid · Híbrido</p>
+              <h4 class="aura-h4" id="puesto-2">Diseñador/a de esquinas redondeadas</h4>
+              <p class="aura-body">Decidirás el radio exacto de cada esquina y defenderás por qué 12 no es 13. Imprescindible un portfolio con al menos una curva continua.</p>
+              <p class="aura-caption aura-caption--muted acerca-puesto__ref">Diseño industrial · Ref. AU-0518</p>
+              <a class="aura-link" href="soporte.html?tema=empleo&amp;puesto=AU-0518#contacto" aria-label="Solicitar este puesto: Diseñador/a de esquinas redondeadas">Solicitar este puesto</a>
+            </article>
+          </li>
+          <li data-aura-reveal>
+            <article class="aura-card acerca-puesto" aria-labelledby="puesto-3">
+              <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">Barcelona · Presencial</p>
+              <h4 class="aura-h4" id="puesto-3">Tasador/a de AURA Trade In</h4>
+              <p class="aura-body">Valorarás dispositivos usados para AURA Trade In con empatía y una calculadora. Sabrás explicar con tacto por qué la funda de purpurina no suma.</p>
+              <p class="aura-caption aura-caption--muted acerca-puesto__ref">AURA Store · Ref. AU-0623</p>
+              <a class="aura-link" href="soporte.html?tema=empleo&amp;puesto=AU-0623#contacto" aria-label="Solicitar este puesto: Tasador/a de AURA Trade In">Solicitar este puesto</a>
+            </article>
+          </li>
+          <li data-aura-reveal style="--i:1">
+            <article class="aura-card acerca-puesto" aria-labelledby="puesto-4">
+              <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">Remoto · Media jornada</p>
+              <h4 class="aura-h4" id="puesto-4">Redactor/a de frases de tres palabras</h4>
+              <p class="aura-body">Escribirás titulares. Cortos. Rotundos. Se valorará la capacidad de terminar cada frase con un punto y de resistirse a los adverbios.</p>
+              <p class="aura-caption aura-caption--muted acerca-puesto__ref">Marketing · Ref. AU-0707</p>
+              <a class="aura-link" href="soporte.html?tema=empleo&amp;puesto=AU-0707#contacto" aria-label="Solicitar este puesto: Redactor/a de frases de tres palabras">Solicitar este puesto</a>
+            </article>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Letra pequeña -->
+    <section class="aura-section aura-section--tight aura-footnotes" aria-labelledby="notas-titulo">
+      <div class="aura-container">
+        <h2 class="visually-hidden" id="notas-titulo">Notas</h2>
+        <ol class="aura-footnotes__list">
+          <li id="nota-1">Cifra orientativa de dispositivos AURA en uso en todo el mundo, incluidos los auraPhone, auraPad y auraBook de generaciones anteriores. <a class="aura-footnotes__back" href="#ref-1" aria-label="Volver al texto de la nota 1"><i class="bi bi-arrow-return-left" aria-hidden="true"></i></a></li>
+          <li id="nota-2">Electricidad que consumen las oficinas, las tiendas y los centros de datos de AURA, procedente de fuentes renovables propias o contratadas. <a class="aura-footnotes__back" href="#ref-2" aria-label="Volver al texto de la nota 2"><i class="bi bi-arrow-return-left" aria-hidden="true"></i></a></li>
+          <li id="nota-3">Objetivo para 2030: huella de carbono neutra en toda la cadena, desde la fabricación y el transporte hasta el uso y el reciclaje de cada producto. <a class="aura-footnotes__back" href="#ref-3" aria-label="Volver al texto de la nota 3"><i class="bi bi-arrow-return-left" aria-hidden="true"></i></a></li>
+        </ol>
+        <ul class="aura-footnotes__list mt-3">
+          <li>AURA es un proyecto de demostración: la empresa, su historia, las personas, las notas de prensa y las ofertas de empleo son ficticias. Cualquier parecido con una empresa de Cupertino es pura parodia.</li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+
+  <aura-footer crumbs="Acerca de AURA"></aura-footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/aura-ui.js"></script>
+</body>
+</html>

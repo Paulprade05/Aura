@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="es" data-bs-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Soporte — AURA</title>
+  <meta name="description" content="Ayuda con tu auraPhone, auraPad o auraBook, tus pedidos, la financiación, AURA Trade In, AuraCare+ y tu ID de AURA. Busca una respuesta o escríbenos.">
+  <meta name="theme-color" content="#000000">
+  <link rel="icon" type="image/png" href="assets/img/aura.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&family=Kanit:wght@500;600&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="assets/css/aura.css" rel="stylesheet">
+  <link href="assets/css/pages/soporte.css" rel="stylesheet">
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/aura-core.js"></script>
+</head>
+<body class="has-localnav">
+  <a class="aura-skip" href="#contenido">Saltar al contenido</a>
+  <aura-header active="soporte" ribbon="off"></aura-header>
+
+  <main id="contenido">
+
+    <nav class="aura-localnav" aria-label="Soporte" data-aura-localnav>
+      <div class="aura-container aura-localnav__inner">
+        <a class="aura-localnav__title" href="soporte.html">Soporte</a>
+        <div class="aura-localnav__links">
+          <a class="aura-localnav__link" href="#temas">Temas</a>
+          <a class="aura-localnav__link" href="#preguntas">Preguntas</a>
+        </div>
+        <a class="aura-link aura-localnav__action" href="#contacto">Contactar</a>
+      </div>
+    </nav>
+
+    <!-- Héroe con buscador local -->
+    <section class="aura-hero aura-hero--center soporte-hero" aria-labelledby="soporte-titulo">
+      <div class="aura-halo" aria-hidden="true"></div>
+      <div class="aura-container aura-hero__inner">
+        <div class="aura-hero__copy">
+          <p class="aura-eyebrow aura-eyebrow--mono">Ayuda / AURA Store España</p>
+          <h1 class="aura-display" id="soporte-titulo">Soporte de&nbsp;AURA.</h1>
+          <p class="aura-lead">Estamos aquí para ayudarte. Busca tu respuesta o escríbenos: siempre te contesta una persona.</p>
+
+          <form class="soporte-buscador" id="soporte-buscador" role="search" action="soporte.html" aria-label="Buscar en el soporte">
+            <div class="aura-field">
+              <label class="aura-field__label" for="soporte-q">¿En qué podemos ayudarte?</label>
+              <div class="aura-field__control">
+                <i class="aura-field__icon bi bi-search" aria-hidden="true"></i>
+                <input class="aura-input" id="soporte-q" name="q" type="search" placeholder="Devolución, reserva, Trade In…" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" aria-describedby="soporte-q-estado" aria-controls="temas preguntas">
+                <button class="aura-field__toggle" type="button" data-soporte-limpiar aria-label="Borrar la búsqueda" hidden><i class="bi bi-x-circle-fill" aria-hidden="true"></i></button>
+              </div>
+              <p class="aura-field__help" id="soporte-q-estado" role="status" aria-live="polite">Filtra al instante los temas y las preguntas de esta página.</p>
+            </div>
+            <div class="soporte-buscador__sugerencias">
+              <p class="aura-caption aura-caption--muted" id="soporte-sugerencias-titulo">Lo más buscado</p>
+              <div class="aura-cluster" role="group" aria-labelledby="soporte-sugerencias-titulo" style="--cluster:.5rem">
+                <button class="aura-chip" type="button" data-soporte-sugerencia="devolución" aria-pressed="false">Devoluciones</button>
+                <button class="aura-chip" type="button" data-soporte-sugerencia="reserva" data-soporte-requiere="auraphone-duo" aria-pressed="false">Reserva del auraPhone Duo</button>
+                <button class="aura-chip" type="button" data-soporte-sugerencia="Trade In" aria-pressed="false">Trade In</button>
+                <button class="aura-chip" type="button" data-soporte-sugerencia="garantía" aria-pressed="false">Garantía</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Estado vacío del buscador -->
+    <section class="aura-section aura-section--tight" id="sin-resultados" aria-labelledby="sin-resultados-titulo" hidden>
+      <div class="aura-container">
+        <div class="aura-empty">
+          <span class="aura-empty__icon"><i class="bi bi-search" aria-hidden="true"></i></span>
+          <h2 class="aura-h3 aura-empty__title" id="sin-resultados-titulo">No hay resultados para «<span data-soporte-consulta></span>»</h2>
+          <p class="aura-empty__text">Prueba con otras palabras, como «envío», «garantía» o «contraseña». O cuéntanoslo a nosotros: te responde una persona.</p>
+          <div class="aura-empty__actions">
+            <a class="aura-btn aura-btn--primary" href="#contacto">Escribir a soporte</a>
+            <button class="aura-btn aura-btn--secondary" type="button" data-soporte-limpiar>Borrar la búsqueda</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Temas -->
+    <section class="aura-section aura-section--band" id="temas" aria-labelledby="temas-titulo">
+      <div class="aura-container">
+        <div class="aura-section-head">
+          <p class="aura-eyebrow aura-eyebrow--mono">Temas</p>
+          <h2 class="aura-h2" id="temas-titulo">Elige por dónde empezar.</h2>
+          <p class="aura-lead">Por producto o por lo que necesitas resolver.</p>
+        </div>
+
+        <div class="soporte-grupo" data-soporte-grupo>
+          <h3 class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain aura-eyebrow--muted soporte-grupo__titulo">Por producto</h3>
+          <div class="aura-grid aura-grid--3">
+            <article class="aura-card soporte-tema" aria-labelledby="tema-auraphone" data-soporte-item data-soporte-claves="teléfono móvil smartphone plegable batería cámara pantalla duo pro max" data-aura-reveal>
+              <div class="aura-stack" style="--stack:.625rem">
+                <span class="aura-feature__icon"><i class="bi bi-phone" aria-hidden="true"></i></span>
+                <h4 class="aura-h4" id="tema-auraphone">auraPhone</h4>
+                <p class="aura-caption">Batería, cámara, configuración inicial y reparaciones.</p>
+                <p class="aura-caption aura-caption--muted" data-soporte-modelos="auraphone"></p>
+                <div class="aura-cluster soporte-tema__acciones" style="--cluster:.25rem 1.25rem">
+                  <a class="aura-link" href="comparar.html?familia=auraphone" aria-label="Especificaciones de auraPhone">Especificaciones</a>
+                  <a class="aura-link" href="auraphone.html" aria-label="Ver modelos de auraPhone">Ver modelos</a>
+                </div>
+              </div>
+            </article>
+            <article class="aura-card soporte-tema" aria-labelledby="tema-aurapad" data-soporte-item data-soporte-claves="tableta tablet pencil lápiz teclado pantalla pro air" data-aura-reveal style="--i:1">
+              <div class="aura-stack" style="--stack:.625rem">
+                <span class="aura-feature__icon"><i class="bi bi-tablet-landscape" aria-hidden="true"></i></span>
+                <h4 class="aura-h4" id="tema-aurapad">auraPad</h4>
+                <p class="aura-caption">AURA Pencil, teclado, pantalla y copias de seguridad.</p>
+                <p class="aura-caption aura-caption--muted" data-soporte-modelos="aurapad"></p>
+                <div class="aura-cluster soporte-tema__acciones" style="--cluster:.25rem 1.25rem">
+                  <a class="aura-link" href="comparar.html?familia=aurapad" aria-label="Especificaciones de auraPad">Especificaciones</a>
+                  <a class="aura-link" href="aurapad.html" aria-label="Ver modelos de auraPad">Ver modelos</a>
+                </div>
+              </div>
+            </article>
+            <article class="aura-card soporte-tema" aria-labelledby="tema-aurabook" data-soporte-item data-soporte-claves="portátil ordenador laptop batería cargador magsafe thunderbolt pro air" data-aura-reveal style="--i:2">
+              <div class="aura-stack" style="--stack:.625rem">
+                <span class="aura-feature__icon"><i class="bi bi-laptop" aria-hidden="true"></i></span>
+                <h4 class="aura-h4" id="tema-aurabook">auraBook</h4>
+                <p class="aura-caption">Arranque, batería, puertos y migración de datos.</p>
+                <p class="aura-caption aura-caption--muted" data-soporte-modelos="aurabook"></p>
+                <div class="aura-cluster soporte-tema__acciones" style="--cluster:.25rem 1.25rem">
+                  <a class="aura-link" href="comparar.html?familia=aurabook" aria-label="Especificaciones de auraBook">Especificaciones</a>
+                  <a class="aura-link" href="aurabook.html" aria-label="Ver modelos de auraBook">Ver modelos</a>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div class="soporte-grupo" data-soporte-grupo>
+          <h3 class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain aura-eyebrow--muted soporte-grupo__titulo">Por tema</h3>
+          <div class="aura-grid aura-grid--3 soporte-temas">
+            <a class="aura-card" href="cuenta.html" data-soporte-item data-soporte-claves="pedido envío entrega seguimiento devolución dirección factura" data-aura-reveal>
+              <div class="aura-stack" style="--stack:.5rem">
+                <span class="aura-feature__icon"><i class="bi bi-box-seam" aria-hidden="true"></i></span>
+                <h4 class="aura-h4">Pedidos y envíos</h4>
+                <p class="aura-caption">Sigue tus pedidos, consulta la entrega o prepara una devolución desde tu cuenta.</p>
+              </div>
+            </a>
+            <a class="aura-card" href="#preguntas" data-soporte-consulta-tema="financiación" data-soporte-item data-soporte-claves="pago pagar tarjeta plazos cuotas meses intereses factura" data-aura-reveal style="--i:1">
+              <div class="aura-stack" style="--stack:.5rem">
+                <span class="aura-feature__icon"><i class="bi bi-credit-card" aria-hidden="true"></i></span>
+                <h4 class="aura-h4">Pagos y financiación</h4>
+                <p class="aura-caption">Métodos de pago, cuotas sin intereses y lo que guardamos (y lo que no) de tu tarjeta.</p>
+              </div>
+            </a>
+            <a class="aura-card" href="trade-in.html" data-soporte-item data-soporte-claves="trade in valor cuántico entregar dispositivo antiguo descuento reciclar tasación" data-aura-reveal style="--i:2">
+              <div class="aura-stack" style="--stack:.5rem">
+                <span class="aura-feature__icon"><i class="bi bi-arrow-repeat" aria-hidden="true"></i></span>
+                <h4 class="aura-h4">AURA Trade In</h4>
+                <p class="aura-caption">Valora tu dispositivo y conviértelo en crédito para tu próxima compra.</p>
+              </div>
+            </a>
+            <a class="aura-card" href="#preguntas" data-soporte-consulta-tema="AuraCare+" data-soporte-item data-soporte-claves="auracare garantía reparación daños accidental seguro cobertura" data-aura-reveal>
+              <div class="aura-stack" style="--stack:.5rem">
+                <span class="aura-feature__icon"><i class="bi bi-shield-check" aria-hidden="true"></i></span>
+                <h4 class="aura-h4">AuraCare+ y reparaciones</h4>
+                <p class="aura-caption">Qué cubre, cuánto dura y cómo pedir una reparación.</p>
+              </div>
+            </a>
+            <a class="aura-card" href="login.html" data-soporte-item data-soporte-claves="id de aura cuenta contraseña sesión acceso registro correo" data-aura-reveal style="--i:1">
+              <div class="aura-stack" style="--stack:.5rem">
+                <span class="aura-feature__icon"><i class="bi bi-person-circle" aria-hidden="true"></i></span>
+                <h4 class="aura-h4">ID de AURA</h4>
+                <p class="aura-caption">Inicia sesión, recupera el acceso o crea tu ID en un minuto.</p>
+              </div>
+            </a>
+            <a class="aura-card" href="legal.html#privacidad" data-soporte-item data-soporte-claves="privacidad datos borrar eliminar cookies localstorage navegador" data-aura-reveal style="--i:2">
+              <div class="aura-stack" style="--stack:.5rem">
+                <span class="aura-feature__icon"><i class="bi bi-lock" aria-hidden="true"></i></span>
+                <h4 class="aura-h4">Privacidad y tus datos</h4>
+                <p class="aura-caption">Qué se guarda en este navegador y cómo borrarlo todo con un botón.</p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Preguntas frecuentes -->
+    <section class="aura-section" id="preguntas" aria-labelledby="preguntas-titulo">
+      <div class="aura-container aura-container--narrow">
+        <div class="aura-section-head">
+          <p class="aura-eyebrow aura-eyebrow--mono">Preguntas frecuentes</p>
+          <h2 class="aura-h2" id="preguntas-titulo">Respuestas rápidas.</h2>
+          <p class="aura-lead">Lo que más nos preguntas, explicado sin rodeos.</p>
+        </div>
+
+        <div class="aura-accordion soporte-faq">
+          <details class="aura-accordion__item" name="faq" data-soporte-item data-soporte-claves="envío entrega plazo cuándo llega pedido transporte exprés seguimiento">
+            <summary class="aura-accordion__summary"><span>¿Cuándo recibiré mi pedido?</span><span class="aura-accordion__icon" aria-hidden="true"></span></summary>
+            <div class="aura-accordion__panel">
+              <p>El envío estándar es gratuito y llega en 2–3 días laborables. Con el envío exprés<span data-soporte-expres></span><sup class="aura-footnote-ref" data-soporte-expres-ref><a href="#nota-1" id="ref-1" aria-label="Nota 1">1</a></sup>, lo recibes al día siguiente laborable. También puedes recogerlo gratis en una AURA Store. Los productos reservados se envían para que lleguen el día de su salida.</p>
+              <p>Puedes seguir cada pedido en <a href="cuenta.html">Tu cuenta</a>. Recuerda que es una tienda de demostración: el repartidor tampoco existe.</p>
+            </div>
+          </details>
+          <details class="aura-accordion__item" name="faq" data-soporte-item data-soporte-claves="devolución devolver reembolso cambiar desistimiento 14 días">
+            <summary class="aura-accordion__summary"><span>¿Puedo devolver un producto?</span><span class="aura-accordion__icon" aria-hidden="true"></span></summary>
+            <div class="aura-accordion__panel">
+              <p>Sí. Tienes 14 días naturales desde la entrega para devolverlo sin dar explicaciones, con el embalaje original y todos sus accesorios. Te devolvemos el importe por el mismo método de pago en cuanto lo recibimos.</p>
+              <p>Si lo pagaste con AURA Trade In, el crédito vuelve a tu cuenta.</p>
+            </div>
+          </details>
+          <details class="aura-accordion__item" name="faq" data-soporte-item data-soporte-requiere="auraphone-duo" data-soporte-claves="reserva reservar preventa lanzamiento duo plegable fecha">
+            <summary class="aura-accordion__summary"><span>¿Cómo funciona la reserva del auraPhone Duo?</span><span class="aura-accordion__icon" aria-hidden="true"></span></summary>
+            <div class="aura-accordion__panel">
+              <!-- Texto según la disponibilidad del día (AURA.catalog.availability); este es el de reserva sin fechas -->
+              <p data-soporte-duo-estado>El auraPhone Duo se puede reservar unos días antes de su salida. Configúralo como cualquier otro auraPhone y pulsa «Reservar»: pagas al reservar y te lo enviamos para que llegue el día de su salida.</p>
+              <p><a href="comprar.html?producto=auraphone-duo" data-soporte-duo-cta>Configurar el auraPhone Duo</a></p>
+            </div>
+          </details>
+          <details class="aura-accordion__item" name="faq" data-soporte-item data-soporte-claves="pago pagar financiación financiar plazos cuotas meses intereses tarjeta">
+            <summary class="aura-accordion__summary"><span>¿Puedo pagar a plazos?</span><span class="aura-accordion__icon" aria-hidden="true"></span></summary>
+            <div class="aura-accordion__panel">
+              <p>Sí. Puedes financiar cualquier compra en <strong data-soporte-meses>varios</strong> meses sin intereses.<sup class="aura-footnote-ref"><a href="#nota-2" id="ref-2" aria-label="Nota 2">2</a></sup> Verás la cuota mensual junto a cada precio, en la bolsa y en el resumen del pedido.</p>
+              <p>Los pagos de esta tienda son simulados: no se cobra nada.</p>
+            </div>
+          </details>
+          <details class="aura-accordion__item" name="faq" data-soporte-item data-soporte-claves="garantía legal avería defecto tres años reparación">
+            <summary class="aura-accordion__summary"><span>¿Qué garantía tienen los productos AURA?</span><span class="aura-accordion__icon" aria-hidden="true"></span></summary>
+            <div class="aura-accordion__panel">
+              <p>Todos los productos tienen tres años de garantía legal en España frente a cualquier defecto de fabricación. La garantía no cubre golpes, caídas ni baños imprevistos: para eso está AuraCare+.</p>
+            </div>
+          </details>
+          <details class="aura-accordion__item" name="faq" data-soporte-item data-soporte-claves="auracare seguro daños accidentales rotura pantalla batería cobertura precio">
+            <summary class="aura-accordion__summary"><span>¿Qué cubre AuraCare+ y cuánto cuesta?</span><span class="aura-accordion__icon" aria-hidden="true"></span></summary>
+            <div class="aura-accordion__panel">
+              <p data-soporte-care-descripcion>Reparaciones por daños accidentales y asistencia prioritaria de especialistas AURA.</p>
+              <p><span data-soporte-care-precios>Su precio depende del dispositivo y lo verás al configurarlo.</span><sup class="aura-footnote-ref"><a href="#nota-1" id="ref-1b" aria-label="Nota 1">1</a></sup></p>
+              <p>Lo añades al configurar tu producto o, después, desde la bolsa.</p>
+            </div>
+          </details>
+          <details class="aura-accordion__item" name="faq" data-soporte-item data-soporte-claves="trade in entregar viejo antiguo valor tasación descuento crédito reciclar">
+            <summary class="aura-accordion__summary"><span>¿Cómo funciona AURA Trade In?</span><span class="aura-accordion__icon" aria-hidden="true"></span></summary>
+            <div class="aura-accordion__panel">
+              <p>Elige tu dispositivo y su estado, y te decimos al momento su valor: hasta <strong data-soporte-tradein-max>un buen pellizco</strong> de descuento en tu próxima compra.<sup class="aura-footnote-ref"><a href="#nota-3" id="ref-3" aria-label="Nota 3">3</a></sup> El crédito se aplica solo en la bolsa.</p>
+              <p><a href="trade-in.html">Valorar mi dispositivo</a></p>
+            </div>
+          </details>
+          <details class="aura-accordion__item" name="faq" data-soporte-item data-soporte-claves="id de aura cuenta registro invitado comprar sin cuenta">
+            <summary class="aura-accordion__summary"><span>¿Necesito un ID de AURA para comprar?</span><span class="aura-accordion__icon" aria-hidden="true"></span></summary>
+            <div class="aura-accordion__panel">
+              <p>No: puedes comprar como invitado. Con un ID de AURA verás todos tus pedidos en un mismo sitio y no tendrás que escribir tus datos cada vez.</p>
+              <p><a href="registro.html">Crear un ID de AURA</a></p>
+            </div>
+          </details>
+          <details class="aura-accordion__item" name="faq" data-soporte-item data-soporte-claves="demostración demo cuenta prueba usuario contraseña test simulado">
+            <summary class="aura-accordion__summary"><span>¿Hay cuentas de demostración?</span><span class="aura-accordion__icon" aria-hidden="true"></span></summary>
+            <div class="aura-accordion__panel">
+              <p>No hace falta: crea tu propio ID de AURA en un minuto con cualquier correo (no te escribiremos) y una contraseña de al menos 8 caracteres con una mayúscula y un número.</p>
+              <p>Se guarda solo en este navegador, con la contraseña convertida en un hash SHA-256 con sal. Puedes borrarlo cuando quieras desde <a href="legal.html#privacidad">Privacidad</a>.</p>
+            </div>
+          </details>
+          <details class="aura-accordion__item" name="faq" data-soporte-item data-soporte-claves="tarjeta datos bancarios seguridad cvv número guardar pago privacidad">
+            <summary class="aura-accordion__summary"><span>¿Guardáis los datos de mi tarjeta?</span><span class="aura-accordion__icon" aria-hidden="true"></span></summary>
+            <div class="aura-accordion__panel">
+              <p>Nunca. El pago es simulado y, antes de guardar el pedido, descartamos cualquier dato de tarjeta: solo conservamos el método y los cuatro últimos dígitos para que reconozcas la compra.</p>
+            </div>
+          </details>
+        </div>
+
+        <div class="aura-cluster soporte-faq__mas" style="--cluster:0 .5rem">
+          <p class="aura-body">¿No encuentras tu respuesta?</p>
+          <a class="aura-link" href="#contacto">Escríbenos</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contacto -->
+    <section class="aura-section aura-section--band" id="contacto" aria-labelledby="contacto-titulo">
+      <div class="aura-container">
+        <div class="aura-section-head">
+          <p class="aura-eyebrow aura-eyebrow--mono">Contacto</p>
+          <h2 class="aura-h2" id="contacto-titulo">Cuéntanos qué pasa.</h2>
+          <p class="aura-lead">Es un formulario de demostración: no se envía nada y te damos al momento un número de caso ficticio.</p>
+        </div>
+
+        <div class="aura-layout aura-layout--aside">
+          <div class="aura-card soporte-form-card">
+            <form class="aura-form" id="soporte-form" method="post" novalidate>
+              <div class="aura-alert" role="note">
+                <i class="bi bi-info-circle-fill" aria-hidden="true"></i>
+                <p class="aura-alert__title">Formulario de demostración</p>
+                <p class="aura-alert__text">No se envía ni se guarda nada. Al terminar recibirás un número de caso ficticio.</p>
+              </div>
+
+              <div class="aura-form__row">
+                <div class="aura-field">
+                  <label class="aura-field__label" for="contacto-nombre">Nombre</label>
+                  <div class="aura-field__control">
+                    <input class="aura-input" id="contacto-nombre" name="nombre" type="text" autocomplete="name" placeholder="Lucía Martín" aria-describedby="contacto-nombre-error">
+                  </div>
+                  <p class="aura-field__error" id="contacto-nombre-error"></p>
+                </div>
+                <div class="aura-field">
+                  <label class="aura-field__label" for="contacto-email">Correo electrónico</label>
+                  <div class="aura-field__control">
+                    <i class="aura-field__icon bi bi-envelope" aria-hidden="true"></i>
+                    <input class="aura-input" id="contacto-email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="tu@correo.com" aria-describedby="contacto-email-ayuda contacto-email-error">
+                  </div>
+                  <p class="aura-field__help" id="contacto-email-ayuda">Te responderemos aquí.</p>
+                  <p class="aura-field__error" id="contacto-email-error"></p>
+                </div>
+              </div>
+
+              <div class="aura-form__row">
+                <div class="aura-field">
+                  <label class="aura-field__label" for="contacto-producto">Producto relacionado <span class="aura-field__hint">Opcional</span></label>
+                  <div class="aura-field__control">
+                    <select class="aura-select" id="contacto-producto" name="producto" data-soporte-productos>
+                      <option value="">Ninguno en concreto</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="aura-field">
+                  <label class="aura-field__label" for="contacto-tema">Tema</label>
+                  <div class="aura-field__control">
+                    <select class="aura-select" id="contacto-tema" name="tema" aria-describedby="contacto-tema-error">
+                      <option value="">Elige un tema</option>
+                      <option value="pedidos">Pedidos y envíos</option>
+                      <option value="devoluciones">Devoluciones</option>
+                      <option value="pagos">Pagos y financiación</option>
+                      <option value="tradein">AURA Trade In</option>
+                      <option value="auracare">AuraCare+ y reparaciones</option>
+                      <option value="id">ID de AURA</option>
+                      <option value="privacidad">Privacidad y datos</option>
+                      <option value="accesibilidad">Accesibilidad</option>
+                      <option value="responsabilidad">Medio ambiente y proveedores</option>
+                      <option value="prensa">Prensa</option>
+                      <option value="empleo">Empleo</option>
+                      <option value="otro">Otro tema</option>
+                    </select>
+                  </div>
+                  <p class="aura-field__error" id="contacto-tema-error"></p>
+                </div>
+              </div>
+
+              <div class="aura-field">
+                <label class="aura-field__label" for="contacto-mensaje">Mensaje</label>
+                <div class="aura-field__control">
+                  <textarea class="aura-textarea" id="contacto-mensaje" name="mensaje" rows="5" maxlength="1000" placeholder="Cuéntanos qué ha pasado, con qué dispositivo y desde cuándo." aria-describedby="contacto-mensaje-ayuda contacto-mensaje-error"></textarea>
+                </div>
+                <p class="aura-field__help" id="contacto-mensaje-ayuda">Mínimo 20 caracteres. <span data-soporte-contador>0</span> de 1.000.</p>
+                <p class="aura-field__error" id="contacto-mensaje-error"></p>
+              </div>
+
+              <div class="aura-field">
+                <label class="aura-check">
+                  <input class="aura-check__input" type="checkbox" name="privacidad" aria-describedby="contacto-privacidad-error">
+                  <span class="aura-check__box" aria-hidden="true"></span>
+                  <span class="aura-check__label">He leído la <a href="legal.html#privacidad">Política de privacidad</a> y acepto que AURA use estos datos solo para responder a mi consulta</span>
+                </label>
+                <p class="aura-field__error" id="contacto-privacidad-error"></p>
+              </div>
+
+              <div class="aura-alert aura-alert--ok" id="soporte-enviado" tabindex="-1" hidden>
+                <i class="bi bi-check-circle-fill" aria-hidden="true"></i>
+                <p class="aura-alert__title">Caso <span data-soporte-caso></span> registrado</p>
+                <p class="aura-alert__text">Hemos enviado (de mentira) una copia a <span data-soporte-caso-email></span>. Guarda el número por si vuelves a escribirnos.</p>
+              </div>
+
+              <button class="aura-btn aura-btn--primary aura-btn--block" type="submit">Enviar mi consulta</button>
+            </form>
+          </div>
+
+          <aside class="aura-stack aura-stack--stretch soporte-tienda" aria-labelledby="tienda-titulo" style="--stack:1.25rem">
+            <figure class="aura-media aura-media--frame aura-media--fill m-0 soporte-tienda__foto" data-aura-reveal="scale">
+              <img class="aura-img" src="assets/img/soporte-contacto.webp" data-slot="soporte-contacto" width="1600" height="1200" alt="Vista cenital de un especialista que atiende a un cliente junto a una mesa de madera clara con un auraPad expositor" loading="lazy" decoding="async">
+            </figure>
+            <div class="aura-card">
+              <div class="aura-stack" style="--stack:1.125rem">
+                <div class="aura-stack" style="--stack:.25rem">
+                  <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">Visítanos</p>
+                  <h3 class="aura-h4" id="tienda-titulo">AURA Store Gran Vía</h3>
+                </div>
+                <div class="aura-feature aura-feature--inline">
+                  <span class="aura-feature__icon"><i class="bi bi-geo-alt" aria-hidden="true"></i></span>
+                  <p class="aura-feature__title">Dirección</p>
+                  <p class="aura-feature__text">Gran Vía, 1976&nbsp;· 28013&nbsp;Madrid</p>
+                </div>
+                <div class="aura-feature aura-feature--inline">
+                  <span class="aura-feature__icon"><i class="bi bi-clock" aria-hidden="true"></i></span>
+                  <p class="aura-feature__title">Horario</p>
+                  <p class="aura-feature__text">Lunes a sábado, de 10:00 a 21:00. Domingos y festivos, de 11:00 a 20:00.</p>
+                </div>
+                <div class="aura-feature aura-feature--inline">
+                  <span class="aura-feature__icon"><i class="bi bi-telephone" aria-hidden="true"></i></span>
+                  <p class="aura-feature__title">Teléfono de demostración</p>
+                  <p class="aura-feature__text">+34&nbsp;000&nbsp;19&nbsp;76&nbsp;00&nbsp;· No marques: no contesta nadie.</p>
+                </div>
+                <div class="aura-feature aura-feature--inline">
+                  <span class="aura-feature__icon"><i class="bi bi-envelope" aria-hidden="true"></i></span>
+                  <p class="aura-feature__title">Correo</p>
+                  <p class="aura-feature__text soporte-correo">soporte@aura.example</p>
+                </div>
+                <p class="aura-caption aura-caption--muted">Dirección, teléfono y correo son ficticios: AURA es un proyecto de demostración.</p>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- Letra pequeña: las cifras salen del catálogo (soporte.js) -->
+    <section class="aura-section aura-section--tight aura-footnotes" aria-labelledby="notas-titulo">
+      <div class="aura-container">
+        <h2 class="visually-hidden" id="notas-titulo">Notas</h2>
+        <ol class="aura-footnotes__list">
+          <li id="nota-1">Precios en España, con IVA incluido. El envío exprés se paga una vez por pedido y AuraCare+, una vez por dispositivo. <a class="aura-footnotes__back" href="#ref-1" aria-label="Volver al texto de la nota 1"><i class="bi bi-arrow-return-left" aria-hidden="true"></i></a></li>
+          <li id="nota-2">Financiación en <span data-soporte-meses>varios</span> meses sin intereses (0&nbsp;% TIN, 0&nbsp;% TAE): la cuota mensual es el precio dividido entre el número de meses. Financiación simulada: AURA es un proyecto de demostración y no concede crédito. <a class="aura-footnotes__back" href="#ref-2" aria-label="Volver al texto de la nota 2"><i class="bi bi-arrow-return-left" aria-hidden="true"></i></a></li>
+          <li id="nota-3">El valor de AURA Trade In depende del modelo y del estado del dispositivo que entregas<span data-soporte-tradein-tope></span>, y se descuenta en la bolsa antes de pagar. <a href="trade-in.html">Consulta las condiciones de AURA Trade&nbsp;In</a>. <a class="aura-footnotes__back" href="#ref-3" aria-label="Volver al texto de la nota 3"><i class="bi bi-arrow-return-left" aria-hidden="true"></i></a></li>
+        </ol>
+      </div>
+    </section>
+
+  </main>
+
+  <aura-footer crumbs="Soporte"></aura-footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/aura-ui.js"></script>
+  <script src="assets/js/pages/soporte.js"></script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+/* ==========================================================================
+   AURA — auraBook (assets/css/pages/aurabook.css)
+   Solo lo que ningún componente del sistema cubre. Tokens de aura.css; sin
+   colores sueltos ni animaciones propias. La gran cifra (.aura-stat--xl), las
+   notas al pie (.aura-footnotes) y los 44 px de los enlaces sueltos ya los
+   resuelve la base.
+   ========================================================================== */
+
+/* Precio + cuota (+ disponibilidad): un único bloque, sin el hueco de
+   .aura-stack entre líneas que se leen juntas. */
+.aurabook-price {
+  display: grid;
+  gap: .25rem;
+}
+
+/* Ecosistema: tarjeta (Elevación/01, no cristal: no flota sobre nada) +
+   foto, como en el prototipo (columna de texto estrecha, foto ancha, poco
+   hueco entre ambas).
+   - Entre 992 y 1199 px la columna de la tarjeta quedaría tan estrecha que
+     la tarjeta doblaría el alto de la foto: ahí se apilan, como en tableta.
+   - Desde 1200 px, tarjeta y foto miden lo mismo: la foto crece hasta el
+     alto de la tarjeta (recortada con object-fit, sin deformar; la foto
+     trae los bordes en negro para ese encuadre casi cuadrado) en lugar de
+     dejar un hueco vacío debajo. El pie de foto queda abajo. */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  /* .aura-split--wide-media ya apila aquí: tarjeta a todo el ancho, con las
+     tres ventajas en fila, sin media tarjeta vacía. */
+  .aurabook-features {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: 1.5rem;
+    align-items: start;
+  }
+}
+@media (min-width: 1200px) {
+  .aurabook-eco {
+    grid-template-columns: minmax(0, .65fr) minmax(0, 1fr);
+    column-gap: clamp(1.25rem, 2vw, 2rem);
+    align-items: stretch;
+  }
+  .aurabook-eco__media {
+    display: flex;
+    flex-direction: column;
+  }
+  .aurabook-eco__media > .aura-img,
+  .aurabook-eco__media > .aura-slot {
+    flex: 1 0 auto;
+    height: auto;
+    object-fit: cover;
+  }
+}
+
+/* Perfiles · «Fotografía»: la foto trae el portátil arriba y la mitad baja
+   en negro, que es donde va el texto. En una tesela estrecha (~300 px, entre
+   992 y 1199 px y en el teléfono) el recorte a lo alto de .aura-tile--cover
+   subía el titular hasta la pantalla iluminada (medido: 1,7–2,2:1). Se ve
+   entera, ajustada al ancho y pegada arriba: el titular queda siempre sobre
+   el negro de la propia foto, a cualquier ancho y tamaño de letra. */
+.aura-tile__media.aurabook-media-top > .aura-img {
+  object-fit: contain;
+  object-position: 50% 0;
+}
+
+/* Fila de cifras: una columna por elemento, todas iguales (tres modelos en
+   la autonomía, tres cifras del auraBook Pro 16″). Si el catálogo trae menos,
+   la fila se reparte sin dejar huecos. */
+.aurabook-row {
+  grid-template-columns: none;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+}
+
+/* Autonomía de cada modelo, bajo la gran cifra y separada por una línea. */
+.aurabook-hours {
+  margin-top: clamp(1.5rem, 4vw, 3.5rem);
+  padding-top: clamp(1.25rem, 3vw, 2rem);
+  border-top: 1px solid var(--hairline);
+}
+
+/* Cifras del auraBook Pro 16″: en móvil, menos relleno para que la etiqueta
+   respire en tres columnas. */
+.aurabook-specs { gap: .75rem; }
+@media (max-width: 575.98px) {
+  .aurabook-specs { gap: .5rem; }
+  .aurabook-specs > .aura-stat--card { padding: .875rem .75rem; }
+}

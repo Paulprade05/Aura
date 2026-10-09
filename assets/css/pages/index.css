@@ -1,0 +1,113 @@
+/* ==========================================================================
+   AURA — Inicio (assets/css/pages/index.css)
+   Solo lo que ningún componente del sistema cubre. Todo con tokens de
+   aura.css: sin colores, desenfoques ni curvas sueltas, sin @keyframes.
+   (Los 44 px de los enlaces sueltos y las notas al pie ya los da la base.)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Héroes a pantalla casi completa (desde 992 px; por debajo manda el
+      contenido, que ya es más alto que la pantalla): la pantalla menos la
+      barra y la cinta, para que siempre asome la siguiente franja. Tope de
+      48 rem para que en monitores muy altos no queden islas de vacío.
+   -------------------------------------------------------------------------- */
+@media (min-width: 992px) {
+  .index-hero {
+    display: grid;
+    align-content: center;
+    min-height: min(calc(100vh - var(--nav-h) - var(--ribbon-h)), 48rem);
+    min-height: min(calc(100svh - var(--nav-h) - var(--ribbon-h)), 48rem);
+  }
+}
+
+/* Oferta del héroe: disponibilidad (si aún no está a la venta) y precio
+   «Desde», juntos como en la tarjeta de modelo. Los pinta index.js desde el
+   catálogo; el precio reserva su alto para que el texto no salte al llegar. */
+.index-offer {
+  display: grid;
+  gap: .625rem;
+  justify-items: start;
+}
+.index-offer__price {
+  display: grid;
+  gap: .125rem;
+  min-height: 2.75rem;
+  margin: 0;
+}
+/* Tipografía de .aura-caption (como la fila de estado de la tarjeta); aquí solo
+   la disposición: icono dorado (valor, no acción) y texto al lado */
+.index-offer__status {
+  display: flex;
+  align-items: flex-start;
+  gap: .5rem;
+}
+.index-offer__status > .bi { flex: none; margin-top: .0625rem; color: var(--gold); }
+.index-offer__status > span { text-wrap: pretty; }
+.index-offer__status strong { font-weight: 600; color: var(--text-primary); }
+
+/* Enlaces de las teselas: «Más información» y «Comprar» con aire entre ellos */
+.index-links { --cluster: 0 1.5rem; }
+
+/* Teselas con un aparato recortado sobre negro puro (auraBook y auraPad
+   flotando): sin la ventana negra de .aura-tile__media, el aparato queda sobre
+   la propia tesela (Elevación/01) y «aclarar» convierte el negro de la foto
+   en el gris de la tarjeta, como hace la base con la tarjeta de modelo. Las
+   fotos con ambiente (cámara, teleobjetivo) conservan su marco. Hasta que la
+   base tenga un modificador para esto, vive aquí. */
+.index-tile-media--blend { background: transparent; }
+.index-tile-media--blend > .aura-img { mix-blend-mode: lighten; }
+/* Sin el gris de la tesela debajo (impresión sin fondos, colores forzados
+   claros), «aclarar» sobre blanco borraría la foto: se ve tal cual. */
+@media print, (forced-colors: active) {
+  .index-tile-media--blend > .aura-img { mix-blend-mode: normal; }
+}
+
+/* --------------------------------------------------------------------------
+   2. «Toda la gama»: unas tres tarjetas y el asomo de la siguiente en
+      escritorio; una y un asomo en móvil. Todas las tarjetas de la fila miden
+      lo mismo y tienen el pie igual (estado, precio y botón, uno debajo de
+      otro), para que precio y botón no cambien de sitio de una a otra según
+      lo largo que sea «Configurar» o la cuota.
+   -------------------------------------------------------------------------- */
+.aura-carousel.index-shelf { --aura-slide: min(84%, 22rem); }
+.index-shelf .aura-carousel__slide { display: flex; }
+.index-shelf .aura-product-card { flex: 1 1 auto; }
+/* El pie de la tarjeta (precio arriba, botón debajo en estas tarjetas
+   estrechas) y la estantería a sangre (.aura-carousel--bleed) son de la base. */
+
+/* El segmentado de familias acompaña al titular, abajo a la derecha */
+.index-families { flex: none; }
+
+/* 3. «Por qué comprar en AURA»: .aura-perks de la base ([data-aura-perks]). */
+
+/* --------------------------------------------------------------------------
+   4. Acerca de AURA: foto con las cifras encima. En móvil las cifras no caben
+      en una fila sobre la foto (taparían media imagen): pasan debajo, sobre
+      la superficie de tarjeta.
+   -------------------------------------------------------------------------- */
+.index-about-media { aspect-ratio: 4 / 3; container-type: inline-size; }
+/* Las tres cifras van en una fila sobre la foto: se miden con la foto, no con
+   la ventana (como los titulares en dos columnas, §2). Entre 992 y ~1150 px la
+   columna mide ~410 px y, a tamaño de ventana, «+2000 M» quedaba a 2 px de
+   «100 %». Las cifras tienen tamaño libre en la guía; mínimo y máximo, los de
+   .aura-stat__value. */
+.index-about-media .aura-stat__value { font-size: clamp(1.625rem, 8.8cqi - .6rem, 2.375rem); }
+@media (max-width: 575.98px) {
+  .index-about-media {
+    aspect-ratio: auto;
+    border: 1px solid var(--hairline);
+    background: var(--bg-secondary);
+  }
+  .index-about-media > .aura-img,
+  .index-about-media > .aura-slot {
+    position: relative;
+    inset: auto;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    border-radius: 0;
+  }
+  .index-about-media > .aura-media__overlay {
+    position: static;
+    background: none;
+  }
+}

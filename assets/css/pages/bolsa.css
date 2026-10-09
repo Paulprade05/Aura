@@ -1,0 +1,131 @@
+/* ==========================================================================
+   AURA — Bolsa (bolsa.html)
+   Solo lo que el sistema no trae: colocación de piezas del sistema dentro de
+   la bolsa. Todo con tokens de aura.css; nada de colores ni desenfoques
+   sueltos. La línea (con AuraCare+), los objetivos táctiles y la barra de
+   compra son de la base.
+   ========================================================================== */
+
+/* Reserva sitio mientras bolsa.js pinta: el pie no salta al cargar */
+.bolsa { min-height: 32rem; }
+
+/* Cabecera: total y entradilla, centrados como en la tienda */
+.bolsa-head { margin-bottom: clamp(2rem, 4.5vw, 3.5rem); }
+.bolsa-head [tabindex="-1"]:focus { outline: 0; }
+.bolsa-head > .aura-lead { text-wrap: balance; }
+
+/* Líneas que se van y que vuelven (bolsa.js): la que se elimina se funde y
+   encoge un poco en su sitio (fuera del flujo, mientras las de debajo suben
+   con un muelle); la que vuelve hace el camino inverso. Misma trayectoria de
+   ida y vuelta, con las curvas espejadas. Solo opacity y scale. */
+.bolsa .aura-bag-list { position: relative; }
+.bolsa-line {
+  transition: opacity var(--dur-2) var(--ease-out), scale var(--dur-2) var(--ease-out);
+}
+.bolsa-line.is-leaving {
+  opacity: 0;
+  scale: .98;
+  pointer-events: none;
+  transition: opacity var(--dur-1) var(--ease-in), scale var(--dur-1) var(--ease-in);
+}
+.bolsa-line.is-entering {
+  opacity: 0;
+  scale: .98;
+  transition: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .bolsa-line,
+  .bolsa-line.is-leaving { scale: none; transition: opacity 150ms ease; }
+  .bolsa-line.is-entering { scale: none; transition: none; }
+}
+
+/* Configuración de la línea: cada dato, un bloque que no se parte */
+.bolsa-line__part { display: inline-block; max-width: 100%; }
+
+/* Entrega o estado de cada línea: icono + frase */
+.bolsa-line__ship {
+  display: flex;
+  align-items: baseline;
+  gap: .5rem;
+  margin: 0;
+  font-size: .8125rem;
+  line-height: 1.45;
+  letter-spacing: .006em;
+  color: var(--text-secondary);
+}
+.bolsa-line__ship > .bi { flex: none; color: var(--text-tertiary); }
+.bolsa-line__ship > span { min-width: 0; }
+.bolsa-line__ship.is-reserva > .bi { color: var(--gold); }
+.bolsa-line__ship.is-blocked { color: var(--text-primary); }
+.bolsa-line__ship.is-blocked > .bi { color: var(--warn); }
+
+/* AuraCare+: entre 992 y 1199 px la columna de artículos comparte fila con el
+   resumen y se queda estrecha; la acción vuelve debajo del texto (como en
+   móvil) en lugar de estrujarlo en una columna de tres palabras. */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .bolsa-line > .aura-bag-line__care { grid-template-columns: auto minmax(0, 1fr); }
+  .bolsa-line > .aura-bag-line__care > .aura-link {
+    grid-column: 2;
+    grid-row: auto;
+    align-self: start;
+    margin-block: -.375rem -.5rem;
+  }
+}
+
+.bolsa-items { min-width: 0; }
+.bolsa-items__foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem 1.75rem;
+  margin-top: 1.5rem;
+}
+
+/* Resumen */
+.bolsa-sum__count { color: var(--text-tertiary); }
+.bolsa-trade dt {
+  display: grid;
+  justify-items: start;
+  gap: .125rem;
+}
+.bolsa-trade__device {
+  font-size: .8125rem;
+  line-height: 1.45;
+  color: var(--text-tertiary);
+}
+/* «Quitar crédito»: su objetivo de 44 px empieza bajo el dispositivo (sin
+   margen negativo arriba: con texto grande, la columna se estrecha y el
+   dispositivo ocupa varias líneas, que el botón no debe pisar). */
+.bolsa-trade__remove {
+  font-size: .8125rem;
+  margin-block: 0 -.75rem;
+  text-wrap: balance;
+}
+.bolsa-trade-cta { display: grid; gap: .25rem; justify-items: start; }
+.bolsa-trade-cta > .aura-caption { margin: 0; }
+.bolsa-bloqueo {
+  display: flex;
+  align-items: baseline;
+  gap: .5rem;
+  margin: 0;
+  font-size: .8125rem;
+  line-height: 1.45;
+  color: var(--text-primary);
+}
+.bolsa-bloqueo > .bi { flex: none; color: var(--warn); }
+.bolsa-checklist {
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--hairline);
+  font-size: .8125rem;
+}
+
+/* Estado vacío y accesos a las familias */
+.bolsa-empty [tabindex="-1"]:focus { outline: 0; }
+.bolsa-empty { padding-bottom: clamp(2.5rem, 6vw, 4rem); }
+.bolsa-familias { display: grid; gap: 1.5rem; }
+.bolsa-familias__title { margin: 0; text-align: center; }
+
+/* Tarjetas de familia: .aura-family-card de la base. */
+
+/* Bolsa llena ↔ vacía: la vista nueva se funde (solo opacidad). */
+[data-bolsa-vista] { transition: opacity var(--dur-2) var(--ease-out); }
+[data-bolsa-vista].is-entering { opacity: 0; transition: none; }

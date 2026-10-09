@@ -1,0 +1,87 @@
+@charset "UTF-8";
+/* ==========================================================================
+   AURA — auraphone.html
+   Solo lo que no cubre ningún componente del sistema. Tokens de aura.css;
+   sin colores sueltos, sin transiciones propias (el movimiento es del sistema).
+   ========================================================================== */
+
+/* Titulares de dos frases: cada frase empieza en su línea (nunca «se /
+   pliega. Y sigue»); dentro de cada una manda el equilibrado de la clase. */
+.auraphone-frases > span { display: block; }
+
+/* Foto del héroe: encuadre del módulo de cámaras. La foto es la trasera
+   entera de un teléfono real y en el centro asoma, tenue, el logotipo de su
+   fabricante; se amplía al doble desde arriba (se ve la mitad superior de la
+   foto, el logotipo empieza al 55 %) y el borde inferior del marco se funde
+   con el negro, como el resto de las fotos de héroe. El halo de
+   .aura-media--halo queda detrás. Es un ajuste de ESTA foto: si se cambia
+   auraphone-hero.webp por una sin logotipo, sobra este bloque. */
+.auraphone-heroe__foto {
+  aspect-ratio: 4 / 3;
+  -webkit-mask-image: var(--photo-feather-y);
+  mask-image: var(--photo-feather-y);
+}
+.auraphone-heroe__foto > .aura-img,
+.auraphone-heroe__foto > .aura-slot {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.auraphone-heroe__foto > .aura-img {
+  transform: scale(2);
+  transform-origin: 50% 0;
+}
+
+/* Disponibilidad del auraPhone Duo («Próximamente · Reserva a partir del…»):
+   texto de .aura-caption (como la cuota que va debajo) en la fila de su
+   tarjeta de modelo, con el icono en dorado (valor, no acción). */
+.auraphone-estado {
+  display: flex;
+  align-items: flex-start;
+  gap: .5rem;
+}
+.auraphone-estado > .bi { flex: none; margin-top: .0625rem; color: var(--gold); }
+
+/* Precio: cifra grande y cuota (o explicación) debajo, como en el configurador */
+.auraphone-price {
+  display: grid;
+  gap: .25rem;
+  justify-items: start;
+  margin: 0;
+}
+
+/* Estado del aviso del Duo */
+.auraphone-aviso-estado .bi { margin-right: .375rem; color: var(--accent-link); }
+
+/* Cifras del auraPhone Duo. Las columnas salen del ancho del bloque medido en
+   rem (consulta de contenedor), así que siguen al tamaño de letra: con texto
+   grande caben menos por fila y ninguna cifra se sale de su tarjeta. Nunca
+   queda una huérfana: todas en una fila (--cifras, como mucho 6), o el
+   reparto sin restos que fija auraphone.js (--cifras-md: 3 × 2 con seis),
+   o 2, o 1. Cada umbral es el ancho mínimo de una tarjeta con la cifra más
+   ancha («Touch ID», 3,7 em de la cifra más el relleno) por columna. */
+.auraphone-cifras {
+  container: auraphone-cifras / inline-size;
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+}
+.auraphone-stats {
+  grid-template-columns: minmax(0, 1fr);
+  gap: .75rem;
+}
+@container auraphone-cifras (min-width: 18.25rem) {
+  .auraphone-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@container auraphone-cifras (min-width: 35.75rem) {
+  .auraphone-stats { grid-template-columns: repeat(var(--cifras-md, 3), minmax(0, 1fr)); gap: 1rem; }
+}
+@container auraphone-cifras (min-width: 72.5rem) {
+  .auraphone-stats { grid-template-columns: repeat(var(--cifras, 6), minmax(0, 1fr)); }
+}
+
+/* La llamada final y «Por qué comprar» son de la base (data-aura-from,
+   data-aura-buy, data-aura-perks); el carrusel usa .aura-tile--media-fit. */
+
+/* Hoja del aviso: «Cancelar el aviso» centrado bajo el botón principal */
+.auraphone-cancelar { justify-self: center; }

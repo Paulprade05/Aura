@@ -1,0 +1,5437 @@
+@charset "UTF-8";
+/* ==========================================================================
+   AURA — Sistema de diseño (v1.3)
+   Hoja única. Se carga DESPUÉS de Bootstrap 5.3 y de Bootstrap Icons.
+
+   Índice
+     1. Tokens
+     2. Base
+     3. Tipografía
+     4. Layout
+     5. Componentes
+        5.1 Navegación (.aura-nav, .aura-ribbon, .aura-localnav)
+        5.2 Acciones (.aura-btn, .aura-icon-btn, .aura-link, chips, segmentado)
+        5.3 Superficies y contenido (tarjetas, bento, producto, tabla…)
+        5.4 Formularios
+        5.5 Tienda
+        5.6 Carrusel, acordeón, imagen y hueco, pie
+     6. Overlays (velo, hoja, popover, avisos, buscador, menú)
+     7. Movimiento
+     8. Accesibilidad (reduced-motion, reduced-transparency, contrast)
+
+   Reglas de la casa (skill «apple-design»)
+   - Respuesta en la pulsación: :active / .is-pressed son inmediatos (100 ms).
+   - Solo se animan transform y opacity (y filter al «materializar» cristal).
+     Los cambios de color son instantáneos: nunca hay transición de color.
+   - Lo que se arrastra (carrusel, hoja) lo mueve el JS con muelles; aquí solo
+     se definen los dos estados de reposo, nunca una transición que compita.
+   - El cristal vive sobre fondos opacos; nunca cristal claro sobre cristal.
+   - Entrada y salida por el mismo camino, con la curva espejada.
+   ========================================================================== */
+
+
+/* ==========================================================================
+   1. TOKENS
+   ========================================================================== */
+
+:root,
+[data-bs-theme="dark"] {
+  color-scheme: dark;
+
+  /* Color — guía de estilo §01 */
+  --bg-main: #000000;
+  --bg-secondary: #161617;
+  --bg-elevated: #1d1d1f;
+  --bg-band: #0a0a0b;
+  --bg-footer: #111113;
+
+  --accent: #0071e3;
+  --accent-hover: #0074e8;            /* más luminoso y aún AA con texto blanco */
+  --accent-link: #2997ff;             /* azul para TEXTO sobre negro (6,9:1) */
+  --accent-soft: rgba(0, 113, 227, .16);
+  --accent-ring: rgba(0, 113, 227, .4);
+  --gold: #e5a93c;
+  --gold-soft: rgba(229, 169, 60, .14);
+
+  --text-primary: #f5f5f7;
+  --text-secondary: #a1a1a6;
+  --text-tertiary: #8e8e93;
+  --text-placeholder: #98989d;              /* ≥ 4,7:1 también sobre el fondo de foco del campo */
+  --text-disabled: #6e6e73;
+
+  --hairline: rgba(255, 255, 255, .1);
+  --hairline-strong: rgba(255, 255, 255, .18);
+  --edge-light: rgba(255, 255, 255, .16);   /* borde superior: la luz toca el material */
+  --field-border: rgba(255, 255, 255, .36); /* límite de controles: ≥ 3:1 incluso sobre negro (3,13:1) */
+
+  --fill-1: rgba(255, 255, 255, .04);
+  --fill-2: rgba(255, 255, 255, .08);
+  --fill-3: rgba(255, 255, 255, .12);
+  --fill-selected: rgba(255, 255, 255, .16);  /* pastilla elegida del segmentado */
+
+  /* Campos (guía §04): sobre la Base negra el reposo se ve como #161617 y el
+     foco gana «cristal» (≈ #1f1f24). Dentro de una tarjeta, hoja o popover
+     (ya elevados) bastan el 4 % y el 7 % (lo redefine cada superficie). */
+  --field-bg: rgba(255, 255, 255, .085);
+  --field-bg-focus: rgba(255, 255, 255, .12);
+
+  /* Hover del botón inverso (guía §03) */
+  --inverse-hover: #e8e8ed;
+
+  /* Fotos: borde difuminado con el que una foto real se funde con el negro
+     (máscara de alfa, no un color) y degradado estático de protección para
+     el texto que va sobre una foto. */
+  --photo-feather-x: linear-gradient(to right, transparent, #000 9%, #000 91%, transparent);
+  --photo-feather-y: linear-gradient(to bottom, transparent, #000 11%, #000 89%, transparent);
+  --photo-scrim: linear-gradient(to top, rgba(0, 0, 0, .92) 0%, rgba(0, 0, 0, .55) 34%, transparent 64%);
+  --photo-scrim-top: linear-gradient(to bottom, rgba(0, 0, 0, .62) 0%, rgba(0, 0, 0, .3) 4.5rem, transparent 8rem);  /* protección de la etiqueta de arriba */
+
+  --ok: #30d158;
+  --warn: #ffd60a;
+  --error: #ff453a;
+
+  /* Materiales: cuanto mayor la superficie, más grueso (más desenfoque).
+     Cada nivel es una pareja fondo + filtro; no se mezclan niveles ni se
+     escribe un blur() a mano.
+       fino     → avisos, tarjeta de cristal
+       regular  → popover, barra global, barra local
+       grueso   → hoja, buscador, menú móvil, barra de compra */
+  --glass-nav-bg: rgba(0, 0, 0, .72);       /* la barra global es negra, con el filtro regular */
+  --glass-thin-bg: rgba(29, 29, 31, .72);
+  --glass-regular-bg: rgba(22, 22, 23, .74);
+  --glass-thick-bg: rgba(22, 22, 23, .88);
+  --glass-thin-filter: blur(16px) saturate(180%);
+  --glass-regular-filter: blur(24px) saturate(180%);
+  --glass-thick-filter: blur(40px) saturate(180%);
+  --scrim: rgba(0, 0, 0, .58);
+
+  /* Vibrancia: texto sobre material translúcido. Nunca un gris plano: blanco
+     translúcido que deja pasar el color de lo que hay debajo. Cada material
+     (y .aura-material) redefine con ellos --text-secondary, --text-tertiary
+     y --text-placeholder; úsalos tú en superficies de cristal propias. */
+  --vibrant-label: rgba(245, 245, 247, .82);       /* controles y texto de apoyo con peso */
+  --vibrant-secondary: rgba(245, 245, 247, .74);   /* secundario */
+  --vibrant-tertiary: rgba(245, 245, 247, .62);    /* terciario, placeholder */
+
+  /* Radios (medidos en los prototipos: 20 px en superficies grandes, 12 px en
+     tarjetas pequeñas y en la tabla) */
+  --radius-xs: .5rem;                 /*  8 px · etiquetas, filas de lista */
+  --radius-sm: .75rem;                /* 12 px · campos, tabla, tarjetas pequeñas y de cifra */
+  --radius-md: 1rem;                  /* 16 px · opciones, notas, avisos, miniaturas */
+  --radius-lg: 1.25rem;               /* 20 px · tarjetas, teselas, imágenes, popover, acceso */
+  --radius-xl: 1.75rem;               /* 28 px · solo hojas y buscador (overlays grandes) */
+  --radius-pill: 999px;
+
+  /* Sombras: más profundas cuanto mayor la superficie */
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, .5);
+  --shadow-2: 0 14px 36px -10px rgba(0, 0, 0, .7), 0 2px 8px rgba(0, 0, 0, .4);
+  --shadow-3: 0 36px 90px -16px rgba(0, 0, 0, .85), 0 10px 28px rgba(0, 0, 0, .55);
+  --glow-accent: 0 0 0 1px rgba(41, 151, 255, .22), 0 10px 30px -6px rgba(0, 113, 227, .85);
+
+  /* Tipografía */
+  --font-display: "Kanit", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-ui: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+
+  /* Medidas */
+  --nav-h: 3.5rem;
+  --localnav-h: 3.25rem;
+  --ribbon-h: 0px;                    /* alto real de la cinta de <aura-header> (lo mide aura-core.js; 0 sin cinta) */
+  --sticky-top: var(--nav-h);
+  --gutter: clamp(1.25rem, 4vw, 2.5rem);
+  --container: 73.75rem;              /* 1180 px de contenido */
+  --gap: 1.25rem;
+
+  /* Movimiento */
+  --ease-out: cubic-bezier(.2, .8, .2, 1);     /* entrada */
+  --ease-in: cubic-bezier(.8, 0, .8, .2);      /* salida = la misma curva, espejada */
+  --dur-press: 100ms;
+  --dur-1: 160ms;
+  --dur-2: 240ms;
+  --dur-3: 560ms;
+
+  /* Capas */
+  --z-localnav: 1020;
+  --z-buybar: 1025;
+  --z-nav: 1030;
+  --z-overlay: 1050;
+  --z-sheet: 1060;
+  --z-toast: 1080;
+
+  /* Iconos embebidos (máscaras) */
+  --icon-check: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' d='M3.5 8.5l3 3 6-7'/%3E%3C/svg%3E");
+  --icon-circle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='6.5' fill='none' stroke='%23000' stroke-width='1.5'/%3E%3C/svg%3E");
+  --icon-check-circle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='6.5' fill='none' stroke='%23000' stroke-width='1.5'/%3E%3Cpath fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round' d='M5 8.3l2 2 4-4.4'/%3E%3C/svg%3E");
+  --icon-alert: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zM7.1 4.4h1.8l-.25 4.7h-1.3L7.1 4.4zM8 12.2a1 1 0 1 1 0-2 1 1 0 0 1 0 2z'/%3E%3C/svg%3E");
+  --icon-plus: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round' d='M8 3.5v9M3.5 8h9'/%3E%3C/svg%3E");
+  --icon-chevron-down: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23a1a1a6' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round' d='M4 6l4 4 4-4'/%3E%3C/svg%3E");
+
+  /* Bootstrap → tema AURA */
+  --bs-body-bg: var(--bg-main);
+  --bs-body-bg-rgb: 0, 0, 0;
+  --bs-body-color: var(--text-primary);
+  --bs-body-color-rgb: 245, 245, 247;
+  --bs-body-font-family: var(--font-ui);
+  --bs-body-font-size: 1rem;
+  --bs-body-font-weight: 400;
+  --bs-body-line-height: 1.6;
+  --bs-font-sans-serif: var(--font-ui);
+  --bs-font-monospace: var(--font-mono);
+  --bs-emphasis-color: #ffffff;
+  --bs-emphasis-color-rgb: 255, 255, 255;
+  --bs-heading-color: var(--text-primary);
+  --bs-secondary-color: var(--text-secondary);
+  --bs-secondary-color-rgb: 161, 161, 166;
+  --bs-secondary-rgb: 161, 161, 166;
+  --bs-secondary-bg: var(--bg-secondary);
+  --bs-secondary-bg-rgb: 22, 22, 23;
+  --bs-tertiary-color: var(--text-tertiary);
+  --bs-tertiary-color-rgb: 142, 142, 147;
+  --bs-tertiary-bg: var(--bg-elevated);
+  --bs-tertiary-bg-rgb: 29, 29, 31;
+  --bs-primary: var(--accent);
+  --bs-primary-rgb: 0, 113, 227;
+  --bs-link-color: var(--accent-link);
+  --bs-link-color-rgb: 41, 151, 255;
+  --bs-link-hover-color: #5ab0ff;
+  --bs-link-hover-color-rgb: 90, 176, 255;
+  --bs-link-decoration: none;
+  --bs-border-color: var(--hairline);
+  --bs-border-color-translucent: var(--hairline);
+  --bs-border-radius: var(--radius-sm);
+  --bs-border-radius-lg: var(--radius-lg);
+  --bs-code-color: var(--gold);
+  --bs-success: var(--ok);
+  --bs-success-rgb: 48, 209, 88;
+  --bs-warning: var(--warn);
+  --bs-warning-rgb: 255, 214, 10;
+  --bs-danger: var(--error);
+  --bs-danger-rgb: 255, 69, 58;
+  --bs-focus-ring-color: var(--accent-ring);
+}
+
+
+/* ==========================================================================
+   2. BASE
+   ========================================================================== */
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--sticky-top) + 1.5rem);
+  scrollbar-gutter: stable;
+  background: var(--bg-main);
+}
+
+html:has(.aura-localnav) { --sticky-top: var(--localnav-h); }
+body.has-localnav { --sticky-top: var(--localnav-h); }
+
+/* Bloqueo de scroll mientras hay una tarea modal abierta (lo pone el JS en <html>) */
+html.aura-lock { overflow: hidden; }
+
+/* «Velar para enfocar» (skill §12): con una hoja inferior o el buscador
+   abiertos, la página retrocede (aura-ui.js escribe `scale` y el origen de
+   cada uno en línea). Lo que queda a la vista alrededor es el lienzo negro.
+   Con «reducir movimiento» no se escala nada. */
+html.aura-recede :is(main, aura-footer, .aura-nav, .aura-ribbon) { will-change: scale, transform; }
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0;
+  overflow-x: clip;
+  background: var(--bg-main);
+  color: var(--text-primary);
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.6;
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Los elementos personalizados no pintan caja propia: sus hijos son los que maquetan */
+aura-header { display: contents; }
+aura-footer { display: block; margin-top: auto; }
+
+main {
+  flex: 1 0 auto;
+  width: 100%;
+  min-width: 0;
+}
+main:focus { outline: 0; }
+
+a {
+  color: var(--accent-link);
+  text-decoration: none;
+}
+/* Una dirección de correo es una sola «palabra» larga: con texto grande se
+   parte donde haga falta en lugar de invadir el relleno de su tarjeta. */
+a[href^="mailto:"] { overflow-wrap: anywhere; }
+/* Los :hover viven en @media (hover: hover): en pantallas táctiles el «hover»
+   se queda pegado tras el toque. La respuesta táctil es :active / .is-pressed. */
+@media (hover: hover) {
+  a:hover { color: var(--bs-link-hover-color); }
+}
+
+img, svg, video { max-width: 100%; }
+img { -webkit-user-drag: none; }
+
+button { font: inherit; color: inherit; }
+
+hr {
+  margin: 0;
+  border: 0;
+  border-top: 1px solid var(--hairline);
+  opacity: 1;
+}
+
+::selection {
+  background: rgba(0, 113, 227, .6);
+  color: #fff;
+}
+
+/* Foco visible y coherente en todo el sitio */
+:focus-visible {
+  outline: 2px solid var(--accent-link);
+  outline-offset: 3px;
+}
+:focus:not(:focus-visible) { outline: 0; }
+
+.aura-skip {
+  position: absolute;
+  top: .5rem;
+  left: 1rem;
+  z-index: 2000;
+  padding: .75rem 1.25rem;
+  border-radius: var(--radius-pill);
+  background: var(--text-primary);
+  color: #000;
+  font-size: .875rem;
+  font-weight: 600;
+  transform: translate3d(0, -300%, 0);
+}
+.aura-skip:hover { color: #000; }
+.aura-skip:focus { transform: none; }
+
+
+/* ==========================================================================
+   3. TIPOGRAFÍA
+   Kanit lidera, Inter explica. Tracking específico por tamaño (negativo en
+   grande, ~0 en cuerpo, positivo en pequeño) e interlineado inverso al tamaño.
+   Todo en rem: respeta el tamaño de texto del usuario.
+   ========================================================================== */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  color: var(--text-primary);
+  text-wrap: balance;
+}
+/* Con el texto al 150 % en el teléfono, una palabra larga de un titular
+   («Increíblemente») puede no caber sola en la línea: se parte antes que
+   salirse de la pantalla. Con el tamaño normal no cambia nada. */
+h1, h2, h3, h4, h5, h6,
+.aura-display, .aura-h1, .aura-h2, .aura-h3, .aura-h4 { max-width: 100%; overflow-wrap: break-word; }
+
+.aura-display,
+.aura-h1,
+.aura-h2,
+.aura-h3,
+.aura-h4 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  color: var(--text-primary);
+  text-wrap: balance;
+  font-optical-sizing: auto;
+}
+
+.aura-display {                         /* momento héroe: 36 → 72 px (40 px a 390) */
+  font-size: clamp(2.25rem, 1.25rem + 5.2vw, 4.5rem);
+  line-height: 1.05;
+  letter-spacing: -.025em;
+}
+.aura-h1 {                              /* 34 → 56 px */
+  font-size: clamp(2.125rem, 1.2rem + 3.6vw, 3.5rem);
+  line-height: 1.08;
+  letter-spacing: -.02em;
+}
+.aura-h2 {                              /* 28 → 42 px */
+  font-size: clamp(1.75rem, 1.15rem + 2.4vw, 2.625rem);
+  line-height: 1.14;
+  letter-spacing: -.015em;
+}
+.aura-h3 {                              /* 22 → 28 px */
+  font-size: clamp(1.375rem, 1.2rem + .75vw, 1.75rem);
+  line-height: 1.22;
+  letter-spacing: -.008em;
+}
+.aura-h4 {                              /* 20 px */
+  font-size: 1.25rem;
+  line-height: 1.3;
+  letter-spacing: -.004em;
+}
+/* El tamaño fluido casi se duplica entre móvil y escritorio: el tracking
+   acompaña. En pequeño (40 / 34 / 28 px) se aprieta menos que en grande. */
+@media (max-width: 767.98px) {
+  .aura-display { letter-spacing: -.016em; }
+  .aura-h1 { letter-spacing: -.012em; }
+  .aura-h2 { letter-spacing: -.01em; }
+}
+
+.aura-lead {                            /* 17 → 21 px */
+  margin: 0;
+  max-width: min(56ch, 100%);
+  font-size: clamp(1.0625rem, 1rem + .4vw, 1.3125rem);
+  line-height: 1.5;
+  letter-spacing: -.003em;
+  color: var(--text-secondary);
+  text-wrap: pretty;
+}
+
+.aura-body {                            /* 16 px */
+  margin: 0;
+  max-width: min(68ch, 100%);
+  font-size: 1rem;
+  line-height: 1.6;
+  letter-spacing: 0;
+  color: var(--text-secondary);
+  text-wrap: pretty;
+}
+
+.aura-caption {                         /* 13 px */
+  margin: 0;
+  font-size: .8125rem;
+  line-height: 1.45;
+  letter-spacing: .006em;
+  color: var(--text-secondary);
+  text-wrap: pretty;
+}
+.aura-caption--muted { color: var(--text-tertiary); }
+
+.aura-eyebrow {                         /* 12 px · Inter 650 */
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: .75rem;
+  font-weight: 650;
+  line-height: 1.35;
+  letter-spacing: .04em;
+  color: var(--gold);
+}
+.aura-eyebrow::before {
+  content: "";
+  flex: none;
+  width: .375rem;
+  height: .375rem;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 8px currentColor;
+  box-shadow: 0 0 0 3px color-mix(in srgb, currentColor 24%, transparent);
+}
+.aura-eyebrow--plain::before { display: none; }
+/* (v1.4) Sin variante azul: el azul es solo para acciones, foco e interacción
+   (guía §01). La etiqueta de una tesela --cover la pinta .aura-tile__tag. */
+.aura-eyebrow--ok { color: var(--ok); }
+.aura-eyebrow--muted { color: var(--text-tertiary); }
+.aura-eyebrow--mono {                   /* etiquetas técnicas del prototipo */
+  font-family: var(--font-mono);
+  font-size: .6875rem;
+  font-weight: 500;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.aura-eyebrow--lg {                     /* nombre de producto sobre un titular héroe: momento de marca, Kanit 18 → 22 px (prototipo) */
+  font-family: var(--font-display);
+  font-size: clamp(1.125rem, 1rem + .5vw, 1.375rem);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -.004em;
+}
+.aura-eyebrow--lg::before { display: none; }
+
+.aura-price {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -.005em;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+.aura-price--sm { font-size: 1rem; letter-spacing: 0; }
+.aura-price--lg {
+  font-size: clamp(1.75rem, 1.5rem + 1vw, 2.25rem);
+  line-height: 1.1;
+  letter-spacing: -.014em;
+}
+
+.aura-mono {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: .75rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+/* Marca de pulgadas (″) con un solo dibujo en todo el sitio: la de Inter.
+   aura-ui.js la envuelve en los textos con Kanit o mono. */
+.aura-inch { font-family: var(--font-ui); font-weight: inherit; letter-spacing: 0; }
+
+.aura-text-primary { color: var(--text-primary) !important; }
+.aura-text-secondary { color: var(--text-secondary) !important; }
+.aura-text-gold { color: var(--gold) !important; }
+.aura-text-blue { color: var(--accent-link) !important; }
+
+/* Texto largo (legal, historia…): ritmo vertical y longitud de línea cómoda */
+.aura-prose {
+  max-width: 68ch;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+.aura-prose > * { margin: 0; }
+.aura-prose :is(p, li) { text-wrap: pretty; }
+.aura-prose > * + * { margin-top: 1.125rem; }
+.aura-prose h2 {
+  margin-top: 3rem;
+  font-size: clamp(1.5rem, 1.25rem + 1vw, 2rem);
+  line-height: 1.2;
+  letter-spacing: -.012em;
+}
+.aura-prose h3 {
+  margin-top: 2rem;
+  font-size: 1.25rem;
+  line-height: 1.3;
+  letter-spacing: -.004em;
+}
+.aura-prose h4 {                        /* tercer nivel: por debajo del h3 de prosa, nunca por encima */
+  margin-top: 1.5rem;
+  font-size: 1.125rem;
+  line-height: 1.3;
+  letter-spacing: -.003em;
+}
+.aura-prose > :first-child { margin-top: 0; }
+.aura-prose strong { color: var(--text-primary); font-weight: 600; }
+.aura-prose a {
+  text-decoration: underline;
+  text-underline-offset: .2em;
+  text-decoration-thickness: 1px;
+}
+.aura-prose ul, .aura-prose ol { padding-left: 1.25rem; }
+.aura-prose li + li { margin-top: .5rem; }
+
+
+/* Textos de varias líneas de los componentes: sin una palabra sola en la
+   última línea (text-wrap: pretty). Donde el navegador no lo evite en un
+   texto corto de tarjeta, el autor pega las dos últimas palabras con &nbsp;. */
+:is(.aura-tile__text, .aura-feature__text, .aura-product-card__text, .aura-timeline__text,
+  .aura-note__text, .aura-empty__text, .aura-alert__text, .aura-check__label, .aura-auth-card__legal,
+  .aura-bag-line__care-text, .aura-option__note, .aura-field__help, .aura-stat__label,
+  .aura-quote__cite, .aura-media__caption, .aura-accordion__panel p, .aura-accordion__panel li) {
+  text-wrap: pretty;
+}
+
+/* ==========================================================================
+   4. LAYOUT
+   ========================================================================== */
+
+.aura-container {
+  width: 100%;
+  max-width: calc(var(--container) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding-left: max(var(--gutter), env(safe-area-inset-left));
+  padding-right: max(var(--gutter), env(safe-area-inset-right));
+}
+.aura-container--narrow { max-width: calc(50rem + 2 * var(--gutter)); }
+.aura-container--wide { max-width: calc(90rem + 2 * var(--gutter)); }
+
+.aura-section {
+  position: relative;
+  padding-block: clamp(4rem, 9vw, 7.5rem);
+}
+.aura-section--tight { padding-block: clamp(2.5rem, 5vw, 4rem); }
+.aura-section--band { background: var(--bg-band); }
+.aura-section--flush-top { padding-top: 0; }
+.aura-section--center { text-align: center; }
+.aura-section--center .aura-section-head,
+.aura-section--center .aura-lead,
+.aura-section--center .aura-body { margin-inline: auto; }
+.aura-section--center .aura-section-head { justify-items: center; }
+
+.aura-section-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);  /* la columna no crece con una palabra larga */
+  gap: .875rem;
+  justify-items: start;
+  max-width: 46rem;
+  margin-bottom: clamp(2rem, 4vw, 3.5rem);
+}
+.aura-section-head--center {
+  justify-items: center;
+  margin-inline: auto;
+  text-align: center;
+}
+.aura-section-head__text {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: .875rem;
+  justify-items: start;
+  max-width: 46rem;
+  min-width: 0;
+}
+.aura-section-head--split {             /* texto a la izquierda, enlace a la derecha */
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  align-items: last baseline;           /* el enlace, en la línea base del último renglón */
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  max-width: none;
+}
+
+/* Héroe */
+.aura-hero {
+  position: relative;
+  padding-block: clamp(3.5rem, 8vw, 7.5rem);
+}
+.aura-hero--band { background: var(--bg-band); }
+.aura-hero__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr); /* una columna que no crece por su contenido (dos desde 992 px en --split) */
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: center;
+}
+.aura-hero__copy {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.25rem;
+  justify-items: start;
+  max-width: min(34rem, 100%);           /* nunca más ancho que su columna (una palabra larga se parte) */
+  min-width: 0;
+}
+.aura-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .75rem;
+  margin-top: .5rem;
+}
+/* En el teléfono, dos o más acciones se apilan y miden lo mismo (el ancho de
+   la más larga), en lugar de dos píldoras de anchos distintos una sobre otra.
+   Lo mismo para cualquier fila de botones con .aura-cluster--stack-sm. */
+@media (max-width: 575.98px) {
+  .aura-hero__actions:has(> :nth-child(2)),
+  .aura-cluster--stack-sm {
+    display: grid;
+    grid-template-columns: minmax(0, max-content);
+    justify-content: start;
+  }
+  .aura-hero--center .aura-hero__actions:has(> :nth-child(2)),
+  .aura-section--center .aura-cluster--stack-sm { justify-content: center; }
+}
+.aura-hero__media {
+  position: relative;
+  min-width: 0;
+}
+@media (min-width: 992px) {
+  .aura-hero--split .aura-hero__inner { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); }
+  .aura-hero--split.aura-hero--reverse .aura-hero__media { order: -1; }
+}
+/* En dos columnas (desde 992 px), los titulares se miden con su columna y no
+   con la ventana: entre 992 y 1199 px una columna de ~420 px ya no recibe un
+   titular de 72 px partido en cuatro líneas de una palabra. */
+@media (min-width: 992px) {
+  .aura-hero--split .aura-hero__copy,
+  .aura-split__copy { container-type: inline-size; }
+  @supports (width: 1cqi) {
+    .aura-hero--split .aura-hero__copy .aura-display { font-size: clamp(2.75rem, 13cqi, 4.5rem); }
+    :is(.aura-hero--split .aura-hero__copy, .aura-split__copy) .aura-h1 { font-size: clamp(2.25rem, 10.5cqi, 3.5rem); }
+    .aura-split__copy .aura-h2 { font-size: clamp(1.75rem, 8cqi, 2.625rem); }
+  }
+}
+.aura-hero--center { text-align: center; }
+.aura-hero--center .aura-hero__inner { justify-items: center; }
+.aura-hero--center .aura-hero__copy {
+  justify-items: center;
+  max-width: min(52rem, 100%);
+}
+.aura-hero--center .aura-hero__actions { justify-content: center; }
+.aura-hero--center .aura-hero__media {
+  width: 100%;
+  max-width: 60rem;
+}
+
+/* Bloque texto + imagen para secciones (alternable con --reverse) */
+.aura-split {
+  display: grid;
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: center;
+}
+.aura-split__copy {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.25rem;
+  justify-items: start;
+  min-width: 0;
+}
+.aura-split__media { position: relative; min-width: 0; }
+@media (min-width: 992px) {
+  .aura-split { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .aura-split--reverse .aura-split__media { order: -1; }
+}
+/* --wide-media: la columna de texto se quedaría en ~350 px entre 992 y 1199 px;
+   ahí se apila (texto primero) y pasa a dos columnas desde 1200 px. */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .aura-split--wide-media { grid-template-columns: minmax(0, 1fr); }
+  .aura-split--wide-media.aura-split--reverse .aura-split__media { order: 0; }
+}
+@media (min-width: 1200px) {
+  .aura-split--wide-media { grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); }
+}
+
+/* Rejillas sencillas */
+.aura-grid {
+  display: grid;
+  gap: var(--gap);
+  grid-template-columns: minmax(0, 1fr);
+}
+.aura-grid--auto { grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); }
+/* Umbrales en em (skill §15): con el tamaño de texto normal son 576, 768 y
+   992 px; si el usuario sube el texto, crecen con él y las columnas se
+   reparten antes de que un titular («Increíblemente») no quepa en la suya. */
+@media (min-width: 36em) {
+  .aura-grid--2, .aura-grid--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 48em) {
+  .aura-grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (min-width: 62em) {
+  .aura-grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+/* Página de tienda: contenido + columna lateral */
+.aura-layout {
+  display: grid;
+  gap: clamp(2rem, 4vw, 4rem);
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+}
+@media (min-width: 992px) {
+  .aura-layout--aside { grid-template-columns: minmax(0, 1fr) minmax(20rem, 24rem); }
+  .aura-layout--config { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); }
+}
+
+/* Una sola columna que nunca se ensancha por su contenido: con texto grande
+   un botón largo se parte en dos líneas en lugar de sacar la pila (y su
+   tarjeta) de la pantalla. */
+.aura-stack { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--stack, 1rem); justify-items: start; min-width: 0; }
+.aura-stack--stretch { justify-items: stretch; }
+.aura-cluster { display: flex; flex-wrap: wrap; align-items: center; gap: var(--cluster, .75rem); }
+
+
+/* ==========================================================================
+   5. COMPONENTES
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   5.1 Navegación
+   -------------------------------------------------------------------------- */
+
+.aura-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  min-height: 2.75rem;
+  color: var(--text-primary);
+}
+.aura-brand:hover { color: #fff; }
+.aura-brand { -webkit-tap-highlight-color: transparent; }
+.aura-brand:active, .aura-brand.is-pressed { opacity: .6; }
+.aura-brand__mark {
+  flex: none;
+  width: 1.75rem;
+  height: 1.75rem;
+}
+.aura-brand__word {
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: .06em;
+}
+.aura-brand--lg .aura-brand__mark { width: 2.25rem; height: 2.25rem; }
+.aura-brand--lg .aura-brand__word { font-size: 1.375rem; }
+
+/* Barra global: material translúcido; el contenido pasa por debajo.
+   El cristal va en ::before para que la barra no sea «raíz de fondo» y el
+   popover de la bolsa (hijo suyo) pueda desenfocar la página por su cuenta. */
+.aura-nav {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-nav);
+  flex: none;
+  height: var(--nav-h);
+  color: var(--text-primary);
+}
+.aura-nav .aura-brand { justify-self: start; }
+.aura-nav::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--glass-nav-bg);
+  -webkit-backdrop-filter: var(--glass-regular-filter);
+  backdrop-filter: var(--glass-regular-filter);
+}
+/* Efecto de borde al hacer scroll (skill §12): aparece solo cuando hay
+   contenido debajo y no es una línea dura sino el propio material que se
+   desvanece: un desenfoque progresivo de 1 rem (el filtro regular, con una
+   máscara que lo lleva de entero a nada) donde el contenido pasa bajo la
+   barra. Con menos transparencia o más contraste, sin filtro, vuelve la
+   línea --hairline (8.2 y 8.3). */
+.aura-nav::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  height: 1rem;
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, .35), transparent);
+  -webkit-backdrop-filter: var(--glass-regular-filter);
+  backdrop-filter: var(--glass-regular-filter);
+  -webkit-mask-image: linear-gradient(to bottom, #000, transparent);
+  mask-image: linear-gradient(to bottom, #000, transparent);
+  opacity: 0;
+  transition: opacity var(--dur-2) ease;
+}
+.aura-nav.is-scrolled::after { opacity: 1; }
+
+/* Con barra local, la global se va con el scroll y la local se queda arriba.
+   La global ya no flota sobre nada: sin efecto de borde (lo pinta la local al
+   quedarse pegada, .aura-localnav.is-stuck). Reglas separadas: un navegador
+   sin :has() descartaría la lista entera. */
+body.has-localnav .aura-nav { position: relative; }
+body:has(.aura-localnav) .aura-nav { position: relative; }
+body.has-localnav .aura-nav::after { display: none; }
+body:has(.aura-localnav) .aura-nav::after { display: none; }
+
+.aura-nav__inner {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: .5rem;
+  height: 100%;
+  container: aura-nav / inline-size;
+}
+/* Con el texto grande (125–150 %) en el teléfono, las cuatro acciones de
+   44 px no caben junto a la marca: la palabra «AURA» se retira y queda el
+   símbolo (el enlace ya se llama «AURA, inicio»). Nunca se solapan. El
+   umbral está en rem: crece con el tamaño de texto del usuario. */
+@container aura-nav (max-width: 18.5rem) {
+  .aura-nav__inner .aura-brand__word { display: none; }
+}
+.aura-nav__links { display: none; }
+.aura-nav__link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: var(--nav-h);
+  padding: 0 .875rem;
+  /* vibrancia: sobre material no vale un gris plano; más contraste, algo más de peso y de tracking */
+  color: var(--vibrant-label);
+  font-size: .8125rem;
+  font-weight: 450;
+  letter-spacing: .01em;
+  white-space: nowrap;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+@media (hover: hover) {
+  .aura-nav__link:hover { color: #fff; }
+}
+.aura-nav__link::after {
+  content: "";
+  position: absolute;
+  left: .875rem;
+  right: .875rem;
+  bottom: .6875rem;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--accent-link);
+  opacity: 0;
+  transform: scaleX(.4);
+  transition: opacity var(--dur-1) ease, transform var(--dur-2) var(--ease-out);
+}
+.aura-nav__link.is-active,
+.aura-nav__link[aria-current="page"] {
+  color: #fff;
+  font-weight: 600;
+}
+.aura-nav__link.is-active::after,
+.aura-nav__link[aria-current="page"]::after {
+  opacity: 1;
+  transform: none;
+}
+
+.aura-nav__actions {
+  display: flex;
+  align-items: center;
+  justify-self: end;
+  gap: .125rem;
+  margin-right: -.5rem;
+}
+.aura-nav__action {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  min-width: 2.75rem;
+  height: 2.75rem;
+  padding: 0 .75rem;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--vibrant-label);
+  font-size: .8125rem;
+  font-weight: 450;
+  letter-spacing: .01em;
+  white-space: nowrap;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--dur-press) ease-out;
+}
+.aura-nav__action .bi { font-size: 1.0625rem; line-height: 1; }
+.aura-nav__action[aria-expanded="true"] { color: #fff; background: var(--fill-2); }
+.aura-nav__action-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+.aura-nav__bag-wrap { display: inline-flex; }
+.aura-nav__count {
+  position: absolute;
+  top: .25rem;
+  right: .125rem;
+  display: grid;
+  place-items: center;
+  min-width: 1.125rem;
+  height: 1.125rem;
+  padding: 0 .3125rem;
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  color: #fff;
+  font-size: .6875rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0;
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+}
+.aura-nav__count:empty,
+.aura-nav__count[hidden] { display: none; }
+.aura-nav__count.is-bumped { animation: aura-bump 320ms var(--ease-out); }
+
+@media (hover: hover) {
+  .aura-nav__action:hover,
+  a.aura-nav__action:hover { color: #fff; background: var(--fill-2); }
+}
+@media (min-width: 576px) {
+  .aura-nav__bag-wrap { position: relative; }
+}
+@media (min-width: 992px) {
+  /* Los enlaces quedan centrados en la página; si un lateral no cabe, cede el centrado antes que solaparse */
+  .aura-nav__inner { grid-template-columns: minmax(max-content, 1fr) auto minmax(max-content, 1fr); gap: 1rem; }
+  .aura-nav__links { display: flex; align-items: center; height: 100%; }
+  .aura-nav__link { padding-inline: .75rem; }
+  .aura-nav__link::after { left: .75rem; right: .75rem; }
+  .aura-nav__toggle { display: none; }
+}
+@media (min-width: 1200px) {
+  .aura-nav__link { padding-inline: .875rem; }
+  .aura-nav__link::after { left: .875rem; right: .875rem; }
+  .aura-nav__action-label {             /* «Iniciar sesión» o el nombre: visible cuando hay sitio */
+    position: static;
+    width: auto;
+    height: auto;
+    margin: 0;
+    max-width: 7.5rem;
+    clip: auto;
+    text-overflow: ellipsis;
+  }
+}
+
+/* Cinta promocional (Trade In). --ribbon-h es su alto real (una o dos
+   líneas según el ancho): aura-core.js lo mide y lo escribe en <html>; estos
+   valores son solo la estimación hasta que llega. */
+html:has(.aura-ribbon) { --ribbon-h: 2.6875rem; }
+@media (min-width: 768px) and (max-width: 1023.98px) {
+  html:has(.aura-ribbon) { --ribbon-h: 3.875rem; }
+}
+.aura-ribbon {
+  background: var(--bg-secondary);
+  box-shadow: inset 0 -1px 0 var(--hairline);
+  color: var(--text-secondary);
+  text-align: center;
+}
+.aura-ribbon__text {
+  margin: 0;
+  padding-block: .75rem;
+  font-size: .8125rem;
+  line-height: 1.45;
+  letter-spacing: .006em;
+  text-wrap: balance;
+}
+
+/* Barra local de las páginas de familia */
+/* El cristal va en ::before (como en la barra global): así la barra no es
+   «raíz de fondo» y su efecto de borde (::after) puede desenfocar lo que
+   pasa por debajo. */
+.aura-localnav {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-localnav);
+  height: var(--localnav-h);
+}
+.aura-localnav::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--glass-regular-bg);
+  -webkit-backdrop-filter: var(--glass-regular-filter);
+  backdrop-filter: var(--glass-regular-filter);
+}
+/* Efecto de borde: sin línea fija; aparece solo cuando la barra se ha quedado
+   pegada y el contenido pasa por debajo (.is-stuck lo pone aura-ui.js). Es
+   el material que se desvanece, como en la barra global. */
+.aura-localnav::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  height: 1rem;
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, .35), transparent);
+  -webkit-backdrop-filter: var(--glass-regular-filter);
+  backdrop-filter: var(--glass-regular-filter);
+  -webkit-mask-image: linear-gradient(to bottom, #000, transparent);
+  mask-image: linear-gradient(to bottom, #000, transparent);
+  opacity: 0;
+  transition: opacity var(--dur-2) ease;
+}
+.aura-localnav.is-stuck::after { opacity: 1; }
+.aura-localnav__inner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  height: 100%;
+}
+/* El título ocupa todo el alto de la barra (52 px): objetivo táctil de sobra.
+   Es lo único que cede si no cabe todo (texto grande en el teléfono): se
+   recorta con puntos suspensivos y «Comprar» nunca se sale de la pantalla. */
+.aura-localnav__title {
+  display: block;
+  align-self: stretch;
+  flex: 0 1 auto;                       /* cede el último: los enlaces encogen antes (flex-shrink 1000) */
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: 1.1875rem;
+  font-weight: 500;
+  line-height: var(--localnav-h);
+  letter-spacing: -.004em;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  -webkit-tap-highlight-color: transparent;
+}
+.aura-localnav__links {
+  display: flex;
+  align-items: center;
+  flex: 1 1000 auto;                    /* encoge (y se desplaza) antes que el título */
+  gap: .25rem;
+  min-width: 0;
+  height: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.aura-localnav__links::-webkit-scrollbar { display: none; }
+.aura-localnav__links > :first-child { margin-left: auto; }   /* a la derecha si cabe; desplazable si no */
+/* Si los enlaces desbordan, el borde por el que hay más se funde: se ve que
+   quedan secciones (las clases las pone aura-ui.js al medir y al desplazar). */
+.aura-localnav__links.has-more-end {
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 1.5rem), transparent);
+  mask-image: linear-gradient(to right, #000 calc(100% - 1.5rem), transparent);
+}
+.aura-localnav__links.has-more-start {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 1rem);
+  mask-image: linear-gradient(to right, transparent, #000 1rem);
+}
+.aura-localnav__links.has-more-start.has-more-end {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 1rem, #000 calc(100% - 1.5rem), transparent);
+  mask-image: linear-gradient(to right, transparent, #000 1rem, #000 calc(100% - 1.5rem), transparent);
+}
+.aura-localnav__link {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  height: 100%;
+  padding: 0 .625rem;
+  color: var(--vibrant-label);
+  font-size: .75rem;
+  font-weight: 450;
+  letter-spacing: .012em;
+  white-space: nowrap;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+@media (hover: hover) {
+  a.aura-localnav__title:hover,
+  .aura-localnav__link:hover { color: #fff; }
+}
+.aura-localnav__link.is-active,
+.aura-localnav__link[aria-current] { color: #fff; font-weight: 600; }
+.aura-localnav .aura-btn { flex: none; }
+.aura-localnav .aura-btn--primary::after { display: none; }
+/* La acción de la barra local («Comprar ›», «Contactar ›») es el enlace
+   contextual de la guía, no un botón: la barra es cromo de cristal y la
+   única primaria azul de la vista es la del héroe (guía §03: una primaria por
+   contexto; botones solo de 48 px). Ocupa todo el alto de la barra (objetivo
+   táctil de sobra), no se parte y nunca cede: cede el título. */
+.aura-localnav__inner > a.aura-link.aura-localnav__action {
+  display: inline-flex;
+  align-items: center;
+  align-self: stretch;
+  flex: none;
+  min-height: 0;
+  padding-block: 0;
+  font-size: .875rem;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+/* Nunca cristal sobre cristal: en las páginas con barra local, el popover de
+   la bolsa (que se abre sobre ella) pasa a ser una capa sólida. Dos reglas:
+   un navegador sin :has() descartaría la lista entera. */
+body.has-localnav .aura-nav .aura-popover {
+  background: var(--bg-elevated);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+body:has(.aura-localnav) .aura-nav .aura-popover {
+  background: var(--bg-elevated);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+/* En el teléfono no caben los enlaces junto al título y «Comprar»: se pliegan
+   en un menú bajo la barra que abre el chevrón (lo añade aura-ui.js). Entra y
+   sale por el mismo camino, desde la barra. */
+.aura-localnav__toggle { display: none; }
+@media (max-width: 767.98px) {
+  .aura-localnav__toggle {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 2.75rem;
+    height: 2.75rem;
+    margin: 0 -.25rem 0 auto;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: none;
+    color: var(--vibrant-label);
+    font-size: .875rem;
+    cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform var(--dur-press) ease-out;
+  }
+  .aura-localnav__toggle > .bi { transition: transform var(--dur-2) var(--ease-out); }
+  .aura-localnav.is-open .aura-localnav__toggle > .bi { transform: rotate(180deg); }
+  .aura-localnav__toggle:active,
+  .aura-localnav__toggle.is-pressed { transform: scale(.92); }
+  .aura-localnav__toggle:focus-visible { outline-offset: -4px; }
+  .aura-localnav.has-menu .aura-localnav__links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    display: grid;
+    align-content: start;
+    gap: 0;
+    height: auto;
+    padding: .25rem max(var(--gutter), env(safe-area-inset-right)) .75rem max(var(--gutter), env(safe-area-inset-left));
+    overflow: visible;
+    background: var(--bg-secondary);   /* opaco: la barra ya es de cristal (nunca cristal sobre cristal) */
+    border-bottom: 1px solid var(--hairline);
+    box-shadow: var(--shadow-2);
+    -webkit-mask-image: none;
+    mask-image: none;
+    visibility: hidden;
+    opacity: 0;
+    transform: translate3d(0, -.5rem, 0);
+    transform-origin: top center;
+    transition: opacity var(--dur-2) var(--ease-in), transform var(--dur-2) var(--ease-in), visibility 0s linear var(--dur-2);
+  }
+  .aura-localnav.has-menu.is-open .aura-localnav__links {
+    visibility: visible;
+    opacity: 1;
+    transform: none;
+    transition: opacity var(--dur-2) var(--ease-out), transform var(--dur-2) var(--ease-out), visibility 0s;
+  }
+  .aura-localnav.has-menu .aura-localnav__links > :first-child { margin-left: 0; }
+  .aura-localnav.has-menu .aura-localnav__link {
+    height: auto;
+    min-height: 2.75rem;
+    padding: 0;
+    border-bottom: 1px solid var(--hairline);
+    font-size: .9375rem;
+    letter-spacing: 0;
+  }
+  .aura-localnav.has-menu .aura-localnav__link:last-child { border-bottom: 0; }
+}
+
+/* Migas de pan */
+.aura-crumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: .8125rem;
+  letter-spacing: .006em;
+  color: var(--text-secondary);
+}
+.aura-crumbs > li { display: inline-flex; align-items: center; gap: .5rem; }
+.aura-crumbs > li + li::before { content: "›"; color: var(--text-tertiary); }
+.aura-crumbs a { display: inline-flex; align-items: center; min-height: 1.5rem; color: var(--text-secondary); }   /* 24 px con puntero fino */
+.aura-crumbs > li:first-child > a { justify-content: center; min-width: 1.5rem; margin-left: -.125rem; }
+@media (hover: hover) {
+  .aura-crumbs a:hover { color: var(--text-primary); }
+}
+.aura-crumbs img { width: 1.25rem; height: 1.25rem; }
+.aura-crumbs [aria-current] { color: var(--text-primary); }
+/* En táctil, 44 px de objetivo; el logotipo gana ancho sin moverse del borde. */
+@media (pointer: coarse) {
+  .aura-crumbs a { min-height: 2.75rem; }
+  .aura-crumbs > li:first-child > a {
+    justify-content: center;
+    min-width: 2.75rem;
+    margin-left: -.75rem;
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   5.2 Acciones
+   -------------------------------------------------------------------------- */
+
+/* Botón — guía de estilo §03: 48 px de alto, radio 999, 24 px de padding.
+   El hover (más luminosidad) y el halo son capas con opacidad; el color nunca
+   se anima. La pulsación responde al instante con scale(.97). */
+.aura-btn {
+  --btn-bg: transparent;
+  --btn-fg: var(--text-primary);
+  --btn-border: transparent;
+  --btn-hover: var(--fill-3);
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  min-height: 3rem;
+  padding: .5rem 1.5rem;
+  border: 1px solid var(--btn-border);
+  border-radius: var(--radius-pill);
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  font-family: var(--font-ui);
+  font-size: .9375rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0;
+  text-align: center;
+  text-decoration: none;
+  /* Los botones cortos siguen en una línea; solo se parten (equilibrados)
+     cuando no caben, p. ej. con el texto al 125–150 % en el teléfono. Los
+     48 px son un mínimo: con dos líneas el botón crece en alto. */
+  white-space: normal;
+  text-wrap: balance;
+  flex-shrink: 0;                       /* en una fila no cede ante sus vecinos (como con nowrap)… */
+  max-width: 100%;                      /* …pero nunca es más ancho que su contenedor */
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--dur-press) ease-out;
+}
+.aura-btn:hover { color: var(--btn-fg); }
+.aura-btn::before {                     /* capa de hover */
+  content: "";
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--btn-hover);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-1) ease;
+}
+.aura-btn .bi { font-size: 1.0625em; line-height: 1; }
+
+.aura-btn--primary {
+  --btn-bg: var(--accent);
+  --btn-fg: #fff;
+  --btn-border: var(--accent);
+  --btn-hover: var(--accent-hover);
+}
+.aura-btn--primary::after {             /* halo de energía */
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  border-radius: inherit;
+  box-shadow: var(--glow-accent);
+  opacity: .55;
+  pointer-events: none;
+  transition: opacity var(--dur-1) ease;
+}
+.aura-btn--secondary {
+  --btn-fg: var(--accent-link);
+  --btn-border: rgba(41, 151, 255, .7);
+  --btn-hover: var(--accent-soft);
+}
+.aura-btn--inverse {
+  --btn-bg: var(--text-primary);
+  --btn-fg: #000;
+  --btn-border: var(--text-primary);
+  --btn-hover: var(--inverse-hover);   /* guía §03 */
+}
+.aura-btn--ghost {
+  --btn-fg: var(--text-primary);
+  --btn-hover: var(--fill-3);
+}
+/* Destructiva (borrar datos, eliminar el ID de AURA): texto y borde en
+   --error sobre fondo neutro. #ff453a da 6,2:1 sobre negro, 5,3:1 sobre
+   --bg-secondary y AA también con la capa de hover y sobre una hoja. Solo
+   para lo irreversible, y siempre tras una confirmación (§13). */
+.aura-btn--destructive {
+  --btn-fg: var(--error);
+  --btn-border: rgba(255, 69, 58, .7);
+  --btn-hover: rgba(255, 69, 58, .14);
+}
+
+.aura-btn--block {
+  display: flex;
+  width: 100%;
+  white-space: normal;
+}
+
+@media (hover: hover) {
+  .aura-btn:hover::before { opacity: 1; }
+  .aura-btn--primary:hover::after { opacity: 1; }
+}
+.aura-btn:focus-visible::before { opacity: 1; }
+
+/* Pulsación: inmediata, en pointerdown (.is-pressed lo pone el JS) */
+.aura-btn:active,
+.aura-btn.is-pressed { transform: scale(.97); }
+
+/* Un botón en carga (AURA.ui.busy) también lleva aria-disabled, pero conserva
+   su aspecto: está trabajando, no desactivado. */
+/* Desactivado: la guía pinta los tres (primario, secundario, inverso) igual:
+   relleno neutro, sin borde y etiqueta con menos contraste pero legible
+   (#6e6e73 en lugar del #4d4d51 de la guía, por accesibilidad). Solo la
+   destructiva conserva su contorno, para que no se confunda con otra acción. */
+.aura-btn:disabled,
+.aura-btn[aria-disabled="true"]:not(.is-loading),
+.aura-btn.is-disabled {
+  --btn-bg: var(--fill-2);
+  --btn-fg: var(--text-disabled);     /* menos contraste, etiqueta aún legible */
+  --btn-border: transparent;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.aura-btn--destructive:disabled,
+.aura-btn--destructive[aria-disabled="true"]:not(.is-loading),
+.aura-btn--destructive.is-disabled {
+  --btn-bg: transparent;
+  --btn-border: var(--hairline-strong);
+}
+.aura-btn:disabled::before, .aura-btn:disabled::after,
+.aura-btn[aria-disabled="true"]:not(.is-loading)::before, .aura-btn[aria-disabled="true"]:not(.is-loading)::after,
+.aura-btn.is-disabled::before, .aura-btn.is-disabled::after { display: none; }
+
+.aura-btn.is-loading { pointer-events: none; }
+
+/* Estados forzados para la guía viva */
+.aura-btn.is-hover::before { opacity: 1; }
+.aura-btn--primary.is-hover::after { opacity: 1; }
+
+.aura-spinner {
+  flex: none;
+  width: 1em;
+  height: 1em;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: aura-spin .7s linear infinite;
+}
+
+/* Botón de icono (cerrar, flechas, mostrar contraseña…) — 44 px */
+.aura-icon-btn {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text-primary);
+  font-size: 1.0625rem;
+  line-height: 1;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--dur-press) ease-out;
+}
+.aura-icon-btn--solid { background: var(--fill-3); }
+.aura-icon-btn:disabled {
+  color: var(--text-disabled);
+  background: var(--fill-1);
+  cursor: not-allowed;
+}
+@media (hover: hover) {
+  .aura-icon-btn:not(:disabled):hover { background: var(--fill-3); color: #fff; }
+  .aura-icon-btn--solid:not(:disabled):hover { background: rgba(255, 255, 255, .2); }
+}
+
+.aura-icon-btn:active:not(:disabled),
+.aura-icon-btn.is-pressed,
+.aura-nav__action:active,
+.aura-nav__action.is-pressed { transform: scale(.92); }
+
+/* Enlace contextual: acción de baja intensidad dentro del flujo */
+.aura-link {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent-link);
+  font: inherit;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+}
+.aura-link::after {
+  content: "›";
+  display: inline-block;
+  margin-left: .3em;
+  transition: transform var(--dur-1) var(--ease-out);
+}
+/* Como botón («Eliminar» en la bolsa) es un control: 44 px de objetivo. */
+button.aura-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+/* Un enlace suelto (no dentro de una frase: en un .aura-cluster, al pie de una
+   tesela o una característica, en .aura-section-head--split…) también es un
+   control: 44 px de alto en pantallas táctiles. Dentro de un texto (p, li,
+   dd, td, span…) sigue la línea; si en un <p> es lo único que hay, márcalo
+   con --control. */
+a.aura-link:not(:is(p, li, dd, dt, td, th, span, label, small, strong, em, b, i, figcaption, blockquote, h1, h2, h3, h4, h5, h6) > .aura-link),
+.aura-link--control {
+  display: inline-block;                /* el «›» sigue a la última palabra aunque el texto se parta */
+  min-height: 1.5rem;                   /* puntero fino: nunca menos de 24 px (§13) */
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+@media (pointer: coarse) {
+  a.aura-link:not(:is(p, li, dd, dt, td, th, span, label, small, strong, em, b, i, figcaption, blockquote, h1, h2, h3, h4, h5, h6) > .aura-link),
+  .aura-link--control {
+    padding-block: .6875rem;
+    padding-block: max(0px, calc((2.75rem - 1lh) / 2));   /* 44 px de alto con una línea */
+  }
+}
+@media (hover: hover) {
+  .aura-link:hover {
+    color: var(--accent-link);
+    text-decoration: underline;
+    text-underline-offset: .2em;
+    text-decoration-thickness: 1px;
+  }
+  .aura-link:hover::after { transform: translate3d(.15em, 0, 0); }
+  .aura-link--muted:hover { color: var(--text-primary); }
+}
+.aura-link--plain::after { display: none; }
+.aura-link--muted { color: var(--text-secondary); font-weight: 400; }
+
+/* Pulsación de los enlaces de texto y de navegación: se atenúan al instante,
+   como un botón de texto (.is-pressed lo pone aura-ui.js en pointerdown). */
+.aura-link:active, .aura-link.is-pressed,
+a.aura-localnav__title:active, a.aura-localnav__title.is-pressed,
+.aura-nav__link:active, .aura-nav__link.is-pressed,
+.aura-localnav__link:active, .aura-localnav__link.is-pressed,
+.aura-menu__link:active, .aura-menu__link.is-pressed,
+.aura-menu__secondary a:active, .aura-menu__secondary a.is-pressed,
+.aura-bag-line__name a:active, .aura-bag-line__name a.is-pressed,
+.aura-prose a:active, .aura-prose a.is-pressed,
+.aura-accordion__panel a:not(.aura-btn):active, .aura-accordion__panel a:not(.aura-btn).is-pressed,
+.aura-footer__list a:active, .aura-footer__list a.is-pressed,
+.aura-footer__legal-links a:active, .aura-footer__legal-links a.is-pressed,
+.aura-crumbs a:active, .aura-crumbs a.is-pressed,
+.aura-footnote-ref > a:active, .aura-footnote-ref > a.is-pressed,
+.aura-footnotes__back:active, .aura-footnotes__back.is-pressed { opacity: .6; }
+/* Donde ya hay respuesta propia, sin el resaltado gris del navegador. */
+.aura-bag-line__name a, a.aura-bag-line__media, .aura-prose a, .aura-accordion__panel a,
+.aura-footer__list a, .aura-footer__legal-links a, .aura-crumbs a,
+.aura-product-card__media, .aura-product-card__name a, .aura-footnote-ref > a, .aura-footnotes__back { -webkit-tap-highlight-color: transparent; }
+a.aura-bag-line__media:active, a.aura-bag-line__media.is-pressed { opacity: .8; }
+
+/* Chip e insignia */
+.aura-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: .375rem;
+  min-height: 1.75rem;
+  padding: .1875rem .75rem;
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--radius-pill);
+  background: var(--fill-1);
+  color: var(--text-primary);
+  font-size: .75rem;
+  font-weight: 650;
+  line-height: 1.3;
+  letter-spacing: .02em;
+  white-space: nowrap;
+}
+button.aura-chip,
+a.aura-chip {
+  min-height: 2.25rem;
+  padding-inline: .875rem;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: transform var(--dur-press) ease-out;
+}
+button.aura-chip:active, a.aura-chip:active, .aura-chip.is-pressed { transform: scale(.96); }
+.aura-chip.is-active,
+.aura-chip[aria-pressed="true"] {
+  border-color: var(--accent-link);
+  background: var(--accent-soft);
+  color: #fff;
+}
+@media (hover: hover) {
+  button.aura-chip:hover, a.aura-chip:hover { background: var(--fill-3); color: #fff; }
+}
+@media (pointer: coarse) {
+  button.aura-chip, a.aura-chip { min-height: 2.75rem; }
+}
+
+.aura-badge {                          /* guía de estilo: «Eyebrow / Badge» · Inter 12 / 650 */
+  display: inline-flex;
+  align-items: center;
+  gap: .3125rem;
+  padding: .25rem .625rem;
+  border-radius: var(--radius-pill);
+  background: var(--gold-soft);
+  color: var(--gold);
+  font-family: var(--font-ui);
+  font-size: .75rem;
+  font-weight: 650;
+  line-height: 1.3;
+  letter-spacing: .02em;
+  white-space: nowrap;
+}
+.aura-badge--mono {                     /* etiqueta técnica (estados de pedido, «Demostración») */
+  padding: .1875rem .5rem;
+  border-radius: .375rem;
+  font-family: var(--font-mono);
+  font-size: .6875rem;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.aura-badge--blue { background: var(--accent-soft); color: var(--accent-link); }
+.aura-badge--ok { background: rgba(48, 209, 88, .14); color: var(--ok); }
+.aura-badge--warn { background: rgba(255, 214, 10, .12); color: var(--warn); }
+.aura-badge--error { background: rgba(255, 69, 58, .14); color: var(--error); }
+.aura-badge--neutral { background: var(--fill-2); color: var(--text-secondary); }
+
+/* Control segmentado (radios, enlaces o botones) */
+.aura-segmented {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  flex-wrap: wrap;                      /* con texto grande se reparte en filas: nunca esconde una opción */
+  gap: .125rem;
+  max-width: 100%;
+  padding: .25rem;
+  border-radius: var(--radius-pill);
+  background: var(--fill-2);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+/* Repartido en varias filas (lo marca aura-ui.js al medir): la píldora pasa a
+   rectángulo redondeado; los ítems y la pastilla conservan su radio. */
+.aura-segmented.is-wrapped { border-radius: var(--radius-lg); }
+.aura-segmented::-webkit-scrollbar { display: none; }
+.aura-segmented__item {
+  position: relative;
+  z-index: 1;
+  flex: 1 0 auto;
+  margin: 0;
+  cursor: pointer;
+}
+/* Con JS (.has-thumb), la selección es una sola pastilla que se desliza de
+   un ítem a otro con un muelle y se puede arrastrar. aura-ui.js la mueve solo
+   con transform (translate3d para el avance, también entre filas, y scaleX
+   para el ancho mientras viaja); width y height en línea se escriben en
+   reposo. El ítem elegido deja de pintar su propio fondo: lo pone la
+   pastilla, con el mismo blanco translúcido. */
+.aura-segmented__thumb {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  height: calc(100% - .5rem);
+  border-radius: var(--radius-pill);
+  background: var(--fill-selected);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .12), var(--shadow-1);
+  pointer-events: none;
+  transition: scale var(--dur-press) ease-out;
+}
+.aura-segmented__thumb.is-pressed { scale: .96; }      /* se hunde con su ítem al pulsarlo */
+.aura-segmented.is-dragging { -webkit-user-select: none; user-select: none; cursor: grabbing; }
+.aura-segmented.is-dragging .aura-segmented__thumb { will-change: transform; }
+.aura-segmented.has-thumb .aura-segmented__item > input:checked + span,
+.aura-segmented.has-thumb a.aura-segmented__item:is(.is-active, [aria-current]),
+.aura-segmented.has-thumb button.aura-segmented__item:is(.is-active, [aria-pressed="true"], [aria-selected="true"]) {
+  background: transparent;
+  box-shadow: none;
+}
+.aura-segmented__item > input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+/* Variante con radios: el span que sigue al input es la pastilla y llena su
+   etiqueta. Variante con enlaces o botones: el propio ítem es la pastilla, a
+   su ancho natural (con width: 100% cada uno mediría todo el control). Solo el
+   span de después del input: cualquier otro span de un enlace o botón es texto. */
+.aura-segmented__item > input + span { width: 100%; }
+.aura-segmented__item > input + span,
+a.aura-segmented__item,
+button.aura-segmented__item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.5rem;
+  padding: 0 1.125rem;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: .875rem;
+  font-weight: 500;
+  letter-spacing: .002em;
+  white-space: nowrap;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--dur-press) ease-out;
+}
+/* Pulsación inmediata (también la opción ya elegida: el gesto se reconoce igual). */
+.aura-segmented__item:active > input + span,
+.aura-segmented__item.is-pressed > input + span,
+a.aura-segmented__item:active, a.aura-segmented__item.is-pressed,
+button.aura-segmented__item:active, button.aura-segmented__item.is-pressed { transform: scale(.96); }
+@media (pointer: coarse) {
+  .aura-segmented__item > input + span,
+  a.aura-segmented__item,
+  button.aura-segmented__item { min-height: 2.75rem; }
+}
+.aura-segmented__item > input:checked + span,
+a.aura-segmented__item.is-active,
+a.aura-segmented__item[aria-current],
+button.aura-segmented__item.is-active,
+button.aura-segmented__item[aria-pressed="true"],
+button.aura-segmented__item[aria-selected="true"] {
+  background: var(--fill-selected);
+  color: #fff;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .12), var(--shadow-1);
+}
+.aura-segmented__item > input:focus-visible + span {
+  outline: 2px solid var(--accent-link);
+  outline-offset: 2px;
+}
+@media (hover: hover) {
+  .aura-segmented__item:hover > input + span,
+  a.aura-segmented__item:hover,
+  button.aura-segmented__item:hover { color: #fff; }
+}
+
+
+/* --------------------------------------------------------------------------
+   5.3 Superficies y contenido
+   -------------------------------------------------------------------------- */
+
+.aura-card {
+  position: relative;
+  display: block;
+  padding: clamp(1.25rem, 2.5vw, 2rem);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+.aura-card--elevated {
+  background: var(--bg-elevated);
+  box-shadow: var(--shadow-2);
+}
+/* Cristal: SOLO sobre fondos opacos (negro, banda, imagen). Nunca dentro de
+   otra superficie de cristal ni de una hoja o popover. */
+.aura-card--glass {
+  background: var(--glass-thin-bg);
+  -webkit-backdrop-filter: var(--glass-thin-filter);
+  backdrop-filter: var(--glass-thin-filter);
+  border-top-color: var(--edge-light);
+  box-shadow: var(--shadow-2);
+}
+.aura-card--flush { padding: 0; overflow: hidden; }
+a.aura-card, .aura-card--interactive {
+  transition: transform var(--dur-2) var(--ease-out);
+}
+a.aura-card:hover { color: var(--text-primary); }
+@media (hover: hover) {
+  a.aura-card:hover, .aura-card--interactive:hover { transform: translate3d(0, -.1875rem, 0); }
+}
+a.aura-card:active, .aura-card--interactive:active, .aura-card.is-pressed {
+  transform: scale(.985);
+  transition-duration: var(--dur-press);
+}
+
+/* Contenedor de imagen */
+.aura-media {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: #000;
+}
+.aura-media--halo {
+  background:
+    radial-gradient(60% 55% at 50% 55%, rgba(0, 113, 227, .22), transparent 70%),
+    #030304;
+}
+.aura-media--frame { border: 1px solid var(--hairline); }
+/* En un marco el hueco no lleva borde ni radio propios: el marco recorta (y,
+   con pie, no quedan cuñas negras entre la imagen y el pie). */
+.aura-media--frame > .aura-slot { border: 0; border-radius: 0; }
+.aura-media--fill > .aura-img,
+.aura-media--fill > .aura-slot {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  object-fit: cover;
+  border: 0;
+  border-radius: inherit;
+}
+.aura-media__tag {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1;
+  padding: .3125rem .625rem;
+  border: 1px solid var(--hairline-strong);
+  border-radius: .375rem;
+  background: rgba(0, 0, 0, .72);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: .6875rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.aura-media__caption {
+  margin: 0;
+  padding: .875rem 1.25rem;
+  background: var(--bg-band);
+  color: var(--text-secondary);
+  font-size: .8125rem;
+  letter-spacing: .006em;
+}
+.aura-media__overlay {                  /* p. ej. cifras sobre la foto de «About us» */
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  padding: clamp(1rem, 3vw, 1.75rem);
+  background: linear-gradient(to top, rgba(0, 0, 0, .88) 30%, transparent);
+}
+
+/* Imagen y hueco de imagen */
+.aura-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-position: var(--photo-focus, 50% 50%);   /* encuadre de una foto recortada (ver abajo) */
+  color: var(--text-tertiary);
+  font-family: var(--font-mono);
+  font-size: .75rem;
+  letter-spacing: .02em;
+}
+
+/* Encuadre: cuando una foto se recorta (object-fit: cover en teselas, tarjetas
+   --fill, héroes de página) o se ajusta (contain), --photo-focus dice qué
+   parte manda. Se pone en el <img> o en su contenedor (se hereda): con una
+   clase para los casos de siempre o en línea para un punto exacto
+   (style="--photo-focus: 16% 50%"). */
+.aura-photo-top { --photo-focus: 50% 0; }
+.aura-photo-bottom { --photo-focus: 50% 100%; }
+.aura-photo-left { --photo-focus: 0 50%; }
+.aura-photo-right { --photo-focus: 100% 50%; }
+
+/* Aparición de la foto al decodificarse (aura-core.js pone .is-pending a la
+   que aún no ha llegado y .is-loaded al llegar): un fundido corto de
+   opacidad, sin desplazamiento. La que ya estaba en caché no se oculta y la
+   que llega casi al instante (.is-instant) aparece sin fundido. La del primer
+   héroe (fetchpriority="high") nunca se oculta. Las que tienen su propia
+   aparición ([data-aura-reveal]) o su propio fundido (galería) lo conservan. */
+/* Las dos transiciones van en :where() (especificidad 0): una página o un
+   componente que quiera su propio fundido (la galería) lo escribe con su
+   clase, sin tener que ganarle a estas reglas. */
+.aura-js img.aura-img.is-pending { opacity: 0; }
+:where(.aura-js img.aura-img[data-slot]:not([data-aura-reveal])) { transition: opacity var(--dur-2) ease; }
+:where(.aura-js img.aura-img.is-instant:not([data-aura-reveal])) { transition: none; }
+
+/* La foto real llega: los marcos de los héroes y de los bloques texto +
+   imagen sobran (borde y fondo propios) y la foto se funde con el negro por
+   sus bordes, en lugar de quedar como un rectángulo dentro de otro. El halo
+   (si lo hay) se queda detrás, sin su base. No se aplica a los bloques con
+   pie de foto o con cifras encima: son composiciones con su propia caja. */
+:is(.aura-hero__media, .aura-split__media):has(> .aura-img.is-loaded):not(:has(> .aura-media__caption, > .aura-media__overlay)) {
+  border-color: transparent;
+  background: transparent;
+  box-shadow: none;
+}
+.aura-media--halo:is(.aura-hero__media, .aura-split__media):has(> .aura-img.is-loaded):not(:has(> .aura-media__caption, > .aura-media__overlay)) {
+  background: radial-gradient(60% 55% at 50% 55%, rgba(0, 113, 227, .22), transparent 70%);
+}
+/* Además, «aclarar»: sobre la franja (#0a0a0b) o el halo, el negro de la foto
+   toma el del fondo y no queda un parche más oscuro en el centro. Sobre el
+   negro puro no cambia nada. */
+:is(.aura-hero__media, .aura-split__media):not(:has(> .aura-media__caption, > .aura-media__overlay)) > .aura-img.is-loaded {
+  -webkit-mask-image: var(--photo-feather-x), var(--photo-feather-y);
+  -webkit-mask-composite: source-in;
+  mask-image: var(--photo-feather-x), var(--photo-feather-y);
+  mask-composite: intersect;
+  mix-blend-mode: lighten;
+}
+
+.aura-slot {
+  container-type: inline-size;
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  aspect-ratio: var(--w, 4) / var(--h, 3);
+  overflow: hidden;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-md);
+  background:
+    radial-gradient(closest-side at 50% 46%, rgba(0, 113, 227, .24), transparent 72%),
+    linear-gradient(180deg, #111113, #08080a);
+  color: var(--text-secondary);
+}
+.aura-slot__inner {
+  display: grid;
+  justify-items: center;
+  gap: .5rem;
+  max-width: 100%;
+  padding: 1rem;
+  text-align: center;
+}
+.aura-slot__icon {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border: 1px solid rgba(41, 151, 255, .5);
+  border-radius: 50%;
+  color: var(--accent-link);
+  font-size: 1.125rem;
+  box-shadow: 0 0 0 6px rgba(0, 113, 227, .09), 0 0 28px rgba(0, 113, 227, .4);
+}
+.aura-slot__path {
+  font-family: var(--font-mono);
+  font-size: .75rem;
+  line-height: 1.4;
+  letter-spacing: .02em;
+  color: var(--text-secondary);
+  overflow-wrap: anywhere;
+}
+.aura-slot__size {
+  font-family: var(--font-mono);
+  font-size: .6875rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+.aura-slot__optional {                  /* «Opcional, una por color: …-negro.png» */
+  max-width: 32ch;
+  font-size: .6875rem;
+  line-height: 1.4;
+  letter-spacing: .01em;
+  color: var(--text-tertiary);
+  overflow-wrap: anywhere;
+}
+@container (max-width: 17rem) {
+  .aura-slot__optional { display: none; }
+}
+@container (max-width: 13rem) {
+  .aura-slot__inner { padding: .25rem; }
+  .aura-slot__path, .aura-slot__size, .aura-slot__optional { display: none; }
+  .aura-slot__icon { width: 2rem; height: 2rem; font-size: .875rem; box-shadow: none; }
+}
+@container (max-width: 4.5rem) {
+  .aura-slot__icon { width: 1.5rem; height: 1.5rem; border: 0; font-size: .875rem; }
+}
+
+/* Novedades: rejilla bento y teselas */
+.aura-bento {
+  display: grid;
+  gap: var(--gap);
+  grid-template-columns: minmax(0, 1fr);
+}
+.aura-bento__col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+  min-width: 0;
+}
+.aura-bento__col > .aura-tile { flex: 1 1 auto; }
+.aura-bento__col > .aura-tile--tall { flex-grow: 1.6; }
+@media (min-width: 768px) {
+  .aura-bento { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .aura-bento--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .aura-bento > .aura-tile--wide { grid-column: 1 / -1; }
+}
+
+.aura-tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  min-width: 0;
+  padding: clamp(1.25rem, 2.4vw, 1.75rem);
+  overflow: hidden;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+.aura-tile__copy {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: .5rem;
+  justify-items: start;
+}
+.aura-tile__text {
+  margin: 0;
+  max-width: 52ch;
+  font-size: .9375rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+.aura-tile__media {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: clamp(12rem, 28vw, 17rem);
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: #000;
+}
+.aura-tile--tall .aura-tile__media { min-height: clamp(15rem, 36vw, 24rem); }
+/* --media-fit: la imagen guarda su proporción (la de width/height) y se apoya
+   abajo; en una fila de teselas con textos de distinta longitud, todas las
+   imágenes miden lo mismo y quedan a la misma altura. */
+.aura-tile--media-fit .aura-tile__media {
+  flex: none;
+  min-height: 0;
+  margin-top: auto;
+  aspect-ratio: 4 / 3;               /* otra proporción: style="aspect-ratio:16/9" en __media */
+}
+.aura-tile__media > .aura-img,
+.aura-tile__media > .aura-slot {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  object-fit: cover;
+  border-radius: inherit;
+}
+/* --blend: un aparato recortado sobre negro puro (auraBook o auraPad
+   flotando). Sin la ventana negra, el aparato queda sobre la propia tesela
+   (Elevación/01) y «aclarar» convierte el negro de la foto en el gris de la
+   tarjeta, como la tarjeta de modelo. Las fotos con ambiente no lo llevan. */
+.aura-tile__media--blend { background: transparent; }
+.aura-tile__media--blend > .aura-img { mix-blend-mode: lighten; }
+/* --contain: la foto entera, ajustada a la caja (sin recortar). Con
+   .aura-photo-top queda pegada arriba: para fotos compuestas con el sujeto
+   arriba y negro abajo, donde va el texto de una tesela --cover estrecha. */
+.aura-tile__media--contain > .aura-img { object-fit: contain; }
+/* Tesela con imagen a sangre y texto sobre degradado (página de familia) */
+.aura-tile--cover {
+  justify-content: flex-end;
+  min-height: clamp(26rem, 42vw, 28rem);   /* en el teléfono, sitio para la imagen sobre el texto */
+  border-color: transparent;
+  background: #050506;
+}
+.aura-tile--cover .aura-tile__media {
+  position: absolute;
+  inset: 0;
+  min-height: 0;
+  border-radius: 0;
+}
+.aura-tile--cover .aura-tile__media::after {   /* protección estática del texto sobre la foto */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--photo-scrim);
+}
+/* La imagen de --cover va en posición absoluta: la tesela alta se alarga a sí
+   misma (mampostería alta + baja / baja + alta también con teselas cover). */
+.aura-tile--cover.aura-tile--tall { min-height: clamp(24rem, 48vw, 35rem); }
+.aura-tile--cover .aura-tile__media > .aura-slot { border: 0; place-items: start center; }
+/* El marcador de un hueco --cover va arriba (el texto ocupa la parte baja) */
+.aura-tile--cover .aura-slot__inner { padding-top: clamp(3.5rem, 8%, 4.5rem); }
+.aura-tile--cover .aura-tile__copy { margin-top: auto; }
+/* Sobre una foto que cambia, el texto de apoyo va en el blanco del titular
+   (skill §12: más contraste, nunca un gris plano); la jerarquía la dan el
+   tamaño y el peso. Con el 82 % de antes, sobre zonas claras de la foto
+   quedaba en 4,3:1. */
+.aura-tile--cover .aura-tile__text { color: var(--text-primary); }
+/* La etiqueta va arriba, donde no llega el degradado del texto: tiene su
+   propia protección (--photo-scrim-top), solo si la tesela lleva etiqueta. */
+.aura-tile--cover:has(> .aura-tile__tag) .aura-tile__media::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: var(--photo-scrim-top);
+  pointer-events: none;
+}
+/* Etiqueta arriba a la izquierda en --cover: mono en blanco con el punto
+   dorado (el prototipo la pinta así, con el punto azul; el azul queda para
+   lo que se pulsa). Marcado: .aura-eyebrow.aura-eyebrow--mono.aura-tile__tag */
+.aura-tile__tag {
+  position: absolute;
+  top: clamp(1.25rem, 2.4vw, 1.75rem);
+  left: clamp(1.25rem, 2.4vw, 1.75rem);
+  z-index: 1;
+  color: var(--text-primary);
+}
+.aura-tile__tag::before {
+  background: var(--gold);
+  box-shadow: 0 0 0 3px var(--gold-soft);
+}
+
+/* Tarjeta de modelo */
+.aura-lineup {
+  display: grid;
+  gap: var(--gap);
+  grid-template-columns: minmax(0, 1fr);
+}
+/* Tres columnas desde 992 px. Entre 768 y 991 px (tarjetas de ~215 px con
+   tres columnas), dos columnas y la tercera tarjeta a lo ancho, con la imagen
+   a la izquierda. */
+@media (min-width: 768px) {
+  .aura-lineup { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .aura-lineup > .aura-product-card:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+  .aura-lineup > .aura-product-card:last-child:nth-child(odd) > .aura-product-card__media { aspect-ratio: auto; min-height: 100%; }
+}
+@media (min-width: 992px) {
+  .aura-lineup { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .aura-lineup > .aura-product-card:last-child:nth-child(odd) { grid-column: auto; display: flex; }
+  .aura-lineup > .aura-product-card:last-child:nth-child(odd) > .aura-product-card__media { aspect-ratio: 4 / 3; min-height: 0; }
+}
+.aura-product-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  text-align: left;
+  transition: transform var(--dur-2) var(--ease-out);
+}
+/* La tarjeta responde entera al tocar su foto o su nombre (los dos llevan al
+   configurador), igual que a.aura-card: al instante, en pointerdown. */
+.aura-product-card:has(> .aura-product-card__media:active, .aura-product-card__name a:active),
+.aura-product-card:has(> .aura-product-card__media.is-pressed, .aura-product-card__name a.is-pressed) {
+  transform: scale(.985);
+  transition-duration: var(--dur-press);
+}
+.aura-product-card__media {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    radial-gradient(70% 60% at 50% 62%, rgba(0, 113, 227, .16), transparent 70%),
+    #050506;
+}
+.aura-product-card__media > .aura-img,
+.aura-product-card__media > .aura-slot {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  object-fit: contain;
+  border: 0;
+  border-radius: 0;
+  background: none;
+}
+/* Las fotos de producto son el aparato sobre negro puro: con «aclarar», el
+   negro de la foto deja ver el fondo y el halo del panel, y la foto deja de
+   ser un rectángulo negro dentro de otro (vale para la tarjeta de modelo, la
+   de familia, la línea de la bolsa y la galería del configurador). */
+.aura-product-card__media > .aura-img,
+.aura-family-card__media > .aura-img,
+.aura-bag-line__media > .aura-img,
+.aura-gallery > .aura-img { mix-blend-mode: lighten; }
+.aura-product-card__body {
+  container-type: inline-size;          /* el pie se decide por el ancho de la tarjeta, no por su texto */
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: .5rem;
+  padding: clamp(1.125rem, 2vw, 1.5rem);
+}
+.aura-product-card__name {               /* el «Card Title (H3)» de la guía: las métricas de .aura-h3 (22 → 28 px) */
+  margin: .125rem 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.375rem, 1.2rem + .75vw, 1.75rem);
+  font-weight: 500;
+  line-height: 1.22;
+  letter-spacing: -.008em;
+}
+.aura-product-card__name a { color: inherit; }
+@media (hover: hover) {
+  .aura-product-card__name a:hover { color: #fff; }
+}
+/* En táctil, el nombre enlazado mide 44 px de objetivo sin mover nada: el
+   relleno vertical crece y un margen negativo igual lo compensa. */
+@media (pointer: coarse) {
+  .aura-product-card__name a {
+    display: inline-block;
+    padding-block: max(0rem, calc((2.75rem - 1.22em) / 2));
+    margin-block: min(0rem, calc((1.22em - 2.75rem) / 2));
+  }
+}
+.aura-product-card__finish {
+  margin: 0;
+  font-size: .8125rem;
+  letter-spacing: .006em;
+  color: var(--accent-link);
+}
+.aura-product-card__text {
+  margin: 0;
+  font-size: .875rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+/* Pie: estado, precio y botón. Una sola composición por ancho de tarjeta,
+   igual en todas las de la fila (tienen el mismo ancho): por debajo de ~20 rem
+   de contenido, precio y cuota arriba y el botón debajo; con sitio, el botón
+   a la derecha del precio, alineado con su última línea (como el prototipo).
+   Nunca depende de lo largos que sean «Configurar» o la cuota. */
+.aura-product-card__foot {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: start;
+  align-items: end;
+  gap: .75rem;
+  width: 100%;
+  margin-top: auto;
+  padding-top: .75rem;
+}
+@container (min-width: 20rem) {
+  .aura-product-card__foot { grid-template-columns: minmax(0, 1fr) auto; column-gap: 1rem; }
+  .aura-product-card__foot > .aura-btn { grid-column: 2; justify-self: end; }
+  .aura-product-card__foot > .aura-product-card__price { grid-column: 1; }
+}
+.aura-product-card__price {
+  display: grid;
+  gap: .125rem;
+  margin: 0;
+}
+.aura-product-card__price > .aura-caption { text-wrap: balance; }
+/* Disponibilidad («Próximamente · Reserva a partir del 16 de octubre»): una
+   fila propia encima del precio, con el icono en dorado (valor, no acción). */
+.aura-product-card__status {
+  display: flex;
+  align-items: flex-start;
+  gap: .5rem;
+  grid-column: 1 / -1;
+  margin: 0;
+  font-size: .8125rem;
+  line-height: 1.45;
+  letter-spacing: .006em;
+  color: var(--text-secondary);
+}
+.aura-product-card__status > .bi { flex: none; margin-top: .0625rem; color: var(--gold); }
+
+/* Puntos de color (informativos, no interactivos) */
+.aura-swatch-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .375rem;
+  margin: .125rem 0;
+  padding: 0;
+  list-style: none;
+}
+.aura-swatch-list__dot {
+  display: block;
+  width: .75rem;
+  height: .75rem;
+  border-radius: 50%;
+  background: var(--swatch, #888);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .42);   /* ≥ 3:1 también con los acabados negros */
+  forced-color-adjust: none;
+}
+
+/* Característica: icono + título + texto */
+.aura-feature {
+  display: grid;
+  gap: .625rem;
+  align-content: start;
+  justify-items: start;
+  min-width: 0;
+}
+/* El icono acompaña, no actúa: pastilla neutra (el azul es para acciones,
+   foco e interacción, y en la misma tarjeta ya está el enlace azul). Para
+   valor premium (AuraCare+, Trade In), --gold, como el icono de la nota. */
+.aura-feature__icon {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: .75rem;
+  background: var(--fill-2);
+  color: var(--text-primary);
+  font-size: 1.125rem;
+  box-shadow: inset 0 1px 0 var(--edge-light);
+}
+.aura-feature__icon--gold {
+  background: var(--gold-soft);
+  color: var(--gold);
+  box-shadow: none;
+}
+.aura-feature__value {
+  margin: .25rem 0 0;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -.01em;
+}
+.aura-feature__title {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: .9375rem;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: 0;
+  color: var(--text-primary);
+}
+.aura-feature__text {
+  margin: 0;
+  font-size: .875rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  overflow-wrap: break-word;            /* un correo o una URL larga se parte antes que invadir el relleno */
+}
+.aura-feature--card {
+  padding: 1.25rem;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-sm);
+  background: var(--bg-secondary);
+}
+.aura-feature--inline {
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: .875rem;
+  row-gap: .125rem;
+}
+.aura-feature--inline .aura-feature__icon { grid-row: 1 / span 3; }
+.aura-feature--inline > :not(.aura-feature__icon) { grid-column: 2; }
+
+/* «Por qué comprar en AURA» ([data-aura-perks]): cuatro características que
+   respiran: 1 columna → 2 × 2 → 4 en fila cuando cada una tiene sitio. El
+   enlace, siempre abajo (las tarjetas de una fila miden lo mismo). */
+.aura-perks {
+  display: grid;
+  gap: var(--gap);
+  grid-template-columns: minmax(0, 1fr);
+}
+.aura-perks > .aura-feature { grid-template-rows: auto auto auto 1fr auto; }
+.aura-perks > .aura-feature > .aura-link { align-self: end; }
+@media (min-width: 576px) {
+  .aura-perks { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 1200px) {
+  .aura-perks { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+/* Tarjeta de familia (AURA.html.familyCard): imagen, nombre, lema, «Desde» y enlace */
+.aura-family-card { display: flex; flex-direction: column; height: 100%; color: var(--text-primary); }
+.aura-family-card__media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  isolation: isolate;
+  border-bottom: 1px solid var(--hairline);
+  background:
+    radial-gradient(70% 60% at 50% 62%, rgba(0, 113, 227, .16), transparent 70%),
+    #050506;
+}
+.aura-family-card__media > .aura-img,
+.aura-family-card__media > .aura-slot {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  object-fit: contain;
+  border: 0;
+  border-radius: 0;
+  background: none;
+}
+.aura-family-card__body {
+  display: grid;
+  flex: 1 1 auto;
+  grid-template-columns: minmax(0, 1fr);  /* el titular se parte dentro de la tarjeta, no la ensancha */
+  grid-template-rows: auto auto 1fr auto;
+  gap: .5rem;
+  padding: clamp(1.125rem, 2vw, 1.5rem);
+}
+.aura-family-card__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: .25rem 1rem;
+  margin: .5rem 0 0;
+}
+
+/* Cifra */
+.aura-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(6.5rem, 1fr));
+  gap: 1rem 1.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.aura-stat {
+  display: grid;
+  gap: .25rem;
+  align-content: start;
+  min-width: 0;
+}
+.aura-stat__value {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.625rem, 1.3rem + 1.3vw, 2.375rem);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -.016em;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-primary);
+}
+.aura-stat__label {
+  margin: 0;
+  font-size: .8125rem;
+  line-height: 1.4;
+  letter-spacing: .006em;
+  color: var(--text-secondary);
+}
+.aura-stat--card {
+  padding: 1rem 1.125rem;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-sm);
+  background: var(--fill-1);
+}
+/* La gran cifra («22 horas»): caja cuadrada para que el resplandor sea el
+   círculo del prototipo, centrada en su columna (como mucho 30 rem). */
+.aura-stat--xl {
+  justify-items: center;
+  align-content: center;
+  gap: .5rem;
+  width: min(100%, 30rem);
+  aspect-ratio: 1;
+  margin-inline: auto;
+  padding: clamp(1.5rem, 5vw, 3rem);
+  text-align: center;
+  background: radial-gradient(closest-side, rgba(0, 113, 227, .26), transparent 78%);
+}
+.aura-stat--xl .aura-stat__value {
+  font-size: clamp(5rem, 2.5rem + 12vw, 10rem);
+  line-height: .9;
+  letter-spacing: -.04em;
+}
+.aura-stat--xl .aura-stat__label,
+.aura-stat--md .aura-stat__label {
+  font-family: var(--font-mono);
+  font-size: .75rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+/* La misma cifra destacada en una columna estrecha (resumen, tarjeta): sin
+   caja cuadrada, 56–76 px. Vale sola o junto a --xl (la sustituye). Dentro
+   de un .aura-summary, --xl se comporta siempre como --md. */
+.aura-stat--md,
+.aura-summary .aura-stat--xl {
+  justify-items: center;
+  gap: .375rem;
+  width: auto;
+  aspect-ratio: auto;
+  margin-inline: 0;
+  padding: 1.5rem .5rem 1.25rem;
+  text-align: center;
+  background: radial-gradient(closest-side, rgba(0, 113, 227, .22), transparent 80%);
+}
+.aura-stat--md .aura-stat__value,
+.aura-summary .aura-stat--xl .aura-stat__value {
+  font-size: clamp(3.5rem, 2.6rem + 2.6vw, 4.75rem);
+  line-height: 1;
+  letter-spacing: -.035em;
+  white-space: nowrap;
+}
+
+/* Tabla comparativa */
+.aura-table-card {
+  overflow: hidden;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-sm);
+  background: #0d0d0e;
+}
+.aura-table-card__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem 1rem;
+  padding: 1.125rem 1.5rem;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--hairline);
+}
+.aura-table-card__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: -.004em;
+}
+.aura-table-card__hint {
+  margin: 0;
+  padding: .625rem 1.5rem;
+  border-bottom: 1px solid var(--hairline);
+  color: var(--text-tertiary);
+  font-size: .75rem;
+  letter-spacing: .01em;
+}
+@media (min-width: 768px) {
+  .aura-table-card__hint { display: none; }
+}
+.aura-table-wrap {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+}
+.aura-table-wrap:focus-visible { outline-offset: -2px; }
+.aura-table {
+  width: 100%;
+  min-width: 42rem;
+  margin: 0;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: .875rem;
+  line-height: 1.5;
+  color: var(--text-primary);
+}
+.aura-table th,
+.aura-table td {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--hairline);
+  text-align: left;
+  vertical-align: top;
+}
+.aura-table thead th {
+  font-family: var(--font-ui);
+  font-size: .875rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  color: var(--text-primary);
+  vertical-align: bottom;
+}
+.aura-table thead th:first-child {
+  font-family: var(--font-mono);
+  font-size: .6875rem;
+  font-weight: 500;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+.aura-table tbody th {
+  font-family: var(--font-ui);
+  font-weight: 400;
+  color: var(--text-secondary);
+}
+.aura-table th:first-child {            /* la característica no se pierde al desplazar */
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  width: 24%;
+  min-width: 9rem;
+  background: #0d0d0e;
+}
+/* Efecto de borde de la columna fija: solo cuando hay columnas pasando por
+   debajo (.aura-table-wrap.is-scrolled lo pone aura-ui.js al desplazar). */
+.aura-table th:first-child::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: -1px;
+  left: 100%;
+  width: .75rem;
+  pointer-events: none;
+  background: linear-gradient(to right, rgba(0, 0, 0, .55), transparent);
+  box-shadow: inset 1px 0 0 var(--hairline);
+  opacity: 0;
+  transition: opacity var(--dur-1) ease;
+}
+.aura-table-wrap.is-scrolled .aura-table th:first-child::after { opacity: 1; }
+/* Columna destacada: como el prototipo, solo el nombre del modelo en dorado.
+   El dorado nunca rellena una superficie (guía §01): la columna no se tiñe. */
+.aura-table thead th.is-featured { color: var(--gold); }
+.aura-table tbody tr:last-child > * { border-bottom: 0; }
+.aura-table__row--price td {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 500;
+}
+.aura-table__note {                     /* disponibilidad bajo el precio */
+  display: block;
+  margin-top: .25rem;
+  font-family: var(--font-ui);
+  font-size: .75rem;
+  font-weight: 400;
+  line-height: 1.45;
+  letter-spacing: .012em;
+  color: var(--text-secondary);
+}
+.aura-table__row--actions td { vertical-align: middle; }
+@media (max-width: 575.98px) {
+  /* A 360 px: la etiqueta fija ocupa 104 px y al lado se ve un modelo entero. */
+  .aura-table { min-width: 34rem; font-size: .8125rem; }
+  .aura-table thead th { font-size: .8125rem; }
+  .aura-table th:first-child { width: 6.5rem; min-width: 6.5rem; }
+  .aura-table th, .aura-table td { padding: .875rem 1rem; }
+  .aura-table th:first-child { padding-inline: 1rem .75rem; }
+  .aura-table-card__head { padding: 1rem; }
+  .aura-table-card__hint { padding-inline: 1rem; }
+}
+
+/* Cronología */
+.aura-timeline {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.aura-timeline__item {
+  position: relative;
+  display: grid;
+  gap: .375rem;
+  padding: 0 0 2.25rem 2rem;
+}
+.aura-timeline__item::before {
+  content: "";
+  position: absolute;
+  top: .75rem;
+  bottom: -.375rem;
+  left: .3125rem;
+  width: 1px;
+  background: var(--hairline-strong);
+}
+.aura-timeline__item::after {
+  content: "";
+  position: absolute;
+  top: .3125rem;
+  left: 0;
+  width: .6875rem;
+  height: .6875rem;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 0 4px var(--gold-soft);
+}
+.aura-timeline__item:last-child { padding-bottom: 0; }
+.aura-timeline__item:last-child::before { display: none; }
+.aura-timeline__when {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: .75rem;
+  font-weight: 500;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.aura-timeline__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.375rem;
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -.006em;
+}
+.aura-timeline__text {
+  margin: 0;
+  max-width: 60ch;
+  color: var(--text-secondary);
+}
+
+/* Cita */
+.aura-quote {
+  display: grid;
+  gap: 1.25rem;
+  max-width: 52rem;
+  margin: 0;
+}
+.aura-quote__text {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 1.1rem + 1.8vw, 2.25rem);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -.014em;
+  color: var(--text-primary);
+  text-wrap: balance;
+}
+.aura-quote__text::before {
+  content: "“";
+  display: block;
+  height: .55em;
+  color: var(--gold);
+  font-size: 1.8em;
+  line-height: 1;
+}
+.aura-quote__cite {
+  font-size: .875rem;
+  font-style: normal;
+  letter-spacing: .004em;
+  color: var(--text-secondary);
+}
+.aura-quote__cite strong { color: var(--text-primary); font-weight: 600; }
+
+/* Nota de uso */
+.aura-note {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: .25rem 1rem;
+  align-items: start;
+  padding: 1.125rem 1.25rem;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-md);
+  background: var(--bg-secondary);
+}
+.aura-note__icon {
+  display: grid;
+  place-items: center;
+  grid-row: 1 / span 2;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: .625rem;
+  background: var(--gold-soft);
+  color: var(--gold);
+  font-size: 1rem;
+}
+.aura-note__title {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: .875rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--text-primary);
+}
+.aura-note__text {
+  grid-column: 2;
+  margin: 0;
+  font-size: .875rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+}
+.aura-note--blue .aura-note__icon { background: var(--accent-soft); color: var(--accent-link); }
+
+/* Lista de ventajas con marca */
+.aura-checklist {
+  display: grid;
+  gap: .625rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--text-secondary);
+  font-size: .9375rem;
+  line-height: 1.5;
+}
+.aura-checklist > li {
+  position: relative;
+  padding-left: 1.75rem;
+}
+.aura-checklist > li::before {
+  content: "";
+  position: absolute;
+  top: .25rem;
+  left: 0;
+  width: 1rem;
+  height: 1rem;
+  background: var(--text-secondary);    /* marca informativa, no una acción: sin azul */
+  -webkit-mask: var(--icon-check) center / contain no-repeat;
+  mask: var(--icon-check) center / contain no-repeat;
+}
+
+/* Notas al pie: la letra pequeña de la página (precios con IVA, financiación,
+   reservas, cifras orientativas), como en las páginas de producto de la
+   guía: una sección --tight al final del <main>, separada por una línea,
+   con una lista numerada (<ol>) o con símbolos (<ul> + data-mark) en 12 px.
+   Las llamadas del texto son <sup class="aura-footnote-ref">. */
+.aura-footnotes { border-top: 1px solid var(--hairline); }
+.aura-footnotes__list {
+  display: grid;
+  gap: .625rem;
+  max-width: 62rem;
+  margin: 0;
+  padding: 0 0 0 1.25rem;
+  font-size: .75rem;
+  line-height: 1.55;
+  letter-spacing: .012em;
+  color: var(--text-secondary);
+  text-wrap: pretty;
+}
+/* <ol> y <ul> comparten el mismo sangrado: el texto de todas las notas
+   empieza en la misma vertical y los números o símbolos cuelgan a la izquierda. */
+ul.aura-footnotes__list { list-style: none; }
+.aura-footnotes__list > li::marker { color: var(--text-tertiary); font-variant-numeric: tabular-nums; }
+.aura-footnotes__list > li[data-mark] { position: relative; list-style: none; }
+.aura-footnotes__list > li[data-mark]::before {
+  content: attr(data-mark);
+  position: absolute;
+  top: 0;
+  right: calc(100% + .375rem);
+  color: var(--text-tertiary);
+}
+.aura-footnotes__list > li:target { color: var(--text-primary); }
+.aura-footnotes__list a:not(.aura-footnotes__back) {
+  color: var(--text-secondary);
+  text-decoration: underline;
+  text-underline-offset: .2em;
+  text-decoration-thickness: 1px;
+}
+@media (hover: hover) {
+  .aura-footnotes__list a:not(.aura-footnotes__back):hover { color: var(--text-primary); }
+}
+.aura-footnotes__back {                 /* «volver al texto»: 24 px con ratón, 44 px en táctil */
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.5rem;
+  min-height: 1.5rem;
+  margin-left: .125rem;
+  vertical-align: middle;
+  color: var(--accent-link);
+  touch-action: manipulation;
+}
+@media (pointer: coarse) {
+  .aura-footnotes__back { min-width: 2.75rem; min-height: 2.75rem; margin-block: -.625rem; }
+}
+/* La llamada sube una sola vez (vertical-align: super; se anula el top de
+   Bootstrap para <sup>) y no pasa de 12 px aunque vaya junto a un precio
+   grande. Va pegada a la palabra (sin relleno a la izquierda); un área
+   invisible amplía el objetivo: 24 px con ratón, 44 px en táctil. Dentro de
+   la cifra de un precio no se pone: la llamada va en el texto de apoyo. */
+/* Un solo dibujo y un solo tamaño en todo el sitio: Inter de 11–12 px con el
+   tracking ligeramente positivo de un texto pequeño. No hereda el tracking
+   negativo del titular en el que vaya (letter-spacing se hereda como
+   longitud: en un h1 de 56 px el «¹» se leía como un apóstrofo). */
+.aura-footnote-ref {
+  position: static;
+  top: auto;
+  font-family: var(--font-ui);
+  font-size: .62em;
+  font-size: max(.6875rem, min(.62em, .75rem));
+  font-weight: 600;
+  line-height: 0;
+  letter-spacing: .01em;
+  vertical-align: super;
+}
+.aura-footnote-ref > a {
+  position: relative;
+  padding: 0 .125em 0 .0625em;
+  color: inherit;
+  text-decoration: none;
+  touch-action: manipulation;
+}
+.aura-footnote-ref > a::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1.5rem;
+  height: 1.5rem;
+  transform: translate(-50%, -50%);
+}
+@media (pointer: coarse) {
+  .aura-footnote-ref > a::after { width: 2.75rem; height: 2.75rem; }
+}
+@media (hover: hover) {
+  .aura-footnote-ref > a:hover { color: var(--accent-link); }
+}
+
+/* Orbe decorativo estático («AURA / SIGNAL») */
+.aura-glow {
+  --size: 16rem;
+  position: relative;
+  flex: none;
+  width: var(--size);
+  max-width: 100%;
+  aspect-ratio: 1;
+  border: 1px solid rgba(255, 255, 255, .07);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 82% 16%, var(--gold) 0 1.1%, transparent 1.9%),
+    radial-gradient(closest-side, rgba(0, 113, 227, .3), transparent 92%);
+  pointer-events: none;
+}
+.aura-glow::before {
+  content: "";
+  position: absolute;
+  inset: 21%;
+  border: 1px solid rgba(41, 151, 255, .4);
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(0, 113, 227, .28), transparent);
+}
+.aura-glow::after {
+  content: "";
+  position: absolute;
+  inset: 40%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 38% 32%, #63b8ff, var(--accent) 62%);
+  box-shadow: 0 0 2.5rem rgba(0, 113, 227, .85), 0 0 0 .375rem rgba(0, 113, 227, .2);
+}
+.aura-glow--sm { --size: 8rem; }
+.aura-glow--lg { --size: 24rem; }
+
+/* Halo de fondo para secciones (estático; nunca se mueve). Ocupa la caja de
+   su sección o héroe y el resplandor se dibuja dentro: nunca tiñe la sección
+   vecina. Círculo de hasta 30 rem de radio; en una sección más baja se aplana
+   en elipse para apagarse justo en sus bordes (sin corte). */
+.aura-halo {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: radial-gradient(45% 50% at 50% 50%, rgba(0, 113, 227, .18), transparent);
+  background: radial-gradient(min(30rem, 45%) min(30rem, 50%) at 50% 50%, rgba(0, 113, 227, .18), transparent);
+  pointer-events: none;
+}
+.aura-halo ~ * { position: relative; z-index: 1; }
+
+
+/* --------------------------------------------------------------------------
+   5.4 Formularios — guía de estilo §04
+   Etiqueta siempre visible; el campo gana profundidad solo al enfocarlo:
+   borde azul + anillo azul al 40 % + cristal. El cambio es instantáneo.
+   -------------------------------------------------------------------------- */
+
+.aura-form { display: grid; gap: 1.125rem; }
+.aura-form__row { display: grid; gap: 1.125rem .75rem; }
+@media (min-width: 576px) {
+  .aura-form__row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .aura-form__row--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+.aura-fieldset {
+  display: grid;
+  gap: 1rem;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.aura-legend {
+  float: none;
+  width: auto;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: -.004em;
+  color: var(--text-primary);
+}
+.aura-legend--sm {
+  font-family: var(--font-ui);
+  font-size: .875rem;
+  font-weight: 400;
+  letter-spacing: .004em;
+  color: var(--text-secondary);
+}
+.aura-legend--sm strong { color: var(--text-primary); font-weight: 600; }
+/* El <legend> de un fieldset no es un elemento de su rejilla (el navegador lo
+   saca de la caja de contenido): el hueco del grid no le llega y la
+   separación con el primer control la pone su margen. */
+.aura-fieldset > legend.aura-legend { margin-bottom: 1rem; }
+.aura-fieldset > legend.aura-legend--sm { margin-bottom: .75rem; }
+
+.aura-field {
+  display: grid;
+  gap: .5rem;
+  min-width: 0;
+  align-content: start;
+}
+.aura-field__label {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: .75rem;
+  margin: 0;
+  font-size: .8125rem;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: .006em;
+  color: var(--text-secondary);
+}
+.aura-field__hint {
+  font-weight: 400;
+  color: var(--text-tertiary);
+}
+.aura-field:focus-within .aura-field__label,
+.aura-field.is-focused .aura-field__label { color: var(--accent-link); }
+
+.aura-field__control {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.aura-input,
+.aura-select,
+.aura-textarea {
+  display: block;
+  width: 100%;
+  min-height: 3.5rem;                   /* 56 px, como la guía («Formularios») y los prototipos */
+  margin: 0;
+  padding: .9375rem 1rem;
+  border: 1px solid var(--field-border);
+  border-radius: var(--radius-sm);
+  background-color: var(--field-bg);
+  background-clip: padding-box;
+  color: var(--text-primary);
+  font-family: var(--font-ui);
+  font-size: 1rem;                      /* 16 px: sin zoom automático en móvil */
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0;
+  -webkit-appearance: none;
+  appearance: none;
+  outline: 0;
+}
+.aura-input::placeholder,
+.aura-textarea::placeholder { color: var(--text-placeholder); opacity: 1; }
+/* Buscador: sin el aspa nativa de WebKit (no llega a 44 px ni lleva el estilo
+   del sistema). Si hace falta borrar, un .aura-icon-btn propio. */
+.aura-input[type="search"]::-webkit-search-cancel-button,
+.aura-input[type="search"]::-webkit-search-decoration { -webkit-appearance: none; appearance: none; display: none; }
+.aura-textarea {
+  min-height: 7.5rem;
+  padding-block: .875rem;
+  resize: vertical;
+}
+.aura-select {
+  padding-right: 2.75rem;
+  background-image: var(--icon-chevron-down);
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1rem;
+  cursor: pointer;
+}
+.aura-select option { background: var(--bg-elevated); color: var(--text-primary); }
+
+@media (hover: hover) {
+  .aura-input:hover, .aura-select:hover, .aura-textarea:hover { border-color: rgba(255, 255, 255, .5); }
+}
+
+/* Foco (guía §04): borde azul + anillo azul al 40 % pegado + «cristal» (el
+   fondo gana luz y un filo claro arriba). El cristal se suma al borde azul,
+   nunca lo sustituye; el cambio es instantáneo. Sin resplandor exterior. */
+.aura-input:focus,
+.aura-select:focus,
+.aura-textarea:focus,
+.aura-field.is-focused .aura-input,
+.aura-field.is-focused .aura-select,
+.aura-field.is-focused .aura-textarea {
+  border-color: var(--accent-link);
+  background-color: var(--field-bg-focus);
+  box-shadow:
+    0 0 0 4px var(--accent-ring),
+    inset 0 1px 0 rgba(255, 255, 255, .1);
+}
+/* Sobre una superficie ya elevada (tarjeta, hoja, popover, nota, resumen,
+   acceso) el campo no necesita tanta luz: 4 % en reposo y 7 % en foco. */
+:is(.aura-card, .aura-auth-card, .aura-summary, .aura-sheet__panel, .aura-popover, .aura-note, .aura-tile, .aura-feature--card) {
+  --field-bg: var(--fill-1);
+  --field-bg-focus: rgba(255, 255, 255, .07);
+}
+
+.aura-input:disabled,
+.aura-select:disabled,
+.aura-textarea:disabled {
+  border-color: var(--hairline);
+  background-color: transparent;
+  color: var(--text-disabled);
+  cursor: not-allowed;
+}
+
+.aura-input:-webkit-autofill,
+.aura-input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--text-primary);
+  caret-color: var(--text-primary);
+  transition: background-color 99999s 99999s;   /* neutraliza el fondo del autorrelleno */
+}
+
+/* Icono de apoyo (nunca decorativo: dice qué se espera en el campo) */
+.aura-field__icon {
+  position: absolute;
+  left: 1rem;
+  z-index: 1;
+  color: var(--text-tertiary);
+  font-size: 1rem;
+  line-height: 1;
+  pointer-events: none;
+}
+.aura-field__icon ~ .aura-input,
+.aura-field__icon ~ .aura-select { padding-left: 2.75rem; }
+.aura-field:focus-within .aura-field__icon,
+.aura-field.is-focused .aura-field__icon { color: var(--accent-link); }
+
+/* Mostrar / ocultar contraseña */
+.aura-field__toggle {
+  position: absolute;
+  right: .125rem;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 1.0625rem;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: transform var(--dur-press) ease-out;
+}
+@media (hover: hover) {
+  .aura-field__toggle:hover { color: #fff; }
+}
+.aura-field__toggle:active, .aura-field__toggle.is-pressed { transform: scale(.92); }
+.aura-field__toggle:focus-visible { outline-offset: -4px; }
+.aura-field--toggle .aura-input { padding-right: 3rem; }
+.aura-field__control:has(.aura-field__toggle) .aura-input { padding-right: 3rem; }
+
+.aura-field__help {
+  margin: 0;
+  font-size: .8125rem;
+  line-height: 1.45;
+  letter-spacing: .006em;
+  color: var(--text-tertiary);
+}
+.aura-field__error {
+  display: none;
+  margin: 0;
+  font-size: .8125rem;
+  line-height: 1.45;
+  letter-spacing: .006em;
+  color: var(--error);
+}
+.aura-field__error::before {
+  content: "";
+  flex: none;
+  width: .9375rem;
+  height: .9375rem;
+  margin-top: .125rem;
+  background: currentColor;
+  -webkit-mask: var(--icon-alert) center / contain no-repeat;
+  mask: var(--icon-alert) center / contain no-repeat;
+}
+
+/* Error: junto al campo, con icono y texto (no solo color) */
+.aura-field.is-invalid .aura-field__label { color: var(--error); }
+.aura-field.is-invalid .aura-input,
+.aura-field.is-invalid .aura-select,
+.aura-field.is-invalid .aura-textarea,
+.aura-input[aria-invalid="true"],
+.aura-select[aria-invalid="true"],
+.aura-textarea[aria-invalid="true"] { border-color: var(--error); }
+.aura-field.is-invalid .aura-input:focus,
+.aura-field.is-invalid .aura-select:focus,
+.aura-field.is-invalid .aura-textarea:focus {
+  box-shadow: 0 0 0 4px rgba(255, 69, 58, .32), inset 0 1px 0 rgba(255, 255, 255, .1);
+}
+.aura-field.is-invalid .aura-field__icon { color: var(--error); }
+/* El mensaje (icono + texto) se ve en los tres sitios donde AURA.ui.form pinta
+   el estado: el .aura-field, el grupo (.aura-fieldset o el contenedor de las
+   opciones, mensaje hijo directo) y, con una casilla suelta, justo después de
+   su etiqueta. */
+.aura-field.is-invalid .aura-field__error,
+.is-invalid > .aura-field__error,
+.is-invalid + .aura-field__error { display: flex; gap: .375rem; align-items: flex-start; }
+.aura-field.is-invalid .aura-field__help,
+.is-invalid > .aura-field__help { display: none; }
+/* Casillas, radios y opciones en error: el borde lo acompaña, nunca lo sustituye */
+.aura-check.is-invalid .aura-check__box,
+.aura-radio.is-invalid .aura-radio__box,
+.aura-field.is-invalid .aura-check__box,
+.aura-field.is-invalid .aura-radio__box,
+.aura-fieldset.is-invalid .aura-check__box,
+.aura-fieldset.is-invalid .aura-radio__box,
+.aura-fieldset.is-invalid .aura-option__card,
+.aura-option-group.is-invalid .aura-option__card,
+.aura-option.is-invalid .aura-option__card { border-color: var(--error); }
+
+/* Válido */
+.aura-field.is-valid .aura-input,
+.aura-field.is-valid .aura-select,
+.aura-field.is-valid .aura-textarea { border-color: rgba(48, 209, 88, .7); }
+/* En foco manda el foco: borde azul (el verde vuelve al salir) */
+.aura-field.is-valid .aura-input:focus,
+.aura-field.is-valid .aura-select:focus,
+.aura-field.is-valid .aura-textarea:focus { border-color: var(--accent-link); }
+.aura-field.is-valid .aura-field__control::after {
+  content: "";
+  position: absolute;
+  right: 1rem;
+  width: 1rem;
+  height: 1rem;
+  background: var(--ok);
+  -webkit-mask: var(--icon-check) center / contain no-repeat;
+  mask: var(--icon-check) center / contain no-repeat;
+  pointer-events: none;
+}
+.aura-field.is-valid .aura-input { padding-right: 2.75rem; }
+.aura-field--toggle.is-valid .aura-field__control::after { right: 3rem; }
+.aura-field--toggle.is-valid .aura-input { padding-right: 4.75rem; }
+.aura-field.is-valid .aura-field__control:has(.aura-field__toggle)::after { right: 3rem; }
+.aura-field.is-valid .aura-field__control:has(.aura-field__toggle) .aura-input { padding-right: 4.75rem; }
+.aura-field.is-valid:has(.aura-select) .aura-field__control::after,
+.aura-field.is-valid:has(.aura-textarea) .aura-field__control::after { display: none; }
+
+/* Casilla y radio — objetivo táctil de 44 px en toda la fila */
+.aura-check,
+.aura-radio {
+  position: relative;
+  display: inline-flex;
+  align-items: flex-start;
+  gap: .75rem;
+  min-height: 2.75rem;
+  margin: 0;
+  padding-block: .6875rem;
+  color: var(--text-secondary);
+  font-size: .875rem;
+  line-height: 1.375rem;
+  letter-spacing: .002em;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.aura-check__input,
+.aura-radio__input {
+  position: absolute;
+  top: .75rem;
+  left: 0;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.aura-check__box,
+.aura-radio__box {
+  position: relative;
+  flex: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-top: .0625rem;
+  border: 1px solid rgba(255, 255, 255, .42);
+  border-radius: .375rem;
+  background: var(--fill-1);
+}
+.aura-radio__box { border-radius: 50%; }
+.aura-check__box::after,
+.aura-radio__box::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: scale(.6);
+  transition: opacity 120ms ease, transform var(--dur-1) var(--ease-out);
+}
+.aura-check__box::after {
+  background: #fff;
+  -webkit-mask: var(--icon-check) center / .8125rem no-repeat;
+  mask: var(--icon-check) center / .8125rem no-repeat;
+}
+.aura-radio__box::after {
+  inset: .3125rem;
+  border-radius: 50%;
+  background: #fff;
+}
+.aura-check__input:checked + .aura-check__box,
+.aura-radio__input:checked + .aura-radio__box {
+  border-color: var(--accent);
+  background: var(--accent);
+}
+.aura-check__input:checked + .aura-check__box::after,
+.aura-radio__input:checked + .aura-radio__box::after {
+  opacity: 1;
+  transform: none;
+}
+.aura-check__input:focus-visible + .aura-check__box,
+.aura-radio__input:focus-visible + .aura-radio__box {
+  outline: 2px solid var(--accent-link);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 5px var(--accent-ring);
+}
+.aura-check__input:disabled ~ *,
+.aura-radio__input:disabled ~ * { opacity: .45; cursor: not-allowed; }
+.aura-check__label a,
+.aura-radio__label a { text-decoration: underline; text-underline-offset: .2em; }
+/* Pulsación: la caja responde en el instante (toda la fila es el objetivo) */
+.aura-check__box,
+.aura-radio__box { transition: transform var(--dur-press) ease-out; }
+.aura-check:active .aura-check__input:not(:disabled) + .aura-check__box,
+.aura-check.is-pressed .aura-check__box,
+.aura-radio:active .aura-radio__input:not(:disabled) + .aura-radio__box,
+.aura-radio.is-pressed .aura-radio__box { transform: scale(.88); }
+
+/* Requisitos de contraseña: se marcan en verde al cumplirse */
+.aura-rules {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .375rem 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: .75rem;
+  line-height: 1.4;
+  letter-spacing: .012em;
+  color: var(--text-tertiary);
+}
+.aura-rules__item {
+  display: inline-flex;
+  align-items: center;
+  gap: .375rem;
+}
+.aura-rules__item::before {
+  content: "";
+  flex: none;
+  width: .9375rem;
+  height: .9375rem;
+  background: currentColor;
+  -webkit-mask: var(--icon-circle) center / contain no-repeat;
+  mask: var(--icon-circle) center / contain no-repeat;
+}
+.aura-rules__item.is-met { color: var(--text-secondary); }
+.aura-rules__item.is-met::before {
+  background: var(--ok);
+  -webkit-mask-image: var(--icon-check-circle);
+  mask-image: var(--icon-check-circle);
+}
+
+/* Tarjeta de inicio de sesión / registro */
+.aura-auth {
+  display: grid;
+  place-items: center;
+  padding: clamp(2rem, 6vw, 4.5rem) var(--gutter);
+  background: var(--bg-band);
+}
+.aura-auth-card {                      /* prototipo: 520 px, 44 px de relleno, radio 20 */
+  display: grid;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 32.5rem;
+  padding: clamp(1.5rem, 5vw, 2.75rem);
+  border: 1px solid var(--hairline-strong);
+  border-top-color: rgba(255, 255, 255, .24);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(180deg, #1e1e21 0%, #18181a 100%);
+  box-shadow: var(--shadow-3);
+}
+.aura-auth-card--wide { max-width: 35rem; }   /* registro: 560 px */
+.aura-auth-card__head {
+  display: grid;
+  gap: .75rem;
+  justify-items: center;
+  text-align: center;
+}
+.aura-auth-card__title {
+  margin: .25rem 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 1.3rem + 1vw, 1.75rem);
+  font-weight: 500;
+  line-height: 1.22;
+  letter-spacing: -.01em;
+  text-wrap: balance;
+}
+.aura-auth-card__lead {
+  margin: 0;
+  max-width: 34ch;
+  font-size: .9375rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  text-wrap: balance;
+}
+.aura-auth-card__legal {
+  margin: 0;
+  font-size: .75rem;
+  line-height: 1.5;
+  letter-spacing: .012em;
+  color: var(--text-tertiary);
+}
+.aura-auth-card__legal a { text-decoration: underline; text-underline-offset: .2em; color: var(--text-secondary); }
+.aura-auth-card__alt {
+  display: grid;
+  gap: .75rem;
+  justify-items: center;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--hairline);
+  color: var(--text-secondary);
+  font-size: .9375rem;
+  text-align: center;
+}
+.aura-auth-card__alt p { margin: 0; }
+/* Bloque de texto centrado con el icono en línea: si se parte en dos líneas,
+   el icono sigue pegado a la primera palabra y las líneas se equilibran. */
+.aura-auth-card__note {
+  display: block;
+  margin: 0;
+  font-size: .75rem;
+  line-height: 1.5;
+  letter-spacing: .012em;
+  color: var(--text-tertiary);
+  text-align: center;
+  text-wrap: balance;
+}
+.aura-auth-card__note > .bi { margin-right: .125rem; }
+
+/* Mensaje de formulario (resumen de errores, confirmaciones) */
+.aura-alert {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: .125rem .75rem;
+  padding: .875rem 1rem;
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--radius-sm);
+  background: var(--fill-1);
+  color: var(--text-primary);
+  font-size: .875rem;
+  line-height: 1.5;
+}
+.aura-alert > .bi { grid-row: 1 / span 2; margin-top: .125rem; font-size: 1rem; line-height: 1.3; color: var(--accent-link); }
+.aura-alert__title { margin: 0; font-weight: 600; }
+.aura-alert__text { margin: 0; grid-column: 2; color: var(--text-secondary); }
+.aura-alert--ok { border-color: rgba(48, 209, 88, .45); }
+.aura-alert--ok > .bi { color: var(--ok); }
+.aura-alert--warn { border-color: rgba(255, 214, 10, .45); }
+.aura-alert--warn > .bi { color: var(--warn); }
+.aura-alert--error { border-color: rgba(255, 69, 58, .55); }
+.aura-alert--error > .bi { color: var(--error); }
+
+
+/* --------------------------------------------------------------------------
+   5.5 Tienda
+   -------------------------------------------------------------------------- */
+
+/* Selector de color */
+.aura-swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .25rem;
+  min-width: 0;
+  margin: 0 0 0 -.375rem;
+  padding: 0;
+  border: 0;
+}
+.aura-swatches > legend { margin-left: .375rem; margin-bottom: .5rem; width: 100%; }
+.aura-swatch {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin: 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.aura-swatch__input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.aura-swatch__dot {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: var(--swatch, #888);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .42), inset 0 .1875rem .25rem rgba(255, 255, 255, .14);   /* aro ≥ 3:1 con acabados negros */
+  forced-color-adjust: none;
+  transition: transform var(--dur-press) ease-out;
+}
+.aura-swatch__input:checked + .aura-swatch__dot {
+  outline: 2px solid var(--accent-link);
+  outline-offset: 3px;
+}
+.aura-swatch__input:focus-visible + .aura-swatch__dot {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .42), 0 0 0 8px var(--accent-ring);
+}
+.aura-swatch:active .aura-swatch__dot,
+.aura-swatch.is-pressed .aura-swatch__dot { transform: scale(.9); }
+
+/* Tarjeta-radio de configuración */
+.aura-option-group { display: grid; gap: .75rem; }
+@media (min-width: 576px) {
+  .aura-option-group--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+.aura-option {
+  position: relative;
+  display: block;
+  margin: 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.aura-option__input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+/* Con texto grande (o un precio largo y «Próximamente»), el precio baja bajo
+   el título en lugar de sacar la opción de la pantalla. */
+.aura-option__card {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .25rem 1rem;
+  min-height: 4.25rem;
+  padding: .875rem 1.25rem;
+  border: 1px solid var(--field-border);
+  border-radius: var(--radius-md);
+  background: var(--fill-1);
+  transition: transform var(--dur-press) ease-out;
+}
+.aura-option__body { display: grid; flex: 1 1 12rem; gap: .125rem; min-width: 0; }
+.aura-option__title {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--text-primary);
+}
+.aura-option__note {
+  font-size: .8125rem;
+  line-height: 1.4;
+  letter-spacing: .006em;
+  color: var(--text-secondary);
+}
+.aura-option__price {
+  flex: none;
+  font-size: .8125rem;
+  line-height: 1.4;
+  letter-spacing: .006em;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-secondary);
+  text-align: right;
+  white-space: nowrap;
+}
+.aura-option__input:checked + .aura-option__card {
+  border-color: var(--accent-link);
+  background: rgba(0, 113, 227, .1);
+  box-shadow: inset 0 0 0 1px var(--accent-link);
+}
+.aura-option__input:checked + .aura-option__card .aura-option__price { color: var(--text-primary); }
+.aura-option__input:focus-visible + .aura-option__card {
+  outline: 2px solid var(--accent-link);
+  outline-offset: 3px;
+}
+/* Desactivada: se atenúan el título y el precio; la nota que explica por qué
+   («Solo con M5 Max») se sigue leyendo en gris terciario (≥ 4,5:1). */
+.aura-option__input:disabled + .aura-option__card { border-style: dashed; background: none; cursor: not-allowed; }
+.aura-option__input:disabled + .aura-option__card :is(.aura-option__title, .aura-option__price) { color: var(--text-disabled); }
+.aura-option__input:disabled + .aura-option__card .aura-option__note { color: var(--text-tertiary); }
+.aura-option:active .aura-option__card,
+.aura-option.is-pressed .aura-option__card { transform: scale(.985); }
+@media (hover: hover) {
+  .aura-option:hover .aura-option__input:not(:checked):not(:disabled) + .aura-option__card { border-color: rgba(255, 255, 255, .55); }
+}
+
+/* Cantidad */
+.aura-stepper {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--field-border);
+  border-radius: var(--radius-pill);
+}
+.aura-stepper__btn {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text-primary);
+  font-size: 1.125rem;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: transform var(--dur-press) ease-out;
+}
+.aura-stepper__btn:active:not(:disabled), .aura-stepper__btn.is-pressed { transform: scale(.88); }
+.aura-stepper__btn:disabled { color: var(--text-disabled); cursor: not-allowed; }
+.aura-stepper__btn:focus-visible { outline-offset: -3px; }
+.aura-stepper__value {
+  min-width: 2ch;
+  font-size: .9375rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+@media (hover: hover) {
+  .aura-stepper__btn:not(:disabled):hover { background: var(--fill-2); }
+}
+
+/* Resumen pegajoso */
+.aura-summary {
+  display: grid;
+  gap: 1.25rem;
+  padding: clamp(1.25rem, 2.5vw, 1.75rem);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  background: var(--bg-secondary);
+}
+@media (min-width: 992px) {
+  .aura-summary { position: sticky; top: calc(var(--sticky-top) + 1.5rem); }
+  .aura-summary--static { position: static; }
+}
+.aura-summary__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: -.004em;
+}
+.aura-summary__rows { display: grid; gap: .75rem; margin: 0; }
+.aura-summary__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: .9375rem;
+}
+.aura-summary__row dt { font-weight: 400; color: var(--text-secondary); }
+.aura-summary__row dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  white-space: nowrap;
+}
+.aura-summary__row--discount dd { color: var(--ok); }
+.aura-summary__row--total {
+  padding-top: 1rem;
+  border-top: 1px solid var(--hairline);
+}
+.aura-summary__row--total dt { font-weight: 600; color: var(--text-primary); }
+.aura-summary__row--total dd {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -.01em;
+}
+.aura-summary__note {
+  margin: 0;
+  font-size: .8125rem;
+  line-height: 1.45;
+  letter-spacing: .006em;
+  color: var(--text-tertiary);
+}
+
+/* Barra de compra fija (móvil) */
+.aura-buybar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: var(--z-buybar);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: .75rem max(var(--gutter), env(safe-area-inset-right)) calc(.75rem + env(safe-area-inset-bottom)) max(var(--gutter), env(safe-area-inset-left));
+  background: var(--glass-thick-bg);
+  -webkit-backdrop-filter: var(--glass-thick-filter);
+  backdrop-filter: var(--glass-thick-filter);
+  border-top: 1px solid var(--edge-light);
+  box-shadow: 0 -12px 32px -12px rgba(0, 0, 0, .7);
+  transition: transform 320ms var(--ease-out);
+}
+/* Si precio y botón no caben en una fila (texto al 125–150 %), el botón baja
+   a una segunda fila a todo el ancho: nunca tapa el precio. El nombre no
+   empuja (contain): se recorta con puntos suspensivos. */
+.aura-buybar { flex-wrap: wrap; row-gap: .5rem; }
+.aura-buybar.is-hidden {
+  transform: translate3d(0, 110%, 0);
+  transition-timing-function: var(--ease-in);
+}
+/* La información se queda el espacio libre de su fila (el botón no se
+   ensancha a su lado); el botón, solo en su propia fila, llena el ancho. */
+.aura-buybar__info { display: grid; flex: 1000 1 auto; gap: .125rem; min-width: min(100%, max-content); }
+.aura-buybar__name {
+  margin: 0;
+  overflow: hidden;
+  font-size: .8125rem;
+  font-weight: 500;                     /* sobre cristal: algo más de peso */
+  letter-spacing: .008em;
+  color: var(--vibrant-label);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  contain: inline-size;
+}
+.aura-buybar .aura-btn { flex: 1 0 auto; }
+/* El alto de la barra se reserva DENTRO del pie (su fondo llega hasta abajo:
+   bajo el cristal no queda una franja negra); sin pie, en el <body>.
+   --buybar-h es su alto real (aura-ui.js lo mide: con dos filas crece); 4,5
+   rem es la estimación hasta que llega. */
+body.has-buybar .aura-footer { padding-bottom: calc(2rem + var(--buybar-h, calc(4.5rem + env(safe-area-inset-bottom)))); }
+body.has-buybar:not(:has(.aura-footer)) { padding-bottom: var(--buybar-h, calc(4.5rem + env(safe-area-inset-bottom))); }
+@media (min-width: 992px) {
+  .aura-buybar:not(.aura-buybar--always) { display: none; }
+  body.has-buybar .aura-footer { padding-bottom: 2rem; }
+  body.has-buybar:not(:has(.aura-footer)) { padding-bottom: 0; }
+  /* --always sigue fija en escritorio: la página reserva su alto (si no, tapa
+     el final del pie) y su contenido se alinea con .aura-container. */
+  body.has-buybar:has(.aura-buybar--always) .aura-footer { padding-bottom: calc(2rem + var(--buybar-h, calc(4.5rem + env(safe-area-inset-bottom)))); }
+  body.has-buybar:has(.aura-buybar--always):not(:has(.aura-footer)) { padding-bottom: var(--buybar-h, calc(4.5rem + env(safe-area-inset-bottom))); }
+  .aura-buybar--always {
+    padding-left: max(var(--gutter), env(safe-area-inset-left), calc((100% - var(--container)) / 2));
+    padding-right: max(var(--gutter), env(safe-area-inset-right), calc((100% - var(--container)) / 2));
+  }
+}
+
+/* Línea de la bolsa */
+.aura-bag-list {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.aura-bag-line {
+  display: grid;
+  grid-template-columns: clamp(4rem, 25%, 5.5rem) minmax(0, 1fr);
+  grid-template-areas: "media info" "media price";
+  gap: .75rem 1rem;
+  padding-block: 1.5rem;
+  border-bottom: 1px solid var(--hairline);
+}
+/* La línea mide su propio ancho (no el de la ventana): con texto grande en
+   el teléfono, la imagen pasa encima y la información usa todo el ancho. */
+.aura-bag-list { container: aura-bag / inline-size; }
+@container aura-bag (max-width: 22rem) {
+  .aura-bag-line:not(.aura-bag-line--compact) {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "media" "info" "price";
+  }
+  .aura-bag-line:not(.aura-bag-line--compact) > .aura-bag-line__media { width: 5.5rem; }
+  .aura-bag-line:not(.aura-bag-line--compact) > .aura-bag-line__price { justify-items: start; text-align: left; }
+  .aura-bag-line:not(.aura-bag-line--compact) > .aura-bag-line__care { grid-column: 1 / -1; }
+}
+.aura-bag-list > .aura-bag-line:first-child { padding-top: 0; }
+.aura-bag-line__media {
+  grid-area: media;
+  position: relative;
+  display: block;
+  isolation: isolate;
+  align-self: start;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background:
+    radial-gradient(closest-side, rgba(0, 113, 227, .18), transparent),
+    #050506;
+}
+.aura-bag-line__media > .aura-img,
+.aura-bag-line__media > .aura-slot {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  object-fit: contain;
+  border: 0;
+  border-radius: inherit;
+  background: none;
+}
+.aura-bag-line__info {
+  grid-area: info;
+  display: grid;
+  gap: .375rem;
+  align-content: start;
+  justify-items: start;
+  min-width: 0;
+}
+.aura-bag-line__name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.1875rem;
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -.004em;
+}
+.aura-bag-line__name a { color: inherit; }
+@media (pointer: coarse) {
+  .aura-bag-line__name a {               /* 44 px de objetivo sin mover la línea */
+    display: inline-block;
+    padding-block: max(0rem, calc((2.75rem - 1.25em) / 2));
+    margin-block: min(0rem, calc((1.25em - 2.75rem) / 2));
+  }
+}
+.aura-bag-line__meta {
+  margin: 0;
+  font-size: .8125rem;
+  line-height: 1.45;
+  letter-spacing: .006em;
+  color: var(--text-secondary);
+}
+.aura-bag-line__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .5rem 1.25rem;
+  margin-top: .5rem;
+}
+.aura-bag-line__price {
+  grid-area: price;
+  display: grid;
+  gap: .125rem;
+  align-content: start;
+}
+.aura-bag-line__qty {                   /* «2 × 1.269,00 €», solo si hay más de una unidad */
+  font-size: .75rem;
+  line-height: 1.45;
+  letter-spacing: .012em;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+@media (min-width: 576px) {
+  .aura-bag-line {
+    grid-template-columns: 8rem minmax(0, 1fr) auto;
+    grid-template-areas: "media info price";
+    gap: 1.5rem;
+  }
+  .aura-bag-line__price { justify-items: end; text-align: right; }
+}
+
+/* AuraCare+ en la línea: una fila propia debajo del producto (a todo el ancho
+   en móvil; bajo la información y el precio desde 576 px). Sin el cuarto
+   hijo, la línea no cambia. */
+.aura-bag-line__care {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: .25rem .875rem;
+  padding: .75rem 1rem;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-md);
+  background: var(--fill-1);
+}
+.aura-bag-line__care-icon {
+  display: grid;
+  place-items: center;
+  grid-row: 1 / span 2;
+  align-self: start;
+  width: 2rem;
+  height: 2rem;
+  border-radius: .5rem;
+  background: var(--gold-soft);
+  color: var(--gold);
+  font-size: .9375rem;
+}
+.aura-bag-line__care-title {
+  margin: 0;
+  font-size: .875rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--text-primary);
+}
+.aura-bag-line__care-text {
+  grid-column: 2;
+  margin: 0;
+  text-wrap: pretty;
+  font-size: .8125rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+.aura-bag-line__care > .aura-link,
+.aura-bag-line__care > .aura-btn {
+  grid-column: 2;
+  justify-self: start;
+}
+.aura-bag-line__care > .aura-link { min-height: 2.75rem; margin-block: -.375rem -.5rem; }
+/* Incluido: el icono pasa al azul de «elegido» */
+.aura-bag-line__care.is-on .aura-bag-line__care-icon { background: var(--accent-soft); color: var(--accent-link); }
+@media (min-width: 576px) {
+  .aura-bag-line__care { grid-column: 2 / -1; }
+}
+@media (min-width: 768px) {
+  .aura-bag-line__care { grid-template-columns: auto minmax(0, 1fr) auto; }
+  .aura-bag-line__care > .aura-link,
+  .aura-bag-line__care > .aura-btn {
+    grid-column: 3;
+    grid-row: 1 / span 2;
+    align-self: center;
+    margin-block: 0;
+  }
+}
+.aura-bag-line--compact .aura-bag-line__care { display: none; }
+/* Compacta: popover de la bolsa y resumen del checkout */
+.aura-bag-line--compact {
+  grid-template-columns: 3.5rem minmax(0, 1fr) auto;
+  grid-template-areas: "media info price";
+  align-items: start;                   /* el importe, a la altura del nombre aunque la configuración ocupe varias líneas */
+  gap: .75rem;
+  padding-block: 0;
+  border: 0;
+}
+.aura-bag-line--compact .aura-bag-line__media { border-radius: var(--radius-sm); }
+.aura-bag-line--compact .aura-bag-line__info { gap: .125rem; }
+.aura-bag-line--compact .aura-bag-line__name {
+  font-family: var(--font-ui);
+  font-size: .875rem;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+.aura-bag-line--compact .aura-bag-line__meta { font-size: .75rem; letter-spacing: .012em; }
+.aura-bag-line--compact .aura-bag-line__price { justify-items: end; text-align: right; }
+.aura-bag-line--compact .aura-price { font-family: var(--font-ui); font-size: .875rem; font-weight: 600; letter-spacing: 0; }
+
+/* Estado vacío */
+.aura-empty {
+  display: grid;
+  justify-items: center;
+  gap: 1rem;
+  padding: clamp(2.5rem, 8vw, 5rem) 1.5rem;
+  text-align: center;
+}
+.aura-empty__icon {
+  display: grid;
+  place-items: center;
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 50%;
+  background: var(--fill-2);
+  color: var(--text-secondary);
+  font-size: 1.75rem;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .12);
+}
+.aura-empty__title { margin: 0; }
+.aura-empty__text {
+  margin: 0;
+  max-width: 40ch;
+  color: var(--text-secondary);
+  text-wrap: balance;
+}
+.aura-empty__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .75rem;
+  width: 100%;
+  margin-top: .5rem;
+}
+/* Al partirse en dos filas, los botones miden lo mismo (y como mucho 20 rem). */
+.aura-empty__actions > .aura-btn { flex: 1 1 12rem; max-width: 20rem; }
+
+/* Pasos del checkout */
+.aura-steps {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: .875rem;
+  color: var(--text-tertiary);
+}
+.aura-steps__item {
+  display: flex;
+  align-items: center;
+  gap: .625rem;
+  flex: 0 1 auto;
+  min-width: 0;
+}
+.aura-steps__item:not(:last-child) { flex: 1 1 0; }
+.aura-steps__item:not(:last-child)::after {
+  content: "";
+  flex: 1 1 auto;
+  min-width: 1rem;
+  height: 1px;
+  background: var(--hairline-strong);
+}
+.aura-steps__num {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 1.75rem;
+  height: 1.75rem;
+  border: 1px solid var(--hairline-strong);
+  border-radius: 50%;
+  font-size: .75rem;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+}
+.aura-steps__label { white-space: nowrap; }
+.aura-steps__item.is-current { color: var(--text-primary); font-weight: 600; }
+.aura-steps__item.is-current .aura-steps__num {
+  border-color: var(--accent-link);
+  background: var(--accent-soft);
+  color: #fff;
+}
+.aura-steps__item.is-done { color: var(--text-secondary); }
+.aura-steps__item.is-done .aura-steps__num {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: transparent;
+}
+.aura-steps__item.is-done .aura-steps__num::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  -webkit-mask: var(--icon-check) center / .8125rem no-repeat;
+  mask: var(--icon-check) center / .8125rem no-repeat;
+}
+.aura-steps__item.is-done:not(:last-child)::after { background: var(--accent); }
+@media (max-width: 575.98px) {
+  .aura-steps__item:not(.is-current) .aura-steps__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+  }
+  /* El paso actual (el único con etiqueta visible) mide lo que su etiqueta:
+     si repartiera el ancho con los demás, una etiqueta larga («Confirmación»)
+     se montaría sobre el círculo siguiente. Los demás se reparten el resto. */
+  .aura-steps__item.is-current:not(:last-child) { flex: 0 0 auto; }
+}
+/* Con texto grande en el teléfono ni la etiqueta del paso actual cabe: se
+   quedan los círculos numerados (sin encogerse ni montarse) y sus
+   conectores; las etiquetas siguen ahí para los lectores de pantalla. */
+.aura-steps { container: aura-steps / inline-size; }
+@container aura-steps (max-width: 18rem) {
+  .aura-steps .aura-steps__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+  .aura-steps .aura-steps__item,
+  .aura-steps .aura-steps__item.is-current:not(:last-child) { flex: 1 1 0; }
+  .aura-steps .aura-steps__item:last-child { flex: 0 0 auto; }
+  .aura-steps .aura-steps__item:not(:last-child)::after { min-width: .375rem; }
+}
+
+/* Imagen grande del configurador. Espera fotos de producto sobre negro puro
+   (como todas las de assets/img): se funden con el panel y su halo con
+   mix-blend-mode: lighten (ver la tarjeta de modelo). */
+.aura-gallery {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 4 / 3;
+  padding: clamp(1rem, 4vw, 3rem);
+  overflow: hidden;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(60% 55% at 50% 56%, rgba(0, 113, 227, .22), transparent 70%),
+    var(--bg-band);
+}
+@media (min-width: 992px) {
+  .aura-gallery--sticky { position: sticky; top: calc(var(--sticky-top) + 1.5rem); }
+}
+.aura-gallery > .aura-img,
+.aura-gallery > .aura-slot {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  object-fit: contain;
+  border: 0;
+  background: none;
+}
+/* Fundido cruzado al cambiar de foto (AURA.ui.gallery): las dos fotos en la
+   misma celda; la que llega espera invisible (.is-entering) hasta estar
+   decodificada y la que se va se funde a cero (.is-leaving) mientras la
+   nueva aparece. Nunca un bache a negro. Solo opacidad, también con «reducir
+   movimiento». (Sustituye a .is-swapping, retirada en la v1.4.) */
+.aura-gallery > .aura-img,
+.aura-gallery > .aura-slot { grid-area: 1 / 1; }
+.aura-gallery > .aura-img,
+.aura-js .aura-gallery > img.aura-img[data-slot]:not([data-aura-reveal]) { transition: opacity 200ms ease; }
+.aura-gallery > .is-entering,
+.aura-gallery > .is-leaving { opacity: 0; }
+.aura-gallery > .is-leaving { pointer-events: none; }
+.aura-gallery__caption {
+  position: absolute;
+  left: 1.25rem;
+  bottom: 1rem;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: .6875rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+
+/* --------------------------------------------------------------------------
+   5.6 Carrusel, acordeón, pie
+   -------------------------------------------------------------------------- */
+
+/* Carrusel. Sin JS es una pista con scroll-snap nativo. Con JS (.is-ready) el
+   arrastre es 1:1 y el ajuste lo hace un muelle: aquí NO hay transiciones. */
+.aura-carousel {
+  --aura-slide: min(84%, 26rem);
+  --aura-gap: 1.25rem;
+  position: relative;
+  min-width: 0;
+}
+.aura-carousel--full { --aura-slide: 100%; }
+@media (min-width: 992px) {
+  .aura-carousel--thirds { --aura-slide: calc((100% - 2 * var(--aura-gap)) / 3); }
+}
+.aura-carousel__viewport {
+  margin: -.5rem;
+  padding: .5rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: .5rem;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.aura-carousel__viewport::-webkit-scrollbar { display: none; }
+.aura-carousel__track {
+  display: flex;
+  gap: var(--aura-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.aura-carousel__slide {
+  flex: 0 0 var(--aura-slide);
+  min-width: 0;
+  scroll-snap-align: start;
+}
+/* --bleed: la ventana llega hasta los bordes de la pantalla (las tarjetas
+   entran y salen por el borde, como en una tienda) y la pista sigue alineada
+   con el contenedor: mismos puntos de ajuste. La sección que lo contiene se
+   vuelve contenedor (100cqw = su ancho, sin la barra de desplazamiento) y
+   recorta lo que sale por los lados. Sin unidades de contenedor, se queda
+   dentro del contenedor como siempre. */
+@supports (width: 1cqw) and selector(:has(*)) {
+  :is(.aura-section, .aura-hero, section):has(> .aura-container .aura-carousel--bleed) {
+    container-type: inline-size;
+    overflow-x: clip;
+  }
+  .aura-carousel--bleed .aura-carousel__viewport {
+    margin-inline: calc((100% - 100cqw) / 2);
+    padding-inline: calc((100cqw - 100%) / 2);
+    scroll-padding-inline: calc((100cqw - 100%) / 2);
+  }
+  /* El foco del teclado se dibuja por dentro: por fuera caería en el borde de la pantalla */
+  .aura-carousel--bleed .aura-carousel__viewport:focus-visible { outline-offset: -2px; }
+}
+.aura-carousel.is-ready .aura-carousel__viewport {
+  overflow: hidden;
+  scroll-snap-type: none;
+  touch-action: pan-y;                  /* el gesto horizontal es nuestro; el vertical, de la página */
+  cursor: grab;
+}
+.aura-carousel.is-dragging { -webkit-user-select: none; user-select: none; }
+.aura-carousel.is-dragging .aura-carousel__viewport { cursor: grabbing; }
+.aura-carousel.is-dragging .aura-carousel__slide a,
+.aura-carousel.is-dragging .aura-carousel__slide button { pointer-events: none; }
+/* will-change solo cuando el movimiento es inminente */
+.aura-carousel.is-dragging .aura-carousel__track,
+.aura-carousel.is-animating .aura-carousel__track { will-change: transform; }
+
+.aura-carousel__controls {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  margin-top: 1.25rem;
+}
+.aura-carousel__dots {
+  display: flex;
+  align-items: center;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.aura-carousel__dot {
+  display: grid;
+  place-items: center;
+  flex: none;                           /* nunca encogen por debajo de su objetivo */
+  width: 1.5rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+@media (pointer: coarse) {
+  .aura-carousel__dot { width: 2.75rem; }   /* 44 × 44 px de objetivo táctil */
+}
+.aura-carousel__dot::before {
+  content: "";
+  width: .5rem;
+  height: .5rem;
+  border-radius: 50%;
+  background: #fff;
+  opacity: .4;                          /* inactivo: 3,7:1 sobre negro */
+  transition: opacity var(--dur-1) ease, transform var(--dur-2) var(--ease-out);
+}
+.aura-carousel__dot.is-active::before,
+.aura-carousel__dot[aria-current="true"]::before {
+  opacity: 1;
+  transform: scale(1.25);
+}
+/* Pulsación: el punto responde en el instante (sin la transición de 240 ms) */
+.aura-carousel__dot:active::before,
+.aura-carousel__dot.is-pressed::before {
+  opacity: .7;
+  transform: scale(.85);
+  transition-duration: var(--dur-press);
+}
+.aura-carousel__dot:focus-visible { outline-offset: -6px; }
+/* Si los puntos no caben (muchas diapositivas en una pantalla estrecha),
+   aura-ui.js pone .is-counter en los controles: en su lugar, «3 de 9». */
+.aura-carousel__counter {
+  display: none;
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: .75rem;
+  letter-spacing: .08em;
+  font-variant-numeric: tabular-nums;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+.aura-carousel__controls.is-counter .aura-carousel__dots { display: none; }
+.aura-carousel__controls.is-counter .aura-carousel__counter { display: block; }
+
+/* Acordeón (details/summary nativos: funciona sin JS) */
+.aura-accordion { border-top: 1px solid var(--hairline); }
+.aura-accordion__item { border-bottom: 1px solid var(--hairline); }
+.aura-accordion__summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  min-height: 4rem;
+  padding: 1.125rem 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.0625rem, 1rem + .4vw, 1.25rem);
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: -.004em;
+  color: var(--text-primary);
+  text-wrap: balance;                   /* las preguntas son titulares: sin una palabra sola */
+  list-style: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.aura-accordion__summary::-webkit-details-marker { display: none; }
+.aura-accordion__summary::marker { content: ""; }
+.aura-accordion__icon {
+  position: relative;
+  flex: none;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: var(--fill-2);
+  color: var(--text-primary);
+  transition: transform var(--dur-2) var(--ease-out);
+}
+.aura-accordion__icon::before {
+  content: "";
+  position: absolute;
+  inset: .5rem;
+  background: currentColor;
+  -webkit-mask: var(--icon-plus) center / contain no-repeat;
+  mask: var(--icon-plus) center / contain no-repeat;
+}
+.aura-accordion__item[open] .aura-accordion__icon { transform: rotate(45deg); }
+.aura-accordion__summary:active .aura-accordion__icon,
+.aura-accordion__summary.is-pressed .aura-accordion__icon { background: var(--fill-3); }
+.aura-accordion__panel {
+  max-width: 68ch;
+  padding: 0 3rem 1.5rem 0;
+  color: var(--text-secondary);
+}
+.aura-accordion__panel > * { margin: 0; }
+.aura-accordion__panel > * + * { margin-top: .875rem; }
+/* Enlaces dentro de una respuesta: subrayados, no solo de color (WCAG 1.4.1) */
+.aura-accordion__panel a:not(.aura-btn):not(.aura-link) {
+  text-decoration: underline;
+  text-underline-offset: .2em;
+  text-decoration-thickness: 1px;
+}
+/* Al abrir, el contenido es visible en el acto (solo se anima la opacidad):
+   un salto a un ancla de dentro (#id, scrollIntoView, la apertura automática
+   del navegador al buscar o al navegar a un fragmento) funciona ya en ese
+   fotograma. Al cerrar, se recoge también en el acto: el cambio de alto
+   coincide con el toque (antes el alto se quedaba 240 ms y luego todo lo de
+   debajo saltaba de golpe). El giro del icono da la continuidad. */
+.aura-accordion__item::details-content {
+  opacity: 0;
+  transition: none;
+}
+.aura-accordion__item[open]::details-content {
+  opacity: 1;
+  transition: opacity var(--dur-2) ease;
+}
+@supports not selector(::details-content) {
+  .aura-accordion__item[open] > .aura-accordion__panel { animation: aura-fade-in var(--dur-2) ease both; }
+}
+
+/* Pie */
+.aura-footer {
+  padding-block: clamp(2.5rem, 5vw, 4rem) 2rem;
+  background: var(--bg-footer);
+  border-top: 1px solid var(--hairline);
+  color: var(--text-secondary);
+  font-size: .8125rem;
+  line-height: 1.5;
+  letter-spacing: .006em;
+}
+.aura-footer__crumbs {
+  margin-bottom: 2rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--hairline);
+}
+.aura-footer__main {
+  display: grid;
+  gap: 2.5rem;
+}
+.aura-footer__brand {
+  display: grid;
+  gap: 1rem;
+  justify-items: start;
+  align-content: start;
+  max-width: 20rem;
+}
+.aura-footer__tagline {
+  margin: 0;
+  font-size: .875rem;
+  line-height: 1.55;
+  letter-spacing: .002em;
+  color: var(--text-secondary);
+}
+.aura-footer__social {
+  display: flex;
+  gap: .5rem;
+  margin: 0 0 0 -.25rem;
+  padding: 0;
+  list-style: none;
+}
+.aura-footer__social-link {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  color: var(--text-secondary);
+  font-size: 1rem;
+  transition: transform var(--dur-press) ease-out;
+}
+.aura-footer__social-link::before {     /* aro visual de 36 px dentro del objetivo de 44 px */
+  content: "";
+  position: absolute;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1px solid var(--hairline-strong);
+  border-radius: 50%;
+}
+@media (hover: hover) {
+  .aura-footer__social-link:hover { color: #fff; }
+}
+.aura-footer__social-link:active,
+.aura-footer__social-link.is-pressed { transform: scale(.92); }
+.aura-footer__directory {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2rem 1.5rem;
+}
+.aura-footer__heading {                 /* etiqueta de columna: Inter, como en el prototipo (Kanit queda para titulares y cifras) */
+  margin: 0 0 .75rem;
+  font-family: var(--font-ui);
+  font-size: .875rem;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: .004em;
+  color: var(--text-primary);
+}
+.aura-footer__list {
+  display: grid;
+  gap: .125rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.aura-footer__list a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.875rem;
+  color: var(--text-secondary);
+}
+@media (hover: hover) {
+  .aura-footer__list a:hover,
+  .aura-footer__legal a:hover {
+    color: var(--text-primary);
+    text-decoration: underline;
+    text-underline-offset: .2em;
+  }
+}
+.aura-footer__legal {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem 2rem;
+  margin-top: clamp(2rem, 4vw, 3rem);
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--hairline);
+  font-size: .75rem;
+  letter-spacing: .012em;
+  color: var(--text-tertiary);
+}
+.aura-footer__copy { margin: 0; }
+/* Separadores «·»: cada elemento lleva el suyo DELANTE (::before, en una caja
+   de 1,25 rem) y la lista se desplaza 1,25 rem a la izquierda con ese tramo
+   recortado (clip-path). El separador del primer elemento de cada línea cae
+   fuera y no se ve: al partirse la fila no queda ninguno colgando, ni al
+   final ni al principio. Todo se centra en vertical (también «España»). */
+.aura-footer__legal-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0;
+  margin: 0 0 0 -1.25rem;
+  padding: 0;
+  list-style: none;
+  clip-path: inset(-.5rem -.5rem -.5rem 1rem);
+}
+.aura-footer__legal-links > li { display: inline-flex; align-items: center; }
+.aura-footer__legal-links > li::before {
+  content: "·";
+  content: "·" / "";
+  flex: none;
+  width: 1.25rem;
+  text-align: center;
+}
+.aura-footer__legal a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.5rem;                   /* 24 px con puntero fino (§13) */
+  color: var(--text-tertiary);
+}
+.aura-footer__demo {
+  margin: 1rem 0 0;
+  font-size: .75rem;
+  letter-spacing: .012em;
+  color: var(--text-tertiary);
+}
+@media (pointer: coarse) {
+  .aura-footer__list a { min-height: 2.75rem; }
+  .aura-footer__legal a { min-height: 2.75rem; padding-block: 0; }
+  .aura-footer__legal { row-gap: 0; }
+}
+@media (min-width: 768px) {
+  .aura-footer__directory { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+@media (min-width: 992px) {
+  .aura-footer__main { grid-template-columns: minmax(0, 20rem) minmax(0, 1fr); gap: 4rem; }
+}
+
+
+/* ==========================================================================
+   6. OVERLAYS
+   Jerarquía de materiales (tokens de §1, fondo y filtro del mismo nivel):
+   aviso (fino) < popover y barras (regular) < hoja, buscador, menú y barra de
+   compra (grueso, sombra profunda). Velo solo en tareas modales (hoja,
+   buscador, menú); el popover y los avisos no bloquean.
+   ========================================================================== */
+
+/* Vibrancia: dentro de un material, el texto secundario no es gris plano.
+   Se redefinen los tokens en cada superficie de cristal y todos sus
+   descendientes (pies de foto, metadatos, ayudas, iconos) los heredan. */
+.aura-popover,
+.aura-toast,
+.aura-sheet__panel,
+.aura-search__panel,
+.aura-menu,
+.aura-buybar,
+.aura-card--glass,
+.aura-material {
+  --text-secondary: var(--vibrant-secondary);
+  --text-tertiary: var(--vibrant-tertiary);
+  --text-placeholder: var(--vibrant-tertiary);
+}
+
+/* Material para superficies de cristal propias de una página (una cabecera
+   flotante, un panel sobre una foto). Regular por defecto; --thin y --thick
+   cambian el nivel (fondo y filtro siempre del mismo nivel). Lleva la
+   vibrancia de arriba. Solo sobre fondos opacos: nunca cristal sobre cristal. */
+.aura-material {
+  background: var(--glass-regular-bg);
+  -webkit-backdrop-filter: var(--glass-regular-filter);
+  backdrop-filter: var(--glass-regular-filter);
+}
+.aura-material--thin {
+  background: var(--glass-thin-bg);
+  -webkit-backdrop-filter: var(--glass-thin-filter);
+  backdrop-filter: var(--glass-thin-filter);
+}
+.aura-material--thick {
+  background: var(--glass-thick-bg);
+  -webkit-backdrop-filter: var(--glass-thick-filter);
+  backdrop-filter: var(--glass-thick-filter);
+}
+
+.aura-scrim {
+  position: fixed;
+  inset: 0;
+  background: var(--scrim);
+  opacity: 0;
+}
+
+/* --- Popover: se materializa (escala + desenfoque + opacidad) desde su disparador --- */
+.aura-anchor { position: relative; display: inline-flex; }
+.aura-popover {
+  --aura-origin: 1.5rem 0;
+  position: absolute;
+  top: calc(100% + .625rem);
+  left: 0;
+  z-index: 10;
+  width: max-content;
+  min-width: min(16rem, calc(100vw - 1.5rem));
+  max-width: min(24rem, calc(100vw - 1.5rem));
+  padding: 1rem;
+  border: 1px solid var(--hairline);
+  border-top-color: var(--edge-light);
+  border-radius: var(--radius-lg);
+  background: var(--glass-regular-bg);
+  -webkit-backdrop-filter: var(--glass-regular-filter);
+  backdrop-filter: var(--glass-regular-filter);
+  box-shadow: var(--shadow-2);
+  color: var(--text-primary);
+  font-size: .875rem;
+  text-align: left;
+  white-space: normal;
+  transform-origin: var(--aura-origin);
+  opacity: 0;
+  transform: scale(.92);
+  filter: blur(8px);
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity var(--dur-1) var(--ease-in),
+    transform 200ms var(--ease-in),
+    filter var(--dur-1) var(--ease-in),
+    visibility 0s linear 200ms;
+}
+.aura-popover.is-open {
+  opacity: 1;
+  transform: none;
+  filter: none;
+  visibility: visible;
+  pointer-events: auto;
+  transition:
+    opacity 180ms var(--ease-out),
+    transform 280ms var(--ease-out),
+    filter 220ms var(--ease-out),
+    visibility 0s;
+}
+.aura-popover:focus { outline: 0; }
+.aura-popover--end {
+  left: auto;
+  right: 0;
+  --aura-origin: calc(100% - 1.375rem) 0;
+}
+.aura-popover--top {
+  top: auto;
+  bottom: calc(100% + .625rem);
+  --aura-origin: 1.5rem 100%;
+}
+.aura-popover__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: .875rem;
+}
+.aura-popover__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  font-weight: 500;
+  line-height: 1.3;
+}
+.aura-popover__list {
+  display: grid;
+  gap: .875rem;
+  max-height: 16.5rem;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  list-style: none;
+}
+.aura-popover__footer {
+  display: grid;
+  gap: .5rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--hairline);
+}
+.aura-popover__total {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: .25rem;
+  font-weight: 500;                     /* vibrancia: más peso sobre cristal */
+  color: var(--vibrant-label);
+}
+.aura-popover__empty {
+  display: grid;
+  gap: .25rem;
+  margin: 0;
+  color: var(--vibrant-label);
+}
+.aura-popover__links {
+  display: grid;
+  margin: .5rem -.5rem -.25rem;
+  padding: 0;
+  list-style: none;
+}
+.aura-popover__links a {
+  display: flex;
+  align-items: center;
+  gap: .625rem;
+  min-height: 2.75rem;
+  padding: 0 .5rem;
+  border-radius: var(--radius-xs);
+  color: var(--text-primary);
+  font-weight: 500;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+@media (hover: hover) {
+  .aura-popover__links a:hover { background: var(--fill-2); color: var(--text-primary); }
+}
+.aura-popover__links a:active,
+.aura-popover__links a.is-pressed { background: var(--fill-3); }
+.aura-popover__links .bi { color: var(--text-secondary); }
+.aura-bag-popover { width: 22rem; }
+@media (max-width: 575.98px) {
+  /* Red de seguridad si el JS no llega: nunca más ancho que la pantalla menos sus márgenes.
+     (Con JS, aura-ui.js además lo desplaza con `translate` para que no se salga.) */
+  .aura-popover { max-width: calc(100vw - 2 * var(--gutter)); }
+  /* En móvil se ancla a la barra y ocupa el ancho; el origen sigue siendo el botón de la bolsa */
+  .aura-nav .aura-popover {
+    left: .75rem;
+    right: .75rem;
+    top: calc(100% + .5rem);
+    width: auto;
+    max-width: none;
+    --aura-origin: calc(100% - 4.25rem) 0;
+  }
+}
+
+/* --- Avisos (toasts): estado, completado, aviso, error --- */
+.aura-toasts {
+  position: fixed;
+  top: calc(var(--nav-h) + .75rem + env(safe-area-inset-top));
+  right: max(.75rem, env(safe-area-inset-right));
+  left: max(.75rem, env(safe-area-inset-left));
+  z-index: var(--z-toast);
+  display: grid;
+  gap: .625rem;
+  pointer-events: none;
+}
+@media (min-width: 576px) {
+  .aura-toasts { left: auto; width: min(25rem, calc(100vw - 2rem)); right: max(1.25rem, env(safe-area-inset-right)); }
+}
+.aura-toasts--static { position: static; width: auto; }
+.aura-toast {
+  --toast-color: var(--accent-link);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-auto-flow: column;
+  grid-auto-columns: auto;
+  align-items: center;
+  gap: .125rem .75rem;
+  padding: .625rem .375rem .625rem 1rem;
+  border: 1px solid var(--hairline);
+  border-top-color: var(--edge-light);
+  border-radius: var(--radius-md);
+  background: var(--glass-thin-bg);                 /* la superficie más pequeña: material fino */
+  -webkit-backdrop-filter: var(--glass-thin-filter);
+  backdrop-filter: var(--glass-thin-filter);
+  box-shadow: var(--shadow-2);
+  color: var(--text-primary);
+  pointer-events: auto;
+  transform-origin: top center;
+  /* Se materializa (escala + desenfoque + opacidad), no solo se funde. */
+  opacity: 0;
+  transform: translate3d(0, -.75rem, 0) scale(.96);
+  filter: blur(6px);
+  transition: opacity var(--dur-1) var(--ease-in), transform 200ms var(--ease-in), filter var(--dur-1) var(--ease-in);
+  /* Se aparta con el dedo (aura-ui.js): hacia arriba en el teléfono, hacia la
+     derecha desde 576 px. El gesto en su eje es nuestro. */
+  touch-action: none;
+}
+.aura-toast.is-visible {
+  opacity: 1;
+  transform: none;
+  filter: none;
+  transition: opacity 200ms var(--ease-out), transform 320ms var(--ease-out), filter 220ms var(--ease-out);
+}
+@media (min-width: 576px) {
+  .aura-toast { touch-action: pan-y; }
+}
+/* Mientras lo mueve el dedo (o el muelle al soltar), manda el transform en
+   línea: sin transiciones CSS que compitan. */
+.aura-toast.is-dragging { transition: none; cursor: grabbing; -webkit-user-select: none; user-select: none; }
+.aura-toast__icon {
+  color: var(--toast-color);
+  font-size: 1.125rem;
+  line-height: 1;
+}
+.aura-toast__body { display: grid; gap: .0625rem; min-width: 0; padding-block: .25rem; }
+.aura-toast__title {
+  margin: 0;
+  font-size: .875rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+.aura-toast__text {
+  margin: 0;
+  font-size: .8125rem;
+  font-weight: 450;                     /* vibrancia */
+  line-height: 1.4;
+  letter-spacing: .008em;
+  color: var(--vibrant-label);
+}
+.aura-toast__action {
+  min-height: 2.75rem;
+  padding: 0 .75rem;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: none;
+  color: var(--accent-link);
+  font-size: .8125rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: transform var(--dur-press) ease-out;
+}
+.aura-toast__action:active,
+.aura-toast__action.is-pressed { transform: scale(.95); }
+.aura-toast__close {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: var(--text-secondary);
+  font-size: 1.125rem;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: transform var(--dur-press) ease-out;
+}
+@media (hover: hover) {
+  .aura-toast__close:hover { color: #fff; }
+}
+.aura-toast__close:active,
+.aura-toast__close.is-pressed { transform: scale(.9); }
+.aura-toast--status { --toast-color: var(--accent-link); }
+.aura-toast--ok { --toast-color: var(--ok); }
+.aura-toast--warn { --toast-color: var(--warn); }
+.aura-toast--error { --toast-color: var(--error); }
+/* Nunca cristal sobre cristal: con una tarea modal abierta (hoja, buscador,
+   menú, todos de cristal grueso) el aviso pasa a ser una capa sólida. */
+html.aura-lock .aura-toast {
+  background: #2a2a2d;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+/* --- Hoja: cajón lateral en escritorio, hoja inferior con tirador en móvil.
+       El CSS define los dos estados de reposo; el JS anima entre ellos con un
+       muelle (damping .8 / response .3) escribiendo transform en línea.
+       --aura-sheet-axis le dice al JS en qué eje arrastrar. --- */
+.aura-sheet {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-sheet);
+  visibility: hidden;
+}
+.aura-sheet.is-open { visibility: visible; }
+.aura-sheet.is-open > .aura-scrim { opacity: 1; }
+.aura-sheet__panel {
+  --aura-sheet-axis: y;
+  --aura-sheet-closed: translate3d(0, 100%, 0);
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 2.5rem);
+  max-height: calc(100dvh - 2.5rem);
+  padding-bottom: env(safe-area-inset-bottom);
+  border-top: 1px solid var(--edge-light);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  background: var(--glass-thick-bg);
+  -webkit-backdrop-filter: var(--glass-thick-filter);
+  backdrop-filter: var(--glass-thick-filter);
+  box-shadow: var(--shadow-3);
+  color: var(--text-primary);
+  outline: 0;
+  transform: var(--aura-sheet-closed);
+}
+.aura-sheet.is-open .aura-sheet__panel { transform: none; }
+.aura-sheet__panel::after {             /* cubre el hueco cuando el muelle rebasa (efecto goma) */
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  height: 50vh;
+  background: var(--bg-secondary);
+}
+.aura-sheet.is-dragging { -webkit-user-select: none; user-select: none; }
+.aura-sheet.is-dragging .aura-sheet__panel,
+.aura-sheet.is-animating .aura-sheet__panel { will-change: transform; }
+.aura-sheet__grabber {
+  display: grid;
+  place-items: center;
+  flex: none;
+  height: 1.5rem;
+  cursor: grab;
+  touch-action: none;
+}
+.aura-sheet__grabber::before {
+  content: "";
+  width: 2.25rem;
+  height: .3125rem;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, .32);
+}
+.aura-sheet__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex: none;
+  padding: .25rem .75rem .75rem 1.5rem;
+  touch-action: none;
+}
+.aura-sheet__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.375rem;
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -.006em;
+}
+.aura-sheet__body {
+  flex: 1 1 auto;
+  min-height: 0;
+  padding: .25rem 1.5rem 1.5rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  color: var(--vibrant-label);       /* vibrancia: nada de gris plano sobre cristal */
+}
+.aura-sheet__footer {
+  display: grid;
+  gap: .5rem;
+  flex: none;
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--hairline);
+}
+@media (min-width: 768px) {
+  .aura-sheet:not(.aura-sheet--bottom) .aura-sheet__panel {
+    --aura-sheet-axis: x;
+    --aura-sheet-closed: translate3d(100%, 0, 0);
+    top: 0;
+    left: auto;
+    width: min(28rem, calc(100vw - 3rem));
+    max-height: none;
+    padding-bottom: 0;
+    border-top: 0;
+    border-left: 1px solid var(--edge-light);
+    border-radius: var(--radius-xl) 0 0 var(--radius-xl);
+  }
+  .aura-sheet:not(.aura-sheet--bottom) .aura-sheet__panel::after {
+    top: 0;
+    bottom: 0;
+    left: 100%;
+    right: auto;
+    width: 50vw;
+    height: auto;
+  }
+  .aura-sheet:not(.aura-sheet--bottom) .aura-sheet__grabber { display: none; }
+  .aura-sheet:not(.aura-sheet--bottom) .aura-sheet__header { padding-top: 1.25rem; touch-action: auto; }
+  .aura-sheet--bottom .aura-sheet__panel {
+    left: 50%;
+    right: auto;
+    width: min(40rem, calc(100vw - 2rem));
+    translate: -50% 0;
+  }
+}
+
+/* --- Buscador: tarea modal; baja desde la barra, de donde salió --- */
+.aura-search {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-overlay);
+  visibility: hidden;
+  transition: visibility 0s linear var(--dur-2);
+}
+.aura-search.is-open {
+  visibility: visible;
+  transition-delay: 0s;
+}
+.aura-search > .aura-scrim { transition: opacity var(--dur-2) ease; }
+.aura-search.is-open > .aura-scrim { opacity: 1; }
+.aura-search__panel {
+  position: relative;
+  max-height: 100vh;
+  max-height: 100dvh;
+  padding: calc(.5rem + env(safe-area-inset-top)) 0 1.75rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border-bottom: 1px solid var(--hairline);
+  border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+  background: var(--glass-thick-bg);
+  -webkit-backdrop-filter: var(--glass-thick-filter);
+  backdrop-filter: var(--glass-thick-filter);
+  box-shadow: var(--shadow-3);
+  /* Se materializa desde la lupa (aura-ui.js fija el origen en su centro):
+     baja un poco, crece y se enfoca; sale por el mismo camino. Las curvas y
+     duraciones son las del popover. */
+  opacity: 0;
+  transform: translate3d(0, -.75rem, 0) scale(.97);
+  filter: blur(8px);
+  transition: opacity var(--dur-1) var(--ease-in), transform 200ms var(--ease-in), filter var(--dur-1) var(--ease-in);
+}
+.aura-search.is-open .aura-search__panel {
+  opacity: 1;
+  transform: none;
+  filter: none;
+  transition: opacity 200ms var(--ease-out), transform 320ms var(--ease-out), filter 220ms var(--ease-out);
+}
+.aura-search__form {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  min-height: 3.5rem;
+  border-bottom: 1px solid var(--hairline-strong);
+  color: var(--text-secondary);
+}
+.aura-search__form:focus-within { border-bottom-color: var(--accent-link); color: var(--accent-link); }
+.aura-search__form > .bi { font-size: 1.25rem; line-height: 1; }
+.aura-search__input {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 3.5rem;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 1rem + 1.2vw, 1.75rem);
+  font-weight: 500;
+  letter-spacing: -.01em;
+  outline: 0;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.aura-search__input::placeholder { color: var(--text-placeholder); opacity: 1; }
+.aura-search__input::-webkit-search-cancel-button { -webkit-appearance: none; }
+.aura-search__results { padding-top: .5rem; }
+.aura-search__heading {
+  margin: 1.25rem 0 .375rem;
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: .04em;
+  color: var(--text-secondary);
+}
+.aura-search__list {
+  display: grid;
+  margin: 0 -.75rem;
+  padding: 0;
+  list-style: none;
+}
+.aura-search__item {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  min-height: 2.75rem;
+  padding: .375rem .75rem;
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-size: .9375rem;
+  font-weight: 500;                     /* vibrancia */
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+.aura-search__item > .bi { flex: none; color: var(--text-secondary); font-size: 1rem; }
+.aura-search__item.is-active { background: var(--fill-2); color: #fff; }
+@media (hover: hover) {
+  .aura-search__item:hover { background: var(--fill-2); color: #fff; }
+}
+.aura-search__item:active,
+.aura-search__item.is-pressed { background: var(--fill-3); color: #fff; }
+.aura-search__item-title { flex: 1 1 auto; min-width: 0; }
+.aura-search__item-status {             /* «Próximamente · Reserva a partir del…» */
+  display: block;
+  font-size: .75rem;
+  font-weight: 450;
+  line-height: 1.4;
+  letter-spacing: .012em;
+  color: var(--text-secondary);
+}
+.aura-search__item-meta {
+  flex: none;
+  font-size: .8125rem;
+  font-weight: 450;
+  letter-spacing: .006em;
+  font-variant-numeric: tabular-nums;
+  color: var(--vibrant-secondary);
+}
+.aura-search__empty {
+  margin: 1.5rem 0 0;
+  color: var(--vibrant-label);
+}
+
+/* --- Menú móvil a pantalla completa --- */
+.aura-menu {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-overlay);
+  display: flex;
+  flex-direction: column;
+  padding-bottom: env(safe-area-inset-bottom);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: rgba(0, 0, 0, .86);       /* grueso, en negro como la barra */
+  -webkit-backdrop-filter: var(--glass-thick-filter);
+  backdrop-filter: var(--glass-thick-filter);
+  /* Se materializa (escala + opacidad) desde el botón de menú y vuelve a él.
+     aura-ui.js fija el origen exacto del disparador; este es el de reserva. */
+  transform-origin: calc(100% - var(--gutter) - .875rem) calc(var(--nav-h) / 2);
+  opacity: 0;
+  transform: scale(.95);
+  visibility: hidden;
+  transition: opacity 200ms var(--ease-in), transform 200ms var(--ease-in), visibility 0s linear 200ms;
+}
+.aura-menu.is-open {
+  opacity: 1;
+  transform: none;
+  visibility: visible;
+  transition: opacity var(--dur-2) var(--ease-out), transform 320ms var(--ease-out), visibility 0s;
+}
+/* El contenido del menú se enfoca al llegar (el desenfoque va en la lista,
+   no en la capa a pantalla completa: sería caro). */
+.aura-menu__nav {
+  filter: blur(6px);
+  transition: filter var(--dur-1) var(--ease-in);
+}
+.aura-menu.is-open .aura-menu__nav {
+  filter: none;
+  transition: filter 220ms var(--ease-out);
+}
+.aura-menu__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: none;
+  height: var(--nav-h);
+}
+.aura-menu__bar .aura-icon-btn { margin-right: -.5rem; }
+.aura-menu__nav { padding-block: 1rem 2rem; }
+.aura-menu__list,
+.aura-menu__secondary {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.aura-menu__list > li,
+.aura-menu__secondary > li {
+  opacity: 0;
+  transform: translate3d(0, -.5rem, 0);
+  transition: opacity var(--dur-1) var(--ease-in), transform var(--dur-1) var(--ease-in);
+}
+.aura-menu.is-open .aura-menu__list > li,
+.aura-menu.is-open .aura-menu__secondary > li {
+  opacity: 1;
+  transform: none;
+  transition: opacity 280ms var(--ease-out), transform 420ms var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 28ms + 60ms);
+}
+.aura-menu__link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 3.5rem;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -.012em;
+}
+.aura-menu__link .bi { font-size: 1rem; color: var(--text-tertiary); }
+@media (hover: hover) {
+  .aura-menu__link:hover { color: #fff; }
+}
+.aura-menu__link.is-active,
+.aura-menu__link[aria-current="page"] { color: var(--accent-link); }
+.aura-menu__secondary {
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--hairline-strong);
+}
+.aura-menu__secondary a {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  min-height: 2.75rem;
+  color: var(--vibrant-label);
+  font-size: 1.0625rem;
+  font-weight: 500;
+}
+@media (hover: hover) {
+  .aura-menu__secondary a:hover { color: #fff; }
+}
+@media (min-width: 992px) {
+  .aura-menu { display: none; }
+}
+
+
+/* ==========================================================================
+   7. MOVIMIENTO
+   ========================================================================== */
+
+/* Aparición al entrar en pantalla.
+   - aura-core.js pone .aura-js en <html> (en el head, antes de pintar).
+   - aura-ui.js pone .aura-ui en <html> y añade .is-visible con IntersectionObserver.
+   - Si aura-ui.js no llega a ejecutarse, el contenido aparece solo a los 2,5 s.
+     Si llega más tarde, lo que el seguro ya mostró se queda visible (no se
+     vuelve a fundir) y al imprimir todo está visible (ver «Impresión»). */
+.aura-js [data-aura-reveal] {
+  opacity: 0;
+  transform: translate3d(0, 1.25rem, 0);
+}
+.aura-js [data-aura-reveal="fade"] { transform: none; }
+.aura-js [data-aura-reveal="scale"] { transform: scale(.96); }
+.aura-js [data-aura-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+  transition: opacity var(--dur-3) ease, transform 760ms var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 80ms);
+}
+.aura-js:not(.aura-ui) [data-aura-reveal] { animation: aura-failsafe 1ms linear 2.5s forwards; }
+
+@keyframes aura-failsafe {
+  to { opacity: 1; transform: none; }
+}
+@keyframes aura-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes aura-spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes aura-bump {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+
+/* Impresión (confirmación del pedido, textos legales): todo el contenido
+   visible, aunque nunca entrara en pantalla, y sin la interfaz flotante. */
+@media print {
+  .aura-js [data-aura-reveal] { opacity: 1 !important; transform: none !important; animation: none !important; }
+  .aura-js img.aura-img.is-pending { opacity: 1 !important; }
+  .aura-nav,
+  .aura-ribbon,
+  .aura-localnav,
+  .aura-buybar,
+  .aura-toasts { display: none !important; }
+  body.has-buybar { padding-bottom: 0; }
+}
+/* «Aclarar» (mix-blend-mode: lighten) funde el negro de una foto con el fondo
+   oscuro que tiene debajo. Al imprimir sin fondos, o con colores forzados, ese
+   fondo no está y sobre blanco la foto desaparecería: se ve tal cual. */
+@media print, (forced-colors: active) {
+  .aura-img { mix-blend-mode: normal !important; }
+}
+
+
+/* ==========================================================================
+   8. ACCESIBILIDAD
+   Tres señales independientes, las tres atendidas.
+   ========================================================================== */
+
+/* 8.1 Menos movimiento: fundidos cortos en lugar de desplazamientos y escalas */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto !important; }
+
+  .aura-js [data-aura-reveal],
+  .aura-js [data-aura-reveal="scale"] { transform: none; }
+  .aura-js [data-aura-reveal].is-visible {
+    transition: opacity 200ms ease;
+    transition-delay: 0s;
+  }
+
+  /* La pulsación sigue respondiendo, al instante, pero sin escala: se atenúa. */
+  .aura-btn:active, .aura-btn.is-pressed,
+  .aura-icon-btn:active:not(:disabled), .aura-icon-btn.is-pressed,
+  .aura-nav__action:active, .aura-nav__action.is-pressed,
+  .aura-stepper__btn:active:not(:disabled), .aura-stepper__btn.is-pressed,
+  .aura-field__toggle:active, .aura-field__toggle.is-pressed,
+  .aura-toast__action:active, .aura-toast__action.is-pressed,
+  .aura-toast__close:active, .aura-toast__close.is-pressed,
+  button.aura-chip:active, a.aura-chip:active, .aura-chip.is-pressed,
+  .aura-footer__social-link:active, .aura-footer__social-link.is-pressed,
+  .aura-segmented__item:active > input + span, .aura-segmented__item.is-pressed > input + span,
+  a.aura-segmented__item:active, a.aura-segmented__item.is-pressed,
+  button.aura-segmented__item:active, button.aura-segmented__item.is-pressed {
+    transform: none;
+    opacity: .7;
+  }
+  .aura-check:active .aura-check__input:not(:disabled) + .aura-check__box,
+  .aura-check.is-pressed .aura-check__box,
+  .aura-radio:active .aura-radio__input:not(:disabled) + .aura-radio__box,
+  .aura-radio.is-pressed .aura-radio__box { transform: none; opacity: .7; }
+  .aura-carousel__dot:active::before, .aura-carousel__dot.is-pressed::before { transform: none; }   /* queda el cambio de opacidad */
+  a.aura-card:active, .aura-card--interactive:active, .aura-card.is-pressed,
+  .aura-option:active .aura-option__card, .aura-option.is-pressed .aura-option__card,
+  .aura-swatch:active .aura-swatch__dot, .aura-swatch.is-pressed .aura-swatch__dot {
+    transform: none;
+    opacity: .8;
+    transition: none;
+  }
+  .aura-product-card { transition: none; }
+  .aura-product-card:has(> .aura-product-card__media:active, .aura-product-card__name a:active),
+  .aura-product-card:has(> .aura-product-card__media.is-pressed, .aura-product-card__name a.is-pressed) {
+    transform: none;
+    opacity: .8;
+  }
+  .aura-segmented__thumb, .aura-segmented__thumb.is-pressed { scale: none; transition: none; }
+
+  /* Fotos: aparecen sin fundido (siguen ocultas hasta estar decodificadas,
+     para no verse a medias). La galería conserva su fundido de cambio. */
+  .aura-js img.aura-img[data-slot]:not([data-aura-reveal]) { transition: none; }
+  .aura-js .aura-gallery > img.aura-img[data-slot]:not([data-aura-reveal]) { transition: opacity 200ms ease; }
+
+  /* Desplegable de la barra local: fundido corto, sin desplazarse ni girar. */
+  .aura-localnav.has-menu .aura-localnav__links {
+    transform: none;
+    transition: opacity 150ms ease, visibility 0s linear 150ms;
+  }
+  .aura-localnav.has-menu.is-open .aura-localnav__links {
+    transform: none;
+    transition: opacity 150ms ease, visibility 0s;
+  }
+  .aura-localnav__toggle > .bi { transition: none; }
+  a.aura-card:hover, .aura-card--interactive:hover,
+  .aura-link:hover::after { transform: none; }
+  .aura-nav__link::after { transform: none; transition: opacity var(--dur-1) ease; }
+
+  .aura-popover,
+  .aura-popover.is-open {
+    transform: none;
+    filter: none;
+    transition: opacity 150ms ease, visibility 0s linear 150ms;
+  }
+  .aura-popover.is-open { transition-delay: 0s; }
+
+  .aura-toast,
+  .aura-toast.is-visible,
+  .aura-search__panel,
+  .aura-search.is-open .aura-search__panel {
+    transform: none;
+    filter: none;
+    transition: opacity 150ms ease;
+  }
+  .aura-toast.is-dragging { transition: none; }
+  .aura-menu,
+  .aura-menu.is-open { transform: none; }
+  .aura-menu__nav,
+  .aura-menu.is-open .aura-menu__nav { filter: none; transition: none; }
+  .aura-menu { transition: opacity 150ms ease, visibility 0s linear 150ms; }
+  .aura-menu.is-open { transition: opacity 150ms ease, visibility 0s; }
+  .aura-menu__list > li,
+  .aura-menu__secondary > li,
+  .aura-menu.is-open .aura-menu__list > li,
+  .aura-menu.is-open .aura-menu__secondary > li {
+    transform: none;
+    transition: opacity 150ms ease;
+    transition-delay: 0s;
+  }
+
+  /* Hoja: al abrir o cerrar con un botón el JS no escribe transform; solo
+     alterna .is-open y aquí se funde. Si se arrastra (lo mueve el usuario,
+     1:1) manda el transform en línea, también mientras se funde al soltar
+     (.is-releasing). */
+  .aura-sheet { transition: visibility 0s linear 200ms; }
+  .aura-sheet.is-open { transition-delay: 0s; }
+  .aura-sheet > .aura-scrim { transition: opacity 200ms ease; }
+  .aura-sheet:not(.is-dragging):not(.is-releasing) .aura-sheet__panel {
+    transform: none !important;
+  }
+  .aura-sheet__panel,
+  .aura-sheet.is-open .aura-sheet__panel {
+    transition: opacity 200ms ease;
+  }
+  .aura-sheet.is-dragging .aura-sheet__panel,
+  .aura-sheet.is-dragging > .aura-scrim { transition: none; }
+  .aura-sheet__panel { opacity: 0; }
+  .aura-sheet.is-open .aura-sheet__panel { opacity: 1; }
+
+  .aura-buybar { transition: opacity 200ms ease; }
+  .aura-buybar.is-hidden { transform: none; opacity: 0; pointer-events: none; }
+
+  .aura-carousel__dot::before { transition: opacity var(--dur-1) ease; }
+  .aura-carousel__dot.is-active::before { transform: none; }
+  .aura-accordion__icon,
+  .aura-check__box::after, .aura-radio__box::after { transition: opacity 120ms ease; }
+  .aura-nav__count.is-bumped { animation: none; }
+  .aura-spinner { animation-duration: 1.4s; }
+}
+
+/* 8.2 Menos transparencia: superficies opacas, sin desenfoque */
+@media (prefers-reduced-transparency: reduce) {
+  :root,
+  [data-bs-theme="dark"] {
+    --glass-nav-bg: #000000;
+    --glass-thin-bg: #1d1d1f;
+    --glass-regular-bg: #161617;
+    --glass-thick-bg: #161617;
+    --glass-thin-filter: none;
+    --glass-regular-filter: none;
+    --glass-thick-filter: none;
+    --scrim: rgba(0, 0, 0, .8);
+  }
+  .aura-popover,
+  .aura-toast {
+    background: #1d1d1f;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+  .aura-popover, .aura-popover.is-open { filter: none; }
+  .aura-menu { background: #000; }
+  .aura-media__tag { background: #000; }
+  /* Sin filtro, el efecto de borde vuelve a ser la línea --hairline (sin máscara). */
+  .aura-nav::after,
+  .aura-localnav::after {
+    opacity: 1;
+    box-shadow: inset 0 1px 0 var(--hairline);
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+}
+
+/* 8.3 Más contraste: fondos sólidos y bordes definidos */
+@media (prefers-contrast: more) {
+  :root,
+  [data-bs-theme="dark"] {
+    --text-secondary: #d6d6db;
+    --text-tertiary: #c2c2c8;
+    --text-placeholder: #c2c2c8;
+    --text-disabled: #9a9aa0;
+    --hairline: rgba(255, 255, 255, .42);
+    --hairline-strong: rgba(255, 255, 255, .62);
+    --edge-light: rgba(255, 255, 255, .62);
+    --field-border: rgba(255, 255, 255, .78);
+    --fill-1: rgba(255, 255, 255, .06);
+    --accent-link: #6cb8ff;
+    --glass-nav-bg: #000000;
+    --glass-thin-bg: #1d1d1f;
+    --glass-regular-bg: #161617;
+    --glass-thick-bg: #161617;
+    --glass-thin-filter: none;
+    --glass-regular-filter: none;
+    --glass-thick-filter: none;
+    --scrim: rgba(0, 0, 0, .86);
+    --vibrant-label: #ffffff;
+    --vibrant-secondary: #d6d6db;
+    --vibrant-tertiary: #c2c2c8;
+  }
+  .aura-popover,
+  .aura-toast {
+    background: #1d1d1f;
+    border-color: var(--hairline-strong);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+  /* Las superficies dejan de ser cristal: su texto vuelve a los tokens de alto contraste */
+  .aura-popover,
+  .aura-toast,
+  .aura-sheet__panel,
+  .aura-search__panel,
+  .aura-menu,
+  .aura-buybar,
+  .aura-card--glass,
+  .aura-material {
+    --text-secondary: #d6d6db;
+    --text-tertiary: #c2c2c8;
+    --text-placeholder: #c2c2c8;
+  }
+  .aura-menu { background: #000; }
+  /* Sin filtro, el efecto de borde vuelve a ser la línea --hairline (sin máscara). */
+  .aura-nav::after,
+  .aura-localnav::after {
+    opacity: 1;
+    box-shadow: inset 0 1px 0 var(--hairline);
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  .aura-btn { border-width: 2px; }
+  .aura-btn--ghost { --btn-border: var(--hairline-strong); }
+  .aura-btn--primary::after { display: none; }
+  .aura-nav__link, .aura-nav__action, .aura-localnav__link { color: #fff; }
+  .aura-check__box, .aura-radio__box { border-color: #fff; }
+  .aura-tile--cover .aura-tile__media::after { background: linear-gradient(to top, #000 0%, rgba(0, 0, 0, .8) 45%, transparent 75%); }
+  .aura-segmented__thumb { box-shadow: inset 0 0 0 1px var(--hairline-strong); }
+  :focus-visible { outline-width: 3px; }
+}
+
+/* 8.4 Colores forzados (modo de alto contraste de Windows) */
+@media (forced-colors: active) {
+  .aura-btn, .aura-chip, .aura-option__card, .aura-card, .aura-tile, .aura-product-card { border: 1px solid CanvasText; }
+  .aura-option__input:checked + .aura-option__card { outline: 3px solid Highlight; }
+  .aura-nav__link.is-active::after { background: Highlight; }
+  /* Indicadores pintados con background (el modo los pondría en Canvas: invisibles) */
+  .aura-check__box::after, .aura-radio__box::after, .aura-rules__item::before,
+  .aura-field__error::before, .aura-accordion__icon::before,
+  .aura-carousel__dot::before, .aura-checklist > li::before,
+  .aura-steps__item.is-done .aura-steps__num::after,
+  .aura-field.is-valid .aura-field__control::after,
+  .aura-eyebrow::before, .aura-timeline__item::before, .aura-timeline__item::after,
+  .aura-sheet__grabber::before { background: CanvasText; }
+  /* El punto activo no depende de la opacidad: color de selección del sistema */
+  .aura-carousel__dot.is-active::before,
+  .aura-carousel__dot[aria-current="true"]::before { background: Highlight; opacity: 1; }
+  /* La pastilla del segmentado se pinta con borde (el fondo lo anula el modo) */
+  .aura-segmented__thumb { border: 2px solid Highlight; }
+}

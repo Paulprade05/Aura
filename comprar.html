@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="es" data-bs-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Comprar — AURA</title>
+  <meta name="description" content="Configura tu auraPhone, auraPad o auraBook en AURA Store: elige modelo, acabado, almacenamiento y AuraCare+, con el precio y la cuota mensual al instante.">
+  <meta name="theme-color" content="#000000">
+  <link rel="icon" type="image/png" href="assets/img/aura.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&family=Kanit:wght@500;600&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="assets/css/aura.css" rel="stylesheet">
+  <link href="assets/css/pages/comprar.css" rel="stylesheet">
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/aura-core.js"></script>
+</head>
+<body class="has-buybar">
+  <a class="aura-skip" href="#contenido">Saltar al contenido</a>
+  <aura-header active="" ribbon="off"></aura-header>
+
+  <main id="contenido">
+
+    <!-- ============ Configurador ============ -->
+    <section class="aura-section aura-section--tight comprar" aria-labelledby="comprar-titulo">
+      <div class="aura-container">
+
+        <div class="aura-section-head aura-section-head--split comprar-head">
+          <div class="aura-section-head__text comprar-head__text">
+            <p class="aura-eyebrow aura-eyebrow--mono" data-c-familia>AURA Store</p>
+            <h1 class="aura-h1" id="comprar-titulo" data-c-titulo>Comprar</h1>
+            <p class="aura-lead comprar-head__desde" data-c-desde></p>
+            <p class="comprar-estado" data-c-estado hidden></p>
+          </div>
+          <ul class="comprar-head__links">
+            <li><a class="aura-link aura-link--control" href="comparar.html" data-c-comparar>Comparar todos los modelos</a></li>
+            <li><a class="aura-link aura-link--control" href="index.html" data-c-gama>Ver la gama</a></li>
+          </ul>
+        </div>
+
+        <div class="comprar-aviso" data-c-aviso hidden></div>
+
+        <div class="aura-layout aura-layout--config comprar-layout">
+
+          <!-- La galería y su nota van juntas (pegajosas desde 992 px): si el
+               acabado elegido no tiene foto propia, la nota dice cuál se ve. -->
+          <div class="comprar-visual">
+            <div class="aura-gallery comprar-galeria" data-c-galeria>
+              <p class="aura-gallery__caption" aria-hidden="true" data-c-galeria-pie></p>
+            </div>
+            <p class="aura-caption comprar-galeria-nota" data-c-galeria-nota hidden></p>
+          </div>
+
+          <div class="comprar-columna">
+            <form class="comprar-pasos" id="configurador" aria-labelledby="comprar-titulo" novalidate>
+
+              <fieldset class="aura-fieldset comprar-paso" aria-describedby="paso-modelo-ayuda">
+                <legend class="aura-legend"><h2 class="aura-h3 comprar-paso__titulo">Modelo. <span class="aura-text-secondary">¿Cuál es para ti?</span></h2></legend>
+                <p class="visually-hidden" id="paso-modelo-ayuda">Al cambiar de modelo se conservan el acabado y las opciones que hayas cambiado, si existen en el nuevo.</p>
+                <div class="comprar-familias" data-c-familias hidden></div>
+                <div class="aura-option-group" data-c-modelos></div>
+              </fieldset>
+
+              <fieldset class="aura-fieldset comprar-paso" data-c-paso-acabado>
+                <legend class="aura-legend"><h2 class="aura-h3 comprar-paso__titulo">Acabado. <span class="aura-text-secondary">Elige tu favorito.</span></h2></legend>
+                <p class="aura-legend aura-legend--sm">Color: <strong data-aura-color-name data-c-color-nombre></strong></p>
+                <div class="aura-swatches" data-c-colores></div>
+              </fieldset>
+
+              <div class="comprar-opciones" data-c-opciones></div>
+
+              <fieldset class="aura-fieldset comprar-paso" aria-describedby="paso-care-texto" data-c-paso-care>
+                <legend class="aura-legend"><h2 class="aura-h3 comprar-paso__titulo">AuraCare+. <span class="aura-text-secondary" data-c-care-pregunta>Protege tu nuevo dispositivo.</span></h2></legend>
+                <p class="aura-body comprar-paso__texto" id="paso-care-texto" data-c-care-texto></p>
+                <div class="aura-option-group" data-c-care></div>
+              </fieldset>
+
+              <section class="comprar-paso" aria-labelledby="paso-tradein-titulo">
+                <h2 class="aura-h3 comprar-paso__titulo" id="paso-tradein-titulo">AURA Trade In. <span class="aura-text-secondary">¿Cuánto vale tu dispositivo actual?</span></h2>
+                <div data-c-tradein></div>
+              </section>
+
+            </form>
+
+            <aside class="aura-summary comprar-resumen" id="resumen" aria-labelledby="resumen-titulo">
+              <div class="comprar-resumen__head">
+                <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">Resumen</p>
+                <h2 class="aura-summary__title" id="resumen-titulo" data-c-resumen-titulo>Tu configuración</h2>
+                <p class="aura-caption" data-c-resumen-config></p>
+              </div>
+              <dl class="aura-summary__rows">
+                <div class="aura-summary__row"><dt data-c-resumen-equipo>Precio</dt><dd data-c-resumen-precio></dd></div>
+                <div class="aura-summary__row"><dt>AuraCare+</dt><dd data-c-resumen-care></dd></div>
+                <div class="aura-summary__row aura-summary__row--discount" data-c-resumen-trade hidden><dt>Crédito AURA Trade In</dt><dd data-c-resumen-trade-valor></dd></div>
+                <div class="aura-summary__row"><dt>Envío</dt><dd data-c-resumen-envio></dd></div>
+                <div class="aura-summary__row aura-summary__row--total"><dt>Total</dt><dd data-c-resumen-total></dd></div>
+              </dl>
+              <p class="aura-summary__note" data-c-resumen-nota></p>
+              <p class="comprar-entrega"><i class="bi bi-truck" aria-hidden="true" data-c-entrega-icono></i><span data-c-entrega></span></p>
+              <button class="aura-btn aura-btn--primary aura-btn--block comprar-accion" id="comprar-anadir" type="button" data-c-accion>Añadir a la bolsa</button>
+              <div class="comprar-hecho" data-c-anadido hidden>
+                <p class="comprar-hecho__texto"><i class="bi bi-check-circle-fill" aria-hidden="true"></i><span data-c-anadido-texto>Está en tu bolsa.</span></p>
+                <ul class="comprar-hecho__links">
+                  <li><a class="aura-link aura-link--control" href="bolsa.html">Revisar la bolsa</a></li>
+                  <li><a class="aura-link aura-link--control" href="index.html" data-c-seguir>Seguir comprando</a></li>
+                </ul>
+              </div>
+              <div class="comprar-hecho comprar-hecho--aviso" data-c-avisado hidden>
+                <p class="comprar-hecho__texto"><i class="bi bi-bell" aria-hidden="true"></i><span data-c-avisado-texto></span></p>
+                <ul class="comprar-hecho__links">
+                  <li><button class="aura-link aura-link--plain" type="button" data-c-cancelar-aviso>Cancelar el aviso</button></li>
+                </ul>
+              </div>
+            </aside>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ Ventajas de AURA Store ============ -->
+    <section class="aura-section aura-section--band" aria-labelledby="ventajas-titulo">
+      <div class="aura-container">
+        <div class="aura-section-head">
+          <p class="aura-eyebrow aura-eyebrow--mono">AURA Store</p>
+          <h2 class="aura-h2" id="ventajas-titulo">Comprar aquí tiene sus ventajas.</h2>
+          <p class="aura-lead">Envío sin coste, devoluciones sin preguntas incómodas y especialistas que hablan tu idioma. Y el de tu dispositivo.</p>
+        </div>
+        <ul class="aura-grid aura-grid--4 comprar-ventajas">
+          <li class="aura-feature aura-feature--card" data-aura-reveal>
+            <span class="aura-feature__icon"><i class="bi bi-truck" aria-hidden="true"></i></span>
+            <h3 class="aura-feature__title">Envío gratis a domicilio</h3>
+            <p class="aura-feature__text">Lo recibes en 2–3 días laborables, sin pedido mínimo. Las reservas llegan el día del lanzamiento.</p>
+          </li>
+          <li class="aura-feature aura-feature--card" data-aura-reveal style="--i:1">
+            <span class="aura-feature__icon"><i class="bi bi-arrow-counterclockwise" aria-hidden="true"></i></span>
+            <h3 class="aura-feature__title">Devolución en 14 días</h3>
+            <p class="aura-feature__text">¿No te convence? Devuélvelo gratis en los 14 días siguientes a recibirlo.</p>
+            <a class="aura-link aura-link--control" href="legal.html#condiciones">Condiciones de uso</a>
+          </li>
+          <li class="aura-feature aura-feature--card" data-aura-reveal style="--i:2">
+            <span class="aura-feature__icon"><i class="bi bi-credit-card" aria-hidden="true"></i></span>
+            <h3 class="aura-feature__title">Paga en <span data-c-meses>24</span> meses</h3>
+            <p class="aura-feature__text">Cuotas fijas y sin intereses. Cada configuración muestra la suya mientras eliges.</p>
+          </li>
+          <li class="aura-feature aura-feature--card" data-aura-reveal style="--i:3">
+            <span class="aura-feature__icon"><i class="bi bi-chat-dots" aria-hidden="true"></i></span>
+            <h3 class="aura-feature__title">Ayuda de especialistas</h3>
+            <p class="aura-feature__text">¿Dudas entre dos modelos? Te ayudamos a elegir el que encaja contigo.</p>
+            <a class="aura-link aura-link--control" href="soporte.html#contacto">Hablar con un especialista</a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ Preguntas sobre la compra ============ -->
+    <section class="aura-section" id="preguntas" aria-labelledby="preguntas-titulo">
+      <div class="aura-container aura-container--narrow">
+        <div class="aura-section-head">
+          <p class="aura-eyebrow aura-eyebrow--mono">Preguntas frecuentes</p>
+          <h2 class="aura-h2" id="preguntas-titulo">Antes de pulsar el botón.</h2>
+          <p class="aura-lead">Lo que más nos preguntan sobre entregas, reservas y pagos.</p>
+        </div>
+        <div class="aura-accordion">
+          <details class="aura-accordion__item" name="faq-compra">
+            <summary class="aura-accordion__summary"><span>¿Cuándo recibiré mi pedido?</span><span class="aura-accordion__icon" aria-hidden="true"></span></summary>
+            <div class="aura-accordion__panel"><p>En 2–3 días laborables, con envío gratuito. La fecha estimada de tu configuración aparece en el resumen, junto al botón. Si es una reserva, te lo entregamos a partir del día del lanzamiento.</p></div>
+          </details>
+          <details class="aura-accordion__item" name="faq-compra">
+            <summary class="aura-accordion__summary"><span>¿Cómo funciona una reserva?</span><span class="aura-accordion__icon" aria-hidden="true"></span></summary>
+            <div class="aura-accordion__panel"><p>Cuando anunciamos un modelo, ya puedes configurarlo, ver su precio y pedirnos que te avisemos. El día que abren las reservas, lo reservas como cualquier compra: eliges tu configuración, pulsas «Reservar» y te lo entregamos a partir del día del lanzamiento. Verás las fechas en el resumen.</p></div>
+          </details>
+          <details class="aura-accordion__item" name="faq-compra">
+            <summary class="aura-accordion__summary"><span>¿Cómo se aplica el crédito de AURA Trade In?</span><span class="aura-accordion__icon" aria-hidden="true"></span></summary>
+            <div class="aura-accordion__panel"><p>Valora tu dispositivo en <a href="trade-in.html">AURA Trade In</a>. El crédito se guarda en este navegador y se descuenta una sola vez del total al tramitar el pedido.</p></div>
+          </details>
+          <details class="aura-accordion__item" name="faq-compra">
+            <summary class="aura-accordion__summary"><span>¿Qué cubre AuraCare+?</span><span class="aura-accordion__icon" aria-hidden="true"></span></summary>
+            <div class="aura-accordion__panel"><p data-c-care-faq>Reparaciones por daños accidentales y asistencia prioritaria de especialistas AURA. Su precio depende del dispositivo y lo verás en el paso AuraCare+.</p></div>
+          </details>
+          <details class="aura-accordion__item" name="faq-compra">
+            <summary class="aura-accordion__summary"><span>¿Puedo cambiar de opinión?</span><span class="aura-accordion__icon" aria-hidden="true"></span></summary>
+            <div class="aura-accordion__panel"><p>Claro. Puedes cambiar cualquier opción antes de tramitar el pedido y, una vez recibido, tienes 14 días para devolverlo. Los detalles están en las <a href="legal.html#condiciones">Condiciones de uso</a>.</p></div>
+          </details>
+        </div>
+        <div class="aura-cluster mt-4">
+          <a class="aura-link" href="soporte.html#preguntas">Ver todas las preguntas</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ Notas al pie (las rellena comprar.js desde el catálogo) ============ -->
+    <section class="aura-section aura-section--tight aura-footnotes" aria-labelledby="notas-titulo">
+      <div class="aura-container">
+        <h2 class="visually-hidden" id="notas-titulo">Notas</h2>
+        <ol class="aura-footnotes__list">
+          <li id="nota-1"><span data-aura-legal="financiacion">Financiación sin intereses, sujeta a la aprobación de la entidad financiera.</span> <span data-aura-legal="envio">El envío estándar es gratuito.</span> <a class="aura-footnotes__back" href="#ref-1" aria-label="Volver al texto de la nota 1"><i class="bi bi-arrow-return-left" aria-hidden="true"></i></a></li>
+          <li id="nota-2"><span data-aura-legal="tradein">El valor de AURA Trade In depende del modelo y del estado del dispositivo.</span> <a class="aura-footnotes__back" href="#ref-2" aria-label="Volver al texto de la nota 2"><i class="bi bi-arrow-return-left" aria-hidden="true"></i></a></li>
+        </ol>
+        <ul class="aura-footnotes__list comprar-notas-fechas" data-c-notas-fechas hidden></ul>
+        <ul class="aura-footnotes__list mt-3">
+          <li data-aura-legal="precios">Precios de venta recomendados en España, IVA incluido.</li>
+          <li data-aura-legal="demo">AURA es un proyecto de demostración.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Barra de compra fija: la misma acción que el resumen (no una segunda).
+         Se esconde mientras el botón del resumen está a la vista. -->
+    <div class="aura-buybar aura-buybar--always comprar-buybar" data-aura-buybar="#comprar-anadir">
+      <div class="aura-buybar__info">
+        <p class="aura-buybar__name" data-c-barra-nombre></p>
+        <div class="comprar-buybar__precio">
+          <p class="aura-price" data-c-barra-precio></p>
+          <p class="aura-caption comprar-buybar__cuota" data-c-barra-cuota></p>
+        </div>
+      </div>
+      <button class="aura-btn aura-btn--primary comprar-accion" type="button" data-c-accion data-c-barra-boton>Añadir a la bolsa</button>
+    </div>
+
+    <p class="visually-hidden" aria-live="polite" aria-atomic="true" data-c-anuncio></p>
+
+  </main>
+
+  <aura-footer crumbs="Comprar"></aura-footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/aura-ui.js"></script>
+  <script src="assets/js/pages/comprar.js"></script>
+</body>
+</html>

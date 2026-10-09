@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="es" data-bs-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Privacidad, cookies y condiciones — AURA</title>
+  <meta name="description" content="Política de privacidad, uso de cookies y condiciones de uso de AURA, un proyecto de demostración sin servidor: todo se guarda en tu navegador y puedes borrarlo con un botón.">
+  <meta name="theme-color" content="#000000">
+  <link rel="icon" type="image/png" href="assets/img/aura.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&family=Kanit:wght@500;600&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="assets/css/aura.css" rel="stylesheet">
+  <link href="assets/css/pages/legal.css" rel="stylesheet">
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/aura-core.js"></script>
+</head>
+<body>
+  <a class="aura-skip" href="#contenido">Saltar al contenido</a>
+  <aura-header active="" ribbon="off"></aura-header>
+
+  <main id="contenido">
+
+    <section class="aura-hero aura-hero--split legal-hero" aria-labelledby="legal-titulo">
+      <div class="aura-container aura-hero__inner">
+        <div class="aura-hero__copy">
+          <p class="aura-eyebrow aura-eyebrow--mono">Legal / Proyecto de demostración</p>
+          <h1 class="aura-h1" id="legal-titulo">Privacidad, cookies y condiciones.</h1>
+          <p class="aura-lead">Sin letra pequeña: qué guardamos, dónde y cómo borrarlo. Adelantamos el final: todo se queda en tu navegador.</p>
+          <p class="aura-caption aura-caption--muted">Última actualización: <time datetime="2026-10-03">3 de octubre de 2026</time></p>
+        </div>
+        <div class="aura-hero__media legal-hero__media d-none d-lg-grid" aria-hidden="true">
+          <div class="aura-glow aura-glow--lg"></div>
+          <p class="aura-mono">AURA / Solo en tu navegador</p>
+        </div>
+      </div>
+    </section>
+
+    <nav class="aura-section aura-section--band aura-section--tight" id="indice" aria-label="Índice">
+      <div class="aura-container">
+        <ol class="aura-grid aura-grid--4 list-unstyled m-0">
+          <li>
+            <a class="aura-card legal-indice__card" href="#privacidad">
+              <span class="aura-mono legal-indice__num" aria-hidden="true">01</span>
+              <span class="aura-h4 d-block">Privacidad</span>
+              <span class="aura-caption d-block">Qué guardamos, dónde y cómo borrarlo.</span>
+            </a>
+          </li>
+          <li>
+            <a class="aura-card legal-indice__card" href="#cookies">
+              <span class="aura-mono legal-indice__num" aria-hidden="true">02</span>
+              <span class="aura-h4 d-block">Cookies</span>
+              <span class="aura-caption d-block">Ninguna nuestra. Las de terceros, explicadas.</span>
+            </a>
+          </li>
+          <li>
+            <a class="aura-card legal-indice__card" href="#condiciones">
+              <span class="aura-mono legal-indice__num" aria-hidden="true">03</span>
+              <span class="aura-h4 d-block">Condiciones</span>
+              <span class="aura-caption d-block">Las reglas del juego, en serio y en broma.</span>
+            </a>
+          </li>
+          <li>
+            <a class="aura-card legal-indice__card" href="#imagenes">
+              <span class="aura-mono legal-indice__num" aria-hidden="true">04</span>
+              <span class="aura-h4 d-block">Imágenes</span>
+              <span class="aura-caption d-block">De quién es cada foto y con qué licencia.</span>
+            </a>
+          </li>
+        </ol>
+      </div>
+    </nav>
+
+    <!-- 01 · Privacidad -->
+    <section class="aura-section" id="privacidad" aria-labelledby="privacidad-titulo">
+      <div class="aura-container legal-seccion">
+        <div class="legal-seccion__head">
+          <p class="aura-eyebrow aura-eyebrow--mono">01 / Privacidad</p>
+          <h2 class="aura-h2" id="privacidad-titulo">Política de privacidad.</h2>
+          <p class="aura-body">Tus datos no salen de este navegador. Literalmente: AURA no tiene servidor.</p>
+        </div>
+
+        <div class="legal-seccion__body">
+        <div class="aura-prose">
+          <h3>Quién es el responsable</h3>
+          <p>AURA Inc. es una empresa ficticia y este sitio es un <strong>proyecto de demostración</strong>. No hay servidor, base de datos ni equipo de analítica al otro lado: la tienda funciona entera dentro de tu navegador.</p>
+
+          <h3>Qué guardamos y dónde</h3>
+          <p>Lo que haces en la tienda se guarda en el <strong>almacenamiento local (localStorage) de este navegador</strong>, en este dispositivo. Nadie más puede verlo, ni siquiera nosotros. Son cinco claves que empiezan por <code>aura.</code>:</p>
+          <ul>
+            <li><strong>Bolsa</strong> (<code>aura.bag.v1</code>): los productos, colores y opciones que añades.</li>
+            <li><strong>ID de AURA</strong> (<code>aura.users.v1</code>): nombre, apellidos, correo y la huella de tu contraseña.</li>
+            <li><strong>Sesión</strong> (<code>aura.session.v1</code>): quién ha iniciado sesión. Si al entrar no marcas «Mantener la sesión iniciada en este dispositivo», dura lo que la pestaña.</li>
+            <li><strong>Pedidos</strong> (<code>aura.orders.v1</code>): lo que has «comprado», con la dirección de envío que escribiste.</li>
+            <li><strong>AURA Trade In</strong> (<code>aura.tradein.v1</code>): el dispositivo que valoraste y su crédito.</li>
+          </ul>
+
+          <h3>Contraseñas</h3>
+          <p>Nunca guardamos tu contraseña. Guardamos su <strong>hash SHA-256 con una sal aleatoria</strong> distinta para cada ID: una huella de la que no se puede recuperar el original. Para una demostración es suficiente; un servicio real la guardaría además en un servidor y con un algoritmo lento, como Argon2 o bcrypt.</p>
+
+          <h3>Pagos</h3>
+          <p>Los pagos son simulados y <strong>nunca se guardan datos de tarjeta</strong>. Antes de guardar un pedido descartamos el número, la fecha de caducidad y el código de seguridad; solo queda el método de pago y los cuatro últimos dígitos, para que reconozcas la compra.</p>
+
+          <h3>Formulario de soporte</h3>
+          <p>El <a href="soporte.html#contacto">formulario de contacto</a> no envía ni guarda nada: solo comprueba los campos y te muestra un número de caso ficticio.</p>
+
+          <h3>Tus derechos</h3>
+          <p>Como todo está en tu navegador, tú tienes el control: puedes ver tus datos en <a href="cuenta.html">Tu cuenta</a> y <strong>borrarlos todos</strong> con el botón de aquí abajo. También desaparecen si borras los datos de este sitio desde los ajustes de tu navegador.</p>
+        </div>
+
+        <div class="aura-card aura-card--elevated legal-datos" id="tus-datos" role="region" aria-labelledby="tus-datos-titulo">
+          <div class="aura-stack aura-stack--stretch" style="--stack:1.25rem">
+            <div class="aura-stack" style="--stack:.375rem">
+              <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">En este navegador, ahora</p>
+              <h3 class="aura-h3" id="tus-datos-titulo" tabindex="-1">Tus datos de AURA</h3>
+            </div>
+            <ul class="aura-stats legal-datos__cifras">
+              <li class="aura-stat aura-stat--card"><p class="aura-stat__value" data-legal-dato="bolsa">0</p><p class="aura-stat__label">Artículos en la bolsa</p></li>
+              <li class="aura-stat aura-stat--card"><p class="aura-stat__value" data-legal-dato="cuentas">0</p><p class="aura-stat__label">ID de AURA creados</p></li>
+              <li class="aura-stat aura-stat--card"><p class="aura-stat__value" data-legal-dato="pedidos">0</p><p class="aura-stat__label">Pedidos guardados</p></li>
+              <li class="aura-stat aura-stat--card"><p class="aura-stat__value" data-legal-dato="tradein">—</p><p class="aura-stat__label">Crédito de Trade In</p></li>
+            </ul>
+            <p class="aura-caption" data-legal-sesion>No hay ninguna sesión iniciada.</p>
+            <div class="legal-datos__accion">
+              <button class="aura-btn aura-btn--destructive" type="button" data-aura-sheet-open="legal-borrar" aria-haspopup="dialog" aria-expanded="false" aria-controls="legal-borrar" aria-describedby="legal-borrar-ayuda">
+                <i class="bi bi-trash3" aria-hidden="true"></i>Borrar todos los datos…
+              </button>
+              <p class="aura-caption aura-caption--muted" id="legal-borrar-ayuda" data-legal-ayuda>Borra la bolsa, los ID de AURA, los pedidos, el crédito de Trade In y la sesión. Solo en este navegador.</p>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 02 · Cookies -->
+    <section class="aura-section aura-section--band" id="cookies" aria-labelledby="cookies-titulo">
+      <div class="aura-container legal-seccion">
+        <div class="legal-seccion__head">
+          <p class="aura-eyebrow aura-eyebrow--mono">02 / Cookies</p>
+          <h2 class="aura-h2" id="cookies-titulo">Uso de cookies.</h2>
+          <p class="aura-body">AURA no instala cookies propias. Ni de análisis, ni de publicidad, ni de las que te siguen por internet.</p>
+        </div>
+
+        <div class="legal-seccion__body">
+        <div class="aura-prose">
+          <h3>Las nuestras: ninguna</h3>
+          <p>El almacenamiento local que usamos para la bolsa o tu ID de AURA no es una cookie: no viaja a ningún servidor con cada visita y solo lo lee esta web, en este navegador. Por eso no te mostramos ningún banner de consentimiento.</p>
+
+          <h3>Las de terceros: solo fuentes y librerías</h3>
+          <p>Para dibujar la página, tu navegador descarga archivos de dos servicios externos. Son las únicas cookies o registros técnicos posibles en este sitio:</p>
+          <ul>
+            <li><strong>Google Fonts</strong> (<code>fonts.googleapis.com</code> y <code>fonts.gstatic.com</code>): las tipografías Inter y Kanit.</li>
+            <li><strong>jsDelivr</strong> (<code>cdn.jsdelivr.net</code>): Bootstrap y Bootstrap Icons.</li>
+          </ul>
+          <p>Al servir esos archivos, estos servicios reciben datos técnicos como tu dirección IP o tu navegador, igual que cualquier servidor web, y los tratan según sus propias políticas de privacidad. AURA no recibe nada de ellos.</p>
+
+          <h3>Cómo evitarlas</h3>
+          <p>Puedes bloquear esos dominios desde tu navegador o con un bloqueador de contenido. La tienda seguirá funcionando: solo cambiarán la tipografía y algunos iconos.</p>
+        </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03 · Condiciones -->
+    <section class="aura-section" id="condiciones" aria-labelledby="condiciones-titulo">
+      <div class="aura-container legal-seccion">
+        <div class="legal-seccion__head">
+          <p class="aura-eyebrow aura-eyebrow--mono">03 / Condiciones</p>
+          <h2 class="aura-h2" id="condiciones-titulo">Condiciones de uso.</h2>
+          <p class="aura-body">Las reglas del juego. Son pocas, son claras y alguna tiene truco.</p>
+        </div>
+
+        <div class="legal-seccion__body">
+        <div class="aura-prose">
+          <h3>1. Esto es una demostración</h3>
+          <p>Nada de lo que compres llegará a tu casa y no se cobra ningún importe. Los productos, precios y especificaciones se inspiran en el mundo real, pero aquí son de ficción y no constituyen ninguna oferta.</p>
+
+          <h3>2. Úsala con total libertad</h3>
+          <p>Prueba todo lo que quieras: añade a la bolsa, crea varios ID de AURA, configura diez veces el mismo auraPhone Duo. Lo único que te pedimos es que <strong>no escribas datos reales de tarjeta</strong>: no los guardaríamos, pero tampoco hacen falta.</p>
+
+          <h3>3. Marcas y parecidos razonables</h3>
+          <p>AURA, auraPhone, auraPad, auraBook, AuraCare+ y el resto de nombres son marcas ficticias. Cualquier parecido con una empresa de Cupertino es pura parodia, hecha con cariño y sin ánimo de confundir a nadie.</p>
+
+          <h3>4. Valoraciones de AURA Trade In</h3>
+          <p>Las valoraciones de AURA Trade In de esta web son simuladas y orientativas: no son una oferta de compra ni dan derecho a ningún pago o descuento fuera de este proyecto de demostración.</p>
+
+          <h3>5. Responsabilidad</h3>
+          <p>El sitio se ofrece tal cual, para aprender y para enseñar. Si borras los datos de tu navegador, tus pedidos de demostración desaparecen con ellos: no hay copia en ningún otro sitio.</p>
+
+          <h3>6. Cambios en estas condiciones</h3>
+          <p>Podemos actualizarlas cuando cambie el sitio. La fecha de la última versión está al principio de esta página.</p>
+
+          <h3>7. Ley aplicable</h3>
+          <p>Se rigen por la ley española. Al ser AURA una empresa ficticia, cualquier pleito también lo sería. ¿Dudas? <a href="soporte.html#contacto">Escríbenos</a>.</p>
+        </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 04 · Créditos de las imágenes (la lista la pinta legal.js con assets/js/creditos.js) -->
+    <section class="aura-section" id="imagenes" aria-labelledby="imagenes-titulo">
+      <div class="aura-container legal-seccion">
+        <div class="legal-seccion__head">
+          <p class="aura-eyebrow aura-eyebrow--mono">04 / Imágenes</p>
+          <h2 class="aura-h2" id="imagenes-titulo">Créditos de las imágenes.</h2>
+          <p class="aura-body">Cada foto es de su autor y tiene licencia libre. Aquí está quién la hizo, dónde se publicó y con qué licencia.</p>
+        </div>
+
+        <div class="legal-seccion__body">
+          <div class="aura-prose">
+            <p>Todas las fotos se han <strong>recortado y ajustado de tono</strong> para el fondo negro de AURA. Los aparatos que aparecen llevan aquí los nombres de AURA: en la foto original son de otras marcas, que no tienen ninguna relación con este proyecto.</p>
+          </div>
+          <div class="legal-creditos" data-legal-creditos>
+            <p class="aura-caption" data-legal-creditos-vacio>Para ver la lista de créditos hace falta JavaScript. Todas las fotos proceden de Unsplash, con la <a href="https://unsplash.com/license">Licencia de Unsplash</a>.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Confirmación del borrado: irreversible, por eso se pregunta -->
+    <div class="aura-sheet aura-sheet--bottom" id="legal-borrar" data-aura-sheet aria-hidden="true">
+      <div class="aura-scrim" data-aura-sheet-close></div>
+      <section class="aura-sheet__panel" role="alertdialog" aria-modal="true" aria-labelledby="legal-borrar-titulo" aria-describedby="legal-borrar-texto" tabindex="-1">
+        <div class="aura-sheet__grabber" aria-hidden="true"></div>
+        <header class="aura-sheet__header">
+          <h2 class="aura-sheet__title" id="legal-borrar-titulo">¿Borrar todos los datos de AURA?</h2>
+          <button class="aura-icon-btn" type="button" data-aura-sheet-close aria-label="Cerrar sin borrar"><i class="bi bi-x-lg" aria-hidden="true"></i></button>
+        </header>
+        <div class="aura-sheet__body">
+          <p class="m-0" id="legal-borrar-texto">Se eliminarán de este navegador <span data-legal-lista>todos los datos de AURA</span>. <strong>No se puede deshacer.</strong></p>
+        </div>
+        <footer class="aura-sheet__footer">
+          <button class="aura-btn aura-btn--destructive aura-btn--block" type="button" data-legal-borrar>Borrar los datos</button>
+          <button class="aura-btn aura-btn--ghost aura-btn--block" type="button" data-aura-sheet-close autofocus>Cancelar</button>
+        </footer>
+      </section>
+    </div>
+
+  </main>
+
+  <aura-footer crumbs="Legal"></aura-footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/aura-ui.js"></script>
+  <script src="assets/js/creditos.js"></script>
+  <script src="assets/js/pages/legal.js"></script>
+</body>
+</html>

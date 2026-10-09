@@ -1,0 +1,149 @@
+/* ==========================================================================
+   AURA — trade-in.html
+   Complementa a aura.css con la maqueta propia de AURA Trade In. Solo tokens
+   del sistema; los cambios de estado son instantáneos (solo se anima la cifra,
+   con el muelle del sistema, desde el JS).
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Héroe: el bloque Trade In del prototipo de inicio (texto ancho, cifra en el
+   titular, una sola acción) con la imagen a la derecha. El titular es el H1
+   de la guía (la base lo mide con su columna) y la foto se funde con la
+   franja por sus bordes (base, §1): sin radio ni marco propios.
+   -------------------------------------------------------------------------- */
+
+.ti-hero .aura-hero__copy { max-width: 44rem; }
+@media (min-width: 992px) {
+  .ti-hero.aura-hero--split .aura-hero__inner { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); }
+}
+/* En una columna (tableta), la foto acompaña al titular desde la derecha sin
+   ocupar una pantalla entera: la calculadora, que es la tarea, queda cerca. */
+@media (max-width: 991.98px) {
+  .ti-hero .aura-hero__media { justify-self: end; width: min(100%, 32rem); }
+}
+
+
+/* --------------------------------------------------------------------------
+   Crédito activo
+   -------------------------------------------------------------------------- */
+
+.ti-credit {
+  max-width: 46rem;
+  margin-bottom: clamp(1.75rem, 3.5vw, 2.5rem);
+}
+.ti-credit__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 1.5rem;
+  grid-column: 2;
+}
+
+
+/* --------------------------------------------------------------------------
+   Calculadora
+   -------------------------------------------------------------------------- */
+
+.ti-steps {
+  display: grid;
+  gap: clamp(2.25rem, 4vw, 3rem);
+  min-width: 0;
+  container-type: inline-size;
+}
+/* Los modelos van en dos columnas solo si caben sin partir el nombre
+   («auraPhone / 17»): junto al resumen (992–1199 px) o en pantallas
+   estrechas, una por fila. */
+@container (max-width: 36rem) {
+  .ti-steps .aura-option-group--2 { grid-template-columns: minmax(0, 1fr); }
+}
+.ti-step {
+  --ti-indent: 2.5rem;                  /* número (1,75 rem) + hueco (0,75 rem) */
+  gap: .875rem;
+}
+.ti-step__legend {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  margin-bottom: .125rem;
+}
+/* El texto de apoyo se alinea con el título del paso, no con su número. */
+.ti-step__hint { margin: -.1875rem 0 0 var(--ti-indent); }
+/* Con sitio, todo el contenido del paso cuelga del título: se lee como una lista numerada. */
+@media (min-width: 768px) {
+  .ti-step > :not(legend) { margin-left: var(--ti-indent); }
+}
+
+/* Número de paso: se convierte en una marca al completarse (cambio instantáneo). */
+.ti-step__num {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background: var(--fill-2);
+  box-shadow: inset 0 0 0 1px var(--hairline-strong);
+  color: var(--text-secondary);
+  font-family: var(--font-ui);
+  font-size: .8125rem;
+  font-weight: 600;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.ti-step.is-done .ti-step__num,
+.ti-result.is-done .ti-step__num {
+  background: var(--accent);
+  box-shadow: none;
+  color: transparent;
+}
+.ti-step.is-done .ti-step__num::after,
+.ti-result.is-done .ti-step__num::after {
+  content: "";
+  position: absolute;
+  inset: .4375rem;
+  background: var(--text-primary);
+  -webkit-mask: var(--icon-check) center / contain no-repeat;
+  mask: var(--icon-check) center / contain no-repeat;
+}
+
+.ti-families { align-self: start; justify-self: start; }
+
+/* Resultado: la cifra es la .aura-stat--md del sistema */
+.ti-result { gap: 1.125rem; }
+.ti-result__head {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+}
+.ti-result__device {
+  margin: -.25rem 0 0;
+  font-size: .9375rem;
+  line-height: 1.45;
+  color: var(--text-secondary);
+  text-align: center;
+  text-wrap: balance;
+}
+.ti-result .aura-summary__rows {
+  padding-top: 1rem;
+  border-top: 1px solid var(--hairline);
+}
+
+
+/* --------------------------------------------------------------------------
+   Cómo funciona, medio ambiente y siguiente paso
+   -------------------------------------------------------------------------- */
+
+.ti-how {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ti-stats {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  gap: var(--gap);
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+}
+
+/* «¿Qué vas a estrenar?»: .aura-family-card de la base. */

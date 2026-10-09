@@ -1,0 +1,156 @@
+/* ==========================================================================
+   AURA — acerca.html
+   Solo maquetación propia de la página; colores, radios, materiales y
+   tipografía salen de los tokens y componentes de aura.css.
+   ========================================================================== */
+
+/* Héroe: la foto de la sede lleva las cifras encima (bloque «About us» del
+   prototipo): un panel de material inset, no un degradado a sangre. */
+.acerca-hero__media { aspect-ratio: 1 / 1; }        /* en móvil, sitio para la foto y las tres cifras */
+@media (min-width: 576px) {
+  .acerca-hero__media { aspect-ratio: 4 / 3; }
+}
+@media (min-width: 992px) {
+  .acerca-hero__media { aspect-ratio: 8 / 7; }
+}
+/* El panel va en el flujo, apilado sobre la foto en la misma celda (no en
+   posición absoluta): si el texto crece (125–200 %), la figura crece con él
+   en lugar de recortarlo por arriba. Deja sitio a la etiqueta de arriba. */
+.acerca-hero__media {
+  display: grid;
+  align-content: end;
+  min-height: min-content;
+}
+.acerca-hero__cifras {
+  position: relative;
+  inset: auto;
+  grid-area: 1 / 1;
+  margin: 3.5rem clamp(.75rem, 2.5vw, 2.25rem) clamp(.75rem, 2.5vw, 2.25rem);
+  padding: clamp(.875rem, 2vw, 1.5rem) clamp(1rem, 2.2vw, 1.5rem);
+  border: 1px solid var(--hairline);
+  border-top-color: var(--edge-light);           /* la luz toca el borde superior del material */
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-2);
+}
+/* Tres cifras en fila mientras quepan (nunca dos y una huérfana debajo). La
+   cifra escala con el ancho del panel, no de la ventana: en 360 px y en el
+   héroe partido de 1024 px el panel es igual de estrecho. */
+.acerca-hero__cifras { container-type: inline-size; }
+.acerca-hero__cifras .aura-stats {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .75rem clamp(.75rem, 2vw, 1.5rem);
+}
+.acerca-hero__cifras .aura-stat__value {
+  font-size: clamp(1.125rem, 7cqi, 2.375rem);
+  white-space: nowrap;
+}
+@media (max-width: 575.98px) {
+  .acerca-hero__cifras .aura-stat__label { font-size: .75rem; }
+}
+/* Con texto grande, o en un panel muy estrecho (la consulta va en rem, así
+   que sigue al tamaño de letra del navegador), las tres no caben en fila:
+   pasan a una lista, cifra y etiqueta en la misma línea, con las etiquetas
+   alineadas en una sola vertical. */
+@container (max-width: 16rem) {
+  .acerca-hero__cifras .aura-stats {
+    grid-template-columns: max-content minmax(0, 1fr);
+    gap: .625rem .875rem;
+  }
+  .acerca-hero__cifras .aura-stat {
+    grid-column: 1 / -1;
+    grid-template-columns: max-content minmax(0, 1fr);
+    grid-template-columns: subgrid;
+    align-items: baseline;
+    gap: 0 .875rem;
+  }
+}
+/* Héroe partido en pantallas medianas: más sitio para el titular (con 1 : 1,1
+   el h1 se partía en cinco líneas a 1024 px) */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .acerca-hero .aura-hero__inner {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr);
+    gap: 2.5rem;
+  }
+  .acerca-hero__media { aspect-ratio: 4 / 5; }     /* columna más estrecha: la foto gana alto */
+}
+
+/* Historia: cronología a la izquierda; cifra e imagen acompañan al leer */
+.acerca-historia {
+  display: grid;
+  gap: clamp(2.5rem, 5vw, 4rem);
+  grid-template-columns: minmax(0, 1fr);
+}
+.acerca-historia__aside {
+  display: grid;
+  gap: 1.5rem;
+  align-content: start;
+  min-width: 0;
+}
+/* En tableta la cronología ocupa todo el ancho: la cifra y la foto van una
+   junto a otra debajo (apiladas dejaban dos bloques de 500 px casi vacíos) */
+@media (min-width: 576px) and (max-width: 991.98px) {
+  .acerca-historia__aside {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: center;
+  }
+}
+/* En escritorio, dos columnas de alto parecido. Sin position: sticky: la
+   columna (cifra + foto) mide casi lo mismo que la cronología y más que una
+   ventana de portátil, así que pegada solo recortaba el pie de foto. */
+@media (min-width: 992px) {
+  .acerca-historia {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
+    align-items: start;
+  }
+}
+
+/* Cita del fundador: centrada bajo su orbe */
+.acerca-cita__inner {
+  display: grid;
+  justify-items: center;
+  gap: 2rem;
+}
+.acerca-cita .aura-quote { margin-inline: auto; }
+
+/* Valores: en cada columna del bento, la tesela con foto absorbe el alto que
+   sobra (crece su imagen); la de solo texto mide lo que su contenido, sin
+   un hueco vacío al pie. */
+.aura-bento__col > .acerca-tile--texto { flex-grow: 0; }
+
+/* Newsroom: misma proporción de imagen y enlaces alineados al pie, aunque un
+   titular o un resumen ocupe más líneas que los demás */
+.acerca-nota .aura-tile__media {
+  flex: none;
+  min-height: 0;
+  aspect-ratio: 4 / 3;
+}
+/* Como en una sala de prensa: categoría, titular y fecha debajo (la fecha ya
+   no comparte línea con la categoría, que en 1024 px se partía en dos) */
+.acerca-nota .aura-tile__copy {
+  flex: 1 1 auto;
+  grid-template-rows: auto auto auto 1fr auto;
+}
+.acerca-nota__fecha { margin-top: -.125rem; }
+/* En tableta, tres columnas dejaban titulares de cuatro líneas: una nota por
+   fila, con la imagen a la izquierda (lista de la sala de prensa) */
+@media (min-width: 576px) and (max-width: 991.98px) {
+  .acerca-newsroom.aura-grid--3 { grid-template-columns: minmax(0, 1fr); }
+  .acerca-nota { flex-direction: row; align-items: flex-start; }
+  .acerca-nota .aura-tile__media { flex: 0 0 42%; }
+  .acerca-nota .aura-tile__copy { align-self: stretch; }
+}
+
+/* Oportunidades */
+.acerca-oportunidades__media { aspect-ratio: 4 / 3; }
+.acerca-puestos__titulo { margin: clamp(3rem, 6vw, 4.5rem) 0 1.5rem; }
+.acerca-puesto {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: .75rem;
+  height: 100%;
+}
+.acerca-puesto__ref { margin-top: auto; padding-top: .25rem; }   /* referencia y enlace, siempre al pie */
+.acerca-puesto > .aura-link { margin-top: -.25rem; }
+
+/* Textos sin palabras huérfanas: lo hace la base (text-wrap en las clases de texto). */

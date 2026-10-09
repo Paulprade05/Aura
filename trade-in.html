@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="es" data-bs-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>AURA Trade In — AURA</title>
+  <meta name="description" content="Entrega tu dispositivo anterior con AURA Trade In: calcula al instante su valor, aplícalo como descuento en tu nuevo auraPhone, auraPad o auraBook y le daremos una segunda vida o lo reciclaremos con responsabilidad.">
+  <meta name="theme-color" content="#000000">
+  <link rel="icon" type="image/png" href="assets/img/aura.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&family=Kanit:wght@500;600&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="assets/css/aura.css" rel="stylesheet">
+  <link href="assets/css/pages/trade-in.css" rel="stylesheet">
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/aura-core.js"></script>
+</head>
+<body class="has-buybar">
+  <a class="aura-skip" href="#contenido">Saltar al contenido</a>
+  <aura-header active="tradein" ribbon="off"></aura-header>
+
+  <main id="contenido" class="ti">
+
+    <!-- Héroe (bloque Trade In del prototipo de inicio) -->
+    <section class="aura-hero aura-hero--split aura-hero--band ti-hero" aria-labelledby="ti-titulo">
+      <div class="aura-container aura-hero__inner">
+        <div class="aura-hero__copy">
+          <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">AURA Trade In</p>
+          <h1 class="aura-h1" id="ti-titulo">Consigue <span data-ti-range>un descuento</span><sup class="aura-footnote-ref"><a href="#ti-nota-valores" id="ti-ref-valores" aria-label="Nota 1">1</a></sup> al entregar tu dispositivo anterior.</h1>
+          <p class="aura-lead">Lo reciclaremos de forma responsable o le daremos una segunda vida. Tú estrenas AURA; el planeta respira.</p>
+          <div class="aura-hero__actions">
+            <a class="aura-btn aura-btn--primary" href="#calculadora">Valorar mi dispositivo <i class="bi bi-arrow-right" aria-hidden="true"></i></a>
+          </div>
+        </div>
+        <div class="aura-hero__media">
+          <img class="aura-img" src="assets/img/trade-in-hero.webp" data-slot="trade-in-hero" width="1600" height="1200" alt="El módulo de triple cámara de un auraPhone negro nuevo asoma de su caja abierta, sobre fondo negro" loading="eager" fetchpriority="high" decoding="async">
+        </div>
+      </div>
+    </section>
+
+    <!-- Calculadora -->
+    <section class="aura-section ti-calc-section" id="calculadora" aria-labelledby="calc-titulo">
+      <div class="aura-container">
+        <div class="aura-section-head">
+          <p class="aura-eyebrow aura-eyebrow--mono">Calculadora</p>
+          <h2 class="aura-h2" id="calc-titulo" tabindex="-1">¿Cuánto vale lo que ya tienes?</h2>
+          <p class="aura-lead">Tres respuestas y tendrás la cifra. Sin registrarte y sin compromiso: si cambias de idea, lo quitas en un toque.</p>
+        </div>
+
+        <div class="aura-alert aura-alert--ok ti-credit" data-ti-credit hidden>
+          <i class="bi bi-check-circle-fill" aria-hidden="true"></i>
+          <p class="aura-alert__title" data-ti-credit-title>Tienes un crédito activo</p>
+          <p class="aura-alert__text" data-ti-credit-text></p>
+          <div class="ti-credit__actions">
+            <a class="aura-link" href="bolsa.html">Ver la bolsa</a>
+            <button class="aura-link aura-link--plain" type="button" data-ti-remove>Quitar el crédito</button>
+          </div>
+        </div>
+
+        <div class="aura-empty ti-empty" data-ti-empty hidden>
+          <span class="aura-empty__icon"><i class="bi bi-arrow-repeat" aria-hidden="true"></i></span>
+          <h3 class="aura-h3 aura-empty__title">La calculadora no está disponible ahora mismo</h3>
+          <p class="aura-empty__text">Aun así, no lo guardes en un cajón: recogemos tu dispositivo anterior y lo reciclamos gratis.</p>
+          <div class="aura-empty__actions"><a class="aura-btn aura-btn--secondary" href="soporte.html#contacto">Pedir la recogida gratuita</a></div>
+        </div>
+
+        <form class="aura-layout aura-layout--aside ti-calc" id="ti-form" novalidate>
+          <div class="ti-steps" data-ti-steps>
+
+            <fieldset class="aura-fieldset ti-step" data-ti-step="familia">
+              <legend class="aura-legend ti-step__legend"><span class="ti-step__num" aria-hidden="true">1</span>¿Qué vas a entregar?</legend>
+              <div class="aura-segmented ti-families" role="radiogroup" aria-label="Tipo de dispositivo" data-ti-families>
+                <label class="aura-segmented__item"><input type="radio" name="familia" value="auraphone" checked><span>auraPhone</span></label>
+                <label class="aura-segmented__item"><input type="radio" name="familia" value="aurapad"><span>auraPad</span></label>
+                <label class="aura-segmented__item"><input type="radio" name="familia" value="aurabook"><span>auraBook</span></label>
+              </div>
+            </fieldset>
+
+            <fieldset class="aura-fieldset ti-step" data-ti-step="dispositivo" aria-describedby="ti-dispositivo-ayuda">
+              <legend class="aura-legend ti-step__legend"><span class="ti-step__num" aria-hidden="true">2</span>Elige el modelo</legend>
+              <p class="aura-legend aura-legend--sm ti-step__hint" id="ti-dispositivo-ayuda">El valor que ves es el máximo, con el dispositivo como nuevo.</p>
+              <div class="aura-option-group aura-option-group--2" data-ti-devices></div>
+              <p class="aura-field__error" id="ti-dispositivo-error"></p>
+            </fieldset>
+
+            <fieldset class="aura-fieldset ti-step" data-ti-step="estado" aria-describedby="ti-estado-ayuda">
+              <legend class="aura-legend ti-step__legend"><span class="ti-step__num" aria-hidden="true">3</span>¿En qué estado está?</legend>
+              <p class="aura-legend aura-legend--sm ti-step__hint" id="ti-estado-ayuda">Sé sincero: lo revisamos al recibirlo y, si coincide, la cifra no cambia.</p>
+              <div class="aura-option-group" data-ti-conditions></div>
+              <p class="aura-field__error" id="ti-estado-error"></p>
+            </fieldset>
+
+          </div>
+
+          <aside class="aura-summary ti-result" aria-labelledby="ti-resultado-titulo">
+            <div class="ti-result__head">
+              <span class="ti-step__num" aria-hidden="true">4</span>
+              <h3 class="aura-summary__title" id="ti-resultado-titulo">Tu valor estimado</h3>
+            </div>
+            <div class="aura-stat aura-stat--md ti-result__stat">
+              <p class="aura-stat__label" data-ti-value-prefix>Hasta</p>
+              <p class="aura-stat__value" data-ti-value>—</p>
+              <p class="aura-stat__label" data-ti-value-label>según el modelo</p>
+            </div>
+            <p class="visually-hidden" aria-live="polite" aria-atomic="true" data-ti-live></p>
+            <p class="ti-result__device" data-ti-device-line>Elige el modelo y su estado para afinar la cifra.</p>
+            <dl class="aura-summary__rows">
+              <div class="aura-summary__row"><dt>Valor como nuevo</dt><dd data-ti-max>—</dd></div>
+              <div class="aura-summary__row"><dt>Ajuste por estado</dt><dd data-ti-adjust>—</dd></div>
+            </dl>
+            <button class="aura-btn aura-btn--primary aura-btn--block" type="submit" data-ti-apply data-ti-apply-main>Aplicar a mi compra</button>
+            <p class="aura-summary__note" data-ti-apply-note>El crédito se descuenta en la bolsa al tramitar el pedido. Confirmamos el valor cuando recibimos el dispositivo.</p>
+          </aside>
+        </form>
+      </div>
+    </section>
+
+    <!-- Cómo funciona -->
+    <section class="aura-section aura-section--band" id="como-funciona" aria-labelledby="como-titulo">
+      <div class="aura-container">
+        <div class="aura-section-head">
+          <p class="aura-eyebrow aura-eyebrow--mono">Cómo funciona</p>
+          <h2 class="aura-h2" id="como-titulo">Tres pasos. Cero burocracia.</h2>
+          <p class="aura-lead">De tu cajón a su segunda vida sin que tengas que pensar en nada más.</p>
+        </div>
+        <ol class="aura-grid aura-grid--3 ti-how">
+          <li class="aura-feature aura-feature--card" data-aura-reveal>
+            <span class="aura-feature__icon"><i class="bi bi-calculator" aria-hidden="true"></i></span>
+            <p class="aura-feature__value">01</p>
+            <h3 class="aura-feature__title">Valóralo aquí</h3>
+            <p class="aura-feature__text">Elige tu dispositivo y su estado. Verás al instante cuánto vale, sin registrarte y sin esperas.</p>
+          </li>
+          <li class="aura-feature aura-feature--card" data-aura-reveal style="--i:1">
+            <span class="aura-feature__icon"><i class="bi bi-bag-check" aria-hidden="true"></i></span>
+            <p class="aura-feature__value">02</p>
+            <h3 class="aura-feature__title">Descuéntalo de tu compra</h3>
+            <p class="aura-feature__text">Aplica el crédito y se restará en la bolsa al tramitar el pedido de tu nuevo auraPhone, auraPad o auraBook.</p>
+          </li>
+          <li class="aura-feature aura-feature--card" data-aura-reveal style="--i:2">
+            <span class="aura-feature__icon"><i class="bi bi-box-seam" aria-hidden="true"></i></span>
+            <p class="aura-feature__value">03</p>
+            <h3 class="aura-feature__title">Entrégalo sin moverte</h3>
+            <p class="aura-feature__text">Cuando recibas tu nuevo AURA, un mensajero recoge el anterior en casa, con la caja de envío incluida. Lo revisamos y confirmamos el valor.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Compromiso medioambiental -->
+    <section class="aura-section" id="planeta" aria-labelledby="planeta-titulo">
+      <div class="aura-container">
+        <div class="aura-split aura-split--reverse">
+          <div class="aura-split__copy">
+            <p class="aura-eyebrow aura-eyebrow--mono">Medio ambiente</p>
+            <h2 class="aura-h2" id="planeta-titulo">Una segunda vida. O&nbsp;un reciclaje impecable. Nunca un cajón.</h2>
+            <p class="aura-body">Si tu dispositivo todavía tiene mucho que dar, lo reacondicionamos para otra persona. Si ya no, nuestros socios de reciclaje recuperan su aluminio, su cobalto y sus tierras raras para fabricar los próximos AURA.</p>
+            <ul class="aura-checklist">
+              <li>Borrado certificado de tus datos antes de cualquier otro paso</li>
+              <li>Reacondicionamiento con piezas originales AURA</li>
+              <li>Recuperación de materiales en plantas certificadas de la UE</li>
+              <li>Caja de recogida de cartón 100&nbsp;% reciclado</li>
+            </ul>
+            <a class="aura-link" href="acerca.html#medio-ambiente">Nuestro compromiso medioambiental</a>
+          </div>
+          <div class="aura-split__media">
+            <figure class="aura-media aura-media--frame m-0" data-aura-reveal="scale">
+              <img class="aura-img" src="assets/img/trade-in-reciclaje.webp" data-slot="trade-in-reciclaje" width="1600" height="1200" alt="Un teléfono abierto deja ver el chasis, la batería y los circuitos, sobre una superficie oscura" loading="lazy" decoding="async">
+              <figcaption class="aura-media__caption">Cada material vuelve a la cadena: nada termina en un vertedero.</figcaption>
+            </figure>
+          </div>
+        </div>
+        <ul class="aura-stats ti-stats">
+          <li class="aura-stat aura-stat--card" data-aura-reveal><p class="aura-stat__value">100&nbsp;%</p><p class="aura-stat__label">De los dispositivos que recibimos se reutilizan o se reciclan</p></li>
+          <li class="aura-stat aura-stat--card" data-aura-reveal style="--i:1"><p class="aura-stat__value">Gratis</p><p class="aura-stat__label">La recogida en casa, con la caja de envío incluida</p></li>
+          <li class="aura-stat aura-stat--card" data-aura-reveal style="--i:2"><p class="aura-stat__value">14&nbsp;días</p><p class="aura-stat__label">Para entregar el anterior desde que recibes tu nuevo AURA</p></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Preguntas frecuentes -->
+    <section class="aura-section aura-section--band" id="preguntas" aria-labelledby="faq-titulo">
+      <div class="aura-container aura-container--narrow">
+        <div class="aura-section-head">
+          <p class="aura-eyebrow aura-eyebrow--mono">Preguntas frecuentes</p>
+          <h2 class="aura-h2" id="faq-titulo">Lo que suelen preguntarnos.</h2>
+        </div>
+        <div class="aura-accordion">
+          <details class="aura-accordion__item" name="ti-faq">
+            <summary class="aura-accordion__summary"><span>¿Qué dispositivos puedo entregar?</span><span class="aura-accordion__icon" aria-hidden="true"></span></summary>
+            <div class="aura-accordion__panel">
+              <p>Los auraPhone, auraPad y auraBook que aparecen en la calculadora. Si el tuyo no está, no lo guardes en un cajón: lo recogemos y lo reciclamos gratis igualmente.</p>
+              <p><a class="aura-link aura-link--control" href="soporte.html#contacto">Pide la recogida gratuita</a></p>
+            </div>
+          </details>
+          <details class="aura-accordion__item" name="ti-faq">
+            <summary class="aura-accordion__summary"><span>¿Cómo se calcula el valor?</span><span class="aura-accordion__icon" aria-hidden="true"></span></summary>
+            <div class="aura-accordion__panel">
+              <p data-ti-faq-valor>Cada modelo tiene un valor máximo, el que vale como nuevo. Su estado ajusta esa cifra, y el descuento nunca supera el importe de tu pedido.</p>
+            </div>
+          </details>
+          <details class="aura-accordion__item" name="ti-faq">
+            <summary class="aura-accordion__summary"><span>¿Cuándo se descuenta el crédito?</span><span class="aura-accordion__icon" aria-hidden="true"></span></summary>
+            <div class="aura-accordion__panel">
+              <p>Al tramitar el pedido: lo verás en la bolsa como una línea «AURA Trade In» que resta del subtotal. Si quitas el crédito antes de pagar, no pasa nada.</p>
+            </div>
+          </details>
+          <details class="aura-accordion__item" name="ti-faq">
+            <summary class="aura-accordion__summary"><span>¿Y si al revisarlo el estado no coincide?</span><span class="aura-accordion__icon" aria-hidden="true"></span></summary>
+            <div class="aura-accordion__panel">
+              <p>Te proponemos el nuevo valor antes de cerrar nada. Si no te convence, te devolvemos el dispositivo sin coste y ajustamos el pedido.</p>
+            </div>
+          </details>
+          <details class="aura-accordion__item" name="ti-faq">
+            <summary class="aura-accordion__summary"><span>¿Qué pasa con mis datos?</span><span class="aura-accordion__icon" aria-hidden="true"></span></summary>
+            <div class="aura-accordion__panel">
+              <p>Antes de entregarlo, haz una copia en auraCloud, cierra la sesión de tu ID de AURA y restablécelo. Aun así, al recibirlo lo borramos con un proceso certificado: tus fotos no viajan con él.</p>
+            </div>
+          </details>
+          <details class="aura-accordion__item" name="ti-faq">
+            <summary class="aura-accordion__summary"><span>¿Puedo entregar más de un dispositivo?</span><span class="aura-accordion__icon" aria-hidden="true"></span></summary>
+            <div class="aura-accordion__panel">
+              <p>Se aplica un crédito por pedido. Si calculas otro, sustituye al anterior; el resto de tus dispositivos puede esperar a tu próxima compra.</p>
+            </div>
+          </details>
+          <details class="aura-accordion__item" name="ti-faq">
+            <summary class="aura-accordion__summary"><span>¿Esto es real?</span><span class="aura-accordion__icon" aria-hidden="true"></span></summary>
+            <div class="aura-accordion__panel">
+              <p>AURA es un proyecto de demostración. El crédito es simulado y solo se guarda en este navegador: nadie va a pasar a recoger tu dispositivo.</p>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- Siguiente paso -->
+    <section class="aura-section" aria-labelledby="ti-elige-titulo">
+      <div class="aura-container">
+        <div class="aura-section-head aura-section-head--split">
+          <div class="aura-section-head__text">
+            <p class="aura-eyebrow aura-eyebrow--mono">Siguiente paso</p>
+            <h2 class="aura-h2" id="ti-elige-titulo">¿Qué vas a estrenar?</h2>
+          </div>
+          <a class="aura-link" href="comparar.html">Comparar todos los modelos</a>
+        </div>
+        <div class="aura-grid aura-grid--3" data-aura-family-cards></div>
+      </div>
+    </section>
+
+    <!-- Notas al pie -->
+    <section class="aura-section aura-section--tight aura-footnotes" aria-labelledby="ti-notas-titulo">
+      <div class="aura-container">
+        <h2 class="visually-hidden" id="ti-notas-titulo">Notas</h2>
+        <ol class="aura-footnotes__list" data-ti-notes>
+          <li id="ti-nota-valores">Valores de AURA Trade In para dispositivos como nuevos; el estado los ajusta y el descuento nunca supera el importe del pedido.</li>
+        </ol>
+        <ul class="aura-footnotes__list mt-3">
+          <li>Confirmamos el valor al recibir el dispositivo. Si su estado no coincide con el indicado, te proponemos el nuevo valor antes de cerrar nada.</li>
+          <li data-aura-legal="precios">Precios de venta recomendados en España, IVA incluido.</li>
+          <li data-aura-legal="demo">AURA es un proyecto de demostración.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Barra de acción en móvil: la misma acción que el resumen, a mano mientras eliges -->
+    <div class="aura-buybar is-hidden ti-buybar" data-ti-buybar>
+      <div class="aura-buybar__info">
+        <p class="aura-buybar__name" data-ti-bar-name>Tu valor estimado</p>
+        <p class="aura-price" data-ti-bar-value>—</p>
+      </div>
+      <button class="aura-btn aura-btn--primary" type="submit" form="ti-form" data-ti-apply>Aplicar a mi compra</button>
+    </div>
+
+  </main>
+
+  <aura-footer crumbs="AURA Trade In"></aura-footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/aura-ui.js"></script>
+  <script src="assets/js/pages/trade-in.js"></script>
+</body>
+</html>

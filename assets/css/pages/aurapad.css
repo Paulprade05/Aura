@@ -1,0 +1,22 @@
+/* ==========================================================================
+   AURA — auraPad (assets/css/pages/aurapad.css)
+   Solo lo propio de la página; todo lo demás es del sistema (aura.css).
+   ========================================================================== */
+
+/* Las teselas de una misma fila (accesorios y «Hecho para crear») usan
+   .aura-tile--media-fit de la base: imagen 4:3 apoyada abajo. Las notas al pie
+   alinean <ol> y <ul> en la base. */
+
+/* Compatibilidad de un accesorio: una línea de apoyo bajo el texto, con la
+   marca alineada a la primera línea. La marca es informativa, no un estado ni
+   una acción: va en el gris del texto, como las de .aura-checklist. */
+.aurapad-compat {
+  display: flex;
+  gap: .375rem;
+  align-items: flex-start;
+  margin-top: .25rem;
+}
+.aurapad-compat > .bi {
+  flex: none;
+  line-height: inherit;
+}

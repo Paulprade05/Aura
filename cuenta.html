@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="es" data-bs-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Tu cuenta — AURA</title>
+  <meta name="description" content="Gestiona tu ID de AURA: sigue tus pedidos, cambia tus datos personales, consulta tu crédito de AURA Trade In y protege tu cuenta.">
+  <meta name="theme-color" content="#000000">
+  <link rel="icon" type="image/png" href="assets/img/aura.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&family=Kanit:wght@500;600&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="assets/css/aura.css" rel="stylesheet">
+  <link href="assets/css/pages/cuenta.css" rel="stylesheet">
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/aura-core.js"></script>
+</head>
+<body>
+  <a class="aura-skip" href="#contenido">Saltar al contenido</a>
+  <aura-header active="cuenta" ribbon="off"></aura-header>
+
+  <main id="contenido">
+    <noscript>
+      <section class="aura-section">
+        <div class="aura-container aura-container--narrow">
+          <div class="aura-empty">
+            <span class="aura-empty__icon"><i class="bi bi-person-circle" aria-hidden="true"></i></span>
+            <h1 class="aura-h3 aura-empty__title">Tu cuenta necesita JavaScript</h1>
+            <p class="aura-empty__text">Tu ID de AURA y tus pedidos se guardan en este navegador. Activa JavaScript para verlos.</p>
+          </div>
+        </div>
+      </section>
+    </noscript>
+
+    <div id="cuenta-app" hidden>
+      <!-- Cabecera: con qué ID de AURA estoy dentro -->
+      <section class="aura-section aura-section--tight aura-section--center cuenta-hero" aria-labelledby="cuenta-titulo">
+        <div class="aura-container aura-container--narrow">
+          <div class="aura-section-head aura-section-head--center cuenta-hero__head">
+            <span class="cuenta-avatar" aria-hidden="true" data-cuenta-iniciales>A</span>
+            <p class="aura-eyebrow aura-eyebrow--mono">ID de AURA</p>
+            <h1 class="aura-h1" id="cuenta-titulo">Hola.</h1>
+            <p class="aura-lead cuenta-cortar" data-cuenta-email></p>
+          </div>
+        </div>
+      </section>
+
+      <div class="aura-section aura-section--band cuenta-paneles">
+        <div class="aura-container aura-container--narrow">
+
+          <!-- Pestañas: junto a lo que controlan -->
+          <div class="cuenta-tabs-wrap">
+            <div class="aura-segmented cuenta-tabs" role="tablist" aria-label="Secciones de tu cuenta">
+              <button class="aura-segmented__item is-active" type="button" role="tab" id="tab-pedidos" aria-selected="true" aria-controls="panel-pedidos" data-cuenta-tab="pedidos">Pedidos</button>
+              <button class="aura-segmented__item" type="button" role="tab" id="tab-datos" aria-selected="false" aria-controls="panel-datos" tabindex="-1" data-cuenta-tab="datos" aria-label="Datos personales">Datos<span class="d-none d-sm-inline">&nbsp;personales</span></button>
+              <button class="aura-segmented__item" type="button" role="tab" id="tab-trade-in" aria-selected="false" aria-controls="panel-trade-in" tabindex="-1" data-cuenta-tab="trade-in">Trade In</button>
+              <button class="aura-segmented__item" type="button" role="tab" id="tab-seguridad" aria-selected="false" aria-controls="panel-seguridad" tabindex="-1" data-cuenta-tab="seguridad">Seguridad</button>
+            </div>
+          </div>
+
+          <!-- Pedidos -->
+          <div class="cuenta-panel" id="panel-pedidos" role="tabpanel" aria-labelledby="tab-pedidos" tabindex="0">
+            <div class="aura-section-head aura-section-head--split cuenta-panel__head">
+              <div class="aura-section-head__text">
+                <h2 class="aura-h3">Tus pedidos</h2>
+                <p class="aura-caption" data-cuenta-pedidos-resumen></p>
+              </div>
+              <a class="aura-link" href="soporte.html#contacto">Ayuda con un pedido</a>
+            </div>
+            <div class="aura-stack aura-stack--stretch" style="--stack:1.25rem" data-cuenta-pedidos></div>
+          </div>
+
+          <!-- Datos personales -->
+          <div class="cuenta-panel" id="panel-datos" role="tabpanel" aria-labelledby="tab-datos" tabindex="0" hidden>
+            <div class="aura-section-head cuenta-panel__head">
+              <h2 class="aura-h3">Datos personales</h2>
+              <p class="aura-body">Así aparece tu nombre en tus pedidos y en tu ID de AURA.</p>
+            </div>
+            <div class="aura-card">
+              <form class="aura-form" id="datos-form" novalidate>
+                <div class="aura-form__row">
+                  <div class="aura-field">
+                    <label class="aura-field__label" for="datos-nombre">Nombre</label>
+                    <div class="aura-field__control">
+                      <input class="aura-input" id="datos-nombre" name="nombre" type="text" autocomplete="given-name" maxlength="60" aria-describedby="datos-nombre-error">
+                    </div>
+                    <p class="aura-field__error" id="datos-nombre-error"></p>
+                  </div>
+                  <div class="aura-field">
+                    <label class="aura-field__label" for="datos-apellidos">Apellidos</label>
+                    <div class="aura-field__control">
+                      <input class="aura-input" id="datos-apellidos" name="apellidos" type="text" autocomplete="family-name" maxlength="80" aria-describedby="datos-apellidos-error">
+                    </div>
+                    <p class="aura-field__error" id="datos-apellidos-error"></p>
+                  </div>
+                </div>
+                <div class="aura-field">
+                  <label class="aura-field__label" for="datos-email">Correo electrónico</label>
+                  <div class="aura-field__control">
+                    <i class="aura-field__icon bi bi-envelope" aria-hidden="true"></i>
+                    <input class="aura-input" id="datos-email" type="email" disabled aria-describedby="datos-email-ayuda">
+                  </div>
+                  <p class="aura-field__help" id="datos-email-ayuda">Es tu ID de AURA, así que no se puede cambiar.</p>
+                </div>
+                <div class="aura-cluster cuenta-guardar">
+                  <button class="aura-btn aura-btn--primary" type="submit" disabled>Guardar cambios</button>
+                  <p class="aura-caption" id="datos-estado" aria-live="polite">No hay cambios sin guardar.</p>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- AURA Trade In -->
+          <div class="cuenta-panel" id="panel-trade-in" role="tabpanel" aria-labelledby="tab-trade-in" tabindex="0" hidden>
+            <div class="aura-section-head cuenta-panel__head">
+              <h2 class="aura-h3">AURA Trade In</h2>
+              <p class="aura-body">El valor de tu dispositivo actual, listo para tu próxima compra.</p>
+            </div>
+            <div class="cuenta-tradein" data-cuenta-tradein></div>
+          </div>
+
+          <!-- Seguridad -->
+          <div class="cuenta-panel" id="panel-seguridad" role="tabpanel" aria-labelledby="tab-seguridad" tabindex="0" hidden>
+            <div class="aura-section-head cuenta-panel__head">
+              <h2 class="aura-h3">Inicio de sesión y seguridad</h2>
+              <p class="aura-body">Cómo se protege tu ID de AURA en este navegador.</p>
+            </div>
+            <div class="aura-stack aura-stack--stretch" style="--stack:1.25rem">
+              <div class="aura-card cuenta-filas">
+                <div class="aura-feature aura-feature--inline">
+                  <span class="aura-feature__icon"><i class="bi bi-person-badge" aria-hidden="true"></i></span>
+                  <h3 class="aura-feature__title">ID de AURA</h3>
+                  <p class="aura-feature__text cuenta-cortar" data-cuenta-email-texto></p>
+                  <p class="aura-feature__text cuenta-fila__dato" data-cuenta-alta hidden></p>
+                </div>
+                <div class="aura-feature aura-feature--inline">
+                  <span class="aura-feature__icon"><i class="bi bi-key" aria-hidden="true"></i></span>
+                  <h3 class="aura-feature__title">Contraseña</h3>
+                  <p class="aura-feature__text">Se guarda cifrada, nunca tal como la escribes. Ni siquiera AURA puede leerla.</p>
+                </div>
+                <div class="aura-feature aura-feature--inline">
+                  <span class="aura-feature__icon"><i class="bi bi-laptop" aria-hidden="true" data-cuenta-sesion-icono></i></span>
+                  <h3 class="aura-feature__title">Sesión en este navegador</h3>
+                  <p class="aura-feature__text" data-cuenta-sesion>Si compartes este dispositivo, cierra la sesión al terminar. Tu bolsa se conserva.</p>
+                  <p class="aura-feature__text cuenta-fila__dato" data-cuenta-sesion-desde hidden></p>
+                  <button class="aura-btn aura-btn--secondary cuenta-fila__accion" type="button" data-cuenta-salir>Cerrar sesión</button>
+                </div>
+              </div>
+
+              <div class="aura-card cuenta-filas">
+                <div class="aura-feature aura-feature--inline">
+                  <span class="aura-feature__icon cuenta-icono-peligro"><i class="bi bi-trash3" aria-hidden="true"></i></span>
+                  <h3 class="aura-feature__title">Eliminar ID de AURA</h3>
+                  <p class="aura-feature__text">Borra de este navegador tu ID de AURA, tu nombre y tus pedidos. No se puede deshacer.</p>
+                  <button class="aura-btn aura-btn--destructive cuenta-fila__accion" type="button" data-aura-sheet-open="eliminar-id" aria-haspopup="dialog" aria-expanded="false" aria-controls="eliminar-id">Eliminar ID de AURA…</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hoja de confirmación: eliminar el ID de AURA (destructivo e irreversible) -->
+    <div class="aura-sheet aura-sheet--bottom" id="eliminar-id" data-aura-sheet aria-hidden="true">
+      <div class="aura-scrim" data-aura-sheet-close></div>
+      <section class="aura-sheet__panel" role="dialog" aria-modal="true" aria-labelledby="eliminar-titulo" aria-describedby="eliminar-texto" tabindex="-1">
+        <div class="aura-sheet__grabber" aria-hidden="true"></div>
+        <header class="aura-sheet__header">
+          <h2 class="aura-sheet__title" id="eliminar-titulo">¿Eliminar tu ID de AURA?</h2>
+          <button class="aura-icon-btn" type="button" data-aura-sheet-close aria-label="Cerrar"><i class="bi bi-x-lg" aria-hidden="true"></i></button>
+        </header>
+        <div class="aura-sheet__body">
+          <div class="aura-stack aura-stack--stretch">
+            <p class="mb-0" id="eliminar-texto">Se borrarán de este navegador el ID de AURA <strong class="cuenta-cortar" data-eliminar-email>actual</strong>, tu nombre y <span data-eliminar-pedidos>tus pedidos</span>. Tu bolsa y tu crédito de AURA Trade In se conservan.</p>
+            <div class="aura-alert aura-alert--warn">
+              <i class="bi bi-exclamation-triangle-fill" aria-hidden="true"></i>
+              <p class="aura-alert__title">No se puede deshacer</p>
+              <p class="aura-alert__text">Tus pedidos no se podrán recuperar. Para volver a iniciar sesión tendrás que crear un ID de AURA nuevo.</p>
+            </div>
+          </div>
+        </div>
+        <footer class="aura-sheet__footer">
+          <button class="aura-btn aura-btn--destructive aura-btn--block" type="button" data-cuenta-eliminar>Eliminar ID de AURA</button>
+          <button class="aura-btn aura-btn--ghost aura-btn--block" type="button" data-aura-sheet-close data-cuenta-cancelar>Cancelar</button>
+        </footer>
+      </section>
+    </div>
+  </main>
+
+  <aura-footer crumbs="Tu cuenta"></aura-footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/aura-ui.js"></script>
+  <script src="assets/js/pages/cuenta.js"></script>
+</body>
+</html>
