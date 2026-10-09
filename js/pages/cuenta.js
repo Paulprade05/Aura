@@ -335,8 +335,8 @@
     var enBolsa = AURA.bag ? AURA.bag.count() : 0;
     var acciones = enBolsa
       ? '<a class="aura-btn aura-btn--primary" href="bolsa.html">Ver la bolsa (' + esc(AURA.fmt.articulos(enBolsa)) + ')</a>' +
-        '<a class="aura-btn aura-btn--secondary" href="index.html">Seguir comprando</a>'
-      : '<a class="aura-btn aura-btn--primary" href="index.html">Ir a la tienda</a>' +
+        '<a class="aura-btn aura-btn--secondary" href="../index.html">Seguir comprando</a>'
+      : '<a class="aura-btn aura-btn--primary" href="../index.html">Ir a la tienda</a>' +
         '<a class="aura-btn aura-btn--secondary" href="comparar.html">Comparar todos los modelos</a>';
     return '<div class="aura-card">' +
       '<div class="aura-empty">' +
@@ -454,7 +454,7 @@
             '<div class="aura-cluster cuenta-credito__acciones">' +
               (enBolsa
                 ? '<a class="aura-btn aura-btn--primary" href="bolsa.html">Ver la bolsa</a>'
-                : '<a class="aura-btn aura-btn--primary" href="index.html">Ir a la tienda</a>') +
+                : '<a class="aura-btn aura-btn--primary" href="../index.html">Ir a la tienda</a>') +
               '<a class="aura-link" href="trade-in.html">Valorar otro dispositivo</a>' +
             '</div>' +
             '<button class="aura-link aura-link--plain aura-link--muted" type="button" data-cuenta-quitar-credito>Quitar el crédito</button>' +
@@ -504,7 +504,7 @@
         '<p class="aura-empty__text">Hemos borrado ' + (email ? '<strong class="cuenta-cortar">' + esc(email) + '</strong>' : 'tu ID de AURA') +
           ' y sus pedidos de este navegador. Si vuelves, crear un ID nuevo lleva menos de un minuto.</p>' +
         '<div class="aura-empty__actions">' +
-          '<a class="aura-btn aura-btn--primary" href="index.html">Ir al inicio</a>' +
+          '<a class="aura-btn aura-btn--primary" href="../index.html">Ir al inicio</a>' +
           '<a class="aura-btn aura-btn--secondary" href="registro.html">Crear un ID de AURA</a>' +
         '</div>';
     } else {
@@ -514,7 +514,7 @@
         '<p class="aura-empty__text">Tu bolsa sigue aquí. Inicia sesión cuando quieras volver a ver tus pedidos y tus datos.</p>' +
         '<div class="aura-empty__actions">' +
           '<a class="aura-btn aura-btn--primary" href="login.html?volver=cuenta.html">Iniciar sesión</a>' +
-          '<a class="aura-btn aura-btn--secondary" href="index.html">Ir al inicio</a>' +
+          '<a class="aura-btn aura-btn--secondary" href="../index.html">Ir al inicio</a>' +
         '</div>';
     }
     var seccion = document.createElement('section');

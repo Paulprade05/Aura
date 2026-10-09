@@ -30,6 +30,7 @@
   function destinoSeguro(valor) {
     if (typeof valor !== 'string') { return ''; }
     valor = valor.trim();
+    if (valor === 'index.html' || valor === '../index.html') { return '../index.html'; }
     var m = /^([a-z0-9-]+\.html)(\?[A-Za-z0-9_=&%.-]*)?(#[A-Za-z0-9_-]*)?$/.exec(valor);
     return m && PAGINAS.indexOf(m[1]) !== -1 ? valor : '';
   }
@@ -49,7 +50,9 @@
       'checkout.html': 'Continuar con el pedido',
       'bolsa.html': 'Volver a la bolsa',
       'comprar.html': 'Volver a la compra',
-      'trade-in.html': 'Volver a AURA Trade In'
+      'trade-in.html': 'Volver a AURA Trade In',
+      '../index.html': 'Volver al inicio',
+      'index.html': 'Volver al inicio'
     };
     return etiquetas[pagina] || 'Continuar';
   }

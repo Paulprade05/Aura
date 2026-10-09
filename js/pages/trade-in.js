@@ -388,7 +388,7 @@
     var inBag = AURA.bag && typeof AURA.bag.count === 'function' ? AURA.bag.count() : 0;
     var next = inBag
       ? { label: 'Ver la bolsa', href: 'bolsa.html' }
-      : { label: fam ? 'Ver ' + fam.name : 'Ir a la tienda', href: (fam && fam.page) || 'index.html' };
+      : { label: fam ? 'Ver ' + fam.name : 'Ir a la tienda', href: (fam && fam.page) || '../index.html' };
     /* Sustituir un crédito sin preguntar, pero con «Deshacer» (el anterior
        vuelve tal cual); el crédito activo ya ofrece «Ver la bolsa» arriba. */
     var action = prev

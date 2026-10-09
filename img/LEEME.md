@@ -1,6 +1,6 @@
 # Imágenes del sitio AURA
 
-Coloca aquí (en `assets/img/`) las imágenes con **exactamente** estos nombres. Mientras falte una, la web muestra en su lugar un marcador con la ruta y el tamaño recomendado, así que puedes ir añadiéndolas poco a poco.
+Coloca aquí (en `img/`) las imágenes con **exactamente** estos nombres. Mientras falte una, la web muestra en su lugar un marcador con la ruta y el tamaño recomendado, así que puedes ir añadiéndolas poco a poco.
 
 - **Formato:** `.png` (mejor con fondo transparente o negro). También valen `.webp` y `.jpg` con el mismo nombre: la web los prueba en ese orden.
 - **Fondo:** todo el sitio es negro (#000); diseña o recorta las imágenes para fondo oscuro.

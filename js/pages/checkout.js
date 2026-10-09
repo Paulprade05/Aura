@@ -315,9 +315,9 @@
     }).join('');
 
     var actions = guest
-      ? '<a class="aura-btn aura-btn--primary" href="index.html">Seguir comprando</a>'
+      ? '<a class="aura-btn aura-btn--primary" href="../index.html">Seguir comprando</a>'
       : '<a class="aura-btn aura-btn--primary" href="cuenta.html">Ver mis pedidos</a>' +
-        '<a class="aura-btn aura-btn--secondary" href="index.html">Seguir comprando</a>';
+        '<a class="aura-btn aura-btn--secondary" href="../index.html">Seguir comprando</a>';
 
     var sec = document.createElement('section');
     sec.className = 'aura-section aura-section--tight checkout-confirm';

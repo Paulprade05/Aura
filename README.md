@@ -53,28 +53,28 @@ Para probar otro día sin esperar, añade `?hoy=AAAA-MM-DD` a la URL (por ejempl
 
 ## Imágenes
 
-Las fotos de producto y de cada sección las pones tú en `assets/img/`. La lista completa, con nombres, tamaños y qué debe mostrar cada una, está en **[`assets/img/LEEME.md`](assets/img/LEEME.md)**. Mientras falte una, la web enseña un marcador con su ruta y tamaño. El logotipo (`assets/img/aura.png`) ya está colocado.
+Las fotos de producto y de cada sección están en `img/`. La lista completa, con nombres, tamaños y qué debe mostrar cada una, está en **[`img/LEEME.md`](img/LEEME.md)**. Mientras falte una, la web enseña un marcador con su ruta y tamaño. El logotipo (`img/aura.png`) ya está colocado.
 
 ## Tienda simulada
 
 - La bolsa, las cuentas, los pedidos y el crédito de Trade In se guardan solo en el `localStorage` de tu navegador. No hay servidor.
 - Las contraseñas se guardan como hash SHA-256 con sal.
 - El pago es simulado. La tarjeta se valida en formato, pero **nunca se guarda ni se envía**: solo quedan los 4 últimos dígitos en el recibo. Para probar, usa `4242 4242 4242 4242`.
-- `legal.html` tiene un botón para borrar todos los datos de AURA de este navegador.
+- `html/legal.html` tiene un botón para borrar todos los datos de AURA de este navegador.
 
 ## Estructura
 
 ```
-index.html … legal.html        páginas
-assets/css/aura.css            sistema de diseño (tokens, componentes, accesibilidad)
-assets/css/pages/*.css         ajustes propios de cada página
-assets/js/data.js              catálogo (productos, precios, Trade In, envío)
-assets/js/aura-core.js         núcleo: catálogo, bolsa, sesión, pedidos, cabecera y pie, huecos de imagen
-assets/js/aura-ui.js           interfaz: muelles, carrusel con inercia, hojas, avisos, formularios
-assets/js/pages/*.js           lógica de cada página
-assets/img/                    logotipo, imágenes y LEEME.md
-docs/COMPONENTES.md            manual del sistema: clases, marcado y API JavaScript
-docs/prototipos/               los prototipos PDF convertidos a imagen
+index.html                     página de inicio
+html/                          páginas del sitio (auraphone, comprar, bolsa, etc.)
+css/aura.css                   sistema de diseño (tokens, componentes, accesibilidad)
+css/pages/*.css                ajustes propios de cada página
+js/data.js                     catálogo (productos, precios, Trade In, envío)
+js/aura-core.js                núcleo: catálogo, bolsa, sesión, pedidos, cabecera y pie, huecos de imagen
+js/aura-ui.js                  interfaz: muelles, carrusel con inercia, hojas, avisos, formularios
+js/pages/*.js                  lógica de cada página
+img/                           logotipo, imágenes y LEEME.md
+guia-de-estilo/                guía de estilo oficial en PDF y prototipos
 ```
 
 ## Diseño

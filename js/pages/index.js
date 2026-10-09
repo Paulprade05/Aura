@@ -138,7 +138,7 @@
   function setCompare(familyId) {
     var f = cat.family(familyId);
     if (!compare || !f) { return; }
-    compare.setAttribute('href', 'comparar.html?familia=' + encodeURIComponent(f.id));
+    compare.setAttribute('href', (AURA.resolveUrl ? AURA.resolveUrl('comparar.html?familia=' + encodeURIComponent(f.id)) : 'html/comparar.html?familia=' + encodeURIComponent(f.id)));
     if (compareName) { compareName.textContent = ' de ' + f.name; }
   }
 

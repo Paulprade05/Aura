@@ -179,10 +179,10 @@
       text += ' Tu crédito de AURA Trade In de ' + fmt.eur(trade.value) + ' te espera.';
     }
     var actions = user
-      ? '<a class="aura-btn aura-btn--primary" href="index.html">Seguir comprando</a>' +
+      ? '<a class="aura-btn aura-btn--primary" href="../index.html">Seguir comprando</a>' +
         '<a class="aura-btn aura-btn--secondary" href="cuenta.html">Ver mis pedidos</a>'
       : '<a class="aura-btn aura-btn--primary" href="login.html?volver=bolsa.html">Iniciar sesión</a>' +
-        '<a class="aura-btn aura-btn--secondary" href="index.html">Seguir comprando</a>';
+        '<a class="aura-btn aura-btn--secondary" href="../index.html">Seguir comprando</a>';
 
     view.innerHTML =
       '<div class="aura-empty bolsa-empty">' +
@@ -221,7 +221,7 @@
         '<div class="bolsa-items">' +
           '<ul class="aura-bag-list" data-b="lista" aria-label="Artículos de tu bolsa"></ul>' +
           '<div class="bolsa-items__foot">' +
-            '<a class="aura-link" href="index.html">Seguir comprando</a>' +
+            '<a class="aura-link" href="../index.html">Seguir comprando</a>' +
             '<a class="aura-link" href="comparar.html">Comparar todos los modelos</a>' +
           '</div>' +
         '</div>' +

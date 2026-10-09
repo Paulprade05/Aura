@@ -29,6 +29,39 @@
   var AURA = window.AURA = window.AURA || {};
   var html = document.documentElement;
 
+  /* Detección de subcarpeta (/html/) para rutas relativas */
+  var isHtmlDir = (function () {
+    try {
+      var p = (window.location && window.location.pathname) || '';
+      return /[\/\\]html([\/\\]|$)/i.test(p);
+    } catch (e) {
+      return false;
+    }
+  })();
+
+  function resolvePageUrl(href) {
+    if (!href) { return ''; }
+    if (/^[a-z]+:/i.test(href) || href.charAt(0) === '#') { return href; }
+    var hash = '';
+    var query = '';
+    var hIdx = href.indexOf('#');
+    if (hIdx >= 0) { hash = href.slice(hIdx); href = href.slice(0, hIdx); }
+    var qIdx = href.indexOf('?');
+    if (qIdx >= 0) { query = href.slice(qIdx); href = href.slice(0, qIdx); }
+
+    var page = href;
+    if (page === 'index.html') {
+      return (isHtmlDir ? '../index.html' : 'index.html') + query + hash;
+    }
+    if (page.indexOf('/') !== -1 || !/\.html$/i.test(page)) {
+      return href + query + hash;
+    }
+    return (isHtmlDir ? '' : 'html/') + page + query + hash;
+  }
+
+  AURA.isHtmlDir = isHtmlDir;
+  AURA.resolveUrl = resolvePageUrl;
+
   /* El CSS usa .aura-js para el estado inicial de [data-aura-reveal]. */
   if (html && html.classList) { html.classList.add('aura-js'); }
 
@@ -586,7 +619,7 @@
     /** comprar.html?producto=ID (con ?hoy si la página se abrió con él). */
     url: function (productRef) {
       var p = getProduct(productRef);
-      return withHoy('comprar.html?producto=' + encodeURIComponent(p ? p.id : String(productRef || '')));
+      return withHoy(resolvePageUrl('comprar.html?producto=' + encodeURIComponent(p ? p.id : String(productRef || ''))));
     },
 
     /** Enlace interno con ?hoy=AAAA-MM-DD si la página se abrió con él (pruebas); si no, igual. */
@@ -1243,7 +1276,7 @@
      LCP. .is-loaded también deja al CSS quitar el marco de su contenedor.
      ------------------------------------------------------------------------ */
 
-  var IMG_DIR = 'assets/img/';
+  var IMG_DIR = isHtmlDir ? '../img/' : 'img/';
   var EXTS = ['webp', 'png', 'jpg'];
   var missing = {};   // rutas que ya han fallado en esta página
 
@@ -1553,21 +1586,21 @@
       { icon: 'bi-truck', value: standard > 0 ? fmt.eur(standard) : 'Gratis',
         title: standard > 0 ? 'Envío y devolución' : 'Envío y devolución gratis',
         text: 'Recíbelo en 2–3' + NBSP + 'días laborables o recógelo en una AURA' + NBSP + 'Store. Si no te convence, tienes 14' + NBSP + 'días para devolverlo.',
-        link: 'Ver envíos y devoluciones', href: 'soporte.html?q=devoluci%C3%B3n#preguntas' },
+        link: 'Ver envíos y devoluciones', href: resolvePageUrl('soporte.html?q=devoluci%C3%B3n#preguntas') },
       { icon: 'bi-credit-card-2-front', value: '0' + NBSP + '% TAE',
         title: 'Paga en ' + m + NBSP + 'meses sin intereses',
         text: entry && toNumber(entry.basePrice) > 0
           ? 'El ' + entry.name + ', desde ' + fmt.mes(entry.basePrice) + ', con la cuota a la vista antes de decidir.'
           : 'Con la cuota a la vista antes de decidir, en todos los modelos.',
-        link: 'Ver cómo financiar', href: 'soporte.html?q=financiar#preguntas' },
+        link: 'Ver cómo financiar', href: resolvePageUrl('soporte.html?q=financiar#preguntas') },
       { icon: 'bi-arrow-repeat', value: tradeMax > 0 ? 'Hasta ' + fmt.eur0(tradeMax) : '',
         title: 'AURA' + NBSP + 'Trade' + NBSP + 'In',
         text: 'Entrega tu dispositivo actual y descuenta su valor de tu nuevo ' + (famName || 'AURA') + ', al instante.',
-        link: 'Valorar mi dispositivo', href: 'trade-in.html' },
+        link: 'Valorar mi dispositivo', href: resolvePageUrl('trade-in.html') },
       { icon: 'bi-shield-check', value: careFrom > 0 ? (fam ? '' : 'Desde ') + fmt.eur0(careFrom) : '',
         title: careName,
         text: care.description || 'Dos años de cobertura frente a daños accidentales y asistencia prioritaria.',
-        link: 'Ver qué cubre ' + careName, href: 'soporte.html?q=auracare#preguntas' }
+        link: 'Ver qué cubre ' + careName, href: resolvePageUrl('soporte.html?q=auracare#preguntas') }
     ];
     return cards.map(function (c, i) {
       return '<div class="aura-feature aura-feature--card" data-aura-reveal style="--i:' + i + '">' +
@@ -1597,7 +1630,7 @@
       return v > 0 && (!min || v < min) ? v : min;
     }, 0);
     var img = catalog.image(entry);
-    var href = opts.href || fam.page || '';
+    var href = opts.href || resolvePageUrl(fam.page) || '';
     return '<a class="aura-card aura-card--flush aura-family-card" href="' + esc(href) + '">' +
         '<div class="aura-family-card__media">' + (img.slot ? imgHTML(img.slot, { alt: '' }) : '') + '</div>' +
         '<div class="aura-family-card__body">' +
@@ -1689,31 +1722,31 @@
   function quickLinks() {
     var user = auth.user();
     return [
-      { title: 'Comparar modelos', href: 'comparar.html', keys: 'comparar comparador modelos especificaciones diferencias', quick: true },
-      { title: 'AURA Trade In', href: 'trade-in.html', keys: 'trade in entregar renovar descuento valorar dispositivo antiguo', quick: true },
-      { title: 'Soporte', href: 'soporte.html', keys: 'soporte ayuda asistencia', quick: true },
-      { title: 'Bolsa', href: 'bolsa.html', keys: 'bolsa carrito cesta compra pedido', quick: true },
+      { title: 'Comparar modelos', href: resolvePageUrl('comparar.html'), keys: 'comparar comparador modelos especificaciones diferencias', quick: true },
+      { title: 'AURA Trade In', href: resolvePageUrl('trade-in.html'), keys: 'trade in entregar renovar descuento valorar dispositivo antiguo', quick: true },
+      { title: 'Soporte', href: resolvePageUrl('soporte.html'), keys: 'soporte ayuda asistencia', quick: true },
+      { title: 'Bolsa', href: resolvePageUrl('bolsa.html'), keys: 'bolsa carrito cesta compra pedido', quick: true },
       user
-        ? { title: 'Tu cuenta', href: 'cuenta.html', keys: 'cuenta id perfil pedidos sesion', quick: true }
-        : { title: 'Iniciar sesión', href: 'login.html', keys: 'iniciar sesion entrar acceder cuenta id login', quick: true }
+        ? { title: 'Tu cuenta', href: resolvePageUrl('cuenta.html'), keys: 'cuenta id perfil pedidos sesion', quick: true }
+        : { title: 'Iniciar sesión', href: resolvePageUrl('login.html'), keys: 'iniciar sesion entrar acceder cuenta id login', quick: true }
     ];
   }
 
   function extraLinks() {
     var out = catalog.families().map(function (f) {
-      return { title: f.name, href: f.page, keys: (f.name || '') + ' ' + (f.tagline || '') };
+      return { title: f.name, href: resolvePageUrl(f.page), keys: (f.name || '') + ' ' + (f.tagline || '') };
     });
     return out.concat([
-      { title: 'Crear un ID de AURA', href: 'registro.html', keys: 'crear cuenta registro registrarse id nuevo' },
-      { title: 'Preguntas frecuentes', href: 'soporte.html#preguntas', keys: 'preguntas frecuentes faq dudas envio devolucion garantia' },
-      { title: 'Contacto', href: 'soporte.html#contacto', keys: 'contacto contactar telefono chat escribir' },
-      { title: 'Acerca de AURA', href: 'acerca.html', keys: 'acerca empresa historia quienes somos' },
-      { title: 'Accesibilidad', href: 'acerca.html#accesibilidad', keys: 'accesibilidad' },
-      { title: 'Medio ambiente', href: 'acerca.html#medio-ambiente', keys: 'medio ambiente sostenibilidad reciclaje' },
-      { title: 'Newsroom', href: 'acerca.html#newsroom', keys: 'newsroom noticias prensa novedades' },
-      { title: 'Privacidad', href: 'legal.html#privacidad', keys: 'privacidad datos personales' },
-      { title: 'Uso de cookies', href: 'legal.html#cookies', keys: 'cookies' },
-      { title: 'Condiciones de uso', href: 'legal.html#condiciones', keys: 'condiciones terminos legal' }
+      { title: 'Crear un ID de AURA', href: resolvePageUrl('registro.html'), keys: 'crear cuenta registro registrarse id nuevo' },
+      { title: 'Preguntas frecuentes', href: resolvePageUrl('soporte.html#preguntas'), keys: 'preguntas frecuentes faq dudas envio devolucion garantia' },
+      { title: 'Contacto', href: resolvePageUrl('soporte.html#contacto'), keys: 'contacto contactar telefono chat escribir' },
+      { title: 'Acerca de AURA', href: resolvePageUrl('acerca.html'), keys: 'acerca empresa historia quienes somos' },
+      { title: 'Accesibilidad', href: resolvePageUrl('acerca.html#accesibilidad'), keys: 'accesibilidad' },
+      { title: 'Medio ambiente', href: resolvePageUrl('acerca.html#medio-ambiente'), keys: 'medio ambiente sostenibilidad reciclaje' },
+      { title: 'Newsroom', href: resolvePageUrl('acerca.html#newsroom'), keys: 'newsroom noticias prensa novedades' },
+      { title: 'Privacidad', href: resolvePageUrl('legal.html#privacidad'), keys: 'privacidad datos personales' },
+      { title: 'Uso de cookies', href: resolvePageUrl('legal.html#cookies'), keys: 'cookies' },
+      { title: 'Condiciones de uso', href: resolvePageUrl('legal.html#condiciones'), keys: 'condiciones terminos legal' }
     ]);
   }
 
@@ -1795,17 +1828,17 @@
      ------------------------------------------------------------------------ */
 
   var NAV = [
-    { key: 'auraphone', label: 'auraPhone', href: 'auraphone.html' },
-    { key: 'aurapad', label: 'auraPad', href: 'aurapad.html' },
-    { key: 'aurabook', label: 'auraBook', href: 'aurabook.html' },
-    { key: 'comparar', label: 'Comparar', href: 'comparar.html' },
-    { key: 'tradein', label: 'Trade In', href: 'trade-in.html' },
-    { key: 'soporte', label: 'Soporte', href: 'soporte.html' }
+    { key: 'auraphone', label: 'auraPhone', href: resolvePageUrl('auraphone.html') },
+    { key: 'aurapad', label: 'auraPad', href: resolvePageUrl('aurapad.html') },
+    { key: 'aurabook', label: 'auraBook', href: resolvePageUrl('aurabook.html') },
+    { key: 'comparar', label: 'Comparar', href: resolvePageUrl('comparar.html') },
+    { key: 'tradein', label: 'Trade In', href: resolvePageUrl('trade-in.html') },
+    { key: 'soporte', label: 'Soporte', href: resolvePageUrl('soporte.html') }
   ];
 
   var BRAND =
-    '<a class="aura-brand" href="index.html" aria-label="AURA, inicio">' +
-      '<img class="aura-brand__mark" src="assets/img/aura.png" width="28" height="28" alt="">' +
+    '<a class="aura-brand" href="' + resolvePageUrl('index.html') + '" aria-label="AURA, inicio">' +
+      '<img class="aura-brand__mark" src="' + (isHtmlDir ? '../img/' : 'img/') + 'aura.png" width="28" height="28" alt="">' +
       '<span class="aura-brand__word">AURA</span>' +
     '</a>';
 
@@ -1837,12 +1870,12 @@
       return '<div class="aura-popover__header"><h2 class="aura-popover__title">Bolsa</h2></div>' +
         '<p class="aura-popover__empty">Tu bolsa está vacía.</p>' +
         '<ul class="aura-popover__links">' +
-          '<li><a href="auraphone.html"><i class="bi bi-phone" aria-hidden="true"></i>Ver auraPhone</a></li>' +
-          '<li><a href="aurapad.html"><i class="bi bi-tablet-landscape" aria-hidden="true"></i>Ver auraPad</a></li>' +
-          '<li><a href="aurabook.html"><i class="bi bi-laptop" aria-hidden="true"></i>Ver auraBook</a></li>' +
+          '<li><a href="' + resolvePageUrl('auraphone.html') + '"><i class="bi bi-phone" aria-hidden="true"></i>Ver auraPhone</a></li>' +
+          '<li><a href="' + resolvePageUrl('aurapad.html') + '"><i class="bi bi-tablet-landscape" aria-hidden="true"></i>Ver auraPad</a></li>' +
+          '<li><a href="' + resolvePageUrl('aurabook.html') + '"><i class="bi bi-laptop" aria-hidden="true"></i>Ver auraBook</a></li>' +
           (user
-            ? '<li><a href="cuenta.html"><i class="bi bi-person-circle" aria-hidden="true"></i>Tu cuenta</a></li>'
-            : '<li><a href="login.html"><i class="bi bi-person-circle" aria-hidden="true"></i>Iniciar sesión</a></li>') +
+            ? '<li><a href="' + resolvePageUrl('cuenta.html') + '"><i class="bi bi-person-circle" aria-hidden="true"></i>Tu cuenta</a></li>'
+            : '<li><a href="' + resolvePageUrl('login.html') + '"><i class="bi bi-person-circle" aria-hidden="true"></i>Iniciar sesión</a></li>') +
         '</ul>';
     }
     var out = '<div class="aura-popover__header"><h2 class="aura-popover__title">Bolsa</h2>' +
@@ -1864,8 +1897,8 @@
     out += '</ul>' +
       '<div class="aura-popover__footer">' +
         '<p class="aura-popover__total"><span>Subtotal</span><span class="aura-price">' + esc(fmt.eur(subtotalOf(items))) + '</span></p>' +
-        '<a class="aura-btn aura-btn--primary aura-btn--block" href="checkout.html">Tramitar pedido</a>' +
-        '<a class="aura-btn aura-btn--ghost aura-btn--block" href="bolsa.html">Ver la bolsa</a>' +
+        '<a class="aura-btn aura-btn--primary aura-btn--block" href="' + resolvePageUrl('checkout.html') + '">Tramitar pedido</a>' +
+        '<a class="aura-btn aura-btn--ghost aura-btn--block" href="' + resolvePageUrl('bolsa.html') + '">Ver la bolsa</a>' +
       '</div>';
     return out;
   }
@@ -1874,10 +1907,10 @@
     var user = auth.user();
     var count = bag.count();
     return (user
-        ? '<li style="--i:6"><a href="cuenta.html"><i class="bi bi-person-circle" aria-hidden="true"></i>Tu cuenta, ' + esc(user.nombre) + '</a></li>'
-        : '<li style="--i:6"><a href="login.html"><i class="bi bi-person-circle" aria-hidden="true"></i>Iniciar sesión</a></li>') +
-      '<li style="--i:7"><a href="bolsa.html"><i class="bi bi-bag" aria-hidden="true"></i>Bolsa' + (count ? ' (' + count + ')' : '') + '</a></li>' +
-      '<li style="--i:8"><a href="acerca.html"><i class="bi bi-info-circle" aria-hidden="true"></i>Acerca de AURA</a></li>';
+        ? '<li style="--i:6"><a href="' + resolvePageUrl('cuenta.html') + '"><i class="bi bi-person-circle" aria-hidden="true"></i>Tu cuenta, ' + esc(user.nombre) + '</a></li>'
+        : '<li style="--i:6"><a href="' + resolvePageUrl('login.html') + '"><i class="bi bi-person-circle" aria-hidden="true"></i>Iniciar sesión</a></li>') +
+      '<li style="--i:7"><a href="' + resolvePageUrl('bolsa.html') + '"><i class="bi bi-bag" aria-hidden="true"></i>Bolsa' + (count ? ' (' + count + ')' : '') + '</a></li>' +
+      '<li style="--i:8"><a href="' + resolvePageUrl('acerca.html') + '"><i class="bi bi-info-circle" aria-hidden="true"></i>Acerca de AURA</a></li>';
   }
 
   /* «auraPhone, auraPad o auraBook» */
@@ -1910,7 +1943,7 @@
           '</nav>' +
           '<div class="aura-nav__actions">' +
             '<button class="aura-nav__action" type="button" data-aura-search-open aria-label="Buscar" aria-haspopup="dialog" aria-expanded="false" aria-controls="aura-search"><i class="bi bi-search" aria-hidden="true"></i></button>' +
-            '<a class="aura-nav__action aura-nav__account" href="login.html" data-aura-account><i class="bi bi-person-circle" aria-hidden="true"></i><span class="aura-nav__action-label">Iniciar sesión</span></a>' +
+            '<a class="aura-nav__action aura-nav__account" href="' + resolvePageUrl('login.html') + '" data-aura-account><i class="bi bi-person-circle" aria-hidden="true"></i><span class="aura-nav__action-label">Iniciar sesión</span></a>' +
             '<div class="aura-nav__bag-wrap">' +
               '<button class="aura-nav__action aura-nav__bag" type="button" data-aura-popover-toggle="aura-bag-popover" aria-label="Bolsa, vacía" aria-haspopup="dialog" aria-expanded="false" aria-controls="aura-bag-popover"><i class="bi bi-bag" aria-hidden="true"></i><span class="aura-nav__count" data-aura-bag-count aria-hidden="true"></span></button>' +
               '<div class="aura-popover aura-popover--end aura-bag-popover" id="aura-bag-popover" role="dialog" aria-label="Bolsa" tabindex="-1" aria-hidden="true"></div>' +
@@ -1924,7 +1957,7 @@
       out +=
         '<aside class="aura-ribbon" aria-label="Promoción">' +
           '<div class="aura-container">' +
-            '<p class="aura-ribbon__text">' + esc(ribbonText()) + ' <a class="aura-link" href="trade-in.html">Comprobar valor cuántico</a></p>' +
+            '<p class="aura-ribbon__text">' + esc(ribbonText()) + ' <a class="aura-link" href="' + resolvePageUrl('trade-in.html') + '">Comprobar valor cuántico</a></p>' +
           '</div>' +
         '</aside>';
     }
@@ -1934,7 +1967,7 @@
         '<div class="aura-scrim" data-aura-search-close></div>' +
         '<div class="aura-search__panel">' +
           '<div class="aura-container aura-container--narrow">' +
-            '<form class="aura-search__form" role="search" action="comparar.html">' +
+            '<form class="aura-search__form" role="search" action="' + resolvePageUrl('comparar.html') + '">' +
               '<i class="bi bi-search" aria-hidden="true"></i>' +
               '<input class="aura-search__input" id="aura-search-input" type="search" name="q" placeholder="Buscar en AURA" aria-label="Buscar productos y páginas" autocomplete="off" autocapitalize="off" spellcheck="false">' +
               '<button class="aura-icon-btn" type="button" data-aura-search-close aria-label="Cerrar el buscador"><i class="bi bi-x-lg" aria-hidden="true"></i></button>' +
@@ -1981,11 +2014,11 @@
     if (link) {
       var label = link.querySelector('.aura-nav__action-label');
       if (user) {
-        link.setAttribute('href', 'cuenta.html');
+        link.setAttribute('href', resolvePageUrl('cuenta.html'));
         link.setAttribute('aria-label', 'Tu cuenta, ' + (user.nombre || user.email));
         if (label) { label.textContent = user.nombre || 'Tu cuenta'; }
       } else {
-        link.setAttribute('href', 'login.html');
+        link.setAttribute('href', resolvePageUrl('login.html'));
         link.removeAttribute('aria-label');
         if (label) { label.textContent = 'Iniciar sesión'; }
       }
@@ -2077,10 +2110,10 @@
     if (!items.length) { return ''; }
     return '<nav class="aura-footer__crumbs" aria-label="Ruta de navegación">' +
       '<ol class="aura-crumbs">' +
-        '<li><a href="index.html"><img src="assets/img/aura.png" width="20" height="20" alt="AURA, inicio"></a></li>' +
+        '<li><a href="' + resolvePageUrl('index.html') + '"><img src="' + (isHtmlDir ? '../img/' : 'img/') + 'aura.png" width="20" height="20" alt="AURA, inicio"></a></li>' +
         items.map(function (c, i) {
           if (i === items.length - 1) { return '<li aria-current="page">' + esc(c.label) + '</li>'; }
-          return c.href ? '<li><a href="' + esc(c.href) + '">' + esc(c.label) + '</a></li>' : '<li>' + esc(c.label) + '</li>';
+          return c.href ? '<li><a href="' + esc(resolvePageUrl(c.href)) + '">' + esc(c.label) + '</a></li>' : '<li>' + esc(c.label) + '</li>';
         }).join('') +
       '</ol>' +
     '</nav>';
@@ -2096,9 +2129,9 @@
           BRAND +
           '<p class="aura-footer__tagline">Tecnología inmersiva diseñada para ampliar lo que imaginas. Precisión, profundidad y energía AURA.</p>' +
           '<ul class="aura-footer__social">' +
-            '<li><a class="aura-footer__social-link" href="acerca.html#newsroom" aria-label="AURA en Instagram: novedades"><i class="bi bi-instagram" aria-hidden="true"></i></a></li>' +
-            '<li><a class="aura-footer__social-link" href="acerca.html#newsroom" aria-label="AURA en YouTube: novedades"><i class="bi bi-youtube" aria-hidden="true"></i></a></li>' +
-            '<li><a class="aura-footer__social-link" href="acerca.html#newsroom" aria-label="AURA en LinkedIn: novedades"><i class="bi bi-linkedin" aria-hidden="true"></i></a></li>' +
+            '<li><a class="aura-footer__social-link" href="' + resolvePageUrl('acerca.html#newsroom') + '" aria-label="AURA en Instagram: novedades"><i class="bi bi-instagram" aria-hidden="true"></i></a></li>' +
+            '<li><a class="aura-footer__social-link" href="' + resolvePageUrl('acerca.html#newsroom') + '" aria-label="AURA en YouTube: novedades"><i class="bi bi-youtube" aria-hidden="true"></i></a></li>' +
+            '<li><a class="aura-footer__social-link" href="' + resolvePageUrl('acerca.html#newsroom') + '" aria-label="AURA en LinkedIn: novedades"><i class="bi bi-linkedin" aria-hidden="true"></i></a></li>' +
           '</ul>' +
         '</div>' +
         '<nav class="aura-footer__directory" aria-label="Directorio">' +
@@ -2111,10 +2144,10 @@
       '<div class="aura-footer__legal">' +
         '<p class="aura-footer__copy">Copyright © ' + year + ' AURA Inc. Todos los derechos reservados.</p>' +
         '<ul class="aura-footer__legal-links">' +
-          '<li><a href="legal.html#privacidad">Política de privacidad</a></li>' +
-          '<li><a href="legal.html#cookies">Uso de cookies</a></li>' +
-          '<li><a href="legal.html#condiciones">Condiciones de uso</a></li>' +
-          '<li><a href="legal.html#imagenes">Créditos de imágenes</a></li>' +
+          '<li><a href="' + resolvePageUrl('legal.html#privacidad') + '">Política de privacidad</a></li>' +
+          '<li><a href="' + resolvePageUrl('legal.html#cookies') + '">Uso de cookies</a></li>' +
+          '<li><a href="' + resolvePageUrl('legal.html#condiciones') + '">Condiciones de uso</a></li>' +
+          '<li><a href="' + resolvePageUrl('legal.html#imagenes') + '">Créditos de imágenes</a></li>' +
           '<li>España</li>' +
         '</ul>' +
       '</div>' +
@@ -2127,7 +2160,7 @@
     return '<div class="aura-footer__col">' +
       '<h2 class="aura-footer__heading">' + title + '</h2>' +
       '<ul class="aura-footer__list">' +
-        links.map(function (l) { return '<li><a href="' + l[0] + '">' + l[1] + '</a></li>'; }).join('') +
+        links.map(function (l) { return '<li><a href="' + resolvePageUrl(l[0]) + '">' + l[1] + '</a></li>'; }).join('') +
       '</ul>' +
     '</div>';
   }

@@ -131,10 +131,10 @@
   }
 
   function familia(p) {
-    return cat.family(p.family) || { id: p.family, name: p.family, page: 'index.html' };
+    return cat.family(p.family) || { id: p.family, name: p.family, page: '../index.html' };
   }
 
-  function paginaFamilia(f) { return f && f.page ? f.page : 'index.html'; }
+  function paginaFamilia(f) { return f && f.page ? f.page : '../index.html'; }
 
   /* { status: 'proximamente' | 'reserva' | 'disponible', title, label, text, canBuy, preorder, release } */
   function disp(p) {

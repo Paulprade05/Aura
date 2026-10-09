@@ -204,7 +204,7 @@
     var desc = c.descripcion || 'Foto sin descripción';
     var img = AURA.html && AURA.html.img
       ? AURA.html.img(c.slot, { className: 'legal-credito__img', alt: '', width: 1600, height: 1200 })
-      : '<img class="legal-credito__img" src="assets/img/' + esc(c.slot) + '.webp" width="1600" height="1200" alt="" loading="lazy" decoding="async">';
+      : '<img class="legal-credito__img" src="../img/' + esc(c.slot) + '.webp" width="1600" height="1200" alt="" loading="lazy" decoding="async">';
     return '<li class="legal-credito">' +
       '<div class="legal-credito__media">' + img + '</div>' +
       '<div class="legal-credito__body">' +

@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="es" data-bs-theme="dark">
 <head>
   <meta charset="utf-8">
@@ -6,13 +6,13 @@
   <title>Sistema de diseño — AURA</title>
   <meta name="description" content="Guía viva del sistema de diseño AURA: color, tipografía, acciones, formularios, superficies, componentes de tienda, overlays y movimiento.">
   <meta name="theme-color" content="#000000">
-  <link rel="icon" type="image/png" href="assets/img/aura.png">
+  <link rel="icon" type="image/png" href="../img/aura.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&family=Kanit:wght@500;600&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-  <link href="assets/css/aura.css" rel="stylesheet">
+  <link href="../css/aura.css" rel="stylesheet">
   <style>
     /* Andamiaje exclusivo de esta guía (prefijo ds-). No forma parte del sistema. */
     .ds-block { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.25rem; margin-top: clamp(2.5rem, 5vw, 4rem); min-width: 0; }
@@ -54,8 +54,8 @@
     .ds-spring__dot { position: absolute; top: .5rem; left: .5rem; width: 3.5rem; height: 3.5rem; border-radius: 50%; background: radial-gradient(circle at 32% 28%, #7cc0ff, var(--accent) 58%, #003a78); box-shadow: 0 0 28px rgba(0, 113, 227, .55); will-change: transform; }
     .ds-readout { font-variant-numeric: tabular-nums; }
   </style>
-  <script src="assets/js/data.js"></script>
-  <script src="assets/js/aura-core.js"></script>
+  <script src="../js/data.js"></script>
+  <script src="../js/aura-core.js"></script>
 </head>
 <body class="has-localnav">
   <a class="aura-skip" href="#contenido">Saltar al contenido</a>
@@ -343,7 +343,7 @@
           <div class="ds-frame ds-frame--flush" inert aria-hidden="true">
             <header class="aura-nav is-scrolled">
               <div class="aura-container aura-nav__inner">
-                <a class="aura-brand" href="index.html"><img class="aura-brand__mark" src="assets/img/aura.png" width="28" height="28" alt=""><span class="aura-brand__word">AURA</span></a>
+                <a class="aura-brand" href="../index.html"><img class="aura-brand__mark" src="../img/aura.png" width="28" height="28" alt=""><span class="aura-brand__word">AURA</span></a>
                 <nav class="aura-nav__links">
                   <a class="aura-nav__link is-active" href="auraphone.html">auraPhone</a>
                   <a class="aura-nav__link" href="aurapad.html">auraPad</a>
@@ -367,7 +367,7 @@
             </aside>
             <div class="p-4">
               <ol class="aura-crumbs">
-                <li><a href="index.html"><img src="assets/img/aura.png" width="20" height="20" alt="AURA"></a></li>
+                <li><a href="../index.html"><img src="../img/aura.png" width="20" height="20" alt="AURA"></a></li>
                 <li><a href="auraphone.html">auraPhone</a></li>
                 <li aria-current="page">auraPhone 18 Pro Max</li>
               </ol>
@@ -632,7 +632,7 @@
           <div class="aura-auth" style="border-radius:var(--radius-lg)">
             <div class="aura-auth-card">
               <div class="aura-auth-card__head">
-                <span class="aura-brand aura-brand--lg"><img class="aura-brand__mark" src="assets/img/aura.png" width="36" height="36" alt=""><span class="aura-brand__word">AURA</span></span>
+                <span class="aura-brand aura-brand--lg"><img class="aura-brand__mark" src="../img/aura.png" width="36" height="36" alt=""><span class="aura-brand__word">AURA</span></span>
                 <h3 class="aura-auth-card__title">Inicia sesión con tu ID de AURA</h3>
                 <p class="aura-auth-card__lead">Un solo acceso para tus dispositivos, servicios y experiencias AURA.</p>
               </div>
@@ -789,7 +789,7 @@
                   <p class="aura-tile__text">Una cámara principal de 48 MP que captura detalles extraordinarios y un zoom 2× de calidad óptica.</p>
                 </div>
                 <div class="aura-tile__media">
-                  <div class="aura-slot" role="img" aria-label="Dos auraPhone 18 Pro en azul glacial, de frente y de espaldas" data-slot="inicio-novedad-camara" style="--w:1600;--h:1200"><div class="aura-slot__inner"><i class="aura-slot__icon bi bi-image" aria-hidden="true"></i><span class="aura-slot__path">assets/img/inicio-novedad-camara.webp</span><span class="aura-slot__size">1600 × 1200 px</span></div></div>
+                  <div class="aura-slot" role="img" aria-label="Dos auraPhone 18 Pro en azul glacial, de frente y de espaldas" data-slot="inicio-novedad-camara" style="--w:1600;--h:1200"><div class="aura-slot__inner"><i class="aura-slot__icon bi bi-image" aria-hidden="true"></i><span class="aura-slot__path">img/inicio-novedad-camara.webp</span><span class="aura-slot__size">1600 × 1200 px</span></div></div>
                 </div>
               </article>
               <article class="aura-tile">
@@ -812,7 +812,7 @@
               </article>
               <article class="aura-tile aura-tile--cover aura-tile--tall">
                 <div class="aura-tile__media">
-                  <div class="aura-slot" role="img" aria-label="Primer plano de la Dynamic Island de un auraPhone" data-slot="auraphone-dynamic-island" style="--w:1600;--h:1200"><div class="aura-slot__inner"><i class="aura-slot__icon bi bi-image" aria-hidden="true"></i><span class="aura-slot__path">assets/img/auraphone-dynamic-island.webp</span><span class="aura-slot__size">1600 × 1200 px</span></div></div>
+                  <div class="aura-slot" role="img" aria-label="Primer plano de la Dynamic Island de un auraPhone" data-slot="auraphone-dynamic-island" style="--w:1600;--h:1200"><div class="aura-slot__inner"><i class="aura-slot__icon bi bi-image" aria-hidden="true"></i><span class="aura-slot__path">img/auraphone-dynamic-island.webp</span><span class="aura-slot__size">1600 × 1200 px</span></div></div>
                 </div>
                 <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--blue aura-tile__tag">Ingeniería AURA</p>
                 <div class="aura-tile__copy">
@@ -832,7 +832,7 @@
           <div class="aura-lineup" data-aura-lineup="auraphone" data-aura-heading="h4">
             <article class="aura-product-card" data-product="auraphone-duo" data-status="proximamente">
               <a class="aura-product-card__media" href="comprar.html?producto=auraphone-duo" tabindex="-1" aria-hidden="true">
-                <img class="aura-img" src="assets/img/auraphone-duo.webp" data-slot="auraphone-duo" width="1600" height="1200" alt="" loading="lazy" decoding="async">
+                <img class="aura-img" src="../img/auraphone-duo.webp" data-slot="auraphone-duo" width="1600" height="1200" alt="" loading="lazy" decoding="async">
               </a>
               <div class="aura-product-card__body">
                 <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">Nuevo · Plegable</p>
@@ -852,7 +852,7 @@
             </article>
             <article class="aura-product-card">
               <a class="aura-product-card__media" href="comprar.html?producto=auraphone-18-pro-max" tabindex="-1" aria-hidden="true">
-                <img class="aura-img" src="assets/img/auraphone-18-pro-max.webp" data-slot="auraphone-18-pro-max" width="1600" height="1200" alt="" loading="lazy" decoding="async">
+                <img class="aura-img" src="../img/auraphone-18-pro-max.webp" data-slot="auraphone-18-pro-max" width="1600" height="1200" alt="" loading="lazy" decoding="async">
               </a>
               <div class="aura-product-card__body">
                 <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">El más Pro</p>
@@ -873,7 +873,7 @@
             </article>
             <article class="aura-product-card">
               <a class="aura-product-card__media" href="comprar.html?producto=auraphone-18-pro" tabindex="-1" aria-hidden="true">
-                <img class="aura-img" src="assets/img/auraphone-18-pro.webp" data-slot="auraphone-18-pro" width="1600" height="1200" alt="" loading="lazy" decoding="async">
+                <img class="aura-img" src="../img/auraphone-18-pro.webp" data-slot="auraphone-18-pro" width="1600" height="1200" alt="" loading="lazy" decoding="async">
               </a>
               <div class="aura-product-card__body">
                 <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">Nuevo</p>
@@ -993,7 +993,7 @@
           </div>
           <figure class="aura-media aura-media--frame m-0">
             <span class="aura-media__tag">AURA Creative Suite</span>
-            <img class="aura-img" src="assets/img/aurabook-ecosistema.webp" data-slot="aurabook-ecosistema" width="1600" height="1200" alt="Un auraBook Pro junto a un monitor con un editor de vídeo, en un escritorio a oscuras con lámpara, teclado y ratón" loading="lazy" decoding="async">
+            <img class="aura-img" src="../img/aurabook-ecosistema.webp" data-slot="aurabook-ecosistema" width="1600" height="1200" alt="Un auraBook Pro junto a un monitor con un editor de vídeo, en un escritorio a oscuras con lámpara, teclado y ratón" loading="lazy" decoding="async">
             <figcaption class="aura-media__caption">Un estudio completo que comparte memoria, color y ambición.</figcaption>
           </figure>
         </div>
@@ -1082,7 +1082,7 @@
               <a class="aura-link" href="acerca.html#historia">Nuestra historia</a>
             </div>
             <figure class="aura-split__media aura-media aura-media--fill aura-media--halo m-0" style="aspect-ratio:4/3">
-              <img class="aura-img" src="assets/img/acerca-historia.webp" data-slot="acerca-historia" width="1600" height="1200" alt="Un ordenador antiguo de color beige, con monitor de tubo y teclado integrado, iluminado en la penumbra" loading="lazy" decoding="async">
+              <img class="aura-img" src="../img/acerca-historia.webp" data-slot="acerca-historia" width="1600" height="1200" alt="Un ordenador antiguo de color beige, con monitor de tubo y teclado integrado, iluminado en la penumbra" loading="lazy" decoding="async">
               <figcaption class="aura-media__overlay">
                 <ul class="aura-stats">
                   <li class="aura-stat"><p class="aura-stat__value">1976</p><p class="aura-stat__label">Año de fundación</p></li>
@@ -1163,7 +1163,7 @@
 
         <div class="aura-layout aura-layout--config">
           <div class="aura-gallery aura-gallery--sticky" data-ds-gallery>
-            <img class="aura-img" src="assets/img/auraphone-18-pro-max.webp" data-slot="auraphone-18-pro-max" width="1600" height="1200" alt="auraPhone 18 Pro Max en negro" decoding="async">
+            <img class="aura-img" src="../img/auraphone-18-pro-max.webp" data-slot="auraphone-18-pro-max" width="1600" height="1200" alt="auraPhone 18 Pro Max en negro" decoding="async">
             <p class="aura-gallery__caption" aria-hidden="true" data-ds-gallery-caption>Negro</p>
           </div>
 
@@ -1250,7 +1250,7 @@
             <ul class="aura-bag-list" data-ds-bag>
               <li class="aura-bag-line" data-ds-line data-ds-unit="2098">
                 <a class="aura-bag-line__media" href="comprar.html?producto=auraphone-18-pro-max" tabindex="-1" aria-hidden="true">
-                  <img class="aura-img" src="assets/img/auraphone-18-pro-max.webp" data-slot="auraphone-18-pro-max" width="1600" height="1200" alt="" loading="lazy" decoding="async">
+                  <img class="aura-img" src="../img/auraphone-18-pro-max.webp" data-slot="auraphone-18-pro-max" width="1600" height="1200" alt="" loading="lazy" decoding="async">
                 </a>
                 <div class="aura-bag-line__info">
                   <h4 class="aura-bag-line__name"><a href="comprar.html?producto=auraphone-18-pro-max">auraPhone 18 Pro Max</a></h4>
@@ -1277,7 +1277,7 @@
               </li>
               <li class="aura-bag-line" data-ds-line data-ds-unit="5749">
                 <a class="aura-bag-line__media" href="comprar.html?producto=aurabook-pro-16" tabindex="-1" aria-hidden="true">
-                  <img class="aura-img" src="assets/img/aurabook-pro-16.webp" data-slot="aurabook-pro-16" width="1600" height="1200" alt="" loading="lazy" decoding="async">
+                  <img class="aura-img" src="../img/aurabook-pro-16.webp" data-slot="aurabook-pro-16" width="1600" height="1200" alt="" loading="lazy" decoding="async">
                 </a>
                 <div class="aura-bag-line__info">
                   <h4 class="aura-bag-line__name"><a href="comprar.html?producto=aurabook-pro-16">auraBook Pro 16″</a></h4>
@@ -1395,12 +1395,12 @@
                 <div class="aura-popover__header"><h4 class="aura-popover__title">Bolsa</h4><span class="aura-caption">2 artículos</span></div>
                 <ul class="aura-popover__list">
                   <li class="aura-bag-line aura-bag-line--compact">
-                    <div class="aura-bag-line__media"><img class="aura-img" src="assets/img/auraphone-18-pro-max.webp" data-slot="auraphone-18-pro-max" width="1600" height="1200" alt="" loading="lazy" decoding="async"></div>
+                    <div class="aura-bag-line__media"><img class="aura-img" src="../img/auraphone-18-pro-max.webp" data-slot="auraphone-18-pro-max" width="1600" height="1200" alt="" loading="lazy" decoding="async"></div>
                     <div class="aura-bag-line__info"><p class="aura-bag-line__name">auraPhone 18 Pro Max</p><p class="aura-bag-line__meta">Negro · 512 GB · × 1</p></div>
                     <div class="aura-bag-line__price"><span class="aura-price">1.869,00 €</span></div>
                   </li>
                   <li class="aura-bag-line aura-bag-line--compact">
-                    <div class="aura-bag-line__media"><img class="aura-img" src="assets/img/aurapad-pro-13.webp" data-slot="aurapad-pro-13" width="1600" height="1200" alt="" loading="lazy" decoding="async"></div>
+                    <div class="aura-bag-line__media"><img class="aura-img" src="../img/aurapad-pro-13.webp" data-slot="aurapad-pro-13" width="1600" height="1200" alt="" loading="lazy" decoding="async"></div>
                     <div class="aura-bag-line__info"><p class="aura-bag-line__name">auraPad Pro 13″</p><p class="aura-bag-line__meta">Negro espacial · 256 GB · Wi-Fi · Vidrio estándar · × 1</p></div>
                     <div class="aura-bag-line__price"><span class="aura-price">1.649,00 €</span></div>
                   </li>
@@ -1522,7 +1522,7 @@
             <div class="ds-frame ds-frame--photo ds-frame--flush" inert aria-hidden="true">
               <div class="aura-menu is-open ds-static">
                 <div class="aura-container aura-menu__bar">
-                  <span class="aura-brand"><img class="aura-brand__mark" src="assets/img/aura.png" width="28" height="28" alt=""><span class="aura-brand__word">AURA</span></span>
+                  <span class="aura-brand"><img class="aura-brand__mark" src="../img/aura.png" width="28" height="28" alt=""><span class="aura-brand__word">AURA</span></span>
                   <button class="aura-icon-btn" type="button"><i class="bi bi-x-lg"></i></button>
                 </div>
                 <nav class="aura-container aura-menu__nav">
@@ -1561,31 +1561,31 @@
               <li class="aura-carousel__slide" aria-roledescription="diapositiva" aria-label="1 de 5">
                 <article class="aura-tile">
                   <div class="aura-tile__copy"><p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">auraPhone</p><h3 class="aura-h3">Titanio. Tan cósmico.</h3></div>
-                  <div class="aura-tile__media"><div class="aura-slot" role="img" aria-label="auraPhone Duo abierto, con su estructura de titanio" data-slot="carrusel-auraphone" style="--w:1600;--h:1200"><div class="aura-slot__inner"><i class="aura-slot__icon bi bi-image" aria-hidden="true"></i><span class="aura-slot__path">assets/img/carrusel-auraphone.webp</span><span class="aura-slot__size">1600 × 1200 px</span></div></div></div>
+                  <div class="aura-tile__media"><div class="aura-slot" role="img" aria-label="auraPhone Duo abierto, con su estructura de titanio" data-slot="carrusel-auraphone" style="--w:1600;--h:1200"><div class="aura-slot__inner"><i class="aura-slot__icon bi bi-image" aria-hidden="true"></i><span class="aura-slot__path">img/carrusel-auraphone.webp</span><span class="aura-slot__size">1600 × 1200 px</span></div></div></div>
                 </article>
               </li>
               <li class="aura-carousel__slide" aria-roledescription="diapositiva" aria-label="2 de 5">
                 <article class="aura-tile">
                   <div class="aura-tile__copy"><p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">auraPad</p><h3 class="aura-h3">Fino a más no poder.</h3></div>
-                  <div class="aura-tile__media"><div class="aura-slot" role="img" aria-label="auraPad Pro con AURA Pencil" data-slot="carrusel-aurapad" style="--w:1600;--h:1200"><div class="aura-slot__inner"><i class="aura-slot__icon bi bi-image" aria-hidden="true"></i><span class="aura-slot__path">assets/img/carrusel-aurapad.webp</span><span class="aura-slot__size">1600 × 1200 px</span></div></div></div>
+                  <div class="aura-tile__media"><div class="aura-slot" role="img" aria-label="auraPad Pro con AURA Pencil" data-slot="carrusel-aurapad" style="--w:1600;--h:1200"><div class="aura-slot__inner"><i class="aura-slot__icon bi bi-image" aria-hidden="true"></i><span class="aura-slot__path">img/carrusel-aurapad.webp</span><span class="aura-slot__size">1600 × 1200 px</span></div></div></div>
                 </article>
               </li>
               <li class="aura-carousel__slide" aria-roledescription="diapositiva" aria-label="3 de 5">
                 <article class="aura-tile">
                   <div class="aura-tile__copy"><p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">auraBook</p><h3 class="aura-h3">Listo para volar.</h3></div>
-                  <div class="aura-tile__media"><div class="aura-slot" role="img" aria-label="auraBook Air entreabierto" data-slot="carrusel-aurabook" style="--w:1600;--h:1200"><div class="aura-slot__inner"><i class="aura-slot__icon bi bi-image" aria-hidden="true"></i><span class="aura-slot__path">assets/img/carrusel-aurabook.webp</span><span class="aura-slot__size">1600 × 1200 px</span></div></div></div>
+                  <div class="aura-tile__media"><div class="aura-slot" role="img" aria-label="auraBook Air entreabierto" data-slot="carrusel-aurabook" style="--w:1600;--h:1200"><div class="aura-slot__inner"><i class="aura-slot__icon bi bi-image" aria-hidden="true"></i><span class="aura-slot__path">img/carrusel-aurabook.webp</span><span class="aura-slot__size">1600 × 1200 px</span></div></div></div>
                 </article>
               </li>
               <li class="aura-carousel__slide" aria-roledescription="diapositiva" aria-label="4 de 5">
                 <article class="aura-tile">
                   <div class="aura-tile__copy"><p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">AURA Trade In</p><h3 class="aura-h3">Hasta <span data-ds-tradein-max>800&nbsp;€</span> de descuento.</h3></div>
-                  <div class="aura-tile__media"><div class="aura-slot" role="img" aria-label="Un teléfono antiguo listo para reciclar" data-slot="carrusel-trade-in" style="--w:1600;--h:1200"><div class="aura-slot__inner"><i class="aura-slot__icon bi bi-image" aria-hidden="true"></i><span class="aura-slot__path">assets/img/carrusel-trade-in.webp</span><span class="aura-slot__size">1600 × 1200 px</span></div></div></div>
+                  <div class="aura-tile__media"><div class="aura-slot" role="img" aria-label="Un teléfono antiguo listo para reciclar" data-slot="carrusel-trade-in" style="--w:1600;--h:1200"><div class="aura-slot__inner"><i class="aura-slot__icon bi bi-image" aria-hidden="true"></i><span class="aura-slot__path">img/carrusel-trade-in.webp</span><span class="aura-slot__size">1600 × 1200 px</span></div></div></div>
                 </article>
               </li>
               <li class="aura-carousel__slide" aria-roledescription="diapositiva" aria-label="5 de 5">
                 <article class="aura-tile">
                   <div class="aura-tile__copy"><p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">AuraCare+</p><h3 class="aura-h3">Tranquilidad, incluida.</h3></div>
-                  <div class="aura-tile__media"><div class="aura-slot" role="img" aria-label="Escudo de protección AuraCare+" data-slot="carrusel-auracare" style="--w:1600;--h:1200"><div class="aura-slot__inner"><i class="aura-slot__icon bi bi-image" aria-hidden="true"></i><span class="aura-slot__path">assets/img/carrusel-auracare.webp</span><span class="aura-slot__size">1600 × 1200 px</span></div></div></div>
+                  <div class="aura-tile__media"><div class="aura-slot" role="img" aria-label="Escudo de protección AuraCare+" data-slot="carrusel-auracare" style="--w:1600;--h:1200"><div class="aura-slot__inner"><i class="aura-slot__icon bi bi-image" aria-hidden="true"></i><span class="aura-slot__path">img/carrusel-auracare.webp</span><span class="aura-slot__size">1600 × 1200 px</span></div></div></div>
                 </article>
               </li>
             </ul>
@@ -1623,13 +1623,13 @@
             <p class="aura-caption">Cada imagen es un hueco que pide directamente su <code>.webp</code> (si falta, prueba <code>.png</code>, <code>.jpg</code>, el <code>data-fallback</code> y, al final, enseña un marcador con la ruta y el tamaño recomendado). Al decodificarse aparece con un fundido corto de opacidad (sin animación con «reducir movimiento»; la que ya estaba en caché no parpadea). A la izquierda, una foto por color que existe (<code>imageVariants</code> en <code>data.js</code>), con la base como respaldo. A la derecha, el marcador a distintos tamaños.</p>
           </div>
           <div class="aura-grid aura-grid--2">
-            <img class="aura-img" src="assets/img/aurapad-air-13-gris-espacial.webp" data-slot="aurapad-air-13-gris-espacial" data-fallback="aurapad-air-13" width="1600" height="1200" alt="auraPad Air 13 pulgadas en gris espacial, de espaldas, inclinado y flotando sobre fondo negro" loading="lazy" decoding="async">
+            <img class="aura-img" src="../img/aurapad-air-13-gris-espacial.webp" data-slot="aurapad-air-13-gris-espacial" data-fallback="aurapad-air-13" width="1600" height="1200" alt="auraPad Air 13 pulgadas en gris espacial, de espaldas, inclinado y flotando sobre fondo negro" loading="lazy" decoding="async">
             <div class="aura-stack aura-stack--stretch">
-              <div class="aura-slot" role="img" aria-label="Marcador panorámico de ejemplo" data-slot="inicio-hero-auraphone" style="--w:1920;--h:1080"><div class="aura-slot__inner"><i class="aura-slot__icon bi bi-image" aria-hidden="true"></i><span class="aura-slot__path">assets/img/inicio-hero-auraphone.webp</span><span class="aura-slot__size">1920 × 1080 px</span></div></div>
+              <div class="aura-slot" role="img" aria-label="Marcador panorámico de ejemplo" data-slot="inicio-hero-auraphone" style="--w:1920;--h:1080"><div class="aura-slot__inner"><i class="aura-slot__icon bi bi-image" aria-hidden="true"></i><span class="aura-slot__path">img/inicio-hero-auraphone.webp</span><span class="aura-slot__size">1920 × 1080 px</span></div></div>
               <div class="aura-cluster" style="--cluster:1rem">
-                <div style="width:10rem"><div class="aura-slot" role="img" aria-label="Marcador mediano de ejemplo" data-slot="miniatura" style="--w:1;--h:1"><div class="aura-slot__inner"><i class="aura-slot__icon bi bi-image" aria-hidden="true"></i><span class="aura-slot__path">assets/img/miniatura.webp</span><span class="aura-slot__size">800 × 800 px</span></div></div></div>
-                <div style="width:5.5rem"><div class="aura-slot" role="img" aria-label="Marcador pequeño de ejemplo" data-slot="miniatura" style="--w:1;--h:1"><div class="aura-slot__inner"><i class="aura-slot__icon bi bi-image" aria-hidden="true"></i><span class="aura-slot__path">assets/img/miniatura.webp</span><span class="aura-slot__size">800 × 800 px</span></div></div></div>
-                <div style="width:3.5rem"><div class="aura-slot" role="img" aria-label="Marcador mínimo de ejemplo" data-slot="miniatura" style="--w:1;--h:1"><div class="aura-slot__inner"><i class="aura-slot__icon bi bi-image" aria-hidden="true"></i><span class="aura-slot__path">assets/img/miniatura.webp</span><span class="aura-slot__size">800 × 800 px</span></div></div></div>
+                <div style="width:10rem"><div class="aura-slot" role="img" aria-label="Marcador mediano de ejemplo" data-slot="miniatura" style="--w:1;--h:1"><div class="aura-slot__inner"><i class="aura-slot__icon bi bi-image" aria-hidden="true"></i><span class="aura-slot__path">img/miniatura.webp</span><span class="aura-slot__size">800 × 800 px</span></div></div></div>
+                <div style="width:5.5rem"><div class="aura-slot" role="img" aria-label="Marcador pequeño de ejemplo" data-slot="miniatura" style="--w:1;--h:1"><div class="aura-slot__inner"><i class="aura-slot__icon bi bi-image" aria-hidden="true"></i><span class="aura-slot__path">img/miniatura.webp</span><span class="aura-slot__size">800 × 800 px</span></div></div></div>
+                <div style="width:3.5rem"><div class="aura-slot" role="img" aria-label="Marcador mínimo de ejemplo" data-slot="miniatura" style="--w:1;--h:1"><div class="aura-slot__inner"><i class="aura-slot__icon bi bi-image" aria-hidden="true"></i><span class="aura-slot__path">img/miniatura.webp</span><span class="aura-slot__size">800 × 800 px</span></div></div></div>
               </div>
             </div>
           </div>
@@ -1665,7 +1665,7 @@
   <aura-footer crumbs="Acerca de AURA|acerca.html;Sistema de diseño"></aura-footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/js/aura-ui.js"></script>
+  <script src="../js/aura-ui.js"></script>
   <script>
     /* Demostraciones de esta guía: usan la API real de aura-ui.js. */
     (function () {
