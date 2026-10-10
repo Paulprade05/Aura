@@ -1,12 +1,47 @@
 ﻿<!doctype html>
 <html lang="es" data-bs-theme="dark">
 <head>
+  <!-- Configuración técnica: codificación, ventana adaptable (con zonas seguras) y tema oscuro del navegador -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Tramitar pedido — AURA</title>
-  <meta name="description" content="Tramita tu pedido de AURA en cuatro pasos: contacto, entrega, pago y revisión. Envío estándar gratuito, recogida en AURA Store y financiación sin intereses.">
   <meta name="theme-color" content="#000000">
+  <meta name="color-scheme" content="dark">
+
+  <!-- SEO: título y descripción únicos, autoría, palabras clave, indexación (página transaccional: no se indexa, pero se siguen sus enlaces) y URL canónica -->
+  <title>Tramitar pedido: contacto, entrega, pago y revisión — AURA</title>
+  <meta name="description" content="Tramita tu pedido de AURA en cuatro pasos: contacto, entrega, pago y revisión. Envío estándar gratuito, recogida en AURA Store y financiación sin intereses.">
+  <meta name="author" content="Paulprade05">
+  <meta name="keywords" content="tramitar pedido, finalizar compra, pago, envío gratis, recogida en tienda, financiación sin intereses, AURA">
+  <meta name="robots" content="noindex, follow">
+  <link rel="canonical" href="https://aura-lyart-beta.vercel.app/html/checkout.html">
+
+  <!-- Redes sociales: Open Graph (Facebook, LinkedIn, WhatsApp…) y tarjeta grande de X/Twitter; URLs absolutas -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="AURA">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:title" content="Tramitar pedido: contacto, entrega, pago y revisión">
+  <meta property="og:description" content="Tramita tu pedido de AURA en cuatro pasos: contacto, entrega, pago y revisión. Envío estándar gratuito, recogida en AURA Store y financiación sin intereses.">
+  <meta property="og:url" content="https://aura-lyart-beta.vercel.app/html/checkout.html">
+  <meta property="og:image" content="https://aura-lyart-beta.vercel.app/img/og/og-aura.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Logotipo de AURA sobre fondo negro con un auraPad, un auraBook y un auraPhone Duo, y el lema «Lo mejor de AURA, en una sola tienda».">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Tramitar pedido: contacto, entrega, pago y revisión">
+  <meta name="twitter:description" content="Tramita tu pedido de AURA en cuatro pasos: contacto, entrega, pago y revisión. Envío estándar gratuito, recogida en AURA Store y financiación sin intereses.">
+  <meta name="twitter:image" content="https://aura-lyart-beta.vercel.app/img/og/og-aura.jpg">
+  <meta name="twitter:image:alt" content="Logotipo de AURA sobre fondo negro con un auraPad, un auraBook y un auraPhone Duo, y el lema «Lo mejor de AURA, en una sola tienda».">
+
+  <!-- Iconos: favicon (ICO y PNG), icono de la pantalla de inicio y manifiesto de la aplicación web -->
+  <link rel="icon" href="../favicon.ico" sizes="any">
   <link rel="icon" type="image/png" href="../img/aura.png">
+  <link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+  <link rel="manifest" href="../site.webmanifest">
+  <!-- Manifiesto: por file:// (doble clic) el navegador lo bloquearía por CORS con un error en la consola, así que ahí se retira -->
+  <script>(function () { if (location.protocol === 'file:') { var m = document.querySelector('link[rel="manifest"]'); if (m) { m.remove(); } } })();</script>
+
+  <!-- Estilos: fuentes Inter y Kanit, Bootstrap 5.3, Bootstrap Icons y hojas de AURA (sistema y página) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&family=Kanit:wght@500;600&display=swap" rel="stylesheet">
@@ -14,15 +49,22 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
   <link href="../css/aura.css" rel="stylesheet">
   <link href="../css/pages/checkout.css" rel="stylesheet">
+
+  <!-- Scripts: catálogo y núcleo de AURA, síncronos y en este orden (definen <aura-header> y <aura-footer> antes del cuerpo) -->
   <script src="../js/data.js"></script>
   <script src="../js/aura-core.js"></script>
 </head>
 <body>
+  <!-- Enlace «Saltar al contenido»: primer foco con el teclado (solo se ve al recibirlo) y lleva directo al <main> -->
   <a class="aura-skip" href="#contenido">Saltar al contenido</a>
+  <!-- Cabecera común (logotipo, navegación principal, buscador, cuenta y bolsa): la pinta aura-core.js.
+       ribbon="off": sin la cinta de promoción, para no distraer mientras se paga -->
   <aura-header active="bolsa" ribbon="off"></aura-header>
 
+  <!-- Contenido principal: el único <main> de la página -->
   <main id="contenido">
 
+    <!-- ============ Tramitar pedido: pasos, un formulario por paso y el resumen (lo controla checkout.js) ============ -->
     <section class="aura-section aura-section--tight checkout" id="checkout" aria-labelledby="checkout-titulo">
       <div class="aura-container">
 
@@ -34,6 +76,8 @@
           <a class="aura-link checkout-head__summary" href="#resumen">Ver el resumen&nbsp;·&nbsp;<span data-co="total-corto"></span></a>
         </div>
 
+        <!-- Indicador de pasos: lista ordenada con aria-current="step" en el paso activo (checkout.js lo mueve y añade «completado»).
+             Debajo, la región viva que anuncia el paso y los cambios de total al lector de pantalla. -->
         <ol class="aura-steps checkout-steps" aria-label="Pasos del pedido">
           <li class="aura-steps__item is-current" aria-current="step" data-co-step="1"><span class="aura-steps__num" aria-hidden="true">1</span><span class="aura-steps__label">Contacto<span class="visually-hidden" data-co-done></span></span></li>
           <li class="aura-steps__item" data-co-step="2"><span class="aura-steps__num" aria-hidden="true">2</span><span class="aura-steps__label">Entrega<span class="visually-hidden" data-co-done></span></span></li>
@@ -45,7 +89,9 @@
         <div class="aura-layout aura-layout--aside">
           <div class="checkout-main">
 
-            <!-- ============ Paso 1 · Contacto ============ -->
+            <!-- ============ Paso 1 · Contacto ============
+                 Cada paso es una <section> con su h2, que recibe el foco al llegar; solo se ve el activo (los demás, hidden).
+                 Aquí: continuar como invitado (formulario) o iniciar sesión con el ID de AURA (enlaces). -->
             <section class="checkout-step" id="paso-1" data-co-panel="1" aria-labelledby="paso-1-titulo">
               <header class="checkout-step__head">
                 <h2 class="aura-h3" id="paso-1-titulo" tabindex="-1">¿Cómo quieres continuar?</h2>
@@ -65,12 +111,15 @@
                     <h3 class="aura-h4">Continuar como invitado</h3>
                     <p class="aura-caption">Solo necesitamos tu correo para enviarte la confirmación y el seguimiento del pedido.</p>
                   </div>
-                  <form class="aura-form checkout-contact__form" id="form-contacto" novalidate>
+                  <!-- Formulario de contacto: solo el correo (obligatorio, type="email"; 254 caracteres como máximo, el tope de una dirección).
+                       method="post": no se envía nunca (lo impide checkout.js), pero si fallara el JS los datos no irían en la URL.
+                       novalidate: lo valida AURA.ui.form, con mensajes propios (icono y texto) junto al campo. -->
+                  <form class="aura-form checkout-contact__form" id="form-contacto" method="post" novalidate>
                     <div class="aura-field">
                       <label class="aura-field__label" for="co-email">Correo electrónico</label>
                       <div class="aura-field__control">
                         <i class="aura-field__icon bi bi-envelope" aria-hidden="true"></i>
-                        <input class="aura-input" id="co-email" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" placeholder="nombre@correo.com" aria-describedby="co-email-error">
+                        <input class="aura-input" id="co-email" name="email" type="email" required maxlength="254" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" placeholder="nombre@correo.com" aria-describedby="co-email-error">
                       </div>
                       <p class="aura-field__error" id="co-email-error"></p>
                     </div>
@@ -101,12 +150,15 @@
                 <p class="aura-alert__text" data-co="reserva-texto"></p>
               </div>
 
-              <form class="aura-form checkout-form" id="form-entrega" novalidate>
+              <!-- Formulario de entrega: cada grupo en su <fieldset> con <legend> (método, tienda y datos de quien recibe).
+                   Las reglas van también en el marcado (required, pattern, minlength) y coinciden con las de checkout.js;
+                   novalidate porque AURA.ui.form da mensajes más claros que el navegador. method="post", como en el contacto. -->
+              <form class="aura-form checkout-form" id="form-entrega" method="post" novalidate>
                 <fieldset class="aura-fieldset">
                   <legend class="aura-legend">Método de entrega</legend>
                   <div class="aura-option-group">
                     <label class="aura-option">
-                      <input class="aura-option__input" type="radio" name="metodo" value="estandar" checked>
+                      <input class="aura-option__input" type="radio" name="metodo" value="estandar" required checked>
                       <span class="aura-option__card">
                         <span class="aura-option__body">
                           <span class="aura-option__title">Envío estándar</span>
@@ -116,7 +168,7 @@
                       </span>
                     </label>
                     <label class="aura-option" data-co="opcion-expres">
-                      <input class="aura-option__input" type="radio" name="metodo" value="expres">
+                      <input class="aura-option__input" type="radio" name="metodo" value="expres" required>
                       <span class="aura-option__card">
                         <span class="aura-option__body">
                           <span class="aura-option__title">Envío exprés</span>
@@ -126,7 +178,7 @@
                       </span>
                     </label>
                     <label class="aura-option">
-                      <input class="aura-option__input" type="radio" name="metodo" value="recogida">
+                      <input class="aura-option__input" type="radio" name="metodo" value="recogida" required>
                       <span class="aura-option__card">
                         <span class="aura-option__body">
                           <span class="aura-option__title">Recogida en AURA Store</span>
@@ -144,7 +196,7 @@
                   <legend class="aura-legend">Elige tu AURA Store</legend>
                   <div class="aura-option-group aura-option-group--2">
                     <label class="aura-option">
-                      <input class="aura-option__input" type="radio" name="tienda" value="madrid-sol">
+                      <input class="aura-option__input" type="radio" name="tienda" value="madrid-sol" required>
                       <span class="aura-option__card">
                         <span class="aura-option__body">
                           <span class="aura-option__title">AURA Store Madrid</span>
@@ -153,7 +205,7 @@
                       </span>
                     </label>
                     <label class="aura-option">
-                      <input class="aura-option__input" type="radio" name="tienda" value="barcelona-gracia">
+                      <input class="aura-option__input" type="radio" name="tienda" value="barcelona-gracia" required>
                       <span class="aura-option__card">
                         <span class="aura-option__body">
                           <span class="aura-option__title">AURA Store Barcelona</span>
@@ -162,7 +214,7 @@
                       </span>
                     </label>
                     <label class="aura-option">
-                      <input class="aura-option__input" type="radio" name="tienda" value="valencia-colon">
+                      <input class="aura-option__input" type="radio" name="tienda" value="valencia-colon" required>
                       <span class="aura-option__card">
                         <span class="aura-option__body">
                           <span class="aura-option__title">AURA Store Valencia</span>
@@ -171,7 +223,7 @@
                       </span>
                     </label>
                     <label class="aura-option">
-                      <input class="aura-option__input" type="radio" name="tienda" value="sevilla-nervion">
+                      <input class="aura-option__input" type="radio" name="tienda" value="sevilla-nervion" required>
                       <span class="aura-option__card">
                         <span class="aura-option__body">
                           <span class="aura-option__title">AURA Store Sevilla</span>
@@ -190,14 +242,14 @@
                     <div class="aura-field">
                       <label class="aura-field__label" for="co-nombre">Nombre</label>
                       <div class="aura-field__control">
-                        <input class="aura-input" id="co-nombre" name="nombre" type="text" autocomplete="given-name" aria-describedby="co-nombre-error">
+                        <input class="aura-input" id="co-nombre" name="nombre" type="text" required autocomplete="given-name" aria-describedby="co-nombre-error">
                       </div>
                       <p class="aura-field__error" id="co-nombre-error"></p>
                     </div>
                     <div class="aura-field">
                       <label class="aura-field__label" for="co-apellidos">Apellidos</label>
                       <div class="aura-field__control">
-                        <input class="aura-input" id="co-apellidos" name="apellidos" type="text" autocomplete="family-name" aria-describedby="co-apellidos-error">
+                        <input class="aura-input" id="co-apellidos" name="apellidos" type="text" required autocomplete="family-name" aria-describedby="co-apellidos-error">
                       </div>
                       <p class="aura-field__error" id="co-apellidos-error"></p>
                     </div>
@@ -209,7 +261,7 @@
                       <label class="aura-field__label" for="co-direccion">Dirección</label>
                       <div class="aura-field__control">
                         <i class="aura-field__icon bi bi-geo-alt" aria-hidden="true"></i>
-                        <input class="aura-input" id="co-direccion" name="direccion" type="text" autocomplete="address-line1" placeholder="Calle y número" aria-describedby="co-direccion-error">
+                        <input class="aura-input" id="co-direccion" name="direccion" type="text" required minlength="5" autocomplete="address-line1" placeholder="Calle y número" aria-describedby="co-direccion-error">
                       </div>
                       <p class="aura-field__error" id="co-direccion-error"></p>
                     </div>
@@ -222,22 +274,23 @@
                     <div class="aura-form__row aura-form__row--3 checkout-address__row">
                       <div class="aura-field">
                         <label class="aura-field__label" for="co-cp">Código postal</label>
+                        <!-- pattern: 5 cifras y las dos primeras, de una provincia (01 a 52): 0[1-9] | [1-4][0-9] | 5[0-2], y 3 cifras más -->
                         <div class="aura-field__control">
-                          <input class="aura-input" id="co-cp" name="cp" type="text" inputmode="numeric" autocomplete="postal-code" maxlength="5" aria-describedby="co-cp-error">
+                          <input class="aura-input" id="co-cp" name="cp" type="text" required pattern="(0[1-9]|[1-4][0-9]|5[0-2])[0-9]{3}" maxlength="5" inputmode="numeric" autocomplete="postal-code" title="5 cifras, como 28013" aria-describedby="co-cp-error">
                         </div>
                         <p class="aura-field__error" id="co-cp-error"></p>
                       </div>
                       <div class="aura-field">
                         <label class="aura-field__label" for="co-ciudad">Ciudad</label>
                         <div class="aura-field__control">
-                          <input class="aura-input" id="co-ciudad" name="ciudad" type="text" autocomplete="address-level2" aria-describedby="co-ciudad-error">
+                          <input class="aura-input" id="co-ciudad" name="ciudad" type="text" required autocomplete="address-level2" aria-describedby="co-ciudad-error">
                         </div>
                         <p class="aura-field__error" id="co-ciudad-error"></p>
                       </div>
                       <div class="aura-field">
                         <label class="aura-field__label" for="co-provincia">Provincia</label>
                         <div class="aura-field__control">
-                          <select class="aura-select" id="co-provincia" name="provincia" autocomplete="address-level1" aria-describedby="co-provincia-error">
+                          <select class="aura-select" id="co-provincia" name="provincia" required autocomplete="address-level1" aria-describedby="co-provincia-error">
                             <option value="">Elige una</option>
                             <option value="15">A Coruña</option>
                             <option value="01">Álava</option>
@@ -298,11 +351,13 @@
                     </div>
                   </div>
 
+                  <!-- pattern del teléfono (la regla de checkout.js): +34 o 0034 opcional y 9 cifras que empiezan por 6, 7, 8 o 9;
+                       entre las cifras se admiten espacios, puntos, guiones y paréntesis ([\s\(\)\.\-]*), como «612 345 678» -->
                   <div class="aura-field">
                     <label class="aura-field__label" for="co-telefono">Teléfono</label>
                     <div class="aura-field__control">
                       <i class="aura-field__icon bi bi-telephone" aria-hidden="true"></i>
-                      <input class="aura-input" id="co-telefono" name="telefono" type="tel" inputmode="tel" autocomplete="tel" aria-describedby="co-telefono-ayuda co-telefono-error">
+                      <input class="aura-input" id="co-telefono" name="telefono" type="tel" required pattern="[\s\(\)\.\-]*(\+34|0034)?[\s\(\)\.\-]*[6789]([\s\(\)\.\-]*[0-9]){8}[\s\(\)\.\-]*" inputmode="tel" autocomplete="tel" title="9 cifras que empiezan por 6, 7, 8 o 9, con o sin +34" aria-describedby="co-telefono-ayuda co-telefono-error">
                     </div>
                     <p class="aura-field__help" id="co-telefono-ayuda">Solo para avisarte de la entrega.</p>
                     <p class="aura-field__error" id="co-telefono-error"></p>
@@ -322,12 +377,15 @@
                 <h2 class="aura-h3" id="paso-3-titulo" tabindex="-1">¿Cómo quieres pagar?</h2>
               </header>
 
-              <form class="aura-form checkout-form" id="form-pago" novalidate autocomplete="off">
+              <!-- Formulario de pago (DEMOSTRACIÓN): el método en un <fieldset> de radios y los datos de la tarjeta en otro.
+                   autocomplete="off" para que el navegador no ofrezca tarjetas reales guardadas; las reglas van en el marcado
+                   (required, pattern) y las comprueba AURA.ui.form (novalidate), además del dígito de control (Luhn) y la caducidad futura. -->
+              <form class="aura-form checkout-form" id="form-pago" method="post" novalidate autocomplete="off">
                 <fieldset class="aura-fieldset">
                   <legend class="aura-legend">Método de pago</legend>
                   <div class="aura-option-group checkout-pay">
                     <label class="aura-option">
-                      <input class="aura-option__input" type="radio" name="pago" value="aura-pay" checked>
+                      <input class="aura-option__input" type="radio" name="pago" value="aura-pay" required checked>
                       <span class="aura-option__card">
                         <span class="checkout-pay__icon" aria-hidden="true"><i class="bi bi-wallet2"></i></span>
                         <span class="aura-option__body">
@@ -337,7 +395,7 @@
                       </span>
                     </label>
                     <label class="aura-option">
-                      <input class="aura-option__input" type="radio" name="pago" value="tarjeta">
+                      <input class="aura-option__input" type="radio" name="pago" value="tarjeta" required>
                       <span class="aura-option__card">
                         <span class="checkout-pay__icon" aria-hidden="true"><i class="bi bi-credit-card"></i></span>
                         <span class="aura-option__body">
@@ -347,7 +405,7 @@
                       </span>
                     </label>
                     <label class="aura-option">
-                      <input class="aura-option__input" type="radio" name="pago" value="financiacion">
+                      <input class="aura-option__input" type="radio" name="pago" value="financiacion" required>
                       <span class="aura-option__card">
                         <span class="checkout-pay__icon" aria-hidden="true"><i class="bi bi-calendar2-check"></i></span>
                         <span class="aura-option__body">
@@ -378,18 +436,20 @@
                   </div>
                   <fieldset class="aura-fieldset">
                     <legend class="aura-legend">Datos de la tarjeta</legend>
+                    <!-- pattern: número, de 13 a 19 cifras con espacios o guiones opcionales; caducidad, MM/AA con el mes de 01 a 12;
+                         CVC, 3 o 4 cifras (checkout.js ajusta maxlength a la marca: 4 solo en American Express) -->
                     <div class="aura-field">
                       <label class="aura-field__label" for="co-numero">Número de tarjeta <span class="aura-field__hint" data-co="marca"></span></label>
                       <div class="aura-field__control">
                         <i class="aura-field__icon bi bi-credit-card" aria-hidden="true"></i>
-                        <input class="aura-input" id="co-numero" name="numero" type="text" inputmode="numeric" autocomplete="off" autocorrect="off" spellcheck="false" maxlength="23" placeholder="1234 1234 1234 1234" aria-describedby="co-numero-error">
+                        <input class="aura-input" id="co-numero" name="numero" type="text" required pattern="[\s\-]*([0-9][\s\-]*){13,19}" inputmode="numeric" autocomplete="off" autocorrect="off" spellcheck="false" maxlength="23" placeholder="1234 1234 1234 1234" title="De 13 a 19 cifras (15 en American Express)" aria-describedby="co-numero-error">
                       </div>
                       <p class="aura-field__error" id="co-numero-error"></p>
                     </div>
                     <div class="aura-field">
                       <label class="aura-field__label" for="co-titular">Nombre del titular</label>
                       <div class="aura-field__control">
-                        <input class="aura-input" id="co-titular" name="titular" type="text" autocomplete="off" spellcheck="false" placeholder="Como aparece en la tarjeta" aria-describedby="co-titular-error">
+                        <input class="aura-input" id="co-titular" name="titular" type="text" required minlength="3" autocomplete="off" spellcheck="false" placeholder="Como aparece en la tarjeta" aria-describedby="co-titular-error">
                       </div>
                       <p class="aura-field__error" id="co-titular-error"></p>
                     </div>
@@ -397,7 +457,7 @@
                       <div class="aura-field">
                         <label class="aura-field__label" for="co-caducidad">Caducidad</label>
                         <div class="aura-field__control">
-                          <input class="aura-input" id="co-caducidad" name="caducidad" type="text" inputmode="numeric" autocomplete="off" maxlength="5" placeholder="MM/AA" aria-describedby="co-caducidad-error">
+                          <input class="aura-input" id="co-caducidad" name="caducidad" type="text" required pattern="(0[1-9]|1[0-2])\s*/\s*[0-9]{2}" inputmode="numeric" autocomplete="off" maxlength="5" placeholder="MM/AA" title="Mes y año de caducidad, como 08/29" aria-describedby="co-caducidad-error">
                         </div>
                         <p class="aura-field__error" id="co-caducidad-error"></p>
                       </div>
@@ -405,7 +465,7 @@
                         <label class="aura-field__label" for="co-cvc">Código de seguridad (CVC)</label>
                         <div class="aura-field__control">
                           <i class="aura-field__icon bi bi-lock" aria-hidden="true"></i>
-                          <input class="aura-input" id="co-cvc" name="cvc" type="text" inputmode="numeric" autocomplete="off" maxlength="4" placeholder="123" aria-describedby="co-cvc-ayuda co-cvc-error">
+                          <input class="aura-input" id="co-cvc" name="cvc" type="text" required pattern="[0-9]{3,4}" inputmode="numeric" autocomplete="off" maxlength="4" placeholder="123" title="3 cifras (4 en American Express)" aria-describedby="co-cvc-ayuda co-cvc-error">
                         </div>
                         <p class="aura-field__help" id="co-cvc-ayuda" data-co="cvc-ayuda">Las 3 cifras del dorso de la tarjeta.</p>
                         <p class="aura-field__error" id="co-cvc-error"></p>
@@ -421,7 +481,8 @@
               </form>
             </section>
 
-            <!-- ============ Paso 4 · Revisión ============ -->
+            <!-- ============ Paso 4 · Revisión ============
+                 Cada dato con su h3 y un «Editar» cuyo aria-label dice qué se edita (los cuatro botones dicen lo mismo a la vista). -->
             <section class="checkout-step" id="paso-4" data-co-panel="4" aria-labelledby="paso-4-titulo" hidden>
               <header class="checkout-step__head">
                 <h2 class="aura-h3" id="paso-4-titulo" tabindex="-1">Revisa tu pedido.</h2>
@@ -462,6 +523,8 @@
 
           </div>
 
+          <!-- Resumen del pedido (aside: complementa a los pasos): líneas, importes en una lista de definición y garantías.
+               Por debajo de 992 px queda tras los pasos: el enlace «Ver el resumen» de la cabecera salta hasta aquí. -->
           <aside class="aura-summary" id="resumen" aria-labelledby="resumen-titulo">
             <div class="checkout-summary__head">
               <h2 class="aura-summary__title" id="resumen-titulo">Tu pedido</h2>
@@ -525,8 +588,10 @@
 
   </main>
 
+  <!-- Pie común (migas de pan, directorio y avisos): lo pinta aura-core.js; crumbs da la ruta Bolsa › Tramitar pedido -->
   <aura-footer crumbs="Bolsa|bolsa.html;Tramitar pedido"></aura-footer>
 
+  <!-- Scripts al final del <body>, cuando el HTML ya existe: Bootstrap, componentes de AURA y la lógica de esta página -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="../js/aura-ui.js"></script>
   <script src="../js/pages/checkout.js"></script>

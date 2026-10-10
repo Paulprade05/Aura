@@ -5,8 +5,24 @@ Contrato de marcado del sistema de diseño (`assets/css/aura.css`). Guía viva: 
 - Prefijo `.aura-`, modificadores `--x`, estados `.is-x`. Los estados los pone el JS o el propio HTML.
 - Las utilidades de Bootstrap 5.3 (`d-flex`, `gap-3`, `mt-4`, `text-center`, `visually-hidden`, `row`/`col`…) están disponibles y se pueden combinar. No uses los componentes de Bootstrap (`.btn`, `.card`, `.navbar`, `.modal`…): todos tienen equivalente AURA.
 - Todo el texto en español de España. La marca es siempre AURA: nunca la marca original ni sus nombres de producto (ver equivalencias del encargo).
+- Toda página nueva cumple la lista de [§15 Accesibilidad y metadatos (temario DIW)](#15-accesibilidad-y-metadatos-temario-diw): `<head>` completo y comentado, un `h1`, tablas con `<caption>`, formularios con `label` y validación HTML5, ARIA solo donde el HTML no llega.
 
-## Cambios recientes (v1.4, 9 de octubre de 2026)
+## Cambios recientes (v1.5, 9 de octubre de 2026)
+
+Marcado, metadatos y accesibilidad según el temario de «Desarrollo de Interfaces Web». **El aspecto no cambia** (mismas medidas, tokens y comportamiento). **Qué ha cambiado** (detalle en cada sección):
+
+| Área | Cambio |
+| --- | --- |
+| Tablas | Las que genera el JS llevan `<caption class="visually-hidden">` además de `<thead>`, `<tbody>` y `th` con `scope`: «Comparativa técnica de los modelos auraPhone» en `[data-aura-compare]` (configurable con `data-aura-compare-caption`) y «Precio: comparativa de auraPhone Duo, … y …» en cada grupo de `comparar.html` (el caption da nombre a la tabla; ya no hay `aria-labelledby`). `caption.visually-hidden` ocupa 0 px (aura.css §2): la tabla no se mueve. Un valor que falta es «—» a la vista y «Sin dato» para el lector de pantalla ([§12.5](#125-tabla-de-data-aura-compare)). |
+| Navegación | Nombres de `nav` propios: «Principal» (barra y menú móvil), «Migas de pan» (antes «Ruta de navegación») y «Pie de página» (antes «Directorio»). `title` solo donde dice algo que el texto no dice: logotipo «AURA — Volver al inicio» (igual que su `aria-label`, que antes era «AURA, inicio»), «Comparar» y «Trade In» de la barra y del menú, enlace de la cinta, iconos sociales, «Newsroom», «Oportunidades» y «Créditos de imágenes» ([§12.1](#121-aura-header), [§12.2](#122-aura-footer)). |
+| Título | `comparar.html` escribe un `document.title` de 40–65 caracteres con el formato «… — AURA» («Comparar modelos de auraPhone: especificaciones y precios — AURA»). |
+| Documentación | Nueva [§15](#15-accesibilidad-y-metadatos-temario-diw): la lista que debe cumplir cualquier página nueva, con la plantilla del `<head>`. |
+| Tablas de `comparar.html` | **Sin roles ARIA** (`table`, `rowgroup`, `row`, `columnheader`, `rowheader`, `cell`): eran redundantes y el validador del W3C daba 85 errores en el DOM ya pintado. La tabla sigue expuesta igual (comprobado en Edge) y no cambia nada a la vista ([§15.4](#154-tablas)). |
+| Disponibilidad | `AURA.catalog.availability(p)` devuelve también `html` y `labelHtml`: el mismo texto con la fecha en `<time datetime>`. Lo usan la tarjeta de modelo, la tabla de `[data-aura-compare]`, el buscador y las páginas que pintan la disponibilidad ([§14.3](#143-auracatalog)). |
+| Formularios | Casilla suelta con etiqueta envolvente **y** `for` + `id` (también «Mostrar solo las diferencias» de comparar y «Avisarme también…» de auraphone); los radios de un grupo, con la etiqueta envolvente ([§7](#casilla-y-radio)). Segmentado de radios: `role="radiogroup"` solo si va suelto; dentro de un `<fieldset>`, sin `role` ([§5](#chip-insignia-segmentado)). §15.5 corrige que los atributos HTML5 «validan si falla el JS» (con `novalidate` en el HTML, el navegador nunca valida) y recuerda que `AURA.ui.form` no los lee. |
+| Guía viva | `componentes.html` pasa a «v1.5»; el ejemplo de segmentado con enlaces usa `aria-current="true"` (enlaza a otra página, no es la actual). |
+
+## Cambios de la v1.4 (9 de octubre de 2026)
 
 Corrección final tras la verificación de la skill «apple-design» dentro de la guía de estilo AURA (tokens, Kanit + Inter, escala 56 / 42 / 28 y botones de 48 / 999 / 24 sin cambios). **Qué ha cambiado** (detalle en cada sección):
 
@@ -113,7 +129,7 @@ Revisión de la base a partir de lo que encontraron las páginas. **Qué ha camb
 
 ## Índice
 
-0. [Cambios recientes](#cambios-recientes-v14-9-de-octubre-de-2026)
+0. [Cambios recientes](#cambios-recientes-v15-9-de-octubre-de-2026)
 1. [Convenciones globales](#1-convenciones-globales)
 2. [Tipografía](#2-tipografía)
 3. [Layout](#3-layout)
@@ -128,6 +144,7 @@ Revisión de la base a partir de lo que encontraron las páginas. **Qué ha camb
 12. [Marcado generado por JS](#12-marcado-generado-por-js)
 13. [Reglas de uso](#13-reglas-de-uso)
 14. [API JavaScript](#14-api-javascript)
+15. [Accesibilidad y metadatos (temario DIW)](#15-accesibilidad-y-metadatos-temario-diw)
 
 ---
 
@@ -402,14 +419,16 @@ Lo que añade `aura-ui.js` a toda `.aura-localnav` (sin marcado extra):
 ### Migas
 
 ```html
-<ol class="aura-crumbs">
-  <li><a href="index.html"><img src="assets/img/aura.png" width="20" height="20" alt="AURA"></a></li>
-  <li><a href="auraphone.html">auraPhone</a></li>
-  <li aria-current="page">auraPhone 18 Pro Max</li>
-</ol>
+<nav aria-label="Migas de pan">
+  <ol class="aura-crumbs">
+    <li><a href="index.html" title="AURA — Volver al inicio"><img src="assets/img/aura.png" width="20" height="20" alt="AURA — Volver al inicio"></a></li>
+    <li><a href="auraphone.html">auraPhone</a></li>
+    <li aria-current="page">auraPhone 18 Pro Max</li>
+  </ol>
+</nav>
 ```
 
-Con puntero fino cada enlace mide al menos 24 × 24 px (también el logotipo); en pantallas táctiles, 44 px de alto y el del logotipo, además, 44 px de ancho (sin moverse del borde). Las migas del pie las genera `<aura-footer crumbs="…">`, también con varios niveles ([§12.2](#122-aura-footer)).
+Siempre dentro de un `<nav aria-label="Migas de pan">` (un `nav` por cada navegación, cada uno con su nombre). El último nivel es la página actual: `aria-current="page"` y sin enlace. Con puntero fino cada enlace mide al menos 24 × 24 px (también el logotipo); en pantallas táctiles, 44 px de alto y el del logotipo, además, 44 px de ancho (sin moverse del borde). Las migas del pie las genera `<aura-footer crumbs="…">`, también con varios niveles ([§12.2](#122-aura-footer)).
 
 ### Marca
 
@@ -484,12 +503,23 @@ El «›» lo añade el CSS: no lo escribas. `--plain` (sin «›»), `--muted` 
 <span class="aura-badge">Nuevo</span>   <!-- --blue --ok --warn --error --neutral -->
 <span class="aura-badge aura-badge--mono aura-badge--ok">Entregado</span>   <!-- etiqueta técnica: mono, mayúsculas -->
 
+<!-- Con radios, suelto (sin leyenda visible): role="radiogroup" + aria-label hacen de <fieldset> y <legend> -->
 <div class="aura-segmented" role="radiogroup" aria-label="Familia">
   <label class="aura-segmented__item"><input type="radio" name="familia" value="auraphone" checked><span>auraPhone</span></label>
   <label class="aura-segmented__item"><input type="radio" name="familia" value="aurapad"><span>auraPad</span></label>
 </div>
 
-<!-- Variante con enlaces (p. ej. comparar.html?familia=…) -->
+<!-- Con radios, dentro de un <fieldset> cuya <legend> es la pregunta: sin role (sería un grupo redundante) -->
+<fieldset class="aura-fieldset">
+  <legend class="aura-legend">¿Qué vas a entregar?</legend>
+  <div class="aura-segmented">
+    <label class="aura-segmented__item"><input type="radio" name="familia" value="auraphone" checked><span>auraPhone</span></label>
+    …
+  </div>
+</fieldset>
+
+<!-- Variante con enlaces (p. ej. comparar.html?familia=…): aria-current="page" solo si el enlace lleva a la
+     página que se está viendo; en una muestra que enlaza a otra página, aria-current="true" -->
 <nav class="aura-segmented" aria-label="Familia">
   <a class="aura-segmented__item is-active" aria-current="page" href="comparar.html?familia=auraphone">auraPhone</a>
   <a class="aura-segmented__item" href="comparar.html?familia=aurapad">auraPad</a>
@@ -504,6 +534,7 @@ El «›» lo añade el CSS: no lo escribas. `--plain` (sin «›»), `--muted` 
 
 - `.aura-badge`: tipografía de la guía («Eyebrow / Badge», Inter 12 / 650) en píldora dorada; `--blue`, `--ok`, `--warn`, `--error`, `--neutral` cambian el color. `--mono` la convierte en etiqueta técnica (mono, mayúsculas, 11 px) para estados de pedido o «Demostración».
 - Segmentado: 40 px de alto con puntero fino y 44 px en pantallas táctiles; responde a la pulsación con `scale(.96)`. Con radios, la pastilla es el `<span>` que sigue al `<input>` y llena su etiqueta; con enlaces o botones, la pastilla es el propio ítem a su ancho natural (se reparten el sobrante). Cualquier otro `<span>` dentro de un enlace o botón es solo texto (no hereda el estilo de pastilla). Elegido: `:checked`, `.is-active`, `aria-current`, `aria-pressed="true"` o `aria-selected="true"`.
+- **Nombre del grupo de radios (v1.5).** Los radios siempre van en un grupo con nombre (§15.5), de una de estas dos formas: dentro de un `<fieldset>` cuya `<legend>` es la pregunta, y entonces el segmentado no lleva `role` (`trade-in.html`, «¿Qué vas a entregar?»); o suelto, con `role="radiogroup"` y `aria-label` (o `aria-labelledby` a su etiqueta visible), que hacen de fieldset y leyenda (`index.html`, «Ir a una familia»). Si comparte `<fieldset>` con otro grupo de radios, conserva su `role="radiogroup"` con su propio nombre (`comprar.html`: «Familia» dentro del paso «Modelo»). El propio `.aura-segmented` no puede ser el `<fieldset>`: `aura-ui.js` le inserta la pastilla como primer hijo y la `<legend>` tiene que ser el primero.
 - **Pastilla que se desliza (v1.3, v1.4).** `aura-ui.js` añade a cada `.aura-segmented` un único `<span class="aura-segmented__thumb" aria-hidden="true">` (primer hijo) y la clase `.has-thumb`: el ítem elegido deja de pintar su fondo y lo pinta la pastilla (mismo `--fill-selected`, blanco al 16 %), que viaja de un ítem a otro con un muelle crítico (response .35), desde donde esté en pantalla e interrumpible; su ancho acompaña al avance. **Solo se anima `transform`**: el avance es `translate3d` y el ancho, un `scaleX` sobre el ancho real de la caja, que se escribe solo en reposo. Sigue al estado, lo ponga quien lo ponga: el `change` de los radios, `input.checked = …` desde JS (el setter de cada radio del control está interceptado), o la página cambiando `aria-selected` / `aria-pressed` / `aria-current` / `.is-active` / `hidden`. En radios y botones **se arrastra**: se agarra el ítem elegido, sigue al dedo 1:1 con goma en los extremos y, al soltar, va al ítem más cercano a donde iba (proyección 0,99) heredando la velocidad, y activa ese ítem con `click()` (la página recibe su `change` o su `click` de siempre). Con enlaces no se arrastra (navegaría). Con «reducir movimiento», la pastilla aparece en su sitio con un fundido. `AURA.ui.segmented(el)` lo inicializa a mano o, si ya lo está, recoloca la pastilla; devuelve `{ el, sync(animar?) }` (no hace falta: es automático, también con el HTML que se inserte después).
 - **Texto grande (v1.4).** Si las opciones no caben en una fila (texto al 150 % en el teléfono), el control se reparte en varias (`flex-wrap`) y `aura-ui.js` marca `.is-wrapped` (radio `--radius-lg` en lugar de píldora): ninguna opción queda escondida. La pastilla viaja también entre filas, con un muelle propio para la vertical (X e Y independientes), y el control deja de arrastrarse.
 
@@ -625,6 +656,8 @@ Para meterla en otro sitio (un carrusel, una rejilla propia) usa `AURA.html.prod
 ### Tabla comparativa
 
 La pinta `[data-aura-compare]` ([§12.5](#125-tabla-de-data-aura-compare)): `<div data-aura-compare="auraphone"></div>`. Para una tabla escrita a mano usa el mismo marcado. La columna destacada lleva `.is-featured` en su `<th>` y en cada `<td>`: como en el prototipo, solo el nombre del modelo va en dorado; la columna no se tiñe (el dorado nunca rellena una superficie). Una nota bajo un valor (p. ej. la disponibilidad bajo el precio) va en `<span class="aura-table__note">`.
+
+Toda tabla (también las escritas a mano) lleva `<caption>` con lo que compara, `<thead>` / `<tbody>` (y `<tfoot>` si hay totales) y `th` con `scope="col"` en la cabecera y `scope="row"` en la primera celda de cada fila. Si el diseño ya la titula con un encabezado visible, el caption se oculta solo a la vista con `class="visually-hidden"` (nunca `display: none`: lo borraría también para el lector de pantalla); `caption.visually-hidden` no ocupa sitio (aura.css §2). Nunca una tabla para maquetar.
 
 ### Cronología, cita, nota, lista
 
@@ -753,12 +786,14 @@ El campo no se marca como error mientras el usuario escribe por primera vez: el 
 ### Casilla y radio
 
 ```html
-<label class="aura-check">
-  <input class="aura-check__input" type="checkbox" name="recordar">
+<!-- Casilla suelta: la etiqueta envuelve el control y, además, lo nombra con for + id -->
+<label class="aura-check" for="login-recordar">
+  <input class="aura-check__input" id="login-recordar" type="checkbox" name="recordar">
   <span class="aura-check__box" aria-hidden="true"></span>
   <span class="aura-check__label">Mantener la sesión iniciada en este dispositivo</span>
 </label>
 
+<!-- Radio de un grupo (siempre dentro de su <fieldset> con <legend>, ver «Grupo obligatorio») -->
 <label class="aura-radio">
   <input class="aura-radio__input" type="radio" name="envio" value="estandar" checked>
   <span class="aura-radio__box" aria-hidden="true"></span>
@@ -767,6 +802,8 @@ El campo no se marca como error mientras el usuario escribe por primera vez: el 
 ```
 
 El orden input → box → label es obligatorio (los estados usan el selector de hermano). Toda la fila es el objetivo (44 px); la caja responde a la pulsación.
+
+**Etiqueta y control (v1.5).** La etiqueta siempre envuelve el control (así toda la fila es pulsable). Una **casilla suelta** (recordar la sesión, aceptar la privacidad) lleva además `for` + `id`, como los campos de texto (temario: `<label>` asociado con `for`). En los **radios, tarjetas-opción, muestras de color y segmentados de un grupo**, la etiqueta envolvente ya asocia el control (asociación implícita del HTML, válida y accesible) y el grupo se nombra con su `<legend>` o su `role="radiogroup"` ([§5](#chip-insignia-segmentado)); `for` + `id` son opcionales.
 
 **Casilla obligatoria** («Acepto las condiciones»): envuélvela en un `.aura-field` con su `.aura-field__error` como **hermano** de la etiqueta, nunca dentro del `<label>` (el texto del error pasaría a formar parte del nombre de la casilla y, al pulsarlo, la marcaría):
 
@@ -1171,7 +1208,7 @@ Atributos: `active` (`inicio` | `auraphone` | `aurapad` | `aurabook` | `comparar
 
   <header class="aura-nav" data-aura-nav>
     <div class="aura-container aura-nav__inner">
-      <a class="aura-brand" href="index.html" aria-label="AURA, inicio">
+      <a class="aura-brand" href="index.html" aria-label="AURA — Volver al inicio" title="AURA — Volver al inicio">
         <img class="aura-brand__mark" src="assets/img/aura.png" width="28" height="28" alt="">
         <span class="aura-brand__word">AURA</span>
       </a>
@@ -1179,8 +1216,8 @@ Atributos: `active` (`inicio` | `auraphone` | `aurapad` | `aurabook` | `comparar
         <a class="aura-nav__link is-active" href="auraphone.html" aria-current="page">auraPhone</a>
         <a class="aura-nav__link" href="aurapad.html">auraPad</a>
         <a class="aura-nav__link" href="aurabook.html">auraBook</a>
-        <a class="aura-nav__link" href="comparar.html">Comparar</a>
-        <a class="aura-nav__link" href="trade-in.html">Trade In</a>
+        <a class="aura-nav__link" href="comparar.html" title="Compara los modelos de cada familia frente a frente">Comparar</a>
+        <a class="aura-nav__link" href="trade-in.html" title="AURA Trade In: entrega tu dispositivo anterior y consigue un descuento">Trade In</a>
         <a class="aura-nav__link" href="soporte.html">Soporte</a>
       </nav>
       <div class="aura-nav__actions">
@@ -1199,7 +1236,7 @@ Atributos: `active` (`inicio` | `auraphone` | `aurapad` | `aurabook` | `comparar
 
   <aside class="aura-ribbon" aria-label="Promoción">
     <div class="aura-container">
-      <p class="aura-ribbon__text">Ahorra con AURA Trade In: entrega tu antiguo dispositivo mundano y llévate hasta 800&nbsp;€ de descuento en tu nuevo auraPhone, auraPad o auraBook. <a class="aura-link" href="trade-in.html">Comprobar valor cuántico</a></p>
+      <p class="aura-ribbon__text">Ahorra con AURA Trade In: entrega tu antiguo dispositivo mundano y llévate hasta 800&nbsp;€ de descuento en tu nuevo auraPhone, auraPad o auraBook. <a class="aura-link" href="trade-in.html" title="AURA Trade In: calcula cuánto vale tu dispositivo anterior">Comprobar valor cuántico</a></p>
     </div>
   </aside>
 
@@ -1210,6 +1247,7 @@ Atributos: `active` (`inicio` | `auraphone` | `aurapad` | `aurabook` | `comparar
 
 Reglas:
 
+- Nombres y textos emergentes: el `nav` de la barra y el del menú móvil se llaman «Principal» (nunca se ven a la vez: por debajo de 992 px la barra no pinta sus enlaces y, por encima, el menú está oculto con `aria-hidden`). `title` solo donde dice algo que el texto visible no dice (el logotipo, «Comparar», «Trade In» y el enlace de la cinta); nunca repite la etiqueta. En el logotipo, `aria-label` y `title` llevan el mismo texto: el lector de pantalla lo anuncia una sola vez. Los botones de icono se nombran con `aria-label` y su icono lleva `aria-hidden="true"`; los que abren algo exponen `aria-haspopup`, `aria-controls` y `aria-expanded` (lo actualiza `aura-ui.js`).
 - Enlace activo: `.is-active` + `aria-current="page"` en el `.aura-nav__link` cuya clave coincide con `active` (`auraphone`, `aurapad`, `aurabook`, `comparar`, `tradein`, `soporte`). Con `inicio`, `bolsa`, `cuenta`, `acerca` o vacío no se marca ninguno. Lo mismo en `.aura-menu__link`. Cada enlace lleva además `data-aura-key="CLAVE"` (lo usa el JS para marcarlo). El atributo `active` se puede cambiar después de cargar (`AURA.header.setActive('aurapad')` en `comprar.html`): la cabecera se repinta sola.
 - El «›» del enlace de la cinta lo pinta el CSS. El texto de la cinta sale del catálogo: la cifra es `AURA.fmt.eur0(AURA.tradeIn.max())` (con el espacio indivisible de `fmt`: «800 €» nunca se parte) y las familias, `AURA.catalog.families()` («auraPhone, auraPad o auraBook»). No lo escribas a mano.
 - Sesión iniciada: `href="cuenta.html"` y la etiqueta es el nombre (`<span class="aura-nav__action-label">Lucía</span>`); añade `aria-label="Tu cuenta, Lucía"`. Sin sesión: `href="login.html"`, «Iniciar sesión». La etiqueta solo se ve desde 1200 px; por debajo es texto accesible oculto.
@@ -1308,7 +1346,7 @@ Vacía:
 ```html
 <div class="aura-menu" id="aura-menu" role="dialog" aria-modal="true" aria-label="Menú" aria-hidden="true">
   <div class="aura-container aura-menu__bar">
-    <a class="aura-brand" href="index.html" aria-label="AURA, inicio">
+    <a class="aura-brand" href="index.html" aria-label="AURA — Volver al inicio" title="AURA — Volver al inicio">
       <img class="aura-brand__mark" src="assets/img/aura.png" width="28" height="28" alt="">
       <span class="aura-brand__word">AURA</span>
     </a>
@@ -1319,8 +1357,8 @@ Vacía:
       <li style="--i:0"><a class="aura-menu__link is-active" href="auraphone.html" aria-current="page">auraPhone<i class="bi bi-chevron-right" aria-hidden="true"></i></a></li>
       <li style="--i:1"><a class="aura-menu__link" href="aurapad.html">auraPad<i class="bi bi-chevron-right" aria-hidden="true"></i></a></li>
       <li style="--i:2"><a class="aura-menu__link" href="aurabook.html">auraBook<i class="bi bi-chevron-right" aria-hidden="true"></i></a></li>
-      <li style="--i:3"><a class="aura-menu__link" href="comparar.html">Comparar<i class="bi bi-chevron-right" aria-hidden="true"></i></a></li>
-      <li style="--i:4"><a class="aura-menu__link" href="trade-in.html">Trade In<i class="bi bi-chevron-right" aria-hidden="true"></i></a></li>
+      <li style="--i:3"><a class="aura-menu__link" href="comparar.html" title="Compara los modelos de cada familia frente a frente">Comparar<i class="bi bi-chevron-right" aria-hidden="true"></i></a></li>
+      <li style="--i:4"><a class="aura-menu__link" href="trade-in.html" title="AURA Trade In: entrega tu dispositivo anterior y consigue un descuento">Trade In<i class="bi bi-chevron-right" aria-hidden="true"></i></a></li>
       <li style="--i:5"><a class="aura-menu__link" href="soporte.html">Soporte<i class="bi bi-chevron-right" aria-hidden="true"></i></a></li>
     </ul>
     <ul class="aura-menu__secondary">
@@ -1351,28 +1389,28 @@ Desde JS (repinta el pie): `AURA.footer.setCrumbs([{ label: 'auraPhone', href: '
   <footer class="aura-footer">
     <div class="aura-container">
 
-      <nav class="aura-footer__crumbs" aria-label="Ruta de navegación">
+      <nav class="aura-footer__crumbs" aria-label="Migas de pan">
         <ol class="aura-crumbs">
-          <li><a href="index.html"><img src="assets/img/aura.png" width="20" height="20" alt="AURA, inicio"></a></li>
+          <li><a href="index.html" title="AURA — Volver al inicio"><img src="assets/img/aura.png" width="20" height="20" alt="AURA — Volver al inicio"></a></li>
           <li aria-current="page">auraPhone</li>
         </ol>
       </nav>
 
       <div class="aura-footer__main">
         <div class="aura-footer__brand">
-          <a class="aura-brand" href="index.html" aria-label="AURA, inicio">
+          <a class="aura-brand" href="index.html" aria-label="AURA — Volver al inicio" title="AURA — Volver al inicio">
             <img class="aura-brand__mark" src="assets/img/aura.png" width="28" height="28" alt="">
             <span class="aura-brand__word">AURA</span>
           </a>
           <p class="aura-footer__tagline">Tecnología inmersiva diseñada para ampliar lo que imaginas. Precisión, profundidad y energía AURA.</p>
           <ul class="aura-footer__social">
-            <li><a class="aura-footer__social-link" href="acerca.html#newsroom" aria-label="AURA en Instagram: novedades"><i class="bi bi-instagram" aria-hidden="true"></i></a></li>
-            <li><a class="aura-footer__social-link" href="acerca.html#newsroom" aria-label="AURA en YouTube: novedades"><i class="bi bi-youtube" aria-hidden="true"></i></a></li>
-            <li><a class="aura-footer__social-link" href="acerca.html#newsroom" aria-label="AURA en LinkedIn: novedades"><i class="bi bi-linkedin" aria-hidden="true"></i></a></li>
+            <li><a class="aura-footer__social-link" href="acerca.html#newsroom" aria-label="AURA en Instagram: novedades" title="AURA en Instagram: novedades"><i class="bi bi-instagram" aria-hidden="true"></i></a></li>
+            <li><a class="aura-footer__social-link" href="acerca.html#newsroom" aria-label="AURA en YouTube: novedades" title="AURA en YouTube: novedades"><i class="bi bi-youtube" aria-hidden="true"></i></a></li>
+            <li><a class="aura-footer__social-link" href="acerca.html#newsroom" aria-label="AURA en LinkedIn: novedades" title="AURA en LinkedIn: novedades"><i class="bi bi-linkedin" aria-hidden="true"></i></a></li>
           </ul>
         </div>
 
-        <nav class="aura-footer__directory" aria-label="Directorio">
+        <nav class="aura-footer__directory" aria-label="Pie de página">
           <div class="aura-footer__col">
             <h2 class="aura-footer__heading">Productos</h2>
             <ul class="aura-footer__list">
@@ -1404,8 +1442,8 @@ Desde JS (repinta el pie): `AURA.footer.setCrumbs([{ label: 'auraPhone', href: '
             <h2 class="aura-footer__heading">Empresa</h2>
             <ul class="aura-footer__list">
               <li><a href="acerca.html">Acerca de AURA</a></li>
-              <li><a href="acerca.html#newsroom">Newsroom</a></li>
-              <li><a href="acerca.html#oportunidades">Oportunidades</a></li>
+              <li><a href="acerca.html#newsroom" title="Sala de prensa: las últimas noticias de AURA">Newsroom</a></li>
+              <li><a href="acerca.html#oportunidades" title="Empleo en AURA">Oportunidades</a></li>
               <li><a href="soporte.html#contacto">Contacto</a></li>
             </ul>
           </div>
@@ -1418,6 +1456,7 @@ Desde JS (repinta el pie): `AURA.footer.setCrumbs([{ label: 'auraPhone', href: '
           <li><a href="legal.html#privacidad">Política de privacidad</a></li>
           <li><a href="legal.html#cookies">Uso de cookies</a></li>
           <li><a href="legal.html#condiciones">Condiciones de uso</a></li>
+          <li><a href="legal.html#imagenes" title="Autor, fuente y licencia de cada fotografía del sitio">Créditos de imágenes</a></li>
           <li>España</li>
         </ul>
       </div>
@@ -1430,6 +1469,8 @@ Desde JS (repinta el pie): `AURA.footer.setCrumbs([{ label: 'auraPhone', href: '
 ```
 
 Los separadores «·» de los enlaces legales los pinta el CSS **delante** de cada elemento (`::before`, en una caja de 1,25 rem), y la lista se desplaza ese tramo a la izquierda con él recortado: el separador del primer elemento de cada línea no se ve. Al partirse la fila en móvil no queda ninguno colgando, ni al final ni al principio. Todo (también «España», que no es un enlace) se centra en vertical; los enlaces miden 24 px con ratón y 44 px en táctil.
+
+Nombres: «Migas de pan» y «Pie de página» en los dos `nav` (el `<footer>` ya es la región de pie). Los iconos sociales, que no tienen texto, se nombran con `aria-label` y repiten ese texto en `title` (el lector lo anuncia una vez; con el ratón aparece el texto emergente). `title` también en «Newsroom», «Oportunidades» y «Créditos de imágenes», donde aclara el destino; en el resto, el texto del enlace ya lo dice.
 
 ### 12.3 Marcador de hueco `.aura-slot`
 
@@ -1519,7 +1560,7 @@ Cuando un `<img class="aura-img" data-slot="NOMBRE">` (que pide `NOMBRE.webp`) f
 | Texto | `product.tagline` |
 | Precio | `'Desde ' + AURA.fmt.eur0(product.basePrice)` (si `basePrice` no es un número mayor que 0, no se pinta ni el precio ni la cuota) |
 | Al mes | `'o ' + AURA.fmt.mes(product.basePrice) + ' durante ' + AURA.data.financing.months + ' meses'` («24 meses» con espacio indivisible) |
-| Estado | `AURA.catalog.availability(product).text`, solo si `status !== 'disponible'` |
+| Estado | `AURA.catalog.availability(product).html` (el `text`, con la fecha en `<time datetime>`), solo si `status !== 'disponible'` |
 | Botón | `AURA.catalog.cta(product)` + `aria-label` «VERBO NOMBRE» |
 
 La imagen lleva `alt=""` porque el enlace que la contiene es decorativo (`aria-hidden`, fuera del orden de tabulación): el nombre enlazado ya da acceso (en táctil mide 44 px de objetivo sin mover el diseño). El nivel de encabezado (`h3`) se puede cambiar con `data-aura-heading="h2"` en el contenedor. `data-status` permite a una página filtrar o destacar sin recalcular.
@@ -1541,6 +1582,7 @@ Botón según la disponibilidad ([§14.3](#143-auracatalog)): «Configurar» si 
     <p class="aura-table-card__hint">Desliza la tabla para ver todos los modelos.</p>
     <div class="aura-table-wrap" role="region" aria-labelledby="aura-cmp-auraphone-titulo" tabindex="0">
       <table class="aura-table">
+        <caption class="visually-hidden">Comparativa técnica de los modelos auraPhone</caption>
         <thead>
           <tr>
             <th scope="col">Característica</th>
@@ -1570,8 +1612,10 @@ Botón según la disponibilidad ([§14.3](#143-auracatalog)): «Configurar» si 
 
 - La fila de acciones al pie de la tabla repite la compra: botón secundario de 48 px (el de la guía; no hay variante pequeña) en todas las columnas (la destacada ya la marca el nombre en dorado), igual que la fila final de `comparar.html`. La acción primaria de cada modelo es la de su tarjeta o su cabecera.
 - Los valores pasan por `AURA.fmt.units`: cifra y unidad no se separan al cambiar de línea («120 Hz», «1 TB»).
-- La fila con `key: 'precio'` se calcula siempre con `'Desde ' + AURA.fmt.eur0(product.basePrice)` (en `data.js` no hay `specs.precio`): al cambiar `basePrice`, la tabla se actualiza sola. Debajo, `.aura-table__note` con `AURA.catalog.availability(p).text` si el modelo aún no está disponible.
+- La fila con `key: 'precio'` se calcula siempre con `'Desde ' + AURA.fmt.eur0(product.basePrice)` (en `data.js` no hay `specs.precio`): al cambiar `basePrice`, la tabla se actualiza sola. Debajo, `.aura-table__note` con `AURA.catalog.availability(p).html` (el `text`, con la fecha en `<time datetime>`) si el modelo aún no está disponible.
 - Título configurable con `data-aura-compare-title="Especificaciones auraPad"`; por defecto «Especificaciones técnicas».
+- `<caption class="visually-hidden">` (temario DIW: toda tabla tiene título): «Comparativa técnica de los modelos FAMILIA» o el texto de `data-aura-compare-caption`. A la vista ya la titula la cabecera de la tarjeta; el caption no ocupa sitio (`caption.visually-hidden`, aura.css §2) y da nombre a la tabla en el lector de pantalla. `th` con `scope="col"` en la cabecera y `scope="row"` en cada fila.
+- Un valor que falta se pinta `<span aria-hidden="true">—</span><span class="visually-hidden">Sin dato</span>`: raya a la vista, «Sin dato» al oído.
 - `.aura-table-wrap` es enfocable (`tabindex="0"`, `role="region"`) para poder desplazarla con el teclado en móvil. La primera columna es pegajosa.
 - Por debajo de 576 px la tabla se compacta (mín. 544 px, texto de 13 px) y la columna fija mide 104 px: a 360 px se ve siempre un modelo entero junto a su etiqueta.
 - Efecto de borde de la columna fija: `aura-ui.js` añade `.is-scrolled` a `.aura-table-wrap` en cuanto se desplaza (escucha `scroll` en captura, sin marcado extra) y solo entonces aparecen la línea y el degradado donde las columnas pasan por debajo.
@@ -1887,7 +1931,7 @@ Lee de `AURA.data` (= `window.AURA_DATA`). Donde se pide un producto vale su `id
 | `carePrice(producto \| familyId)` | Precio de AuraCare+ por unidad. |
 | `image(producto, colorId)` | `{ slot, fallback, exact, color, alt }`. `slot`: la foto de ese color si existe (`imageVariants`; con la base en `fallback`), si no la base directamente (`fallback: ''`). `color`: el acabado que se **ve** en la foto (`null` si no se aprecia). `exact`: `false` si la foto enseña otro acabado que el pedido (díselo al usuario). `alt`: descripción de la foto real. |
 | `today()` | Hoy, como `Date` a medianoche local. Si la URL con la que se abrió la página lleva `?hoy=AAAA-MM-DD`, ese día (ver abajo). |
-| `availability(producto, día?)` | `{ status, title, label, text, canBuy, preorder, release }` (ver abajo). `día` opcional (`'AAAA-MM-DD'` o `Date`); por defecto, `today()`. |
+| `availability(producto, día?)` | `{ status, title, label, text, labelHtml, html, canBuy, preorder, release }` (ver abajo). `día` opcional (`'AAAA-MM-DD'` o `Date`); por defecto, `today()`. |
 | `cta(producto)` | `'Configurar'` si aún no se puede reservar (`proximamente`), `'Reservar'` en reserva y `'Comprar'` si está disponible. |
 | `url(producto)` | `comprar.html?producto=ID` (con `&hoy=…` si la página se abrió con `?hoy=`). |
 | `withHoy(href)` | El enlace interno con `?hoy=AAAA-MM-DD` si la página se abrió con él; si no, igual. |
@@ -1902,7 +1946,7 @@ Lee de `AURA.data` (= `window.AURA_DATA`). Donde se pide un producto vale su `id
 | de `preorder` a la víspera de `release` | `'reserva'` | Reserva | «Entregas a partir del 23 de octubre» | `true` | Reservar |
 | desde `release`, o sin `availability` | `'disponible'` | Disponible | `''` | `true` | Comprar |
 
-`text` = `title + ' · ' + label` («Próximamente · Reserva a partir del 16 de octubre»), o `''` si está disponible: es lo que enseñan la tarjeta de modelo, la tabla comparativa y el buscador. `preorder` / `release` vuelven como `'AAAA-MM-DD'` (o `''`); dales formato con `fmt.diaMes` o `fmt.fecha`. El 3 de octubre de 2026 el auraPhone Duo está en `proximamente`; pasa solo a `reserva` el 16 y a `disponible` el 23.
+`text` = `title + ' · ' + label` («Próximamente · Reserva a partir del 16 de octubre»), o `''` si está disponible: es lo que enseñan la tarjeta de modelo, la tabla comparativa y el buscador. `html` y `labelHtml` son `text` y `label` ya escapados, con la fecha dentro de `<time datetime="AAAA-MM-DD">` (se ven igual): úsalos al pintar con `innerHTML` (la tarjeta, la tabla, el buscador, inicio, auraPad, auraBook, comparar, comprar y la bolsa lo hacen) y `text` para `textContent`, `aria-label` o avisos. `preorder` / `release` vuelven como `'AAAA-MM-DD'` (o `''`); dales formato con `fmt.diaMes` o `fmt.fecha`. El 3 de octubre de 2026 el auraPhone Duo está en `proximamente`; pasa solo a `reserva` el 16 y a `disponible` el 23.
 
 Cómo usarlo en las páginas:
 
@@ -2152,6 +2196,7 @@ var f = AURA.ui.form(formulario /* elemento, id o selector */, {
 });
 ```
 
+- **No lee el marcado**: `required`, `pattern`, `minlength` o `type="email"` del HTML no se aplican solos. Declara la misma regla en los dos sitios (§15.5): el marcado la documenta y la anuncia el lector; `ui.form` la aplica con su mensaje. Si cambias una, cambia la otra.
 - Las claves son los `name` de los campos. Cada regla admite el valor directo (`true`, `8`, `/re/`, `'campo'`) o `{ value, message }`; en `required` y `email` una cadena es el mensaje. `messages: { minLength: '…' }` cambia textos sueltos. `custom` devuelve `true` o el mensaje de error.
 - Reglas: `required`, `email`, `minLength`, `maxLength`, `pattern`, `match`, `custom`. Un campo vacío y no obligatorio es siempre válido.
 - Cuándo valida: mientras se escribe por primera vez no se señala el error (sí el acierto); al salir del campo (`focusout`) o al enviar aparece el error, y desde entonces se revalida en cada `input`. Casillas, radios y `<select>` se validan al cambiar. Si un campo tiene `match`, se revalida cuando cambia el otro.
@@ -2216,3 +2261,127 @@ f.form.addEventListener('change', function (e) {
 | `tradeIn.cap` | Tope por dispositivo (800). |
 | `tradeIn.conditions[]` | `id`, `label`, `factor` y `description` (texto para el radio de cada estado). |
 | `tradeIn.devices[]` | `id`, `family`, `name`, `max`. |
+
+---
+
+## 15. Accesibilidad y metadatos (temario DIW)
+
+Lo que pide el temario de «Desarrollo de Interfaces Web» (HTML temas 1, 3, 4, 5, 6, 8 y 9; Elementos de una web; Accesibilidad temas 1 y 2; Tailwind tema 10), aplicado a AURA. Es la **lista que debe cumplir cualquier página nueva** antes de publicarse. Lo que pintan `aura-core.js` y `aura-ui.js` (cabecera, menú, pie, migas, tablas de `[data-aura-compare]`, avisos, hojas) ya cumple: la página responde de su propio marcado.
+
+### 15.1 `<head>` completo y comentado
+
+Plantilla para una página de `html/` (en `index.html`, las rutas sin `../`). Cada bloque con un comentario breve que diga para qué sirve; el orden es técnica → SEO → redes sociales → identidad → estilos → scripts.
+
+```html
+<!doctype html>
+<html lang="es" data-bs-theme="dark">
+<head>
+  <!-- Técnica: codificación y ventana adaptable al móvil -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  <!-- SEO: título (40–65 caracteres, «… — AURA»), descripción (120–160), autoría, palabras clave, indexación y URL canónica -->
+  <title>auraPhone: modelos, precios y especificaciones — AURA</title>
+  <meta name="description" content="Una o dos frases propias de esta página, entre 120 y 160 caracteres: qué se encuentra en ella y qué se puede hacer (comparar, configurar, comprar).">
+  <meta name="author" content="AURA">
+  <meta name="keywords" content="auraPhone, auraPhone 18 Pro, móvil plegable, comprar auraPhone">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aura-lyart-beta.vercel.app/html/auraphone.html">
+
+  <!-- Redes sociales: Open Graph (Facebook, LinkedIn, WhatsApp) y tarjeta de Twitter / X -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="AURA">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:title" content="auraPhone: modelos, precios y especificaciones — AURA">
+  <meta property="og:description" content="La misma descripción o una versión más corta.">
+  <meta property="og:url" content="https://aura-lyart-beta.vercel.app/html/auraphone.html">
+  <meta property="og:image" content="https://aura-lyart-beta.vercel.app/img/og/og-auraphone.jpg">
+  <meta property="og:image:alt" content="Qué se ve en la imagen, como un alt.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="auraPhone: modelos, precios y especificaciones — AURA">
+  <meta name="twitter:description" content="La misma descripción o una versión más corta.">
+  <meta name="twitter:image" content="https://aura-lyart-beta.vercel.app/img/og/og-auraphone.jpg">
+
+  <!-- Identidad: color de la interfaz del navegador, favicon e icono de acceso directo -->
+  <meta name="theme-color" content="#000000">
+  <link rel="icon" href="../favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="../img/aura.png">
+  <link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+
+  <!-- Estilos: fuentes, Bootstrap 5.3 y sus iconos, sistema AURA y la hoja de la página (en este orden) -->
+  <!-- … -->
+
+  <!-- Catálogo y núcleo, síncronos: pintan <aura-header> y <aura-footer> sin parpadeo -->
+  <script src="../js/data.js"></script>
+  <script src="../js/aura-core.js"></script>
+</head>
+```
+
+- [ ] `lang="es"` en `<html>`; `<meta charset>` y `viewport` los primeros.
+- [ ] `<title>` único, de **40 a 65 caracteres**, que diga qué es la página y termine en « — AURA» (nunca «Inicio» ni solo el nombre). Si el JS cambia lo que muestra la página (`comparar.html?familia=`, `comprar.html?producto=`, los pasos del checkout), actualiza `document.title` con las mismas reglas.
+- [ ] `description` única, de **120 a 160 caracteres**, escrita como frase (no una lista de palabras clave). `author` y `keywords` presentes.
+- [ ] `robots`: `index, follow` en las páginas públicas; `noindex, follow` en las que no deben salir en un buscador (bolsa, tramitar pedido, cuenta, inicio de sesión, registro y la guía de componentes).
+- [ ] `canonical` y `og:url`: la URL **absoluta** de producción de esa página, sin parámetros de prueba (`?hoy=`, `?familia=`).
+- [ ] Open Graph completo (`og:type`, `og:site_name`, `og:locale`, `og:title`, `og:description`, `og:url`, `og:image` absoluta con `og:image:alt`) y `twitter:card` con su título, descripción e imagen. Las imágenes para redes, en `img/og/` (1200 × 630 px).
+- [ ] Favicon y `apple-touch-icon` (nombre técnico del estándar; no aparece en ningún texto). `theme-color` negro.
+- [ ] Ni en el título ni en los metadatos aparecen la marca original ni sus productos: auraPhone, auraPad, auraBook, auraOS.
+
+### 15.2 Estructura y semántica
+
+- [ ] `<!doctype html>`, etiquetas en minúscula, cerradas y bien indentadas; comentarios que separen los bloques grandes del `<main>`.
+- [ ] Orden del `<body>`: `<a class="aura-skip" href="#contenido">Saltar al contenido</a>` → `<aura-header>` (pinta `header` y `nav`) → **un solo** `<main id="contenido">` → `<aura-footer>` (pinta `footer`, migas y directorio).
+- [ ] Cada bloque temático es un `<section aria-labelledby="ID-del-h2">`; el contenido que se entiende solo (tarjeta de modelo, noticia, puesto de empleo) es `<article>`; lo complementario, `<aside>`. `<div>` solo para maquetar.
+- [ ] **Un único `h1`** y jerarquía sin saltos (h1 → h2 → h3…). El nivel lo da la estructura y el tamaño la clase (un `h3` puede llevar `.aura-h4`); `data-aura-heading="h4"` en `[data-aura-lineup]` / `[data-aura-compare]` para encajar las piezas generadas.
+- [ ] Listas con su significado: `ul` (enlaces, ventajas), `ol` (pasos, notas, migas), `dl` (pares término / valor, como especificaciones o datos de un pedido).
+- [ ] Cada `nav` tiene un nombre propio con `aria-label` («Principal», «Migas de pan», «Pie de página», el de la barra local con el nombre de la familia…).
+
+### 15.3 Enlaces e imágenes
+
+- [ ] El texto del enlace dice adónde lleva («Ver auraPhone», «Comparar todos los modelos»); nunca «aquí», «más» ni «haz clic». Si el texto visible se repite («Comprar»), se completa para el lector con `aria-label` («Comprar auraPhone 18 Pro») o con un `<span class="visually-hidden">`.
+- [ ] `title` solo cuando añade información que el texto no da (un icono sin texto, una palabra técnica o en inglés, el destino del logotipo); nunca repite el texto visible. En un control de solo icono, `title` es el texto emergente que ve quien usa el ratón y puede coincidir con su `aria-label`: el nombre accesible sale del `aria-label` y el `title` queda como descripción, que NVDA y JAWS no repiten si es igual al nombre.
+- [ ] Rutas relativas dentro del sitio y absolutas hacia fuera; ningún `href="#"` ni enlace roto. Un enlace externo que abre pestaña nueva lleva `target="_blank" rel="noopener noreferrer"`; un archivo para guardar, `download`.
+- [ ] Toda `<img>` con `alt`: la descripción **real** de lo que se ve (nunca «imagen de…» ni el nombre del archivo); `alt=""` si es decorativa o si el texto de al lado ya lo dice. Siempre `width` y `height` (sin saltos al cargar); `loading="lazy" decoding="async"` salvo la primera del héroe (`fetchpriority="high"`).
+- [ ] Imagen con leyenda: `<figure>` + `<figcaption>` (`.aura-media__caption`, `.aura-quote__cite` o `.aura-media__overlay`).
+- [ ] Los iconos de Bootstrap Icons son decorativos: `<i class="bi …" aria-hidden="true"></i>`.
+
+### 15.4 Tablas
+
+- [ ] Solo para datos (comparativas, especificaciones), nunca para maquetar.
+- [ ] `<caption>` con lo que compara la tabla. Si el diseño ya la titula con un encabezado visible, `class="visually-hidden"` (nunca `display: none`); `caption.visually-hidden` no ocupa sitio (aura.css §2).
+- [ ] `<thead>` y `<tbody>` (y `<tfoot>` si hay totales u observaciones); `th scope="col"` en la cabecera y `th scope="row"` en la primera celda de cada fila; `colspan` / `rowspan` solo cuando agrupan de verdad.
+- [ ] Una celda sin dato no queda muda: raya visual con `aria-hidden="true"` y «Sin dato» en `.visually-hidden`.
+- [ ] Sin roles ARIA en la tabla ni en sus partes (`table`, `rowgroup`, `row`, `columnheader`, `rowheader`, `cell`), aunque el CSS cambie su `display` (rejilla o bloque, como `comparar.html`): son redundantes y el validador del W3C los da como error en `<tr>`, `<th>` y `<td>`. Comprobado en Edge: con y sin roles, el árbol de accesibilidad de `comparar.html` tiene las mismas tablas, filas, cabeceras y celdas.
+
+### 15.5 Formularios
+
+- [ ] Cada control con su `<label for="id">` **visible**; el `placeholder` es un ejemplo, no la etiqueta. Un control sin etiqueta visible (el buscador) lleva `aria-label`. Casilla suelta: etiqueta envolvente **y** `for` + `id`; radios, tarjetas-opción y muestras de un grupo: basta la etiqueta envolvente ([§7](#casilla-y-radio)).
+- [ ] Los grupos van en `<fieldset>` con `<legend>`: radios, casillas de una misma pregunta y bloques largos (datos personales, dirección, pago). Un segmentado de radios suelto, sin leyenda visible, usa `role="radiogroup"` con `aria-label` en su lugar; dentro de un `<fieldset>`, sin `role` ([§5](#chip-insignia-segmentado)).
+- [ ] Bloque con un título visible que ya lo explica (registro, contacto): `<legend class="visually-hidden">` («Datos personales», «Datos de acceso», «Tu consulta»). El `<legend>` no es un elemento de la rejilla del fieldset; si el bloque tiene varios campos seguidos, van en un contenedor interior `.aura-stack.aura-stack--stretch` con `style="--stack:1.125rem"` para conservar el mismo hueco que el resto del formulario (así lo hacen `registro.html` y `soporte.html`).
+- [ ] El tipo correcto (`email`, `tel`, `password`, `number`, `search`…), `name` y `autocomplete` en los datos personales (`given-name`, `family-name`, `email`, `tel`, `street-address`, `postal-code`, `address-level2`, `new-password`, `current-password`…).
+- [ ] **Validación HTML5 en el marcado**: `required`, `pattern` (con un `title` que explique el formato), `minlength` / `maxlength`, `min` / `max` / `step`, `inputmode`. El formulario lleva `novalidate` en el propio HTML (lo valida `AURA.ui.form`, §14.10, con mensajes propios junto al campo), así que el navegador **no** valida por su cuenta; los atributos se quedan porque documentan la regla, el lector anuncia «obligatorio» y `maxlength` impide escribir de más.
+- [ ] Las reglas se escriben dos veces, en el marcado y en `AURA.ui.form` (que **no** lee los atributos): las dos dicen lo mismo y, si cambia una, cambia la otra. El correo lleva `pattern="[^\s@]+@[^\s@]+\.[^\s@]{2,}"`, la misma regla que `email: true` (`EMAIL_RE`); sin él, `type="email"` daría por bueno «a@b».
+- [ ] Mensajes junto al campo en `.aura-field__error`, enlazados con `aria-describedby`, con `aria-invalid` en el control y texto + icono (nunca solo color); el resumen de un envío fallido, en `.aura-alert` con `role="alert"`. `readonly` y `disabled` con su sentido; cada `<button>` con su `type`.
+
+### 15.6 ARIA y atributos globales
+
+- [ ] Primero HTML nativo (`button`, `a href`, `nav`, `fieldset`); ARIA solo donde el HTML no llega. Sin roles redundantes (`<nav role="navigation">`, `<button role="button">`, `<table role="table">`), sin excepciones.
+- [ ] **Propiedades**: `aria-label` en los botones de icono; `aria-labelledby` de cada `section` o región a su encabezado; `aria-describedby` de los campos a su ayuda y su error; `aria-controls` del disparador a lo que abre.
+- [ ] **Estados**, actualizados por el JS en el mismo instante que lo visual: `aria-expanded` (menú, bolsa, buscador, acordeón, barra local), `aria-current="page"` (navegación, migas, familia activa), `aria-pressed` / `aria-checked`, `aria-invalid`, `aria-busy` (envío en curso, `AURA.ui.busy`), `aria-hidden` en lo decorativo y en los overlays cerrados.
+- [ ] **Cambios dinámicos** anunciados: `role="status"` o `aria-live="polite"` para resultados y recuentos (buscador, comparador, bolsa, avisos) y `role="alert"` para errores.
+- [ ] Atributos globales con criterio: `id` único (anclas, `label for`, `aria-*`); `class` con el prefijo `aura-` o el de la página; `data-*` para datos y comportamiento (`data-aura-*`, `data-slot`, `data-family`); `hidden` para lo que no aplica (campos condicionales); `style` solo para variables (`style="--i:3"`); `title` como en §15.3; `lang` en un fragmento en otro idioma.
+- [ ] Teclado: todo lo que se pulsa es `<button>` o `<a href>` (nunca un `div` con `onclick`); `tabindex="0"` solo en zonas desplazables (`.aura-table-wrap`) y `-1` para el foco por JS; **nunca mayor que 0**. El orden del foco sigue el visual; los overlays atrapan el foco, se cierran con Esc y lo devuelven a su disparador.
+
+### 15.7 Foco, contraste y preferencias
+
+- [ ] Foco siempre visible: `:focus-visible` con 2 px de `--accent-link` (3 px con «más contraste»). Nunca `outline: none` sin un sustituto igual de visible.
+- [ ] Contraste AA: texto ≥ 4,5:1 (≥ 3:1 si es grande) y controles ≥ 3:1. Usa los tokens (`--text-primary`, `--text-secondary`, `--text-tertiary`; texto azul siempre `--accent-link`, nunca `--accent`).
+- [ ] Estados visibles y distintos: `:hover`, `:focus-visible`, `:active`, `disabled` (menos contraste pero legible) y error (icono + texto).
+- [ ] Objetivos de 44 px en táctil y 24 px con ratón (lo hace la base). Se respetan «reducir movimiento», «reducir transparencia», «más contraste» y los colores forzados (aura.css §8): ninguna página los anula.
+
+### 15.8 Cómo se comprueba
+
+- Auditoría de Lighthouse (Accesibilidad, Buenas prácticas y SEO) en Edge o Chrome, y el panel **Accesibilidad** de DevTools para ver el nombre accesible de cada control.
+- Teclado: recorrer la página con Tab y Mayús + Tab, abrir y cerrar con Intro, Espacio y Esc, sin quedarse atrapado.
+- Lector de pantalla (NVDA en Windows): lista de encabezados, regiones, enlaces y tablas; cada una con su nombre.
+- Contraste: el comprobador de DevTools (o el de WebAIM) sobre texto, iconos y bordes de campos.
+- Validador del W3C (HTML) y una vista previa del enlace compartido para revisar Open Graph.

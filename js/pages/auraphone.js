@@ -62,6 +62,13 @@
     return d.getFullYear() === hoy().getFullYear() ? fmt.diaMes(iso) : fmt.fecha(iso);
   }
 
+  /* «16 de octubre de 2026» dentro de <time datetime="2026-10-16">: la fecha
+     exacta para la máquina y la legible para la persona. */
+  function fechaHtml(iso) {
+    var texto = esc(fmt.fecha(iso));
+    return /^\d{4}-\d{2}-\d{2}$/.test(String(iso || '')) ? '<time datetime="' + esc(iso) + '">' + texto + '</time>' : texto;
+  }
+
 
   /* ------------------------------------------------------------------------
      1. Datos del catálogo
@@ -135,12 +142,16 @@
     pintar('duo-estado', enVenta ? '' : String(dispDuo.text || ''));   // la fecha ya trae espacios indivisibles
     mostrarBloque('duo-estado', !enVenta && !!dispDuo.text);
 
+    /* Nota del Duo, con cada fecha en <time datetime="AAAA-MM-DD"> (HTML ya escapado). */
     var fechas = [];
-    if (dispDuo.status === 'proximamente' && dispDuo.preorder) { fechas.push('reserva a partir del ' + fmt.fecha(dispDuo.preorder)); }
+    if (dispDuo.status === 'proximamente' && dispDuo.preorder) { fechas.push('reserva a partir del ' + fechaHtml(dispDuo.preorder)); }
     if (dispDuo.status === 'reserva') { fechas.push('reservas abiertas'); }
-    if (!enVenta && dispDuo.release) { fechas.push('entregas a partir del ' + fmt.fecha(dispDuo.release)); }
-    var notaDuo = fechas.length ? duo.name + ': ' + fechas.join(' y ') + '. Las fechas pueden cambiar según la demanda.' : '';
-    pintar('nota-duo', notaDuo);
+    if (!enVenta && dispDuo.release) { fechas.push('entregas a partir del ' + fechaHtml(dispDuo.release)); }
+    var notaDuo = fechas.length ? esc(duo.name) + ': ' + fechas.join(' y ') + '. Las fechas pueden cambiar según la demanda.' : '';
+    all('[data-ap="nota-duo"]').forEach(function (el) {
+      el.innerHTML = notaDuo;
+      el.hidden = !notaDuo;
+    });
     var liDuo = one('#nota-duo');
     if (liDuo) { liDuo.hidden = !notaDuo; }
 
@@ -189,7 +200,11 @@
       var volver = one('.aura-footnotes__back', li);
       if (volver) {
         volver.hidden = !refs.some(function (a) { return !a.closest('[hidden]'); });
-        if (visible) { volver.setAttribute('aria-label', 'Volver al texto de la nota ' + n); }
+        /* Enlace de solo icono: nombre (aria-label) y texto emergente (title) con el número nuevo. */
+        if (visible) {
+          volver.setAttribute('aria-label', 'Volver al texto de la nota ' + n);
+          volver.setAttribute('title', 'Volver al texto de la nota ' + n);
+        }
       }
     });
   }

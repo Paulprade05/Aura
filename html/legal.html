@@ -1,12 +1,47 @@
 ﻿<!doctype html>
 <html lang="es" data-bs-theme="dark">
 <head>
+  <!-- Configuración técnica: codificación, ventana adaptable (con zonas seguras) y tema oscuro del navegador -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Privacidad, cookies y condiciones — AURA</title>
-  <meta name="description" content="Política de privacidad, uso de cookies y condiciones de uso de AURA, un proyecto de demostración sin servidor: todo se guarda en tu navegador y puedes borrarlo con un botón.">
   <meta name="theme-color" content="#000000">
+  <meta name="color-scheme" content="dark">
+
+  <!-- SEO: título y descripción únicos, autoría, palabras clave, indexación (se indexa y se siguen sus enlaces) y URL canónica -->
+  <title>Privacidad, cookies y condiciones de uso de la tienda — AURA</title>
+  <meta name="description" content="Política de privacidad, uso de cookies y condiciones de AURA, un proyecto de demostración sin servidor: todo se guarda en tu navegador y lo borras con un botón.">
+  <meta name="author" content="Paulprade05">
+  <meta name="keywords" content="privacidad, política de privacidad, cookies, condiciones de uso, protección de datos, almacenamiento local, AURA">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aura-lyart-beta.vercel.app/html/legal.html">
+
+  <!-- Redes sociales: Open Graph (Facebook, LinkedIn, WhatsApp…) y tarjeta grande de X/Twitter; URLs absolutas -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="AURA">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:title" content="Privacidad, cookies y condiciones de uso de la tienda">
+  <meta property="og:description" content="Política de privacidad, uso de cookies y condiciones de AURA, un proyecto de demostración sin servidor: todo se guarda en tu navegador y lo borras con un botón.">
+  <meta property="og:url" content="https://aura-lyart-beta.vercel.app/html/legal.html">
+  <meta property="og:image" content="https://aura-lyart-beta.vercel.app/img/og/og-aura.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Logotipo de AURA sobre fondo negro con un auraPad, un auraBook y un auraPhone Duo, y el lema «Lo mejor de AURA, en una sola tienda».">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Privacidad, cookies y condiciones de uso de la tienda">
+  <meta name="twitter:description" content="Política de privacidad, uso de cookies y condiciones de AURA, un proyecto de demostración sin servidor: todo se guarda en tu navegador y lo borras con un botón.">
+  <meta name="twitter:image" content="https://aura-lyart-beta.vercel.app/img/og/og-aura.jpg">
+  <meta name="twitter:image:alt" content="Logotipo de AURA sobre fondo negro con un auraPad, un auraBook y un auraPhone Duo, y el lema «Lo mejor de AURA, en una sola tienda».">
+
+  <!-- Iconos: favicon (ICO y PNG), icono de la pantalla de inicio y manifiesto de la aplicación web -->
+  <link rel="icon" href="../favicon.ico" sizes="any">
   <link rel="icon" type="image/png" href="../img/aura.png">
+  <link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+  <link rel="manifest" href="../site.webmanifest">
+  <!-- Manifiesto: por file:// (doble clic) el navegador lo bloquearía por CORS con un error en la consola, así que ahí se retira -->
+  <script>(function () { if (location.protocol === 'file:') { var m = document.querySelector('link[rel="manifest"]'); if (m) { m.remove(); } } })();</script>
+
+  <!-- Estilos: fuentes Inter y Kanit, Bootstrap 5.3, Bootstrap Icons y hojas de AURA (sistema y página) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&family=Kanit:wght@500;600&display=swap" rel="stylesheet">
@@ -14,15 +49,23 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
   <link href="../css/aura.css" rel="stylesheet">
   <link href="../css/pages/legal.css" rel="stylesheet">
+
+  <!-- Scripts: catálogo y núcleo de AURA, síncronos y en este orden (definen <aura-header> y <aura-footer> antes del cuerpo) -->
   <script src="../js/data.js"></script>
   <script src="../js/aura-core.js"></script>
 </head>
 <body>
+  <!-- Enlace «Saltar al contenido»: lo primero que se enfoca con el tabulador; lleva al <main> sin recorrer el menú -->
   <a class="aura-skip" href="#contenido">Saltar al contenido</a>
+
+  <!-- Cabecera común: aura-core.js pinta el <header> con la navegación principal, el buscador y la bolsa.
+       Esta página no está en el menú (active vacío) y no lleva la cinta promocional (ribbon="off"): es un texto legal. -->
   <aura-header active="" ribbon="off"></aura-header>
 
+  <!-- Contenido principal: el único <main> de la página y destino del enlace de salto -->
   <main id="contenido">
 
+    <!-- Héroe: el único <h1> y la fecha de la última versión en <time datetime>. El panel de la derecha es decorativo (aria-hidden). -->
     <section class="aura-hero aura-hero--split legal-hero" aria-labelledby="legal-titulo">
       <div class="aura-container aura-hero__inner">
         <div class="aura-hero__copy">
@@ -38,6 +81,8 @@
       </div>
     </section>
 
+    <!-- Índice: <nav> con nombre propio y lista ordenada, porque las cuatro partes van numeradas (01–04).
+         Los números son decorativos (aria-hidden): el lector lee solo el nombre y la descripción de cada parte. -->
     <nav class="aura-section aura-section--band aura-section--tight" id="indice" aria-label="Índice">
       <div class="aura-container">
         <ol class="aura-grid aura-grid--4 list-unstyled m-0">
@@ -73,14 +118,14 @@
       </div>
     </nav>
 
-    <!-- 01 · Privacidad -->
+    <!-- 01 · Privacidad: título fijo a la izquierda (<header>) y el texto en .aura-prose, con sus <h3> -->
     <section class="aura-section" id="privacidad" aria-labelledby="privacidad-titulo">
       <div class="aura-container legal-seccion">
-        <div class="legal-seccion__head">
+        <header class="legal-seccion__head">
           <p class="aura-eyebrow aura-eyebrow--mono">01 / Privacidad</p>
           <h2 class="aura-h2" id="privacidad-titulo">Política de privacidad.</h2>
           <p class="aura-body">Tus datos no salen de este navegador. Literalmente: AURA no tiene servidor.</p>
-        </div>
+        </header>
 
         <div class="legal-seccion__body">
         <div class="aura-prose">
@@ -110,7 +155,9 @@
           <p>Como todo está en tu navegador, tú tienes el control: puedes ver tus datos en <a href="cuenta.html">Tu cuenta</a> y <strong>borrarlos todos</strong> con el botón de aquí abajo. También desaparecen si borras los datos de este sitio desde los ajustes de tu navegador.</p>
         </div>
 
-        <div class="aura-card aura-card--elevated legal-datos" id="tus-datos" role="region" aria-labelledby="tus-datos-titulo">
+        <!-- «Tus datos de AURA»: <section> con nombre (aria-labelledby → región para el lector de pantalla). legal.js
+             cuenta lo guardado en este navegador y el botón abre la confirmación del borrado, que es irreversible. -->
+        <section class="aura-card aura-card--elevated legal-datos" id="tus-datos" aria-labelledby="tus-datos-titulo">
           <div class="aura-stack aura-stack--stretch" style="--stack:1.25rem">
             <div class="aura-stack" style="--stack:.375rem">
               <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">En este navegador, ahora</p>
@@ -130,19 +177,19 @@
               <p class="aura-caption aura-caption--muted" id="legal-borrar-ayuda" data-legal-ayuda>Borra la bolsa, los ID de AURA, los pedidos, el crédito de Trade In y la sesión. Solo en este navegador.</p>
             </div>
           </div>
-        </div>
+        </section>
         </div>
       </div>
     </section>
 
-    <!-- 02 · Cookies -->
+    <!-- 02 · Cookies: las propias (ninguna) y las de los dos servicios externos que usa la página -->
     <section class="aura-section aura-section--band" id="cookies" aria-labelledby="cookies-titulo">
       <div class="aura-container legal-seccion">
-        <div class="legal-seccion__head">
+        <header class="legal-seccion__head">
           <p class="aura-eyebrow aura-eyebrow--mono">02 / Cookies</p>
           <h2 class="aura-h2" id="cookies-titulo">Uso de cookies.</h2>
           <p class="aura-body">AURA no instala cookies propias. Ni de análisis, ni de publicidad, ni de las que te siguen por internet.</p>
-        </div>
+        </header>
 
         <div class="legal-seccion__body">
         <div class="aura-prose">
@@ -164,14 +211,14 @@
       </div>
     </section>
 
-    <!-- 03 · Condiciones -->
+    <!-- 03 · Condiciones: condiciones de uso numeradas en sus <h3> -->
     <section class="aura-section" id="condiciones" aria-labelledby="condiciones-titulo">
       <div class="aura-container legal-seccion">
-        <div class="legal-seccion__head">
+        <header class="legal-seccion__head">
           <p class="aura-eyebrow aura-eyebrow--mono">03 / Condiciones</p>
           <h2 class="aura-h2" id="condiciones-titulo">Condiciones de uso.</h2>
           <p class="aura-body">Las reglas del juego. Son pocas, son claras y alguna tiene truco.</p>
-        </div>
+        </header>
 
         <div class="legal-seccion__body">
         <div class="aura-prose">
@@ -200,14 +247,15 @@
       </div>
     </section>
 
-    <!-- 04 · Créditos de las imágenes (la lista la pinta legal.js con ../js/creditos.js) -->
+    <!-- 04 · Créditos de las imágenes (la lista la pinta legal.js con ../js/creditos.js): un grupo por página, cada foto
+         con su descripción, autor, fuente y licencia. Las miniaturas llevan alt="" porque el texto de al lado ya la describe. -->
     <section class="aura-section" id="imagenes" aria-labelledby="imagenes-titulo">
       <div class="aura-container legal-seccion">
-        <div class="legal-seccion__head">
+        <header class="legal-seccion__head">
           <p class="aura-eyebrow aura-eyebrow--mono">04 / Imágenes</p>
           <h2 class="aura-h2" id="imagenes-titulo">Créditos de las imágenes.</h2>
           <p class="aura-body">Cada foto es de su autor y tiene licencia libre. Aquí está quién la hizo, dónde se publicó y con qué licencia.</p>
-        </div>
+        </header>
 
         <div class="legal-seccion__body">
           <div class="aura-prose">
@@ -220,14 +268,15 @@
       </div>
     </section>
 
-    <!-- Confirmación del borrado: irreversible, por eso se pregunta -->
+    <!-- Confirmación del borrado: irreversible, por eso se pregunta. role="alertdialog" (pide una decisión) y aria-modal;
+         atrapa el foco, empieza en «Cancelar» (autofocus) y se cierra con Esc sin borrar nada. -->
     <div class="aura-sheet aura-sheet--bottom" id="legal-borrar" data-aura-sheet aria-hidden="true">
       <div class="aura-scrim" data-aura-sheet-close></div>
       <section class="aura-sheet__panel" role="alertdialog" aria-modal="true" aria-labelledby="legal-borrar-titulo" aria-describedby="legal-borrar-texto" tabindex="-1">
         <div class="aura-sheet__grabber" aria-hidden="true"></div>
         <header class="aura-sheet__header">
           <h2 class="aura-sheet__title" id="legal-borrar-titulo">¿Borrar todos los datos de AURA?</h2>
-          <button class="aura-icon-btn" type="button" data-aura-sheet-close aria-label="Cerrar sin borrar"><i class="bi bi-x-lg" aria-hidden="true"></i></button>
+          <button class="aura-icon-btn" type="button" data-aura-sheet-close aria-label="Cerrar sin borrar" title="Cerrar sin borrar"><i class="bi bi-x-lg" aria-hidden="true"></i></button>
         </header>
         <div class="aura-sheet__body">
           <p class="m-0" id="legal-borrar-texto">Se eliminarán de este navegador <span data-legal-lista>todos los datos de AURA</span>. <strong>No se puede deshacer.</strong></p>
@@ -241,8 +290,10 @@
 
   </main>
 
+  <!-- Pie común: aura-core.js pinta el <footer> con las migas de pan («crumbs»), el directorio de enlaces, las redes y los avisos legales -->
   <aura-footer crumbs="Legal"></aura-footer>
 
+  <!-- Scripts al final del cuerpo: Bootstrap, los componentes de AURA (aura-ui.js) y, si la hay, la lógica de esta página -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="../js/aura-ui.js"></script>
   <script src="../js/creditos.js"></script>

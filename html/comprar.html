@@ -1,12 +1,47 @@
 ﻿<!doctype html>
 <html lang="es" data-bs-theme="dark">
 <head>
+  <!-- Configuración técnica: codificación, ventana adaptable (con zonas seguras) y tema oscuro del navegador -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Comprar — AURA</title>
-  <meta name="description" content="Configura tu auraPhone, auraPad o auraBook en AURA Store: elige modelo, acabado, almacenamiento y AuraCare+, con el precio y la cuota mensual al instante.">
   <meta name="theme-color" content="#000000">
+  <meta name="color-scheme" content="dark">
+
+  <!-- SEO: título y descripción únicos, autoría, palabras clave, indexación (página transaccional: no se indexa, pero se siguen sus enlaces) y URL canónica -->
+  <title>Configura y compra tu auraPhone, auraPad o auraBook — AURA</title>
+  <meta name="description" content="Configura tu auraPhone, auraPad o auraBook en AURA Store: elige modelo, acabado, almacenamiento y AuraCare+, con el precio y la cuota mensual al instante.">
+  <meta name="author" content="Paulprade05">
+  <meta name="keywords" content="comprar auraPhone, comprar auraPad, comprar auraBook, configurador, acabados, almacenamiento, AuraCare+, AURA Store">
+  <meta name="robots" content="noindex, follow">
+  <link rel="canonical" href="https://aura-lyart-beta.vercel.app/html/comprar.html">
+
+  <!-- Redes sociales: Open Graph (Facebook, LinkedIn, WhatsApp…) y tarjeta grande de X/Twitter; URLs absolutas -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="AURA">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:title" content="Configura y compra tu auraPhone, auraPad o auraBook">
+  <meta property="og:description" content="Configura tu auraPhone, auraPad o auraBook en AURA Store: elige modelo, acabado, almacenamiento y AuraCare+, con el precio y la cuota mensual al instante.">
+  <meta property="og:url" content="https://aura-lyart-beta.vercel.app/html/comprar.html">
+  <meta property="og:image" content="https://aura-lyart-beta.vercel.app/img/og/og-aura.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Logotipo de AURA sobre fondo negro con un auraPad, un auraBook y un auraPhone Duo, y el lema «Lo mejor de AURA, en una sola tienda».">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Configura y compra tu auraPhone, auraPad o auraBook">
+  <meta name="twitter:description" content="Configura tu auraPhone, auraPad o auraBook en AURA Store: elige modelo, acabado, almacenamiento y AuraCare+, con el precio y la cuota mensual al instante.">
+  <meta name="twitter:image" content="https://aura-lyart-beta.vercel.app/img/og/og-aura.jpg">
+  <meta name="twitter:image:alt" content="Logotipo de AURA sobre fondo negro con un auraPad, un auraBook y un auraPhone Duo, y el lema «Lo mejor de AURA, en una sola tienda».">
+
+  <!-- Iconos: favicon (ICO y PNG), icono de la pantalla de inicio y manifiesto de la aplicación web -->
+  <link rel="icon" href="../favicon.ico" sizes="any">
   <link rel="icon" type="image/png" href="../img/aura.png">
+  <link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+  <link rel="manifest" href="../site.webmanifest">
+  <!-- Manifiesto: por file:// (doble clic) el navegador lo bloquearía por CORS con un error en la consola, así que ahí se retira -->
+  <script>(function () { if (location.protocol === 'file:') { var m = document.querySelector('link[rel="manifest"]'); if (m) { m.remove(); } } })();</script>
+
+  <!-- Estilos: fuentes Inter y Kanit, Bootstrap 5.3, Bootstrap Icons y hojas de AURA (sistema y página) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&family=Kanit:wght@500;600&display=swap" rel="stylesheet">
@@ -14,16 +49,24 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
   <link href="../css/aura.css" rel="stylesheet">
   <link href="../css/pages/comprar.css" rel="stylesheet">
+
+  <!-- Scripts: catálogo y núcleo de AURA, síncronos y en este orden (definen <aura-header> y <aura-footer> antes del cuerpo) -->
   <script src="../js/data.js"></script>
   <script src="../js/aura-core.js"></script>
 </head>
 <body class="has-buybar">
+  <!-- Enlace «Saltar al contenido»: primer foco con el teclado (solo se ve al recibirlo) y lleva directo al <main> -->
   <a class="aura-skip" href="#contenido">Saltar al contenido</a>
+  <!-- Cabecera común (logotipo, navegación principal, buscador, cuenta y bolsa): la pinta aura-core.js.
+       active vacío porque comprar.js marca la familia del modelo; ribbon="off": sin cinta de promoción mientras se configura -->
   <aura-header active="" ribbon="off"></aura-header>
 
+  <!-- Contenido principal: el único <main> de la página -->
   <main id="contenido">
 
-    <!-- ============ Configurador ============ -->
+    <!-- ============ Configurador ============
+         Todo sale del catálogo (data.js) y lo pinta comprar.js: el h1 «Comprar auraPhone 18 Pro», la galería,
+         un formulario con un paso por pregunta y el resumen con la acción principal. -->
     <section class="aura-section aura-section--tight comprar" aria-labelledby="comprar-titulo">
       <div class="aura-container">
 
@@ -54,6 +97,9 @@
           </div>
 
           <div class="comprar-columna">
+            <!-- Formulario de configuración: cada paso es un <fieldset> de radios con su <legend> (el h2 del paso), porque
+                 agrupa las respuestas a una sola pregunta. Siempre hay una opción marcada, así que no hay nada obligatorio
+                 que rellenar ni se envía: cada cambio actualiza el resumen y la región viva al instante. -->
             <form class="comprar-pasos" id="configurador" aria-labelledby="comprar-titulo" novalidate>
 
               <fieldset class="aura-fieldset comprar-paso" aria-describedby="paso-modelo-ayuda">
@@ -77,6 +123,7 @@
                 <div class="aura-option-group" data-c-care></div>
               </fieldset>
 
+              <!-- Trade In no es una pregunta con opciones (solo un enlace o «Quitar el crédito»): <section> con su h2, no <fieldset> -->
               <section class="comprar-paso" aria-labelledby="paso-tradein-titulo">
                 <h2 class="aura-h3 comprar-paso__titulo" id="paso-tradein-titulo">AURA Trade In. <span class="aura-text-secondary">¿Cuánto vale tu dispositivo actual?</span></h2>
                 <div data-c-tradein></div>
@@ -84,6 +131,8 @@
 
             </form>
 
+            <!-- Resumen (aside: complementa al formulario): importes en una lista de definición, fecha de entrega
+                 y la acción principal, que cambia con la disponibilidad (añadir, reservar o avisar) -->
             <aside class="aura-summary comprar-resumen" id="resumen" aria-labelledby="resumen-titulo">
               <div class="comprar-resumen__head">
                 <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">Resumen</p>
@@ -155,7 +204,8 @@
       </div>
     </section>
 
-    <!-- ============ Preguntas sobre la compra ============ -->
+    <!-- ============ Preguntas sobre la compra ============
+         Acordeón nativo con <details>/<summary> (teclado y lector sin JS); name="faq-compra" deja una sola abierta. -->
     <section class="aura-section" id="preguntas" aria-labelledby="preguntas-titulo">
       <div class="aura-container aura-container--narrow">
         <div class="aura-section-head">
@@ -220,12 +270,15 @@
       <button class="aura-btn aura-btn--primary comprar-accion" type="button" data-c-accion data-c-barra-boton>Añadir a la bolsa</button>
     </div>
 
+    <!-- Región viva: anuncia al lector de pantalla el modelo y el nuevo total en cada cambio de configuración -->
     <p class="visually-hidden" aria-live="polite" aria-atomic="true" data-c-anuncio></p>
 
   </main>
 
+  <!-- Pie común (migas de pan, directorio y avisos): lo pinta aura-core.js; comprar.js pone las migas de la familia y el modelo -->
   <aura-footer crumbs="Comprar"></aura-footer>
 
+  <!-- Scripts al final del <body>, cuando el HTML ya existe: Bootstrap, componentes de AURA y la lógica de esta página -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="../js/aura-ui.js"></script>
   <script src="../js/pages/comprar.js"></script>

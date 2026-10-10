@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Páginas indexables de AURA (las transaccionales llevan noindex y no se incluyen) -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://aura-lyart-beta.vercel.app/</loc>
+    <lastmod>2026-10-09</lastmod>
+  </url>
+  <url>
+    <loc>https://aura-lyart-beta.vercel.app/html/auraphone.html</loc>
+    <lastmod>2026-10-09</lastmod>
+  </url>
+  <url>
+    <loc>https://aura-lyart-beta.vercel.app/html/aurapad.html</loc>
+    <lastmod>2026-10-09</lastmod>
+  </url>
+  <url>
+    <loc>https://aura-lyart-beta.vercel.app/html/aurabook.html</loc>
+    <lastmod>2026-10-09</lastmod>
+  </url>
+  <url>
+    <loc>https://aura-lyart-beta.vercel.app/html/comparar.html</loc>
+    <lastmod>2026-10-09</lastmod>
+  </url>
+  <url>
+    <loc>https://aura-lyart-beta.vercel.app/html/trade-in.html</loc>
+    <lastmod>2026-10-09</lastmod>
+  </url>
+  <url>
+    <loc>https://aura-lyart-beta.vercel.app/html/acerca.html</loc>
+    <lastmod>2026-10-09</lastmod>
+  </url>
+  <url>
+    <loc>https://aura-lyart-beta.vercel.app/html/soporte.html</loc>
+    <lastmod>2026-10-09</lastmod>
+  </url>
+  <url>
+    <loc>https://aura-lyart-beta.vercel.app/html/legal.html</loc>
+    <lastmod>2026-10-09</lastmod>
+  </url>
+</urlset>

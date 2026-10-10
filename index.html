@@ -1,12 +1,47 @@
 ﻿<!doctype html>
 <html lang="es" data-bs-theme="dark">
 <head>
+  <!-- Configuración técnica: codificación, ventana adaptable (con zonas seguras) y tema oscuro del navegador -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>auraPhone, auraPad y auraBook — AURA</title>
-  <meta name="description" content="Descubre el auraPhone Duo, el primer auraPhone que se pliega, el auraPad Pro con AURA M5 y el auraBook Pro con hasta AURA M5 Max. Financiación sin intereses, AURA Trade In y envío gratis.">
   <meta name="theme-color" content="#000000">
+  <meta name="color-scheme" content="dark">
+
+  <!-- SEO: título y descripción únicos, autoría, palabras clave, indexación (se indexa y se siguen sus enlaces) y URL canónica -->
+  <title>auraPhone, auraPad y auraBook con envío gratis — AURA</title>
+  <meta name="description" content="Descubre el auraPhone Duo, el primer auraPhone plegable, el auraPad Pro con chip AURA M5 y el auraBook Pro. Financiación sin intereses, Trade In y envío gratis.">
+  <meta name="author" content="Paulprade05">
+  <meta name="keywords" content="AURA, tienda AURA, auraPhone, auraPhone Duo, auraPad, auraBook, móvil plegable, AURA Trade In, financiación sin intereses">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aura-lyart-beta.vercel.app/">
+
+  <!-- Redes sociales: Open Graph (Facebook, LinkedIn, WhatsApp…) y tarjeta grande de X/Twitter; URLs absolutas -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="AURA">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:title" content="auraPhone, auraPad y auraBook con envío gratis">
+  <meta property="og:description" content="Descubre el auraPhone Duo, el primer auraPhone plegable, el auraPad Pro con chip AURA M5 y el auraBook Pro. Financiación sin intereses, Trade In y envío gratis.">
+  <meta property="og:url" content="https://aura-lyart-beta.vercel.app/">
+  <meta property="og:image" content="https://aura-lyart-beta.vercel.app/img/og/og-aura.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Logotipo de AURA sobre fondo negro con un auraPad, un auraBook y un auraPhone Duo, y el lema «Lo mejor de AURA, en una sola tienda».">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="auraPhone, auraPad y auraBook con envío gratis">
+  <meta name="twitter:description" content="Descubre el auraPhone Duo, el primer auraPhone plegable, el auraPad Pro con chip AURA M5 y el auraBook Pro. Financiación sin intereses, Trade In y envío gratis.">
+  <meta name="twitter:image" content="https://aura-lyart-beta.vercel.app/img/og/og-aura.jpg">
+  <meta name="twitter:image:alt" content="Logotipo de AURA sobre fondo negro con un auraPad, un auraBook y un auraPhone Duo, y el lema «Lo mejor de AURA, en una sola tienda».">
+
+  <!-- Iconos: favicon (ICO y PNG), icono de la pantalla de inicio y manifiesto de la aplicación web -->
+  <link rel="icon" href="favicon.ico" sizes="any">
   <link rel="icon" type="image/png" href="img/aura.png">
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
+  <!-- Manifiesto: por file:// (doble clic) el navegador lo bloquearía por CORS con un error en la consola, así que ahí se retira -->
+  <script>(function () { if (location.protocol === 'file:') { var m = document.querySelector('link[rel="manifest"]'); if (m) { m.remove(); } } })();</script>
+
+  <!-- Estilos: fuentes Inter y Kanit, Bootstrap 5.3, Bootstrap Icons y hojas de AURA (sistema y página) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&family=Kanit:wght@500;600&display=swap" rel="stylesheet">
@@ -14,16 +49,23 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
   <link href="css/aura.css" rel="stylesheet">
   <link href="css/pages/index.css" rel="stylesheet">
+
+  <!-- Scripts: catálogo y núcleo de AURA, síncronos y en este orden (definen <aura-header> y <aura-footer> antes del cuerpo) -->
   <script src="js/data.js"></script>
   <script src="js/aura-core.js"></script>
 </head>
 <body>
+  <!-- Enlace «Saltar al contenido»: lo primero que se enfoca con el tabulador; lleva al <main> sin recorrer el menú -->
   <a class="aura-skip" href="#contenido">Saltar al contenido</a>
+
+  <!-- Cabecera común: aura-core.js pinta el <header> con la navegación principal, el buscador y la bolsa; «active» marca la página actual (aria-current) -->
   <aura-header active="inicio"></aura-header>
 
+  <!-- Contenido principal: el único <main> de la página y destino del enlace de salto -->
   <main id="contenido">
 
-    <!-- ================= 1a · Héroe auraPhone Duo (texto / imagen) ================= -->
+    <!-- ================= 1a · Héroe auraPhone Duo (texto / imagen) =================
+         Primer bloque: lleva el único <h1> de la portada. Los otros dos héroes usan <h2> con la misma tipografía (clase aura-h1). -->
     <section class="aura-hero aura-hero--split index-hero" id="auraphone-duo" aria-labelledby="hero-duo-titulo">
       <div class="aura-container aura-hero__inner">
         <div class="aura-hero__copy">
@@ -89,14 +131,15 @@
       </div>
     </section>
 
-    <!-- ================= 2 · Novedades (bento) ================= -->
+    <!-- ================= 2 · Novedades (bento) =================
+         Cada tesela es un <article>: una novedad que se entiende sola, con su título, su texto y sus enlaces. -->
     <section class="aura-section aura-section--band" id="novedades" aria-labelledby="novedades-titulo">
       <div class="aura-container">
-        <div class="aura-section-head">
+        <header class="aura-section-head">
           <p class="aura-eyebrow aura-eyebrow--mono">Novedades / 2026</p>
           <h2 class="aura-h2" id="novedades-titulo">Cuatro formas de entrar en otra dimensión.</h2>
           <p class="aura-lead">Diseñadas juntas. Extraordinarias por separado. Esta es la nueva generación AURA.</p>
-        </div>
+        </header>
 
         <div class="aura-bento">
           <div class="aura-bento__col">
@@ -166,10 +209,12 @@
       </div>
     </section>
 
-    <!-- ================= 3 · Toda la gama (carrusel desde el catálogo) ================= -->
+    <!-- ================= 3 · Toda la gama (carrusel desde el catálogo) =================
+         index.js pinta las tarjetas desde data.js. El segmentado es el componente documentado del sistema
+         (COMPONENTES.md §5): radios nativos agrupados con role="radiogroup" y su nombre en aria-label. -->
     <section class="aura-section index-gama" id="gama" aria-labelledby="gama-titulo">
       <div class="aura-container">
-        <div class="aura-section-head aura-section-head--split">
+        <header class="aura-section-head aura-section-head--split">
           <div class="aura-section-head__text">
             <p class="aura-eyebrow aura-eyebrow--mono">La gama AURA</p>
             <h2 class="aura-h2" id="gama-titulo">Toda la gama, de un vistazo.</h2>
@@ -181,7 +226,7 @@
             <label class="aura-segmented__item"><input type="radio" name="gama-familia" value="aurapad"><span>auraPad</span></label>
             <label class="aura-segmented__item"><input type="radio" name="gama-familia" value="aurabook"><span>auraBook</span></label>
           </div>
-        </div>
+        </header>
 
         <div class="aura-carousel aura-carousel--bleed index-shelf" data-aura-carousel data-index-shelf role="region" aria-roledescription="carrusel" aria-label="Toda la gama AURA">
           <div class="aura-carousel__viewport">
@@ -194,21 +239,23 @@
       </div>
     </section>
 
-    <!-- ================= 4 · Por qué comprar en AURA (AURA.html.storePerks) ================= -->
+    <!-- ================= 4 · Por qué comprar en AURA (AURA.html.storePerks) =================
+         Las ventajas las pinta aura-ui.js desde el catálogo, iguales en todas las páginas de la tienda. -->
     <section class="aura-section aura-section--band" id="ventajas" aria-labelledby="ventajas-titulo">
       <div class="aura-container">
-        <div class="aura-section-head aura-section-head--split">
+        <header class="aura-section-head aura-section-head--split">
           <div class="aura-section-head__text">
             <p class="aura-eyebrow aura-eyebrow--mono">AURA Store</p>
             <h2 class="aura-h2" id="ventajas-titulo">Por qué comprar en AURA.</h2>
           </div>
           <a class="aura-link" href="html/soporte.html#contacto">Hablar con un especialista</a>
-        </div>
+        </header>
         <div class="aura-perks" data-aura-perks=""></div>
       </div>
     </section>
 
-    <!-- ================= 5 · Acerca de AURA / Cupertino ================= -->
+    <!-- ================= 5 · Acerca de AURA / Cupertino =================
+         La foto va en <figure>: las cifras que tiene encima son su leyenda (<figcaption>). -->
     <section class="aura-section" id="acerca-de-aura" aria-labelledby="acerca-titulo">
       <div class="aura-container">
         <div class="aura-split">
@@ -224,7 +271,7 @@
             <img class="aura-img" src="img/inicio-acerca.webp" data-slot="inicio-acerca" width="1600" height="1200" alt="Fachada de cristal azul de un edificio de oficinas de noche, con varias plantas iluminadas en luz cálida" loading="lazy" decoding="async">
             <figcaption class="aura-media__overlay aura-media__overlay--glass">
               <ul class="aura-stats">
-                <li class="aura-stat"><p class="aura-stat__value">1976</p><p class="aura-stat__label">Año de fundación</p></li>
+                <li class="aura-stat"><p class="aura-stat__value"><time datetime="1976">1976</time></p><p class="aura-stat__label">Año de fundación</p></li>
                 <li class="aura-stat"><p class="aura-stat__value">+2000&nbsp;M</p><p class="aura-stat__label">Dispositivos activos</p></li>
                 <li class="aura-stat"><p class="aura-stat__value">100&nbsp;%</p><p class="aura-stat__label">Energía renovable</p></li>
               </ul>
@@ -234,7 +281,8 @@
       </div>
     </section>
 
-    <!-- ================= 6 · AURA Trade In ================= -->
+    <!-- ================= 6 · AURA Trade In =================
+         El rango «entre X € y Y €» lo calcula index.js con AURA.tradeIn; sin JS queda «un descuento». -->
     <section class="aura-section aura-section--band" id="trade-in" aria-labelledby="tradein-titulo">
       <div class="aura-container">
         <div class="aura-split">
@@ -251,7 +299,8 @@
       </div>
     </section>
 
-    <!-- ================= 7 · Notas al pie ================= -->
+    <!-- ================= 7 · Notas al pie =================
+         Letra pequeña dentro del <main>: su <h2> está oculto a la vista, pero da nombre a la sección para el lector de pantalla. -->
     <section class="aura-section aura-section--tight aura-footnotes" aria-labelledby="notas-titulo">
       <div class="aura-container">
         <h2 class="visually-hidden" id="notas-titulo">Notas</h2>
@@ -269,8 +318,10 @@
 
   </main>
 
+  <!-- Pie común: aura-core.js pinta el <footer> con el directorio de enlaces, las redes y los avisos legales -->
   <aura-footer></aura-footer>
 
+  <!-- Scripts al final del cuerpo: Bootstrap, los componentes de AURA (aura-ui.js) y la lógica de esta página -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="js/aura-ui.js"></script>
   <script src="js/pages/index.js"></script>

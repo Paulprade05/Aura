@@ -152,7 +152,7 @@
   font-size: 1rem;
 }
 
-/* La tabla conserva su semántica (roles explícitos) y se maqueta en rejilla:
+/* Tabla nativa (sin roles ARIA: sigue siendo tabla) maquetada en rejilla:
    la etiqueta encima de su fila y un valor por columna. */
 .cmp-table {
   display: block;

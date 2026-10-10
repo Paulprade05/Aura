@@ -2284,6 +2284,10 @@
     if (!fam || !products.length) { return ''; }
     var tag = headingTag(el, 'h3');
     var title = el.getAttribute('data-aura-compare-title') || 'Especificaciones técnicas';
+    /* <caption>: el título de la propia tabla (temario DIW, tablas). A la vista ya
+       la titula la cabecera de la tarjeta, así que solo lo leen los lectores de
+       pantalla (.visually-hidden, nunca display: none; ver aura.css §2). */
+    var caption = el.getAttribute('data-aura-compare-caption') || 'Comparativa técnica de los modelos ' + fam.name;
     var id = 'aura-cmp-' + family + '-titulo';
     if (document.getElementById(id) && !el.querySelector('#' + id)) { id += '-' + (++compareCount); }
     var featured = function (i) { return i === 0 ? ' class="is-featured"' : ''; };
@@ -2297,10 +2301,13 @@
           if (isPrice) {
             var a = cat.availability(p);
             return '<td' + featured(i) + '>' + esc('Desde ' + AURA.fmt.eur0(p.basePrice)) +
-              (a.text ? '<span class="aura-table__note">' + esc(a.text) + '</span>' : '') + '</td>';
+              (a.text ? '<span class="aura-table__note">' + (a.html || esc(a.text)) + '</span>' : '') + '</td>';
           }
           var value = p.specs && p.specs[row.key];
-          return '<td' + featured(i) + '>' + esc(value ? AURA.fmt.units(value) : '—') + '</td>';   // cifra y unidad juntas
+          /* Sin dato: la raya es solo visual; el lector de pantalla oye «Sin dato» (como comparar.html). */
+          return '<td' + featured(i) + '>' + (value
+            ? esc(AURA.fmt.units(value))   // cifra y unidad juntas
+            : '<span aria-hidden="true">—</span><span class="visually-hidden">Sin dato</span>') + '</td>';
         }).join('') + '</tr>';
     }).join('');
 
@@ -2312,6 +2319,7 @@
       '<p class="aura-table-card__hint">Desliza la tabla para ver todos los modelos.</p>' +
       '<div class="aura-table-wrap" role="region" aria-labelledby="' + id + '" tabindex="0">' +
         '<table class="aura-table">' +
+          '<caption class="visually-hidden">' + esc(caption) + '</caption>' +
           '<thead><tr><th scope="col">Característica</th>' +
             products.map(function (p, i) { return '<th scope="col"' + featured(i) + '>' + esc(p.name) + '</th>'; }).join('') +
           '</tr></thead>' +

@@ -320,6 +320,13 @@ hr {
 .aura-skip:hover { color: #000; }
 .aura-skip:focus { transform: none; }
 
+/* Título de tabla solo para lectores de pantalla: <caption class="visually-hidden">
+   (temario DIW: toda tabla lleva caption). Bootstrap lo oculta a la vista sin
+   sacarlo del árbol de accesibilidad (nunca display: none) y lo deja como
+   caption (sin position: absolute), pero su margen de -1px por los cuatro
+   lados subiría la tabla 1px: aquí el caption ocupa exactamente 0px. */
+caption.visually-hidden { margin: 0 0 -1px !important; }
+
 
 /* ==========================================================================
    3. TIPOGRAFÍA
@@ -837,7 +844,7 @@ body:has(.aura-localnav) .aura-nav::after { display: none; }
 }
 /* Con el texto grande (125–150 %) en el teléfono, las cuatro acciones de
    44 px no caben junto a la marca: la palabra «AURA» se retira y queda el
-   símbolo (el enlace ya se llama «AURA, inicio»). Nunca se solapan. El
+   símbolo (el enlace ya se llama «AURA — Volver al inicio»). Nunca se solapan. El
    umbral está en rem: crece con el tamaño de texto del usuario. */
 @container aura-nav (max-width: 18.5rem) {
   .aura-nav__inner .aura-brand__word { display: none; }

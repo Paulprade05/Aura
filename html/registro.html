@@ -1,12 +1,47 @@
 ﻿<!doctype html>
 <html lang="es" data-bs-theme="dark">
 <head>
+  <!-- Configuración técnica: codificación, ventana adaptable (con zonas seguras) y tema oscuro del navegador -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Crear tu ID de AURA — AURA</title>
-  <meta name="description" content="Crea tu ID de AURA: un único acceso para comprar, seguir tus pedidos y guardar tu crédito de AURA Trade In.">
   <meta name="theme-color" content="#000000">
+  <meta name="color-scheme" content="dark">
+
+  <!-- SEO: título y descripción únicos, autoría, palabras clave, indexación (página transaccional: no se indexa, pero se siguen sus enlaces) y URL canónica -->
+  <title>Crea tu ID de AURA para comprar y seguir pedidos — AURA</title>
+  <meta name="description" content="Crea tu ID de AURA en un minuto: un único acceso para comprar auraPhone, auraPad y auraBook, seguir tus pedidos y guardar tu crédito de AURA Trade In.">
+  <meta name="author" content="Paulprade05">
+  <meta name="keywords" content="crear cuenta, registro, ID de AURA, darse de alta, pedidos, AURA Trade In, AURA">
+  <meta name="robots" content="noindex, follow">
+  <link rel="canonical" href="https://aura-lyart-beta.vercel.app/html/registro.html">
+
+  <!-- Redes sociales: Open Graph (Facebook, LinkedIn, WhatsApp…) y tarjeta grande de X/Twitter; URLs absolutas -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="AURA">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:title" content="Crea tu ID de AURA para comprar y seguir pedidos">
+  <meta property="og:description" content="Crea tu ID de AURA en un minuto: un único acceso para comprar auraPhone, auraPad y auraBook, seguir tus pedidos y guardar tu crédito de AURA Trade In.">
+  <meta property="og:url" content="https://aura-lyart-beta.vercel.app/html/registro.html">
+  <meta property="og:image" content="https://aura-lyart-beta.vercel.app/img/og/og-aura.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Logotipo de AURA sobre fondo negro con un auraPad, un auraBook y un auraPhone Duo, y el lema «Lo mejor de AURA, en una sola tienda».">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Crea tu ID de AURA para comprar y seguir pedidos">
+  <meta name="twitter:description" content="Crea tu ID de AURA en un minuto: un único acceso para comprar auraPhone, auraPad y auraBook, seguir tus pedidos y guardar tu crédito de AURA Trade In.">
+  <meta name="twitter:image" content="https://aura-lyart-beta.vercel.app/img/og/og-aura.jpg">
+  <meta name="twitter:image:alt" content="Logotipo de AURA sobre fondo negro con un auraPad, un auraBook y un auraPhone Duo, y el lema «Lo mejor de AURA, en una sola tienda».">
+
+  <!-- Iconos: favicon (ICO y PNG), icono de la pantalla de inicio y manifiesto de la aplicación web -->
+  <link rel="icon" href="../favicon.ico" sizes="any">
   <link rel="icon" type="image/png" href="../img/aura.png">
+  <link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+  <link rel="manifest" href="../site.webmanifest">
+  <!-- Manifiesto: por file:// (doble clic) el navegador lo bloquearía por CORS con un error en la consola, así que ahí se retira -->
+  <script>(function () { if (location.protocol === 'file:') { var m = document.querySelector('link[rel="manifest"]'); if (m) { m.remove(); } } })();</script>
+
+  <!-- Estilos: fuentes Inter y Kanit, Bootstrap 5.3, Bootstrap Icons y hojas de AURA (sistema y página) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&family=Kanit:wght@500;600&display=swap" rel="stylesheet">
@@ -14,75 +49,98 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
   <link href="../css/aura.css" rel="stylesheet">
   <link href="../css/pages/cuenta.css" rel="stylesheet">
+
+  <!-- Scripts: catálogo y núcleo de AURA, síncronos y en este orden (definen <aura-header> y <aura-footer> antes del cuerpo) -->
   <script src="../js/data.js"></script>
   <script src="../js/aura-core.js"></script>
 </head>
 <body>
+  <!-- Cabecera global: enlace para saltar al contenido (primer elemento enfocable) y barra de navegación que genera aura-core.js -->
   <a class="aura-skip" href="#contenido">Saltar al contenido</a>
   <aura-header active="cuenta" ribbon="off"></aura-header>
 
+  <!-- Contenido principal: tarjeta de alta centrada (título, formulario y acceso para quien ya tiene ID) -->
   <main id="contenido" class="aura-auth">
     <div class="aura-auth-card aura-auth-card--wide">
-      <div class="aura-auth-card__head">
+      <!-- Cabecera de la tarjeta: marca (el logotipo es decorativo, alt vacío: ya se lee «AURA») y el único h1 de la página -->
+      <header class="aura-auth-card__head">
         <span class="aura-brand aura-brand--lg"><img class="aura-brand__mark" src="../img/aura.png" width="36" height="36" alt=""><span class="aura-brand__word">AURA</span></span>
         <h1 class="aura-auth-card__title">Crea tu ID de AURA</h1>
         <p class="aura-auth-card__lead">Tu identidad para descubrir, configurar y proteger todo tu universo AURA.</p>
-      </div>
+      </header>
 
+      <!-- Formulario de alta. Dos grupos (fieldset + legend: la leyenda la leen los lectores de pantalla; a la vista
+           ya los separa el diseño) y las reglas declaradas en HTML5: required, type, maxlength, y minlength + pattern
+           en la contraseña (8 caracteres con una mayúscula y un número). Lleva novalidate porque los mensajes los da
+           AURA.ui.form (registro.js) junto a cada campo, con icono y texto. -->
       <form class="aura-form" id="registro-form" novalidate>
-        <!-- Aviso si ya hay una sesión iniciada (lo muestra registro.js) -->
+        <!-- Aviso si ya hay una sesión iniciada (lo muestra registro.js; role="status" lo anuncia sin interrumpir) -->
         <div class="aura-alert" id="registro-sesion" role="status" hidden>
           <i class="bi bi-person-check-fill" aria-hidden="true"></i>
           <p class="aura-alert__title">Ya has iniciado sesión como <span data-registro-quien>tu ID de AURA</span></p>
           <p class="aura-alert__text">Si creas otro ID de AURA, cerraremos esta sesión. <a href="cuenta.html">Ir&nbsp;a&nbsp;tu&nbsp;cuenta</a></p>
         </div>
 
-        <div class="aura-form__row">
-          <div class="aura-field">
-            <label class="aura-field__label" for="registro-nombre">Nombre</label>
-            <div class="aura-field__control">
-              <input class="aura-input" id="registro-nombre" name="nombre" type="text" placeholder="Tu nombre" autocomplete="given-name" maxlength="60" aria-describedby="registro-nombre-error">
+        <!-- Grupo 1: datos personales (en dos columnas desde 576 px) -->
+        <fieldset class="aura-fieldset">
+          <legend class="visually-hidden">Datos personales</legend>
+          <div class="aura-form__row">
+            <div class="aura-field">
+              <label class="aura-field__label" for="registro-nombre">Nombre</label>
+              <div class="aura-field__control">
+                <input class="aura-input" id="registro-nombre" name="nombre" type="text" placeholder="Tu nombre" required maxlength="60" autocomplete="given-name" aria-describedby="registro-nombre-error">
+              </div>
+              <p class="aura-field__error" id="registro-nombre-error"></p>
             </div>
-            <p class="aura-field__error" id="registro-nombre-error"></p>
-          </div>
-          <div class="aura-field">
-            <label class="aura-field__label" for="registro-apellidos">Apellidos</label>
-            <div class="aura-field__control">
-              <input class="aura-input" id="registro-apellidos" name="apellidos" type="text" placeholder="Tus apellidos" autocomplete="family-name" maxlength="80" aria-describedby="registro-apellidos-error">
+            <div class="aura-field">
+              <label class="aura-field__label" for="registro-apellidos">Apellidos</label>
+              <div class="aura-field__control">
+                <input class="aura-input" id="registro-apellidos" name="apellidos" type="text" placeholder="Tus apellidos" required maxlength="80" autocomplete="family-name" aria-describedby="registro-apellidos-error">
+              </div>
+              <p class="aura-field__error" id="registro-apellidos-error"></p>
             </div>
-            <p class="aura-field__error" id="registro-apellidos-error"></p>
           </div>
-        </div>
+        </fieldset>
 
-        <div class="aura-field">
-          <label class="aura-field__label" for="registro-email">Correo electrónico</label>
-          <div class="aura-field__control">
-            <i class="aura-field__icon bi bi-envelope" aria-hidden="true"></i>
-            <input class="aura-input" id="registro-email" name="email" type="email" inputmode="email" placeholder="nombre@correo.com" autocomplete="email" autocapitalize="off" spellcheck="false" aria-describedby="registro-email-error">
+        <!-- Grupo 2: datos de acceso. El contenedor interior conserva la separación del resto del formulario -->
+        <fieldset class="aura-fieldset">
+          <legend class="visually-hidden">Datos de acceso</legend>
+          <div class="aura-stack aura-stack--stretch" style="--stack:1.125rem">
+            <div class="aura-field">
+              <label class="aura-field__label" for="registro-email">Correo electrónico</label>
+              <div class="aura-field__control">
+                <i class="aura-field__icon bi bi-envelope" aria-hidden="true"></i>
+                <input class="aura-input" id="registro-email" name="email" type="email" inputmode="email" placeholder="nombre@correo.com" required maxlength="254" pattern="[^\s@]+@[^\s@]+\.[^\s@]{2,}" autocomplete="email" autocapitalize="off" spellcheck="false" aria-describedby="registro-email-error">
+              </div>
+              <p class="aura-field__error" id="registro-email-error"></p>
+            </div>
+
+            <div class="aura-field aura-field--toggle">
+              <label class="aura-field__label" for="registro-password">Contraseña</label>
+              <div class="aura-field__control">
+                <i class="aura-field__icon bi bi-lock" aria-hidden="true"></i>
+                <input class="aura-input" id="registro-password" name="password" type="password" required minlength="8" pattern="(?=.*[A-ZÁÉÍÓÚÜÑ])(?=.*\d).{8,}" autocomplete="new-password" aria-describedby="registro-password-reglas registro-password-error">
+                <!-- Botón de icono: su nombre (aria-label) y su estado (aria-pressed) los actualiza aura-ui.js al pulsarlo -->
+                <button class="aura-field__toggle" type="button" data-aura-password-toggle aria-label="Mostrar la contraseña" aria-pressed="false"><i class="bi bi-eye" aria-hidden="true"></i></button>
+              </div>
+              <!-- Requisitos: cada uno dice su estado en texto oculto («Pendiente» / «Cumplido»), no solo con el color -->
+              <ul class="aura-rules" id="registro-password-reglas" aria-label="Requisitos de la contraseña">
+                <li class="aura-rules__item" data-rule="length"><span class="visually-hidden">Pendiente: </span>8 caracteres</li>
+                <li class="aura-rules__item" data-rule="upper"><span class="visually-hidden">Pendiente: </span>Una mayúscula</li>
+                <li class="aura-rules__item" data-rule="number"><span class="visually-hidden">Pendiente: </span>Un número</li>
+              </ul>
+              <p class="aura-field__error" id="registro-password-error"></p>
+            </div>
           </div>
-          <p class="aura-field__error" id="registro-email-error"></p>
-        </div>
+        </fieldset>
 
-        <div class="aura-field aura-field--toggle">
-          <label class="aura-field__label" for="registro-password">Contraseña</label>
-          <div class="aura-field__control">
-            <i class="aura-field__icon bi bi-lock" aria-hidden="true"></i>
-            <input class="aura-input" id="registro-password" name="password" type="password" autocomplete="new-password" aria-describedby="registro-password-reglas registro-password-error">
-            <button class="aura-field__toggle" type="button" data-aura-password-toggle aria-label="Mostrar la contraseña" aria-pressed="false"><i class="bi bi-eye" aria-hidden="true"></i></button>
-          </div>
-          <ul class="aura-rules" id="registro-password-reglas" aria-label="Requisitos de la contraseña">
-            <li class="aura-rules__item" data-rule="length"><span class="visually-hidden">Pendiente: </span>8 caracteres</li>
-            <li class="aura-rules__item" data-rule="upper"><span class="visually-hidden">Pendiente: </span>Una mayúscula</li>
-            <li class="aura-rules__item" data-rule="number"><span class="visually-hidden">Pendiente: </span>Un número</li>
-          </ul>
-          <p class="aura-field__error" id="registro-password-error"></p>
-        </div>
-
+        <!-- Condiciones: se aceptan al registrarse (sin casilla, como en el prototipo); el botón las enlaza con aria-describedby -->
         <p class="aura-auth-card__legal" id="registro-legal">Al registrarte aceptas las <a href="legal.html#condiciones">Condiciones&nbsp;de&nbsp;uso</a> y confirmas que has leído nuestra <a href="legal.html#privacidad">Política&nbsp;de&nbsp;privacidad</a>.</p>
 
         <button class="aura-btn aura-btn--primary aura-btn--block" type="submit" aria-describedby="registro-legal">Registrarse en AURA</button>
       </form>
 
+      <!-- Alternativa: iniciar sesión (registro.js conserva ?volver= en el enlace) -->
       <div class="aura-auth-card__alt">
         <p>¿Ya tienes un ID de AURA?</p>
         <a class="aura-btn aura-btn--secondary" href="login.html" data-registro-login>Iniciar sesión</a>
@@ -92,8 +150,10 @@
     </div>
   </main>
 
+  <!-- Pie global con migas de pan, generado por aura-core.js -->
   <aura-footer crumbs="Crear ID de AURA"></aura-footer>
 
+  <!-- Scripts al final del cuerpo: Bootstrap, componentes de AURA y la lógica de esta página -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="../js/aura-ui.js"></script>
   <script src="../js/pages/registro.js"></script>

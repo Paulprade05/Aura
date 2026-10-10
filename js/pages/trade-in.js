@@ -180,12 +180,15 @@
   /* Pintado                                                            */
   /* ------------------------------------------------------------------ */
 
+  /* Modelo y estado son obligatorios (las reglas de AURA.ui.form, abajo): el
+     marcado lo declara con `required` en cada radio (temario DIW, validación
+     HTML5) y el lector anuncia «obligatorio»; los mensajes los pone AURA.ui.form. */
   function renderDevices() {
     var list = devicesOf(state.family);
     el.devices.innerHTML = list.map(function (d) {
       var n = splitName(d.name);
       return '<label class="aura-option">' +
-        '<input class="aura-option__input" type="radio" name="dispositivo" value="' + esc(d.id) + '"' + (d.id === state.deviceId ? ' checked' : '') + '>' +
+        '<input class="aura-option__input" type="radio" name="dispositivo" value="' + esc(d.id) + '" required' + (d.id === state.deviceId ? ' checked' : '') + '>' +
         '<span class="aura-option__card">' +
           '<span class="aura-option__body">' +
             '<span class="aura-option__title">' + esc(n.title) + '</span>' +
@@ -200,7 +203,7 @@
   function renderConditions() {
     el.conditions.innerHTML = CONDITIONS.map(function (c) {
       return '<label class="aura-option">' +
-        '<input class="aura-option__input" type="radio" name="estado" value="' + esc(c.id) + '"' + (c.id === state.conditionId ? ' checked' : '') + '>' +
+        '<input class="aura-option__input" type="radio" name="estado" value="' + esc(c.id) + '" required' + (c.id === state.conditionId ? ' checked' : '') + '>' +
         '<span class="aura-option__card">' +
           '<span class="aura-option__body">' +
             '<span class="aura-option__title">' + esc(c.label) + '</span>' +

@@ -1,12 +1,47 @@
 ﻿<!doctype html>
 <html lang="es" data-bs-theme="dark">
 <head>
+  <!-- Configuración técnica: codificación, ventana adaptable (con zonas seguras) y tema oscuro del navegador -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Tu cuenta — AURA</title>
-  <meta name="description" content="Gestiona tu ID de AURA: sigue tus pedidos, cambia tus datos personales, consulta tu crédito de AURA Trade In y protege tu cuenta.">
   <meta name="theme-color" content="#000000">
+  <meta name="color-scheme" content="dark">
+
+  <!-- SEO: título y descripción únicos, autoría, palabras clave, indexación (página transaccional: no se indexa, pero se siguen sus enlaces) y URL canónica -->
+  <title>Tu cuenta: pedidos, datos personales y seguridad — AURA</title>
+  <meta name="description" content="Gestiona tu ID de AURA: sigue el estado de tus pedidos, cambia tus datos personales, consulta tu crédito de AURA Trade In y protege tu cuenta.">
+  <meta name="author" content="Paulprade05">
+  <meta name="keywords" content="mi cuenta, ID de AURA, pedidos, seguimiento de pedidos, datos personales, seguridad, AURA Trade In">
+  <meta name="robots" content="noindex, follow">
+  <link rel="canonical" href="https://aura-lyart-beta.vercel.app/html/cuenta.html">
+
+  <!-- Redes sociales: Open Graph (Facebook, LinkedIn, WhatsApp…) y tarjeta grande de X/Twitter; URLs absolutas -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="AURA">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:title" content="Tu cuenta: pedidos, datos personales y seguridad">
+  <meta property="og:description" content="Gestiona tu ID de AURA: sigue el estado de tus pedidos, cambia tus datos personales, consulta tu crédito de AURA Trade In y protege tu cuenta.">
+  <meta property="og:url" content="https://aura-lyart-beta.vercel.app/html/cuenta.html">
+  <meta property="og:image" content="https://aura-lyart-beta.vercel.app/img/og/og-aura.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Logotipo de AURA sobre fondo negro con un auraPad, un auraBook y un auraPhone Duo, y el lema «Lo mejor de AURA, en una sola tienda».">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Tu cuenta: pedidos, datos personales y seguridad">
+  <meta name="twitter:description" content="Gestiona tu ID de AURA: sigue el estado de tus pedidos, cambia tus datos personales, consulta tu crédito de AURA Trade In y protege tu cuenta.">
+  <meta name="twitter:image" content="https://aura-lyart-beta.vercel.app/img/og/og-aura.jpg">
+  <meta name="twitter:image:alt" content="Logotipo de AURA sobre fondo negro con un auraPad, un auraBook y un auraPhone Duo, y el lema «Lo mejor de AURA, en una sola tienda».">
+
+  <!-- Iconos: favicon (ICO y PNG), icono de la pantalla de inicio y manifiesto de la aplicación web -->
+  <link rel="icon" href="../favicon.ico" sizes="any">
   <link rel="icon" type="image/png" href="../img/aura.png">
+  <link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+  <link rel="manifest" href="../site.webmanifest">
+  <!-- Manifiesto: por file:// (doble clic) el navegador lo bloquearía por CORS con un error en la consola, así que ahí se retira -->
+  <script>(function () { if (location.protocol === 'file:') { var m = document.querySelector('link[rel="manifest"]'); if (m) { m.remove(); } } })();</script>
+
+  <!-- Estilos: fuentes Inter y Kanit, Bootstrap 5.3, Bootstrap Icons y hojas de AURA (sistema y página) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&family=Kanit:wght@500;600&display=swap" rel="stylesheet">
@@ -14,28 +49,34 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
   <link href="../css/aura.css" rel="stylesheet">
   <link href="../css/pages/cuenta.css" rel="stylesheet">
+
+  <!-- Scripts: catálogo y núcleo de AURA, síncronos y en este orden (definen <aura-header> y <aura-footer> antes del cuerpo) -->
   <script src="../js/data.js"></script>
   <script src="../js/aura-core.js"></script>
 </head>
 <body>
+  <!-- Cabecera global: enlace para saltar al contenido (primer elemento enfocable) y barra de navegación que genera aura-core.js -->
   <a class="aura-skip" href="#contenido">Saltar al contenido</a>
   <aura-header active="cuenta" ribbon="off"></aura-header>
 
+  <!-- Contenido principal. Sin sesión, cuenta.js lleva a login.html; con sesión, muestra #cuenta-app -->
   <main id="contenido">
+    <!-- Sin JavaScript: los datos viven en el navegador, así que solo se explica por qué no se ven -->
     <noscript>
-      <section class="aura-section">
+      <section class="aura-section" aria-labelledby="cuenta-sin-js">
         <div class="aura-container aura-container--narrow">
           <div class="aura-empty">
             <span class="aura-empty__icon"><i class="bi bi-person-circle" aria-hidden="true"></i></span>
-            <h1 class="aura-h3 aura-empty__title">Tu cuenta necesita JavaScript</h1>
+            <h1 class="aura-h3 aura-empty__title" id="cuenta-sin-js">Tu cuenta necesita JavaScript</h1>
             <p class="aura-empty__text">Tu ID de AURA y tus pedidos se guardan en este navegador. Activa JavaScript para verlos.</p>
           </div>
         </div>
       </section>
     </noscript>
 
+    <!-- La cuenta: oculta (hidden) hasta que cuenta.js ha pintado los datos del usuario -->
     <div id="cuenta-app" hidden>
-      <!-- Cabecera: con qué ID de AURA estoy dentro -->
+      <!-- Cabecera: con qué ID de AURA estoy dentro (el avatar con las iniciales es decorativo: aria-hidden) -->
       <section class="aura-section aura-section--tight aura-section--center cuenta-hero" aria-labelledby="cuenta-titulo">
         <div class="aura-container aura-container--narrow">
           <div class="aura-section-head aura-section-head--center cuenta-hero__head">
@@ -50,7 +91,8 @@
       <div class="aura-section aura-section--band cuenta-paneles">
         <div class="aura-container aura-container--narrow">
 
-          <!-- Pestañas: junto a lo que controlan -->
+          <!-- Pestañas: junto a lo que controlan. HTML no tiene pestañas nativas, así que llevan ARIA
+               (tablist / tab / tabpanel); cuenta.js actualiza aria-selected y tabindex y las mueve con las flechas -->
           <div class="cuenta-tabs-wrap">
             <div class="aura-segmented cuenta-tabs" role="tablist" aria-label="Secciones de tu cuenta">
               <button class="aura-segmented__item is-active" type="button" role="tab" id="tab-pedidos" aria-selected="true" aria-controls="panel-pedidos" data-cuenta-tab="pedidos">Pedidos</button>
@@ -60,7 +102,7 @@
             </div>
           </div>
 
-          <!-- Pedidos -->
+          <!-- Panel «Pedidos»: cada pedido es un <article> independiente que pinta cuenta.js -->
           <div class="cuenta-panel" id="panel-pedidos" role="tabpanel" aria-labelledby="tab-pedidos" tabindex="0">
             <div class="aura-section-head aura-section-head--split cuenta-panel__head">
               <div class="aura-section-head__text">
@@ -72,26 +114,29 @@
             <div class="aura-stack aura-stack--stretch" style="--stack:1.25rem" data-cuenta-pedidos></div>
           </div>
 
-          <!-- Datos personales -->
+          <!-- Panel «Datos personales» -->
           <div class="cuenta-panel" id="panel-datos" role="tabpanel" aria-labelledby="tab-datos" tabindex="0" hidden>
             <div class="aura-section-head cuenta-panel__head">
               <h2 class="aura-h3">Datos personales</h2>
               <p class="aura-body">Así aparece tu nombre en tus pedidos y en tu ID de AURA.</p>
             </div>
             <div class="aura-card">
+              <!-- Formulario de datos: required y maxlength declarados en HTML5 (los mismos límites que en el alta);
+                   novalidate porque los errores los explica AURA.ui.form (cuenta.js) junto a cada campo. El correo
+                   es el ID de AURA: está desactivado y su ayuda dice por qué. -->
               <form class="aura-form" id="datos-form" novalidate>
                 <div class="aura-form__row">
                   <div class="aura-field">
                     <label class="aura-field__label" for="datos-nombre">Nombre</label>
                     <div class="aura-field__control">
-                      <input class="aura-input" id="datos-nombre" name="nombre" type="text" autocomplete="given-name" maxlength="60" aria-describedby="datos-nombre-error">
+                      <input class="aura-input" id="datos-nombre" name="nombre" type="text" required maxlength="60" autocomplete="given-name" aria-describedby="datos-nombre-error">
                     </div>
                     <p class="aura-field__error" id="datos-nombre-error"></p>
                   </div>
                   <div class="aura-field">
                     <label class="aura-field__label" for="datos-apellidos">Apellidos</label>
                     <div class="aura-field__control">
-                      <input class="aura-input" id="datos-apellidos" name="apellidos" type="text" autocomplete="family-name" maxlength="80" aria-describedby="datos-apellidos-error">
+                      <input class="aura-input" id="datos-apellidos" name="apellidos" type="text" required maxlength="80" autocomplete="family-name" aria-describedby="datos-apellidos-error">
                     </div>
                     <p class="aura-field__error" id="datos-apellidos-error"></p>
                   </div>
@@ -100,10 +145,11 @@
                   <label class="aura-field__label" for="datos-email">Correo electrónico</label>
                   <div class="aura-field__control">
                     <i class="aura-field__icon bi bi-envelope" aria-hidden="true"></i>
-                    <input class="aura-input" id="datos-email" type="email" disabled aria-describedby="datos-email-ayuda">
+                    <input class="aura-input" id="datos-email" type="email" disabled autocomplete="email" aria-describedby="datos-email-ayuda">
                   </div>
                   <p class="aura-field__help" id="datos-email-ayuda">Es tu ID de AURA, así que no se puede cambiar.</p>
                 </div>
+                <!-- Guardar: desactivado mientras no hay cambios; la región viva (aria-live) lo anuncia solo cuando cambia -->
                 <div class="aura-cluster cuenta-guardar">
                   <button class="aura-btn aura-btn--primary" type="submit" disabled>Guardar cambios</button>
                   <p class="aura-caption" id="datos-estado" aria-live="polite">No hay cambios sin guardar.</p>
@@ -112,7 +158,7 @@
             </div>
           </div>
 
-          <!-- AURA Trade In -->
+          <!-- Panel «AURA Trade In»: crédito activo o estado vacío (cuenta.js) -->
           <div class="cuenta-panel" id="panel-trade-in" role="tabpanel" aria-labelledby="tab-trade-in" tabindex="0" hidden>
             <div class="aura-section-head cuenta-panel__head">
               <h2 class="aura-h3">AURA Trade In</h2>
@@ -121,7 +167,7 @@
             <div class="cuenta-tradein" data-cuenta-tradein></div>
           </div>
 
-          <!-- Seguridad -->
+          <!-- Panel «Seguridad»: una fila por dato (h3 en cada una); las fechas van en <time> (cuenta.js) -->
           <div class="cuenta-panel" id="panel-seguridad" role="tabpanel" aria-labelledby="tab-seguridad" tabindex="0" hidden>
             <div class="aura-section-head cuenta-panel__head">
               <h2 class="aura-h3">Inicio de sesión y seguridad</h2>
@@ -163,7 +209,8 @@
       </div>
     </div>
 
-    <!-- Hoja de confirmación: eliminar el ID de AURA (destructivo e irreversible) -->
+    <!-- Hoja de confirmación: eliminar el ID de AURA (destructivo e irreversible). Diálogo modal con nombre y
+         descripción (aria-labelledby / aria-describedby); al abrirse, el foco va a «Cancelar», la opción segura -->
     <div class="aura-sheet aura-sheet--bottom" id="eliminar-id" data-aura-sheet aria-hidden="true">
       <div class="aura-scrim" data-aura-sheet-close></div>
       <section class="aura-sheet__panel" role="dialog" aria-modal="true" aria-labelledby="eliminar-titulo" aria-describedby="eliminar-texto" tabindex="-1">
@@ -190,8 +237,10 @@
     </div>
   </main>
 
+  <!-- Pie global con migas de pan, generado por aura-core.js -->
   <aura-footer crumbs="Tu cuenta"></aura-footer>
 
+  <!-- Scripts al final del cuerpo: Bootstrap, componentes de AURA y la lógica de esta página -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="../js/aura-ui.js"></script>
   <script src="../js/pages/cuenta.js"></script>

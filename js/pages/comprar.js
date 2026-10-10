@@ -261,10 +261,19 @@
     return String(texto || '').replace(/(\d{1,2}) de ([a-záéíóúñ]+)/gi, '$1' + NBSP + 'de' + NBSP + '$2');
   }
 
-  /* «entre el martes 6 y el miércoles 7 de octubre» (el mes, una vez si coincide). */
-  function rango(d1, d2) {
+  /* Cada fecha, también legible por máquina (temario DIW, semántica):
+     <time datetime="2026-10-16">viernes 16 de octubre</time>. El texto se ve igual. */
+  function tiempo(valor, texto) {
+    var d = fecha(valor);
+    var iso = d && A.util && A.util.isoDate ? A.util.isoDate(d) : '';
+    return iso ? '<time datetime="' + iso + '">' + esc(texto) + '</time>' : esc(texto);
+  }
+
+  /* «entre el martes 6 y el miércoles 7 de octubre» (el mes, una vez si
+     coincide), con cada fecha en su <time>. Devuelve HTML. */
+  function rangoHTML(d1, d2) {
     var primero = d1.getMonth() === d2.getMonth() ? DIAS[d1.getDay()] + ' ' + d1.getDate() : diaLargo(d1);
-    return 'entre el ' + primero + ' y el ' + diaLargo(d2);
+    return 'entre el ' + tiempo(d1, primero) + ' y el ' + tiempo(d2, diaLargo(d2));
   }
 
   /* Línea de entrega del resumen: { icono, html, fecha } */
@@ -273,20 +282,20 @@
     if (a.status === 'proximamente') {
       return {
         icono: 'bi-calendar-event', fecha: true,
-        html: 'Reservas a partir del <strong>' + esc(diaLargo(a.preorder)) + '</strong>.' +
-          (a.release ? ' Entregas a partir del ' + esc(diaLargo(a.release)) + '.' : '')
+        html: 'Reservas a partir del <strong>' + tiempo(a.preorder, diaLargo(a.preorder)) + '</strong>.' +
+          (a.release ? ' Entregas a partir del ' + tiempo(a.release, diaLargo(a.release)) + '.' : '')
       };
     }
     if (a.status === 'reserva') {
       return {
         icono: 'bi-calendar-check', fecha: true,
-        html: a.release ? 'Entrega a partir del <strong>' + esc(diaLargo(a.release)) + '</strong>, día del lanzamiento.' : 'Te lo entregamos el día del lanzamiento.'
+        html: a.release ? 'Entrega a partir del <strong>' + tiempo(a.release, diaLargo(a.release)) + '</strong>, día del lanzamiento.' : 'Te lo entregamos el día del lanzamiento.'
       };
     }
     var base = hoy();
     return {
       icono: 'bi-truck', fecha: false,
-      html: 'Recíbelo <strong>' + esc(rango(sumarLaborables(base, 2), sumarLaborables(base, 3))) + '</strong>.'
+      html: 'Recíbelo <strong>' + rangoHTML(sumarLaborables(base, 2), sumarLaborables(base, 3)) + '</strong>.'
     };
   }
 
@@ -346,7 +355,7 @@
     if (a.status !== 'disponible' && a.text) {
       /* El mismo icono que la línea de entrega del resumen para ese estado. */
       el.estado.innerHTML = '<i class="bi ' + (a.status === 'reserva' ? 'bi-calendar-check' : 'bi-calendar-event') + '" aria-hidden="true"></i>' +
-        '<span>' + esc(junto(a.text)) + '</span>';
+        '<span>' + (a.html || esc(junto(a.text))) + '</span>';   // la fecha, en <time datetime>
       el.estado.hidden = false;
     } else {
       el.estado.hidden = true;
@@ -362,7 +371,9 @@
       el.seguir.setAttribute('aria-label', 'Seguir comprando: gama ' + f.name);
     }
 
-    document.title = verbo + ' ' + p.name + ' — AURA';
+    /* Título descriptivo y único por modelo (40–65 caracteres, temario DIW):
+       «Comprar auraPhone 18 Pro: acabados, precio y cuotas — AURA». */
+    document.title = verbo + ' ' + p.name + ': acabados, precio y cuotas — AURA';
     if (A.header && A.header.setActive) { A.header.setActive(f.id); }
     if (A.footer && A.footer.setCrumbs) {
       A.footer.setCrumbs([{ label: f.name, href: paginaFamilia(f) }, verbo + ' ' + p.name]);
@@ -584,11 +595,12 @@
       var items = cat.products(estado.producto.family).map(function (m) {
         var a = disp(m);
         if (a.status === 'disponible') { return ''; }
-        var partesTxt = [];
-        if (a.status === 'proximamente' && a.preorder) { partesTxt.push('reservas a partir del ' + fmt.fecha(a.preorder)); }
-        if (a.release) { partesTxt.push('entregas a partir del ' + fmt.fecha(a.release)); }
-        if (!partesTxt.length) { return ''; }
-        return '<li>' + esc(m.name) + ': ' + esc(junto(partesTxt.join(' y '))) + '. Fechas previstas en España.</li>';
+        /* Cada fecha en su <time> (HTML ya escapado). */
+        var partesHTML = [];
+        if (a.status === 'proximamente' && a.preorder) { partesHTML.push('reservas a partir del ' + tiempo(a.preorder, junto(fmt.fecha(a.preorder)))); }
+        if (a.release) { partesHTML.push('entregas a partir del ' + tiempo(a.release, junto(fmt.fecha(a.release)))); }
+        if (!partesHTML.length) { return ''; }
+        return '<li>' + esc(m.name) + ': ' + partesHTML.join(' y ') + '. Fechas previstas en España.</li>';
       }).filter(Boolean);
       el.notasFechas.innerHTML = items.join('');
       el.notasFechas.hidden = !items.length;
