@@ -104,6 +104,16 @@
     return 'entre el ' + (a.getMonth() === b.getMonth() ? dayNum(a) : dayLabel(a)) + ' y el ' + dayLabel(b);
   }
 
+  /* Las mismas fechas, también legibles por máquina (temario DIW, semántica):
+     <time datetime="2026-10-13">martes 13 de octubre</time>. El texto se ve igual. */
+  function isoDay(d) {
+    return util.isoDate ? util.isoDate(d) : d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2);
+  }
+  function timeHTML(d, text) { return '<time datetime="' + isoDay(d) + '">' + esc(text) + '</time>'; }
+  function rangeHTML(a, b) {
+    return 'entre el ' + timeHTML(a, a.getMonth() === b.getMonth() ? dayNum(a) : dayLabel(a)) + ' y el ' + timeHTML(b, dayLabel(b));
+  }
+
   function availabilityOf(line) { return line.availability || catalog.availability(line.productId); }
   function isBlocked(line) { return availabilityOf(line).canBuy === false; }
 
@@ -276,22 +286,27 @@
     return out;
   }
 
-  /* Entrega o estado de la línea: { kind, icon, text }. */
+  /* Entrega o estado de la línea: { kind, icon, text, html } (html: el mismo
+     texto, con cada fecha en <time datetime>). */
   function shipInfo(line, bagRelease) {
     var a = availabilityOf(line);
     if (a.canBuy === false) {
-      return { kind: 'is-blocked', icon: 'bi-exclamation-circle', text: (a.text || a.title || 'Aún no disponible') + '.' };   // la fecha ya llega con espacios indivisibles
+      var aviso = (a.text || a.title || 'Aún no disponible') + '.';   // la fecha ya llega con espacios indivisibles
+      return { kind: 'is-blocked', icon: 'bi-exclamation-circle', text: aviso, html: a.html ? a.html + '.' : esc(aviso) };
     }
     var release = releaseOf(line);
     if (release) {
-      return { kind: 'is-reserva', icon: 'bi-calendar-event', text: a.title + ' · Recíbelo a partir del ' + dayLabel(release) };
+      return { kind: 'is-reserva', icon: 'bi-calendar-event', text: a.title + ' · Recíbelo a partir del ' + dayLabel(release),
+        html: esc(a.title + ' · Recíbelo a partir del ') + timeHTML(release, dayLabel(release)) };
     }
     var hoy = today();
     var from = addBusinessDays(hoy, 2);
     if (bagRelease && bagRelease >= from) {
-      return { kind: '', icon: 'bi-truck', text: 'Llega con tu reserva, a partir del ' + dayLabel(bagRelease) };
+      return { kind: '', icon: 'bi-truck', text: 'Llega con tu reserva, a partir del ' + dayLabel(bagRelease),
+        html: 'Llega con tu reserva, a partir del ' + timeHTML(bagRelease, dayLabel(bagRelease)) };
     }
-    return { kind: '', icon: 'bi-truck', text: 'Recíbelo ' + rangeLabel(from, addBusinessDays(hoy, 3)) };
+    var to = addBusinessDays(hoy, 3);
+    return { kind: '', icon: 'bi-truck', text: 'Recíbelo ' + rangeLabel(from, to), html: 'Recíbelo ' + rangeHTML(from, to) };
   }
 
   function paintShip(li, line, bagRelease) {
@@ -302,7 +317,7 @@
     if (el._key === key) { return; }
     el._key = key;
     el.className = 'bolsa-line__ship' + (info.kind ? ' ' + info.kind : '');
-    el.innerHTML = '<i class="bi ' + info.icon + '" aria-hidden="true"></i><span>' + esc(info.text) + '</span>';
+    el.innerHTML = '<i class="bi ' + info.icon + '" aria-hidden="true"></i><span>' + info.html + '</span>';
   }
 
   function careHTML(line) {

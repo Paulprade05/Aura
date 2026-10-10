@@ -15,7 +15,8 @@
         carrusel también mientras se arrastra (su pastilla se desliza con el
         gesto), y el enlace «Comparar todos los modelos» de la familia elegida.
      3. Cifras sueltas: meses de financiación, rango y tope de AURA Trade In,
-        fecha del catálogo y notas de las reservas.
+        fecha del catálogo y notas de las reservas (las fechas, en <time
+        datetime>).
    ========================================================================== */
 (function (window, document) {
   'use strict';
@@ -52,6 +53,14 @@
     return p && cat.availability ? cat.availability(p) : { status: 'disponible', title: '', label: '', text: '', release: '' };
   }
 
+  /* Fecha legible dentro de <time datetime="AAAA-MM-DD">: la máquina lee la
+     fecha exacta y la persona, «3 de octubre». Sin fecha ISO válida, solo el texto. */
+  function timeTag(iso, text) {
+    return /^\d{4}-\d{2}-\d{2}$/.test(String(iso || ''))
+      ? '<time datetime="' + esc(iso) + '">' + esc(text) + '</time>'
+      : esc(text);
+  }
+
   function monthly(price) {
     return months ? 'o ' + fmt.mes(price) + ' durante ' + months + ' meses' : '';
   }
@@ -78,7 +87,7 @@
     var a = availability(cheapest(idList(el, 'data-index-availability')));
     if (a.status === 'disponible' || !a.text) { el.hidden = true; return; }
     el.innerHTML = '<i class="bi bi-calendar-event" aria-hidden="true"></i>' +
-      '<span>' + (a.title && a.label ? '<strong>' + esc(a.title) + '</strong> · ' + esc(a.label) : esc(a.text)) + '</span>';
+      '<span>' + (a.title && a.label ? '<strong>' + esc(a.title) + '</strong> · ' + (a.labelHtml || esc(a.label)) : esc(a.text)) + '</span>';
     el.hidden = false;
   });
 
@@ -201,7 +210,7 @@
   var updated = data.updated ? fmt.fecha(data.updated) : '';
   all('[data-index-updated]').forEach(function (el) {
     if (!updated) { el.hidden = true; return; }
-    el.textContent = ' Catálogo actualizado el ' + updated + '.';
+    el.innerHTML = ' Catálogo actualizado el ' + timeTag(data.updated, updated) + '.';
     el.hidden = false;
   });
 
@@ -230,14 +239,14 @@
     .filter(function (x) { return x.a.status !== 'disponible'; });
   all('[data-index-preorders]').forEach(function (el) {
     if (!announced.length) { el.hidden = true; return; }
-    el.textContent = announced.map(function (x) {
+    el.innerHTML = announced.map(function (x) {
       var a = x.a;
-      var entregas = a.release ? 'entregas a partir del ' + fmt.diaMes(a.release) : '';
+      var entregas = a.release ? 'entregas a partir del ' + timeTag(a.release, fmt.diaMes(a.release)) : '';
       if (a.status === 'proximamente') {
-        var reservas = a.preorder ? 'reservas a partir del ' + fmt.diaMes(a.preorder) : 'muy pronto';
-        return x.p.name + ': ' + reservas + (entregas ? ' y ' + entregas : '') + ', según disponibilidad.';
+        var reservas = a.preorder ? 'reservas a partir del ' + timeTag(a.preorder, fmt.diaMes(a.preorder)) : 'muy pronto';
+        return esc(x.p.name) + ': ' + reservas + (entregas ? ' y ' + entregas : '') + ', según disponibilidad.';
       }
-      return x.p.name + ': en reserva' + (entregas ? '; ' + entregas : '') + ', según disponibilidad.';
+      return esc(x.p.name) + ': en reserva' + (entregas ? '; ' + entregas : '') + ', según disponibilidad.';
     }).join(' ');
     el.hidden = false;
   });

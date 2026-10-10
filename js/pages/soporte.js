@@ -5,7 +5,8 @@
       auraPhone Duo según su disponibilidad del día, cuotas de financiación,
       envío exprés, precios de AuraCare+, Trade In («hasta X €» y tope) y la
       lista de productos del formulario. Nada de esto se escribe a mano en el
-      HTML: al cambiar data.js, la página se actualiza sola.
+      HTML: al cambiar data.js, la página se actualiza sola. Las fechas de la
+      reserva van en <time datetime>.
    2. Buscador local: filtra temas y preguntas en cada pulsación (sin espera
       artificial), con estado vacío que invita a escribir a soporte. Un enlace
       a algo que el filtro o un acordeón cerrado esconden lo muestra antes.
@@ -45,22 +46,32 @@
      1. Datos del catálogo
      ------------------------------------------------------------------------ */
 
+  /* «16 de octubre» dentro de <time datetime="2026-10-16"> (temario DIW,
+     semántica): se lee igual y la fecha queda también en formato máquina.
+     iso es el día 'AAAA-MM-DD' de AURA.catalog.availability ('' si no hay). */
+  function fechaHTML(iso) {
+    var texto = AURA.fmt.diaMes(iso);
+    return texto ? '<time datetime="' + AURA.html.esc(iso) + '">' + AURA.html.esc(texto) + '</time>' : '';
+  }
+
   /* Pregunta de la reserva: el texto depende del día (próximamente / reserva).
-     Disponible ya, la pregunta y su sugerencia desaparecen (pintarCatalogo). */
+     Disponible ya, la pregunta y su sugerencia desaparecen (pintarCatalogo).
+     Todo lo que no es una fecha va escapado. */
   function pintarReserva(p, a) {
     var texto = $('[data-soporte-duo-estado]');
     var cta = $('[data-soporte-duo-cta]');
     if (!p || !a || a.status === 'disponible') { return; }
-    var abre = AURA.fmt.diaMes(a.preorder);
-    var llega = AURA.fmt.diaMes(a.release);
+    var nombre = AURA.html.esc(p.name);
+    var abre = fechaHTML(a.preorder);
+    var llega = fechaHTML(a.release);
     var pago = 'pagas al reservar y te lo enviamos para que llegue el día de su salida.';
     if (texto) {
       if (a.status === 'proximamente') {
-        texto.textContent = (abre ? 'Las reservas del ' + p.name + ' se abren el ' + abre : 'Las reservas del ' + p.name + ' se abrirán muy pronto') +
+        texto.innerHTML = (abre ? 'Las reservas del ' + nombre + ' se abren el ' + abre : 'Las reservas del ' + nombre + ' se abrirán muy pronto') +
           (llega ? ' y las entregas empiezan el ' + llega + '. ' : '. ') +
           'Mientras tanto, puedes configurarlo y ver su precio. Cuando se abran, pulsa «Reservar»: ' + pago;
       } else {
-        texto.textContent = 'Las reservas del ' + p.name + ' ya están abiertas' +
+        texto.innerHTML = 'Las reservas del ' + nombre + ' ya están abiertas' +
           (llega ? ' y las entregas empiezan el ' + llega + '. ' : '. ') +
           'Configúralo como cualquier otro auraPhone y pulsa «Reservar»: ' + pago;
       }

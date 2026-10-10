@@ -153,7 +153,8 @@
     /* «Próximamente · Reserva a partir del…» solo si el modelo aún no está a la venta. */
     availability: function (el, p) {
       var a = AURA.catalog.availability(p);
-      el.textContent = a.status !== 'disponible' ? a.text : '';
+      /* Con la fecha en <time datetime> (a.html ya va escapado). */
+      el.innerHTML = a.status !== 'disponible' ? (a.html || AURA.html.esc(a.text || '')) : '';
       el.hidden = !el.textContent;
     },
     href: function (el, p) { el.setAttribute('href', AURA.catalog.url(p)); },

@@ -102,7 +102,7 @@
         '</p>'
       : '';
     var status = a.status && a.status !== 'disponible' && a.text
-      ? '<p class="aura-caption aurapad-rec__status"><i class="bi bi-calendar-event" aria-hidden="true"></i> ' + esc(a.text) + '</p>'
+      ? '<p class="aura-caption aurapad-rec__status"><i class="bi bi-calendar-event" aria-hidden="true"></i> ' + (a.html || esc(a.text)) + '</p>'
       : '';
     box.innerHTML =
       '<div class="aura-stack" style="--stack:.25rem">' +

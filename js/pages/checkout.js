@@ -122,6 +122,9 @@
     t = new Date(t.getFullYear(), t.getMonth(), t.getDate() + 1);
     return d.getTime() === t.getTime();
   }
+  /* La misma fecha, también legible por máquina (temario DIW, semántica):
+     <time datetime="2026-10-13">martes 13 de octubre</time>. El texto se ve igual. */
+  function timeHTML(d, text) { return '<time datetime="' + isoDay(d) + '">' + esc(text) + '</time>'; }
   function capitalize(t) { return t.charAt(0).toUpperCase() + t.slice(1); }
   function listNames(names) {
     return names.length < 2 ? names.join('') : names.slice(0, -1).join(', ') + ' y ' + names[names.length - 1];
@@ -143,7 +146,8 @@
     return out;
   }
 
-  /* Fecha estimada por método: { from, to, note (para la opción), texto (frase), corta, iso, launch }. */
+  /* Fecha estimada por método: { from, to, note (para la opción), noteHTML (la
+     misma nota con <time>), texto (frase), corta, iso, launch }. */
   function estimate(metodo, items) {
     var hoy = today();
     var from = metodo === 'estandar' ? addBusinessDays(hoy, 2) : addBusinessDays(hoy, 1);
@@ -152,20 +156,27 @@
     var launch = false;
     if (rel && rel >= from) { from = rel; to = rel; launch = true; }
     var same = from.getTime() === to.getTime();
-    var dia = (!launch && isTomorrow(from) ? 'mañana, ' : 'el ') + dayLabel(from);
-    var rango = 'entre el ' + (from.getMonth() === to.getMonth() ? dayNum(from) : dayLabel(from)) + ' y el ' + dayLabel(to);
-    var note, texto, corta;
+    var prefijo = !launch && isTomorrow(from) ? 'mañana, ' : 'el ';
+    var desde = from.getMonth() === to.getMonth() ? dayNum(from) : dayLabel(from);
+    var dia = prefijo + dayLabel(from);
+    var rango = 'entre el ' + desde + ' y el ' + dayLabel(to);
+    var diaHTML = prefijo + timeHTML(from, dayLabel(from));
+    var rangoHTML = 'entre el ' + timeHTML(from, desde) + ' y el ' + timeHTML(to, dayLabel(to));
+    var lanzamiento = launch ? ', día de lanzamiento' : '';
+    var note, noteHTML, texto, corta;
     if (metodo === 'recogida') {
-      note = 'Listo a partir del ' + dayLabel(from) + (launch ? ', día de lanzamiento' : '');
+      note = 'Listo a partir del ' + dayLabel(from) + lanzamiento;
+      noteHTML = 'Listo a partir del ' + timeHTML(from, dayLabel(from)) + lanzamiento;
       texto = 'Listo para recoger a partir del ' + dayLabel(from);
       corta = 'A partir del ' + dayLabel(from);
     } else {
-      note = 'Llega ' + (same ? dia : rango) + (launch ? ', día de lanzamiento' : '');
+      note = 'Llega ' + (same ? dia : rango) + lanzamiento;
+      noteHTML = 'Llega ' + (same ? diaHTML : rangoHTML) + lanzamiento;
       texto = 'Llega ' + (same ? dia : rango);
       corta = same ? dayLabel(from) : rango;
       corta = corta.charAt(0).toUpperCase() + corta.slice(1);
     }
-    return { from: from, to: to, note: note, texto: texto, corta: corta, iso: isoDay(to), launch: launch };
+    return { from: from, to: to, note: note, noteHTML: noteHTML, texto: texto, corta: corta, iso: isoDay(to), launch: launch };
   }
 
   /* Tarjeta: marca, Luhn y formato. Nada de esto sale de la página. */
@@ -304,14 +315,16 @@
       '</div>';
     }
 
-    /* Datos del pedido (sin filas vacías si el pedido guardado es antiguo o está incompleto). */
+    /* Datos del pedido (sin filas vacías si el pedido guardado es antiguo o está
+       incompleto). La fecha del pedido va en <time datetime>: un tercer dato. */
+    var fechaPedido = parseDay(order.fecha);
     var meta = [
       ['Número de pedido', order.id],
-      ['Fecha', fmt.fecha(order.fecha)],
+      ['Fecha', fmt.fecha(order.fecha), fechaPedido],
       [recogida ? 'Recogida' : 'Entrega estimada', envio.fechaCorta || envio.fechaTexto || 'Por confirmar'],
       ['Pago', payText(pago)]
     ].filter(function (r) { return r[1]; }).map(function (r) {
-      return '<div><dt>' + esc(r[0]) + '</dt><dd>' + esc(r[1]) + '</dd></div>';
+      return '<div><dt>' + esc(r[0]) + '</dt><dd>' + (r[2] ? timeHTML(r[2], r[1]) : esc(r[1])) + '</dd></div>';
     }).join('');
 
     var actions = guest
@@ -357,7 +370,8 @@
 
     var current = document.getElementById('checkout') || document.getElementById('confirmacion');
     if (current && current.parentNode) { current.parentNode.replaceChild(sec, current); }
-    document.title = 'Pedido confirmado — AURA';
+    /* Título descriptivo (40–65 caracteres, temario DIW): dice qué ha pasado. */
+    document.title = reserva ? 'Reserva confirmada: gracias por tu pedido — AURA' : 'Pedido confirmado: gracias por tu compra — AURA';
     if (AURA.footer && AURA.footer.setCrumbs) { AURA.footer.setCrumbs(['Pedido confirmado']); }
     else {
       var footer = document.querySelector('aura-footer');
@@ -544,7 +558,7 @@
     ['estandar', 'expres', 'recogida'].forEach(function (m) {
       est[m] = estimate(m, items);
       var el = root.querySelector('[data-co-fecha="' + m + '"]');
-      if (el) { el.textContent = est[m].note; }
+      if (el) { el.innerHTML = est[m].noteHTML; }
     });
 
     /* Con una reserva, el exprés no adelanta nada (todo sale el día de
@@ -555,7 +569,7 @@
       expresInput.disabled = useless;
       if (useless) {
         var note = root.querySelector('[data-co-fecha="expres"]');
-        if (note) { note.textContent = 'No adelanta una reserva: llega igual el ' + dayLabel(est.expres.from); }
+        if (note) { note.innerHTML = 'No adelanta una reserva: llega igual el ' + timeHTML(est.expres.from, dayLabel(est.expres.from)); }
         if (expresInput.checked) {
           formEntrega.querySelector('input[name="metodo"][value="estandar"]').checked = true;
           applyMetodo(true);
@@ -569,8 +583,11 @@
       aviso.hidden = !r.date;
       if (r.date) {
         setText('reserva-titulo', r.names.length > 1 ? 'Tu pedido incluye reservas' : 'Tu pedido incluye una reserva');
-        setText('reserva-texto', capitalize(listNames(r.names)) + (r.names.length > 1 ? ' llegan' : ' llega') +
-          ' a partir del ' + dayLabel(r.date) + ', su día de lanzamiento. Enviaremos el pedido completo ese día.');
+        var texto = co('reserva-texto');
+        if (texto) {
+          texto.innerHTML = esc(capitalize(listNames(r.names)) + (r.names.length > 1 ? ' llegan' : ' llega') + ' a partir del ') +
+            timeHTML(r.date, dayLabel(r.date)) + ', su día de lanzamiento. Enviaremos el pedido completo ese día.';
+        }
       }
     }
   }
@@ -929,7 +946,8 @@
     if (n === 4) { renderReview(); }
     enter(panels[n], back);
 
-    document.title = STEPS[n - 1] + ' · Tramitar pedido — AURA';
+    /* «Paso 2 de 4, entrega: tramitar tu pedido — AURA» (44–48 caracteres, temario DIW). */
+    document.title = 'Paso ' + n + ' de 4, ' + STEPS[n - 1].toLowerCase() + ': tramitar tu pedido — AURA';
     announce('Paso ' + n + ' de 4: ' + STEPS[n - 1] + '.');
 
     /* Orientación: los pasos y el encabezado a la vista; el foco, al encabezado. */

@@ -1,12 +1,47 @@
 ﻿<!doctype html>
 <html lang="es" data-bs-theme="dark">
 <head>
+  <!-- Configuración técnica: codificación, ventana adaptable (con zonas seguras) y tema oscuro del navegador -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Soporte — AURA</title>
-  <meta name="description" content="Ayuda con tu auraPhone, auraPad o auraBook, tus pedidos, la financiación, AURA Trade In, AuraCare+ y tu ID de AURA. Busca una respuesta o escríbenos.">
   <meta name="theme-color" content="#000000">
+  <meta name="color-scheme" content="dark">
+
+  <!-- SEO: título y descripción únicos, autoría, palabras clave, indexación (se indexa y se siguen sus enlaces) y URL canónica -->
+  <title>Soporte: ayuda con tu dispositivo, pedidos y Trade In — AURA</title>
+  <meta name="description" content="Ayuda con tu auraPhone, auraPad o auraBook, tus pedidos y envíos, la financiación, AURA Trade In, AuraCare+ y tu ID de AURA. Busca una respuesta o escríbenos.">
+  <meta name="author" content="Paulprade05">
+  <meta name="keywords" content="soporte AURA, ayuda, preguntas frecuentes, envíos, devoluciones, financiación, AuraCare+, contacto, ID de AURA">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aura-lyart-beta.vercel.app/html/soporte.html">
+
+  <!-- Redes sociales: Open Graph (Facebook, LinkedIn, WhatsApp…) y tarjeta grande de X/Twitter; URLs absolutas -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="AURA">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:title" content="Soporte: ayuda con tu dispositivo, pedidos y Trade In">
+  <meta property="og:description" content="Ayuda con tu auraPhone, auraPad o auraBook, tus pedidos y envíos, la financiación, AURA Trade In, AuraCare+ y tu ID de AURA. Busca una respuesta o escríbenos.">
+  <meta property="og:url" content="https://aura-lyart-beta.vercel.app/html/soporte.html">
+  <meta property="og:image" content="https://aura-lyart-beta.vercel.app/img/og/og-aura.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Logotipo de AURA sobre fondo negro con un auraPad, un auraBook y un auraPhone Duo, y el lema «Lo mejor de AURA, en una sola tienda».">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Soporte: ayuda con tu dispositivo, pedidos y Trade In">
+  <meta name="twitter:description" content="Ayuda con tu auraPhone, auraPad o auraBook, tus pedidos y envíos, la financiación, AURA Trade In, AuraCare+ y tu ID de AURA. Busca una respuesta o escríbenos.">
+  <meta name="twitter:image" content="https://aura-lyart-beta.vercel.app/img/og/og-aura.jpg">
+  <meta name="twitter:image:alt" content="Logotipo de AURA sobre fondo negro con un auraPad, un auraBook y un auraPhone Duo, y el lema «Lo mejor de AURA, en una sola tienda».">
+
+  <!-- Iconos: favicon (ICO y PNG), icono de la pantalla de inicio y manifiesto de la aplicación web -->
+  <link rel="icon" href="../favicon.ico" sizes="any">
   <link rel="icon" type="image/png" href="../img/aura.png">
+  <link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+  <link rel="manifest" href="../site.webmanifest">
+  <!-- Manifiesto: por file:// (doble clic) el navegador lo bloquearía por CORS con un error en la consola, así que ahí se retira -->
+  <script>(function () { if (location.protocol === 'file:') { var m = document.querySelector('link[rel="manifest"]'); if (m) { m.remove(); } } })();</script>
+
+  <!-- Estilos: fuentes Inter y Kanit, Bootstrap 5.3, Bootstrap Icons y hojas de AURA (sistema y página) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&family=Kanit:wght@500;600&display=swap" rel="stylesheet">
@@ -14,15 +49,20 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
   <link href="../css/aura.css" rel="stylesheet">
   <link href="../css/pages/soporte.css" rel="stylesheet">
+
+  <!-- Scripts: catálogo y núcleo de AURA, síncronos y en este orden (definen <aura-header> y <aura-footer> antes del cuerpo) -->
   <script src="../js/data.js"></script>
   <script src="../js/aura-core.js"></script>
 </head>
 <body class="has-localnav">
+  <!-- Cabecera global: enlace para saltar al contenido (primer elemento enfocable) y barra de navegación que genera aura-core.js -->
   <a class="aura-skip" href="#contenido">Saltar al contenido</a>
   <aura-header active="soporte" ribbon="off"></aura-header>
 
+  <!-- Contenido principal: buscador, temas, preguntas frecuentes, contacto y notas -->
   <main id="contenido">
 
+    <!-- Barra local (navegación secundaria de la página, con su propio nombre): anclas a las secciones y «Contactar» -->
     <nav class="aura-localnav" aria-label="Soporte" data-aura-localnav>
       <div class="aura-container aura-localnav__inner">
         <a class="aura-localnav__title" href="soporte.html">Soporte</a>
@@ -34,7 +74,8 @@
       </div>
     </nav>
 
-    <!-- Héroe con buscador local -->
+    <!-- Héroe con el único h1 y el buscador local (role="search"): filtra en cada pulsación y anuncia el número de
+         resultados en una región viva (role="status"); las sugerencias son conmutadores con aria-pressed -->
     <section class="aura-hero aura-hero--center soporte-hero" aria-labelledby="soporte-titulo">
       <div class="aura-halo" aria-hidden="true"></div>
       <div class="aura-container aura-hero__inner">
@@ -48,7 +89,7 @@
               <label class="aura-field__label" for="soporte-q">¿En qué podemos ayudarte?</label>
               <div class="aura-field__control">
                 <i class="aura-field__icon bi bi-search" aria-hidden="true"></i>
-                <input class="aura-input" id="soporte-q" name="q" type="search" placeholder="Devolución, reserva, Trade In…" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" aria-describedby="soporte-q-estado" aria-controls="temas preguntas">
+                <input class="aura-input" id="soporte-q" name="q" type="search" placeholder="Devolución, reserva, Trade In…" maxlength="120" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" aria-describedby="soporte-q-estado" aria-controls="temas preguntas">
                 <button class="aura-field__toggle" type="button" data-soporte-limpiar aria-label="Borrar la búsqueda" hidden><i class="bi bi-x-circle-fill" aria-hidden="true"></i></button>
               </div>
               <p class="aura-field__help" id="soporte-q-estado" role="status" aria-live="polite">Filtra al instante los temas y las preguntas de esta página.</p>
@@ -67,7 +108,7 @@
       </div>
     </section>
 
-    <!-- Estado vacío del buscador -->
+    <!-- Estado vacío del buscador (hidden hasta que una búsqueda no encuentra nada): invita a escribir a soporte -->
     <section class="aura-section aura-section--tight" id="sin-resultados" aria-labelledby="sin-resultados-titulo" hidden>
       <div class="aura-container">
         <div class="aura-empty">
@@ -82,7 +123,7 @@
       </div>
     </section>
 
-    <!-- Temas -->
+    <!-- Temas: dos grupos (<section> con su h3), cada tema de producto es un <article> independiente -->
     <section class="aura-section aura-section--band" id="temas" aria-labelledby="temas-titulo">
       <div class="aura-container">
         <div class="aura-section-head">
@@ -91,8 +132,9 @@
           <p class="aura-lead">Por producto o por lo que necesitas resolver.</p>
         </div>
 
-        <div class="soporte-grupo" data-soporte-grupo>
-          <h3 class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain aura-eyebrow--muted soporte-grupo__titulo">Por producto</h3>
+        <!-- Grupo «Por producto»: una tarjeta por familia, con enlaces a sus especificaciones y modelos -->
+        <section class="soporte-grupo" aria-labelledby="temas-producto-titulo" data-soporte-grupo>
+          <h3 class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain aura-eyebrow--muted soporte-grupo__titulo" id="temas-producto-titulo">Por producto</h3>
           <div class="aura-grid aura-grid--3">
             <article class="aura-card soporte-tema" aria-labelledby="tema-auraphone" data-soporte-item data-soporte-claves="teléfono móvil smartphone plegable batería cámara pantalla duo pro max" data-aura-reveal>
               <div class="aura-stack" style="--stack:.625rem">
@@ -131,10 +173,11 @@
               </div>
             </article>
           </div>
-        </div>
+        </section>
 
-        <div class="soporte-grupo" data-soporte-grupo>
-          <h3 class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain aura-eyebrow--muted soporte-grupo__titulo">Por tema</h3>
+        <!-- Grupo «Por tema»: cada tarjeta es un enlace entero (su h4 da el nombre); dos llevan a las preguntas ya filtradas -->
+        <section class="soporte-grupo" aria-labelledby="temas-tema-titulo" data-soporte-grupo>
+          <h3 class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain aura-eyebrow--muted soporte-grupo__titulo" id="temas-tema-titulo">Por tema</h3>
           <div class="aura-grid aura-grid--3 soporte-temas">
             <a class="aura-card" href="cuenta.html" data-soporte-item data-soporte-claves="pedido envío entrega seguimiento devolución dirección factura" data-aura-reveal>
               <div class="aura-stack" style="--stack:.5rem">
@@ -179,11 +222,12 @@
               </div>
             </a>
           </div>
-        </div>
+        </section>
       </div>
     </section>
 
-    <!-- Preguntas frecuentes -->
+    <!-- Preguntas frecuentes: acordeón nativo (<details>/<summary>: teclado y estado abierto/cerrado sin ARIA);
+         con name="faq" solo queda una abierta a la vez. Las llamadas a nota (<sup>) enlazan con la letra pequeña -->
     <section class="aura-section" id="preguntas" aria-labelledby="preguntas-titulo">
       <div class="aura-container aura-container--narrow">
         <div class="aura-section-head">
@@ -272,7 +316,7 @@
       </div>
     </section>
 
-    <!-- Contacto -->
+    <!-- Contacto: formulario simulado y, al lado, la ficha de la tienda (aside: información complementaria) -->
     <section class="aura-section aura-section--band" id="contacto" aria-labelledby="contacto-titulo">
       <div class="aura-container">
         <div class="aura-section-head">
@@ -283,6 +327,10 @@
 
         <div class="aura-layout aura-layout--aside">
           <div class="aura-card soporte-form-card">
+            <!-- Formulario de contacto. Dos grupos (fieldset + legend: la leyenda la leen los lectores de pantalla; a la
+                 vista ya los separa el diseño) y las reglas declaradas en HTML5: required en lo obligatorio, type="email"
+                 con su formato, minlength/maxlength en el mensaje y la casilla de privacidad obligatoria. novalidate:
+                 los mensajes los da AURA.ui.form (soporte.js) junto a cada campo, con icono y texto. -->
             <form class="aura-form" id="soporte-form" method="post" novalidate>
               <div class="aura-alert" role="note">
                 <i class="bi bi-info-circle-fill" aria-hidden="true"></i>
@@ -290,75 +338,88 @@
                 <p class="aura-alert__text">No se envía ni se guarda nada. Al terminar recibirás un número de caso ficticio.</p>
               </div>
 
-              <div class="aura-form__row">
-                <div class="aura-field">
-                  <label class="aura-field__label" for="contacto-nombre">Nombre</label>
-                  <div class="aura-field__control">
-                    <input class="aura-input" id="contacto-nombre" name="nombre" type="text" autocomplete="name" placeholder="Lucía Martín" aria-describedby="contacto-nombre-error">
+              <!-- Grupo 1: quién escribe (con sesión iniciada, soporte.js lo rellena) -->
+              <fieldset class="aura-fieldset">
+                <legend class="visually-hidden">Tus datos de contacto</legend>
+                <div class="aura-form__row">
+                  <div class="aura-field">
+                    <label class="aura-field__label" for="contacto-nombre">Nombre</label>
+                    <div class="aura-field__control">
+                      <input class="aura-input" id="contacto-nombre" name="nombre" type="text" required autocomplete="name" placeholder="Lucía Martín" aria-describedby="contacto-nombre-error">
+                    </div>
+                    <p class="aura-field__error" id="contacto-nombre-error"></p>
                   </div>
-                  <p class="aura-field__error" id="contacto-nombre-error"></p>
-                </div>
-                <div class="aura-field">
-                  <label class="aura-field__label" for="contacto-email">Correo electrónico</label>
-                  <div class="aura-field__control">
-                    <i class="aura-field__icon bi bi-envelope" aria-hidden="true"></i>
-                    <input class="aura-input" id="contacto-email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="tu@correo.com" aria-describedby="contacto-email-ayuda contacto-email-error">
+                  <div class="aura-field">
+                    <label class="aura-field__label" for="contacto-email">Correo electrónico</label>
+                    <div class="aura-field__control">
+                      <i class="aura-field__icon bi bi-envelope" aria-hidden="true"></i>
+                      <input class="aura-input" id="contacto-email" name="email" type="email" inputmode="email" required maxlength="254" pattern="[^\s@]+@[^\s@]+\.[^\s@]{2,}" autocomplete="email" placeholder="tu@correo.com" aria-describedby="contacto-email-ayuda contacto-email-error">
+                    </div>
+                    <p class="aura-field__help" id="contacto-email-ayuda">Te responderemos aquí.</p>
+                    <p class="aura-field__error" id="contacto-email-error"></p>
                   </div>
-                  <p class="aura-field__help" id="contacto-email-ayuda">Te responderemos aquí.</p>
-                  <p class="aura-field__error" id="contacto-email-error"></p>
                 </div>
-              </div>
+              </fieldset>
 
-              <div class="aura-form__row">
-                <div class="aura-field">
-                  <label class="aura-field__label" for="contacto-producto">Producto relacionado <span class="aura-field__hint">Opcional</span></label>
-                  <div class="aura-field__control">
-                    <select class="aura-select" id="contacto-producto" name="producto" data-soporte-productos>
-                      <option value="">Ninguno en concreto</option>
-                    </select>
+              <!-- Grupo 2: la consulta. El contenedor interior conserva la separación del resto del formulario -->
+              <fieldset class="aura-fieldset">
+                <legend class="visually-hidden">Tu consulta</legend>
+                <div class="aura-stack aura-stack--stretch" style="--stack:1.125rem">
+                  <div class="aura-form__row">
+                    <div class="aura-field">
+                      <label class="aura-field__label" for="contacto-producto">Producto relacionado <span class="aura-field__hint">Opcional</span></label>
+                      <div class="aura-field__control">
+                        <!-- Las opciones (agrupadas por familia en <optgroup>) salen del catálogo: soporte.js -->
+                        <select class="aura-select" id="contacto-producto" name="producto" data-soporte-productos>
+                          <option value="">Ninguno en concreto</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="aura-field">
+                      <label class="aura-field__label" for="contacto-tema">Tema</label>
+                      <div class="aura-field__control">
+                        <select class="aura-select" id="contacto-tema" name="tema" required aria-describedby="contacto-tema-error">
+                          <option value="">Elige un tema</option>
+                          <option value="pedidos">Pedidos y envíos</option>
+                          <option value="devoluciones">Devoluciones</option>
+                          <option value="pagos">Pagos y financiación</option>
+                          <option value="tradein">AURA Trade In</option>
+                          <option value="auracare">AuraCare+ y reparaciones</option>
+                          <option value="id">ID de AURA</option>
+                          <option value="privacidad">Privacidad y datos</option>
+                          <option value="accesibilidad">Accesibilidad</option>
+                          <option value="responsabilidad">Medio ambiente y proveedores</option>
+                          <option value="prensa">Prensa</option>
+                          <option value="empleo">Empleo</option>
+                          <option value="otro">Otro tema</option>
+                        </select>
+                      </div>
+                      <p class="aura-field__error" id="contacto-tema-error"></p>
+                    </div>
                   </div>
-                </div>
-                <div class="aura-field">
-                  <label class="aura-field__label" for="contacto-tema">Tema</label>
-                  <div class="aura-field__control">
-                    <select class="aura-select" id="contacto-tema" name="tema" aria-describedby="contacto-tema-error">
-                      <option value="">Elige un tema</option>
-                      <option value="pedidos">Pedidos y envíos</option>
-                      <option value="devoluciones">Devoluciones</option>
-                      <option value="pagos">Pagos y financiación</option>
-                      <option value="tradein">AURA Trade In</option>
-                      <option value="auracare">AuraCare+ y reparaciones</option>
-                      <option value="id">ID de AURA</option>
-                      <option value="privacidad">Privacidad y datos</option>
-                      <option value="accesibilidad">Accesibilidad</option>
-                      <option value="responsabilidad">Medio ambiente y proveedores</option>
-                      <option value="prensa">Prensa</option>
-                      <option value="empleo">Empleo</option>
-                      <option value="otro">Otro tema</option>
-                    </select>
-                  </div>
-                  <p class="aura-field__error" id="contacto-tema-error"></p>
-                </div>
-              </div>
 
+                  <div class="aura-field">
+                    <label class="aura-field__label" for="contacto-mensaje">Mensaje</label>
+                    <div class="aura-field__control">
+                      <textarea class="aura-textarea" id="contacto-mensaje" name="mensaje" rows="5" required minlength="20" maxlength="1000" placeholder="Cuéntanos qué ha pasado, con qué dispositivo y desde cuándo." aria-describedby="contacto-mensaje-ayuda contacto-mensaje-error"></textarea>
+                    </div>
+                    <p class="aura-field__help" id="contacto-mensaje-ayuda">Mínimo 20 caracteres. <span data-soporte-contador>0</span> de 1.000.</p>
+                    <p class="aura-field__error" id="contacto-mensaje-error"></p>
+                  </div>
+                </div>
+              </fieldset>
+
+              <!-- Casilla obligatoria: dentro de .aura-field, con su mensaje como hermano de la etiqueta (nunca dentro) -->
               <div class="aura-field">
-                <label class="aura-field__label" for="contacto-mensaje">Mensaje</label>
-                <div class="aura-field__control">
-                  <textarea class="aura-textarea" id="contacto-mensaje" name="mensaje" rows="5" maxlength="1000" placeholder="Cuéntanos qué ha pasado, con qué dispositivo y desde cuándo." aria-describedby="contacto-mensaje-ayuda contacto-mensaje-error"></textarea>
-                </div>
-                <p class="aura-field__help" id="contacto-mensaje-ayuda">Mínimo 20 caracteres. <span data-soporte-contador>0</span> de 1.000.</p>
-                <p class="aura-field__error" id="contacto-mensaje-error"></p>
-              </div>
-
-              <div class="aura-field">
-                <label class="aura-check">
-                  <input class="aura-check__input" type="checkbox" name="privacidad" aria-describedby="contacto-privacidad-error">
+                <label class="aura-check" for="contacto-privacidad">
+                  <input class="aura-check__input" id="contacto-privacidad" type="checkbox" name="privacidad" required aria-describedby="contacto-privacidad-error">
                   <span class="aura-check__box" aria-hidden="true"></span>
                   <span class="aura-check__label">He leído la <a href="legal.html#privacidad">Política de privacidad</a> y acepto que AURA use estos datos solo para responder a mi consulta</span>
                 </label>
                 <p class="aura-field__error" id="contacto-privacidad-error"></p>
               </div>
 
+              <!-- Confirmación (hidden hasta enviar): recibe el foco (tabindex="-1") para que el lector de pantalla la lea entera -->
               <div class="aura-alert aura-alert--ok" id="soporte-enviado" tabindex="-1" hidden>
                 <i class="bi bi-check-circle-fill" aria-hidden="true"></i>
                 <p class="aura-alert__title">Caso <span data-soporte-caso></span> registrado</p>
@@ -369,36 +430,41 @@
             </form>
           </div>
 
+          <!-- Ficha de la tienda: complementa el formulario (aside con nombre propio). La foto no lleva leyenda, así que
+               va en un contenedor sin semántica (no en <figure>) y su alt describe lo que se ve -->
           <aside class="aura-stack aura-stack--stretch soporte-tienda" aria-labelledby="tienda-titulo" style="--stack:1.25rem">
-            <figure class="aura-media aura-media--frame aura-media--fill m-0 soporte-tienda__foto" data-aura-reveal="scale">
+            <div class="aura-media aura-media--frame aura-media--fill m-0 soporte-tienda__foto" data-aura-reveal="scale">
               <img class="aura-img" src="../img/soporte-contacto.webp" data-slot="soporte-contacto" width="1600" height="1200" alt="Vista cenital de un especialista que atiende a un cliente junto a una mesa de madera clara con un auraPad expositor" loading="lazy" decoding="async">
-            </figure>
+            </div>
             <div class="aura-card">
               <div class="aura-stack" style="--stack:1.125rem">
                 <div class="aura-stack" style="--stack:.25rem">
                   <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">Visítanos</p>
                   <h3 class="aura-h4" id="tienda-titulo">AURA Store Gran Vía</h3>
                 </div>
-                <div class="aura-feature aura-feature--inline">
-                  <span class="aura-feature__icon"><i class="bi bi-geo-alt" aria-hidden="true"></i></span>
-                  <p class="aura-feature__title">Dirección</p>
-                  <p class="aura-feature__text">Gran Vía, 1976&nbsp;· 28013&nbsp;Madrid</p>
-                </div>
-                <div class="aura-feature aura-feature--inline">
-                  <span class="aura-feature__icon"><i class="bi bi-clock" aria-hidden="true"></i></span>
-                  <p class="aura-feature__title">Horario</p>
-                  <p class="aura-feature__text">Lunes a sábado, de 10:00 a 21:00. Domingos y festivos, de 11:00 a 20:00.</p>
-                </div>
-                <div class="aura-feature aura-feature--inline">
-                  <span class="aura-feature__icon"><i class="bi bi-telephone" aria-hidden="true"></i></span>
-                  <p class="aura-feature__title">Teléfono de demostración</p>
-                  <p class="aura-feature__text">+34&nbsp;000&nbsp;19&nbsp;76&nbsp;00&nbsp;· No marques: no contesta nadie.</p>
-                </div>
-                <div class="aura-feature aura-feature--inline">
-                  <span class="aura-feature__icon"><i class="bi bi-envelope" aria-hidden="true"></i></span>
-                  <p class="aura-feature__title">Correo</p>
-                  <p class="aura-feature__text">soporte@aura.example</p>
-                </div>
+                <!-- Datos de contacto de la tienda en <address>; el horario, en <time> (hora en formato máquina) -->
+                <address class="aura-stack mb-0" style="--stack:1.125rem">
+                  <div class="aura-feature aura-feature--inline">
+                    <span class="aura-feature__icon"><i class="bi bi-geo-alt" aria-hidden="true"></i></span>
+                    <p class="aura-feature__title">Dirección</p>
+                    <p class="aura-feature__text">Gran Vía, 1976&nbsp;· 28013&nbsp;Madrid</p>
+                  </div>
+                  <div class="aura-feature aura-feature--inline">
+                    <span class="aura-feature__icon"><i class="bi bi-clock" aria-hidden="true"></i></span>
+                    <p class="aura-feature__title">Horario</p>
+                    <p class="aura-feature__text">Lunes a sábado, de <time datetime="10:00">10:00</time> a <time datetime="21:00">21:00</time>. Domingos y festivos, de <time datetime="11:00">11:00</time> a <time datetime="20:00">20:00</time>.</p>
+                  </div>
+                  <div class="aura-feature aura-feature--inline">
+                    <span class="aura-feature__icon"><i class="bi bi-telephone" aria-hidden="true"></i></span>
+                    <p class="aura-feature__title">Teléfono de demostración</p>
+                    <p class="aura-feature__text">+34&nbsp;000&nbsp;19&nbsp;76&nbsp;00&nbsp;· No marques: no contesta nadie.</p>
+                  </div>
+                  <div class="aura-feature aura-feature--inline">
+                    <span class="aura-feature__icon"><i class="bi bi-envelope" aria-hidden="true"></i></span>
+                    <p class="aura-feature__title">Correo</p>
+                    <p class="aura-feature__text">soporte@aura.example</p>
+                  </div>
+                </address>
                 <p class="aura-caption aura-caption--muted">Dirección, teléfono y correo son ficticios: AURA es un proyecto de demostración.</p>
               </div>
             </div>
@@ -407,7 +473,7 @@
       </div>
     </section>
 
-    <!-- Letra pequeña: las cifras salen del catálogo (soporte.js) -->
+    <!-- Letra pequeña: notas numeradas (<ol>) con su enlace de vuelta; las cifras salen del catálogo (soporte.js) -->
     <section class="aura-section aura-section--tight aura-footnotes" aria-labelledby="notas-titulo">
       <div class="aura-container">
         <h2 class="visually-hidden" id="notas-titulo">Notas</h2>
@@ -421,8 +487,10 @@
 
   </main>
 
+  <!-- Pie global con migas de pan, generado por aura-core.js -->
   <aura-footer crumbs="Soporte"></aura-footer>
 
+  <!-- Scripts al final del cuerpo: Bootstrap, componentes de AURA y la lógica de esta página -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="../js/aura-ui.js"></script>
   <script src="../js/pages/soporte.js"></script>

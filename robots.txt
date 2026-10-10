@@ -1,0 +1,6 @@
+# AURA: todos los buscadores pueden rastrear el sitio.
+# Las páginas transaccionales (bolsa, pago, cuenta…) llevan <meta name="robots" content="noindex, follow">.
+User-agent: *
+Allow: /
+
+Sitemap: https://aura-lyart-beta.vercel.app/sitemap.xml

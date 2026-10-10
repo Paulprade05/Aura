@@ -1,12 +1,47 @@
 ﻿<!doctype html>
 <html lang="es" data-bs-theme="dark">
 <head>
+  <!-- Configuración técnica: codificación, ventana adaptable (con zonas seguras) y tema oscuro del navegador -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Comparar modelos — AURA</title>
-  <meta name="description" content="Compara los modelos de auraPhone, auraPad y auraBook frente a frente: chip, pantalla, cámaras, batería, capacidad, diseño y precio, con la opción de ver solo lo que cambia.">
   <meta name="theme-color" content="#000000">
+  <meta name="color-scheme" content="dark">
+
+  <!-- SEO: título y descripción únicos, autoría, palabras clave, indexación (se indexa y se siguen sus enlaces) y URL canónica -->
+  <title>Compara auraPhone, auraPad y auraBook modelo a modelo — AURA</title>
+  <meta name="description" content="Compara frente a frente los modelos de auraPhone, auraPad y auraBook: chip, pantalla, cámaras, batería, capacidad y precio, o mira solo lo que cambia.">
+  <meta name="author" content="Paulprade05">
+  <meta name="keywords" content="comparar modelos, comparativa, auraPhone, auraPad, auraBook, especificaciones, diferencias entre modelos, AURA">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aura-lyart-beta.vercel.app/html/comparar.html">
+
+  <!-- Redes sociales: Open Graph (Facebook, LinkedIn, WhatsApp…) y tarjeta grande de X/Twitter; URLs absolutas -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="AURA">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:title" content="Compara auraPhone, auraPad y auraBook modelo a modelo">
+  <meta property="og:description" content="Compara frente a frente los modelos de auraPhone, auraPad y auraBook: chip, pantalla, cámaras, batería, capacidad y precio, o mira solo lo que cambia.">
+  <meta property="og:url" content="https://aura-lyart-beta.vercel.app/html/comparar.html">
+  <meta property="og:image" content="https://aura-lyart-beta.vercel.app/img/og/og-aura.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Logotipo de AURA sobre fondo negro con un auraPad, un auraBook y un auraPhone Duo, y el lema «Lo mejor de AURA, en una sola tienda».">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Compara auraPhone, auraPad y auraBook modelo a modelo">
+  <meta name="twitter:description" content="Compara frente a frente los modelos de auraPhone, auraPad y auraBook: chip, pantalla, cámaras, batería, capacidad y precio, o mira solo lo que cambia.">
+  <meta name="twitter:image" content="https://aura-lyart-beta.vercel.app/img/og/og-aura.jpg">
+  <meta name="twitter:image:alt" content="Logotipo de AURA sobre fondo negro con un auraPad, un auraBook y un auraPhone Duo, y el lema «Lo mejor de AURA, en una sola tienda».">
+
+  <!-- Iconos: favicon (ICO y PNG), icono de la pantalla de inicio y manifiesto de la aplicación web -->
+  <link rel="icon" href="../favicon.ico" sizes="any">
   <link rel="icon" type="image/png" href="../img/aura.png">
+  <link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+  <link rel="manifest" href="../site.webmanifest">
+  <!-- Manifiesto: por file:// (doble clic) el navegador lo bloquearía por CORS con un error en la consola, así que ahí se retira -->
+  <script>(function () { if (location.protocol === 'file:') { var m = document.querySelector('link[rel="manifest"]'); if (m) { m.remove(); } } })();</script>
+
+  <!-- Estilos: fuentes Inter y Kanit, Bootstrap 5.3, Bootstrap Icons y hojas de AURA (sistema y página) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&family=Kanit:wght@500;600&display=swap" rel="stylesheet">
@@ -14,6 +49,8 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
   <link href="../css/aura.css" rel="stylesheet">
   <link href="../css/pages/comparar.css" rel="stylesheet">
+
+  <!-- Scripts: catálogo y núcleo de AURA, síncronos y en este orden (definen <aura-header> y <aura-footer> antes del cuerpo) -->
   <script src="../js/data.js"></script>
   <script src="../js/aura-core.js"></script>
 </head>
@@ -60,8 +97,8 @@
             <h2 class="aura-h2" id="cmp-specs-titulo">Frente a frente. Línea a línea.</h2>
           </div>
           <div class="cmp-toolbar__control" data-cmp-toolbar>
-            <label class="aura-check">
-              <input class="aura-check__input" type="checkbox" name="diferencias" data-cmp-diff aria-describedby="cmp-estado">
+            <label class="aura-check" for="cmp-diferencias">
+              <input class="aura-check__input" id="cmp-diferencias" type="checkbox" name="diferencias" data-cmp-diff aria-describedby="cmp-estado">
               <span class="aura-check__box" aria-hidden="true"></span>
               <span class="aura-check__label">Mostrar solo las diferencias</span>
             </label>

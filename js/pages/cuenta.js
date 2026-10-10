@@ -15,6 +15,8 @@
    - Seguridad: alta («Miembro desde…») y sesión (AURA.auth.user().creado /
      .remember / .desde); cerrar sesión (sin confirmación) y eliminar el ID de
      AURA (destructivo e irreversible → confirmación en una hoja).
+   - Fechas (pedido, alta, inicio de sesión) en <time datetime>, con el día
+     local que se ve escrito.
    - El doble envío lo impide AURA.ui.busy (sin banderas propias).
    ========================================================================== */
 (function () {
@@ -87,6 +89,32 @@
     return String(AURA.fmt.fecha(valor) || '').replace(/^\d+\s+de\s+/, '');
   }
 
+  /* Día local en formato máquina ('AAAA-MM-DD'), el mismo que se ve escrito:
+     un pedido de las 00:30 del 10 de octubre es del día 10, no del 9 (UTC). */
+  function isoDia(valor) {
+    return AURA.util && AURA.util.isoDate ? AURA.util.isoDate(valor) : '';
+  }
+
+  /* <time datetime="…">texto</time> (temario DIW, semántica): la fecha se lee
+     igual, pero buscadores y lectores la entienden. Sin datetime válido, solo
+     el texto. */
+  function tiempoHTML(texto, datetime) {
+    return datetime ? '<time datetime="' + esc(datetime) + '">' + esc(texto) + '</time>' : esc(texto);
+  }
+
+  /* El mismo <time> como nodos (para los textos que se pintan sin innerHTML):
+     «antes» + fecha + «después», dentro del elemento que se pasa. */
+  function pintarFecha(el, antes, texto, datetime, despues) {
+    el.textContent = texto && !datetime ? antes + texto + (despues || '') : '';
+    if (!texto || !datetime) { return; }
+    var t = document.createElement('time');
+    t.setAttribute('datetime', datetime);
+    t.textContent = texto;
+    el.appendChild(document.createTextNode(antes));
+    el.appendChild(t);
+    el.appendChild(document.createTextNode(despues || ''));
+  }
+
   /* ---- Cabecera y Seguridad --------------------------------------------- */
 
   function iniciales(u) {
@@ -104,9 +132,10 @@
     var campoEmail = document.getElementById('datos-email');
     if (campoEmail) { campoEmail.value = u.email; }
 
-    /* Alta: los ID creados antes de guardar la fecha no la tienen → sin fila. */
+    /* Alta: los ID creados antes de guardar la fecha no la tienen → sin fila.
+       «Miembro desde <time datetime="2026-10">octubre de 2026</time>.» */
     var miembro = mesAnio(u.creado);
-    alta.textContent = miembro ? 'Miembro desde ' + miembro + '.' : '';
+    pintarFecha(alta, 'Miembro desde ', miembro, isoDia(u.creado).slice(0, 7), '.');
     alta.hidden = !miembro;
 
     /* Sesión: mantenida en el dispositivo o solo en esta pestaña. */
@@ -116,7 +145,7 @@
       : 'Solo dura mientras tengas abierta esta pestaña. Al cerrarla, tendrás que volver a iniciar sesión; tu bolsa se conserva.';
     if (sesionIcono) { sesionIcono.className = 'bi ' + (mantenida ? 'bi-laptop' : 'bi-window'); }
     var desde = AURA.fmt.fecha(u.desde);
-    sesionDesde.textContent = desde ? 'Iniciada el ' + desde + '.' : '';
+    pintarFecha(sesionDesde, 'Iniciada el ', desde, isoDia(u.desde), '.');
     sesionDesde.hidden = !desde;
   }
 
@@ -303,10 +332,10 @@
     filas += fila('Total', AURA.fmt.eur(total), ' aura-summary__row--total');
 
     /* «Del 3 de octubre de 2026 · 3 artículos»: cada parte entera; si no
-       cabe, parte por el separador. */
+       cabe, parte por el separador. La fecha va en <time datetime> (día local). */
     var realizado = AURA.fmt.fecha(o.fecha);
-    var detalle = [realizado ? 'Del ' + realizado : '', unidades ? AURA.fmt.articulos(unidades) : '']
-      .filter(Boolean).map(function (s) { return '<span class="text-nowrap">' + esc(s) + '</span>'; }).join(' · ');
+    var detalle = [realizado ? 'Del ' + tiempoHTML(realizado, isoDia(o.fecha)) : '', unidades ? esc(AURA.fmt.articulos(unidades)) : '']
+      .filter(Boolean).map(function (s) { return '<span class="text-nowrap">' + s + '</span>'; }).join(' · ');
 
     return '<article class="aura-card cuenta-pedido" aria-labelledby="' + idTitulo + '"' +
         (i > 1 ? ' data-aura-reveal style="--i:' + Math.min(i - 2, 3) + '"' : '') + '>' +

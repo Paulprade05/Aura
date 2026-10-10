@@ -231,10 +231,24 @@
     }
   }
 
+  /** Título de la pestaña para la familia (temario DIW, SEO): 40–65 caracteres y
+      «… — AURA». Se queda con la primera variante que cabe en ese margen. */
+  function pageTitle(name) {
+    var options = [
+      'Comparar modelos de ' + name + ': especificaciones y precios — AURA',
+      'Comparar modelos de ' + name + ' frente a frente — AURA',
+      'Comparar modelos de ' + name + ' — AURA'
+    ];
+    for (var i = 0; i < options.length; i++) {
+      if (options[i].length >= 40 && options[i].length <= 65) { return options[i]; }
+    }
+    return options[options.length - 1];
+  }
+
   function paintFamilyTexts() {
     var fam = cat.family(state.family);
     if (!fam) { return; }
-    document.title = 'Compara los modelos de ' + fam.name + ' — AURA';
+    document.title = pageTitle(fam.name);
     if (el.lead) { el.lead.textContent = fam.description || fam.tagline || ''; }
     if (el.modelsTitle) { el.modelsTitle.textContent = 'Modelos de ' + fam.name; }
     if (el.familyTitle) { el.familyTitle.textContent = 'Conoce la familia ' + fam.name; }
@@ -346,7 +360,7 @@
       (rows.tagline ? '<p class="cmp-head__tagline">' + esc(p.tagline || '') + '</p>' : '') +
       (rows.status
         ? '<p class="aura-product-card__status cmp-head__status">' +
-            (a.text ? '<i class="bi bi-calendar-event" aria-hidden="true"></i><span>' + esc(a.text) + '</span>' : '') +
+            (a.text ? '<i class="bi bi-calendar-event" aria-hidden="true"></i><span>' + (a.html || esc(a.text)) + '</span>' : '') +
           '</p>'
         : '') +
       '<p class="cmp-head__price">' +
@@ -389,7 +403,7 @@
       var a = availability(p);
       return '<span class="cmp-cell__main aura-price aura-price--sm">Desde ' + esc(fmt.eur0(p.basePrice)) + '</span>' +
         '<span class="cmp-cell__more">o ' + esc(fmt.mes(p.basePrice)) + ' durante ' + MONTHS + '&nbsp;meses</span>' +
-        (a.text ? '<span class="cmp-cell__more cmp-cell__status">' + esc(a.text) + '</span>' : '');
+        (a.text ? '<span class="cmp-cell__more cmp-cell__status">' + (a.html || esc(a.text)) + '</span>' : '');
     }
     var v = specText(p, key);
     if (!v) { return '<span class="cmp-cell__main" aria-hidden="true">—</span><span class="visually-hidden">Sin dato</span>'; }
@@ -410,20 +424,20 @@
     var same = cols.length > 1 && keys.every(function (k) { return k === keys[0]; });
     var sameText = cols.length === 2 ? 'Igual en ambos' : 'Igual en todos';
     var quiet = !!(opts && opts.quiet) && !same;
-    return '<tr class="cmp-row' + (quiet ? ' cmp-row--quiet' : '') + '" role="row" data-key="' + esc(row.key) + '"' + (same ? ' data-same=""' : '') + '>' +
-      '<th class="cmp-row__label' + (quiet ? ' visually-hidden' : '') + '" role="rowheader" scope="row">' + esc(row.label || row.key) +
+    return '<tr class="cmp-row' + (quiet ? ' cmp-row--quiet' : '') + '" data-key="' + esc(row.key) + '"' + (same ? ' data-same=""' : '') + '>' +
+      '<th class="cmp-row__label' + (quiet ? ' visually-hidden' : '') + '" scope="row">' + esc(row.label || row.key) +
         (same ? ' <span class="aura-badge aura-badge--neutral aura-badge--mono cmp-row__same">' + sameText + '</span>' : '') +
       '</th>' +
-      cols.map(function (p) { return '<td class="cmp-cell" role="cell">' + cellHTML(p, row.key) + '</td>'; }).join('') +
+      cols.map(function (p) { return '<td class="cmp-cell">' + cellHTML(p, row.key) + '</td>'; }).join('') +
     '</tr>';
   }
 
   function actionsRowHTML(cols) {
-    return '<tr class="cmp-row cmp-row--actions" role="row">' +
-      '<th class="visually-hidden" role="rowheader" scope="row">Comprar</th>' +
+    return '<tr class="cmp-row cmp-row--actions">' +
+      '<th class="visually-hidden" scope="row">Comprar</th>' +
       cols.map(function (p) {
         var cta = cat.cta(p);
-        return '<td class="cmp-cell" role="cell"><a class="aura-btn aura-btn--secondary" href="' + esc(cat.url(p)) + '" aria-label="' + esc(cta + ' ' + p.name) + '">' + esc(cta) + '</a></td>';
+        return '<td class="cmp-cell"><a class="aura-btn aura-btn--secondary" href="' + esc(cat.url(p)) + '" aria-label="' + esc(cta + ' ' + p.name) + '">' + esc(cta) + '</a></td>';
       }).join('') +
     '</tr>';
   }
@@ -434,6 +448,9 @@
       var gid = 'cmp-grupo-' + b.def.id;
       var keys = b.rows.map(function (r) { return r.key; });
       var title = b.def.title(keys);
+      /* <caption> (temario DIW, tablas): da nombre a la tabla y dice qué modelos
+         compara; a la vista ya la titula el h3 del grupo (.visually-hidden). */
+      var caption = title + ': comparativa de ' + listES(cols.map(function (p) { return p.name; }));
       var body = b.rows.map(function (r) {
         return rowHTML(r, cols, { quiet: b.rows.length === 1 && norm(r.label || r.key) === norm(title) });
       }).join('') +
@@ -443,12 +460,17 @@
           '<span class="aura-feature__icon" aria-hidden="true"><i class="bi ' + b.def.icon + '"></i></span>' +
           '<h3 class="aura-h4 cmp-group__title" id="' + gid + '">' + esc(title) + '</h3>' +
         '</div>' +
-        '<table class="cmp-table" role="table" aria-labelledby="' + gid + '">' +
-          '<thead class="visually-hidden" role="rowgroup"><tr role="row">' +
-            '<th role="columnheader" scope="col">Característica</th>' +
-            cols.map(function (p) { return '<th role="columnheader" scope="col">' + esc(p.name) + '</th>'; }).join('') +
+        /* Tabla nativa, sin roles ARIA (temario DIW: HTML nativo y sin roles
+           redundantes; el validador del W3C los da como error en <tr>, <th> y
+           <td>). Aunque el CSS la maquete en rejilla (display: block / grid),
+           Edge la sigue exponiendo como tabla: filas, cabeceras y celdas. */
+        '<table class="cmp-table">' +
+          '<caption class="visually-hidden">' + esc(caption) + '</caption>' +
+          '<thead class="visually-hidden"><tr>' +
+            '<th scope="col">Característica</th>' +
+            cols.map(function (p) { return '<th scope="col">' + esc(p.name) + '</th>'; }).join('') +
           '</tr></thead>' +
-          '<tbody role="rowgroup">' + body + '</tbody>' +
+          '<tbody>' + body + '</tbody>' +
         '</table>' +
       '</section>';
     }).join('');

@@ -1,12 +1,47 @@
 ﻿<!doctype html>
 <html lang="es" data-bs-theme="dark">
 <head>
+  <!-- Configuración técnica: codificación, ventana adaptable (con zonas seguras) y tema oscuro del navegador -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>AURA Trade In — AURA</title>
-  <meta name="description" content="Entrega tu dispositivo anterior con AURA Trade In: calcula al instante su valor, aplícalo como descuento en tu nuevo auraPhone, auraPad o auraBook y le daremos una segunda vida o lo reciclaremos con responsabilidad.">
   <meta name="theme-color" content="#000000">
+  <meta name="color-scheme" content="dark">
+
+  <!-- SEO: título y descripción únicos, autoría, palabras clave, indexación (se indexa y se siguen sus enlaces) y URL canónica -->
+  <title>Trade In: entrega tu dispositivo y ahorra en uno nuevo — AURA</title>
+  <meta name="description" content="Calcula al instante cuánto vale tu dispositivo con AURA Trade In y descuéntalo de tu nuevo auraPhone, auraPad o auraBook. Si no tiene valor, lo reciclamos.">
+  <meta name="author" content="Paulprade05">
+  <meta name="keywords" content="AURA Trade In, entregar dispositivo, valorar móvil, tasación, descuento, reciclaje, segunda vida, AURA">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aura-lyart-beta.vercel.app/html/trade-in.html">
+
+  <!-- Redes sociales: Open Graph (Facebook, LinkedIn, WhatsApp…) y tarjeta grande de X/Twitter; URLs absolutas -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="AURA">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:title" content="Trade In: entrega tu dispositivo y ahorra en uno nuevo">
+  <meta property="og:description" content="Calcula al instante cuánto vale tu dispositivo con AURA Trade In y descuéntalo de tu nuevo auraPhone, auraPad o auraBook. Si no tiene valor, lo reciclamos.">
+  <meta property="og:url" content="https://aura-lyart-beta.vercel.app/html/trade-in.html">
+  <meta property="og:image" content="https://aura-lyart-beta.vercel.app/img/og/og-trade-in.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cámara triple de un auraPhone dentro de su caja, con el logotipo de AURA y el titular «Tu dispositivo anterior vale más de lo que crees».">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Trade In: entrega tu dispositivo y ahorra en uno nuevo">
+  <meta name="twitter:description" content="Calcula al instante cuánto vale tu dispositivo con AURA Trade In y descuéntalo de tu nuevo auraPhone, auraPad o auraBook. Si no tiene valor, lo reciclamos.">
+  <meta name="twitter:image" content="https://aura-lyart-beta.vercel.app/img/og/og-trade-in.jpg">
+  <meta name="twitter:image:alt" content="Cámara triple de un auraPhone dentro de su caja, con el logotipo de AURA y el titular «Tu dispositivo anterior vale más de lo que crees».">
+
+  <!-- Iconos: favicon (ICO y PNG), icono de la pantalla de inicio y manifiesto de la aplicación web -->
+  <link rel="icon" href="../favicon.ico" sizes="any">
   <link rel="icon" type="image/png" href="../img/aura.png">
+  <link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+  <link rel="manifest" href="../site.webmanifest">
+  <!-- Manifiesto: por file:// (doble clic) el navegador lo bloquearía por CORS con un error en la consola, así que ahí se retira -->
+  <script>(function () { if (location.protocol === 'file:') { var m = document.querySelector('link[rel="manifest"]'); if (m) { m.remove(); } } })();</script>
+
+  <!-- Estilos: fuentes Inter y Kanit, Bootstrap 5.3, Bootstrap Icons y hojas de AURA (sistema y página) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&family=Kanit:wght@500;600&display=swap" rel="stylesheet">
@@ -14,16 +49,24 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
   <link href="../css/aura.css" rel="stylesheet">
   <link href="../css/pages/trade-in.css" rel="stylesheet">
+
+  <!-- Scripts: catálogo y núcleo de AURA, síncronos y en este orden (definen <aura-header> y <aura-footer> antes del cuerpo) -->
   <script src="../js/data.js"></script>
   <script src="../js/aura-core.js"></script>
 </head>
 <body class="has-buybar">
+  <!-- Enlace «Saltar al contenido»: primer foco con el teclado (solo se ve al recibirlo) y lleva directo al <main> -->
   <a class="aura-skip" href="#contenido">Saltar al contenido</a>
+  <!-- Cabecera común (logotipo, navegación principal, buscador, cuenta y bolsa): la pinta aura-core.js.
+       active="tradein" marca «Trade In»; ribbon="off" porque la cinta solo anuncia esta misma página -->
   <aura-header active="tradein" ribbon="off"></aura-header>
 
+  <!-- Contenido principal: el único <main> de la página -->
   <main id="contenido" class="ti">
 
-    <!-- Héroe (bloque Trade In del prototipo de inicio) -->
+    <!-- ============ Héroe (bloque Trade In del prototipo de inicio) ============
+         El h1 de la página: trade-in.js escribe la cifra desde el catálogo. La foto es la imagen principal:
+         sin carga diferida y con prioridad alta; sin leyenda, así que va sin <figure>. -->
     <section class="aura-hero aura-hero--split aura-hero--band ti-hero" aria-labelledby="ti-titulo">
       <div class="aura-container aura-hero__inner">
         <div class="aura-hero__copy">
@@ -40,7 +83,8 @@
       </div>
     </section>
 
-    <!-- Calculadora -->
+    <!-- ============ Calculadora ============
+         Avisos (crédito activo o calculadora sin datos) y el formulario: tres pasos y el resultado en vivo. -->
     <section class="aura-section ti-calc-section" id="calculadora" aria-labelledby="calc-titulo">
       <div class="aura-container">
         <div class="aura-section-head">
@@ -66,12 +110,16 @@
           <div class="aura-empty__actions"><a class="aura-btn aura-btn--secondary" href="soporte.html#contacto">Pedir la recogida gratuita</a></div>
         </div>
 
+        <!-- Formulario de la calculadora: cada pregunta es un <fieldset> de radios con su <legend> (el número es decorativo).
+             Modelo y estado llevan required (los pinta trade-in.js); novalidate porque AURA.ui.form dice, junto al paso,
+             qué falta. El resultado es un aside con una región viva que anuncia la cifra final, no cada paso del contador. -->
         <form class="aura-layout aura-layout--aside ti-calc" id="ti-form" novalidate>
           <div class="ti-steps" data-ti-steps>
 
+            <!-- El fieldset ya agrupa y nombra estos radios: el segmentado no lleva role="radiogroup" (sería redundante) -->
             <fieldset class="aura-fieldset ti-step" data-ti-step="familia">
               <legend class="aura-legend ti-step__legend"><span class="ti-step__num" aria-hidden="true">1</span>¿Qué vas a entregar?</legend>
-              <div class="aura-segmented ti-families" role="radiogroup" aria-label="Tipo de dispositivo" data-ti-families>
+              <div class="aura-segmented ti-families" data-ti-families>
                 <label class="aura-segmented__item"><input type="radio" name="familia" value="auraphone" checked><span>auraPhone</span></label>
                 <label class="aura-segmented__item"><input type="radio" name="familia" value="aurapad"><span>auraPad</span></label>
                 <label class="aura-segmented__item"><input type="radio" name="familia" value="aurabook"><span>auraBook</span></label>
@@ -117,7 +165,8 @@
       </div>
     </section>
 
-    <!-- Cómo funciona -->
+    <!-- ============ Cómo funciona ============
+         Pasos en orden: <ol>. El «01», «02», «03» repite la numeración de la lista y se oculta al lector (aria-hidden). -->
     <section class="aura-section aura-section--band" id="como-funciona" aria-labelledby="como-titulo">
       <div class="aura-container">
         <div class="aura-section-head">
@@ -128,19 +177,19 @@
         <ol class="aura-grid aura-grid--3 ti-how">
           <li class="aura-feature aura-feature--card" data-aura-reveal>
             <span class="aura-feature__icon"><i class="bi bi-calculator" aria-hidden="true"></i></span>
-            <p class="aura-feature__value">01</p>
+            <p class="aura-feature__value" aria-hidden="true">01</p>
             <h3 class="aura-feature__title">Valóralo aquí</h3>
             <p class="aura-feature__text">Elige tu dispositivo y su estado. Verás al instante cuánto vale, sin registrarte y sin esperas.</p>
           </li>
           <li class="aura-feature aura-feature--card" data-aura-reveal style="--i:1">
             <span class="aura-feature__icon"><i class="bi bi-bag-check" aria-hidden="true"></i></span>
-            <p class="aura-feature__value">02</p>
+            <p class="aura-feature__value" aria-hidden="true">02</p>
             <h3 class="aura-feature__title">Descuéntalo de tu compra</h3>
             <p class="aura-feature__text">Aplica el crédito y se restará en la bolsa al tramitar el pedido de tu nuevo auraPhone, auraPad o auraBook.</p>
           </li>
           <li class="aura-feature aura-feature--card" data-aura-reveal style="--i:2">
             <span class="aura-feature__icon"><i class="bi bi-box-seam" aria-hidden="true"></i></span>
-            <p class="aura-feature__value">03</p>
+            <p class="aura-feature__value" aria-hidden="true">03</p>
             <h3 class="aura-feature__title">Entrégalo sin moverte</h3>
             <p class="aura-feature__text">Cuando recibas tu nuevo AURA, un mensajero recoge el anterior en casa, con la caja de envío incluida. Lo revisamos y confirmamos el valor.</p>
           </li>
@@ -148,7 +197,8 @@
       </div>
     </section>
 
-    <!-- Compromiso medioambiental -->
+    <!-- ============ Compromiso medioambiental ============
+         La foto lleva leyenda, así que va en <figure> con <figcaption>; las cifras, en una lista. -->
     <section class="aura-section" id="planeta" aria-labelledby="planeta-titulo">
       <div class="aura-container">
         <div class="aura-split aura-split--reverse">
@@ -179,7 +229,8 @@
       </div>
     </section>
 
-    <!-- Preguntas frecuentes -->
+    <!-- ============ Preguntas frecuentes ============
+         Acordeón nativo con <details>/<summary> (teclado y lector sin JS); name="ti-faq" deja una sola abierta. -->
     <section class="aura-section aura-section--band" id="preguntas" aria-labelledby="faq-titulo">
       <div class="aura-container aura-container--narrow">
         <div class="aura-section-head">
@@ -234,7 +285,8 @@
       </div>
     </section>
 
-    <!-- Siguiente paso -->
+    <!-- ============ Siguiente paso ============
+         Tarjetas de familia de la base (AURA.html.familyCard, data-aura-family-cards): enlazan a cada gama. -->
     <section class="aura-section" aria-labelledby="ti-elige-titulo">
       <div class="aura-container">
         <div class="aura-section-head aura-section-head--split">
@@ -248,7 +300,8 @@
       </div>
     </section>
 
-    <!-- Notas al pie -->
+    <!-- ============ Notas al pie ============
+         Numeradas (con llamada y «volver», las escribe trade-in.js con las cifras del catálogo) y letra pequeña general. -->
     <section class="aura-section aura-section--tight aura-footnotes" aria-labelledby="ti-notas-titulo">
       <div class="aura-container">
         <h2 class="visually-hidden" id="ti-notas-titulo">Notas</h2>
@@ -263,7 +316,8 @@
       </div>
     </section>
 
-    <!-- Barra de acción en móvil: la misma acción que el resumen, a mano mientras eliges -->
+    <!-- Barra de acción en móvil: la misma acción que el resumen, a mano mientras eliges.
+         Está fuera del formulario: form="ti-form" hace que su botón lo envíe igual (y pase por la misma validación). -->
     <div class="aura-buybar is-hidden ti-buybar" data-ti-buybar>
       <div class="aura-buybar__info">
         <p class="aura-buybar__name" data-ti-bar-name>Tu valor estimado</p>
@@ -274,8 +328,10 @@
 
   </main>
 
+  <!-- Pie común (migas de pan, directorio y avisos): lo pinta aura-core.js; crumbs da la última miga -->
   <aura-footer crumbs="AURA Trade In"></aura-footer>
 
+  <!-- Scripts al final del <body>, cuando el HTML ya existe: Bootstrap, componentes de AURA y la lógica de esta página -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="../js/aura-ui.js"></script>
   <script src="../js/pages/trade-in.js"></script>
