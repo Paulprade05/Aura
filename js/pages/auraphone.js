@@ -5,6 +5,8 @@
 
    1. Precios, disponibilidad, cifras y topes pintados desde el catálogo
       (data.js): ninguna cifra de precio, fecha ni estado escrita a mano.
+   1 bis. Capítulos: acabados y «Desde» de los 18 Pro, exhibición de color
+      con la foto real de cada acabado y autonomía de cada modelo.
    2. Notas al pie numeradas según las que se ven.
    3. Aviso del auraPhone Duo mientras está «Próximamente» (hoja + formulario
       con validación en línea + avisos con «Deshacer»). Se guarda solo en
@@ -173,6 +175,99 @@
     }
   }
 
+
+  /* ------------------------------------------------------------------------
+     1 bis. Capítulos de la página
+     ------------------------------------------------------------------------ */
+
+  var NUMEROS = ['cero', 'uno', 'dos', 'tres', 'cuatro', 'cinco', 'seis', 'siete', 'ocho', 'nueve', 'diez'];
+
+  /* ['negro', 'plata', 'azul glacial'] → «negro, plata y azul glacial» */
+  function enumerar(nombres) {
+    if (nombres.length < 2) { return nombres.join(''); }
+    return nombres.slice(0, -1).join(', ') + ' y ' + nombres[nombres.length - 1];
+  }
+
+  /* Acabados de los 18 Pro (escena y titular de «Diseño»), en el orden del catálogo. */
+  var pro = cat.product('auraphone-18-pro');
+  if (pro && Array.isArray(pro.colors) && pro.colors.length) {
+    pintar('acabados-texto', enumerar(pro.colors.map(function (c) { return String(c.name || '').toLowerCase(); })));
+    pintar('acabados-num', NUMEROS[pro.colors.length] || String(pro.colors.length));
+  }
+
+  /* «Desde …» del cierre de la escena: el precio base más bajo de los modelos que no son el Duo. */
+  var minimoPro = productos.reduce(function (min, p) {
+    var precio = Number(p.basePrice) || 0;
+    return p.id !== DUO_ID && precio > 0 && (min === null || precio < min) ? precio : min;
+  }, null);
+  pintar('desde-pro', minimoPro !== null ? 'Desde ' + fmt.eur0(minimoPro) : '');
+
+  /* Exhibición de color («Diseño»): los acabados del 18 Pro y del 18 Pro Max
+     (mismo diseño y mismos colores). Las muestras salen del catálogo y la foto
+     de cada una también (AURA.catalog.image: imageColor e imageVariants de
+     data.js, con su alt): la del 18 Pro si la tiene y, si no, la del 18 Pro
+     Max (así el burdeos enseña el Pro Max burdeos). Un color sin foto en
+     ninguno de los dos enseña la base del 18 Pro y el nombre lo dice
+     («Verde · Imagen en Negro»). La base (AURA.ui.colorway) hace el fundido
+     cruzado y el aria-live del nombre. */
+  var expo = one('[data-ap-colorway]');
+  var expoP = expo ? cat.product(expo.getAttribute('data-ap-colorway')) : null;
+  var muestras = expo ? one('.aura-swatches', expo) : null;
+  if (expo && expoP && muestras && ui && typeof ui.colorway === 'function' && typeof cat.image === 'function' && Array.isArray(expoP.colors) && expoP.colors.length) {
+    var modelosExpo = [expoP].concat(productos.filter(function (p) { return p.id !== expoP.id && p.id !== DUO_ID; }));
+    var base = cat.image(expoP);
+    /* Foto que enseña de verdad ese acabado: { slot, fallback, alt } o null. */
+    var fotoDe = function (colorId) {
+      for (var i = 0; i < modelosExpo.length; i++) {
+        var info = cat.image(modelosExpo[i], colorId);
+        if (info.slot && info.exact && (info.fallback || (info.color && info.color.id === colorId))) { return info; }
+      }
+      return null;
+    };
+    var sinFoto = {};
+    var grupo = 'auraphone-acabado';
+    var elegido = expo.getAttribute('data-color');
+    if (!expoP.colors.some(function (c) { return c.id === elegido; })) { elegido = expoP.colors[0].id; }
+    muestras.innerHTML = expoP.colors.map(function (c) {
+      var foto = fotoDe(c.id);
+      if (!foto) { sinFoto[c.id] = true; foto = base; }
+      return '<label class="aura-swatch" style="--swatch:' + esc(c.hex || '#888') + '">' +
+        '<input class="aura-swatch__input" type="radio" name="' + grupo + '" value="' + esc(c.id) + '"' +
+        ' data-slot="' + esc(foto.slot) + '" data-fallback="' + esc(foto.fallback || base.slot) + '" data-alt="' + esc(foto.alt) + '"' +
+        (c.id === elegido ? ' checked' : '') + '>' +
+        '<span class="aura-swatch__dot" aria-hidden="true"></span>' +
+        '<span class="visually-hidden">' + esc(c.name) + '</span></label>';
+    }).join('');
+    expo.addEventListener('aura:colorway', function (e) {
+      var d = e.detail || {};
+      var nombre = one('.aura-colorway__name', expo);
+      if (!nombre || !sinFoto[d.colorId] || !base.color || one('.aura-colorway__note', nombre)) { return; }
+      var nota = document.createElement('span');
+      nota.className = 'aura-colorway__note';
+      nota.textContent = ' · Imagen en ' + base.color.name;
+      nombre.appendChild(nota);
+    });
+    ui.colorway(expo);
+  }
+
+  /* Autonomía («Batería»): una cifra por modelo, sacada de specs.bateria
+     («Hasta 44 h de vídeo · …»), en el orden de la gama. */
+  var autonomia = one('[data-ap-autonomia]');
+  if (autonomia) {
+    var horas = productos.map(function (p) {
+      var m = /Hasta\s+(\d+(?:,\d+)?)\s*h\b/i.exec(String((p.specs || {}).bateria || ''));
+      return m ? { valor: m[1], nombre: p.name } : null;
+    }).filter(Boolean);
+    if (horas.length) {
+      autonomia.innerHTML = horas.map(function (h, i) {
+        return '<li class="aura-stat aura-stat--lg" data-aura-reveal="stat" style="--i:' + i + '">' +
+          '<p class="aura-stat__pre">Hasta</p>' +
+          '<p class="aura-stat__value">' + esc(h.valor) + '<span class="aura-stat__unit"> h</span></p>' +
+          '<p class="aura-stat__label">de vídeo en el ' + esc(h.nombre) + '</p></li>';
+      }).join('');
+      autonomia.hidden = false;
+    }
+  }
 
 
   /* ------------------------------------------------------------------------

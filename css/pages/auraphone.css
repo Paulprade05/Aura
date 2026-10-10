@@ -9,29 +9,15 @@
    pliega. Y sigue»); dentro de cada una manda el equilibrado de la clase. */
 .auraphone-frases > span { display: block; }
 
-/* Foto del héroe: encuadre del módulo de cámaras. La foto es la trasera
-   entera del teléfono (ya sin logotipo: retocada); se amplía al doble desde
-   arriba, de modo que la triple cámara protagoniza el héroe como en el
-   prototipo (el alt lo describe así), y el borde inferior del marco se funde
-   con el negro, como el resto de las fotos de héroe. El halo de
-   .aura-media--halo queda detrás. Es un encuadre de ESTA foto: si se cambia
-   auraphone-hero.webp, revisa este bloque y el alt. */
-.auraphone-heroe__foto {
-  aspect-ratio: 4 / 3;
-  -webkit-mask-image: var(--photo-feather-y);
-  mask-image: var(--photo-feather-y);
-}
-.auraphone-heroe__foto > .aura-img,
-.auraphone-heroe__foto > .aura-slot {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+/* Foto del héroe (centrado, debajo del titular): el auraPhone Duo abierto es
+   apaisado y ocupa la franja central de su foto 4:3, así que se recorta a
+   16:9 con el foco en el aparato; el resto es negro. Es un encuadre de ESTA
+   foto (inicio-hero-auraphone.webp): si se cambia, revisa este bloque y el alt. */
+.auraphone-heroe .aura-hero__media > .aura-img {
+  --photo-focus: 50% 42%;
+  aspect-ratio: 16 / 9;
+  height: auto;
   object-fit: cover;
-}
-.auraphone-heroe__foto > .aura-img {
-  transform: scale(2);
-  transform-origin: 50% 0;
 }
 
 /* Disponibilidad del auraPhone Duo («Próximamente · Reserva a partir del…»):
@@ -85,3 +71,90 @@
 
 /* Hoja del aviso: «Cancelar el aviso» centrado bajo el botón principal */
 .auraphone-cancelar { justify-self: center; }
+
+/* --------------------------------------------------------------------------
+   Capítulos (diseño, pantalla, cámaras, rendimiento, batería…): solo el
+   ritmo vertical entre las piezas de la base, el encuadre de las fotos, las
+   columnas de las cifras y dónde van los textos de la escena. Las piezas
+   (escena con scroll, exhibición de color, cifras --lg, galería, teselas)
+   son de aura.css.
+   -------------------------------------------------------------------------- */
+
+/* Exhibición de color: la foto, protagonista y centrada, bajo el titular del
+   capítulo; el bloque de ingeniería, separado por el mismo aire que una
+   sección compacta. */
+.auraphone-colores { margin-inline: auto; }
+/* En las fotos de producto el teléfono ocupa el centro y deja mucho negro
+   alrededor: la exhibición las recorta a 16:10 (sin el relleno de la
+   galería) y crece hasta 60 rem, así el aparato manda en el capítulo. */
+.auraphone-colores > .aura-gallery {
+  max-width: min(100%, 60rem);
+  aspect-ratio: 16 / 10;
+  padding: 0;
+}
+.auraphone-colores > .aura-gallery > :is(.aura-img, .aura-slot) { object-fit: cover; }
+.auraphone-bloque { margin-top: clamp(3.5rem, 8vw, 6.5rem); }
+
+/* Foto protagonista con leyenda (cámaras, chip): panorámica 16:9 dentro de
+   su marco; el encuadre lo da --photo-focus (por defecto, el centro). */
+.auraphone-figura > .aura-img {
+  aspect-ratio: 16 / 9;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Cifras grandes en fila bajo la foto protagonista */
+.auraphone-cifras-fila { margin-top: clamp(2.5rem, 5vw, 4rem); }
+
+/* Cifras grandes dentro de la columna de texto de un bloque texto + imagen.
+   La columna es el contenedor (consulta en rem: sigue al tamaño de letra) y
+   decide las columnas sin que ninguna cifra quede sola en su fila: una
+   debajo de otra si no caben, dos en fila desde 18 rem y tres desde 26 rem
+   (la cifra más ancha, «3.000», cabe en la mitad de 18 rem; por eso su
+   unidad va en el texto de debajo). */
+.auraphone-copy { container: auraphone-copy / inline-size; }
+.auraphone-stats-lg {
+  justify-self: stretch;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.5rem clamp(1.25rem, 3vw, 2rem);
+  margin-top: .75rem;
+}
+@container auraphone-copy (min-width: 18rem) {
+  .auraphone-stats-lg:has(> :last-child:nth-child(2)) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@container auraphone-copy (min-width: 26rem) {
+  .auraphone-stats-lg:has(> :last-child:nth-child(3)) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+/* Galería de fotos de ejemplo: subtítulo del capítulo con aire por encima */
+.auraphone-galeria { margin-top: clamp(4rem, 9vw, 7rem); }
+.auraphone-galeria > .aura-section-head { margin-bottom: clamp(1.5rem, 3vw, 2.5rem); }
+
+/* Escena del auraPhone 18 Pro (componente de la base, «contain» y apoyada
+   abajo). Los textos van a las zonas tranquilas de los fotogramas
+   (img/seq/auraphone-intro/seq.json):
+   - En ventanas más altas que 3:2 (tabletas, portátiles de 4:3) el fotograma
+     deja una franja negra arriba: todos los textos suben a esa franja en lugar
+     de quedar sobre la meseta de cámaras. Hasta 5:4 la base ya los pone en
+     una sola columna; aquí, con su protección desde arriba.
+   - En pantallas anchas, el tramo 2 (la cámara se aleja) va arriba a la
+     izquierda, la única zona sin teléfono en esos fotogramas.
+   - La protección de la columna izquierda es algo más densa que la de la
+     base: el aluminio claro de la trasera pasa muy cerca del texto.
+   En el teléfono (fotogramas verticales de m/) manda la colocación de la base. */
+@media screen and (prefers-reduced-motion: no-preference) and (min-width: 768px) and (max-aspect-ratio: 3/2) {
+  .aura-js .auraphone-escena.aura-scrub:not(.is-static) .aura-scrub__text[data-pos] { align-content: start; }
+}
+@media screen and (prefers-reduced-motion: no-preference) and (min-width: 768px) {
+  .aura-js .auraphone-escena:not(.is-static) .auraphone-escena__alto { align-content: start; }
+}
+@media screen and (prefers-reduced-motion: no-preference) and (prefers-reduced-transparency: no-preference) and (prefers-contrast: no-preference) and (min-width: 768px) {
+  .aura-js .auraphone-escena:not(.is-static) .aura-scrub__text[data-pos="left"]::before {
+    background: linear-gradient(to right, rgba(0, 0, 0, .88) 0%, rgba(0, 0, 0, .66) 40%, transparent 74%);
+  }
+}
+@media screen and (prefers-reduced-motion: no-preference) and (prefers-reduced-transparency: no-preference) and (prefers-contrast: no-preference) and (min-width: 768px) and (max-aspect-ratio: 5/4) {
+  .aura-js .auraphone-escena.aura-scrub:not(.is-static) .aura-scrub__text[data-pos]::before {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, .88) 0%, rgba(0, 0, 0, .55) 38%, transparent 70%);
+  }
+}

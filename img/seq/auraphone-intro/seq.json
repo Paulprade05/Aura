@@ -1,0 +1,35 @@
+{
+ "frames": 120,
+ "width": 1600,
+ "height": 900,
+ "pattern": "f-%04d.webp",
+ "mobile": true,
+ "mobileWidth": 640,
+ "mobileHeight": 1136,
+ "fondo": "#000",
+ "fuente": "Foto de jiale MA en Pexels (px:36503100), logotipo borrado; movimiento de cámara y barrido de luz generados por código",
+ "momentos": [
+  {
+   "desde": 1,
+   "hasta": 30,
+   "ve": "Macro de la meseta de cámaras (tres objetivos, flash, micrófono), luz lateral que sube; el cuerpo se pierde en negro hacia la izquierda"
+  },
+  {
+   "desde": 30,
+   "hasta": 75,
+   "ve": "La cámara se aleja y gira un poco; una banda de luz recorre el cristal esmerilado de la trasera (máximo hacia f60–70)"
+  },
+  {
+   "desde": 75,
+   "hasta": 120,
+   "ve": "auraPhone entero en diagonal a la derecha (x≈37–92 %), quieto al final"
+  }
+ ],
+ "zonasTranquilas": {
+  "inicio": "arriba (y<10 %) y tercio izquierdo (x<16 %)",
+  "medio": "esquina superior izquierda (x<35 %, y<35 %)",
+  "final": "izquierda (x<36 %)"
+ },
+ "estaticoRecomendado": "f-0120.webp",
+ "mobileNota": "m/ en vertical (640×1136, 120 fotogramas): misma foto y mismo recorrido de cámara, encuadrado para el teléfono (la meseta arriba al principio, el teléfono casi en vertical al final) y con el pie fundido a negro para los textos. Generado con scratchpad/ap4/tools/auraphone-vertical.mjs --sa=0.44 --oxa=330 --oya=360 --oyb=390 y encode-m.mjs (calidad 70)."
+}

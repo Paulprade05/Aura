@@ -1,6 +1,8 @@
 /* ==========================================================================
    AURA — auraPad (assets/css/pages/aurapad.css)
-   Solo lo propio de la página; todo lo demás es del sistema (aura.css).
+   Solo lo propio de la página; todo lo demás es del sistema (aura.css): la
+   escena con scroll, las exhibiciones de color, las cifras destacadas, los
+   bloques texto + imagen, el carrusel y las hojas.
    ========================================================================== */
 
 /* Las teselas de una misma fila (accesorios y «Hecho para crear») usan
@@ -19,4 +21,56 @@
 .aurapad-compat > .bi {
   flex: none;
   line-height: inherit;
+}
+
+/* Diseño: el canto de la tableta como una franja panorámica. La foto (4:3,
+   casi toda negra) se recorta a lo ancho y se funde con el negro por los
+   lados, sin marco: es un aparato sobre negro puro, como en el héroe. La
+   leyenda va debajo, centrada, en el gris de las leyendas. */
+.aurapad-canto {
+  display: grid;
+  gap: 1rem;
+  margin: clamp(.5rem, 2vw, 1.5rem) 0 0;
+  text-align: center;
+}
+.aurapad-canto > .aura-img {
+  aspect-ratio: 4 / 1;
+  object-fit: cover;
+  -webkit-mask-image: var(--photo-feather-x);
+  mask-image: var(--photo-feather-x);
+}
+.aurapad-canto > .aura-caption {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+/* Colores: dos exhibiciones (Pro y Air) en columnas, cada una con el nombre de
+   su línea encima, centrado como la propia exhibición. */
+.aurapad-colors {
+  --gap: clamp(2.5rem, 5vw, 4rem);
+  margin-top: clamp(3.5rem, 8vw, 6rem);
+}
+.aurapad-colors__item {
+  display: grid;
+  justify-items: center;
+  align-content: start;
+  gap: clamp(.75rem, 2vw, 1.25rem);
+  min-width: 0;
+  text-align: center;
+}
+.aurapad-colors__item > .aura-colorway { width: 100%; }
+
+/* Accesorios: tres teselas en fila desde 992 px. Entre 768 y 991 px tres
+   columnas quedarían en ~230 px (foto diminuta y texto en columna estrecha):
+   ahí van dos arriba y la tercera a lo ancho, con el texto a la izquierda y la
+   foto a la derecha. Por debajo de 768 px, una columna (la base). */
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .aurapad-acc { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .aurapad-acc > .aura-tile:last-child {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: center;
+  }
+  .aurapad-acc > .aura-tile:last-child > .aura-tile__media { margin-top: 0; }
 }

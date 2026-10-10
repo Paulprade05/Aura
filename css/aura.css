@@ -15,6 +15,8 @@
         5.4 Formularios
         5.5 Tienda
         5.6 Carrusel, acordeón, imagen y hueco, pie
+        5.7 Páginas de producto (escena con scroll .aura-scrub, exhibición de
+            color .aura-colorway, cifra destacada .aura-stat--lg, .aura-carousel--wide)
      6. Overlays (velo, hoja, popover, avisos, buscador, menú)
      7. Movimiento
      8. Accesibilidad (reduced-motion, reduced-transparency, contrast)
@@ -636,10 +638,13 @@ h1, h2, h3, h4, h5, h6,
 }
 /* En el teléfono, dos o más acciones se apilan y miden lo mismo (el ancho de
    la más larga), en lugar de dos píldoras de anchos distintos una sobre otra.
-   Lo mismo para cualquier fila de botones con .aura-cluster--stack-sm. */
+   Lo mismo para cualquier fila de botones con .aura-cluster--stack-sm (con
+   las dos clases en el selector: .aura-cluster, que va después y fija
+   display: flex, no lo deshace). */
 @media (max-width: 575.98px) {
   .aura-hero__actions:has(> :nth-child(2)),
-  .aura-cluster--stack-sm {
+  .aura-cluster--stack-sm,
+  .aura-cluster.aura-cluster--stack-sm {
     display: grid;
     grid-template-columns: minmax(0, max-content);
     justify-content: start;
@@ -4525,6 +4530,304 @@ body.has-buybar:not(:has(.aura-footer)) { padding-bottom: var(--buybar-h, calc(4
 }
 
 
+/* --------------------------------------------------------------------------
+   5.7 Páginas de producto: escena con scroll, exhibición de color, cifra
+       destacada y galería de fotos
+   -------------------------------------------------------------------------- */
+
+/* Escena que avanza con el scroll ([data-aura-scrub], aura-ui.js §8 quater).
+   La BASE es la versión estática: el póster en el flujo, fundido con el negro
+   por arriba y por abajo, y los textos apilados en su orden debajo. Es lo que
+   se ve sin aura-core.js, con «reducir movimiento», con «ahorro de datos»
+   (.is-static, lo pone el JS) y al imprimir. La escena pegajosa es una mejora
+   que solo existe en pantalla y con movimiento permitido (más abajo). */
+.aura-scrub { position: relative; }     /* sin fondo propio: en estático, el póster se funde con el de su sección */
+.aura-scrub__stage {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-content: start;
+  gap: clamp(2rem, 4vw, 3rem);
+  padding-bottom: clamp(3rem, 7vw, 5.5rem);
+}
+.aura-scrub__canvas { display: none; }
+.aura-scrub__poster {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 85vh;
+  max-height: 85svh;
+  object-fit: cover;
+  object-position: var(--aura-scrub-focus, 50% 50%);
+  -webkit-mask-image: var(--photo-feather-y);
+  mask-image: var(--photo-feather-y);
+}
+.aura-scrub__text {
+  display: grid;
+  gap: 1rem;
+  justify-items: start;
+  align-content: start;
+  width: 100%;
+  min-width: 0;
+  max-width: calc(var(--container) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding-left: max(var(--gutter), env(safe-area-inset-left));
+  padding-right: max(var(--gutter), env(safe-area-inset-right));
+}
+.aura-scrub__text > * { max-width: min(100%, 40rem); }
+.aura-scrub__text > :where(p, h2, h3, h4) { margin: 0; }
+/* Póster dentro de un <picture> (un fotograma para la escena y otro para la
+   versión estática, §10 bis): el <picture> no crea caja y el <img> se coloca
+   en el escenario como si fuera su hijo directo. */
+.aura-scrub__stage > picture { display: contents; }
+/* Escena que hace de héroe (su primer texto lleva el h1): en la versión
+   estática ese texto va ANTES del póster, con el aire de un héroe, para que
+   el titular y la acción principal se vean en la primera pantalla. */
+.aura-scrub__stage > .aura-scrub__text:first-of-type:has(> h1) {
+  order: -1;
+  padding-top: clamp(3.5rem, 8vw, 7.5rem);
+}
+.aura-scrub__text .aura-display { max-width: min(100%, 52rem); }
+
+/* Escena: el escenario (100svh) se queda pegado arriba mientras la sección
+   (data-length × 1svh, 300 por defecto) pasa por debajo. Fondo a sangre bajo
+   la barra de cristal; los textos se colocan en la misma celda y el JS les
+   da opacity / transform según el progreso. Solo transform y opacity. */
+@media screen and (prefers-reduced-motion: no-preference) {
+  .aura-js .aura-scrub:not(.is-static) {
+    height: calc(var(--aura-scrub-length, 300) * 1vh);
+    height: calc(var(--aura-scrub-length, 300) * 1svh);
+  }
+  .aura-js .aura-scrub:not(.is-static) > .aura-scrub__stage {
+    position: sticky;
+    top: 0;
+    isolation: isolate;
+    grid-template-rows: minmax(0, 1fr);
+    gap: 0;
+    height: 100vh;
+    height: 100svh;
+    padding: 0;
+    overflow: hidden;
+    background: var(--bg-main);
+  }
+  .aura-js .aura-scrub:not(.is-static) :is(.aura-scrub__poster, .aura-scrub__canvas) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-height: none;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  .aura-js .aura-scrub:not(.is-static) .aura-scrub__poster { object-fit: var(--aura-scrub-fit, cover); }
+  /* El lienzo aparece sobre el póster con su primer fotograma (el póster sigue
+     debajo: es la imagen con alt para el lector de pantalla). */
+  .aura-js .aura-scrub:not(.is-static) .aura-scrub__canvas {
+    display: block;
+    opacity: 0;
+    transition: opacity var(--dur-2) ease;
+  }
+  .aura-js .aura-scrub.is-painted:not(.is-static) .aura-scrub__canvas { opacity: 1; }
+
+  /* Bloque de texto: ocupa todo el escenario (su degradado de protección
+     también) y alinea su contenido con .aura-container. */
+  .aura-js .aura-scrub:not(.is-static) .aura-scrub__text {
+    --scrub-pad-x: max(var(--gutter), calc((100% - var(--container)) / 2));
+    --text-secondary: var(--text-primary);      /* sobre una imagen que cambia, nunca un gris (como .aura-tile--cover) */
+    --text-tertiary: var(--vibrant-label);
+    grid-area: 1 / 1;
+    position: relative;
+    z-index: 1;
+    grid-template-columns: minmax(0, 1fr);
+    align-content: center;
+    justify-items: center;
+    max-width: none;
+    margin: 0;
+    padding: calc(var(--sticky-top) + 2rem) max(var(--scrub-pad-x), env(safe-area-inset-right)) clamp(2.5rem, 8vh, 5rem) max(var(--scrub-pad-x), env(safe-area-inset-left));
+    text-align: center;
+    order: 0;                                    /* en la escena, el orden del HTML (el héroe estático adelanta su texto) */
+    opacity: 0;
+    pointer-events: none;
+  }
+  .aura-js .aura-scrub:not(.is-static) .aura-scrub__text > * { max-width: min(100%, 46rem); }
+  /* El titular de una escena que hace de héroe mide lo de un héroe centrado
+     (.aura-hero--center, 52 rem): dos líneas en escritorio, no tres. */
+  .aura-js .aura-scrub:not(.is-static) .aura-scrub__text > .aura-display { max-width: min(100%, 52rem); }
+  /* Las acciones de un texto centrado van centradas (también apiladas en el
+     teléfono); en left / right, alineadas al inicio como su texto. */
+  .aura-js .aura-scrub:not(.is-static) .aura-scrub__text:not([data-pos="left"]):not([data-pos="right"]) :is(.aura-hero__actions, .aura-cluster) { justify-content: center; }
+  /* Sobre un fotograma que cambia, el botón secundario (contorno, sin fondo)
+     lleva material oscuro: su etiqueta azul no depende de lo que haya detrás. */
+  .aura-js .aura-scrub:not(.is-static) .aura-scrub__text .aura-btn--secondary {
+    --btn-bg: rgba(0, 0, 0, .78);
+    -webkit-backdrop-filter: var(--glass-thin-filter);
+    backdrop-filter: var(--glass-thin-filter);
+  }
+  /* Antes de que llegue aura-ui.js, solo el primer texto (los textos son los
+     únicos <div> del escenario). */
+  .aura-js .aura-scrub:not(.is-ready):not(.is-static) .aura-scrub__text:first-of-type { opacity: 1; }
+  .aura-js .aura-scrub:not(.is-static) .aura-scrub__text.is-on > * { pointer-events: auto; }
+  .aura-js .aura-scrub.is-active:not(.is-static) .aura-scrub__text { will-change: opacity, transform; }
+  .aura-js .aura-scrub:not(.is-static) .aura-scrub__text::before {
+    content: "";
+    position: absolute;
+    inset: -3rem 0;                    /* sobra por arriba y por abajo: al desplazarse no deja ver su borde */
+    z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(70% 60% at 50% 50%, rgba(0, 0, 0, .6), rgba(0, 0, 0, .25) 60%, transparent 88%);
+  }
+
+  /* data-pos: left | right (columna de 30 rem, con un borde izquierdo común) */
+  .aura-js .aura-scrub:not(.is-static) .aura-scrub__text:is([data-pos="left"], [data-pos="right"]) {
+    justify-items: start;
+    text-align: start;
+  }
+  .aura-js .aura-scrub:not(.is-static) .aura-scrub__text[data-pos="left"] { grid-template-columns: minmax(0, 30rem) minmax(0, 1fr); }
+  .aura-js .aura-scrub:not(.is-static) .aura-scrub__text[data-pos="right"] { grid-template-columns: minmax(0, 1fr) minmax(0, 30rem); }
+  .aura-js .aura-scrub:not(.is-static) .aura-scrub__text[data-pos="left"] > * { grid-column: 1; max-width: 100%; }
+  .aura-js .aura-scrub:not(.is-static) .aura-scrub__text[data-pos="right"] > * { grid-column: 2; max-width: 100%; }
+  .aura-js .aura-scrub:not(.is-static) .aura-scrub__text[data-pos="left"]::before {
+    background: linear-gradient(to right, rgba(0, 0, 0, .78) 0%, rgba(0, 0, 0, .5) 34%, transparent 66%);
+  }
+  .aura-js .aura-scrub:not(.is-static) .aura-scrub__text[data-pos="right"]::before {
+    background: linear-gradient(to left, rgba(0, 0, 0, .78) 0%, rgba(0, 0, 0, .5) 34%, transparent 66%);
+  }
+  /* data-pos="bottom": centrado, abajo, con la protección de las fotos */
+  .aura-js .aura-scrub:not(.is-static) .aura-scrub__text[data-pos="bottom"] { align-content: end; }
+  .aura-js .aura-scrub:not(.is-static) .aura-scrub__text[data-pos="bottom"]::before { background: var(--photo-scrim); }
+}
+/* En el teléfono no hay columnas: left / right bajan al pie, alineados al inicio. */
+@media screen and (prefers-reduced-motion: no-preference) and (max-width: 767.98px) {
+  .aura-js .aura-scrub:not(.is-static) .aura-scrub__text:is([data-pos="left"], [data-pos="right"]) {
+    grid-template-columns: minmax(0, 1fr);
+    align-content: end;
+  }
+  .aura-js .aura-scrub:not(.is-static) .aura-scrub__text:is([data-pos="left"], [data-pos="right"]) > * { grid-column: 1; }
+  .aura-js .aura-scrub:not(.is-static) .aura-scrub__text:is([data-pos="left"], [data-pos="right"])::before { background: var(--photo-scrim); }
+}
+/* Tableta en vertical o ventana casi cuadrada (desde 768 px y hasta 5:4) con
+   data-fit="contain": el fotograma apaisado deja una franja negra arriba y
+   abajo, y la columna de 30 rem taparía el aparato. Como en el teléfono,
+   left / right bajan al pie, sobre el negro. */
+@media screen and (prefers-reduced-motion: no-preference) and (min-width: 768px) and (max-aspect-ratio: 5/4) {
+  .aura-js .aura-scrub:where([data-fit="contain"]):not(.is-static) .aura-scrub__text:is([data-pos="left"], [data-pos="right"]) {
+    grid-template-columns: minmax(0, 1fr);
+    align-content: end;
+  }
+  .aura-js .aura-scrub:where([data-fit="contain"]):not(.is-static) .aura-scrub__text:is([data-pos="left"], [data-pos="right"]) > * { grid-column: 1; max-width: min(100%, 40rem); }
+  .aura-js .aura-scrub:where([data-fit="contain"]):not(.is-static) .aura-scrub__text:is([data-pos="left"], [data-pos="right"])::before { background: var(--photo-scrim); }
+}
+/* Menos transparencia / más contraste: la protección pasa a ser un velo casi
+   sólido (el texto se lee igual sobre cualquier fotograma). */
+@media screen and (prefers-reduced-motion: no-preference) and (prefers-reduced-transparency: reduce) {
+  .aura-js .aura-scrub:not(.is-static) .aura-scrub__text::before,
+  .aura-js .aura-scrub:not(.is-static) .aura-scrub__text[data-pos]::before { background: rgba(0, 0, 0, .72); }
+  .aura-js .aura-scrub:not(.is-static) .aura-scrub__text .aura-btn--secondary {
+    --btn-bg: #000;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+@media screen and (prefers-reduced-motion: no-preference) and (prefers-contrast: more) {
+  .aura-js .aura-scrub:not(.is-static) .aura-scrub__text::before,
+  .aura-js .aura-scrub:not(.is-static) .aura-scrub__text[data-pos]::before { background: rgba(0, 0, 0, .84); }
+}
+@media (forced-colors: active) {
+  .aura-scrub__text::before { display: none; }   /* el modo pone su propia placa tras el texto */
+}
+@media print {
+  .aura-scrub__poster { -webkit-mask-image: none; mask-image: none; }
+}
+
+/* Exhibición de color ([data-aura-colorway], aura-ui.js §8 quinquies): la
+   foto del producto flotando sobre su halo (la galería sin caja) y, debajo,
+   las muestras y el nombre del acabado. El cambio de foto es el fundido
+   cruzado de .aura-gallery (solo opacidad). */
+.aura-colorway {
+  display: grid;
+  justify-items: center;
+  gap: clamp(1rem, 2.5vw, 1.5rem);
+  min-width: 0;
+  text-align: center;
+}
+/* Sin caja ni aislamiento: «aclarar» funde el negro de la foto con el fondo
+   de la sección que haya debajo (negro o franja), no con un panel propio. */
+.aura-colorway > .aura-gallery {
+  isolation: auto;
+  width: 100%;
+  max-width: min(100%, 50rem);
+  border: 0;
+  border-radius: 0;
+  background: radial-gradient(55% 50% at 50% 56%, rgba(0, 113, 227, .16), transparent 72%);
+}
+.aura-colorway__picker {
+  display: grid;
+  justify-items: center;
+  gap: .375rem;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.aura-colorway__picker .aura-swatches { justify-content: center; margin: 0; }
+.aura-colorway__name {
+  margin: 0;
+  font-size: .9375rem;
+  line-height: 1.4;
+  letter-spacing: .002em;
+  color: var(--text-secondary);
+  text-wrap: pretty;
+}
+.aura-colorway__name strong { font-weight: 600; color: var(--text-primary); }
+.aura-colorway__note { color: var(--text-tertiary); }
+
+/* Cifra destacada (.aura-stat--lg): la cifra grande de una página de
+   producto, alineada al inicio, con el texto que la explica debajo (y, si
+   hace falta, «Hasta» encima). Con data-aura-reveal="stat" aparece por partes
+   y solo con opacidad (§7): nunca un contador que haga esperar al lector. */
+.aura-stats--lg {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  gap: 2rem clamp(1.5rem, 4vw, 3rem);
+}
+.aura-stat--lg { gap: .375rem; }
+.aura-stat__pre {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -.003em;
+  color: var(--text-primary);
+}
+.aura-stat--lg .aura-stat__value {
+  font-size: clamp(3rem, 2.25rem + 3vw, 5rem);
+  line-height: 1;
+  letter-spacing: -.03em;
+}
+/* Dentro de un contenedor (p. ej. la columna de texto de .aura-split desde
+   992 px) la cifra se mide con él y no con la ventana: en una columna
+   estrecha se queda en su mínimo en lugar de salirse. Sin contenedor, cqi
+   equivale al ancho de la ventana (lo mismo que arriba). */
+@supports (width: 1cqi) {
+  .aura-stat--lg .aura-stat__value { font-size: clamp(3rem, 2.25rem + 3cqi, 5rem); }
+}
+.aura-stat__unit {
+  font-size: .5em;
+  letter-spacing: -.005em;
+}
+.aura-stat--lg .aura-stat__label {
+  max-width: 18rem;
+  font-size: 1rem;
+  line-height: 1.45;
+  letter-spacing: 0;
+  text-wrap: pretty;
+}
+
+/* Galería de fotos de ejemplo: un carrusel (--bleed --wide) de
+   figure.aura-media--frame con su pie. --wide: una foto grande por vista,
+   asomando la siguiente. */
+.aura-carousel--wide { --aura-slide: min(88%, 54rem); }
+
+
 /* ==========================================================================
    6. OVERLAYS
    Jerarquía de materiales (tokens de §1, fondo y filtro del mismo nivel):
@@ -5258,6 +5561,20 @@ html.aura-lock .aura-toast {
   transition-delay: calc(var(--i, 0) * 80ms);
 }
 .aura-js:not(.aura-ui) [data-aura-reveal] { animation: aura-failsafe 1ms linear 2.5s forwards; }
+/* "stat": una cifra que aparece por partes, solo con opacidad (sin
+   desplazamiento ni contador): primero la cifra, después lo que la explica.
+   El elemento se queda en su sitio; se funden sus hijos. */
+.aura-js [data-aura-reveal="stat"] { opacity: 1; transform: none; }
+.aura-js [data-aura-reveal="stat"] > * { opacity: 0; }
+.aura-js [data-aura-reveal="stat"].is-visible > * {
+  opacity: 1;
+  transition: opacity var(--dur-3) ease;
+  transition-delay: calc(var(--i, 0) * 80ms + var(--j, 0) * 120ms);
+}
+.aura-js [data-aura-reveal="stat"] > .aura-stat__value { --j: 0; }
+.aura-js [data-aura-reveal="stat"] > .aura-stat__pre { --j: 1; }
+.aura-js [data-aura-reveal="stat"] > .aura-stat__label { --j: 2; }
+.aura-js:not(.aura-ui) [data-aura-reveal="stat"] > * { animation: aura-failsafe 1ms linear 2.5s forwards; }
 
 @keyframes aura-failsafe {
   to { opacity: 1; transform: none; }
@@ -5278,7 +5595,8 @@ html.aura-lock .aura-toast {
 /* Impresión (confirmación del pedido, textos legales): todo el contenido
    visible, aunque nunca entrara en pantalla, y sin la interfaz flotante. */
 @media print {
-  .aura-js [data-aura-reveal] { opacity: 1 !important; transform: none !important; animation: none !important; }
+  .aura-js [data-aura-reveal],
+  .aura-js [data-aura-reveal="stat"] > * { opacity: 1 !important; transform: none !important; animation: none !important; }
   .aura-js img.aura-img.is-pending { opacity: 1 !important; }
   .aura-nav,
   .aura-ribbon,
@@ -5306,7 +5624,8 @@ html.aura-lock .aura-toast {
 
   .aura-js [data-aura-reveal],
   .aura-js [data-aura-reveal="scale"] { transform: none; }
-  .aura-js [data-aura-reveal].is-visible {
+  .aura-js [data-aura-reveal].is-visible,
+  .aura-js [data-aura-reveal="stat"].is-visible > * {
     transition: opacity 200ms ease;
     transition-delay: 0s;
   }

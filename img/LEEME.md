@@ -1,6 +1,6 @@
 # Imágenes del sitio AURA
 
-Todas las imágenes ya están colocadas: fotos reales de Unsplash (licencia libre), recortadas y ajustadas de tono, en WebP. Los créditos están en `html/legal.html#imagenes`. Para sustituir una, guarda la nueva con **exactamente** el mismo nombre; si falta alguna, la web muestra en su lugar un marcador con la ruta y el tamaño recomendado.
+Todas las imágenes ya están colocadas: fotos reales con licencia libre (Wikimedia Commons, Unsplash y Pexels), recortadas y ajustadas de tono, en WebP. Las secuencias de las escenas con scroll están en `img/seq/`. Los créditos están en `html/legal.html#imagenes`. Para sustituir una, guarda la nueva con **exactamente** el mismo nombre; si falta alguna, la web muestra en su lugar un marcador con la ruta y el tamaño recomendado.
 
 - **Formato:** `.webp` (es lo que pide la web; también valen `.png` y `.jpg` con el mismo nombre, que se prueban después).
 - **Fondo:** todo el sitio es negro (#000); diseña o recorta las imágenes para fondo oscuro.
@@ -25,7 +25,7 @@ Una imagen por producto basta: se usa en las tarjetas, el comparador, el configu
 
 ### Opcional: una imagen por color
 
-Si quieres que el configurador cambie de imagen al elegir acabado, añade también estas (mismo tamaño). Si no existen, se usa la del producto.
+Si quieres que el configurador y las exhibiciones de color cambien de imagen al elegir acabado, añade también estas (mismo tamaño) **y declara cada una en `imageVariants` de `js/data.js`, con su `alt`**: solo se piden las declaradas. Sin ellas se usa la del producto, y el color de esa foto va en `imageColor`. No hace falta la del color que ya enseña la foto base.
 
 | Producto | Archivos opcionales |
 |---|---|

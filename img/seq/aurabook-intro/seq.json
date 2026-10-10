@@ -1,0 +1,33 @@
+{
+ "frames": 120,
+ "width": 1600,
+ "height": 900,
+ "pattern": "f-%04d.webp",
+ "mobile": true,
+ "mobileWidth": 760,
+ "mobileHeight": 900,
+ "fondo": "#000",
+ "fuente": "Vídeo de Arpit Brandings en Pexels (pv:26109748); fondo a negro y pantalla sustituida por un fondo «auraOS» generado por código",
+ "momentos": [
+  {
+   "desde": 1,
+   "hasta": 26,
+   "ve": "auraBook pequeño en el centro, en penumbra y con la pantalla apagada; la luz sube"
+  },
+  {
+   "desde": 26,
+   "hasta": 56,
+   "ve": "La pantalla se enciende: brillo en el centro (f26–35) y la aurora se abre hacia los bordes (f35–56)"
+  },
+  {
+   "desde": 56,
+   "hasta": 120,
+   "ve": "La cámara se acerca despacio; aurora viva en pantalla; al final el portátil ocupa x≈27–70 %, y≈13–85 %"
+  }
+ ],
+ "zonasTranquilas": {
+  "todo": "izquierda (x<27 %) y derecha (x>71 %); franja superior (y<13 %)"
+ },
+ "estaticoRecomendado": "f-0120.webp",
+ "mobileNota": "m/: recorte vertical 760 × 900 (x 396–1156) de los fotogramas originales de 1600 × 900, centrado en el portátil, para que en el teléfono ocupe casi todo el ancho (agente de página auraBook, ffmpeg crop, calidad 62)"
+}
