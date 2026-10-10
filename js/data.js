@@ -61,7 +61,7 @@
    ========================================================================== */
 
 window.AURA_DATA = {
-  updated: '2026-10-03',
+  updated: '2026-10-10',
 
   financing: { months: 24 },
 
@@ -190,7 +190,7 @@ window.AURA_DATA = {
       ],
       image: 'auraphone-duo',
       imageColor: 'blanco-estelar',
-      imageAlt: 'auraPhone Duo plateado, entreabierto en vertical y con su triple cámara, sobre fondo negro'
+      imageAlt: 'auraPhone Duo blanco estelar, abierto y visto por detrás: doble cámara en una cápsula y la pantalla exterior apagada, sobre fondo negro'
     },
     {
       id: 'auraphone-18-pro-max',
@@ -239,8 +239,11 @@ window.AURA_DATA = {
         'Hasta 2 TB de almacenamiento'
       ],
       image: 'auraphone-18-pro-max',
-      imageColor: 'negro',
-      imageAlt: 'Dos auraPhone 18 Pro Max de titanio oscuro, de frente y de espaldas, sobre fondo negro'
+      imageColor: 'burdeos',
+      imageAlt: 'auraPhone 18 Pro Max burdeos de espaldas, con la meseta de cámaras de lado a lado, sobre fondo negro',
+      imageVariants: {
+        plata: 'auraPhone 18 Pro Max plata de espaldas, con la meseta de cámaras de lado a lado, sobre fondo negro'
+      }
     },
     {
       id: 'auraphone-18-pro',
@@ -289,8 +292,12 @@ window.AURA_DATA = {
         'Unibody de aluminio con Ceramic Shield 2 en cuatro acabados'
       ],
       image: 'auraphone-18-pro',
-      imageColor: 'azul-glacial',
-      imageAlt: 'auraPhone 18 Pro azul, tumbado de espaldas y con su triple cámara, sobre fondo negro'
+      imageColor: 'negro',
+      imageAlt: 'auraPhone 18 Pro negro de espaldas, con la meseta de cámaras de lado a lado, sobre fondo negro',
+      imageVariants: {
+        plata: 'auraPhone 18 Pro plata de espaldas, con la meseta de cámaras de lado a lado, sobre fondo negro',
+        'azul-glacial': 'auraPhone 18 Pro azul glacial de espaldas, con la meseta de cámaras de lado a lado, sobre fondo negro'
+      }
     },
 
     /* ======================== auraPad ======================== */
@@ -362,7 +369,11 @@ window.AURA_DATA = {
       ],
       image: 'aurapad-pro-13',
       imageColor: '',
-      imageAlt: 'auraPad Pro 13″ de frente, con una pantalla de curvas naranjas, rojas, azules y violetas, sobre fondo negro'
+      imageAlt: 'auraPad Pro 13″ de frente sobre fondo negro, con la pantalla encendida: ondas de luz rosas, rojas y azules',
+      imageVariants: {
+        'negro-espacial': 'Trasera negro espacial del auraPad Pro 13″, con el módulo de cámaras y el escáner LiDAR en la esquina, sobre fondo negro',
+        plata: 'Trasera plateada del auraPad Pro 13″, con el módulo de cámaras y el escáner LiDAR en la esquina, sobre fondo negro'
+      }
     },
     {
       id: 'aurapad-pro-11',
@@ -431,8 +442,8 @@ window.AURA_DATA = {
         'Carga rápida: hasta el 50 % en unos 30 minutos'
       ],
       image: 'aurapad-pro-11',
-      imageColor: 'negro-espacial',
-      imageAlt: 'auraPad Pro 11″ en negro espacial, de espaldas e inclinado, con su módulo de cámaras, sobre fondo negro'
+      imageColor: 'plata',
+      imageAlt: 'Trasera plateada del auraPad Pro 11″, con su módulo de cámaras y el escáner LiDAR en la esquina, sobre fondo negro'
     },
     {
       id: 'aurapad-air-13',
@@ -490,9 +501,11 @@ window.AURA_DATA = {
       ],
       image: 'aurapad-air-13',
       imageColor: 'azul',
-      imageAlt: 'auraPad Air 13″ azul, de espaldas y en vertical, con la cámara en la esquina, sobre fondo negro',
+      imageAlt: 'Trasera azul del auraPad Air 13″, con su única cámara en la esquina, sobre fondo negro',
       imageVariants: {
-        'gris-espacial': 'auraPad Air 13″ en gris espacial, de espaldas, inclinado y flotando sobre fondo negro'
+        'gris-espacial': 'Trasera gris espacial del auraPad Air 13″, con su única cámara en la esquina, sobre fondo negro',
+        purpura: 'Trasera púrpura del auraPad Air 13″, con su única cámara en la esquina, sobre fondo negro',
+        'blanco-estrella': 'Trasera blanco estrella del auraPad Air 13″, con su única cámara en la esquina, sobre fondo negro'
       }
     },
 
@@ -570,8 +583,8 @@ window.AURA_DATA = {
         'Cámara Center Stage de 12 Mpx y seis altavoces con audio espacial'
       ],
       image: 'aurabook-pro-16',
-      imageColor: '',
-      imageAlt: 'auraBook Pro 16″ entreabierto de frente, con el teclado bañado en la luz violeta y azul de la pantalla, sobre negro'
+      imageColor: 'plata',
+      imageAlt: 'auraBook Pro 16″ plateado abierto sobre negro, con teclado negro y la pantalla con ondas azules y violetas'
     },
     {
       id: 'aurabook-pro-14',
@@ -650,8 +663,11 @@ window.AURA_DATA = {
         '1 TB de SSD de serie'
       ],
       image: 'aurabook-pro-14',
-      imageColor: '',
-      imageAlt: 'auraBook Pro 14″ entreabierto en tres cuartos, con un atardecer en la pantalla y un halo cian sobre la mesa'
+      imageColor: 'negro-espacial',
+      imageAlt: 'auraBook Pro 14″ en negro espacial abierto sobre negro, con la pantalla de ondas ámbar y rosa',
+      imageVariants: {
+        plata: 'auraBook Pro 14″ plateado visto de frente sobre negro, con teclado negro y la pantalla de ondas violetas'
+      }
     },
     {
       id: 'aurabook-air-15',
@@ -709,8 +725,13 @@ window.AURA_DATA = {
         'Cuatro acabados: azul cielo, plata, blanco estrella y medianoche'
       ],
       image: 'aurabook-air-15',
-      imageColor: '',
-      imageAlt: 'auraBook Air 15″ entreabierto, con la pantalla rosa, naranja y azul iluminando el teclado en la oscuridad'
+      imageColor: 'plata',
+      imageAlt: 'auraBook Air 15″ plateado, fino y abierto sobre negro, con la pantalla de ondas turquesa',
+      imageVariants: {
+        'azul-cielo': 'auraBook Air en azul cielo abierto sobre negro, con teclado negro y la pantalla de ondas turquesa',
+        'blanco-estrella': 'auraBook Air 15″ en blanco estrella abierto sobre negro, con la pantalla de ondas turquesa',
+        medianoche: 'auraBook Air 15″ en color medianoche abierto sobre negro, con la pantalla de ondas turquesa'
+      }
     }
   ],
 

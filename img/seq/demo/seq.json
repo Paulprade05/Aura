@@ -1,0 +1,10 @@
+{
+ "frames": 48,
+ "width": 1280,
+ "height": 720,
+ "pattern": "f-%04d.webp",
+ "mobile": true,
+ "mobileWidth": 600,
+ "mobileFrames": 48,
+ "mobileHeight": 900
+}

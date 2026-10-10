@@ -189,8 +189,10 @@
   var porGrupo = {};
   lista.forEach(function (c) {
     if (!c || !c.slot) { return; }
+    /* Las secuencias de las escenas (seq-auraphone-intro…) van con la página de su familia. */
+    var nombre = c.slot.replace(/^seq-/, '');
     for (var i = 0; i < GRUPOS.length; i++) {
-      if (GRUPOS[i].test(c.slot)) { (porGrupo[GRUPOS[i].id] = porGrupo[GRUPOS[i].id] || []).push(c); return; }
+      if (GRUPOS[i].test(nombre)) { (porGrupo[GRUPOS[i].id] = porGrupo[GRUPOS[i].id] || []).push(c); return; }
     }
   });
 
@@ -202,9 +204,14 @@
   function item(c) {
     /* Solo la descripción de lo que se ve (nunca el título original del banco de imágenes, que nombra marcas). */
     var desc = c.descripcion || 'Foto sin descripción';
-    var img = AURA.html && AURA.html.img
+    /* Miniatura: la foto de su hueco o, en una secuencia, su póster (c.media, img/seq/…/poster.webp). */
+    var propia = !!c.media && c.media !== 'img/' + c.slot + '.webp' && /^img\/[a-z0-9\/._-]+\.webp$/i.test(c.media);
+    var img = !propia && AURA.html && AURA.html.img
       ? AURA.html.img(c.slot, { className: 'legal-credito__img', alt: '', width: 1600, height: 1200 })
-      : '<img class="legal-credito__img" src="../img/' + esc(c.slot) + '.webp" width="1600" height="1200" alt="" loading="lazy" decoding="async">';
+      : '<img class="legal-credito__img" src="../' + esc(propia ? c.media : 'img/' + c.slot + '.webp') + '" width="1600" height="' + (propia ? 900 : 1200) + '" alt="" loading="lazy" decoding="async">';
+    /* Cambios: siempre recortada y ajustada; si hubo retoque, lo que se hizo (creditos.js: retoque). */
+    var cambios = 'Recortada y ajustada de tono' +
+      (c.retoque ? '. ' + String(c.retoque).replace(/\.\s*$/, '') : (c.retocada ? '; logotipos o textos de pantalla borrados' : ''));
     return '<li class="legal-credito">' +
       '<div class="legal-credito__media">' + img + '</div>' +
       '<div class="legal-credito__body">' +
@@ -213,13 +220,13 @@
           '<div><dt>Autor</dt><dd>' + enlace(c.autorUrl, c.autor || 'Sin nombre') + '</dd></div>' +
           '<div><dt>Fuente</dt><dd>' + enlace(c.url, c.fuente || 'Original', '<span class="visually-hidden">: foto original</span>') + '</dd></div>' +
           '<div><dt>Licencia</dt><dd>' + enlace(c.licenciaUrl, c.licencia || 'Licencia libre') + '</dd></div>' +
-          (c.modificada !== false ? '<div><dt>Cambios</dt><dd>Recortada y ajustada de tono' + (c.retocada ? '; logotipos o textos de pantalla borrados' : '') + '</dd></div>' : '') +
+          (c.modificada !== false ? '<div><dt>Cambios</dt><dd>' + esc(cambios) + '</dd></div>' : '') +
         '</dl>' +
       '</div>' +
     '</li>';
   }
 
-  var html = '<p class="legal-creditos__total aura-caption">' + lista.length + ' fotos, agrupadas por la página en la que aparecen.</p>';
+  var html = '<p class="legal-creditos__total aura-caption">' + lista.length + ' fotos y vídeos, agrupados por la página en la que aparecen.</p>';
   GRUPOS.forEach(function (g) {
     var items = porGrupo[g.id];
     if (!items || !items.length) { return; }

@@ -9,9 +9,9 @@
 
   <!-- SEO: título y descripción únicos, autoría, palabras clave, indexación (se indexa y se siguen sus enlaces) y URL canónica -->
   <title>auraPhone 18 Pro, Pro Max y Duo plegable: compra online — AURA</title>
-  <meta name="description" content="auraPhone Duo, el primer auraPhone que se pliega, y auraPhone 18 Pro y Pro Max, con chip AURA A20 Pro. Compara cámaras, batería y precios, y elige el tuyo.">
+  <meta name="description" content="auraPhone Duo, el primer auraPhone que se pliega, y auraPhone 18 Pro y Pro Max, con chip AURA A20 Pro. Descubre su diseño, cámaras y batería, y elige el tuyo.">
   <meta name="author" content="Paulprade05">
-  <meta name="keywords" content="auraPhone, auraPhone Duo, auraPhone 18 Pro, auraPhone 18 Pro Max, móvil plegable, AURA A20 Pro, comprar móvil, AURA">
+  <meta name="keywords" content="auraPhone, auraPhone Duo, auraPhone 18 Pro, auraPhone 18 Pro Max, móvil plegable, AURA A20 Pro, cámara de apertura variable, comprar móvil, AURA">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://aura-lyart-beta.vercel.app/html/auraphone.html">
 
@@ -20,18 +20,18 @@
   <meta property="og:site_name" content="AURA">
   <meta property="og:locale" content="es_ES">
   <meta property="og:title" content="auraPhone 18 Pro, Pro Max y Duo plegable: compra online">
-  <meta property="og:description" content="auraPhone Duo, el primer auraPhone que se pliega, y auraPhone 18 Pro y Pro Max, con chip AURA A20 Pro. Compara cámaras, batería y precios, y elige el tuyo.">
+  <meta property="og:description" content="auraPhone Duo, el primer auraPhone que se pliega, y auraPhone 18 Pro y Pro Max, con chip AURA A20 Pro. Descubre su diseño, cámaras y batería, y elige el tuyo.">
   <meta property="og:url" content="https://aura-lyart-beta.vercel.app/html/auraphone.html">
   <meta property="og:image" content="https://aura-lyart-beta.vercel.app/img/og/og-auraphone.jpg">
   <meta property="og:image:type" content="image/jpeg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="auraPhone Duo plegable en plata sobre fondo negro, con el logotipo de AURA y el titular «Ahora se pliega. Y sigue siendo Pro».">
+  <meta property="og:image:alt" content="auraPhone Duo blanco estelar abierto y visto por detrás sobre fondo negro, con el logotipo de AURA y el titular «Ahora se pliega. Y sigue siendo Pro».">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="auraPhone 18 Pro, Pro Max y Duo plegable: compra online">
-  <meta name="twitter:description" content="auraPhone Duo, el primer auraPhone que se pliega, y auraPhone 18 Pro y Pro Max, con chip AURA A20 Pro. Compara cámaras, batería y precios, y elige el tuyo.">
+  <meta name="twitter:description" content="auraPhone Duo, el primer auraPhone que se pliega, y auraPhone 18 Pro y Pro Max, con chip AURA A20 Pro. Descubre su diseño, cámaras y batería, y elige el tuyo.">
   <meta name="twitter:image" content="https://aura-lyart-beta.vercel.app/img/og/og-auraphone.jpg">
-  <meta name="twitter:image:alt" content="auraPhone Duo plegable en plata sobre fondo negro, con el logotipo de AURA y el titular «Ahora se pliega. Y sigue siendo Pro».">
+  <meta name="twitter:image:alt" content="auraPhone Duo blanco estelar abierto y visto por detrás sobre fondo negro, con el logotipo de AURA y el titular «Ahora se pliega. Y sigue siendo Pro».">
 
   <!-- Iconos: favicon (ICO y PNG), icono de la pantalla de inicio y manifiesto de la aplicación web -->
   <link rel="icon" href="../favicon.ico" sizes="any">
@@ -65,16 +65,20 @@
   <main id="contenido">
 
     <!-- ================= Barra local =================
-         Segundo <nav>, con nombre propio (aria-label): salta a las secciones de esta página y lleva a comprar.
-         aura-ui.js la fija arriba al desplazarse; el «Comprar» corto completa su nombre con el modelo (aria-label). -->
+         Segundo <nav>, con nombre propio (aria-label): salta a los capítulos de esta página y lleva a comprar.
+         aura-ui.js la fija arriba al desplazarse (en el teléfono, los enlaces se pliegan en un menú);
+         el «Comprar» corto completa su nombre con el modelo (aria-label). -->
     <nav class="aura-localnav" aria-label="auraPhone" data-aura-localnav>
       <div class="aura-container aura-localnav__inner">
         <a class="aura-localnav__title" href="auraphone.html">auraPhone</a>
         <div class="aura-localnav__links">
           <a class="aura-localnav__link" href="#descripcion">Descripción</a>
-          <a class="aura-localnav__link" href="#modelos">Modelos</a>
           <a class="aura-localnav__link" href="#duo">Duo</a>
-          <a class="aura-localnav__link" href="#camara">Cámara</a>
+          <a class="aura-localnav__link" href="#diseno">Diseño</a>
+          <a class="aura-localnav__link" href="#camaras">Cámaras</a>
+          <a class="aura-localnav__link" href="#rendimiento">Rendimiento</a>
+          <a class="aura-localnav__link" href="#auraos">auraOS</a>
+          <a class="aura-localnav__link" href="#modelos">Modelos</a>
           <a class="aura-localnav__link" href="#comparativa">Especificaciones</a>
         </div>
         <a class="aura-link aura-localnav__action" href="comprar.html?producto=auraphone-18-pro" data-aura-buy="auraphone" data-aura-buy-short aria-label="Comprar auraPhone 18 Pro">Comprar</a>
@@ -82,8 +86,10 @@
     </nav>
 
     <!-- ================= Héroe =================
-         Lleva el único <h1> de la página. El «Desde…» y su nota los pinta auraphone.js desde el catálogo. -->
-    <section class="aura-hero aura-hero--split auraphone-heroe" id="descripcion" aria-labelledby="hero-titulo">
+         Lleva el único <h1> de la página. El «Desde…» y su nota los pinta auraphone.js desde el catálogo.
+         Centrado, con la foto debajo (como el resto de familias): la foto es la del primer pantallazo, carga en el
+         acto (fetchpriority="high") y, sin leyenda, va en un <div>. Sin relleno inferior: la escena sigue debajo. -->
+    <section class="aura-hero aura-hero--center auraphone-heroe pb-0" id="descripcion" aria-labelledby="hero-titulo">
       <div class="aura-container aura-hero__inner">
         <div class="aura-hero__copy">
           <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">Gama auraPhone</p>
@@ -95,28 +101,130 @@
           </div>
           <p class="aura-caption" data-ap-bloque="desde" hidden><span data-ap="desde-heroe"></span><sup class="aura-footnote-ref"><a href="#nota-financiacion" id="ref-financiacion" aria-label="Nota 1">1</a></sup>.</p>
         </div>
-        <!-- Encuadre propio (auraphone.css): el módulo de cámaras, sin la mitad baja de la trasera -->
-        <div class="aura-hero__media aura-media aura-media--halo auraphone-heroe__foto">
-          <img class="aura-img" src="../img/auraphone-hero.webp" data-slot="auraphone-hero" width="1600" height="1200" alt="Módulo de triple cámara de la trasera de un auraPhone plateado, que se funde con el fondo negro" loading="eager" fetchpriority="high" decoding="async">
+        <div class="aura-hero__media aura-media aura-media--halo">
+          <img class="aura-img" src="../img/inicio-hero-auraphone.webp" data-slot="inicio-hero-auraphone" width="1600" height="1200" alt="auraPhone Duo abierto de frente, con un degradado azul y violeta en la pantalla interior, sobre fondo negro" loading="eager" fetchpriority="high" decoding="async">
         </div>
       </div>
     </section>
 
-    <!-- ================= Modelos =================
-         Las tarjetas de modelo (<article>, una por auraPhone) las pinta aura-ui.js desde data.js en [data-aura-lineup]. -->
-    <section class="aura-section aura-section--band" id="modelos" aria-labelledby="modelos-titulo">
+    <!-- ================= Escena con scroll: auraPhone 18 Pro =================
+         Componente de la base (data-aura-scrub, COMPONENTES.md §10 bis): 120 fotogramas que avanzan 1:1 con el
+         scroll (en el teléfono, la versión vertical de m/), con tres textos que entran y se van por tramos sin
+         solaparse. El lienzo es decorativo (aria-hidden); el póster lleva el alt y los textos son HTML real, en
+         orden. Con «reducir movimiento» o «ahorro de datos» no se descarga ningún fotograma: el póster queda
+         fijo y los textos se leen debajo. Los fotogramas se piden cuando la escena está a pantalla y media.
+         «contain» y el foco abajo: el fotograma entero, apoyado en el borde inferior (su fondo es negro puro).
+         Póster: <picture> elige el fotograma 1 para la escena (coincide con lo primero que pinta el lienzo, sin
+         dos imágenes superpuestas al aparecer) y el 120 (el teléfono entero) para la versión estática, con la
+         versión vertical de m/ en el teléfono. -->
+    <section class="aura-scrub auraphone-escena" data-aura-scrub data-seq="../img/seq/auraphone-intro" data-frames="120" data-width="1600" data-height="900" data-mobile="true" data-length="380" data-fit="contain" data-mobile-fit="contain" data-focus="0.5 1" aria-labelledby="escena-titulo">
+      <div class="aura-scrub__stage">
+        <picture>
+          <source media="(prefers-reduced-motion: reduce) and (max-width: 767.98px)" srcset="../img/seq/auraphone-intro/m/f-0120.webp" width="640" height="1136">
+          <source media="(prefers-reduced-motion: reduce)" srcset="../img/seq/auraphone-intro/f-0120.webp">
+          <source media="(max-width: 767.98px)" srcset="../img/seq/auraphone-intro/m/poster.webp" width="640" height="1136">
+          <img class="aura-scrub__poster" src="../img/seq/auraphone-intro/poster.webp" width="1600" height="900" alt="auraPhone 18 Pro plata de espaldas sobre fondo negro: la meseta de tres cámaras de lado a lado, de cerca y después con el teléfono entero en diagonal" loading="lazy" decoding="async">
+        </picture>
+        <canvas class="aura-scrub__canvas" aria-hidden="true"></canvas>
+        <!-- Tramo 1 (macro de la meseta de cámaras): el titular de la escena -->
+        <div class="aura-scrub__text" data-from="0" data-to="0.3" data-pos="left">
+          <p class="aura-eyebrow aura-eyebrow--lg">auraPhone 18 Pro</p>
+          <h2 class="aura-h1" id="escena-titulo">Pro de lado a&nbsp;lado.</h2>
+          <p class="aura-lead">Una meseta de cámaras que cruza toda la trasera, un unibody de aluminio y el chip AURA A20 Pro.</p>
+        </div>
+        <!-- Tramo 2 (la cámara se aleja y la luz recorre el cristal): la cifra clave, arriba a la izquierda
+             (auraphone-escena__alto: la única zona de esos fotogramas sin teléfono) -->
+        <div class="aura-scrub__text auraphone-escena__alto" data-from="0.34" data-to="0.64" data-pos="left">
+          <p class="aura-eyebrow aura-eyebrow--mono">Cámara Fusion de 48&nbsp;Mpx</p>
+          <h3 class="aura-h1">De f/1,48 a&nbsp;f/4.</h3>
+          <p class="aura-body">La primera cámara de auraPhone con apertura variable: se abre para la noche y se cierra para que todo el paisaje salga nítido.</p>
+        </div>
+        <!-- Tramo 3 (el teléfono entero, ya quieto): la frase de cierre, el precio del catálogo y el salto a los modelos -->
+        <div class="aura-scrub__text" data-from="0.68" data-to="1" data-pos="left">
+          <h3 class="aura-h2 auraphone-frases"><span>Todo lo Pro.</span> <span>En 6,3 o 6,9&nbsp;pulgadas.</span></h3>
+          <p class="aura-body">auraPhone 18 Pro y 18 Pro Max, en <span data-ap="acabados-texto">negro, plata, azul glacial y burdeos</span>.</p>
+          <p class="aura-price" data-ap="desde-pro" hidden></p>
+          <a class="aura-link" href="#modelos">Ver los modelos</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= Lo más destacado (carrusel) =================
+         Resumen rápido antes de los capítulos. Carrusel del sistema: región con aria-roledescription y cada
+         diapositiva con su posición («1 de 6»). Cada tesela es un <article>: se entiende sola. -->
+    <section class="aura-section aura-section--band" id="destacado" aria-labelledby="destacado-titulo">
       <div class="aura-container">
-        <header class="aura-section-head aura-section-head--center">
-          <p class="aura-eyebrow aura-eyebrow--mono">La gama / 2026</p>
-          <h2 class="aura-h2" id="modelos-titulo">Elige tu auraPhone.</h2>
-          <p class="aura-lead">Tres formas de llevar el AURA A20 Pro. Todos con cámara Fusion de 48&nbsp;Mpx, Wi-Fi&nbsp;7 y USB-C.</p>
+        <header class="aura-section-head">
+          <p class="aura-eyebrow aura-eyebrow--mono">auraPhone 18 / En detalle</p>
+          <h2 class="aura-h2" id="destacado-titulo">Lo más destacado.</h2>
+          <p class="aura-lead">Seis razones para cambiar de teléfono.</p>
         </header>
 
-        <div class="aura-lineup" data-aura-lineup="auraphone"></div>
-
-        <div class="aura-cluster justify-content-center mt-4" style="--cluster:.5rem 2rem">
-          <a class="aura-link" href="comparar.html?familia=auraphone">Comparar todos los modelos</a>
-          <a class="aura-link" href="trade-in.html">Valorar mi dispositivo</a>
+        <div class="aura-carousel aura-carousel--bleed" data-aura-carousel role="region" aria-roledescription="carrusel" aria-label="Lo más destacado del auraPhone">
+          <div class="aura-carousel__viewport">
+            <ul class="aura-carousel__track">
+              <li class="aura-carousel__slide" aria-roledescription="diapositiva" aria-label="1 de 6">
+                <article class="aura-tile aura-tile--media-fit h-100">
+                  <div class="aura-tile__copy">
+                    <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">Cámara</p>
+                    <h3 class="aura-h3">La luz, a tus órdenes.</h3>
+                    <p class="aura-tile__text">La cámara Fusion de los 18&nbsp;Pro abre su diafragma hasta f/1,48 para la noche y lo cierra hasta f/4 para el&nbsp;paisaje.</p>
+                  </div>
+                  <div class="aura-tile__media"><img class="aura-img" src="../img/auraphone-camara-detalle.webp" data-slot="auraphone-camara-detalle" width="1600" height="1200" alt="Primer plano de la meseta de cámaras de un auraPhone 18 Pro Max burdeos: tres objetivos, flash y LiDAR" loading="lazy" decoding="async"></div>
+                </article>
+              </li>
+              <li class="aura-carousel__slide" aria-roledescription="diapositiva" aria-label="2 de 6">
+                <article class="aura-tile aura-tile--media-fit h-100">
+                  <div class="aura-tile__copy">
+                    <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">auraPhone Duo</p>
+                    <h3 class="aura-h3">Dos apps, lado a lado.</h3>
+                    <p class="aura-tile__text">Split View en auraOS&nbsp;27 aprovecha la pantalla de 7,6&nbsp;pulgadas: el mapa a un lado y el chat al&nbsp;otro.</p>
+                  </div>
+                  <div class="aura-tile__media"><img class="aura-img" src="../img/auraphone-destacado-3.webp" data-slot="auraphone-destacado-3" width="1600" height="1200" alt="auraPhone Duo abierto en tres cuartos sobre fondo negro, con dos apps lado a lado en su pantalla de 7,6 pulgadas: un mapa con la ruta y un chat" loading="lazy" decoding="async"></div>
+                </article>
+              </li>
+              <li class="aura-carousel__slide" aria-roledescription="diapositiva" aria-label="3 de 6">
+                <article class="aura-tile aura-tile--media-fit h-100">
+                  <div class="aura-tile__copy">
+                    <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">Diseño térmico</p>
+                    <h3 class="aura-h3">Una cámara de vapor el triple de grande.</h3>
+                    <p class="aura-tile__text">Reparte el calor del AURA A20 Pro por todo el unibody de aluminio, partida tras&nbsp;partida.</p>
+                  </div>
+                  <div class="aura-tile__media"><img class="aura-img" src="../img/auraphone-zoom-4.webp" data-slot="auraphone-zoom-4" width="1600" height="1200" alt="Interior de un teléfono desmontado, con la placa térmica de cobre y pasta azul sobre el procesador" loading="lazy" decoding="async"></div>
+                </article>
+              </li>
+              <li class="aura-carousel__slide" aria-roledescription="diapositiva" aria-label="4 de 6">
+                <article class="aura-tile aura-tile--media-fit h-100">
+                  <div class="aura-tile__copy">
+                    <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">Batería</p>
+                    <h3 class="aura-h3">Hasta 43 horas de vídeo.</h3>
+                    <p class="aura-tile__text">El auraPhone 18 Pro Max aguanta una temporada entera. Con MagSafe de 25&nbsp;W, el 50&nbsp;% llega en unos 15&nbsp;minutos.</p>
+                  </div>
+                  <div class="aura-tile__media"><img class="aura-img" src="../img/auraphone-destacado-2.webp" data-slot="auraphone-destacado-2" width="1600" height="1200" alt="Cargador magnético plateado sobre su soporte de aluminio en forma de anillo, encima de una mesa negra" loading="lazy" decoding="async"></div>
+                </article>
+              </li>
+              <li class="aura-carousel__slide" aria-roledescription="diapositiva" aria-label="5 de 6">
+                <article class="aura-tile aura-tile--media-fit h-100">
+                  <div class="aura-tile__copy">
+                    <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">Resistencia</p>
+                    <h3 class="aura-h3">Ceramic Shield 2. Y un IP68.</h3>
+                    <p class="aura-tile__text">El frontal más duro de un auraPhone y protección frente al agua y el polvo, para los despistes de cada&nbsp;día.</p>
+                  </div>
+                  <div class="aura-tile__media"><img class="aura-img" src="../img/auraphone-destacado-4.webp" data-slot="auraphone-destacado-4" width="1600" height="1200" alt="Gotas de agua sobre la pantalla de un auraPhone negro apoyado en una tarima de madera mojada" loading="lazy" decoding="async"></div>
+                </article>
+              </li>
+              <li class="aura-carousel__slide" aria-roledescription="diapositiva" aria-label="6 de 6">
+                <article class="aura-tile aura-tile--media-fit h-100">
+                  <div class="aura-tile__copy">
+                    <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">Conectividad</p>
+                    <h3 class="aura-h3">Wi-Fi 7, 5G y USB-C.</h3>
+                    <p class="aura-tile__text">Descargas que no se hacen esperar y un USB-C con velocidades USB&nbsp;3 para pasar tus vídeos al auraBook en&nbsp;segundos.</p>
+                  </div>
+                  <div class="aura-tile__media"><img class="aura-img" src="../img/auraphone-destacado-5.webp" data-slot="auraphone-destacado-5" width="1600" height="1200" alt="Conector USB-C de un cable claro en primer plano, sobre fondo negro" loading="lazy" decoding="async"></div>
+                </article>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </section>
@@ -142,7 +250,7 @@
             <p class="aura-caption auraphone-aviso-estado" data-ap="aviso-estado" hidden></p>
           </div>
           <div class="aura-split__media aura-media aura-media--fill aura-media--halo m-0" style="aspect-ratio:4/3">
-            <img class="aura-img" src="../img/auraphone-duo.webp" data-slot="auraphone-duo" width="1600" height="1200" alt="auraPhone Duo plateado, entreabierto en vertical y con su triple cámara, sobre fondo negro" loading="lazy" decoding="async" data-aura-reveal="scale">
+            <img class="aura-img" src="../img/auraphone-duo.webp" data-slot="auraphone-duo" width="1600" height="1200" alt="auraPhone Duo blanco abierto y visto por detrás: doble cámara en una cápsula y la pantalla exterior apagada" loading="lazy" decoding="async" data-aura-reveal="scale">
           </div>
         </div>
 
@@ -154,132 +262,348 @@
       </div>
     </section>
 
-    <!-- ================= Zoom a la innovación =================
-         Bento de cuatro <article>: cada tesela presenta una función (cámara, zoom, pantalla, diseño térmico) que se entiende sola. -->
-    <section class="aura-section aura-section--band" id="camara" aria-labelledby="camara-titulo">
+    <!-- ================= Diseño y colores =================
+         Exhibición de color de la base (data-aura-colorway): auraphone.js pinta las muestras con los acabados del
+         catálogo y asigna a cada una la foto real de ese color (fundido cruzado, solo opacidad). Debajo, el
+         unibody en un bloque texto + imagen con dos cifras del catálogo. -->
+    <section class="aura-section aura-section--band" id="diseno" aria-labelledby="diseno-titulo">
       <div class="aura-container">
-        <header class="aura-section-head">
-          <p class="aura-eyebrow aura-eyebrow--mono">Zoom a la innovación</p>
-          <h2 class="aura-h2" id="camara-titulo">Visto de cerca, es aún más extraordinario.</h2>
-          <p class="aura-lead">auraPhone 18 Pro y 18 Pro Max: cada sensor, cada píxel y cada milímetro de aluminio, diseñados como un solo sistema.</p>
+        <header class="aura-section-head aura-section-head--center">
+          <p class="aura-eyebrow aura-eyebrow--mono">Diseño</p>
+          <h2 class="aura-h2" id="diseno-titulo">Unibody de aluminio. En <span data-ap="acabados-num">cuatro</span> acabados.</h2>
+          <p class="aura-lead">La meseta de cámaras cruza toda la trasera y el aluminio lo envuelve todo, de una sola pieza.</p>
         </header>
 
-        <div class="aura-bento">
-          <div class="aura-bento__col">
-            <article class="aura-tile aura-tile--cover aura-tile--tall" data-aura-reveal>
-              <div class="aura-tile__media"><img class="aura-img" src="../img/auraphone-zoom-1.webp" data-slot="auraphone-zoom-1" width="1600" height="1200" alt="Primer plano del módulo de triple cámara de un auraPhone gris oscuro, sobre fondo negro" loading="lazy" decoding="async"></div>
-              <p class="aura-eyebrow aura-eyebrow--mono aura-tile__tag">Cámara Fusion</p>
-              <div class="aura-tile__copy">
-                <h3 class="aura-h3">48&nbsp;Mpx. Ahora con apertura variable.</h3>
-                <p class="aura-tile__text">El diafragma se abre hasta f/1,48 para la noche y se cierra hasta f/4 para que todo el paisaje salga nítido. La luz, a tus órdenes.</p>
-              </div>
-            </article>
-            <article class="aura-tile aura-tile--cover" data-aura-reveal style="--i:1">
-              <div class="aura-tile__media"><img class="aura-img" src="../img/auraphone-zoom-2.webp" data-slot="auraphone-zoom-2" width="1600" height="1200" alt="Silueta de un faro con la linterna encendida al anochecer, sobre un horizonte naranja y un cielo azul oscuro" loading="lazy" decoding="async"></div>
-              <p class="aura-eyebrow aura-eyebrow--mono aura-tile__tag">Teleobjetivo</p>
-              <div class="aura-tile__copy">
-                <h3 class="aura-h3">Zoom x8. Como estar allí.</h3>
-                <p class="aura-tile__text">Un teleobjetivo de 48&nbsp;Mpx con calidad óptica hasta x8<sup class="aura-footnote-ref"><a href="#nota-zoom" id="ref-zoom" aria-label="Nota 3">3</a></sup>. El concierto, desde la grada; los detalles, desde primera fila.</p>
-              </div>
-            </article>
+        <div class="aura-colorway auraphone-colores" data-aura-colorway="" data-ap-colorway="auraphone-18-pro" data-color="azul-glacial">
+          <div class="aura-gallery">
+            <img class="aura-img" src="../img/auraphone-18-pro-azul-glacial.webp" data-slot="auraphone-18-pro-azul-glacial" data-fallback="auraphone-18-pro" width="1600" height="1200" alt="auraPhone 18 Pro azul glacial de espaldas, con la meseta de cámaras de lado a lado, sobre fondo negro" loading="lazy" decoding="async">
           </div>
-          <div class="aura-bento__col">
-            <article class="aura-tile aura-tile--cover" data-aura-reveal style="--i:1">
-              <div class="aura-tile__media"><img class="aura-img" src="../img/auraphone-zoom-3.webp" data-slot="auraphone-zoom-3" width="1600" height="1200" alt="Parte superior de un auraPhone con la isla de la cámara frontal y la pantalla de bloqueo violeta, sobre fondo negro" loading="lazy" decoding="async"></div>
-              <p class="aura-eyebrow aura-eyebrow--mono aura-tile__tag">Pantalla</p>
-              <div class="aura-tile__copy">
-                <h3 class="aura-h3">Dynamic Island. Tres cosas a la vez.</h3>
-                <p class="aura-tile__text">Hasta tres actividades en directo sobre una pantalla ProMotion de 120&nbsp;Hz y 3.000&nbsp;nits que se lee hasta a pleno sol de agosto.</p>
-              </div>
-            </article>
-            <article class="aura-tile aura-tile--cover aura-tile--tall" data-aura-reveal style="--i:2">
-              <div class="aura-tile__media"><img class="aura-img" src="../img/auraphone-zoom-4.webp" data-slot="auraphone-zoom-4" width="1600" height="1200" alt="Interior de un teléfono desmontado, con la placa térmica de cobre y pasta azul sobre el procesador" loading="lazy" decoding="async"></div>
-              <p class="aura-eyebrow aura-eyebrow--mono aura-tile__tag">Diseño térmico</p>
-              <div class="aura-tile__copy">
-                <h3 class="aura-h3">Una cámara de vapor el triple de grande.</h3>
-                <p class="aura-tile__text">Reparte el calor del AURA A20 Pro por todo el unibody de aluminio: un 40&nbsp;% más de rendimiento sostenido, partida tras partida.</p>
-              </div>
-            </article>
+          <fieldset class="aura-colorway__picker">
+            <legend class="visually-hidden">Acabados del auraPhone 18 Pro y del 18 Pro Max</legend>
+            <div class="aura-swatches"></div>
+            <p class="aura-colorway__name"><strong>Azul glacial</strong></p>
+          </fieldset>
+        </div>
+
+        <div class="aura-split auraphone-bloque">
+          <div class="aura-split__copy auraphone-copy">
+            <p class="aura-eyebrow aura-eyebrow--mono">Ingeniería AURA</p>
+            <h3 class="aura-h2">Ligero en la mano. Firme en el bolsillo.</h3>
+            <p class="aura-body">Un solo bloque de aluminio forma el chasis y la meseta de cámaras, y por delante lo protege Ceramic Shield&nbsp;2. Es la misma estructura que reparte el calor del chip.</p>
+            <ul class="aura-stats aura-stats--lg auraphone-stats-lg">
+              <li class="aura-stat aura-stat--lg" data-aura-reveal="stat" style="--i:0">
+                <p class="aura-stat__pre">Solo</p>
+                <p class="aura-stat__value">211<span class="aura-stat__unit">&nbsp;g</span></p>
+                <p class="aura-stat__label">pesa el auraPhone 18 Pro</p>
+              </li>
+              <li class="aura-stat aura-stat--lg" data-aura-reveal="stat" style="--i:1">
+                <p class="aura-stat__pre">Con</p>
+                <p class="aura-stat__value">8,8<span class="aura-stat__unit">&nbsp;mm</span></p>
+                <p class="aura-stat__label">de grosor, los dos 18 Pro</p>
+              </li>
+            </ul>
+          </div>
+          <div class="aura-split__media aura-media aura-media--halo">
+            <img class="aura-img" src="../img/auraphone-diseno.webp" data-slot="auraphone-diseno" width="1600" height="1200" alt="auraPhone 18 Pro plata en diagonal sobre fondo negro: unibody de aluminio y meseta de cámaras" loading="lazy" decoding="async" data-aura-reveal="scale">
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ================= Lo más destacado (carrusel) =================
-         Carrusel del sistema: región con aria-roledescription y cada diapositiva con su posición («1 de 6»). -->
-    <section class="aura-section" id="destacado" aria-labelledby="destacado-titulo">
+    <!-- ================= Pantalla =================
+         Bloque texto + imagen (la foto, sin leyenda, en un <div>) con dos cifras de la pantalla del catálogo. -->
+    <section class="aura-section" id="pantalla" aria-labelledby="pantalla-titulo">
       <div class="aura-container">
-        <header class="aura-section-head">
-          <p class="aura-eyebrow aura-eyebrow--mono">auraPhone 18 / En detalle</p>
-          <h2 class="aura-h2" id="destacado-titulo">Lo más destacado.</h2>
-          <p class="aura-lead">Seis razones para cambiar de teléfono.</p>
-        </header>
-
-        <div class="aura-carousel aura-carousel--bleed" data-aura-carousel role="region" aria-roledescription="carrusel" aria-label="Lo más destacado del auraPhone">
-          <div class="aura-carousel__viewport">
-            <ul class="aura-carousel__track">
-              <li class="aura-carousel__slide" aria-roledescription="diapositiva" aria-label="1 de 6">
-                <article class="aura-tile aura-tile--media-fit h-100">
-                  <div class="aura-tile__copy">
-                    <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">AURA Intelligence</p>
-                    <h3 class="aura-h3">Te entiende a la primera.</h3>
-                    <p class="aura-tile__text">Resume, redacta y encuentra lo que buscas, en el propio auraPhone siempre que puede. Tus datos no salen de&nbsp;casa.</p>
-                  </div>
-                  <div class="aura-tile__media"><img class="aura-img" src="../img/auraphone-destacado-1.webp" data-slot="auraphone-destacado-1" width="1600" height="1200" alt="Mano a contraluz que sostiene un auraPhone con la pantalla de bloqueo azul encendida, al anochecer" loading="lazy" decoding="async"></div>
-                </article>
+        <div class="aura-split aura-split--reverse">
+          <div class="aura-split__copy auraphone-copy">
+            <p class="aura-eyebrow aura-eyebrow--mono">Pantalla Super Retina XDR</p>
+            <h2 class="aura-h1" id="pantalla-titulo">Se lee hasta a pleno sol de&nbsp;agosto.</h2>
+            <p class="aura-body">ProMotion ajusta la frecuencia hasta 120&nbsp;Hz para que todo se deslice con suavidad, y el brillo sube hasta 3.000&nbsp;nits cuando sales a la calle. En el 18 Pro Max, 6,9&nbsp;pulgadas; en el 18 Pro, 6,3.</p>
+            <ul class="aura-stats aura-stats--lg auraphone-stats-lg">
+              <li class="aura-stat aura-stat--lg" data-aura-reveal="stat" style="--i:0">
+                <p class="aura-stat__pre">Hasta</p>
+                <p class="aura-stat__value">3.000</p>
+                <p class="aura-stat__label">nits de brillo máximo al aire libre</p>
               </li>
-              <li class="aura-carousel__slide" aria-roledescription="diapositiva" aria-label="2 de 6">
-                <article class="aura-tile aura-tile--media-fit h-100">
-                  <div class="aura-tile__copy">
-                    <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">Batería</p>
-                    <h3 class="aura-h3">Hasta 43 horas de vídeo.</h3>
-                    <p class="aura-tile__text">El auraPhone 18 Pro Max aguanta una temporada entera. Con MagSafe de 25&nbsp;W, el 50&nbsp;% llega en unos 15&nbsp;minutos.</p>
-                  </div>
-                  <div class="aura-tile__media"><img class="aura-img" src="../img/auraphone-destacado-2.webp" data-slot="auraphone-destacado-2" width="1600" height="1200" alt="Cargador magnético plateado sobre un soporte de aluminio, junto a las cámaras de un auraPhone, sobre fondo negro" loading="lazy" decoding="async"></div>
-                </article>
-              </li>
-              <li class="aura-carousel__slide" aria-roledescription="diapositiva" aria-label="3 de 6">
-                <article class="aura-tile aura-tile--media-fit h-100">
-                  <div class="aura-tile__copy">
-                    <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">auraPhone Duo</p>
-                    <h3 class="aura-h3">Dos apps, lado a lado.</h3>
-                    <p class="aura-tile__text">Split View en auraOS&nbsp;27 aprovecha la pantalla de 7,6&nbsp;pulgadas: el mapa a un lado y el chat al otro.</p>
-                  </div>
-                  <div class="aura-tile__media"><img class="aura-img" src="../img/auraphone-destacado-3.webp" data-slot="auraphone-destacado-3" width="1600" height="1200" alt="auraPhone Duo abierto con la pantalla de inicio y un fondo de trazos azules, de pie sobre una mesa en penumbra" loading="lazy" decoding="async"></div>
-                </article>
-              </li>
-              <li class="aura-carousel__slide" aria-roledescription="diapositiva" aria-label="4 de 6">
-                <article class="aura-tile aura-tile--media-fit h-100">
-                  <div class="aura-tile__copy">
-                    <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">Resistencia</p>
-                    <h3 class="aura-h3">Ceramic Shield 2. Y un IP68.</h3>
-                    <p class="aura-tile__text">El frontal más duro de un auraPhone y protección frente al agua y el polvo, para los despistes de cada día.</p>
-                  </div>
-                  <div class="aura-tile__media"><img class="aura-img" src="../img/auraphone-destacado-4.webp" data-slot="auraphone-destacado-4" width="1600" height="1200" alt="Gotas de agua sobre la pantalla de un auraPhone negro apoyado en una tarima de madera mojada" loading="lazy" decoding="async"></div>
-                </article>
-              </li>
-              <li class="aura-carousel__slide" aria-roledescription="diapositiva" aria-label="5 de 6">
-                <article class="aura-tile aura-tile--media-fit h-100">
-                  <div class="aura-tile__copy">
-                    <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">Conectividad</p>
-                    <h3 class="aura-h3">Wi-Fi 7, 5G y USB-C.</h3>
-                    <p class="aura-tile__text">Descargas que no se hacen esperar y un USB-C con velocidades USB&nbsp;3 para pasar tus vídeos al auraBook en segundos.</p>
-                  </div>
-                  <div class="aura-tile__media"><img class="aura-img" src="../img/auraphone-destacado-5.webp" data-slot="auraphone-destacado-5" width="1600" height="1200" alt="Conector USB-C de un cable claro en primer plano, sobre fondo negro" loading="lazy" decoding="async"></div>
-                </article>
-              </li>
-              <li class="aura-carousel__slide" aria-roledescription="diapositiva" aria-label="6 de 6">
-                <article class="aura-tile aura-tile--media-fit h-100">
-                  <div class="aura-tile__copy">
-                    <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">Privacidad</p>
-                    <h3 class="aura-h3">Tú eres la contraseña.</h3>
-                    <p class="aura-tile__text">Face ID en los 18&nbsp;Pro y Touch ID en el Duo: desbloquean, pagan con AURA Pay y rellenan contraseñas. Tus datos biométricos no salen del dispositivo.</p>
-                  </div>
-                  <div class="aura-tile__media"><img class="aura-img" src="../img/auraphone-destacado-6.webp" data-slot="auraphone-destacado-6" width="1600" height="1200" alt="Mano que acerca un auraPhone negro a un datáfono con el símbolo de pago sin contacto" loading="lazy" decoding="async"></div>
-                </article>
+              <li class="aura-stat aura-stat--lg" data-aura-reveal="stat" style="--i:1">
+                <p class="aura-stat__pre">ProMotion</p>
+                <p class="aura-stat__value">120<span class="aura-stat__unit">&nbsp;Hz</span></p>
+                <p class="aura-stat__label">en los tres auraPhone, también en las dos pantallas del Duo</p>
               </li>
             </ul>
           </div>
+          <div class="aura-split__media aura-media aura-media--halo">
+            <img class="aura-img" src="../img/auraphone-zoom-3.webp" data-slot="auraphone-zoom-3" width="1600" height="1200" alt="Parte superior de un auraPhone con la isla de la cámara frontal y la pantalla de bloqueo encendida: la hora sobre una aurora azul y violeta, sobre fondo negro" loading="lazy" decoding="async" data-aura-reveal="scale">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= Cámaras =================
+         Foto protagonista con leyenda (<figure> + <figcaption>), tres cifras del catálogo y la galería de fotos de
+         ejemplo: el carrusel de la base (--bleed --wide) con un <figure> y su pie por diapositiva. -->
+    <section class="aura-section aura-section--band" id="camaras" aria-labelledby="camaras-titulo">
+      <div class="aura-container">
+        <header class="aura-section-head aura-section-head--center">
+          <p class="aura-eyebrow aura-eyebrow--mono">Cámaras</p>
+          <h2 class="aura-h2" id="camaras-titulo">Más luz. Más alcance.</h2>
+          <p class="aura-lead">La cámara Fusion de 48&nbsp;Mpx con apertura variable y un teleobjetivo de 48&nbsp;Mpx que llega hasta x8 sin perder calidad.</p>
+        </header>
+
+        <figure class="aura-media aura-media--frame auraphone-figura" data-aura-reveal="fade">
+          <img class="aura-img" src="../img/auraphone-zoom-1.webp" data-slot="auraphone-zoom-1" width="1600" height="1200" alt="Primer plano de la meseta de cámaras de un auraPhone plateado: tres objetivos, flash y LiDAR sobre negro" loading="lazy" decoding="async" style="--photo-focus: 60% 45%">
+          <figcaption class="aura-media__caption">Tres objetivos, flash y LiDAR en la meseta de aluminio del auraPhone 18 Pro.</figcaption>
+        </figure>
+
+        <ul class="aura-stats aura-stats--lg auraphone-cifras-fila">
+          <li class="aura-stat aura-stat--lg" data-aura-reveal="stat" style="--i:0">
+            <p class="aura-stat__pre">Cámara Fusion de</p>
+            <p class="aura-stat__value">48<span class="aura-stat__unit">&nbsp;Mpx</span></p>
+            <p class="aura-stat__label">en la principal y en el teleobjetivo</p>
+          </li>
+          <li class="aura-stat aura-stat--lg" data-aura-reveal="stat" style="--i:1">
+            <p class="aura-stat__pre">Apertura de</p>
+            <p class="aura-stat__value">f/1,48</p>
+            <p class="aura-stat__label">a f/4: la primera variable en un auraPhone</p>
+          </li>
+          <li class="aura-stat aura-stat--lg" data-aura-reveal="stat" style="--i:2">
+            <p class="aura-stat__pre">Zoom de calidad óptica</p>
+            <p class="aura-stat__value">x8</p>
+            <p class="aura-stat__label">con el teleobjetivo, como una focal de 200&nbsp;mm<sup class="aura-footnote-ref"><a href="#nota-zoom" id="ref-zoom" aria-label="Nota 3">3</a></sup></p>
+          </li>
+        </ul>
+
+        <!-- Galería de fotos de ejemplo: subtítulo del capítulo y llamada a la nota que dice de dónde salen las fotos -->
+        <div class="auraphone-galeria">
+          <div class="aura-section-head">
+            <h3 class="aura-h3">Fotos de ejemplo.</h3>
+            <p class="aura-body">Retrato, noche, macro y zoom: cuatro maneras de usar la cámara<sup class="aura-footnote-ref"><a href="#nota-fotos" id="ref-fotos" aria-label="Nota 4">4</a></sup>.</p>
+          </div>
+          <div class="aura-carousel aura-carousel--bleed aura-carousel--wide" data-aura-carousel role="region" aria-roledescription="carrusel" aria-label="Fotos de ejemplo">
+            <div class="aura-carousel__viewport">
+              <ul class="aura-carousel__track">
+                <li class="aura-carousel__slide" aria-roledescription="diapositiva" aria-label="1 de 4">
+                  <figure class="aura-media aura-media--frame">
+                    <img class="aura-img" src="../img/auraphone-foto-1.webp" data-slot="auraphone-foto-1" width="1600" height="1200" alt="Retrato de un gato atigrado de ojos azules con el fondo desenfocado en tonos cálidos" loading="lazy" decoding="async">
+                    <figcaption class="aura-media__caption">Retrato · Cámara Fusion a f/1,48</figcaption>
+                  </figure>
+                </li>
+                <li class="aura-carousel__slide" aria-roledescription="diapositiva" aria-label="2 de 4">
+                  <figure class="aura-media aura-media--frame">
+                    <img class="aura-img" src="../img/auraphone-foto-2.webp" data-slot="auraphone-foto-2" width="1600" height="1200" alt="Aurora boreal verde y roja sobre un lago en calma, con las luces de un pueblo reflejadas en el agua" loading="lazy" decoding="async">
+                    <figcaption class="aura-media__caption">Aurora boreal · Modo Noche</figcaption>
+                  </figure>
+                </li>
+                <li class="aura-carousel__slide" aria-roledescription="diapositiva" aria-label="3 de 4">
+                  <figure class="aura-media aura-media--frame">
+                    <img class="aura-img" src="../img/auraphone-foto-3.webp" data-slot="auraphone-foto-3" width="1600" height="1200" alt="Margarita blanca cubierta de gotas de lluvia, en primer plano sobre un fondo verde oscuro" loading="lazy" decoding="async">
+                    <figcaption class="aura-media__caption">Margarita bajo la lluvia · Macro</figcaption>
+                  </figure>
+                </li>
+                <li class="aura-carousel__slide" aria-roledescription="diapositiva" aria-label="4 de 4">
+                  <figure class="aura-media aura-media--frame">
+                    <img class="aura-img" src="../img/auraphone-zoom-2.webp" data-slot="auraphone-zoom-2" width="1600" height="1200" alt="Silueta de un faro con la linterna encendida al anochecer, sobre un horizonte naranja y un cielo azul oscuro" loading="lazy" decoding="async">
+                    <figcaption class="aura-media__caption">Faro al anochecer · Teleobjetivo x8</figcaption>
+                  </figure>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= Chip y rendimiento =================
+         Foto panorámica con leyenda (<figure>) y las cifras del chip, sacadas de las especificaciones del catálogo. -->
+    <section class="aura-section" id="rendimiento" aria-labelledby="rendimiento-titulo">
+      <div class="aura-container">
+        <header class="aura-section-head aura-section-head--center">
+          <p class="aura-eyebrow aura-eyebrow--mono">AURA A20 Pro</p>
+          <h2 class="aura-h2" id="rendimiento-titulo">2&nbsp;nm de potencia. Y la cabeza fría.</h2>
+          <p class="aura-lead">El mismo chip en los tres auraPhone, con una cámara de vapor el triple de grande que sostiene el ritmo partida tras partida.</p>
+        </header>
+
+        <figure class="aura-media aura-media--frame auraphone-figura" data-aura-reveal="fade">
+          <img class="aura-img" src="../img/auraphone-chip.webp" data-slot="auraphone-chip" width="1600" height="1200" alt="Oblea de silicio en macro, con la rejilla de chips en reflejos iridiscentes de colores" loading="lazy" decoding="async">
+          <figcaption class="aura-media__caption">Una oblea de silicio antes de cortarla: cada recuadro será un chip.</figcaption>
+        </figure>
+
+        <ul class="aura-stats aura-stats--lg auraphone-cifras-fila">
+          <li class="aura-stat aura-stat--lg" data-aura-reveal="stat" style="--i:0">
+            <p class="aura-stat__pre">Fabricado a</p>
+            <p class="aura-stat__value">2<span class="aura-stat__unit">&nbsp;nm</span></p>
+            <p class="aura-stat__label">más transistores en el mismo espacio</p>
+          </li>
+          <li class="aura-stat aura-stat--lg" data-aura-reveal="stat" style="--i:1">
+            <p class="aura-stat__pre">CPU de</p>
+            <p class="aura-stat__value">6<span class="aura-stat__unit">&nbsp;núcleos</span></p>
+            <p class="aura-stat__label">y GPU de 7 núcleos para juegos y vídeo</p>
+          </li>
+          <li class="aura-stat aura-stat--lg" data-aura-reveal="stat" style="--i:2">
+            <p class="aura-stat__pre">Un</p>
+            <p class="aura-stat__value">40<span class="aura-stat__unit">&nbsp;%</span></p>
+            <p class="aura-stat__label">más de rendimiento sostenido, gracias a la cámara de vapor</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ================= Autonomía =================
+         Bloque texto + imagen. Las cifras (una por auraPhone) las pinta auraphone.js desde specs.bateria del catálogo. -->
+    <section class="aura-section aura-section--band" id="bateria" aria-labelledby="bateria-titulo">
+      <div class="aura-container">
+        <div class="aura-split">
+          <div class="aura-split__copy auraphone-copy">
+            <p class="aura-eyebrow aura-eyebrow--mono">Batería</p>
+            <h2 class="aura-h1 auraphone-frases" id="bateria-titulo"><span>Un día entero.</span> <span>Y lo que haga&nbsp;falta.</span></h2>
+            <p class="aura-body">Con MagSafe de 25&nbsp;W, la mitad de la batería vuelve en lo que dura un café: unos 15&nbsp;minutos en los 18&nbsp;Pro y 20 en el Duo<sup class="aura-footnote-ref"><a href="#nota-bateria" id="ref-bateria" aria-label="Nota 5">5</a></sup>.</p>
+            <ul class="aura-stats aura-stats--lg auraphone-stats-lg" data-ap-autonomia hidden></ul>
+          </div>
+          <div class="aura-split__media aura-media aura-media--halo">
+            <img class="aura-img" src="../img/auraphone-bateria.webp" data-slot="auraphone-bateria" width="1600" height="1200" alt="Dos auraPhone 18 Pro plata de espaldas sobre soportes de carga magnética, en penumbra" loading="lazy" decoding="async" data-aura-reveal="scale">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= auraOS 27 y AURA Intelligence =================
+         Bloque texto + imagen con tres características (los iconos son decorativos: aria-hidden). -->
+    <section class="aura-section" id="auraos" aria-labelledby="auraos-titulo">
+      <div class="aura-container">
+        <div class="aura-split aura-split--reverse">
+          <div class="aura-split__copy">
+            <p class="aura-eyebrow aura-eyebrow--mono">auraOS 27</p>
+            <h2 class="aura-h1" id="auraos-titulo">Te entiende a la&nbsp;primera.</h2>
+            <p class="aura-body">AURA Intelligence resume, redacta y encuentra lo que buscas, en el propio auraPhone siempre que puede: tus datos no salen de casa<sup class="aura-footnote-ref"><a href="#nota-intelligence" id="ref-intelligence" aria-label="Nota 6">6</a></sup>.</p>
+            <div class="aura-stack" style="--stack:1.5rem">
+              <div class="aura-feature aura-feature--inline">
+                <span class="aura-feature__icon"><i class="bi bi-stars" aria-hidden="true"></i></span>
+                <h3 class="aura-feature__title">Escribe y resume por ti</h3>
+                <p class="aura-feature__text">Un correo largo en tres líneas o una respuesta con el tono justo, sin salir de la app.</p>
+              </div>
+              <div class="aura-feature aura-feature--inline">
+                <span class="aura-feature__icon"><i class="bi bi-capsule" aria-hidden="true"></i></span>
+                <h3 class="aura-feature__title">Dynamic Island</h3>
+                <p class="aura-feature__text">Hasta tres actividades en directo a la vez: el pedido, el partido y el temporizador.</p>
+              </div>
+              <div class="aura-feature aura-feature--inline">
+                <span class="aura-feature__icon"><i class="bi bi-layout-split" aria-hidden="true"></i></span>
+                <h3 class="aura-feature__title">Split View en el Duo</h3>
+                <p class="aura-feature__text">Dos apps lado a lado en la pantalla de 7,6&nbsp;pulgadas.</p>
+              </div>
+            </div>
+          </div>
+          <div class="aura-split__media aura-media aura-media--halo">
+            <img class="aura-img" src="../img/auraphone-destacado-1.webp" data-slot="auraphone-destacado-1" width="1600" height="1200" alt="auraPhone 18 Pro negro en tres cuartos sobre fondo negro, con la pantalla de bloqueo encendida: la hora, un pedido en directo y la Dynamic Island con un temporizador" loading="lazy" decoding="async" data-aura-reveal="scale">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= Privacidad y seguridad =================
+         Bloque texto + imagen con tres características. -->
+    <section class="aura-section aura-section--band" id="privacidad" aria-labelledby="privacidad-titulo">
+      <div class="aura-container">
+        <div class="aura-split">
+          <div class="aura-split__copy">
+            <p class="aura-eyebrow aura-eyebrow--mono">Privacidad y seguridad</p>
+            <h2 class="aura-h1" id="privacidad-titulo">Tú eres la&nbsp;contraseña.</h2>
+            <p class="aura-body">Tu cara o tu huella desbloquean, pagan y rellenan contraseñas. Y lo que te identifica se queda en tu auraPhone.</p>
+            <div class="aura-stack" style="--stack:1.5rem">
+              <div class="aura-feature aura-feature--inline">
+                <span class="aura-feature__icon"><i class="bi bi-person-bounding-box" aria-hidden="true"></i></span>
+                <h3 class="aura-feature__title">Face ID y Touch ID</h3>
+                <p class="aura-feature__text">Face ID en los 18 Pro y Touch ID en el botón lateral del Duo. Tus datos biométricos no salen del dispositivo.</p>
+              </div>
+              <div class="aura-feature aura-feature--inline">
+                <span class="aura-feature__icon"><i class="bi bi-wallet2" aria-hidden="true"></i></span>
+                <h3 class="aura-feature__title">AURA Pay</h3>
+                <p class="aura-feature__text">Acercas el auraPhone al datáfono y confirmas con la cara o la huella, sin sacar la tarjeta.</p>
+              </div>
+              <div class="aura-feature aura-feature--inline">
+                <span class="aura-feature__icon"><i class="bi bi-key" aria-hidden="true"></i></span>
+                <h3 class="aura-feature__title">Contraseñas</h3>
+                <p class="aura-feature__text">Se rellenan solas al iniciar sesión, siempre después de reconocerte.</p>
+              </div>
+            </div>
+          </div>
+          <div class="aura-split__media aura-media aura-media--halo">
+            <img class="aura-img" src="../img/auraphone-destacado-6.webp" data-slot="auraphone-destacado-6" width="1600" height="1200" alt="auraPhone 18 Pro negro con AURA Pay en la pantalla, sobre fondo negro: la AURA Card y la confirmación «Hecho» de un pago de 4,20 €" loading="lazy" decoding="async" data-aura-reveal="scale">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= Medio ambiente =================
+         Bloque texto + imagen con los compromisos que ya cuentan Acerca y Trade In, y el enlace a Trade In. -->
+    <section class="aura-section" id="medio-ambiente" aria-labelledby="ambiente-titulo">
+      <div class="aura-container">
+        <div class="aura-split aura-split--reverse">
+          <div class="aura-split__copy">
+            <p class="aura-eyebrow aura-eyebrow--mono">Medio ambiente</p>
+            <h2 class="aura-h2" id="ambiente-titulo">Más años en tu mano. Menos en un&nbsp;cajón.</h2>
+            <p class="aura-body">Un auraPhone que dura es el que menos huella deja. Y cuando lo cambies, el anterior tiene una segunda vida o se recicla con cuidado.</p>
+            <ul class="aura-checklist">
+              <li>Electricidad renovable en las oficinas, las tiendas y los centros de datos de AURA</li>
+              <li>Aluminio, cobalto y tierras raras reciclados</li>
+              <li>Con AURA Trade In, tu móvil anterior se reacondiciona o se recicla gratis</li>
+            </ul>
+            <div class="aura-cluster">
+              <a class="aura-link" href="trade-in.html">Valorar mi dispositivo</a>
+            </div>
+          </div>
+          <div class="aura-split__media aura-media aura-media--halo">
+            <img class="aura-img" src="../img/auraphone-medio-ambiente.webp" data-slot="auraphone-medio-ambiente" width="1600" height="1200" alt="Campo de paneles solares al atardecer, con montañas en el horizonte" loading="lazy" decoding="async" data-aura-reveal="scale">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= Accesorios =================
+         Dos teselas (<article>) con fotos de accesorio sobre negro, fundidas con la tarjeta (__media--blend). -->
+    <section class="aura-section aura-section--band" id="accesorios" aria-labelledby="accesorios-titulo">
+      <div class="aura-container">
+        <header class="aura-section-head">
+          <p class="aura-eyebrow aura-eyebrow--mono">Accesorios MagSafe</p>
+          <h2 class="aura-h2" id="accesorios-titulo">Se acopla solo. Con un clic.</h2>
+          <p class="aura-lead">Los tres auraPhone cargan con MagSafe de hasta 25&nbsp;W: los imanes alinean la funda y el cargador a la primera.</p>
+        </header>
+        <div class="aura-bento">
+          <article class="aura-tile aura-tile--media-fit" data-aura-reveal>
+            <div class="aura-tile__copy">
+              <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">Funda MagSafe</p>
+              <h3 class="aura-h3">Protege sin tapar la meseta.</h3>
+              <p class="aura-tile__text">Se ajusta al milímetro, deja libres las tres cámaras y no estorba a la carga&nbsp;magnética.</p>
+            </div>
+            <div class="aura-tile__media aura-tile__media--blend"><img class="aura-img" src="../img/auraphone-accesorio-funda.webp" data-slot="auraphone-accesorio-funda" width="1600" height="1200" alt="Funda de ante azul petróleo puesta en un auraPhone, con el hueco de la meseta de cámaras, sobre negro" loading="lazy" decoding="async"></div>
+          </article>
+          <article class="aura-tile aura-tile--media-fit" data-aura-reveal style="--i:1">
+            <div class="aura-tile__copy">
+              <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">Cargador MagSafe</p>
+              <h3 class="aura-h3">Hasta 25&nbsp;W, sin buscar el sitio.</h3>
+              <p class="aura-tile__text">Lo acercas y se coloca solo; con un adaptador USB-C, carga a toda&nbsp;velocidad.</p>
+            </div>
+            <div class="aura-tile__media aura-tile__media--blend"><img class="aura-img" src="../img/auraphone-accesorio-cargador.webp" data-slot="auraphone-accesorio-cargador" width="1600" height="1200" alt="Cargador magnético plateado y blanco con su cable USB-C, sobre fondo negro" loading="lazy" decoding="async"></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= Modelos =================
+         Las tarjetas de modelo (<article>, una por auraPhone) las pinta aura-ui.js desde data.js en [data-aura-lineup]. -->
+    <section class="aura-section" id="modelos" aria-labelledby="modelos-titulo">
+      <div class="aura-container">
+        <header class="aura-section-head aura-section-head--center">
+          <p class="aura-eyebrow aura-eyebrow--mono">La gama / 2026</p>
+          <h2 class="aura-h2" id="modelos-titulo">Elige tu auraPhone.</h2>
+          <p class="aura-lead">Tres formas de llevar el AURA A20 Pro. Todos con cámara Fusion de 48&nbsp;Mpx, Wi-Fi&nbsp;7 y USB-C.</p>
+        </header>
+
+        <div class="aura-lineup" data-aura-lineup="auraphone"></div>
+
+        <div class="aura-cluster justify-content-center mt-4" style="--cluster:.5rem 2rem">
+          <a class="aura-link" href="comparar.html?familia=auraphone">Comparar todos los modelos</a>
+          <a class="aura-link" href="trade-in.html">Valorar mi dispositivo</a>
         </div>
       </div>
     </section>
@@ -339,17 +663,19 @@
     <section class="aura-section aura-section--tight aura-footnotes" aria-labelledby="notas-titulo">
       <div class="aura-container">
         <h2 class="visually-hidden" id="notas-titulo">Notas</h2>
-        <!-- Numeradas: el número lo pone auraphone.js según las notas visibles -->
+        <!-- Numeradas, en el orden de sus llamadas en la página: el número lo pone auraphone.js según las notas visibles -->
         <ol class="aura-footnotes__list" data-ap-notas>
           <li id="nota-financiacion"><span data-aura-legal="financiacion">Financiación sin intereses, sujeta a la aprobación de la entidad financiera.</span> <a class="aura-footnotes__back" href="#ref-financiacion" aria-label="Volver al texto de la nota 1" title="Volver al texto de la nota 1"><i class="bi bi-arrow-return-left" aria-hidden="true"></i></a></li>
           <li id="nota-duo" hidden><span data-ap="nota-duo"></span> <a class="aura-footnotes__back" href="#ref-duo" aria-label="Volver al texto de la nota 2" title="Volver al texto de la nota 2"><i class="bi bi-arrow-return-left" aria-hidden="true"></i></a></li>
           <li id="nota-zoom">El zoom x8 de calidad óptica combina el teleobjetivo de 48&nbsp;Mpx con el recorte del sensor: equivale a una focal de 200&nbsp;mm. <a class="aura-footnotes__back" href="#ref-zoom" aria-label="Volver al texto de la nota 3" title="Volver al texto de la nota 3"><i class="bi bi-arrow-return-left" aria-hidden="true"></i></a></li>
+          <li id="nota-fotos">Las fotos de ejemplo son de bancos de imágenes con licencia libre y muestran el tipo de foto de cada modo: no se han hecho con un auraPhone. Autoría y licencias en <a href="legal.html#imagenes">Créditos de las imágenes</a>. <a class="aura-footnotes__back" href="#ref-fotos" aria-label="Volver al texto de la nota 4" title="Volver al texto de la nota 4"><i class="bi bi-arrow-return-left" aria-hidden="true"></i></a></li>
+          <li id="nota-bateria">Las cifras de autonomía son de reproducción de vídeo y dependen del uso, la configuración y la cobertura. Medidas por AURA Labs con unidades de preproducción. <a class="aura-footnotes__back" href="#ref-bateria" aria-label="Volver al texto de la nota 5" title="Volver al texto de la nota 5"><i class="bi bi-arrow-return-left" aria-hidden="true"></i></a></li>
+          <li id="nota-intelligence">Algunas funciones de AURA Intelligence llegarán más adelante y pueden no estar disponibles en todos los idiomas. <a class="aura-footnotes__back" href="#ref-intelligence" aria-label="Volver al texto de la nota 6" title="Volver al texto de la nota 6"><i class="bi bi-arrow-return-left" aria-hidden="true"></i></a></li>
         </ol>
         <ul class="aura-footnotes__list mt-3">
           <li data-aura-legal="precios">Precios de venta recomendados en España, IVA incluido.</li>
           <li data-aura-legal="tradein">El valor de AURA Trade In depende del modelo y del estado del dispositivo.</li>
-          <li>Las cifras de autonomía son de reproducción de vídeo y dependen del uso, la configuración y la cobertura. Medidas por AURA Labs con unidades de preproducción.</li>
-          <li>Algunas funciones de AURA Intelligence llegarán más adelante y pueden no estar disponibles en todos los idiomas.</li>
+          <li data-aura-legal="cifras">La autonomía, el rendimiento y el resto de cifras técnicas son orientativos y dependen de la configuración y del uso.</li>
           <li data-aura-legal="demo">AURA es un proyecto de demostración.</li>
         </ul>
       </div>

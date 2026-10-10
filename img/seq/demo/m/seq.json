@@ -1,0 +1,8 @@
+{
+ "frames": 48,
+ "width": 600,
+ "height": 900,
+ "pattern": "f-%04d.webp",
+ "mobile": false,
+ "mobileWidth": null
+}

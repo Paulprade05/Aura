@@ -1,9 +1,12 @@
 /* ==========================================================================
    AURA — auraBook (assets/css/pages/aurabook.css)
-   Solo lo que ningún componente del sistema cubre. Tokens de aura.css; sin
-   colores sueltos ni animaciones propias. La gran cifra (.aura-stat--xl), las
-   notas al pie (.aura-footnotes) y los 44 px de los enlaces sueltos ya los
-   resuelve la base.
+   Solo lo que ningún componente del sistema cubre: ritmo vertical entre los
+   bloques de cada capítulo y cómo se reparten algunas filas. Tokens de
+   aura.css; sin colores sueltos ni animaciones propias. La escena con scroll
+   (.aura-scrub: también el <picture> del póster, el ancho del titular del
+   héroe y el centrado de sus acciones), la exhibición de color (.aura-colorway), las cifras
+   destacadas (.aura-stat--lg), las notas al pie y los 44 px de los enlaces
+   sueltos ya los resuelve la base.
    ========================================================================== */
 
 /* Precio + cuota (+ disponibilidad): un único bloque, sin el hueco de
@@ -12,6 +15,44 @@
   display: grid;
   gap: .25rem;
 }
+
+/* Ritmo dentro de un capítulo: la fila de cifras, la foto ancha, la nota y
+   los bloques secundarios se separan de lo anterior lo mismo en todas las
+   secciones (más aire en escritorio, como las páginas de producto). */
+.aurabook-stats { margin-top: clamp(2.5rem, 6vw, 4.5rem); }
+.aurabook-block { margin-top: clamp(4rem, 9vw, 7rem); }
+.aurabook-wide {
+  max-width: 60rem;
+  margin: clamp(1rem, 3vw, 2rem) auto 0;
+}
+.aurabook-note {
+  max-width: 44rem;
+  margin: clamp(2.5rem, 5vw, 3.5rem) auto 0;
+}
+
+/* Rendimiento: cuatro cifras. Donde caben dos o tres por fila (576–1199 px)
+   quedaría una sola en la segunda: se reparten dos y dos. */
+@media (min-width: 576px) and (max-width: 1199.98px) {
+  .aurabook-stats--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* Diseño: cada exhibición de color con su nombre encima y las medidas debajo,
+   centradas como la propia exhibición. */
+.aurabook-finish {
+  display: grid;
+  justify-items: center;
+  align-content: start;
+  gap: clamp(1rem, 2.5vw, 1.5rem);
+  min-width: 0;
+  text-align: center;
+}
+.aurabook-finish > .aura-colorway { width: 100%; }
+.aurabook-finish__meta { max-width: 26rem; }
+
+/* Conexiones: las dos teselas y, debajo, los puertos de cada modelo
+   (lista de definiciones con las tarjetas de .aura-feature). */
+.aurabook-ports__title { margin: clamp(2.5rem, 5vw, 3.5rem) 0 1rem; }
+.aurabook-ports > div { height: 100%; }
 
 /* Ecosistema: tarjeta (Elevación/01, no cristal: no flota sobre nada) +
    foto, como en el prototipo (columna de texto estrecha, foto ancha, poco
@@ -47,34 +88,4 @@
     height: auto;
     object-fit: cover;
   }
-}
-
-/* Perfiles · «Fotografía»: la foto trae el portátil arriba y la mitad baja
-   en negro, que es donde va el texto. En una tesela estrecha (~300 px) el
-   recorte a lo alto de .aura-tile--cover subía el titular hasta la pantalla
-   iluminada: la foto va entera y pegada arriba con los modificadores de la
-   base (.aura-tile__media--contain .aura-photo-top, en aurabook.html). */
-
-/* Fila de cifras: una columna por elemento, todas iguales (tres modelos en
-   la autonomía, tres cifras del auraBook Pro 16″). Si el catálogo trae menos,
-   la fila se reparte sin dejar huecos. */
-.aurabook-row {
-  grid-template-columns: none;
-  grid-auto-flow: column;
-  grid-auto-columns: minmax(0, 1fr);
-}
-
-/* Autonomía de cada modelo, bajo la gran cifra y separada por una línea. */
-.aurabook-hours {
-  margin-top: clamp(1.5rem, 4vw, 3.5rem);
-  padding-top: clamp(1.25rem, 3vw, 2rem);
-  border-top: 1px solid var(--hairline);
-}
-
-/* Cifras del auraBook Pro 16″: en móvil, menos relleno para que la etiqueta
-   respire en tres columnas. */
-.aurabook-specs { gap: .75rem; }
-@media (max-width: 575.98px) {
-  .aurabook-specs { gap: .5rem; }
-  .aurabook-specs > .aura-stat--card { padding: .875rem .75rem; }
 }

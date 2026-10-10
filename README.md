@@ -53,7 +53,9 @@ Para probar otro día sin esperar, añade `?hoy=AAAA-MM-DD` a la URL (por ejempl
 
 ## Imágenes
 
-Las 57 fotos de `img/` (WebP) son fotos reales de Unsplash con licencia libre, recortadas y ajustadas de tono para el fondo negro; en algunas se han borrado logotipos o textos de la pantalla. Sus autores y licencias aparecen en `html/legal.html#imagenes`. Para cambiar una, sustituye el archivo con el mismo nombre (lista completa en **[`img/LEEME.md`](img/LEEME.md)**); si falta alguna, la web muestra un marcador con su ruta y tamaño. El logotipo (`img/aura.png`) no cambia.
+Las fotos de `img/` (WebP) son fotos reales con licencia libre (Wikimedia Commons, Unsplash y Pexels) de los modelos actuales, recortadas y ajustadas de tono para el fondo negro; en algunas se han borrado logotipos o textos de la pantalla. Sus autores y licencias aparecen en `html/legal.html#imagenes`. Para cambiar una, sustituye el archivo con el mismo nombre (lista completa en **[`img/LEEME.md`](img/LEEME.md)**); si falta alguna, la web muestra un marcador con su ruta y tamaño. El logotipo (`img/aura.png`) no cambia.
+
+Las páginas de auraPhone, auraPad y auraBook abren con una **escena que avanza con el scroll**: una secuencia de 120 fotogramas por familia en `img/seq/<familia>-intro/` (con versión ligera para móvil en `m/`), pintada en un `<canvas>` al ritmo del scroll y con textos superpuestos. Con «reducir movimiento» o ahorro de datos se muestra una imagen fija con los textos. El componente está documentado en `guia-de-estilo/docs/COMPONENTES.md` (§10 bis).
 
 ## Tienda simulada
 

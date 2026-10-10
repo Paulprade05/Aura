@@ -7,7 +7,29 @@ Contrato de marcado del sistema de diseño (`assets/css/aura.css`). Guía viva: 
 - Todo el texto en español de España. La marca es siempre AURA: nunca la marca original ni sus nombres de producto (ver equivalencias del encargo).
 - Toda página nueva cumple la lista de [§15 Accesibilidad y metadatos (temario DIW)](#15-accesibilidad-y-metadatos-temario-diw): `<head>` completo y comentado, un `h1`, tablas con `<caption>`, formularios con `label` y validación HTML5, ARIA solo donde el HTML no llega.
 
-## Cambios recientes (v1.5, 9 de octubre de 2026)
+## Cambios recientes (v1.6, 10 de octubre de 2026)
+
+Piezas nuevas para que las páginas de familia cuenten el producto como una presentación: una escena que avanza con el scroll y componentes pequeños que la acompañan. **Nada de lo anterior cambia** de aspecto ni de comportamiento. **Qué hay nuevo** (detalle en cada sección):
+
+| Área | Cambio |
+| --- | --- |
+| Escena con scroll | `section.aura-scrub[data-aura-scrub]`: secuencia de fotogramas (`img/seq/<nombre>/f-0001.webp…`) pintada en un `<canvas>` que sigue al scroll 1:1, con textos HTML que entran y se van por tramos (`data-from` / `data-to` / `data-pos`). Carga progresiva (uno de cada 8, luego el resto), versión de teléfono (`m/`), y sin escena con «reducir movimiento», «ahorro de datos», al imprimir o sin JS: póster fijo y textos en orden ([§10 bis](#10-bis-escena-que-avanza-con-el-scroll)). `AURA.ui.scrub(el)`. |
+| Exhibición de color | `.aura-colorway[data-aura-colorway="idDeProducto"]`: muestras del catálogo que cambian la foto con el fundido cruzado de la galería y anuncian el acabado; si el color no tiene foto propia, lo dice («Plata · Imagen en Azul glacial») ([§8](#exhibición-de-color)). `AURA.ui.colorway(el)`, evento `aura:colorway`. |
+| Cifra destacada | `.aura-stat--lg` (+ `.aura-stats--lg`, `__pre`, `__unit`) y `data-aura-reveal="stat"`: la cifra aparece y después lo que la explica, solo con opacidad (sin contador) ([§6](#cifra)). |
+| Galería de fotos | `.aura-carousel--wide`: una foto grande por vista en el carrusel de siempre; cada foto, un `figure.aura-media--frame` con su pie ([§10](#carrusel)). |
+| Movimiento | §13: los fondos en movimiento siguen prohibidos **salvo la escena con scroll**, que nunca se mueve sola (solo avanza mientras el usuario desplaza la página, 1:1) y con «reducir movimiento» es una imagen fija. |
+| Guía viva | `componentes.html` pasa a «v1.6» con la sección «09 / Páginas de producto» (escena de prueba de 48 fotogramas en `img/seq/demo/`, exhibición, cifras y galería). |
+
+**Qué deben hacer las páginas** para usarlo: [§10 bis](#10-bis-escena-que-avanza-con-el-scroll) tiene el marcado copiable y la lista de comprobación (póster con su `alt` real, `aria-labelledby`, jerarquía de encabezados, peso de la secuencia). Para las fotos por color, además de guardar `img/<image>-<color>.webp`, declarar el color en `imageVariants` de `data.js` (si no, la base no lo pide).
+
+**Ajustes de la v1.6 tras la revisión** (lo que antes resolvía cada página ahora es de la base):
+
+- Escena: el póster puede ir en un `<picture>` (fotograma 1 para la escena, el último para la versión estática; `display: contents`, el JS lo encuentra igual). Una escena que hace de héroe adelanta su primer texto (el del `h1`) al póster en la versión estática. Su `.aura-display` mide 52 rem, sus acciones van centradas en los textos centrados y el botón secundario lleva material oscuro sobre el fotograma. En tableta vertical o ventana casi cuadrada (desde 768 px y hasta 5:4) con `data-fit="contain"`, `left` / `right` bajan al pie como en el teléfono. Hasta 120 fotogramas ([§10 bis](#10-bis-escena-que-avanza-con-el-scroll)).
+- `.aura-cluster.aura-cluster--stack-sm` apila de verdad en el teléfono (antes `.aura-cluster`, que va después, lo devolvía a `flex`).
+- `.aura-stat--lg` mide la cifra en `cqi`: dentro de una columna con contenedor se queda en su mínimo en lugar de salirse ([§6](#cifra)).
+- `data.js`: `imageColor`, `imageAlt` e `imageVariants` al día con las fotos nuevas (todas las fotos por color declaradas).
+
+## Cambios de la v1.5 (9 de octubre de 2026)
 
 Marcado, metadatos y accesibilidad según el temario de «Desarrollo de Interfaces Web». **El aspecto no cambia** (mismas medidas, tokens y comportamiento). **Qué ha cambiado** (detalle en cada sección):
 
@@ -129,7 +151,7 @@ Revisión de la base a partir de lo que encontraron las páginas. **Qué ha camb
 
 ## Índice
 
-0. [Cambios recientes](#cambios-recientes-v15-9-de-octubre-de-2026)
+0. [Cambios recientes](#cambios-recientes-v16-10-de-octubre-de-2026)
 1. [Convenciones globales](#1-convenciones-globales)
 2. [Tipografía](#2-tipografía)
 3. [Layout](#3-layout)
@@ -140,6 +162,7 @@ Revisión de la base a partir de lo que encontraron las páginas. **Qué ha camb
 8. [Tienda](#8-tienda)
 9. [Overlays](#9-overlays)
 10. [Carrusel, acordeón, imagen](#10-carrusel-acordeón-imagen)
+    - [10 bis. Escena que avanza con el scroll](#10-bis-escena-que-avanza-con-el-scroll)
 11. [Movimiento](#11-movimiento)
 12. [Marcado generado por JS](#12-marcado-generado-por-js)
 13. [Reglas de uso](#13-reglas-de-uso)
@@ -653,6 +676,24 @@ Para meterla en otro sitio (un carrusel, una rejilla propia) usa `AURA.html.prod
 </div>
 ```
 
+**Cifra destacada (v1.6)** — la cifra grande de una página de producto, alineada al inicio, con lo que la explica debajo:
+
+```html
+<ul class="aura-stats aura-stats--lg">
+  <li class="aura-stat aura-stat--lg" data-aura-reveal="stat" style="--i:0">
+    <p class="aura-stat__pre">Hasta</p>                                    <!-- opcional, encima de la cifra -->
+    <p class="aura-stat__value">43<span class="aura-stat__unit">&nbsp;h</span></p>
+    <p class="aura-stat__label">de reproducción de vídeo</p>
+  </li>
+  <li class="aura-stat aura-stat--lg" data-aura-reveal="stat" style="--i:1"> … </li>
+</ul>
+```
+
+- `.aura-stat--lg`: cifra en Kanit 48 → 80 px (entre `--md` y `--xl`), sin caja ni resplandor; el tamaño intermedio se mide en `cqi` (el ancho de su contenedor, p. ej. la columna de texto de `.aura-split` desde 992 px; sin contenedor, la ventana), así en una columna estrecha se queda en 48 px en vez de salirse; `__label` en Inter 16 px `--text-secondary` (hasta 18 rem); `__pre` en Inter 16 / 600. `.aura-stat__unit` dibuja la unidad a la mitad del tamaño («43 h», «3.000 nits»), pegada con `&nbsp;`. `.aura-stats--lg`: columnas de 13 rem como mínimo (tres en escritorio, una en el teléfono).
+- El orden del marcado es el de lectura (`__pre` → `__value` → `__label`: «Hasta / 43 h / de reproducción de vídeo»).
+- `data-aura-reveal="stat"` (§11): al entrar en pantalla aparecen primero la cifra, después `__pre` y por último `__label` (120 ms entre partes, 80 ms entre cifras con `--i`), **solo con opacidad**. La cifra está escrita en el HTML: nunca un contador que la haga subir ni que haga esperar al lector.
+- Las cifras salen del catálogo (`specs`, `highlights`): no inventes otras.
+
 ### Tabla comparativa
 
 La pinta `[data-aura-compare]` ([§12.5](#125-tabla-de-data-aura-compare)): `<div data-aura-compare="auraphone"></div>`. Para una tabla escrita a mano usa el mismo marcado. La columna destacada lleva `.is-featured` en su `<th>` y en cada `<td>`: como en el prototipo, solo el nombre del modelo va en dorado; la columna no se tiñe (el dorado nunca rellena una superficie). Una nota bajo un valor (p. ej. la disponibilidad bajo el precio) va en `<span class="aura-table__note">`.
@@ -1049,6 +1090,33 @@ Espera fotos de producto sobre negro puro (las de `assets/img`): se funden con e
 
 **Cambio de foto: fundido cruzado (v1.4).** `AURA.ui.gallery(el).show(info.slot, { fallback: info.fallback, alt, priority })` con `info = AURA.catalog.image(p, color)`. Si ese hueco ya está (a la vista o yéndose), solo cambia su `alt` y vuelve: un color sin foto propia **no funde nada** (cambia solo lo que dice la página: con `exact: false`, el `alt` de la foto y la nota «Imagen en Azul glacial · Tu acabado: Negro» bajo la galería). Si es otra foto, se monta encima invisible (`.is-entering`) y, en cuanto está decodificada, se funde sobre la anterior mientras esta se va a 0 (`.is-leaving`) y se retira: las dos ocupan la misma celda y nunca hay un bache a negro. Sin temporizadores de espera; un cambio nuevo parte de la opacidad en curso y manda sobre los anteriores. Si el hueco no existe, la base prueba sus reservas y promueve el marcador. Sin foto todavía, `show()` monta la primera (`priority: true` para la imagen principal de la página). `.is-swapping` (fundido a negro) se retiró.
 
+### Exhibición de color
+
+Para las páginas de familia (no para el configurador, que tiene su galería y su formulario): la foto del producto flotando sobre su halo, las muestras del catálogo debajo y el nombre del acabado.
+
+```html
+<div class="aura-colorway" data-aura-colorway="auraphone-18-pro">
+  <div class="aura-gallery">
+    <img class="aura-img" src="../img/auraphone-18-pro.webp" data-slot="auraphone-18-pro" width="1600" height="1200" alt="(imageAlt del producto en data.js)" loading="lazy" decoding="async">
+  </div>
+  <fieldset class="aura-colorway__picker">
+    <legend class="visually-hidden">Acabados del auraPhone 18 Pro</legend>
+    <div class="aura-swatches"></div>                              <!-- vacío: el JS pinta las muestras de data.js -->
+    <p class="aura-colorway__name"><strong>Azul glacial</strong></p> <!-- el acabado de la foto (imageColor) -->
+  </fieldset>
+</div>
+```
+
+| Atributo | Por defecto | Qué hace |
+| --- | --- | --- |
+| `data-aura-colorway="id"` | — | Id del producto en `data.js`. Si `.aura-swatches` está vacío, se pintan sus colores en orden (`.aura-swatch` con radio, `--swatch: hex` y el nombre en `.visually-hidden`). Vacío (`data-aura-colorway=""`): las muestras se escriben a mano y cada `input` puede llevar `data-slot`, `data-fallback` y `data-alt`. |
+| `data-color="idDeColor"` | el de la foto (`imageColor`) | Acabado elegido al cargar. El JS lo actualiza al cambiar. |
+
+- **La foto**: `AURA.catalog.image(producto, color)`. Si el color tiene foto propia, se pide `img/<image>-<color>.webp` (con la base de reserva) y entra con el **fundido cruzado** de la galería (`AURA.ui.gallery`, solo opacidad, también con «reducir movimiento»). La foto por color **solo se pide si está declarada en `imageVariants`** de `data.js` (`{ 'plata': 'alt real de esa foto' }`): guardar el archivo no basta. Sin ella, la foto no cambia (no hay fundido ni petición fallida) y el nombre lo dice: «**Plata** · Imagen en Azul glacial» (`.aura-colorway__note`).
+- **El nombre** (`.aura-colorway__name`) se reescribe al cambiar; el JS le pone `aria-live="polite"` después de pintarlo la primera vez (no se anuncia al cargar la página). El `alt` de la foto pasa a ser el de la foto que se ve.
+- Sin caja: «aclarar» funde el negro de la foto con el fondo de la sección (negro o franja); la foto mide como mucho 50 rem de ancho (4:3).
+- Evento en la raíz: `aura:colorway` con `detail: { colorId, name, exact, slot }`. API: `AURA.ui.colorway(el)` → `{ el, color(), set(colorId) }`.
+
 ### Barra de compra fija (móvil)
 
 ```html
@@ -1134,7 +1202,17 @@ Los genera `<aura-header>` ([§12.1](#121-aura-header)). Disparadores disponible
 ```
 
 - `role="region"` con `aria-roledescription` (ARIA 1.2 no lo admite en un `<div>` sin rol; si falta, `aura-ui.js` lo pone).
-- Ancho de diapositiva: `--aura-slide` (por defecto `min(84%, 26rem)`: se asoma la siguiente). `--full` (una por vista), `--thirds` (tres por vista desde 992 px). Hueco: `--aura-gap`.
+- Ancho de diapositiva: `--aura-slide` (por defecto `min(84%, 26rem)`: se asoma la siguiente). `--full` (una por vista), `--thirds` (tres por vista desde 992 px), `--wide` (v1.6: una foto grande por vista, `min(88%, 54rem)`, asomando la siguiente). Hueco: `--aura-gap`.
+- **Galería de fotos de ejemplo** (v1.6, «hechas con auraPhone»): `.aura-carousel--bleed.aura-carousel--wide` con un `figure.aura-media.aura-media--frame` por diapositiva, la foto (`.aura-img`, con su `alt` real) y su `figcaption.aura-media__caption` («Retrato nocturno · Teleobjetivo x4»). Nada nuevo que inicializar: es el carrusel de siempre.
+
+```html
+<li class="aura-carousel__slide" aria-roledescription="diapositiva" aria-label="1 de 3">
+  <figure class="aura-media aura-media--frame">
+    <img class="aura-img" src="../img/NOMBRE.webp" data-slot="NOMBRE" width="1600" height="1200" alt="Lo que se ve en la foto" loading="lazy" decoding="async">
+    <figcaption class="aura-media__caption">Atardecer desde el aire · Gran angular</figcaption>
+  </figure>
+</li>
+```
 - `--bleed`: la ventana llega hasta los bordes de la pantalla (las diapositivas entran y salen por el borde, como en una tienda) y la pista sigue alineada con el contenedor. La sección que lo contiene se convierte en contenedor y recorta lo que sale por los lados. Úsalo en todas las estanterías de página.
 - Un ancla dentro de una diapositiva que no se ve (`#id`, `location.hash`) mueve el carrusel a esa diapositiva.
 - Sin JS es una pista con `scroll-snap` nativo. Con JS, ver [§12.8](#128-carrusel).
@@ -1160,6 +1238,116 @@ Los genera `<aura-header>` ([§12.1](#121-aura-header)). Disparadores disponible
 
 ---
 
+## 10 bis. Escena que avanza con el scroll
+
+La escena de las páginas de producto: un vídeo convertido en fotogramas que avanza **solo mientras el usuario hace scroll** y al mismo ritmo, con textos que entran desde abajo y se van hacia arriba por tramos. La escena se queda pegada a la pantalla (100svh) mientras su sección pasa por debajo; al terminar, la página sigue. Lo hace `aura-ui.js` (§8 quater) con el CSS de `aura.css` §5.7. Guía viva: `componentes.html#producto`.
+
+### Marcado (copiable)
+
+```html
+<!-- Escena con scroll: el lienzo es decorativo; el póster lleva el alt y los textos son HTML real, en orden -->
+<section class="aura-scrub" data-aura-scrub
+         data-seq="../img/seq/auraphone-intro" data-frames="96" data-width="1600" data-height="900"
+         data-mobile="true" data-length="300" aria-labelledby="intro-titulo">
+  <div class="aura-scrub__stage">
+    <picture>  <!-- opcional: sin <picture>, un <img> suelto con poster.webp -->
+      <source media="(prefers-reduced-motion: reduce) and (max-width: 767.98px)" srcset="../img/seq/auraphone-intro/m/f-0096.webp" width="750" height="1100">
+      <source media="(prefers-reduced-motion: reduce)" srcset="../img/seq/auraphone-intro/f-0096.webp">
+      <source media="(max-width: 767.98px)" srcset="../img/seq/auraphone-intro/m/poster.webp" width="750" height="1100">
+      <img class="aura-scrub__poster" src="../img/seq/auraphone-intro/poster.webp" width="1600" height="900"
+           alt="Lo que se ve en la secuencia" loading="lazy" decoding="async">
+    </picture>
+    <canvas class="aura-scrub__canvas" aria-hidden="true"></canvas>
+    <div class="aura-scrub__text" data-from="0" data-to="0.3">
+      <p class="aura-eyebrow aura-eyebrow--lg">auraPhone 18 Pro</p>
+      <h2 class="aura-h1" id="intro-titulo">Titular de la escena.</h2>
+      <p class="aura-lead">Entradilla.</p>
+    </div>
+    <div class="aura-scrub__text" data-from="0.32" data-to="0.64" data-pos="left">
+      <h3 class="aura-h2">Segundo mensaje.</h3>
+      <p class="aura-body">Texto de apoyo.</p>
+    </div>
+    <div class="aura-scrub__text" data-from="0.66" data-to="1" data-pos="right">
+      <h3 class="aura-h2">Tercer mensaje.</h3>
+      <p class="aura-body">Se queda hasta que la escena se va.</p>
+    </div>
+  </div>
+</section>
+```
+
+- La sección va **a sangre**: hija de `<main>` (o de una sección, fuera de `.aura-container`), nunca dentro de un elemento con `overflow: hidden` (rompería el pegado). Puede ir justo después del héroe o ser el héroe: entonces el primer texto lleva el `h1` (con `data-from="0"`), el póster `loading="eager" fetchpriority="high"` y no hay otro `h1`.
+- Dentro del escenario, en este orden: póster (o su `<picture>`), lienzo y los bloques de texto (los textos son los únicos `<div>`). Si falta el `<canvas>`, el JS lo crea.
+- **Póster con `<picture>`** (recomendado): en la escena, el fotograma 1 (`poster.webp`), que es lo primero que pinta el lienzo: al aparecer con su fundido no se ven dos imágenes distintas superpuestas. Con «reducir movimiento», el fotograma que mejor resume la secuencia (normalmente el último, el `estaticoRecomendado` de `seq.json`). En el teléfono, los de `m/`. El `<picture>` lleva `display: contents` (lo pone la base) y el `alt` va en el `<img>`: describe la secuencia (lo que se ve al principio y al final).
+- **Escena que hace de héroe** (su primer texto lleva el `h1`): en la versión estática ese texto va **antes** del póster, con el aire de un héroe, para que el titular y la acción principal quepan en la primera pantalla. En la escena, su `.aura-display` mide hasta 52 rem (como `.aura-hero--center`) y sus `.aura-hero__actions` van centradas (apiladas y del mismo ancho en el teléfono). El botón secundario de cualquier texto de la escena lleva un material oscuro (`rgba(0,0,0,.78)` + desenfoque; negro sólido con «menos transparencia») para que su etiqueta azul no dependa del fotograma.
+- Cada bloque de texto usa las clases de siempre (`.aura-eyebrow`, `.aura-h1` / `.aura-h2`, `.aura-lead`, `.aura-body`, `.aura-link`). Jerarquía sin saltos: el titular de la escena es el nombre de la sección (`aria-labelledby`); los demás bloques, un nivel por debajo. Dentro de la escena el texto de apoyo se pinta en `--text-primary` (sobre una imagen que cambia, nunca un gris).
+
+### Atributos de la sección
+
+| Atributo | Por defecto | Qué hace |
+| --- | --- | --- |
+| `data-aura-scrub` | — | Activa el componente (también en HTML insertado después). |
+| `data-seq` | — | Carpeta de los fotogramas, relativa a la página y sin barra final (`../img/seq/NOMBRE`). Sin ella, la escena funciona igual con el póster quieto y los textos por tramos. |
+| `data-frames` | `0` | Número de fotogramas de escritorio (`f-0001.webp` … `f-0096.webp`). |
+| `data-pattern` | `f-%04d.webp` | Nombre de cada fotograma: `%04d` es su número (desde 1) con cuatro cifras. |
+| `data-width` · `data-height` | `1600` · `900` | Tamaño de los fotogramas de escritorio: el mismo `width` / `height` del póster (el JS dibuja con el tamaño real de cada imagen). |
+| `data-mobile` | `false` | `"true"`: por debajo de 768 px usa `<data-seq>/m/` (mismo patrón; p. ej. 750 × 1100, en vertical). Si `m/` no existe (dos fallos sin ninguna carga), vuelve a la de escritorio. Al cruzar los 768 px cambia de carpeta. |
+| `data-mobile-frames` | `= data-frames` | Fotogramas de `m/`, si son otros. |
+| `data-length` | `300` (mín. `120`) | Alto de la sección en % del alto de pantalla (`svh`). La escena avanza durante `data-length − 100`: con 300, dos pantallas de scroll. Con 96 fotogramas, 300–400; con 48, 250–320. |
+| `data-fit` | `cover` | `cover`: llena el escenario y recorta (vídeo con ambiente). `contain`: el fotograma entero con negro alrededor (aparato sobre negro). |
+| `data-mobile-fit` | `= data-fit` | Ajuste en el teléfono (`contain` suele ir mejor con fotogramas horizontales). |
+| `data-focus` | `"0.5 0.5"` | Punto que manda en el recorte (x y, de 0 a 1), como `--photo-focus`; vale también para el póster. |
+
+### Atributos de cada texto (`.aura-scrub__text`)
+
+| Atributo | Por defecto | Qué hace |
+| --- | --- | --- |
+| `data-from` | `0` | Progreso de la escena (0–1) en el que el texto **empieza** a entrar. Con `0` ya está a la vista cuando llega la escena. |
+| `data-to` | `1` | Progreso en el que **ha terminado** de irse. Con `1` se queda hasta que la escena se va. |
+| `data-pos` | `center` | `center` (centrado), `left` / `right` (columna de 30 rem alineada con `.aura-container`, con un degradado de protección desde su lado), `bottom` (centrado abajo, con `--photo-scrim`). En el teléfono, `left` y `right` bajan al pie; con `data-fit="contain"`, también en tableta vertical o ventana casi cuadrada (desde 768 px y hasta 5:4), donde el fotograma apaisado deja negro arriba y abajo. Coloca cada texto en una zona tranquila de sus fotogramas (`zonasTranquilas` de `seq.json`); si la página necesita otra colocación (p. ej. arriba), la fija en su hoja con `align-content`. |
+
+Entrada y salida ocupan un tercio del tramo cada una (como mucho el 10 % de la escena): opacidad 0 → 1 subiendo 40 px y, al irse, 1 → 0 subiendo otros 40 px (en el sentido del scroll). Para que un texto se vaya antes de que llegue el siguiente, que sus tramos no se solapen (`0–0.3`, `0.32–0.64`…). Cada texto lleva su propio degradado de protección (se funde con él), así que el contraste no depende del fotograma.
+
+### Comportamiento (skill «apple-design»)
+
+- **1:1 con el scroll**: en cada `requestAnimationFrame` se lee la posición (`progreso = −top / (alto − alto del escenario)`) y se pinta el fotograma `round(progreso × (n − 1))`. Sin inercia, sin suavizado, sin temporizadores. **Solo se repinta si cambia el fotograma** (o el tamaño). Solo se calcula mientras la escena está en pantalla (`IntersectionObserver`).
+- **Lienzo**: tamaño del escenario × `devicePixelRatio` (como mucho 2), recorte tipo *cover* (o *contain*) con el punto de `data-focus`. Aparece sobre el póster con un fundido de 240 ms al pintar su primer fotograma (`.is-painted`); el póster sigue debajo.
+- **Carga progresiva**: empieza cuando la escena está a pantalla y media (`IntersectionObserver`), con `new Image()` (funciona igual por `file://` que por http; no hay `fetch` y el lienzo nunca se lee). Primero el fotograma 1, uno de cada 8 y el último (así siempre hay uno cerca: si el exacto no ha llegado, se pinta el más próximo); el resto, **después del evento `load` de la página**, con `fetchPriority = 'low'` y como mucho 4 descargas a la vez: no frena ni el resto de la página ni sus fotos.
+- **Textos**: solo `opacity` y `transform` en línea, ligados al progreso; `.is-on` (opacidad > 0,5) deja pulsar sus enlaces (los invisibles no tapan a los visibles). Si el foco de teclado cae en un texto que no se ve, la página se desplaza al centro de su tramo.
+- **Sin escena** (versión estática): con `prefers-reduced-motion: reduce`, con «ahorro de datos» (`navigator.connection.saveData`; `.is-static`), al imprimir, sin `aura-core.js` o sin `<canvas>`. El póster se queda en el flujo (fundido con el fondo por arriba y por abajo, hasta el 85 % del alto de pantalla) y los textos se leen debajo, uno tras otro, en su orden. **No se descarga ningún fotograma.** Si el usuario cambia «reducir movimiento» con la página abierta, la escena cambia en el acto.
+- **Menos transparencia / más contraste**: el degradado de cada texto pasa a un velo casi sólido (72 % / 84 % de negro). Con colores forzados no hay degradado (el modo pone su placa tras el texto).
+- **Lectores de pantalla**: el lienzo es `aria-hidden`; el póster (con su `alt`) y los textos están siempre en el HTML y en orden, también los que aún no se ven.
+
+### Lo que pone el JS
+
+| Dónde | Qué | Para qué |
+| --- | --- | --- |
+| Sección | `.is-ready` · `.is-scene` / `.is-static` · `.is-active` (en pantalla) · `.is-painted` (ya hay fotograma) | Estados (el CSS de la escena cuelga de `.aura-js` y la media `prefers-reduced-motion: no-preference`, sin esperar al JS: no hay salto al cargar). |
+| Sección | `data-frame="N"` | Fotograma pintado (desde 1). Útil para probar. |
+| Sección | `--aura-scrub-length`, `--aura-scrub-focus`, `--aura-scrub-fit` | Alto, encuadre y ajuste (de los atributos). |
+| Texto | `style="opacity; transform"` · `.is-on` | Su estado en el tramo. |
+
+API: `AURA.ui.scrub(el | selector)` → `{ el, progress(), frame(), frames(), loaded(), mode(), refresh() }` (`mode()`: `'scene'` o `'static'`; `refresh()` vuelve a medir y repinta).
+
+### La secuencia
+
+```text
+img/seq/NOMBRE/
+  poster.webp          ← copia del primer fotograma (el póster de la escena; sin <picture>, también el de la versión estática)
+  f-0001.webp … f-0120.webp
+  seq.json             ← tamaño, número de fotogramas, qué se ve en cada tramo, zonas tranquilas y fotograma estático recomendado
+  m/                   ← opcional (data-mobile="true"): los mismos fotogramas para el teléfono, mejor en vertical (750 × 1100)
+    poster.webp · f-0001.webp …
+```
+
+- Un tramo **continuo** del vídeo (sin cortes de plano), de 3 a 8 s. Escritorio: 1600 × 900 (o 1280 × 720), WebP calidad 60–70, **≤ 120 fotogramas y ≤ 4 MB**; teléfono: 750 px de ancho, en vertical (750 × 1100) siempre que el sujeto quepa, ≤ 2 MB. Con 96 basta para 3–5 s de movimiento; 120 para recorridos largos de 6–8 s (`data-length` 360–420), siempre dentro de los 4 MB. Más fotogramas no se notan y pesan.
+- Con ffmpeg: `ffmpeg -ss 2 -to 8 -i clip.mp4 -vf "fps=16,scale=1600:900:force_original_aspect_ratio=increase,crop=1600:900" -frames:v 96 -c:v libwebp -quality 70 img/seq/NOMBRE/f-%04d.webp` y `poster.webp` = `f-0001.webp`.
+- Vídeos con licencia libre (Pexels, Unsplash…), sin logotipos ni marcas reconocibles y con su crédito en `legal.html#imagenes`. El `alt` del póster describe lo que se ve de verdad.
+- Para probarla, emula la preferencia de forma explícita (el navegador sin ventana no siempre hereda la del sistema): `prefers-reduced-motion: no-preference` para la escena y `reduce` para la versión estática. Las capturas de página completa estiran la ventana y la escena con ella: compruébala con capturas de la ventana a varios progresos.
+
+**Lista de comprobación de una página con escena**: sección con `aria-labelledby` a su titular · un solo `h1` en la página · jerarquía sin saltos dentro de la escena · póster con `width`, `height` y `alt` real · `<canvas aria-hidden="true">` · tramos sin solapar · póster de la escena = fotograma 1 (o `<picture>` con el estático aparte) · versión estática revisada (con «reducir movimiento» emulado) · sin desborde a 390 px · peso de la secuencia dentro de lo indicado · su crédito en `img/creditos/seq-NOMBRE.json` si sale de un vídeo o una foto de terceros.
+
+---
+
 ## 11. Movimiento
 
 ### Aparición al entrar en pantalla
@@ -1169,6 +1357,7 @@ Los genera `<aura-header>` ([§12.1](#121-aura-header)). Disparadores disponible
 <div data-aura-reveal style="--i:1">…</div>      <!-- escalonado: 80 ms por unidad de --i -->
 <div data-aura-reveal="fade">…</div>             <!-- solo opacidad -->
 <div data-aura-reveal="scale">…</div>            <!-- escala .96 → 1 (imágenes) -->
+<li class="aura-stat aura-stat--lg" data-aura-reveal="stat">…</li>   <!-- v1.6: la cifra y luego su texto, solo opacidad (§6) -->
 ```
 
 - `aura-ui.js` observa con `IntersectionObserver` (umbral ≈ 0.15, `rootMargin: '0px 0px -8% 0px'`), añade `.is-visible` **una sola vez** y deja de observar. Sin `IntersectionObserver`: `.is-visible` a todos de inmediato.
@@ -1189,9 +1378,11 @@ Los genera `<aura-header>` ([§12.1](#121-aura-header)). Disparadores disponible
 | Foto que llega | CSS | `opacity` de `.is-pending` a `.is-loaded` (240 ms) |
 | Carrusel | JS | muelle sobre `transform` de `.aura-carousel__track`; **el CSS no define transición** |
 | Hoja | JS | muelle sobre `transform` de `.aura-sheet__panel` y `opacity` del velo: damping 1 / response 0.3 al abrir o cerrar con un botón, el velo o Esc; damping 0.8 solo al soltar un arrastre con impulso |
-| Reveal | CSS | transición al añadir `.is-visible` |
+| Reveal | CSS | transición al añadir `.is-visible` (`"stat"`: solo la opacidad de sus hijos, escalonada) |
+| Escena con scroll | JS | en cada `requestAnimationFrame` con scroll: el fotograma del progreso en el `<canvas>` (solo si cambia) y `opacity` + `transform` en línea de cada texto; ninguna transición ni muelle: es 1:1 con el scroll (§10 bis) |
+| Exhibición de color | CSS | el fundido cruzado de la galería (`opacity`, 200 ms) |
 
-Con `prefers-reduced-motion: reduce` el JS no anima con muelles: la hoja alterna sus clases y el CSS la funde (si el usuario la arrastra, la mueve 1:1 y al soltar se funde desde ahí), el carrusel se coloca en su posición final con un fundido, la pastilla del segmentado aparece en su sitio, los avisos se apartan fundiéndose y la página no retrocede.
+Con `prefers-reduced-motion: reduce` el JS no anima con muelles: la hoja alterna sus clases y el CSS la funde (si el usuario la arrastra, la mueve 1:1 y al soltar se funde desde ahí), el carrusel se coloca en su posición final con un fundido, la pastilla del segmentado aparece en su sitio, los avisos se apartan fundiéndose y la página no retrocede. La escena con scroll no existe: póster fijo y textos en orden, sin descargar fotogramas.
 
 ---
 
@@ -1839,7 +2030,7 @@ Derivadas de las notas de uso de la guía de estilo AURA y de la skill «apple-d
 - En cuanto un arrastre gana, el toque pierde: nada se queda «pulsado» mientras se arrastra.
 - La háptica (`AURA.ui.haptic`) acompaña a lo que la merece (éxito, error, ajuste), en el mismo instante que lo visual; nunca en carrusel, hoja ni navegación, y nunca sustituye al mensaje.
 - Entra y sale por el mismo camino, y desde el elemento que lo abrió.
-- Sin bucles lentos, sin fondos en movimiento a pantalla completa, sin parallax. Los orbes y halos son estáticos.
+- Sin bucles lentos, sin fondos en movimiento a pantalla completa, sin parallax. Los orbes y halos son estáticos. **La única excepción es la escena con scroll** (§10 bis): nunca se mueve sola ni en bucle, solo avanza mientras el usuario desplaza la página y a su mismo ritmo (se para cuando él se para), y con «reducir movimiento» o «ahorro de datos» es una imagen fija. Como mucho una o dos por página, nunca dos seguidas.
 - Respeta `prefers-reduced-motion` (fundidos cortos), `prefers-reduced-transparency` (superficies opacas) y `prefers-contrast: more` (fondos sólidos, bordes definidos): el CSS ya lo hace; el JS no debe saltárselo.
 
 ### Orientación
@@ -1868,7 +2059,7 @@ Reglas generales:
 
 - Ninguna función lanza excepciones: con datos que faltan devuelven `null`, `0`, `[]` o `{ ok: false }`.
 - Todo tolera que `localStorage` esté bloqueado (modo privado): se trabaja en memoria durante la página. `AURA.storage.persistent` es `false` en ese caso; avisa al usuario con un `toast` de tipo `warn` si la página depende de guardar algo. Si el almacén se llena **a mitad de sesión**, lo último escrito se sigue leyendo de memoria (nada se pierde mientras la página esté abierta), `AURA.storage.persistent` pasa a `false`, se emite `aura:storage` y `aura-ui.js` muestra él solo un aviso `warn` (una vez).
-- El HTML que insertes después con JS se inicializa solo (un `MutationObserver` busca `data-aura-reveal`, `-carousel`, `-sheet`, `-lineup`, `-compare`, `-relocate`, `.aura-buybar` y `.aura-segmented`; otro, en `aura-core.js`, marca la aparición de cada `img[data-slot]`). También puedes llamar a `AURA.ui.init(contenedor)`.
+- El HTML que insertes después con JS se inicializa solo (un `MutationObserver` busca `data-aura-reveal`, `-carousel`, `-sheet`, `-lineup`, `-compare`, `-relocate`, `-scrub`, `-colorway`, `.aura-buybar` y `.aura-segmented`; otro, en `aura-core.js`, marca la aparición de cada `img[data-slot]`). También puedes llamar a `AURA.ui.init(contenedor)`.
 - Al insertar texto de usuario o del catálogo con `innerHTML`, pásalo por `AURA.html.esc()`.
 
 ### 14.1 Eventos
@@ -1888,6 +2079,7 @@ Todos en `document` salvo que se indique. Escúchalos para repintar; no hace fal
 | `aura:popover-open` / `aura:popover-close` | En el `.aura-popover` (burbujean) | — |
 | `aura:search-open` / `-close`, `aura:menu-open` / `-close` | En `#aura-search` / `#aura-menu` | — |
 | `aura:step` | En un `.aura-stepper[data-aura-stepper]` (burbujea) | `{ value, delta }` |
+| `aura:colorway` | En un `[data-aura-colorway]` al elegir acabado (burbujea; también al iniciar) | `{ colorId, name, exact, slot }` |
 
 ```js
 document.addEventListener('aura:bag', function (e) {
@@ -2141,6 +2333,8 @@ En `componentes.html` (§08, «Muelle interrumpible») hay un ejemplo completo d
 | `ui.sheet(id \| el)` | `{ open(disparador), close(), toggle(), isOpen(), el }`. |
 | `ui.segmented(el)` | Inicializa a mano la pastilla deslizante de un `.aura-segmented` (es automático) o, si ya lo está, la recoloca en el ítem elegido. Devuelve `{ el, sync(animar = true) }`. No hace falta tras `input.checked = …`: la pastilla ya lo sigue. |
 | `ui.gallery(el)` | `{ show(slot, { fallback, alt, priority }), el }`: fundido cruzado de la galería del configurador (§8). |
+| `ui.scrub(el)` | `{ progress(), frame(), frames(), loaded(), mode(), refresh(), el }`: escena con scroll (§10 bis). Automática con `data-aura-scrub`. |
+| `ui.colorway(el)` | `{ color(), set(colorId), el }`: exhibición de color (§8). Automática con `data-aura-colorway`. |
 | `ui.haptic('exito' \| 'error' \| 'ajuste')` | Vibración corta (12 ms · 10-60-10 ms · 8 ms) solo en pantallas táctiles con la API (`navigator.vibrate`); devuelve `true` si vibró. Llámalo en el mismo tick que el cambio visual (el aviso, el error pintado). `ui.form` ya la usa al rechazar un envío. No en carrusel, hoja ni navegación. |
 | `ui.carousel(el \| selector)` | `{ goTo(i, { immediate }), next(), prev(), refresh(), index(), count(), el }`. |
 | `ui.popover.open(id \| el, disparador)` · `.close()` · `.isOpen(id)` | Uno abierto a la vez. |
@@ -2160,7 +2354,9 @@ Atributos que `aura-ui.js` atiende por delegación (no hay que inicializar nada)
 | `data-aura-popover-toggle="ID"` | botón | Alterna el popover. |
 | `data-aura-search-open` · `data-aura-search-close` | botones | Buscador. |
 | `data-aura-menu-open` · `data-aura-menu-close` | botones | Menú móvil. |
-| `data-aura-reveal` (`""`, `fade`, `scale`) | cualquier elemento | Aparición al entrar en pantalla. |
+| `data-aura-reveal` (`""`, `fade`, `scale`, `stat`) | cualquier elemento (`stat`: un `.aura-stat`) | Aparición al entrar en pantalla. |
+| `data-aura-scrub` (+ `data-seq`, `data-frames`, `data-pattern`, `data-width`, `data-height`, `data-mobile`, `data-mobile-frames`, `data-length`, `data-fit`, `data-mobile-fit`, `data-focus`) | `section.aura-scrub` | Escena con scroll; sus textos llevan `data-from`, `data-to`, `data-pos` (§10 bis). |
+| `data-aura-colorway="idDeProducto"` (+ `data-color`) | `.aura-colorway` | Exhibición de color (§8). |
 | `data-aura-lineup="familia"` (+ `data-aura-heading="h2"`) | contenedor | Tres tarjetas de modelo. |
 | `data-aura-compare="familia"` (+ `data-aura-compare-title`, `data-aura-heading`) | contenedor | Tabla comparativa. |
 | `data-aura-localnav` | `.aura-localnav` | Marca el enlace de la sección visible y, por debajo de 768 px, pliega los enlaces en un menú con chevrón. |
@@ -2244,6 +2440,7 @@ f.form.addEventListener('change', function (e) {
 - Carrusel y hoja capturan el puntero al reconocer el arrastre (10 px), no en `pointerdown`, salvo cuando se agarran en pleno vuelo.
 - Hoja: el foco entra al abrir y vuelve al disparador al pedir el cierre, sin esperar al muelle.
 - Añadidos: `catalog.resolve/choices/optionLabels/color/carePrice/image/cta/url/line`, `auth.update/remove`, `tradeIn.estimate/discount`, `fmt.num/articulos/fecha`, `AURA.slots`, `AURA.html`, `AURA.header`, `AURA.search`, `ui.busy`, `ui.passwordRules`, `ui.popover`, `ui.search`, `ui.menu`, `ui.init`, `ui.lineup`, `ui.compare`, `data-aura-stepper`, `data-aura-buybar="#selector"`, `data-aura-no-drag`.
+- v1.6: `ui.scrub` y `[data-aura-scrub]` (escena con scroll), `ui.colorway` y `[data-aura-colorway]` con el evento `aura:colorway`, `data-aura-reveal="stat"`.
 - v1.3: `catalog.image()` con `exact`, `color` y `alt`; `catalog.defaults()` / `catalog.color()` con el acabado de la foto; `html.img({ priority })`; huecos en `.webp`; `ui.haptic`; `ui.segmented`; avisos que se apartan con el dedo; hojas y barras de compra fuera de `<main>`; `--buybar-h`.
 - v1.2: `fmt.dia`, `fmt.units` y fechas con espacios indivisibles; `catalog.entry` y `catalog.withHoy` (`url` conserva `?hoy`); `orders.create` con el día simulado; `tradeIn.get` validado; `AURA.legal`; `html.storePerks` y `html.familyCard` con sus atributos; `ui.fixInches`; menú plegable de la barra local; ancla dentro de un carrusel; `role="region"` automático.
 - v1.1: `catalog.today/availability`; `catalog.cta()` con «Configurar»; `bag.add()` rechaza lo que aún no se puede comprar; `line.availability`; `fmt.diaMes` y fechas `AAAA-MM-DD` locales; `util.parseDate/isoDate`; `tradeIn.max()` y `tradeIn.cap` desde `data.js`; `auth.user()` con `creado`, `remember` y `desde`; `html.productCard`; `AURA.footer.setCrumbs/parse` y `crumbs` multinivel; `ui.form` con campos condicionales; `ui.busy` que bloquea el reenvío; el stepper conserva el foco; contador del carrusel.
@@ -2342,6 +2539,7 @@ Plantilla para una página de `html/` (en `index.html`, las rutas sin `../`). Ca
 - [ ] Rutas relativas dentro del sitio y absolutas hacia fuera; ningún `href="#"` ni enlace roto. Un enlace externo que abre pestaña nueva lleva `target="_blank" rel="noopener noreferrer"`; un archivo para guardar, `download`.
 - [ ] Toda `<img>` con `alt`: la descripción **real** de lo que se ve (nunca «imagen de…» ni el nombre del archivo); `alt=""` si es decorativa o si el texto de al lado ya lo dice. Siempre `width` y `height` (sin saltos al cargar); `loading="lazy" decoding="async"` salvo la primera del héroe (`fetchpriority="high"`).
 - [ ] Imagen con leyenda: `<figure>` + `<figcaption>` (`.aura-media__caption`, `.aura-quote__cite` o `.aura-media__overlay`).
+- [ ] Un `<canvas>` que solo dibuja (la escena con scroll, §10 bis) lleva `aria-hidden="true"`; lo que muestra lo cuenta el `alt` de su póster y los textos HTML de la escena.
 - [ ] Los iconos de Bootstrap Icons son decorativos: `<i class="bi …" aria-hidden="true"></i>`.
 
 ### 15.4 Tablas

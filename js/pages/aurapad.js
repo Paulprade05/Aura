@@ -5,15 +5,18 @@
      - [data-aurapad-family="description"] → family.description
      - [data-aurapad-buy="ID"]              → enlace, verbo («Comprar»,
        «Reservar» o «Configurar», según la disponibilidad) y nombre del
-       modelo (los «Comprar auraPad» de héroe, barra local y llamada final
-       son del sistema: [data-aura-buy="aurapad"]).
+       modelo: el enlace del último texto de la escena con scroll (los
+       «Comprar auraPad» de héroe, barra local y llamada final son del
+       sistema: [data-aura-buy="aurapad"]).
      - [data-aurapad-compat="Accesorio"]    → «Compatible con …»: los modelos
-       cuyo specs.accesorios lo nombran
+       cuyo specs.accesorios lo nombran (si ninguno lo nombra, se oculta)
      - [data-aurapad-rec="ID"]              → modelo recomendado en el pie de
-       cada hoja de «Hecho para crear» (nombre, lema, disponibilidad, precio,
-       cuota y acción)
-   Si un ID ya no está en la gama, se usa el primer modelo (rank 1). Si falta
-   un dato, se conserva el texto genérico del HTML.
+       cada hoja «Ver cómo» (las del carrusel de auraPadOS y la de cámaras):
+       nombre, lema, disponibilidad, precio, cuota y acción
+   Lo demás lo pone el sistema desde el catálogo: tarjetas de modelo, muestras
+   de color de las exhibiciones, tabla comparativa, ventajas de la tienda y
+   precio «Desde». Si un ID ya no está en la gama, se usa el primer modelo
+   (rank 1). Si falta un dato, se conserva el texto genérico del HTML.
    ========================================================================== */
 (function () {
   'use strict';
@@ -89,7 +92,7 @@
   });
 
 
-  /* 4. Modelo recomendado en cada hoja de «Hecho para crear» */
+  /* 4. Modelo recomendado en cada hoja «Ver cómo» */
   var months = data.financing && data.financing.months;
   each('[data-aurapad-rec]', function (box) {
     var p = pick(box.getAttribute('data-aurapad-rec'));

@@ -15,7 +15,9 @@
      8. Carrusel                [data-aura-carousel]
      8 bis. Segmentado          .aura-segmented (pastilla que se desliza)
      8 ter. Galería             AURA.ui.gallery() (fundido cruzado)
-     9. Aparición               [data-aura-reveal]
+     8 quater. Escena con scroll [data-aura-scrub] (fotogramas en <canvas> + textos por tramos)
+     8 quinquies. Exhibición     [data-aura-colorway] (muestras que cambian la foto)
+     9. Aparición               [data-aura-reveal] (+ "stat": cifra que aparece por partes)
     10. Catálogo en pantalla    [data-aura-lineup] · [data-aura-compare]
     11. Avisos                  AURA.ui.toast() (se apartan con el dedo) · AURA.ui.haptic()
     12. Formularios             AURA.ui.form() · contraseña · cantidad
@@ -1845,6 +1847,13 @@
       safe(c.destroy);
       return false;
     });
+    /* Escenas con scroll (allScrubs, §8 quater: se declara más abajo, pero
+       esta función solo se llama después de arrancar). */
+    allScrubs = allScrubs.filter(function (s) {
+      if (document.contains(s.root)) { return true; }
+      safe(s.destroy);
+      return false;
+    });
   }
 
   /** Controlador de un carrusel: AURA.ui.carousel(el | selector) → { goTo, next, prev, refresh, index, count, el } */
@@ -2200,6 +2209,469 @@
 
   /** Galería con fundido cruzado: AURA.ui.gallery(el).show('slot', { fallback, alt, priority }) */
   ui.gallery = function (target) { return safe(function () { return initGallery($(target)); }) || null; };
+  /* ------------------------------------------------------------------------
+     8 quater. Escena que avanza con el scroll   [data-aura-scrub]
+     Una secuencia de fotogramas (img/seq/<nombre>/f-0001.webp…) pintada en un
+     <canvas> según el progreso del scroll, con textos que aparecen y se van en
+     tramos (data-from / data-to). Marcado y API: docs/COMPONENTES.md §10 bis.
+
+     Reglas (skill «apple-design»):
+     - El fotograma sigue al scroll 1:1: en cada requestAnimationFrame se lee
+       la posición y se pinta el fotograma que le toca. Sin inercia, sin
+       suavizado y sin temporizadores. Solo se repinta si cambia el fotograma
+       (o el tamaño del lienzo).
+     - Si el fotograma exacto aún no ha llegado, se pinta el más cercano de
+       los que ya están: por eso primero se descarga uno de cada 8 (siempre
+       hay uno cerca) y después el resto, con prioridad baja, como mucho 4 a
+       la vez y no antes de que termine de cargar la página.
+     - Los textos solo cambian opacity y transform, ligados al progreso:
+       entran desde abajo y se van hacia arriba (en el sentido del scroll).
+     - Con «reducir movimiento» o «ahorro de datos» (o al imprimir, o sin
+       aura-core.js) no hay escena: el póster en su sitio y los textos
+       apilados en orden (lo hace el CSS; aquí no se descarga nada).
+     - Las imágenes se piden con new Image(): funciona igual por file:// que
+       por http (sin fetch; el lienzo nunca se lee, así que no importa que
+       quede «contaminado» por file://).
+     ------------------------------------------------------------------------ */
+
+  var SCRUB_MOBILE = '(max-width: 767.98px)';
+  var SCRUB_KEY_STEP = 8;          // primero uno de cada 8 fotogramas
+  var SCRUB_PARALLEL = 4;          // descargas simultáneas como mucho (no acapara la red)
+  var SCRUB_SHIFT = 40;            // px que recorre un texto al entrar y al irse
+  var SCRUB_MAX_DPR = 2;           // más densidad no se ve y cuesta memoria
+  var SCRUB_NEAR = '150% 0px 150% 0px';   // empieza a descargar a pantalla y media de distancia
+  var allScrubs = [];
+  var scrubTick = 0;
+  var scrubListening = false;
+
+  function saveData() {
+    return !!safe(function () { var c = window.navigator.connection; return c && c.saveData === true; });
+  }
+
+  /* 'f-%04d.webp' + 7 → 'f-0007.webp' */
+  function scrubFile(pattern, n) {
+    return String(pattern || 'f-%04d.webp').replace(/%0?(\d*)d/, function (m, w) {
+      var s = String(n);
+      var width = Number(w) || 0;
+      while (s.length < width) { s = '0' + s; }
+      return s;
+    });
+  }
+
+  /* Orden de descarga: el primero, uno de cada 8, el último y después el resto. */
+  function scrubOrder(n) {
+    var keys = [];
+    var rest = [];
+    var seen = {};
+    var add = function (list, i) { if (i >= 0 && i < n && !seen[i]) { seen[i] = true; list.push(i); } };
+    for (var k = 0; k < n; k += SCRUB_KEY_STEP) { add(keys, k); }
+    add(keys, n - 1);
+    for (var i = 0; i < n; i++) { add(rest, i); }
+    return { keys: keys, rest: rest };
+  }
+
+  /* Opacidad y desplazamiento de un texto para un progreso p (0–1). Entra en
+     el primer tercio de su tramo (como mucho un 10 % de la escena) y se va en
+     el último. Con data-from="0" ya está a la vista al llegar la escena; con
+     data-to="1" se queda hasta que la escena se va. */
+  function scrubTextState(t, p) {
+    var f = t.fade;
+    if (t.from > 0 && p <= t.from) { return { o: 0, y: SCRUB_SHIFT }; }
+    if (t.from > 0 && p < t.from + f) { var a = (p - t.from) / f; return { o: a, y: SCRUB_SHIFT * (1 - a) }; }
+    if (t.to < 1 && p >= t.to) { return { o: 0, y: -SCRUB_SHIFT }; }
+    if (t.to < 1 && p > t.to - f) { var b = (t.to - p) / f; return { o: b, y: -SCRUB_SHIFT * (1 - b) }; }
+    return { o: 1, y: 0 };
+  }
+
+  function scrubSchedule() {
+    if (!scrubTick) { scrubTick = raf(scrubFrame); }
+  }
+  function scrubFrame() {
+    scrubTick = 0;
+    allScrubs.forEach(function (s) { if (s.active) { safe(s.update); } });
+  }
+  function scrubListen() {
+    if (scrubListening) { return; }
+    scrubListening = true;
+    window.addEventListener('scroll', scrubSchedule, { passive: true });
+    window.addEventListener('resize', function () {
+      allScrubs.forEach(function (s) { safe(s.measure); });
+      scrubSchedule();
+    });
+    window.addEventListener('load', function () { allScrubs.forEach(function (s) { safe(s.pump); }); });
+    reduceListeners.push(function () { allScrubs.forEach(function (s) { safe(s.setMode); }); });
+  }
+
+  function initScrub(root) {
+    if (!root || !root.querySelector) { return null; }
+    if (root._auraScrub) { return root._auraScrub; }
+    var stage = root.querySelector('.aura-scrub__stage');
+    if (!stage) { return null; }
+    var poster = stage.querySelector('.aura-scrub__poster');
+    var canvas = stage.querySelector('canvas.aura-scrub__canvas');
+    if (!canvas) {
+      canvas = document.createElement('canvas');
+      canvas.className = 'aura-scrub__canvas';
+      canvas.setAttribute('aria-hidden', 'true');
+      /* Detrás del póster (o de su <picture>, que es el hijo del escenario). */
+      var anchor = poster && poster.parentNode !== stage ? poster.parentNode : poster;
+      stage.insertBefore(canvas, anchor && anchor.parentNode === stage ? anchor.nextSibling : stage.firstChild);
+    }
+    var ctx = safe(function () { return canvas.getContext('2d', { alpha: true }); }) || null;
+
+    var focus = String(root.getAttribute('data-focus') || '').split(/[\s,]+/);
+    var fx = clamp(num(focus[0], 0.5), 0, 1);
+    var fy = clamp(num(focus[1], 0.5), 0, 1);
+    var pattern = root.getAttribute('data-pattern') || 'f-%04d.webp';
+    var length = Math.max(120, num(root.getAttribute('data-length'), 300));
+    root.style.setProperty('--aura-scrub-length', String(length));
+    root.style.setProperty('--aura-scrub-focus', (fx * 100) + '% ' + (fy * 100) + '%');
+
+    var texts = toArray(stage.querySelectorAll('.aura-scrub__text')).map(function (el) {
+      var from = clamp(num(el.getAttribute('data-from'), 0), 0, 1);
+      var to = clamp(num(el.getAttribute('data-to'), 1), from, 1);
+      return { el: el, from: from, to: to, fade: Math.max(0.001, Math.min(0.1, (to - from) / 3)), o: -1, y: 0, on: null };
+    });
+
+    var s = { root: root, active: typeof window.IntersectionObserver !== 'function', near: false, mode: '', progress: 0, painted: -1, set: null, observers: [] };
+    var mq = safe(function () { return window.matchMedia(SCRUB_MOBILE); });
+    var inflight = 0;
+    var queue = [];
+    var later = [];
+
+    function readSet(mobile) {
+      var base = String(root.getAttribute('data-seq') || '').replace(/\/+$/, '');
+      var frames = Math.max(0, Math.floor(num(root.getAttribute('data-frames'), 0)));
+      var fit = root.getAttribute('data-fit') === 'contain' ? 'contain' : 'cover';
+      if (mobile) {
+        frames = Math.max(0, Math.floor(num(root.getAttribute('data-mobile-frames'), frames)));
+        var mfit = root.getAttribute('data-mobile-fit');
+        if (mfit === 'contain' || mfit === 'cover') { fit = mfit; }
+        base += '/m';
+      }
+      return { mobile: mobile, base: base, frames: base ? frames : 0, fit: fit, imgs: [], state: [], loaded: 0, failed: 0 };
+    }
+    function wantMobile() {
+      return root.getAttribute('data-mobile') === 'true' && !!(mq && mq.matches) && !s.mobileBroken;
+    }
+    function useSet(set) {
+      s.set = set;
+      s.painted = -1;
+      root.classList.remove('is-painted');
+      root.removeAttribute('data-frame');
+      root.style.setProperty('--aura-scrub-fit', set.fit);
+      var order = scrubOrder(set.frames);
+      queue = order.keys;
+      later = order.rest;
+      if (s.near) { pump(); }
+    }
+
+    /* --- Descarga progresiva --- */
+    function pageLoaded() { return document.readyState === 'complete'; }
+    function load(set, i) {
+      var img = new window.Image();
+      set.state[i] = 1;
+      inflight++;
+      img.decoding = 'async';
+      if ('fetchPriority' in img) { img.fetchPriority = i % SCRUB_KEY_STEP === 0 ? 'auto' : 'low'; }
+      img.onload = function () {
+        inflight--;
+        if (set !== s.set) { pump(); return; }
+        set.imgs[i] = img;
+        set.state[i] = 2;
+        set.loaded++;
+        /* Llega uno más cercano al que toca que el que se ve: se repinta. */
+        if (s.mode === 'scene' && s.active) { scrubSchedule(); }
+        pump();
+      };
+      img.onerror = function () {
+        inflight--;
+        if (set !== s.set) { pump(); return; }
+        set.state[i] = 3;
+        set.failed++;
+        /* La carpeta m/ no existe: se usa la de escritorio (sin repetir el error). */
+        if (set.mobile && !set.loaded && set.failed >= 2) {
+          s.mobileBroken = true;
+          useSet(readSet(false));
+          return;
+        }
+        pump();
+      };
+      img.src = set.base + '/' + scrubFile(pattern, i + 1);
+    }
+    function pump() {
+      var set = s.set;
+      if (!set || !set.frames || !s.near || s.mode !== 'scene') { return; }
+      while (inflight < SCRUB_PARALLEL) {
+        var next = queue.length ? queue : (pageLoaded() ? later : null);
+        if (!next || !next.length) { return; }
+        var i = next.shift();
+        if (!set.state[i]) { load(set, i); }
+      }
+    }
+
+    /* --- Lienzo --- */
+    function measure() {
+      if (s.mode !== 'scene' || !ctx) { return; }
+      var w = stage.clientWidth;
+      var h = stage.clientHeight;
+      var dpr = Math.min(SCRUB_MAX_DPR, window.devicePixelRatio || 1);
+      var bw = Math.max(1, Math.round(w * dpr));
+      var bh = Math.max(1, Math.round(h * dpr));
+      if (canvas.width !== bw || canvas.height !== bh) {
+        canvas.width = bw;          // cambiar el tamaño borra el lienzo: hay que repintar
+        canvas.height = bh;
+        s.painted = -1;
+      }
+      var set = s.set;
+      if (set && set.mobile !== wantMobile()) { useSet(readSet(wantMobile())); }
+    }
+    function nearest(set, want) {
+      if (set.state[want] === 2) { return want; }
+      for (var d = 1; d < set.frames; d++) {
+        if (want - d >= 0 && set.state[want - d] === 2) { return want - d; }
+        if (want + d < set.frames && set.state[want + d] === 2) { return want + d; }
+      }
+      return -1;
+    }
+    function draw(img) {
+      var cw = canvas.width;
+      var ch = canvas.height;
+      var iw = img.naturalWidth || 1;
+      var ih = img.naturalHeight || 1;
+      var contain = s.set.fit === 'contain';
+      var k = contain ? Math.min(cw / iw, ch / ih) : Math.max(cw / iw, ch / ih);   // recorte tipo cover (o ajuste)
+      var dw = iw * k;
+      var dh = ih * k;
+      if (contain) { ctx.clearRect(0, 0, cw, ch); }
+      ctx.imageSmoothingEnabled = true;
+      if ('imageSmoothingQuality' in ctx) { ctx.imageSmoothingQuality = 'high'; }
+      ctx.drawImage(img, (cw - dw) * fx, (ch - dh) * fy, dw, dh);
+    }
+
+    /* --- Fotograma y textos para la posición actual --- */
+    function update() {
+      if (s.mode !== 'scene') { return; }
+      var r = root.getBoundingClientRect();
+      var run = r.height - stage.offsetHeight;          // recorrido con la escena pegada
+      var p = run > 0 ? clamp(-r.top / run, 0, 1) : (r.top < 0 ? 1 : 0);
+      s.progress = p;
+
+      texts.forEach(function (t) {
+        var st = scrubTextState(t, p);
+        var o = Math.round(st.o * 1000) / 1000;
+        var y = Math.round(st.y * 10) / 10;
+        if (o !== t.o || y !== t.y) {
+          t.o = o;
+          t.y = y;
+          t.el.style.opacity = String(o);
+          t.el.style.transform = y ? 'translate3d(0, ' + y + 'px, 0)' : 'none';
+        }
+        var on = o > 0.5;
+        if (on !== t.on) { t.on = on; t.el.classList.toggle('is-on', on); }
+      });
+
+      var set = s.set;
+      if (!ctx || !set || !set.frames) { return; }
+      var i = nearest(set, Math.round(p * (set.frames - 1)));
+      if (i < 0 || i === s.painted) { return; }
+      draw(set.imgs[i]);
+      s.painted = i;
+      root.setAttribute('data-frame', String(i + 1));
+      if (!root.classList.contains('is-painted')) { root.classList.add('is-painted'); }
+    }
+
+    /* --- Escena o versión estática --- */
+    function setMode() {
+      var scene = !reduced && !saveData() && !!ctx && !!(window.matchMedia && window.matchMedia('screen').matches);
+      var mode = scene ? 'scene' : 'static';
+      if (mode === s.mode) { return; }
+      s.mode = mode;
+      /* «Reducir movimiento» lo resuelve también el CSS; .is-static cubre lo
+         que el CSS no ve (ahorro de datos, sin lienzo). */
+      root.classList.toggle('is-static', !scene);
+      root.classList.toggle('is-scene', scene);
+      if (!scene) {
+        texts.forEach(function (t) {
+          t.o = -1; t.y = 0; t.on = null;
+          t.el.style.opacity = '';
+          t.el.style.transform = '';
+          t.el.classList.remove('is-on');
+        });
+        return;
+      }
+      if (!s.set) { useSet(readSet(wantMobile())); }
+      measure();
+      update();
+      pump();
+    }
+
+    /* El foco de teclado en un texto que no se ve (un enlace en un tramo
+       posterior) lleva la página al centro de su tramo: nunca hay foco sobre
+       algo invisible. */
+    stage.addEventListener('focusin', function (e) {
+      if (s.mode !== 'scene') { return; }
+      var t = null;
+      texts.forEach(function (x) { if (!t && x.el.contains(e.target)) { t = x; } });
+      if (!t || t.o >= 0.99) { return; }
+      var r = root.getBoundingClientRect();
+      var run = r.height - stage.offsetHeight;
+      var target = (t.from + t.to) / 2;
+      var y = (window.pageYOffset || document.documentElement.scrollTop || 0) + r.top + target * Math.max(0, run);
+      safe(function () { window.scrollTo(0, Math.round(y)); });
+      scrubSchedule();
+    });
+
+    /* Visible: se actualiza con el scroll. Cerca: empieza la descarga. */
+    if (typeof window.IntersectionObserver === 'function') {
+      var vis = new window.IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          s.active = en.isIntersecting;
+          root.classList.toggle('is-active', s.active);
+          if (s.active) { scrubSchedule(); }
+        });
+      });
+      vis.observe(root);
+      var near = new window.IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (en.isIntersecting && !s.near) { s.near = true; pump(); }
+        });
+      }, { rootMargin: SCRUB_NEAR });
+      near.observe(root);
+      s.observers.push(vis, near);
+    } else {
+      s.near = true;
+    }
+    if (typeof window.ResizeObserver === 'function') {
+      var ro = new window.ResizeObserver(function () { safe(measure); scrubSchedule(); });
+      ro.observe(stage);
+      s.observers.push(ro);
+    }
+    if (mq) {
+      var onMq = function () { if (s.mode === 'scene') { safe(measure); scrubSchedule(); } };
+      if (mq.addEventListener) { mq.addEventListener('change', onMq); } else if (mq.addListener) { mq.addListener(onMq); }
+    }
+
+    s.update = update;
+    s.measure = measure;
+    s.pump = pump;
+    s.setMode = setMode;
+    s.destroy = function () { s.observers.forEach(function (o) { safe(function () { o.disconnect(); }); }); s.active = false; };
+
+    root.classList.add('is-ready');
+    allScrubs.push(s);
+    scrubListen();
+    setMode();
+
+    root._auraScrub = {
+      el: root,
+      progress: function () { return s.progress; },
+      frame: function () { return s.painted + 1; },
+      frames: function () { return s.set ? s.set.frames : 0; },
+      loaded: function () { return s.set ? s.set.loaded : 0; },
+      mode: function () { return s.mode; },
+      refresh: function () { safe(measure); s.painted = -1; safe(update); }
+    };
+    return root._auraScrub;
+  }
+
+  /** Escena con scroll: AURA.ui.scrub(el) → { progress(), frame(), frames(), loaded(), mode(), refresh(), el } */
+  ui.scrub = function (target) { return safe(function () { return initScrub($(target)); }) || null; };
+
+
+  /* ------------------------------------------------------------------------
+     8 quinquies. Exhibición de color   [data-aura-colorway="idDeProducto"]
+     Muestras que cambian la foto del producto con el fundido cruzado de la
+     galería (AURA.ui.gallery) y anuncian el nombre del acabado. La foto sale
+     de AURA.catalog.image(producto, color): la propia del color si existe
+     (imageVariants en data.js) y, si no, la base, con la nota «Imagen en …».
+     Sin id de producto, cada input puede llevar data-slot / data-fallback /
+     data-alt. Docs: COMPONENTES.md §8 («Exhibición de color»).
+     ------------------------------------------------------------------------ */
+
+  var colorwayCount = 0;
+
+  function initColorway(root) {
+    if (!root || !root.querySelector) { return null; }
+    if (root._auraColorway) { return root._auraColorway; }
+    var media = root.querySelector('.aura-gallery');
+    var box = root.querySelector('.aura-swatches');
+    if (!media || !box) { return null; }
+    var cat = AURA.catalog;
+    var id = root.getAttribute('data-aura-colorway') || '';
+    var p = id && cat && cat.product ? cat.product(id) : null;
+    var nameEl = root.querySelector('.aura-colorway__name');
+    var group = 'aura-colorway-' + (++colorwayCount);
+
+    /* Sin muestras escritas, se pintan las del catálogo (en su orden). */
+    if (p && !box.querySelector('input')) {
+      var wanted = root.getAttribute('data-color');
+      var start = (wanted && cat.color(p, wanted)) || cat.color(p);
+      box.innerHTML = (Array.isArray(p.colors) ? p.colors : []).map(function (c) {
+        return '<label class="aura-swatch" style="--swatch:' + esc(c.hex || '#888') + '">' +
+          '<input class="aura-swatch__input" type="radio" name="' + group + '" value="' + esc(c.id) + '"' + (start && start.id === c.id ? ' checked' : '') + '>' +
+          '<span class="aura-swatch__dot" aria-hidden="true"></span>' +
+          '<span class="visually-hidden">' + esc(c.name) + '</span></label>';
+      }).join('');
+    }
+    var inputs = toArray(box.querySelectorAll('input[type="radio"]'));
+    if (!inputs.length) { return null; }
+    if (!inputs.some(function (i) { return i.checked; })) { inputs[0].checked = true; }
+    var gallery = initGallery(media);
+
+    function labelOf(input) {
+      var label = closest(input, 'label');
+      var hidden = label && label.querySelector('.visually-hidden');
+      return String((hidden || label || input).textContent || input.value).trim();
+    }
+    function current() {
+      var on = null;
+      inputs.forEach(function (i) { if (i.checked) { on = i; } });
+      return on;
+    }
+    function apply(input) {
+      var name = labelOf(input);
+      var slot = input.getAttribute('data-slot');
+      var info = { slot: slot, fallback: input.getAttribute('data-fallback') || '', alt: input.getAttribute('data-alt') || '', exact: true, color: null };
+      if (!slot && p) { info = cat.image(p, input.value); }
+      if (gallery && info.slot) { gallery.show(info.slot, { fallback: info.fallback, alt: info.alt }); }
+      if (nameEl) {
+        nameEl.textContent = '';
+        var strong = document.createElement('strong');
+        strong.textContent = name;
+        nameEl.appendChild(strong);
+        if (!info.exact && info.color) {
+          var note = document.createElement('span');
+          note.className = 'aura-colorway__note';
+          note.textContent = ' · Imagen en ' + info.color.name;
+          nameEl.appendChild(note);
+        }
+      }
+      root.setAttribute('data-color', input.value);
+      fire(root, 'aura:colorway', { colorId: input.value, name: name, exact: !!info.exact, slot: info.slot });
+    }
+
+    box.addEventListener('change', function (e) {
+      if (e.target && e.target.type === 'radio') { safe(function () { apply(e.target); }); }
+    });
+    apply(current());
+    /* El nombre se anuncia al cambiar (no al cargar la página). */
+    if (nameEl && !nameEl.hasAttribute('aria-live')) { nameEl.setAttribute('aria-live', 'polite'); }
+
+    root._auraColorway = {
+      el: root,
+      color: function () { var c = current(); return c ? c.value : ''; },
+      set: function (colorId) {
+        inputs.forEach(function (i) { if (i.value === colorId && !i.checked) { i.checked = true; safe(function () { apply(i); }); } });
+        return root._auraColorway;
+      }
+    };
+    return root._auraColorway;
+  }
+
+  /** Exhibición de color: AURA.ui.colorway(el) → { color(), set(colorId), el } */
+  ui.colorway = function (target) { return safe(function () { return initColorway($(target)); }) || null; };
+
 
 
   /* ------------------------------------------------------------------------
@@ -3246,6 +3718,8 @@
     each(scope.querySelectorAll('.aura-buybar'), function (el) { safe(function () { initBuybarBox(el); }); });
     each(scope.querySelectorAll('.aura-segmented'), function (el) { safe(function () { initSegmented(el); }); });
     each(scope.querySelectorAll('[data-aura-relocate]'), function (el) { safe(function () { relocate(el); }); });
+    each(scope.querySelectorAll('[data-aura-scrub]'), function (el) { safe(function () { initScrub(el); }); });
+    each(scope.querySelectorAll('[data-aura-colorway]'), function (el) { safe(function () { initColorway(el); }); });
     safe(function () { reveal(scope); });
     safe(function () { if (AURA.slots) { AURA.slots.scan(scope); } });
   }
@@ -3253,7 +3727,7 @@
 
   /* Red de seguridad: el HTML que una página inserte más tarde con JS se
      inicializa solo (si no, un [data-aura-reveal] nuevo se quedaría invisible). */
-  var AUTO = '[data-aura-reveal], [data-aura-carousel], [data-aura-sheet], [data-aura-lineup], [data-aura-compare], [data-aura-localnav], .aura-localnav, [data-aura-buybar], .aura-buybar, .aura-segmented, [data-aura-relocate]';
+  var AUTO = '[data-aura-reveal], [data-aura-carousel], [data-aura-sheet], [data-aura-lineup], [data-aura-compare], [data-aura-localnav], .aura-localnav, [data-aura-buybar], .aura-buybar, .aura-segmented, [data-aura-relocate], [data-aura-scrub], [data-aura-colorway]';
 
   function initAdded(node) {
     if (!node || node.nodeType !== 1 || !node.querySelectorAll) { return; }
@@ -3272,6 +3746,8 @@
       if (node.classList.contains('aura-buybar')) { initBuybarBox(node); }
       if (node.classList.contains('aura-segmented')) { initSegmented(node); }
       if (node.hasAttribute('data-aura-relocate') && !node._auraRelocated) { relocate(node); }
+      if (node.hasAttribute('data-aura-scrub')) { initScrub(node); }
+      if (node.hasAttribute('data-aura-colorway')) { initColorway(node); }
     }
     each(node.querySelectorAll('[data-aura-lineup]'), function (el) { if (!el.children.length) { safe(function () { renderLineup(el); }); } });
     each(node.querySelectorAll('[data-aura-compare]'), function (el) { if (!el.children.length) { safe(function () { renderCompare(el); }); } });
@@ -3282,6 +3758,8 @@
     each(node.querySelectorAll('.aura-buybar'), function (el) { safe(function () { initBuybarBox(el); }); });
     each(node.querySelectorAll('.aura-segmented'), function (el) { safe(function () { initSegmented(el); }); });
     each(node.querySelectorAll('[data-aura-relocate]'), function (el) { if (!el._auraRelocated) { safe(function () { relocate(el); }); } });
+    each(node.querySelectorAll('[data-aura-scrub]'), function (el) { safe(function () { initScrub(el); }); });
+    each(node.querySelectorAll('[data-aura-colorway]'), function (el) { safe(function () { initColorway(el); }); });
     reveal(node);
   }
 
@@ -3365,7 +3843,7 @@
         each(rec.addedNodes, function (node) { safe(function () { initAdded(node); }); });
         each(rec.addedNodes, function (node) { if (node.nodeType === 1 || node.nodeType === 3) { safe(function () { fixInches(node); }); } });
       });
-      if (removed && (allSheets.length || allCarousels.length)) { safe(pruneDetached); }
+      if (removed && (allSheets.length || allCarousels.length || allScrubs.length)) { safe(pruneDetached); }
     }).observe(document.body, { childList: true, subtree: true });
   }
 

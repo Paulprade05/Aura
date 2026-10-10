@@ -1,0 +1,42 @@
+{
+ "frames": 120,
+ "width": 1600,
+ "height": 900,
+ "pattern": "f-%04d.webp",
+ "mobile": true,
+ "mobileWidth": 750,
+ "mobileHeight": 1100,
+ "fondo": "#000",
+ "fuente": "Render 3D propio generado por código (sin material de terceros)",
+ "momentos": [
+  {
+   "desde": 1,
+   "hasta": 40,
+   "ve": "auraPad de canto: una hoja de 5,1 mm que cruza todo el ancho (y≈50–63 %); un destello recorre el canto de izquierda a derecha (máximo f15–30)"
+  },
+  {
+   "desde": 40,
+   "hasta": 66,
+   "ve": "Se levanta hacia el espectador mostrando el cristal oscuro con un reflejo que se desliza, y se desplaza a la derecha"
+  },
+  {
+   "desde": 62,
+   "hasta": 90,
+   "ve": "La pantalla se enciende: la aurora se abre desde el centro"
+  },
+  {
+   "desde": 90,
+   "hasta": 120,
+   "ve": "Vista de tres cuartos a la derecha (x≈33–89 %, y≈10–88 %), pantalla encendida; cámara frontal en el marco largo superior"
+  }
+ ],
+ "zonasTranquilas": {
+  "inicio": "mitad superior (y<46 %) y franja inferior (y>70 %)",
+  "final": "izquierda (x<32 %)"
+ },
+ "estaticoRecomendado": "f-0120.webp",
+ "mobileNota": "m/ en vertical (750 × 1100, 120 fotogramas): el mismo render con la cámara centrada (sin el desplazamiento final a la derecha) y una focal más larga, para que en el teléfono la tableta ocupe ~77 % del ancho; entre f40 y f60 la lámina pasa cerca de la cámara y sale por los lados. La tableta queda en y≈21–63 %: el pie es negro para los textos. Generado con scratchpad/video/tools/aurapad-m.mjs --ow=750 --oh=1100 --f=1450 --tx=0 --cy=0.42 (calidad 62).",
+ "zonasTranquilasMovil": {
+  "todo": "franja inferior (y>66 %)"
+ }
+}
