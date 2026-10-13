@@ -18,7 +18,9 @@
      más fino; «lightest» = el más ligero (a igualdad, el de mejor rank).
      Admite varios candidatos separados por espacios («aurabook-air-15
      cheapest»): vale el primero que exista. Si ninguno existe, se usa el
-     rank 1 de la familia: nunca queda un enlace muerto.
+     rank 1 de la familia: nunca queda un enlace muerto. Manda el más
+     cercano: un dato de otro modelo dentro del mismo bloque lleva su propio
+     data-ab-product (el peso del más ligero en el texto de la autonomía).
    - data-ab="campo campo…": qué se rellena (ver BIND). Si el dato no está en
      el catálogo, se queda el texto del HTML.
    - data-ab-list="hours | puertos": autonomía (cifras destacadas) y puertos
@@ -250,6 +252,13 @@
     'nano-delta': function (el) { var d = nanoDelta(); if (d) { el.textContent = AURA.fmt.eur0(d); } },
     os: function (el) { put(el, family.os); },
     'family-tagline': function (el) { put(el, family.tagline); },
+    /* Lema corto del héroe en el teléfono, una frase por línea (cada una en su
+       <span>: nunca «fino. Tan AURA.»); si el catálogo no lo tiene, se queda el del HTML. */
+    'family-tagline-short': function (el) {
+      var parts = String(family.taglineShort || '').match(/[^.!?]+[.!?]*/g);
+      if (!parts) { return; }
+      el.innerHTML = parts.map(function (t) { return '<span>' + AURA.html.esc(t.trim()) + '</span>'; }).join(' ');
+    },
     'family-description': function (el) { put(el, family.description); }
   };
 

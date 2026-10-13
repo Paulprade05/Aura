@@ -23,20 +23,34 @@
       familia (valores concisos, unas 70 letras como mucho), salvo `precio`:
       esa fila la calcula el sistema desde basePrice («Desde 1.469 €»), así
       que el precio solo se escribe una vez, en basePrice.
-   6. `image` es el nombre del hueco de imagen: assets/img/<image>.webp
-      (también valen .png y .jpg, que se prueban después). Con esa imagen
-      basta para todos los colores. Junto a ella:
-      - `imageColor`: el id del acabado que se VE en esa foto ('' si no se
-        aprecia ninguno, p. ej. una tableta de frente). Es el color que
-        preseleccionan la tarjeta de modelo y el configurador, para que la
-        etiqueta del acabado coincida con la foto.
-      - `imageAlt`: el texto alternativo de la foto real (lo que se ve, no lo
+   6. Fotos. La galería por color (varias vistas por acabado) NO se escribe
+      aquí: la añade el bloque generado del final del archivo (entre las
+      marcas FOTOS:INICIO y FOTOS:FIN), que escribe fotos-tools/integrar.mjs
+      desde los manifiestos de las fotos. Da a cada producto:
+      - `photos`: { idDeColor: [{ slot, vista, alt }, …] }. `slot` es el
+        archivo img/<slot>.webp; `vista` una de trasera, frontal,
+        tres-cuartos, lateral, abierto, cerrado, estuche-abierto,
+        estuche-cerrado o auriculares; `alt`, lo que se ve en esa foto. La
+        primera vista de cada acabado es la de tarjeta (la misma en los
+        modelos de una familia). Un acabado sin fotos enseña las del acabado
+        por defecto y la página lo dice («Imagen en …»).
+      - `imageColor`: el acabado por defecto, uno con foto en la vista de
+        tarjeta. Es el color que preseleccionan la tarjeta de modelo y el
+        configurador, para que la etiqueta del acabado coincida con la foto.
+      Las páginas lo leen con AURA.catalog.views(producto, color) y
+      AURA.catalog.image(producto, color, vista?): nunca escriben nombres de
+      archivo a mano.
+      De respaldo (si falta una foto de la galería, o un producto no tiene
+      ninguna), cada producto lleva aquí:
+      - `image`: su foto base, img/<image>.webp (también valen .png y .jpg,
+        que se prueban después).
+      - `imageColor`: el id del acabado que se VE en esa foto base ('' si no
+        se aprecia ninguno, p. ej. una tableta de frente); con fotos, el
+        bloque FOTOS lo sustituye por el acabado por defecto de la galería.
+      - `imageAlt`: el texto alternativo de la foto base (lo que se ve, no lo
         que se anuncia).
-      - `imageVariants` (opcional): { idDeColor: alt } con las fotos por color
-        que EXISTEN en assets/img como <image>-<color.id>.webp. Solo esas se
-        piden; los demás colores usan la foto base directamente (sin probar
-        archivos que no están ni parpadear al cambiar de color). Al añadir una
-        foto por color, añade aquí su id.
+      - `imageVariants` (opcional, solo sin galería): { idDeColor: alt } con
+        fotos por color que existen como img/<image>-<color.id>.webp.
    7. Cambia `updated` por la fecha de la revisión.
 
    CAMPOS OPCIONALES (el sitio funciona igual si faltan)
@@ -56,6 +70,10 @@
      No escribas el estado ni las frases («Reserva a partir del…»): salen de
      las fechas. Para probar otro día, añade ?hoy=AAAA-MM-DD a la URL.
    - family.description: frase de apoyo para tarjetas y cabeceras.
+   - family.taglineShort: el lema en corto, solo para el titular del héroe
+     en el teléfono (por debajo de 576 px), cuando el entero deja una
+     palabra sola en la última línea. Las tarjetas de familia, la guía y la
+     imagen OG siguen usando `tagline`.
    - family.plural: true si el nombre se usa en plural («los auraPods», «unos
      auraPods», «tus nuevos auraPods»). Los textos generados concuerdan con
      AURA.catalog.grammar(producto | familia); sin el campo, singular.
@@ -123,6 +141,7 @@ window.AURA_DATA = {
       page: 'aurabook.html',
       os: 'auraOS 27',
       tagline: 'Increíblemente fino. Asombrosamente AURA.',
+      taglineShort: 'Increíblemente fino. Tan AURA.',
       description: 'Portátiles con AURA Silicon: dos Pro con pantalla Liquid Retina XDR y el Air más grande, fino y silencioso.',
       compareRows: [
         { key: 'chip', label: 'Chip' },
@@ -269,10 +288,7 @@ window.AURA_DATA = {
       ],
       image: 'auraphone-18-pro-max',
       imageColor: 'plata',
-      imageAlt: 'auraPhone 18 Pro Max plata tumbado en diagonal, en tres cuartos, con la meseta de tres cámaras, sobre fondo negro',
-      imageVariants: {
-        burdeos: 'auraPhone 18 Pro Max burdeos de espaldas, con la meseta de cámaras de lado a lado, sobre fondo negro'
-      }
+      imageAlt: 'auraPhone 18 Pro Max plata tumbado en diagonal, en tres cuartos, con la meseta de tres cámaras, sobre fondo negro'
     },
     {
       id: 'auraphone-18-pro',
@@ -322,11 +338,7 @@ window.AURA_DATA = {
       ],
       image: 'auraphone-18-pro',
       imageColor: 'negro',
-      imageAlt: 'auraPhone 18 Pro negro tumbado y visto a ras, con la meseta de tres cámaras en primer plano, sobre fondo negro',
-      imageVariants: {
-        plata: 'auraPhone 18 Pro plata de espaldas, con la meseta de cámaras de lado a lado, sobre fondo negro',
-        'azul-glacial': 'auraPhone 18 Pro azul glacial de espaldas, con la meseta de cámaras de lado a lado, sobre fondo negro'
-      }
+      imageAlt: 'auraPhone 18 Pro negro tumbado y visto a ras, con la meseta de tres cámaras en primer plano, sobre fondo negro'
     },
 
     /* ======================== auraPad ======================== */
@@ -398,11 +410,7 @@ window.AURA_DATA = {
       ],
       image: 'aurapad-pro-13',
       imageColor: '',
-      imageAlt: 'auraPad Pro 13″ de frente sobre fondo negro, con la pantalla encendida: ondas de luz rosas, rojas y azules',
-      imageVariants: {
-        'negro-espacial': 'Trasera negro espacial del auraPad Pro 13″, con el módulo de cámaras y el escáner LiDAR en la esquina, sobre fondo negro',
-        plata: 'Trasera plateada del auraPad Pro 13″, con el módulo de cámaras y el escáner LiDAR en la esquina, sobre fondo negro'
-      }
+      imageAlt: 'auraPad Pro 13″ de frente sobre fondo negro, con la pantalla encendida: ondas de luz rosas, rojas y azules'
     },
     {
       id: 'aurapad-pro-11',
@@ -530,12 +538,7 @@ window.AURA_DATA = {
       ],
       image: 'aurapad-air-13',
       imageColor: 'azul',
-      imageAlt: 'Trasera azul del auraPad Air 13″, con su única cámara en la esquina, sobre fondo negro',
-      imageVariants: {
-        'gris-espacial': 'Trasera gris espacial del auraPad Air 13″, con su única cámara en la esquina, sobre fondo negro',
-        purpura: 'Trasera púrpura del auraPad Air 13″, con su única cámara en la esquina, sobre fondo negro',
-        'blanco-estrella': 'Trasera blanco estrella del auraPad Air 13″, con su única cámara en la esquina, sobre fondo negro'
-      }
+      imageAlt: 'Trasera azul del auraPad Air 13″, con su única cámara en la esquina, sobre fondo negro'
     },
 
     /* ======================= auraBook ======================== */
@@ -693,10 +696,7 @@ window.AURA_DATA = {
       ],
       image: 'aurabook-pro-14',
       imageColor: 'negro-espacial',
-      imageAlt: 'auraBook Pro 14″ en negro espacial abierto sobre negro, con la pantalla de ondas ámbar y rosa',
-      imageVariants: {
-        plata: 'auraBook Pro 14″ plateado visto de frente sobre negro, con teclado negro y la pantalla de ondas violetas'
-      }
+      imageAlt: 'auraBook Pro 14″ en negro espacial abierto sobre negro, con la pantalla de ondas ámbar y rosa'
     },
     {
       id: 'aurabook-air-15',
@@ -755,12 +755,7 @@ window.AURA_DATA = {
       ],
       image: 'aurabook-air-15',
       imageColor: 'plata',
-      imageAlt: 'auraBook Air 15″ plateado, fino y abierto sobre negro, con la pantalla de ondas turquesa',
-      imageVariants: {
-        'azul-cielo': 'auraBook Air en azul cielo abierto sobre negro, con teclado negro y la pantalla de ondas turquesa',
-        'blanco-estrella': 'auraBook Air 15″ en blanco estrella abierto sobre negro, con la pantalla de ondas turquesa',
-        medianoche: 'auraBook Air 15″ en color medianoche abierto sobre negro, con la pantalla de ondas turquesa'
-      }
+      imageAlt: 'auraBook Air 15″ plateado, fino y abierto sobre negro, con la pantalla de ondas turquesa'
     },
 
     /* ======================= auraPods ======================== */
@@ -803,12 +798,7 @@ window.AURA_DATA = {
       ],
       image: 'aurapods-max-2',
       imageColor: 'medianoche',
-      imageAlt: 'auraPods Max 2 en color medianoche, en tres cuartos sobre una superficie negra brillante: diadema con malla, orejeras de aluminio y su reflejo',
-      imageVariants: {
-        'blanco-estrella': 'auraPods Max 2 en blanco estrella vistos desde arriba sobre fondo negro: diadema con malla y dos orejeras de aluminio',
-        azul: 'auraPods Max 2 azules vistos desde arriba sobre fondo negro, con las orejeras dentro de su funda Smart Case',
-        purpura: 'auraPods Max 2 en púrpura vistos desde arriba sobre fondo negro: diadema con malla y dos orejeras de aluminio'
-      }
+      imageAlt: 'auraPods Max 2 en color medianoche, en tres cuartos sobre una superficie negra brillante: diadema con malla, orejeras de aluminio y su reflejo'
     },
     {
       id: 'aurapods-pro-3',
@@ -962,3 +952,516 @@ window.AURA_DATA = {
     ]
   }
 };
+
+/* FOTOS:INICIO -----------------------------------------------------------
+   Galería por color: bloque GENERADO por fotos-tools/integrar.mjs a partir de
+   fotos-tools/manifiestos/<diseño>.json. No lo edites a mano: cambia los
+   manifiestos y vuelve a ejecutar el script (también regenera creditos.js y
+   las variantes img/400, img/800 e img/thumbs).
+   Da a cada producto `photos` ({ idDeColor: [{ slot, vista, alt }, …] }: la
+   primera vista es la de tarjeta, la misma en los modelos de una familia) e
+   `imageColor` (su acabado por defecto: uno con foto en esa vista). Los
+   acabados que no salen aquí enseñan las fotos del de por defecto, con el
+   aviso «Imagen en …» (AURA.catalog.views / image: exact = false).
+   Acabados sin foto propia:
+     - auraPhone Duo: cielo nocturno (enseña blanco estelar)
+     - auraPods Max 2: azul (enseña blanco estrella)
+   ------------------------------------------------------------------------ */
+(function (data) {
+  var FOTOS = {
+    "auraphone-duo": {
+      "imageColor": "blanco-estelar",
+      "photos": {
+        "blanco-estelar": [
+          {
+            "slot": "auraphone-duo-blanco-estelar-trasera",
+            "vista": "trasera",
+            "alt": "auraPhone Duo blanco estelar abierto y visto por detrás, con la cápsula de dos cámaras y la pantalla exterior AURA, sobre fondo negro"
+          },
+          {
+            "slot": "auraphone-duo-blanco-estelar-abierto",
+            "vista": "abierto",
+            "alt": "auraPhone Duo blanco estelar abierto y de frente, con la gran pantalla interior AURA encendida, sobre fondo negro"
+          },
+          {
+            "slot": "auraphone-duo-blanco-estelar-frontal",
+            "vista": "frontal",
+            "alt": "auraPhone Duo blanco estelar cerrado y de frente, con la pantalla exterior AURA encendida, sobre fondo negro"
+          },
+          {
+            "slot": "auraphone-duo-blanco-estelar-cerrado",
+            "vista": "cerrado",
+            "alt": "auraPhone Duo blanco estelar cerrado y visto por detrás, con la cápsula de dos cámaras, sobre fondo negro"
+          }
+        ]
+      }
+    },
+    "auraphone-18-pro-max": {
+      "imageColor": "plata",
+      "photos": {
+        "negro": [
+          {
+            "slot": "auraphone-18-pro-negro-trasera",
+            "vista": "trasera",
+            "alt": "auraPhone 18 Pro Max negro de espaldas, con la meseta de tres cámaras de lado a lado, sobre fondo negro"
+          },
+          {
+            "slot": "auraphone-18-pro-negro-frontal",
+            "vista": "frontal",
+            "alt": "auraPhone 18 Pro Max negro de frente, con la pantalla AURA encendida y la isla de cámara arriba, sobre fondo negro"
+          },
+          {
+            "slot": "auraphone-18-pro-negro-lateral",
+            "vista": "lateral",
+            "alt": "Canto izquierdo del auraPhone 18 Pro Max negro, de pie, con la meseta de cámaras asomando arriba, sobre fondo negro"
+          }
+        ],
+        "plata": [
+          {
+            "slot": "auraphone-18-pro-plata-trasera",
+            "vista": "trasera",
+            "alt": "auraPhone 18 Pro Max plata de espaldas, con la meseta de tres cámaras y el cristal blanco mate, sobre fondo negro"
+          },
+          {
+            "slot": "auraphone-18-pro-plata-tres-cuartos",
+            "vista": "tres-cuartos",
+            "alt": "auraPhone 18 Pro Max plata visto de espaldas y en ángulo, con la meseta de cámaras y el canto derecho, sobre fondo negro"
+          },
+          {
+            "slot": "auraphone-18-pro-plata-frontal",
+            "vista": "frontal",
+            "alt": "auraPhone 18 Pro Max plata de frente, con la pantalla AURA encendida y el canto plateado, sobre fondo negro"
+          }
+        ],
+        "azul-glacial": [
+          {
+            "slot": "auraphone-18-pro-azul-glacial-trasera",
+            "vista": "trasera",
+            "alt": "auraPhone 18 Pro Max azul glacial de espaldas, con la meseta de tres cámaras, sobre fondo negro"
+          },
+          {
+            "slot": "auraphone-18-pro-azul-glacial-frontal",
+            "vista": "frontal",
+            "alt": "auraPhone 18 Pro Max azul glacial de frente, con la pantalla AURA encendida y el canto azul, sobre fondo negro"
+          },
+          {
+            "slot": "auraphone-18-pro-azul-glacial-lateral",
+            "vista": "lateral",
+            "alt": "Canto izquierdo del auraPhone 18 Pro Max azul glacial, de pie, con los botones y la meseta de cámaras asomando arriba, sobre fondo negro"
+          }
+        ],
+        "burdeos": [
+          {
+            "slot": "auraphone-18-pro-burdeos-trasera",
+            "vista": "trasera",
+            "alt": "auraPhone 18 Pro Max burdeos de espaldas, con la meseta de tres cámaras, sobre fondo negro"
+          },
+          {
+            "slot": "auraphone-18-pro-burdeos-tres-cuartos",
+            "vista": "tres-cuartos",
+            "alt": "auraPhone 18 Pro Max burdeos visto de espaldas y en ángulo, con la meseta de cámaras y el canto izquierdo, sobre fondo negro"
+          },
+          {
+            "slot": "auraphone-18-pro-burdeos-frontal",
+            "vista": "frontal",
+            "alt": "auraPhone 18 Pro Max burdeos de frente, con la pantalla AURA encendida y el canto burdeos, sobre fondo negro"
+          }
+        ]
+      }
+    },
+    "auraphone-18-pro": {
+      "imageColor": "negro",
+      "photos": {
+        "negro": [
+          {
+            "slot": "auraphone-18-pro-negro-trasera",
+            "vista": "trasera",
+            "alt": "auraPhone 18 Pro negro de espaldas, con la meseta de tres cámaras de lado a lado, sobre fondo negro"
+          },
+          {
+            "slot": "auraphone-18-pro-negro-frontal",
+            "vista": "frontal",
+            "alt": "auraPhone 18 Pro negro de frente, con la pantalla AURA encendida y la isla de cámara arriba, sobre fondo negro"
+          },
+          {
+            "slot": "auraphone-18-pro-negro-lateral",
+            "vista": "lateral",
+            "alt": "Canto izquierdo del auraPhone 18 Pro negro, de pie, con la meseta de cámaras asomando arriba, sobre fondo negro"
+          }
+        ],
+        "plata": [
+          {
+            "slot": "auraphone-18-pro-plata-trasera",
+            "vista": "trasera",
+            "alt": "auraPhone 18 Pro plata de espaldas, con la meseta de tres cámaras y el cristal blanco mate, sobre fondo negro"
+          },
+          {
+            "slot": "auraphone-18-pro-plata-tres-cuartos",
+            "vista": "tres-cuartos",
+            "alt": "auraPhone 18 Pro plata visto de espaldas y en ángulo, con la meseta de cámaras y el canto derecho, sobre fondo negro"
+          },
+          {
+            "slot": "auraphone-18-pro-plata-frontal",
+            "vista": "frontal",
+            "alt": "auraPhone 18 Pro plata de frente, con la pantalla AURA encendida y el canto plateado, sobre fondo negro"
+          }
+        ],
+        "azul-glacial": [
+          {
+            "slot": "auraphone-18-pro-azul-glacial-trasera",
+            "vista": "trasera",
+            "alt": "auraPhone 18 Pro azul glacial de espaldas, con la meseta de tres cámaras, sobre fondo negro"
+          },
+          {
+            "slot": "auraphone-18-pro-azul-glacial-frontal",
+            "vista": "frontal",
+            "alt": "auraPhone 18 Pro azul glacial de frente, con la pantalla AURA encendida y el canto azul, sobre fondo negro"
+          },
+          {
+            "slot": "auraphone-18-pro-azul-glacial-lateral",
+            "vista": "lateral",
+            "alt": "Canto izquierdo del auraPhone 18 Pro azul glacial, de pie, con los botones y la meseta de cámaras asomando arriba, sobre fondo negro"
+          }
+        ],
+        "burdeos": [
+          {
+            "slot": "auraphone-18-pro-burdeos-trasera",
+            "vista": "trasera",
+            "alt": "auraPhone 18 Pro burdeos de espaldas, con la meseta de tres cámaras, sobre fondo negro"
+          },
+          {
+            "slot": "auraphone-18-pro-burdeos-tres-cuartos",
+            "vista": "tres-cuartos",
+            "alt": "auraPhone 18 Pro burdeos visto de espaldas y en ángulo, con la meseta de cámaras y el canto izquierdo, sobre fondo negro"
+          },
+          {
+            "slot": "auraphone-18-pro-burdeos-frontal",
+            "vista": "frontal",
+            "alt": "auraPhone 18 Pro burdeos de frente, con la pantalla AURA encendida y el canto burdeos, sobre fondo negro"
+          }
+        ]
+      }
+    },
+    "aurapad-pro-13": {
+      "imageColor": "negro-espacial",
+      "photos": {
+        "negro-espacial": [
+          {
+            "slot": "aurapad-pro-negro-espacial-trasera",
+            "vista": "trasera",
+            "alt": "Trasera negro espacial del auraPad Pro 13″, con su módulo de cámaras en la esquina, sobre fondo negro"
+          }
+        ],
+        "plata": [
+          {
+            "slot": "aurapad-pro-plata-trasera",
+            "vista": "trasera",
+            "alt": "Trasera plateada del auraPad Pro 13″, con su módulo de cámaras en la esquina, sobre fondo negro"
+          },
+          {
+            "slot": "aurapad-pro-plata-frontal",
+            "vista": "frontal",
+            "alt": "auraPad Pro 13″ plateado de frente y en horizontal, con la pantalla AURA encendida, sobre fondo negro"
+          }
+        ]
+      }
+    },
+    "aurapad-pro-11": {
+      "imageColor": "plata",
+      "photos": {
+        "negro-espacial": [
+          {
+            "slot": "aurapad-pro-negro-espacial-trasera",
+            "vista": "trasera",
+            "alt": "Trasera negro espacial del auraPad Pro 11″, con su módulo de cámaras en la esquina, sobre fondo negro"
+          }
+        ],
+        "plata": [
+          {
+            "slot": "aurapad-pro-plata-trasera",
+            "vista": "trasera",
+            "alt": "Trasera plateada del auraPad Pro 11″, con su módulo de cámaras en la esquina, sobre fondo negro"
+          },
+          {
+            "slot": "aurapad-pro-plata-frontal",
+            "vista": "frontal",
+            "alt": "auraPad Pro 11″ plateado de frente y en horizontal, con la pantalla AURA encendida, sobre fondo negro"
+          }
+        ]
+      }
+    },
+    "aurapad-air-13": {
+      "imageColor": "azul",
+      "photos": {
+        "gris-espacial": [
+          {
+            "slot": "aurapad-air-13-gris-espacial-trasera",
+            "vista": "trasera",
+            "alt": "Trasera gris espacial del auraPad Air 13″, con su única cámara en la esquina, sobre fondo negro"
+          },
+          {
+            "slot": "aurapad-air-13-gris-espacial-frontal",
+            "vista": "frontal",
+            "alt": "Frente del auraPad Air 13″ gris espacial en horizontal, con la pantalla AURA encendida, sobre fondo negro"
+          }
+        ],
+        "azul": [
+          {
+            "slot": "aurapad-air-13-azul-trasera",
+            "vista": "trasera",
+            "alt": "Trasera azul del auraPad Air 13″, con su única cámara en la esquina y los tres puntos del conector, sobre fondo negro"
+          }
+        ],
+        "purpura": [
+          {
+            "slot": "aurapad-air-13-purpura-frontal",
+            "vista": "frontal",
+            "alt": "Frente del auraPad Air 13″ púrpura en horizontal, con la pantalla AURA encendida, sobre fondo negro"
+          }
+        ],
+        "blanco-estrella": [
+          {
+            "slot": "aurapad-air-13-blanco-estrella-trasera",
+            "vista": "trasera",
+            "alt": "Trasera blanco estrella del auraPad Air 13″, con su única cámara en la esquina, sobre fondo negro"
+          },
+          {
+            "slot": "aurapad-air-13-blanco-estrella-frontal",
+            "vista": "frontal",
+            "alt": "Frente del auraPad Air 13″ blanco estrella en horizontal, con la pantalla AURA encendida, sobre fondo negro"
+          }
+        ]
+      }
+    },
+    "aurabook-pro-16": {
+      "imageColor": "plata",
+      "photos": {
+        "negro-espacial": [
+          {
+            "slot": "aurabook-pro-negro-espacial-tres-cuartos",
+            "vista": "tres-cuartos",
+            "alt": "auraBook Pro 16″ negro espacial abierto, visto en tres cuartos desde la derecha, con la pantalla AURA encendida, sobre fondo negro"
+          },
+          {
+            "slot": "aurabook-pro-negro-espacial-abierto",
+            "vista": "abierto",
+            "alt": "auraBook Pro 16″ negro espacial abierto, visto de frente y desde arriba, con la pantalla AURA encendida, sobre fondo negro"
+          },
+          {
+            "slot": "aurabook-pro-negro-espacial-cerrado",
+            "vista": "cerrado",
+            "alt": "auraBook Pro 16″ negro espacial cerrado, tapa vista desde arriba, sobre fondo negro"
+          }
+        ],
+        "plata": [
+          {
+            "slot": "aurabook-pro-plata-tres-cuartos",
+            "vista": "tres-cuartos",
+            "alt": "auraBook Pro 16″ plateado abierto, visto en tres cuartos desde la derecha, con la pantalla AURA encendida, sobre fondo negro"
+          },
+          {
+            "slot": "aurabook-pro-plata-abierto",
+            "vista": "abierto",
+            "alt": "auraBook Pro 16″ plateado abierto, visto de frente y desde arriba, con la pantalla AURA encendida, sobre fondo negro"
+          },
+          {
+            "slot": "aurabook-pro-plata-cerrado",
+            "vista": "cerrado",
+            "alt": "auraBook Pro 16″ plateado cerrado, tapa vista desde arriba, sobre fondo negro"
+          }
+        ]
+      }
+    },
+    "aurabook-pro-14": {
+      "imageColor": "negro-espacial",
+      "photos": {
+        "negro-espacial": [
+          {
+            "slot": "aurabook-pro-negro-espacial-tres-cuartos",
+            "vista": "tres-cuartos",
+            "alt": "auraBook Pro 14″ negro espacial abierto, visto en tres cuartos desde la derecha, con la pantalla AURA encendida, sobre fondo negro"
+          },
+          {
+            "slot": "aurabook-pro-negro-espacial-abierto",
+            "vista": "abierto",
+            "alt": "auraBook Pro 14″ negro espacial abierto, visto de frente y desde arriba, con la pantalla AURA encendida, sobre fondo negro"
+          },
+          {
+            "slot": "aurabook-pro-negro-espacial-cerrado",
+            "vista": "cerrado",
+            "alt": "auraBook Pro 14″ negro espacial cerrado, tapa vista desde arriba, sobre fondo negro"
+          }
+        ],
+        "plata": [
+          {
+            "slot": "aurabook-pro-plata-tres-cuartos",
+            "vista": "tres-cuartos",
+            "alt": "auraBook Pro 14″ plateado abierto, visto en tres cuartos desde la derecha, con la pantalla AURA encendida, sobre fondo negro"
+          },
+          {
+            "slot": "aurabook-pro-plata-abierto",
+            "vista": "abierto",
+            "alt": "auraBook Pro 14″ plateado abierto, visto de frente y desde arriba, con la pantalla AURA encendida, sobre fondo negro"
+          },
+          {
+            "slot": "aurabook-pro-plata-cerrado",
+            "vista": "cerrado",
+            "alt": "auraBook Pro 14″ plateado cerrado, tapa vista desde arriba, sobre fondo negro"
+          }
+        ]
+      }
+    },
+    "aurabook-air-15": {
+      "imageColor": "plata",
+      "photos": {
+        "azul-cielo": [
+          {
+            "slot": "aurabook-air-15-azul-cielo-abierto",
+            "vista": "abierto",
+            "alt": "auraBook Air 15″ azul cielo abierto y visto de frente desde arriba, con la pantalla AURA encendida, sobre fondo negro"
+          },
+          {
+            "slot": "aurabook-air-15-azul-cielo-cerrado",
+            "vista": "cerrado",
+            "alt": "auraBook Air 15″ azul cielo cerrado, con la tapa de aluminio lisa vista de frente, sobre fondo negro"
+          }
+        ],
+        "plata": [
+          {
+            "slot": "aurabook-air-15-plata-tres-cuartos",
+            "vista": "tres-cuartos",
+            "alt": "auraBook Air 15″ plateado abierto y visto en tres cuartos, con la pantalla AURA encendida, sobre fondo negro"
+          },
+          {
+            "slot": "aurabook-air-15-plata-frontal",
+            "vista": "frontal",
+            "alt": "auraBook Air 15″ plateado abierto y visto de frente, con la pantalla AURA encendida, sobre fondo negro"
+          },
+          {
+            "slot": "aurabook-air-15-plata-cerrado",
+            "vista": "cerrado",
+            "alt": "auraBook Air 15″ plateado cerrado y visto desde arriba, con la tapa de aluminio lisa, sobre fondo negro"
+          }
+        ],
+        "blanco-estrella": [
+          {
+            "slot": "aurabook-air-15-blanco-estrella-tres-cuartos",
+            "vista": "tres-cuartos",
+            "alt": "auraBook Air 15″ blanco estrella abierto y visto en tres cuartos, con la pantalla AURA encendida, sobre fondo negro"
+          },
+          {
+            "slot": "aurabook-air-15-blanco-estrella-abierto",
+            "vista": "abierto",
+            "alt": "auraBook Air 15″ blanco estrella abierto y visto de frente desde arriba, con la pantalla AURA encendida, sobre fondo negro"
+          }
+        ],
+        "medianoche": [
+          {
+            "slot": "aurabook-air-15-medianoche-tres-cuartos",
+            "vista": "tres-cuartos",
+            "alt": "auraBook Air 15″ medianoche abierto y visto en tres cuartos, con la pantalla AURA encendida, sobre fondo negro"
+          },
+          {
+            "slot": "aurabook-air-15-medianoche-abierto",
+            "vista": "abierto",
+            "alt": "auraBook Air 15″ medianoche abierto y visto de frente desde arriba, con la pantalla AURA encendida, sobre fondo negro"
+          },
+          {
+            "slot": "aurabook-air-15-medianoche-cerrado",
+            "vista": "cerrado",
+            "alt": "auraBook Air 15″ medianoche cerrado y visto desde arriba, con la tapa de aluminio lisa, sobre fondo negro"
+          }
+        ]
+      }
+    },
+    "aurapods-max-2": {
+      "imageColor": "blanco-estrella",
+      "photos": {
+        "medianoche": [
+          {
+            "slot": "aurapods-max-2-medianoche-tres-cuartos",
+            "vista": "tres-cuartos",
+            "alt": "auraPods Max 2 medianoche en tres cuartos, con una orejera vista por fuera y la otra por el lado de la almohadilla, sobre fondo negro"
+          },
+          {
+            "slot": "aurapods-max-2-medianoche-trasera",
+            "vista": "trasera",
+            "alt": "auraPods Max 2 medianoche de pie, vistos por el lado de las almohadillas de malla, sobre fondo negro"
+          }
+        ],
+        "blanco-estrella": [
+          {
+            "slot": "aurapods-max-2-blanco-estrella-frontal",
+            "vista": "frontal",
+            "alt": "auraPods Max 2 blanco estrella tumbados, con la diadema arriba y las dos orejeras vistas por fuera, sobre fondo negro"
+          }
+        ],
+        "purpura": [
+          {
+            "slot": "aurapods-max-2-purpura-frontal",
+            "vista": "frontal",
+            "alt": "auraPods Max 2 púrpura tumbados, con la diadema arriba y las dos orejeras vistas por fuera, sobre fondo negro"
+          }
+        ],
+        "naranja": [
+          {
+            "slot": "aurapods-max-2-naranja-frontal",
+            "vista": "frontal",
+            "alt": "auraPods Max 2 naranja tumbados, con la diadema arriba y las dos orejeras vistas por fuera, sobre fondo negro"
+          }
+        ]
+      }
+    },
+    "aurapods-pro-3": {
+      "imageColor": "blanco",
+      "photos": {
+        "blanco": [
+          {
+            "slot": "aurapods-pro-3-blanco-estuche-abierto",
+            "vista": "estuche-abierto",
+            "alt": "Estuche de carga de los auraPods Pro 3 abierto de frente, con los dos auriculares dentro, sobre fondo negro"
+          },
+          {
+            "slot": "aurapods-pro-3-blanco-auriculares",
+            "vista": "auriculares",
+            "alt": "Los dos auraPods Pro 3 blancos fuera del estuche, uno frente a otro con sus almohadillas, sobre fondo negro"
+          },
+          {
+            "slot": "aurapods-pro-3-blanco-estuche-cerrado",
+            "vista": "estuche-cerrado",
+            "alt": "Estuche de carga de los auraPods Pro 3 cerrado, visto de frente, sobre fondo negro"
+          }
+        ]
+      }
+    },
+    "aurapods-5": {
+      "imageColor": "blanco",
+      "photos": {
+        "blanco": [
+          {
+            "slot": "aurapods-5-blanco-estuche-abierto",
+            "vista": "estuche-abierto",
+            "alt": "Estuche de carga de los auraPods 5 abierto, con los dos auriculares sin almohadilla dentro, sobre fondo negro"
+          },
+          {
+            "slot": "aurapods-5-blanco-auriculares",
+            "vista": "auriculares",
+            "alt": "Los dos auriculares de los auraPods 5 fuera del estuche, uno de frente y otro de lado, sobre fondo negro"
+          },
+          {
+            "slot": "aurapods-5-blanco-estuche-cerrado",
+            "vista": "estuche-cerrado",
+            "alt": "Estuche de carga de los auraPods 5 cerrado, visto de frente, sobre fondo negro"
+          }
+        ]
+      }
+    }
+  };
+  (data && Array.isArray(data.products) ? data.products : []).forEach(function (p) {
+    var f = p && FOTOS[p.id];
+    if (!f) { return; }
+    p.photos = f.photos;
+    if (f.imageColor) { p.imageColor = f.imageColor; }
+  });
+})(window.AURA_DATA);
+/* FOTOS:FIN */

@@ -20,7 +20,8 @@
       imagen (cancelación, auraPods Max). La columna es el contenedor (consulta
       en rem: sigue al tamaño de letra) y decide las columnas sin que ninguna
       cifra quede sola en su fila: una debajo de otra si no caben y dos en
-      fila desde 18 rem.
+      fila desde 26 rem (con 18 rem, a 390 px el pie de cada cifra quedaba en
+      165 px: 22 caracteres por línea y hasta cuatro líneas).
    -------------------------------------------------------------------------- */
 .aurapods-copy { container: aurapods-copy / inline-size; }
 .aurapods-stats-lg {
@@ -29,7 +30,7 @@
   gap: 1.5rem clamp(1.25rem, 3vw, 2rem);
   margin-top: .75rem;
 }
-@container aurapods-copy (min-width: 18rem) {
+@container aurapods-copy (min-width: 26rem) {
   .aurapods-stats-lg:has(> :last-child:nth-child(2)) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
@@ -53,7 +54,7 @@
   margin-inline: auto;
   text-align: start;
 }
-.aurapods-pesos { margin-top: clamp(3rem, 7vw, 5rem); }
+.aurapods-pesos { margin-top: var(--space-stats, clamp(2.5rem, 5vw, 4rem)); }   /* el ritmo de las cuatro familias (aura.css) */
 @media (min-width: 576px) and (max-width: 991.98px) {
   .aurapods-autonomia,
   .aurapods-pesos { grid-template-columns: minmax(0, 1fr); max-width: 26rem; }
@@ -76,10 +77,30 @@
    5. Escena (componente de la base, «contain»): los tramos 2 y 3 van a la
       columna izquierda, la zona tranquila de los fotogramas desde el 30 % del
       recorrido (img/seq/aurapods-intro/seq.json: los auriculares se desplazan a
-      la derecha). En ventanas más altas que 3:2 el fotograma deja una franja
-      negra arriba: los textos laterales suben a ella en lugar de quedar sobre
-      la diadema. En el teléfono manda la colocación de la base (al pie).
+      la derecha). En ventanas algo más altas que 3:2 (hasta 5:4) el fotograma
+      deja una franja negra arriba: los textos laterales suben a ella en lugar
+      de quedar sobre la diadema. En las casi cuadradas (5:4 o menos: 1024 × 900,
+      1280 × 1024) esa franja no da para el bloque (162 px frente a unos 250) y
+      el párrafo cruzaba la diadema iluminada (el 27 % de sus píxeles por debajo
+      de 4,5:1): ahí manda la base, que los baja al pie con la protección de las
+      fotos, sobre la orejera oscura (0 % por debajo de 4,5:1). Se eligió frente
+      a un degradado desde arriba, que también cumple pero apaga la diadema. En
+      el teléfono manda la colocación de la base (al pie).
    -------------------------------------------------------------------------- */
-@media screen and (prefers-reduced-motion: no-preference) and (min-width: 768px) and (max-aspect-ratio: 3/2) {
+@media screen and (prefers-reduced-motion: no-preference) and (min-width: 768px) and (min-aspect-ratio: 5001/4000) and (max-aspect-ratio: 3/2) {
   .aura-js .aurapods-escena.aura-scrub:not(.is-static) .aura-scrub__text[data-pos] { align-content: start; }
+}
+
+/* Héroe de la escena en su versión estática: centrado, como el de auraPhone
+   y auraPad (.aura-hero--center) y como en la escena en marcha. */
+.aurapods-escena .aura-scrub__text:has(> h1) { justify-items: center; text-align: center; }
+.aurapods-escena .aura-scrub__text:has(> h1) .aura-hero__actions { justify-content: center; }
+
+/* Versión estática de la escena (sin aura-core.js, con «reducir movimiento» o
+   «ahorro de datos»): desde 992 px los textos que siguen al póster van
+   centrados bajo él, como el héroe, en lugar de una columna de 40 rem a la
+   izquierda con más de 500 px vacíos al lado. Con la escena en marcha mandan
+   las reglas de la base (más específicas). */
+@media (min-width: 992px) {
+  .aurapods-escena .aura-scrub__text { justify-items: center; text-align: center; }
 }

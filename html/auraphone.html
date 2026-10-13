@@ -35,7 +35,7 @@
 
   <!-- Iconos: favicon (ICO y PNG), icono de la pantalla de inicio y manifiesto de la aplicación web -->
   <link rel="icon" href="../favicon.ico" sizes="any">
-  <link rel="icon" type="image/png" href="../img/aura.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="../img/icon-192.png">
   <link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
   <link rel="manifest" href="../site.webmanifest">
   <!-- Manifiesto: por file:// (doble clic) el navegador lo bloquearía por CORS con un error en la consola, así que ahí se retira -->
@@ -66,12 +66,14 @@
 
     <!-- ================= Barra local =================
          Segundo <nav>, con nombre propio (aria-label): salta a los capítulos de esta página y lleva a comprar.
-         aura-ui.js la fija arriba al desplazarse (en el teléfono, los enlaces se pliegan en un menú);
-         el «Comprar» corto completa su nombre con el modelo (aria-label). -->
-    <nav class="aura-localnav" aria-label="auraPhone" data-aura-localnav>
+         aura-ui.js la fija arriba al desplazarse y el «Comprar» corto completa su nombre con el modelo (aria-label).
+         Llega ya plegable (.has-menu y el chevrón en el HTML, sin salto al cargar): mientras los enlaces no caben
+         (teléfono y tableta), el chevrón los despliega en un menú. -->
+    <nav class="aura-localnav has-menu" aria-label="auraPhone" data-aura-localnav>
       <div class="aura-container aura-localnav__inner">
         <a class="aura-localnav__title" href="auraphone.html">auraPhone</a>
-        <div class="aura-localnav__links">
+        <button type="button" class="aura-localnav__toggle" aria-expanded="false" aria-controls="localnav-secciones" aria-label="Secciones de auraPhone"><i class="bi bi-chevron-down" aria-hidden="true"></i></button>
+        <div class="aura-localnav__links" id="localnav-secciones">
           <a class="aura-localnav__link" href="#descripcion">Descripción</a>
           <a class="aura-localnav__link" href="#duo">Duo</a>
           <a class="aura-localnav__link" href="#diseno">Diseño</a>
@@ -102,7 +104,7 @@
           <p class="aura-caption" data-ap-bloque="desde" hidden><span data-ap="desde-heroe"></span><sup class="aura-footnote-ref"><a href="#nota-financiacion" id="ref-financiacion" aria-label="Nota 1">1</a></sup>.</p>
         </div>
         <div class="aura-hero__media aura-media aura-media--halo">
-          <img class="aura-img" src="../img/inicio-hero-auraphone.webp" data-slot="inicio-hero-auraphone" width="1600" height="1200" alt="auraPhone Duo abierto de frente, con un degradado azul y violeta en la pantalla interior, sobre fondo negro" loading="eager" fetchpriority="high" decoding="async">
+          <img class="aura-img" src="../img/inicio-hero-auraphone.webp" srcset="../img/400/inicio-hero-auraphone.webp 400w, ../img/800/inicio-hero-auraphone.webp 800w, ../img/inicio-hero-auraphone.webp 1600w" sizes="(min-width: 1024px) 960px, calc(100vw - 32px)" data-slot="inicio-hero-auraphone" width="1600" height="1200" alt="auraPhone Duo abierto de frente, con un degradado azul y violeta en la pantalla interior, sobre fondo negro" loading="eager" fetchpriority="high" decoding="async">
         </div>
       </div>
     </section>
@@ -116,31 +118,35 @@
          «contain» y el foco abajo: el fotograma entero, apoyado en el borde inferior (su fondo es negro puro).
          Póster: <picture> elige el fotograma 1 para la escena (coincide con lo primero que pinta el lienzo, sin
          dos imágenes superpuestas al aparecer) y el 120 (el teléfono entero) para la versión estática, con la
-         versión vertical de m/ en el teléfono. -->
-    <section class="aura-scrub auraphone-escena" data-aura-scrub data-seq="../img/seq/auraphone-intro" data-frames="120" data-width="1600" data-height="900" data-mobile="true" data-length="380" data-fit="contain" data-mobile-fit="contain" data-focus="0.5 1" aria-labelledby="escena-titulo">
+         versión vertical de m/ en el teléfono; su alt describe ese fotograma fijo (el teléfono entero), que es
+         también como termina la escena.
+         Ritmo (COMPONENTES.md §10 bis): 340 de largo (2,4 pantallas pegada) y tres tramos con 150 px de fundido
+         a cada lado: cada texto se lee entero unos 430–460 px de scroll (4 muescas de rueda, 1,5 arrastres).
+         Tramo 2 en f40–80 (la cámara se aleja y la luz barre el cristal) y tramo 3 desde f86 (el teléfono entero). -->
+    <section class="aura-scrub auraphone-escena" data-aura-scrub data-seq="../img/seq/auraphone-intro" data-frames="120" data-width="1600" data-height="900" data-mobile="true" data-length="340" data-fit="contain" data-mobile-fit="contain" data-focus="0.5 1" aria-labelledby="escena-titulo">
       <div class="aura-scrub__stage">
         <picture>
           <source media="(prefers-reduced-motion: reduce) and (max-width: 767.98px)" srcset="../img/seq/auraphone-intro/m/f-0120.webp" width="640" height="1136">
           <source media="(prefers-reduced-motion: reduce)" srcset="../img/seq/auraphone-intro/f-0120.webp">
           <source media="(max-width: 767.98px)" srcset="../img/seq/auraphone-intro/m/poster.webp" width="640" height="1136">
-          <img class="aura-scrub__poster" src="../img/seq/auraphone-intro/poster.webp" width="1600" height="900" alt="auraPhone 18 Pro plata de espaldas sobre fondo negro: la meseta de tres cámaras de lado a lado, de cerca y después con el teléfono entero en diagonal" loading="lazy" decoding="async">
+          <img class="aura-scrub__poster" src="../img/seq/auraphone-intro/poster.webp" width="1600" height="900" alt="auraPhone 18 Pro plata de espaldas, en diagonal sobre fondo negro, con la meseta de las tres cámaras arriba" loading="lazy" decoding="async">
         </picture>
         <canvas class="aura-scrub__canvas" aria-hidden="true"></canvas>
         <!-- Tramo 1 (macro de la meseta de cámaras): el titular de la escena -->
-        <div class="aura-scrub__text" data-from="0" data-to="0.3" data-pos="left">
+        <div class="aura-scrub__text" data-from="0" data-to="0.28" data-pos="left">
           <p class="aura-eyebrow aura-eyebrow--lg">auraPhone 18 Pro</p>
           <h2 class="aura-h1" id="escena-titulo">Pro de lado a&nbsp;lado.</h2>
           <p class="aura-lead">Una meseta de cámaras que cruza toda la trasera, un unibody de aluminio y el chip AURA A20 Pro.</p>
         </div>
         <!-- Tramo 2 (la cámara se aleja y la luz recorre el cristal): la cifra clave, arriba a la izquierda
              (auraphone-escena__alto: la única zona de esos fotogramas sin teléfono) -->
-        <div class="aura-scrub__text auraphone-escena__alto" data-from="0.34" data-to="0.64" data-pos="left">
+        <div class="aura-scrub__text auraphone-escena__alto" data-from="0.33" data-to="0.67" data-pos="left">
           <p class="aura-eyebrow aura-eyebrow--mono">Cámara Fusion de 48&nbsp;Mpx</p>
           <h3 class="aura-h1">De f/1,48 a&nbsp;f/4.</h3>
           <p class="aura-body">La primera cámara de auraPhone con apertura variable: se abre para la noche y se cierra para que todo el paisaje salga nítido.</p>
         </div>
         <!-- Tramo 3 (el teléfono entero, ya quieto): la frase de cierre, el precio del catálogo y el salto a los modelos -->
-        <div class="aura-scrub__text" data-from="0.68" data-to="1" data-pos="left">
+        <div class="aura-scrub__text" data-from="0.72" data-to="1" data-pos="left">
           <h3 class="aura-h2 auraphone-frases"><span>Todo lo Pro.</span> <span>En 6,3 o 6,9&nbsp;pulgadas.</span></h3>
           <p class="aura-body">auraPhone 18 Pro y 18 Pro Max, en <span data-ap="acabados-texto">negro, plata, azul glacial y burdeos</span>.</p>
           <p class="aura-price" data-ap="desde-pro" hidden></p>
@@ -170,7 +176,7 @@
                     <h3 class="aura-h3">La luz, a tus órdenes.</h3>
                     <p class="aura-tile__text">La cámara Fusion de los 18&nbsp;Pro abre su diafragma hasta f/1,48 para la noche y lo cierra hasta f/4 para el&nbsp;paisaje.</p>
                   </div>
-                  <div class="aura-tile__media"><img class="aura-img" src="../img/auraphone-camara-detalle.webp" data-slot="auraphone-camara-detalle" width="1600" height="1200" alt="Primer plano de la meseta de cámaras de un auraPhone 18 Pro plata: tres objetivos, flash y LiDAR, sobre fondo negro" loading="lazy" decoding="async"></div>
+                  <div class="aura-tile__media"><img class="aura-img" src="../img/auraphone-camara-detalle.webp" srcset="../img/400/auraphone-camara-detalle.webp 400w, ../img/800/auraphone-camara-detalle.webp 800w, ../img/auraphone-camara-detalle.webp 1600w" sizes="auto, (max-width: 767.98px) 65vw, 375px" data-slot="auraphone-camara-detalle" width="1600" height="1200" alt="Primer plano de la meseta de cámaras de un auraPhone 18 Pro plata: tres objetivos, flash y LiDAR, sobre fondo negro" loading="lazy" decoding="async"></div>
                 </article>
               </li>
               <li class="aura-carousel__slide" aria-roledescription="diapositiva" aria-label="2 de 6">
@@ -180,7 +186,7 @@
                     <h3 class="aura-h3">Dos apps, lado a lado.</h3>
                     <p class="aura-tile__text">Split View en auraOS&nbsp;27 aprovecha la pantalla de 7,6&nbsp;pulgadas: el mapa a un lado y el chat al&nbsp;otro.</p>
                   </div>
-                  <div class="aura-tile__media"><img class="aura-img" src="../img/auraphone-destacado-3.webp" data-slot="auraphone-destacado-3" width="1600" height="1200" alt="auraPhone Duo abierto en tres cuartos sobre fondo negro, con dos apps lado a lado en su pantalla de 7,6 pulgadas: un mapa con la ruta y un chat" loading="lazy" decoding="async"></div>
+                  <div class="aura-tile__media"><img class="aura-img" src="../img/auraphone-destacado-3.webp" srcset="../img/400/auraphone-destacado-3.webp 400w, ../img/800/auraphone-destacado-3.webp 800w, ../img/auraphone-destacado-3.webp 1600w" sizes="auto, (max-width: 767.98px) 65vw, 375px" data-slot="auraphone-destacado-3" width="1600" height="1200" alt="auraPhone Duo abierto en tres cuartos sobre fondo negro, con dos apps lado a lado en su pantalla de 7,6 pulgadas: un mapa con la ruta y un chat" loading="lazy" decoding="async"></div>
                 </article>
               </li>
               <li class="aura-carousel__slide" aria-roledescription="diapositiva" aria-label="3 de 6">
@@ -190,7 +196,7 @@
                     <h3 class="aura-h3">Una cámara de vapor el triple de grande.</h3>
                     <p class="aura-tile__text">Reparte el calor del AURA A20 Pro por todo el unibody de aluminio, partida tras&nbsp;partida.</p>
                   </div>
-                  <div class="aura-tile__media"><img class="aura-img" src="../img/auraphone-zoom-4.webp" data-slot="auraphone-zoom-4" width="1600" height="1200" alt="Interior de un teléfono desmontado, con la placa térmica de cobre y pasta azul sobre el procesador" loading="lazy" decoding="async"></div>
+                  <div class="aura-tile__media"><img class="aura-img" src="../img/auraphone-zoom-4.webp" srcset="../img/400/auraphone-zoom-4.webp 400w, ../img/800/auraphone-zoom-4.webp 800w, ../img/auraphone-zoom-4.webp 1600w" sizes="auto, (max-width: 767.98px) 65vw, 375px" data-slot="auraphone-zoom-4" width="1600" height="1200" alt="Interior de un teléfono desmontado, con la placa térmica de cobre y pasta azul sobre el procesador" loading="lazy" decoding="async"></div>
                 </article>
               </li>
               <li class="aura-carousel__slide" aria-roledescription="diapositiva" aria-label="4 de 6">
@@ -200,7 +206,7 @@
                     <h3 class="aura-h3">Hasta 43 horas de vídeo.</h3>
                     <p class="aura-tile__text">El auraPhone 18 Pro Max aguanta una temporada entera. Con MagSafe de 25&nbsp;W, el 50&nbsp;% llega en unos 15&nbsp;minutos.</p>
                   </div>
-                  <div class="aura-tile__media"><img class="aura-img" src="../img/auraphone-destacado-2.webp" data-slot="auraphone-destacado-2" width="1600" height="1200" alt="Cargador magnético plateado sobre su soporte de aluminio en forma de anillo, encima de una mesa negra" loading="lazy" decoding="async"></div>
+                  <div class="aura-tile__media"><img class="aura-img" src="../img/auraphone-destacado-2.webp" srcset="../img/400/auraphone-destacado-2.webp 400w, ../img/800/auraphone-destacado-2.webp 800w, ../img/auraphone-destacado-2.webp 1600w" sizes="auto, (max-width: 767.98px) 65vw, 375px" data-slot="auraphone-destacado-2" width="1600" height="1200" alt="Cargador magnético plateado sobre su soporte de aluminio en forma de anillo, encima de una mesa negra" loading="lazy" decoding="async"></div>
                 </article>
               </li>
               <li class="aura-carousel__slide" aria-roledescription="diapositiva" aria-label="5 de 6">
@@ -210,7 +216,7 @@
                     <h3 class="aura-h3">Ceramic Shield 2. Y un IP68.</h3>
                     <p class="aura-tile__text">El frontal más duro de un auraPhone y protección frente al agua y el polvo, para los despistes de cada&nbsp;día.</p>
                   </div>
-                  <div class="aura-tile__media"><img class="aura-img" src="../img/auraphone-destacado-4.webp" data-slot="auraphone-destacado-4" width="1600" height="1200" alt="Gotas de agua sobre la pantalla de un auraPhone negro apoyado en una tarima de madera mojada" loading="lazy" decoding="async"></div>
+                  <div class="aura-tile__media"><img class="aura-img" src="../img/auraphone-destacado-4.webp" srcset="../img/400/auraphone-destacado-4.webp 400w, ../img/800/auraphone-destacado-4.webp 800w, ../img/auraphone-destacado-4.webp 1600w" sizes="auto, (max-width: 767.98px) 65vw, 375px" data-slot="auraphone-destacado-4" width="1600" height="1200" alt="Gotas de agua sobre la pantalla de un auraPhone negro apoyado en una tarima de madera mojada" loading="lazy" decoding="async"></div>
                 </article>
               </li>
               <li class="aura-carousel__slide" aria-roledescription="diapositiva" aria-label="6 de 6">
@@ -220,7 +226,7 @@
                     <h3 class="aura-h3">Wi-Fi 7, 5G y USB-C.</h3>
                     <p class="aura-tile__text">Descargas que no se hacen esperar y un USB-C con velocidades USB&nbsp;3 para pasar tus vídeos al auraBook en&nbsp;segundos.</p>
                   </div>
-                  <div class="aura-tile__media"><img class="aura-img" src="../img/auraphone-destacado-5.webp" data-slot="auraphone-destacado-5" width="1600" height="1200" alt="Conector USB-C de un cable claro en primer plano, sobre fondo negro" loading="lazy" decoding="async"></div>
+                  <div class="aura-tile__media"><img class="aura-img" src="../img/auraphone-destacado-5.webp" srcset="../img/400/auraphone-destacado-5.webp 400w, ../img/800/auraphone-destacado-5.webp 800w, ../img/auraphone-destacado-5.webp 1600w" sizes="auto, (max-width: 767.98px) 65vw, 375px" data-slot="auraphone-destacado-5" width="1600" height="1200" alt="Conector USB-C de un cable claro en primer plano, sobre fondo negro" loading="lazy" decoding="async"></div>
                 </article>
               </li>
             </ul>
@@ -250,7 +256,7 @@
             <p class="aura-caption auraphone-aviso-estado" data-ap="aviso-estado" hidden></p>
           </div>
           <div class="aura-split__media aura-media aura-media--fill aura-media--halo m-0" style="aspect-ratio:4/3">
-            <img class="aura-img" src="../img/auraphone-duo.webp" data-slot="auraphone-duo" width="1600" height="1200" alt="auraPhone Duo blanco abierto y visto por detrás: doble cámara en una cápsula y la pantalla exterior apagada" loading="lazy" decoding="async" data-aura-reveal="scale">
+            <img class="aura-img" src="../img/auraphone-duo-blanco-estelar-trasera.webp" srcset="../img/400/auraphone-duo-blanco-estelar-trasera.webp 400w, ../img/800/auraphone-duo-blanco-estelar-trasera.webp 800w, ../img/auraphone-duo-blanco-estelar-trasera.webp 1600w" sizes="auto, (max-width: 991.98px) 88vw, (max-width: 1199.98px) 42vw, 532px" data-slot="auraphone-duo-blanco-estelar-trasera" width="1600" height="1200" alt="auraPhone Duo blanco estelar abierto y visto por detrás, con la cápsula de dos cámaras y la pantalla exterior AURA, sobre fondo negro" loading="lazy" decoding="async" data-aura-reveal="scale">
           </div>
         </div>
 
@@ -275,8 +281,8 @@
         </header>
 
         <div class="aura-colorway auraphone-colores" data-aura-colorway="" data-ap-colorway="auraphone-18-pro" data-color="azul-glacial">
-          <div class="aura-gallery">
-            <img class="aura-img" src="../img/auraphone-18-pro-azul-glacial.webp" data-slot="auraphone-18-pro-azul-glacial" data-fallback="auraphone-18-pro" width="1600" height="1200" alt="auraPhone 18 Pro azul glacial de espaldas, con la meseta de cámaras de lado a lado, sobre fondo negro" loading="lazy" decoding="async">
+          <div class="aura-gallery" data-sizes="(min-width: 1024px) 960px, calc(100vw - 32px)">
+            <img class="aura-img" src="../img/auraphone-18-pro-azul-glacial-trasera.webp" srcset="../img/400/auraphone-18-pro-azul-glacial-trasera.webp 400w, ../img/800/auraphone-18-pro-azul-glacial-trasera.webp 800w, ../img/auraphone-18-pro-azul-glacial-trasera.webp 1600w" sizes="auto, (min-width: 1024px) 960px, calc(100vw - 32px)" data-slot="auraphone-18-pro-azul-glacial-trasera" data-fallback="auraphone-18-pro" width="1600" height="1200" alt="auraPhone 18 Pro azul glacial de espaldas, con la meseta de tres cámaras, sobre fondo negro" loading="lazy" decoding="async">
           </div>
           <fieldset class="aura-colorway__picker">
             <legend class="visually-hidden">Acabados del auraPhone 18 Pro y del 18 Pro Max</legend>
@@ -304,7 +310,7 @@
             </ul>
           </div>
           <div class="aura-split__media aura-media aura-media--halo">
-            <img class="aura-img" src="../img/auraphone-diseno.webp" data-slot="auraphone-diseno" width="1600" height="1200" alt="auraPhone 18 Pro plata en diagonal sobre fondo negro: unibody de aluminio y meseta de cámaras" loading="lazy" decoding="async" data-aura-reveal="scale">
+            <img class="aura-img" src="../img/auraphone-diseno.webp" srcset="../img/400/auraphone-diseno.webp 400w, ../img/800/auraphone-diseno.webp 800w, ../img/auraphone-diseno.webp 1600w" sizes="auto, (max-width: 991.98px) 88vw, (max-width: 1199.98px) 42vw, 532px" data-slot="auraphone-diseno" width="1600" height="1200" alt="auraPhone 18 Pro plata en diagonal sobre fondo negro: unibody de aluminio y meseta de cámaras" loading="lazy" decoding="async" data-aura-reveal="scale">
           </div>
         </div>
       </div>
@@ -333,7 +339,7 @@
             </ul>
           </div>
           <div class="aura-split__media aura-media aura-media--halo">
-            <img class="aura-img" src="../img/auraphone-zoom-3.webp" data-slot="auraphone-zoom-3" width="1600" height="1200" alt="Parte superior de un auraPhone con la isla de la cámara frontal y la pantalla de bloqueo encendida: la hora sobre una aurora azul y violeta, sobre fondo negro" loading="lazy" decoding="async" data-aura-reveal="scale">
+            <img class="aura-img" src="../img/auraphone-zoom-3.webp" srcset="../img/400/auraphone-zoom-3.webp 400w, ../img/800/auraphone-zoom-3.webp 800w, ../img/auraphone-zoom-3.webp 1600w" sizes="auto, (max-width: 991.98px) 88vw, (max-width: 1199.98px) 42vw, 532px" data-slot="auraphone-zoom-3" width="1600" height="1200" alt="Parte superior de un auraPhone con la isla de la cámara frontal y la pantalla de bloqueo encendida: la hora sobre una aurora azul y violeta, sobre fondo negro" loading="lazy" decoding="async" data-aura-reveal="scale">
           </div>
         </div>
       </div>
@@ -351,7 +357,7 @@
         </header>
 
         <figure class="aura-media aura-media--frame auraphone-figura" data-aura-reveal="fade">
-          <img class="aura-img" src="../img/auraphone-zoom-1.webp" data-slot="auraphone-zoom-1" width="1600" height="1200" alt="Primer plano de la meseta de cámaras de un auraPhone plateado: tres objetivos, flash y LiDAR sobre negro" loading="lazy" decoding="async" style="--photo-focus: 60% 45%">
+          <img class="aura-img" src="../img/auraphone-zoom-1.webp" srcset="../img/400/auraphone-zoom-1.webp 400w, ../img/800/auraphone-zoom-1.webp 800w, ../img/auraphone-zoom-1.webp 1600w" sizes="auto, (min-width: 1280px) 1180px, 92vw" data-slot="auraphone-zoom-1" width="1600" height="1200" alt="Primer plano de la meseta de cámaras de un auraPhone plateado: tres objetivos, flash y LiDAR sobre negro" loading="lazy" decoding="async" style="--photo-focus: 60% 45%">
           <figcaption class="aura-media__caption">Tres objetivos, flash y LiDAR en la meseta de aluminio del auraPhone 18 Pro.</figcaption>
         </figure>
 
@@ -384,25 +390,25 @@
               <ul class="aura-carousel__track">
                 <li class="aura-carousel__slide" aria-roledescription="diapositiva" aria-label="1 de 4">
                   <figure class="aura-media aura-media--frame">
-                    <img class="aura-img" src="../img/auraphone-foto-1.webp" data-slot="auraphone-foto-1" width="1600" height="1200" alt="Retrato de un gato atigrado de ojos azules con el fondo desenfocado en tonos cálidos" loading="lazy" decoding="async">
+                    <img class="aura-img" src="../img/auraphone-foto-1.webp" srcset="../img/400/auraphone-foto-1.webp 400w, ../img/800/auraphone-foto-1.webp 800w, ../img/auraphone-foto-1.webp 1600w" sizes="auto, (min-width: 1200px) 862px, 80vw" data-slot="auraphone-foto-1" width="1600" height="1200" alt="Retrato de un gato atigrado de ojos azules con el fondo desenfocado en tonos cálidos" loading="lazy" decoding="async">
                     <figcaption class="aura-media__caption">Retrato · Cámara Fusion a f/1,48</figcaption>
                   </figure>
                 </li>
                 <li class="aura-carousel__slide" aria-roledescription="diapositiva" aria-label="2 de 4">
                   <figure class="aura-media aura-media--frame">
-                    <img class="aura-img" src="../img/auraphone-foto-2.webp" data-slot="auraphone-foto-2" width="1600" height="1200" alt="Aurora boreal verde y roja sobre un lago en calma, con las luces de un pueblo reflejadas en el agua" loading="lazy" decoding="async">
+                    <img class="aura-img" src="../img/auraphone-foto-2.webp" srcset="../img/400/auraphone-foto-2.webp 400w, ../img/800/auraphone-foto-2.webp 800w, ../img/auraphone-foto-2.webp 1600w" sizes="auto, (min-width: 1200px) 862px, 80vw" data-slot="auraphone-foto-2" width="1600" height="1200" alt="Aurora boreal verde y roja sobre un lago en calma, con las luces de un pueblo reflejadas en el agua" loading="lazy" decoding="async">
                     <figcaption class="aura-media__caption">Aurora boreal · Modo Noche</figcaption>
                   </figure>
                 </li>
                 <li class="aura-carousel__slide" aria-roledescription="diapositiva" aria-label="3 de 4">
                   <figure class="aura-media aura-media--frame">
-                    <img class="aura-img" src="../img/auraphone-foto-3.webp" data-slot="auraphone-foto-3" width="1600" height="1200" alt="Margarita blanca cubierta de gotas de lluvia, en primer plano sobre un fondo verde oscuro" loading="lazy" decoding="async">
+                    <img class="aura-img" src="../img/auraphone-foto-3.webp" srcset="../img/400/auraphone-foto-3.webp 400w, ../img/800/auraphone-foto-3.webp 800w, ../img/auraphone-foto-3.webp 1600w" sizes="auto, (min-width: 1200px) 862px, 80vw" data-slot="auraphone-foto-3" width="1600" height="1200" alt="Margarita blanca cubierta de gotas de lluvia, en primer plano sobre un fondo verde oscuro" loading="lazy" decoding="async">
                     <figcaption class="aura-media__caption">Margarita bajo la lluvia · Macro</figcaption>
                   </figure>
                 </li>
                 <li class="aura-carousel__slide" aria-roledescription="diapositiva" aria-label="4 de 4">
                   <figure class="aura-media aura-media--frame">
-                    <img class="aura-img" src="../img/auraphone-zoom-2.webp" data-slot="auraphone-zoom-2" width="1600" height="1200" alt="Silueta de un faro con la linterna encendida al anochecer, sobre un horizonte naranja y un cielo azul oscuro" loading="lazy" decoding="async">
+                    <img class="aura-img" src="../img/auraphone-zoom-2.webp" srcset="../img/400/auraphone-zoom-2.webp 400w, ../img/800/auraphone-zoom-2.webp 800w, ../img/auraphone-zoom-2.webp 1600w" sizes="auto, (min-width: 1200px) 862px, 80vw" data-slot="auraphone-zoom-2" width="1600" height="1200" alt="Silueta de un faro con la linterna encendida al anochecer, sobre un horizonte naranja y un cielo azul oscuro" loading="lazy" decoding="async">
                     <figcaption class="aura-media__caption">Faro al anochecer · Teleobjetivo x8</figcaption>
                   </figure>
                 </li>
@@ -424,7 +430,7 @@
         </header>
 
         <figure class="aura-media aura-media--frame auraphone-figura" data-aura-reveal="fade">
-          <img class="aura-img" src="../img/auraphone-chip.webp" data-slot="auraphone-chip" width="1600" height="1200" alt="Oblea de silicio en macro, con la rejilla de chips en reflejos iridiscentes de colores" loading="lazy" decoding="async">
+          <img class="aura-img" src="../img/auraphone-chip.webp" srcset="../img/400/auraphone-chip.webp 400w, ../img/800/auraphone-chip.webp 800w, ../img/auraphone-chip.webp 1600w" sizes="auto, (min-width: 1280px) 1180px, 92vw" data-slot="auraphone-chip" width="1600" height="1200" alt="Oblea de silicio en macro, con la rejilla de chips en reflejos iridiscentes de colores" loading="lazy" decoding="async">
           <figcaption class="aura-media__caption">Una oblea de silicio antes de cortarla: cada recuadro será un chip.</figcaption>
         </figure>
 
@@ -460,7 +466,7 @@
             <ul class="aura-stats aura-stats--lg auraphone-stats-lg" data-ap-autonomia hidden></ul>
           </div>
           <div class="aura-split__media aura-media aura-media--halo">
-            <img class="aura-img" src="../img/auraphone-bateria.webp" data-slot="auraphone-bateria" width="1600" height="1200" alt="Dos auraPhone 18 Pro plata de espaldas sobre soportes de carga magnética, en penumbra" loading="lazy" decoding="async" data-aura-reveal="scale">
+            <img class="aura-img" src="../img/auraphone-bateria.webp" srcset="../img/400/auraphone-bateria.webp 400w, ../img/800/auraphone-bateria.webp 800w, ../img/auraphone-bateria.webp 1600w" sizes="auto, (max-width: 991.98px) 88vw, (max-width: 1199.98px) 42vw, 532px" data-slot="auraphone-bateria" width="1600" height="1200" alt="Dos auraPhone 18 Pro plata de espaldas sobre soportes de carga magnética, en penumbra" loading="lazy" decoding="async" data-aura-reveal="scale">
           </div>
         </div>
       </div>
@@ -494,7 +500,7 @@
             </div>
           </div>
           <div class="aura-split__media aura-media aura-media--halo">
-            <img class="aura-img" src="../img/auraphone-destacado-1.webp" data-slot="auraphone-destacado-1" width="1600" height="1200" alt="auraPhone 18 Pro negro en tres cuartos sobre fondo negro, con la pantalla de bloqueo encendida: la hora, un pedido en directo y la Dynamic Island con un temporizador" loading="lazy" decoding="async" data-aura-reveal="scale">
+            <img class="aura-img" src="../img/auraphone-destacado-1.webp" srcset="../img/400/auraphone-destacado-1.webp 400w, ../img/800/auraphone-destacado-1.webp 800w, ../img/auraphone-destacado-1.webp 1600w" sizes="auto, (max-width: 991.98px) 88vw, (max-width: 1199.98px) 42vw, 532px" data-slot="auraphone-destacado-1" width="1600" height="1200" alt="auraPhone 18 Pro negro en tres cuartos sobre fondo negro, con la pantalla de bloqueo encendida: la hora, un pedido en directo y la Dynamic Island con un temporizador" loading="lazy" decoding="async" data-aura-reveal="scale">
           </div>
         </div>
       </div>
@@ -528,7 +534,7 @@
             </div>
           </div>
           <div class="aura-split__media aura-media aura-media--halo">
-            <img class="aura-img" src="../img/auraphone-destacado-6.webp" data-slot="auraphone-destacado-6" width="1600" height="1200" alt="auraPhone 18 Pro negro con AURA Pay en la pantalla, sobre fondo negro: la AURA Card y la confirmación «Hecho» de un pago de 4,20 €" loading="lazy" decoding="async" data-aura-reveal="scale">
+            <img class="aura-img" src="../img/auraphone-destacado-6.webp" srcset="../img/400/auraphone-destacado-6.webp 400w, ../img/800/auraphone-destacado-6.webp 800w, ../img/auraphone-destacado-6.webp 1600w" sizes="auto, (max-width: 991.98px) 88vw, (max-width: 1199.98px) 42vw, 532px" data-slot="auraphone-destacado-6" width="1600" height="1200" alt="auraPhone 18 Pro negro con AURA Pay en la pantalla, sobre fondo negro: la AURA Card y la confirmación «Hecho» de un pago de 4,20 €" loading="lazy" decoding="async" data-aura-reveal="scale">
           </div>
         </div>
       </div>
@@ -541,7 +547,7 @@
         <div class="aura-split aura-split--reverse">
           <div class="aura-split__copy">
             <p class="aura-eyebrow aura-eyebrow--mono">Medio ambiente</p>
-            <h2 class="aura-h2" id="ambiente-titulo">Más años en tu mano. Menos en un&nbsp;cajón.</h2>
+            <h2 class="aura-h1" id="ambiente-titulo">Más años en tu mano. Menos en un&nbsp;cajón.</h2>
             <p class="aura-body">Un auraPhone que dura es el que menos huella deja. Y cuando lo cambies, el anterior tiene una segunda vida o se recicla con cuidado.</p>
             <ul class="aura-checklist">
               <li>Electricidad renovable en las oficinas, las tiendas y los centros de datos de AURA</li>
@@ -553,7 +559,7 @@
             </div>
           </div>
           <div class="aura-split__media aura-media aura-media--halo">
-            <img class="aura-img" src="../img/auraphone-medio-ambiente.webp" data-slot="auraphone-medio-ambiente" width="1600" height="1200" alt="Campo de paneles solares al atardecer, con montañas en el horizonte" loading="lazy" decoding="async" data-aura-reveal="scale">
+            <img class="aura-img" src="../img/auraphone-medio-ambiente.webp" srcset="../img/400/auraphone-medio-ambiente.webp 400w, ../img/800/auraphone-medio-ambiente.webp 800w, ../img/auraphone-medio-ambiente.webp 1600w" sizes="auto, (max-width: 991.98px) 88vw, (max-width: 1199.98px) 42vw, 532px" data-slot="auraphone-medio-ambiente" width="1600" height="1200" alt="Campo de paneles solares al atardecer, con montañas en el horizonte" loading="lazy" decoding="async" data-aura-reveal="scale">
           </div>
         </div>
       </div>
@@ -575,7 +581,7 @@
               <h3 class="aura-h3">Protege sin tapar la meseta.</h3>
               <p class="aura-tile__text">Se ajusta al milímetro, deja libres las tres cámaras y no estorba a la carga&nbsp;magnética.</p>
             </div>
-            <div class="aura-tile__media aura-tile__media--blend"><img class="aura-img" src="../img/auraphone-accesorio-funda.webp" data-slot="auraphone-accesorio-funda" width="1600" height="1200" alt="Funda de ante azul petróleo puesta en un auraPhone, con el hueco de la meseta de cámaras, sobre negro" loading="lazy" decoding="async"></div>
+            <div class="aura-tile__media aura-tile__media--blend"><img class="aura-img" src="../img/auraphone-accesorio-funda.webp" srcset="../img/400/auraphone-accesorio-funda.webp 400w, ../img/800/auraphone-accesorio-funda.webp 800w, ../img/auraphone-accesorio-funda.webp 1600w" sizes="auto, (max-width: 767.98px) 80vw, (max-width: 1199.98px) 40vw, 522px" data-slot="auraphone-accesorio-funda" width="1600" height="1200" alt="Funda de ante azul petróleo puesta en un auraPhone, con el hueco de la meseta de cámaras, sobre negro" loading="lazy" decoding="async"></div>
           </article>
           <article class="aura-tile aura-tile--media-fit" data-aura-reveal style="--i:1">
             <div class="aura-tile__copy">
@@ -583,7 +589,7 @@
               <h3 class="aura-h3">Hasta 25&nbsp;W, sin buscar el sitio.</h3>
               <p class="aura-tile__text">Lo acercas y se coloca solo; con un adaptador USB-C, carga a toda&nbsp;velocidad.</p>
             </div>
-            <div class="aura-tile__media aura-tile__media--blend"><img class="aura-img" src="../img/auraphone-accesorio-cargador.webp" data-slot="auraphone-accesorio-cargador" width="1600" height="1200" alt="Cargador magnético plateado y blanco con su cable USB-C, sobre fondo negro" loading="lazy" decoding="async"></div>
+            <div class="aura-tile__media aura-tile__media--blend"><img class="aura-img" src="../img/auraphone-accesorio-cargador.webp" srcset="../img/400/auraphone-accesorio-cargador.webp 400w, ../img/800/auraphone-accesorio-cargador.webp 800w, ../img/auraphone-accesorio-cargador.webp 1600w" sizes="auto, (max-width: 767.98px) 80vw, (max-width: 1199.98px) 40vw, 522px" data-slot="auraphone-accesorio-cargador" width="1600" height="1200" alt="Cargador magnético plateado y blanco con su cable USB-C, sobre fondo negro" loading="lazy" decoding="async"></div>
           </article>
         </div>
       </div>

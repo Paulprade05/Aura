@@ -3,13 +3,16 @@
 Todas las imágenes ya están colocadas: fotos reales con licencia libre (Wikimedia Commons, Unsplash y Pexels), recortadas y ajustadas de tono, en WebP. Las secuencias de las escenas con scroll están en `img/seq/`. Los créditos están en `html/legal.html#imagenes`. Para sustituir una, guarda la nueva con **exactamente** el mismo nombre; si falta alguna, la web muestra en su lugar un marcador con la ruta y el tamaño recomendado.
 
 - **Formato:** `.webp` (es lo que pide la web; también valen `.png` y `.jpg` con el mismo nombre, que se prueban después).
+- **Tamaños (`srcset`):** cada foto de `img/` tiene sus variantes de 400 y 800 px de ancho en `img/400/` e `img/800/` (el original, de 1600, es la grande), y cada foto de los créditos una miniatura de 240 × 180 en `img/thumbs/`. No se hacen a mano: después de añadir o cambiar una foto, ejecuta `node scratchpad/impl/catalogo-imagenes/variantes.mjs` (solo rehace lo que ha cambiado y borra las variantes de fotos que ya no están). Si falta una variante, la web usa el original.
 - **Fondo:** todo el sitio es negro (#000); diseña o recorta las imágenes para fondo oscuro.
 - **Tamaño:** el indicado o mayor con la misma proporción (la proporción importa más que los píxeles exactos).
 - Listado generado automáticamente el 2026-10-03 (fotos colocadas el 2026-10-09) recorriendo todas las páginas. Si cambias la gama en `js/data.js`, vuelve a mirar la tabla de productos.
 
-## 1. Productos (imprescindibles: 12 imágenes)
+## 1. Productos
 
-Una imagen por producto basta: se usa en las tarjetas, el comparador, el configurador, la bolsa y el buscador. **1600 × 1200 px (4:3)**, el dispositivo centrado y con aire alrededor.
+Cada producto tiene una **galería por color**: varias vistas de cada acabado, `img/<diseño>-<color>-<vista>.webp` a **1600 × 1200 px (4:3)** (vistas: `trasera`, `frontal`, `tres-cuartos`, `lateral`, `abierto`, `cerrado`, `estuche-abierto`, `estuche-cerrado` y `auriculares`). Las declaran los manifiestos `scratchpad/fotos-tools/manifiestos/<diseño>.json` y `node scratchpad/fotos-tools/integrar.mjs` las lleva al bloque generado del final de `js/data.js` (`photos` e `imageColor`), a los créditos y a las variantes. La primera vista de cada acabado es la de las tarjetas, la bolsa y el checkout (la misma en los modelos de una familia); el configurador enseña todas. Un acabado sin fotos enseña las del acabado por defecto, con el aviso «Imagen en …».
+
+La foto base de cada producto (la tabla de abajo) se queda de respaldo, por si faltara una foto de la galería.
 
 | Archivo | Producto | Familia |
 |---|---|---|
@@ -26,22 +29,9 @@ Una imagen por producto basta: se usa en las tarjetas, el comparador, el configu
 | `aurapods-pro-3.webp` | auraPods Pro 3 | auraPods |
 | `aurapods-5.webp` | auraPods 5 | auraPods |
 
-### Opcional: una imagen por color
+### Fotos por diseño
 
-Si quieres que el configurador y las exhibiciones de color cambien de imagen al elegir acabado, añade también estas (mismo tamaño) **y declara cada una en `imageVariants` de `js/data.js`, con su `alt`**: solo se piden las declaradas. Sin ellas se usa la del producto, y el color de esa foto va en `imageColor`. No hace falta la del color que ya enseña la foto base.
-
-| Producto | Archivos opcionales |
-|---|---|
-| auraPhone Duo | `auraphone-duo-cielo-nocturno.webp` (Cielo nocturno) · `auraphone-duo-blanco-estelar.webp` (Blanco estelar) |
-| auraPhone 18 Pro Max | `auraphone-18-pro-max-negro.webp` (Negro) · `auraphone-18-pro-max-plata.webp` (Plata) · `auraphone-18-pro-max-azul-glacial.webp` (Azul glacial) · `auraphone-18-pro-max-burdeos.webp` (Burdeos) |
-| auraPhone 18 Pro | `auraphone-18-pro-negro.webp` (Negro) · `auraphone-18-pro-plata.webp` (Plata) · `auraphone-18-pro-azul-glacial.webp` (Azul glacial) · `auraphone-18-pro-burdeos.webp` (Burdeos) |
-| auraPad Pro 13″ | `aurapad-pro-13-negro-espacial.webp` (Negro espacial) · `aurapad-pro-13-plata.webp` (Plata) |
-| auraPad Pro 11″ | `aurapad-pro-11-negro-espacial.webp` (Negro espacial) · `aurapad-pro-11-plata.webp` (Plata) |
-| auraPad Air 13″ | `aurapad-air-13-gris-espacial.webp` (Gris espacial) · `aurapad-air-13-azul.webp` (Azul) · `aurapad-air-13-purpura.webp` (Púrpura) · `aurapad-air-13-blanco-estrella.webp` (Blanco estrella) |
-| auraBook Pro 16″ | `aurabook-pro-16-negro-espacial.webp` (Negro espacial) · `aurabook-pro-16-plata.webp` (Plata) |
-| auraBook Pro 14″ | `aurabook-pro-14-negro-espacial.webp` (Negro espacial) · `aurabook-pro-14-plata.webp` (Plata) |
-| auraBook Air 15″ | `aurabook-air-15-azul-cielo.webp` (Azul cielo) · `aurabook-air-15-plata.webp` (Plata) · `aurabook-air-15-blanco-estrella.webp` (Blanco estrella) · `aurabook-air-15-medianoche.webp` (Medianoche) |
-| auraPods Max 2 | `aurapods-max-2-blanco-estrella.webp` (Blanco estrella) · `aurapods-max-2-azul.webp` (Azul) · `aurapods-max-2-purpura.webp` (Púrpura) · `aurapods-max-2-naranja.webp` (Naranja, aún sin foto); la base enseña el medianoche |
+Un diseño da sus fotos a todos sus tamaños: `auraphone-18-pro-*` al 18 Pro y al 18 Pro Max, `aurapad-pro-*` a los Pro de 13″ y 11″ y `aurabook-pro-*` a los Pro de 16″ y 14″; el resto, a su producto. Los acabados que aún no tienen foto propia salen en el comentario del bloque generado de `js/data.js`.
 
 ## 2. Imágenes de cada página
 
@@ -58,14 +48,12 @@ La columna «Qué debe mostrar» es el texto alternativo que ya lleva la imagen:
 | `inicio-novedad-aurabook-air.webp` | 1600 × 1200 | auraBook Air 15″ | auraBook Air cerrado, flotando de canto sobre una estela de luz azul |
 | `inicio-novedad-teleobjetivo.webp` | 1600 × 1200 | auraPhone 18 Pro Max | Primer plano del módulo de cámaras del auraPhone 18 Pro Max, con el teleobjetivo en primer término |
 | `inicio-novedad-aurapad-air.webp` | 1600 × 1200 | auraPad Air 13″ | auraPad Air 13″ con Magic Keyboard y AURA Pencil Pro trazando una línea de luz sobre la pantalla |
-| `inicio-acerca.webp` | 1600 × 1200 | #acerca-de-aura Acerca de AURA / Cupertino | La sede de AURA en Cupertino de noche, con su fachada de cristal atravesada por anillos de luz azul |
 | `inicio-trade-in.webp` | 1600 × 1200 | #trade-in AURA Trade In | Un auraPhone nuevo se eleva sobre varios teléfonos antiguos que se deshacen en partículas de luz azul |
 
 ### auraphone.html
 
 | Archivo | Tamaño | Dónde | Qué debe mostrar |
 |---|---|---|---|
-| `auraphone-hero.webp` | 1600 × 1200 | #descripcion Gama auraPhone | El auraPhone Duo abierto entre un auraPhone 18 Pro Max y un auraPhone 18 Pro, sobre fondo negro con un halo azul |
 | `auraphone-zoom-1.webp` | 1600 × 1200 | Cámara Fusion | Primer plano del módulo de cámaras de un auraPhone 18 Pro con el diafragma de la cámara Fusion entreabierto |
 | `auraphone-zoom-2.webp` | 1600 × 1200 | Teleobjetivo | Fotografía tomada con el zoom x8: un faro lejano visto con todo detalle al atardecer |
 | `auraphone-zoom-3.webp` | 1600 × 1200 | Pantalla | La Dynamic Island de un auraPhone 18 Pro mostrando a la vez un temporizador, un trayecto y la música |
@@ -82,20 +70,17 @@ La columna «Qué debe mostrar» es el texto alternativo que ya lleva la imagen:
 | Archivo | Tamaño | Dónde | Qué debe mostrar |
 |---|---|---|---|
 | `aurapad-hero.webp` | 1920 × 1080 | #descripcion Gama auraPad | Tres auraPad flotando en abanico sobre fondo negro, con un paisaje cósmico azul y dorado en sus pantallas |
-| `aurapad-pro.webp` | 1600 × 1200 | #pro auraPad Pro / AURA M5 | auraPad Pro inclinado de perfil, con AURA Pencil Pro apoyado sobre una pantalla que muestra una galaxia |
 | `aurapad-accesorios-pencil.webp` | 1600 × 1200 | AURA Pencil Pro | AURA Pencil Pro dibujando un trazo dorado sobre la pantalla de un auraPad |
 | `aurapad-accesorios-teclado.webp` | 1600 × 1200 | Magic Keyboard | auraPad Pro acoplado a Magic Keyboard en negro, abierto como un portátil |
 | `aurapad-crear-ilustrar.webp` | 1600 × 1200 | Ilustrar | Ilustración de un paisaje nocturno a medio pintar en un auraPad Pro, con AURA Pencil Pro al lado |
 | `aurapad-crear-video.webp` | 1600 × 1200 | Editar vídeo | Línea de tiempo de edición de vídeo con varias pistas en la pantalla de un auraPad Pro |
 | `aurapad-crear-estudiar.webp` | 1600 × 1200 | Estudiar | Apuntes manuscritos de biología con esquemas en un auraPad Air azul sobre un escritorio |
 | `aurapad-crear-trabajar.webp` | 1600 × 1200 | Trabajar | auraPad Pro con Magic Keyboard conectado a un monitor externo, con varias ventanas de auraPadOS 27 abiertas |
-| `aurapad-crear-medir.webp` | 1600 × 1200 | Medir el mundo | auraPad Pro escaneando un salón, con una malla 3D azul superpuesta sobre los muebles |
 
 ### aurabook.html
 
 | Archivo | Tamaño | Dónde | Qué debe mostrar |
 |---|---|---|---|
-| `aurabook-hero.webp` | 1920 × 1080 | #descripcion Gama auraBook | auraBook Pro entreabierto, visto de tres cuartos, con una galaxia azul en la pantalla sobre fondo negro |
 | `aurabook-ecosistema.webp` | 1600 × 1200 | #ecosistema AURA Silicon / Ecosistema | Un auraBook Pro conectado a una gran pantalla en un estudio a media luz, junto a un auraPad, con teclado y ratón sobre una mesa de madera |
 | `aurabook-perfil-desarrollo.webp` | 1600 × 1200 | Desarrollo | Una desarrolladora con un auraBook Pro lleno de código, junto a un monitor con la terminal abierta |
 | `aurabook-perfil-fotografia.webp` | 1600 × 1200 | Fotografía | Un fotógrafo revela una foto de paisaje nocturno en un auraBook Pro, con la tarjeta SD en el lateral |
@@ -143,6 +128,6 @@ El estuche (#estuche) y los accesorios (#accesorios) usan las fotos de producto 
 
 ---
 
-**Total:** 9 imágenes de producto + 47 de páginas = **56** imágenes (más las opcionales por color).
+**Total:** las 12 fotos base de producto, las de las páginas de las tablas de arriba y la galería por color de cada producto. `auraphone-hero`, `aurabook-hero`, `aurapad-pro`, `aurapad-crear-medir` e `inicio-acerca` (inicio, acerca, componentes y la guía enseñan ya la misma sede, `acerca-hero`) ya no las usaba ninguna página y se retiraron, igual que las fotos por color antiguas que sustituyó la galería (también `auraphone-18-pro-azul-glacial`, `auraphone-18-pro-max-burdeos` y `aurapad-pro-13-negro-espacial`: las exhibiciones de color y la muestra de componentes parten ya de la primera vista del acabado).
 
 El logotipo (`aura.png`) ya está colocado.

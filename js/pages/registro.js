@@ -138,7 +138,10 @@
     pintarSesion();
   });
 
-  pintarSesion();
+  try { pintarSesion(); } finally {
+    /* Primer render terminado: desde aquí manda el JS (cuenta.css). */
+    document.documentElement.classList.add('is-ready');
+  }
 
   /* Como en el prototipo, el primer campo llega enfocado; solo con ratón o
      trackpad (en el móvil abriría el teclado sin que nadie lo pida). */

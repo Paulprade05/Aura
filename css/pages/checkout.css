@@ -4,6 +4,24 @@
    objetivos táctiles y movimiento salen de aura.css (tokens var(--…)).
    ========================================================================== */
 
+/* Sin saltos al cargar: las líneas y los importes del resumen los pinta
+   checkout.js después del primer pintado. Hasta que termina (.is-ready en
+   <html>), el resumen y las notas ocupan su sitio sin verse; si el JS
+   fallara, aparecen a los 2,5 s igualmente. */
+.aura-js:not(.is-ready) :is(#resumen, main > .aura-footnotes) {
+  visibility: hidden;
+  animation: aura-ready-fallback 0s 2.5s forwards;
+}
+/* Con sesión iniciada (aura-core.js lo marca en <html> desde el <head>), el
+   paso 1 nace con el marcado de quien ya ha entrado: su tarjeta y su
+   pregunta, sin las de invitado. Así no encoge de 492 a 272 px al llegar el
+   JS. Desde .is-ready manda lo que escribe checkout.js (atributos hidden). */
+html.aura-has-session:not(.is-ready) :is([data-co="invitado"], [data-co="login"], [data-co="titulo-invitado"]) { display: none !important; }
+html.aura-has-session:not(.is-ready) .checkout-user[hidden] { display: flex !important; }
+html.aura-has-session:not(.is-ready) [data-co="titulo-usuario"][hidden] { display: inline !important; }
+html.aura-has-session:not(.is-ready) .checkout-contact { grid-template-columns: minmax(0, 1fr); }
+html.aura-has-session:not(.is-ready) .checkout-user__name { min-height: 1lh; }
+
 /* Cabecera y pasos */
 .checkout-head { margin-bottom: clamp(1.5rem, 3vw, 2.25rem); }
 /* «Ver el resumen»: solo cuando el resumen queda debajo (en escritorio está
@@ -91,6 +109,8 @@
   align-items: center;
   gap: .875rem;
 }
+/* El mismo avatar que en Tu cuenta (.cuenta-avatar), a 48 px: no se pulsa,
+   así que la inicial va en blanco, no en el azul de los enlaces. */
 .checkout-user__avatar {
   display: grid;
   place-items: center;
@@ -98,11 +118,13 @@
   width: 3rem;
   height: 3rem;
   border-radius: 50%;
-  background: var(--accent-soft);
-  color: var(--accent-link);
+  background: radial-gradient(circle at 50% 30%, var(--accent-soft), transparent 72%), var(--bg-elevated);
+  box-shadow: inset 0 0 0 1px var(--hairline-strong), inset 0 1px 0 var(--edge-light), var(--shadow-2);
+  color: var(--text-primary);
   font-family: var(--font-display);
   font-size: 1.25rem;
-  font-weight: 600;
+  font-weight: 500;
+  line-height: 1;
 }
 .checkout-user__text { display: grid; gap: .125rem; }
 .checkout-user__text > * { margin: 0; }
@@ -129,7 +151,7 @@
   flex: none;
   width: 2.25rem;
   height: 2.25rem;
-  border-radius: .625rem;
+  border-radius: var(--radius-sm);
   background: var(--fill-2);
   color: var(--text-primary);
   font-size: 1.0625rem;

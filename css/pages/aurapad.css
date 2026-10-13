@@ -44,11 +44,16 @@
   color: var(--text-secondary);
 }
 
+/* Ritmo dentro de un capítulo (tokens de aura.css, los mismos en las cuatro
+   familias): las filas de cifras y de características se separan de lo
+   anterior --space-stats, y los bloques secundarios, --space-block. */
+.aurapad-fila { margin-top: var(--space-stats, clamp(2.5rem, 5vw, 4rem)); }
+
 /* Colores: dos exhibiciones (Pro y Air) en columnas, cada una con el nombre de
    su línea encima, centrado como la propia exhibición. */
 .aurapad-colors {
   --gap: clamp(2.5rem, 5vw, 4rem);
-  margin-top: clamp(3.5rem, 8vw, 6rem);
+  margin-top: var(--space-block, clamp(3.5rem, 8vw, 6.5rem));
 }
 .aurapad-colors__item {
   display: grid;
@@ -73,4 +78,24 @@
     align-items: center;
   }
   .aurapad-acc > .aura-tile:last-child > .aura-tile__media { margin-top: 0; }
+}
+
+/* Versión estática de la escena (sin aura-core.js, con «reducir movimiento» o
+   «ahorro de datos»): desde 992 px los textos que siguen al póster van
+   centrados bajo él, como el héroe, en lugar de una columna de 40 rem a la
+   izquierda con más de 500 px vacíos al lado. Con la escena en marcha mandan
+   las reglas de la base (más específicas). */
+@media (min-width: 992px) {
+  .aurapad-escena .aura-scrub__text { justify-items: center; text-align: center; }
+}
+
+/* Escena del auraPad Pro (componente de la base, «contain»): desde que se
+   enciende la pantalla la tableta queda a la derecha, con su borde izquierdo
+   entre el 22 % (f64) y el 34 % (f94–120) del fotograma (seq.json, «final:
+   izquierda x<32 %»). La columna de la base (30 rem) llega al 42 % a 1440 y
+   cruzaba el bisel: aquí mide 27 rem, lo justo para que «Se enciende. Y el
+   negro» quepa en una línea. Solo donde la base pone left a un lado (más
+   ancho que 5:4; en el teléfono y en ventanas casi cuadradas va al pie). */
+@media screen and (prefers-reduced-motion: no-preference) and (min-width: 768px) and (min-aspect-ratio: 5001/4000) {
+  .aura-js .aurapad-escena.aura-scrub:not(.is-static) .aura-scrub__text[data-pos="left"] { grid-template-columns: minmax(0, 27rem) minmax(0, 1fr); }
 }

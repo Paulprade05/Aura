@@ -57,10 +57,18 @@
    mensajes de error). Sin sticky: la columna mide lo mismo que el
    formulario y, en una ventana baja, pegada recortaba la ficha. */
 .soporte-tienda__foto { aspect-ratio: 4 / 3; }
-/* Cuando la columna recorta la foto en vertical (tableta y escritorio), el
-   encuadre se queda con el cliente, el especialista y el expositor (punto
-   focal de la base, --photo-focus). */
-.soporte-tienda__foto { --photo-focus: 16% 50%; }
+/* Cuando la columna recorta la foto (tableta y escritorio), el encuadre se
+   queda con el tablero iluminado (punto focal de la base, --photo-focus). La
+   foto, en clave baja, se funde con el negro por sus bordes, como las de los
+   bloques texto + imagen (sin marco). */
+.soporte-tienda__foto { --photo-focus: 70% 55%; background: transparent; }
+.soporte-tienda__foto > .aura-img {
+  -webkit-mask-image: var(--photo-feather-x), var(--photo-feather-y);
+  -webkit-mask-composite: source-in;
+  mask-image: var(--photo-feather-x), var(--photo-feather-y);
+  mask-composite: intersect;
+  mix-blend-mode: lighten;              /* el negro de la foto toma el de la franja: sin rectángulo dentro de otro */
+}
 @media (min-width: 768px) and (max-width: 991.98px) {
   .soporte-tienda { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .soporte-tienda__foto { aspect-ratio: auto; min-height: 12rem; }   /* tan alta como la ficha */

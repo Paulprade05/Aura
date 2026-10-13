@@ -484,7 +484,12 @@
       if (e.target !== el) { return; }
       if (g && g.active && e.pointerId === g.id) { onCancel(e); }
     });
-    safe(function () { el.addEventListener('touchmove', onTouchMove, { passive: false }); });
+    /* No pasivo: obliga al navegador a esperar al hilo principal en cada
+       touchmove sobre el elemento. Quien ya reparte el gesto con touch-action
+       (el carrusel, pan-y) lo apaga con handlers.touchMove === false. */
+    if (handlers.touchMove !== false) {
+      safe(function () { el.addEventListener('touchmove', onTouchMove, { passive: false }); });
+    }
     return { cancel: function () { if (g) { finish(); } } };
   }
 
@@ -1640,6 +1645,10 @@
 
     dragGesture(viewport, {
       axis: function () { return 'x'; },
+      /* touch-action: pan-y (aura.css) ya deja el vertical a la página y el
+         horizontal a nosotros: sin touchmove no pasivo, el scroll táctil que
+         empieza sobre el carrusel no espera al hilo principal. */
+      touchMove: false,
       accept: function (e) {
         return !closest(e.target, 'input, textarea, select, [contenteditable="true"], [data-aura-no-drag]');
       },
@@ -1713,7 +1722,11 @@
     /* Trackpad / rueda horizontal: desplazamiento directo (1:1, con goma en
        los extremos como el dedo) y, al parar, ajuste con muelle crítico desde
        el reposo: la velocidad del muelle que se interrumpió no se reutiliza
-       (daría un tirón hacia el lado de antes). */
+       (daría un tirón hacia el lado de antes). No pasivo a propósito: el
+       preventDefault de los gestos horizontales evita que el trackpad navegue
+       atrás. Los verticales vuelven sin tocar nada y la página baja (el CSS
+       devuelve el overscroll a la página con .is-ready). Pasar a { passive:
+       true } solo tras comprobar en un trackpad real que no navega atrás. */
     safe(function () {
       viewport.addEventListener('wheel', function (e) {
         if (c.max <= 0 || Math.abs(e.deltaX) <= Math.abs(e.deltaY)) { return; }
@@ -2174,16 +2187,19 @@
       opts = opts || {};
       if (!slot || !AURA.html || !AURA.html.img) { return; }
       want = slot;
+      /* El hueco real de la foto (opts.sizes o data-sizes del .aura-gallery):
+         sin él, el srcset elegiría por el ancho de la pantalla (100vw). */
+      var sizes = opts.sizes || el.getAttribute('data-sizes') || undefined;
       var current = photos();
       if (!current.length) {
-        insert(AURA.html.img(slot, { fallback: opts.fallback, alt: opts.alt || '', priority: !!opts.priority, eager: true }));
+        insert(AURA.html.img(slot, { fallback: opts.fallback, alt: opts.alt || '', priority: !!opts.priority, eager: true, sizes: sizes }));
         return;
       }
       var same = null;
       current.forEach(function (f) { if (f.getAttribute('data-slot') === slot) { same = f; } });
       if (same) { setAlt(same, opts.alt); front(same); return; }
 
-      var next = insert(AURA.html.img(slot, { fallback: opts.fallback, alt: opts.alt || '', eager: true, className: 'is-entering' }));
+      var next = insert(AURA.html.img(slot, { fallback: opts.fallback, alt: opts.alt || '', eager: true, className: 'is-entering', sizes: sizes }));
       next.setAttribute('aria-hidden', 'true');
       var promote = function (f) {
         if (!f || !f.parentNode || want !== slot) { return; }      // mientras tanto se pidió otra
@@ -2229,17 +2245,54 @@
      - Con «reducir movimiento» o «ahorro de datos» (o al imprimir, o sin
        aura-core.js) no hay escena: el póster en su sitio y los textos
        apilados en orden (lo hace el CSS; aquí no se descarga nada).
-     - Las imágenes se piden con new Image(): funciona igual por file:// que
-       por http (sin fetch; el lienzo nunca se lee, así que no importa que
-       quede «contaminado» por file://).
+     - Por http(s) y con el lienzo en la GPU, cada fotograma se descarga como
+       Blob (fetch) y los que rodean al actual (ventana de ±6) se decodifican
+       de antemano fuera del hilo principal (createImageBitmap del Blob): al
+       hacer scroll, pintar un fotograma nuevo ya no lo decodifica en el hilo
+       principal; solo se escala al lienzo (en la GPU). No sirven ni
+       createImageBitmap(<img>) (decodifica en el hilo principal) ni sus
+       opciones resizeWidth / resizeHeight (escalan en el hilo principal al
+       crearlo: ~15–20 ms por fotograma, medidos), ni escalar en un Worker con
+       OffscreenCanvas (medido: con la CPU ocupada, el fotograma exacto
+       llegaba 50–640 ms tarde). Los que salen de la ventana se cierran
+       (close()).
+     - Por file://, fetch no puede leer archivos locales: las imágenes se piden
+       con new Image() y se escalan al pintarlas (el lienzo nunca se lee, así
+       que no importa que quede «contaminado»). Es también el camino sin GPU
+       (scrubBitmaps) o si createImageBitmap no existe o falla.
      ------------------------------------------------------------------------ */
 
   var SCRUB_MOBILE = '(max-width: 767.98px)';
   var SCRUB_KEY_STEP = 8;          // primero uno de cada 8 fotogramas
   var SCRUB_PARALLEL = 4;          // descargas simultáneas como mucho (no acapara la red)
   var SCRUB_SHIFT = 40;            // px que recorre un texto al entrar y al irse
+  var SCRUB_FADE_PX = 150;         // px de scroll de cada entrada o salida de texto (≈1,5 muescas de rueda, medio arrastre)
   var SCRUB_MAX_DPR = 2;           // más densidad no se ve y cuesta memoria
   var SCRUB_NEAR = '150% 0px 150% 0px';   // empieza a descargar a pantalla y media de distancia
+  var SCRUB_WINDOW = 6;            // fotogramas decodificados a cada lado del actual (como mucho)
+  var SCRUB_WINDOW_BYTES = 100 * 1048576;  // memoria de esa ventana (RGBA del fotograma: con 1600 × 900, ±6)
+  var SCRUB_DECODES = 3;           // decodificaciones a la vez (en hilos del navegador, no en el principal)
+  /* Fotogramas como ImageBitmap: solo por http(s) (fetch no lee file://) y
+     con el lienzo dibujado por la GPU. Sin GPU, escalar un ImageBitmap al
+     pintarlo cuesta 25–150 ms en el hilo principal (medido a DPR 1 y 2, peor
+     que decodificar): ahí se queda el camino de <img>. La señal es que WebGL
+     no se puede crear sin «una pérdida grande de rendimiento» (render por
+     software). Se mira una vez, solo en páginas con escena. */
+  var scrubBitmapsOk = null;
+  function scrubBitmaps() {
+    if (scrubBitmapsOk === null) {
+      scrubBitmapsOk = !!safe(function () {
+        if (!/^https?:$/.test(window.location.protocol) || typeof window.fetch !== 'function' ||
+          typeof window.createImageBitmap !== 'function' || typeof window.Blob !== 'function') { return false; }
+        var gl = document.createElement('canvas').getContext('webgl', { failIfMajorPerformanceCaveat: true });
+        if (!gl) { return false; }
+        var lose = gl.getExtension('WEBGL_lose_context');
+        if (lose) { lose.loseContext(); }
+        return true;
+      });
+    }
+    return scrubBitmapsOk;
+  }
   var allScrubs = [];
   var scrubTick = 0;
   var scrubListening = false;
@@ -2271,9 +2324,12 @@
   }
 
   /* Opacidad y desplazamiento de un texto para un progreso p (0–1). Entra en
-     el primer tercio de su tramo (como mucho un 10 % de la escena) y se va en
-     el último. Con data-from="0" ya está a la vista al llegar la escena; con
-     data-to="1" se queda hasta que la escena se va. */
+     los primeros 150 px de scroll de su tramo (SCRUB_FADE_PX; como mucho un
+     tercio del tramo) y se va en los últimos: el fundido se mide en píxeles,
+     no en fracción de la escena, así que el texto pasa casi todo su tramo
+     entero y legible, sea cual sea la longitud de la escena. Con
+     data-from="0" ya está a la vista al llegar la escena; con data-to="1" se
+     queda hasta que la escena se va. */
   function scrubTextState(t, p) {
     var f = t.fade;
     if (t.from > 0 && p <= t.from) { return { o: 0, y: SCRUB_SHIFT }; }
@@ -2330,10 +2386,11 @@
     var texts = toArray(stage.querySelectorAll('.aura-scrub__text')).map(function (el) {
       var from = clamp(num(el.getAttribute('data-from'), 0), 0, 1);
       var to = clamp(num(el.getAttribute('data-to'), 1), from, 1);
-      return { el: el, from: from, to: to, fade: Math.max(0.001, Math.min(0.1, (to - from) / 3)), o: -1, y: 0, on: null };
+      /* fade (fracción de la escena) sale de SCRUB_FADE_PX en update(), cuando se conoce el recorrido. */
+      return { el: el, from: from, to: to, span: to - from, fade: Math.max(0.001, Math.min(0.1, (to - from) / 3)), o: -1, y: 0, on: null };
     });
 
-    var s = { root: root, active: typeof window.IntersectionObserver !== 'function', near: false, mode: '', progress: 0, painted: -1, set: null, observers: [] };
+    var s = { root: root, active: typeof window.IntersectionObserver !== 'function', near: false, mode: '', progress: 0, painted: -1, run: -1, set: null, bitmaps: null, observers: [] };
     var mq = safe(function () { return window.matchMedia(SCRUB_MOBILE); });
     var inflight = 0;
     var queue = [];
@@ -2349,12 +2406,18 @@
         if (mfit === 'contain' || mfit === 'cover') { fit = mfit; }
         base += '/m';
       }
-      return { mobile: mobile, base: base, frames: base ? frames : 0, fit: fit, imgs: [], state: [], loaded: 0, failed: 0 };
+      /* bytes: lo que ocupa un fotograma decodificado (lo da el primero; hasta entonces, el de 1600 × 900). */
+      return {
+        mobile: mobile, base: base, frames: base ? frames : 0, fit: fit, bytes: 1600 * 900 * 4,
+        imgs: [], blobs: [], state: [], loaded: 0, failed: 0,
+        bmps: {}, decoding: {}, decodes: 0, radius: SCRUB_WINDOW, center: -1, nb: -1, dir: 1
+      };
     }
     function wantMobile() {
       return root.getAttribute('data-mobile') === 'true' && !!(mq && mq.matches) && !s.mobileBroken;
     }
     function useSet(set) {
+      if (s.set) { dropBitmaps(s.set); }
       s.set = set;
       s.painted = -1;
       root.classList.remove('is-painted');
@@ -2368,36 +2431,53 @@
 
     /* --- Descarga progresiva --- */
     function pageLoaded() { return document.readyState === 'complete'; }
+    function loaded(set, i) {
+      inflight--;
+      if (set !== s.set) { pump(); return; }
+      set.state[i] = 2;
+      set.loaded++;
+      /* Llega uno más cercano al que toca que el que se ve: se repinta. */
+      if (s.mode === 'scene' && s.active) { scrubSchedule(); }
+      pump();
+    }
+    function failed(set, i) {
+      inflight--;
+      if (set !== s.set) { pump(); return; }
+      set.state[i] = 3;
+      set.failed++;
+      /* La carpeta m/ no existe: se usa la de escritorio (sin repetir el error). */
+      if (set.mobile && !set.loaded && set.failed >= 2) {
+        s.mobileBroken = true;
+        useSet(readSet(false));
+        return;
+      }
+      pump();
+    }
     function load(set, i) {
-      var img = new window.Image();
+      var url = set.base + '/' + scrubFile(pattern, i + 1);
+      var low = i % SCRUB_KEY_STEP !== 0;
       set.state[i] = 1;
       inflight++;
+      if (s.bitmaps) {
+        /* El Blob tal cual (sin decodificar): se decodifica en la ventana. */
+        window.fetch(url, { credentials: 'same-origin', priority: low ? 'low' : 'auto' }).then(function (r) {
+          if (!r.ok) { throw new Error(String(r.status)); }
+          return r.blob();
+        }).then(function (blob) {
+          if (set === s.set) { set.blobs[i] = blob; }
+          loaded(set, i);
+        }, function () { failed(set, i); });
+        return;
+      }
+      var img = new window.Image();
       img.decoding = 'async';
-      if ('fetchPriority' in img) { img.fetchPriority = i % SCRUB_KEY_STEP === 0 ? 'auto' : 'low'; }
+      if ('fetchPriority' in img) { img.fetchPriority = low ? 'low' : 'auto'; }
       img.onload = function () {
-        inflight--;
-        if (set !== s.set) { pump(); return; }
-        set.imgs[i] = img;
-        set.state[i] = 2;
-        set.loaded++;
-        /* Llega uno más cercano al que toca que el que se ve: se repinta. */
-        if (s.mode === 'scene' && s.active) { scrubSchedule(); }
-        pump();
+        if (set === s.set) { set.imgs[i] = img; }
+        loaded(set, i);
       };
-      img.onerror = function () {
-        inflight--;
-        if (set !== s.set) { pump(); return; }
-        set.state[i] = 3;
-        set.failed++;
-        /* La carpeta m/ no existe: se usa la de escritorio (sin repetir el error). */
-        if (set.mobile && !set.loaded && set.failed >= 2) {
-          s.mobileBroken = true;
-          useSet(readSet(false));
-          return;
-        }
-        pump();
-      };
-      img.src = set.base + '/' + scrubFile(pattern, i + 1);
+      img.onerror = function () { failed(set, i); };
+      img.src = url;
     }
     function pump() {
       var set = s.set;
@@ -2426,7 +2506,9 @@
       var set = s.set;
       if (set && set.mobile !== wantMobile()) { useSet(readSet(wantMobile())); }
     }
+    /* El fotograma descargado más cercano a `want` (-1 si aún no hay ninguno). */
     function nearest(set, want) {
+      if (want < 0) { return -1; }
       if (set.state[want] === 2) { return want; }
       for (var d = 1; d < set.frames; d++) {
         if (want - d >= 0 && set.state[want - d] === 2) { return want - d; }
@@ -2434,11 +2516,99 @@
       }
       return -1;
     }
-    function draw(img) {
+
+    /* --- Ventana de ImageBitmap (http/https) --- */
+    /* Fotogramas a cada lado del actual que caben en SCRUB_WINDOW_BYTES. */
+    function windowRadius(set) {
+      return clamp(Math.floor(SCRUB_WINDOW_BYTES / Math.max(1, set.bytes) / 2), 1, SCRUB_WINDOW);
+    }
+    function closeBitmap(set, j) {
+      var bmp = set.bmps[j];
+      if (!bmp) { return; }
+      delete set.bmps[j];
+      safe(function () { if (bmp.close) { bmp.close(); } });
+    }
+    /* Libera toda la ventana (escena fuera de la vista, versión estática o
+       cambio de carpeta). Lo que se esté decodificando se cierra al llegar. */
+    function dropBitmaps(set) {
+      Object.keys(set.bmps).forEach(function (j) { closeBitmap(set, j); });
+      set.center = -1;
+      set.nb = -1;
+    }
+    function inWindow(set, j) {
+      return set.center >= 0 && (Math.abs(j - set.center) <= set.radius + 1 || j === set.nb);
+    }
+    function decode(set, j) {
+      set.decoding[j] = true;
+      set.decodes++;
+      /* Al terminar uno (sirva o no), la ventana sigue llenándose: si la
+         escena saltó lejos mientras tanto, los huecos de decodificación se
+         habrían quedado ocupados por fotogramas que ya no tocan. */
+      var next = function () { if (set === s.set && s.mode === 'scene' && s.active) { scrubSchedule(); } };
+      window.createImageBitmap(set.blobs[j]).then(function (bmp) {
+        set.decodes--;
+        delete set.decoding[j];
+        if (set !== s.set || s.mode !== 'scene' || !inWindow(set, j)) { safe(function () { bmp.close(); }); next(); return; }
+        set.bytes = bmp.width * bmp.height * 4;
+        closeBitmap(set, j);
+        set.bmps[j] = bmp;
+        scrubSchedule();                 // quizá es el que toca (o uno más cercano que el pintado)
+      }, function () {
+        set.decodes--;
+        delete set.decoding[j];
+        if (set !== s.set) { return; }
+        /* Ese fotograma no se puede decodificar: se salta. Si no se puede
+           ninguno, el navegador no sabe hacerlo desde un Blob: camino de <img>. */
+        set.blobs[j] = null;
+        set.state[j] = 3;
+        s.bitmapFails = (s.bitmapFails || 0) + 1;
+        if (s.bitmapFails >= 3 && !Object.keys(set.bmps).length) {
+          s.bitmaps = false;
+          useSet(readSet(wantMobile()));
+          return;
+        }
+        next();
+      });
+    }
+    /* Rehace la ventana alrededor de `want`: cierra lo que queda lejos y pide
+       lo que falta: el que toca, después los que vienen en el sentido del
+       scroll (del más cercano al más lejano) y por último los de atrás. */
+    function prepare(set, want) {
+      var r = windowRadius(set);
+      var dir = set.center < 0 || want === set.center ? (set.dir || 1) : (want > set.center ? 1 : -1);
+      set.dir = dir;
+      set.center = want;
+      set.radius = r;
+      var nb = set.nb = nearest(set, want);
+      Object.keys(set.bmps).forEach(function (k) { if (!inWindow(set, Number(k))) { closeBitmap(set, k); } });
+      var list = nb >= 0 && Math.abs(nb - want) > r ? [nb] : [];   // nada descargado cerca: el más cercano, para no dejar el lienzo vacío
+      var d;
+      for (d = 0; d <= r; d++) { list.push(want + d * dir); }
+      for (d = 1; d <= r; d++) { list.push(want - d * dir); }
+      for (var n = 0; n < list.length; n++) {
+        /* El primero (el que toca, o el más cercano descargado) no espera turno tras un salto: como mucho uno más. */
+        if (set.decodes >= SCRUB_DECODES + (n === 0 ? 1 : 0)) { break; }
+        var j = list[n];
+        if (j < 0 || j >= set.frames || set.state[j] !== 2 || !set.blobs[j] || set.decoding[j] || set.bmps[j]) { continue; }
+        decode(set, j);
+      }
+    }
+    /* El fotograma con ImageBitmap más cercano a `want` (-1 si no hay ninguno). */
+    function nearestBitmap(set, want) {
+      var best = -1;
+      Object.keys(set.bmps).forEach(function (k) {
+        var j = Number(k);
+        if (best < 0 || Math.abs(j - want) < Math.abs(best - want)) { best = j; }
+      });
+      return best;
+    }
+
+    /* Pinta un fotograma (<img> o ImageBitmap) escalado al lienzo. */
+    function draw(src, iw, ih) {
       var cw = canvas.width;
       var ch = canvas.height;
-      var iw = img.naturalWidth || 1;
-      var ih = img.naturalHeight || 1;
+      iw = iw || 1;
+      ih = ih || 1;
       var contain = s.set.fit === 'contain';
       var k = contain ? Math.min(cw / iw, ch / ih) : Math.max(cw / iw, ch / ih);   // recorte tipo cover (o ajuste)
       var dw = iw * k;
@@ -2446,7 +2616,7 @@
       if (contain) { ctx.clearRect(0, 0, cw, ch); }
       ctx.imageSmoothingEnabled = true;
       if ('imageSmoothingQuality' in ctx) { ctx.imageSmoothingQuality = 'high'; }
-      ctx.drawImage(img, (cw - dw) * fx, (ch - dh) * fy, dw, dh);
+      ctx.drawImage(src, (cw - dw) * fx, (ch - dh) * fy, dw, dh);
     }
 
     /* --- Fotograma y textos para la posición actual --- */
@@ -2456,6 +2626,14 @@
       var run = r.height - stage.offsetHeight;          // recorrido con la escena pegada
       var p = run > 0 ? clamp(-r.top / run, 0, 1) : (r.top < 0 ? 1 : 0);
       s.progress = p;
+      /* El fundido de cada texto son SCRUB_FADE_PX de scroll: en fracción de
+         este recorrido (cambia con el alto de la ventana), como mucho un tercio
+         de su tramo. */
+      if (run !== s.run) {
+        s.run = run;
+        var fp = run > 0 ? SCRUB_FADE_PX / run : 0.1;
+        texts.forEach(function (t) { t.fade = Math.max(0.001, Math.min(t.span / 3, fp)); });
+      }
 
       texts.forEach(function (t) {
         var st = scrubTextState(t, p);
@@ -2473,9 +2651,18 @@
 
       var set = s.set;
       if (!ctx || !set || !set.frames) { return; }
-      var i = nearest(set, Math.round(p * (set.frames - 1)));
-      if (i < 0 || i === s.painted) { return; }
-      draw(set.imgs[i]);
+      var want = Math.round(p * (set.frames - 1));
+      var i;
+      if (s.bitmaps) {
+        prepare(set, want);
+        i = nearestBitmap(set, want);
+        if (i < 0 || i === s.painted) { return; }
+        draw(set.bmps[i], set.bmps[i].width, set.bmps[i].height);
+      } else {
+        i = nearest(set, want);
+        if (i < 0 || i === s.painted) { return; }
+        draw(set.imgs[i], set.imgs[i].naturalWidth, set.imgs[i].naturalHeight);
+      }
       s.painted = i;
       root.setAttribute('data-frame', String(i + 1));
       if (!root.classList.contains('is-painted')) { root.classList.add('is-painted'); }
@@ -2498,8 +2685,10 @@
           t.el.style.transform = '';
           t.el.classList.remove('is-on');
         });
+        if (s.set) { dropBitmaps(s.set); }
         return;
       }
+      if (s.bitmaps === null) { s.bitmaps = scrubBitmaps(); }   // al estrenar la escena (con «reducir movimiento» nunca)
       if (!s.set) { useSet(readSet(wantMobile())); }
       measure();
       update();
@@ -2529,6 +2718,10 @@
           s.active = en.isIntersecting;
           root.classList.toggle('is-active', s.active);
           if (s.active) { scrubSchedule(); }
+          /* Fuera de la vista no hace falta tener fotogramas decodificados (son
+             decenas de MB): el lienzo conserva el último y la ventana se
+             rehace en cuanto la escena vuelve a asomar. */
+          else if (s.set) { dropBitmaps(s.set); }
         });
       });
       vis.observe(root);
@@ -2556,7 +2749,11 @@
     s.measure = measure;
     s.pump = pump;
     s.setMode = setMode;
-    s.destroy = function () { s.observers.forEach(function (o) { safe(function () { o.disconnect(); }); }); s.active = false; };
+    s.destroy = function () {
+      s.observers.forEach(function (o) { safe(function () { o.disconnect(); }); });
+      s.active = false;
+      if (s.set) { dropBitmaps(s.set); }
+    };
 
     root.classList.add('is-ready');
     allScrubs.push(s);
@@ -2583,8 +2780,9 @@
      8 quinquies. Exhibición de color   [data-aura-colorway="idDeProducto"]
      Muestras que cambian la foto del producto con el fundido cruzado de la
      galería (AURA.ui.gallery) y anuncian el nombre del acabado. La foto sale
-     de AURA.catalog.image(producto, color): la propia del color si existe
-     (imageVariants en data.js) y, si no, la base, con la nota «Imagen en …».
+     de AURA.catalog.image(producto, color): la primera vista de ese acabado
+     (photos en data.js) y, si no tiene, la del acabado por defecto, con la
+     nota «Imagen en …».
      Sin id de producto, cada input puede llevar data-slot / data-fallback /
      data-alt. Docs: COMPONENTES.md §8 («Exhibición de color»).
      ------------------------------------------------------------------------ */
@@ -2643,7 +2841,7 @@
         if (!info.exact && info.color) {
           var note = document.createElement('span');
           note.className = 'aura-colorway__note';
-          note.textContent = ' · Imagen en ' + info.color.name;
+          note.textContent = ' · Imagen en ' + info.color.name.toLowerCase();
           nameEl.appendChild(note);
         }
       }
@@ -2694,16 +2892,23 @@
       return;
     }
     if (!revealObserver) {
+      /* Se dispara en cuanto el elemento entra, con un 5 % de margen bajo la
+         ventana: el fundido (aura.css) acompaña al scroll y no deja ver una
+         tarjeta vacía aunque se baje deprisa. (Antes pedía ~190 px dentro:
+         a 1000 px/s se veían hasta 539 px de un elemento sin aparecer.) El
+         umbral [0] y la condición «isIntersecting» van juntos: con [0] solo
+         llega un aviso al entrar, y si la condición pidiera más, no
+         aparecería hasta pasar de largo. */
       revealObserver = new window.IntersectionObserver(function (entries) {
         entries.forEach(function (en) {
           var passed = !en.isIntersecting && en.boundingClientRect.bottom < 0;          // ya quedó por encima
-          var enough = en.isIntersecting && (en.intersectionRatio >= 0.15 || en.intersectionRect.height >= 120);
+          var enough = en.isIntersecting;
           if (passed || enough) {
             en.target.classList.add('is-visible');     // una sola vez
             revealObserver.unobserve(en.target);
           }
         });
-      }, { threshold: [0, 0.05, 0.15], rootMargin: '0px 0px -8% 0px' });
+      }, { threshold: [0], rootMargin: '0px 0px 5% 0px' });
     }
     els.forEach(function (el) { revealObserver.observe(el); });
   }
@@ -2792,8 +2997,9 @@
       '<div class="aura-table-wrap" role="region" aria-labelledby="' + id + '" tabindex="0">' +
         '<table class="aura-table">' +
           '<caption class="visually-hidden">' + esc(caption) + '</caption>' +
+          /* La última palabra del nombre va pegada a la anterior: nunca «Max» o «13″» solos en su línea. */
           '<thead><tr><th scope="col">Característica</th>' +
-            products.map(function (p, i) { return '<th scope="col"' + featured(i) + '>' + esc(p.name) + '</th>'; }).join('') +
+            products.map(function (p, i) { return '<th scope="col"' + featured(i) + '>' + esc(p.name).replace(/ (\S+)$/, '&nbsp;$1') + '</th>'; }).join('') +
           '</tr></thead>' +
           '<tbody>' + rows +
             '<tr class="aura-table__row--actions"><th scope="row"><span class="visually-hidden">Comprar</span></th>' +
@@ -3510,30 +3716,41 @@
      - fundido en los bordes de sus enlaces cuando desbordan en horizontal, para
        que se vea que hay más secciones (.has-more-start / .has-more-end);
      - marca la sección que cruza el centro de la pantalla. */
-  /* En el teléfono (< 768 px) los enlaces de la barra local no caben junto al
-     título y «Comprar»: un chevrón los despliega en un menú bajo la barra (como
-     en la referencia). Esc, un enlace, un toque fuera o pasar a ≥ 768 px lo
-     cierran; el foco vuelve al chevrón. */
-  var LOCALNAV_MENU = '(max-width: 767.98px)';
+  /* Mientras los enlaces de la barra local no caben junto al título y
+     «Comprar» (el teléfono y la tableta: el ancho lo decide aura.css), un
+     chevrón los despliega en un menú bajo la barra (como en la referencia).
+     Esc, un enlace, un toque fuera o ensanchar la ventana hasta que el
+     chevrón desaparece lo cierran; el foco vuelve al chevrón.
+     La barra llega del HTML con .has-menu y su chevrón (las familias, acerca
+     y soporte): así se pinta ya plegada y no salta al cargar. Aquí solo se
+     enganchan los eventos; si el HTML no los trae, se crean. */
   function initLocalnavMenu(nav) {
     var strip = nav.querySelector('.aura-localnav__links');
     var inner = nav.querySelector('.aura-localnav__inner');
-    if (!strip || !inner || nav.querySelector('.aura-localnav__toggle')) { return; }
+    if (!strip || !inner || nav._auraLocalnavMenu) { return; }
+    nav._auraLocalnavMenu = true;
     if (!strip.id) { strip.id = 'aura-localnav-' + Math.random().toString(36).slice(2, 8); }
     var name = nav.getAttribute('aria-label') || '';
-    var toggle = document.createElement('button');
-    toggle.type = 'button';
-    toggle.className = 'aura-localnav__toggle';
-    toggle.setAttribute('aria-expanded', 'false');
+    var toggle = nav.querySelector('.aura-localnav__toggle');
+    if (!toggle) {
+      toggle = document.createElement('button');
+      toggle.type = 'button';
+      toggle.className = 'aura-localnav__toggle';
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', name ? 'Secciones de ' + name : 'Secciones');
+      toggle.innerHTML = '<i class="bi bi-chevron-down" aria-hidden="true"></i>';
+      inner.insertBefore(toggle, strip);
+    }
     toggle.setAttribute('aria-controls', strip.id);
-    toggle.setAttribute('aria-label', name ? 'Secciones de ' + name : 'Secciones');
-    toggle.innerHTML = '<i class="bi bi-chevron-down" aria-hidden="true"></i>';
-    inner.insertBefore(toggle, strip);
     nav.classList.add('has-menu');
-    var mq = window.matchMedia ? window.matchMedia(LOCALNAV_MENU) : null;
 
+    /* El menú existe mientras se ve el chevrón (lo muestra el CSS según el ancho). */
+    function menuShown() {
+      var cs = safe(function () { return window.getComputedStyle(toggle); });
+      return !cs || cs.display !== 'none';
+    }
     function setOpen(open, focusBack) {
-      if (open && mq && !mq.matches) { open = false; }
+      if (open && !menuShown()) { open = false; }
       nav.classList.toggle('is-open', open);
       toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
       if (!open && focusBack) { focusEl(toggle); }
@@ -3551,16 +3768,17 @@
     nav.addEventListener('focusout', function (e) {
       if (nav.classList.contains('is-open') && e.relatedTarget && !nav.contains(e.relatedTarget)) { setOpen(false); }
     });
-    if (mq) {
-      var onChange = function () { if (!mq.matches) { setOpen(false); } };
-      if (mq.addEventListener) { mq.addEventListener('change', onChange); } else if (mq.addListener) { mq.addListener(onChange); }
-    }
+    window.addEventListener('resize', function () {
+      if (nav.classList.contains('is-open') && !menuShown()) { setOpen(false); }
+    });
   }
 
   function initLocalnav(nav) {
-    if (!nav || nav._auraLocalnav || typeof window.IntersectionObserver !== 'function') { return; }
-    nav._auraLocalnav = true;
+    if (!nav || nav._auraLocalnav) { return; }
+    /* El menú no depende de IntersectionObserver: el chevrón del HTML funciona siempre. */
     safe(function () { initLocalnavMenu(nav); });
+    if (typeof window.IntersectionObserver !== 'function') { return; }
+    nav._auraLocalnav = true;
 
     /* Pegada = su borde superior toca el de la ventana (con 1 px de margen negativo deja de verse entera). */
     new window.IntersectionObserver(function (entries) {

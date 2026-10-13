@@ -35,7 +35,7 @@
 
   <!-- Iconos: favicon (ICO y PNG), icono de la pantalla de inicio y manifiesto de la aplicación web -->
   <link rel="icon" href="../favicon.ico" sizes="any">
-  <link rel="icon" type="image/png" href="../img/aura.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="../img/icon-192.png">
   <link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
   <link rel="manifest" href="../site.webmanifest">
   <!-- Manifiesto: por file:// (doble clic) el navegador lo bloquearía por CORS con un error en la consola, así que ahí se retira -->
@@ -66,12 +66,14 @@
 
     <!-- ================= Barra local =================
          Segundo <nav>, con nombre propio (aria-label): salta a los capítulos de esta página y lleva a comprar.
-         aura-ui.js la fija arriba al desplazarse (en el teléfono, los enlaces se pliegan en un menú); el «Comprar»
-         corto lleva al modelo de entrada (data-aura-buy) y completa su nombre (aria-label). -->
-    <nav class="aura-localnav" aria-label="auraPods" data-aura-localnav>
+         aura-ui.js la fija arriba al desplazarse; el «Comprar» corto lleva al modelo de entrada (data-aura-buy) y
+         completa su nombre (aria-label). Llega ya plegable (.has-menu y el chevrón en el HTML, sin salto al
+         cargar): mientras los enlaces no caben (teléfono y tableta), el chevrón los despliega en un menú. -->
+    <nav class="aura-localnav has-menu" aria-label="auraPods" data-aura-localnav>
       <div class="aura-container aura-localnav__inner">
         <a class="aura-localnav__title" href="aurapods.html">auraPods</a>
-        <div class="aura-localnav__links">
+        <button type="button" class="aura-localnav__toggle" aria-expanded="false" aria-controls="localnav-secciones" aria-label="Secciones de auraPods"><i class="bi bi-chevron-down" aria-hidden="true"></i></button>
+        <div class="aura-localnav__links" id="localnav-secciones">
           <a class="aura-localnav__link" href="#modelos">Modelos</a>
           <a class="aura-localnav__link" href="#cancelacion">Cancelación</a>
           <a class="aura-localnav__link" href="#audio">Audio</a>
@@ -93,8 +95,10 @@
          tramos que no se solapan. El primer texto lleva el único <h1> de la página (la escena hace de héroe).
          «contain»: el fotograma entero, con su fondo negro fundido con el escenario.
          Póster: <picture> elige el fotograma 1 para la escena (lo primero que pinta el lienzo) y el 26 (los
-         auriculares enteros, ya iluminados) para la versión estática («reducir movimiento»), con m/ en el teléfono. -->
-    <section class="aura-scrub aurapods-escena" id="descripcion" data-aura-scrub data-seq="../img/seq/aurapods-intro" data-frames="96" data-width="1600" data-height="900" data-mobile="true" data-mobile-frames="56" data-length="380" data-fit="contain" data-mobile-fit="contain" aria-labelledby="hero-titulo">
+         auriculares enteros, ya iluminados) para la versión estática («reducir movimiento»), con m/ en el teléfono.
+         Ritmo (COMPONENTES.md §10 bis): 340 de largo (2,4 pantallas pegada) y tres tramos con 150 px de fundido a
+         cada lado; la cifra del tramo 2 se lee entera unos 500 px de scroll (5 muescas de rueda, 2 arrastres). -->
+    <section class="aura-scrub aurapods-escena" id="descripcion" data-aura-scrub data-seq="../img/seq/aurapods-intro" data-frames="96" data-width="1600" data-height="900" data-mobile="true" data-mobile-frames="56" data-length="340" data-fit="contain" data-mobile-fit="contain" aria-labelledby="hero-titulo">
       <div class="aura-scrub__stage">
         <picture>
           <source media="(prefers-reduced-motion: reduce) and (max-width: 767.98px)" srcset="../img/seq/aurapods-intro/m/f-0016.webp" width="750" height="1100">
@@ -116,14 +120,14 @@
         </div>
 
         <!-- Tramo 2 (la luz cruza el aluminio): la cifra de la cancelación de ruido, en la columna izquierda (zona tranquila) -->
-        <div class="aura-scrub__text" data-from="0.3" data-to="0.62" data-pos="left">
+        <div class="aura-scrub__text" data-from="0.3" data-to="0.67" data-pos="left">
           <p class="aura-eyebrow aura-eyebrow--lg">auraPods Max 2</p>
           <h2 class="aura-h1">Hasta 1,5&nbsp;veces más&nbsp;silencio.</h2>
           <p class="aura-body">Nueve micrófonos y el chip AURA&nbsp;H2 apagan el ruido de fuera con más fuerza que la generación anterior. El metro, la oficina o el avión se quedan al otro lado.</p>
         </div>
 
         <!-- Tramo 3 (primer plano de la orejera): audio sin pérdida, autonomía y precio del catálogo; se queda hasta que la escena se va -->
-        <div class="aura-scrub__text" data-from="0.66" data-to="1" data-pos="left" data-pods-product="aurapods-max-2">
+        <div class="aura-scrub__text" data-from="0.72" data-to="1" data-pos="left" data-pods-product="aurapods-max-2">
           <h2 class="aura-h2 aurapods-frases"><span>Sin pérdida.</span> <span>Sin&nbsp;esperas.</span></h2>
           <p class="aura-body">Con el cable USB-C, audio sin pérdida y latencia ultrabaja. Y hasta <span data-pods="hours">20</span>&nbsp;horas con la cancelación de ruido activada.</p>
           <p class="aura-price" data-pods="from" hidden></p>
@@ -164,7 +168,7 @@
             <ul class="aura-stats aura-stats--lg aurapods-stats-lg" data-pods-list="cancelacion" hidden></ul>
           </div>
           <div class="aura-split__media aura-media aura-media--halo">
-            <img class="aura-img" src="../img/aurapods-cancelacion.webp" data-slot="aurapods-cancelacion" width="1600" height="1200" alt="Dos auriculares blancos con almohadilla, de tallo largo, sobre una superficie de cuero negro" loading="lazy" decoding="async" data-aura-reveal="scale">
+            <img class="aura-img" src="../img/aurapods-cancelacion.webp" srcset="../img/400/aurapods-cancelacion.webp 400w, ../img/800/aurapods-cancelacion.webp 800w, ../img/aurapods-cancelacion.webp 1600w" sizes="auto, (max-width: 991.98px) 88vw, (max-width: 1199.98px) 42vw, 532px" data-slot="aurapods-cancelacion" width="1600" height="1200" alt="Dos auriculares blancos con almohadilla, de tallo largo, sobre una superficie de cuero negro" loading="lazy" decoding="async" data-aura-reveal="scale">
           </div>
         </div>
       </div>
@@ -198,7 +202,7 @@
             </div>
           </div>
           <div class="aura-split__media aura-media aura-media--halo">
-            <img class="aura-img" src="../img/aurapods-audio.webp" data-slot="aurapods-audio" width="1600" height="1200" alt="De cerca, las orejeras de aluminio y las almohadillas de malla de unos auraPods Max 2 en color medianoche, sobre fondo negro" loading="lazy" decoding="async" data-aura-reveal="scale">
+            <img class="aura-img" src="../img/aurapods-audio.webp" srcset="../img/400/aurapods-audio.webp 400w, ../img/800/aurapods-audio.webp 800w, ../img/aurapods-audio.webp 1600w" sizes="auto, (max-width: 991.98px) 88vw, (max-width: 1199.98px) 42vw, 532px" data-slot="aurapods-audio" width="1600" height="1200" alt="De cerca, las orejeras de aluminio y las almohadillas de malla de unos auraPods Max 2 en color medianoche, sobre fondo negro" loading="lazy" decoding="async" data-aura-reveal="scale">
           </div>
         </div>
       </div>
@@ -265,8 +269,8 @@
         </header>
 
         <div class="aura-colorway aurapods-colores" data-aura-colorway="aurapods-max-2" data-color="medianoche">
-          <div class="aura-gallery">
-            <img class="aura-img" src="../img/aurapods-max-2.webp" data-slot="aurapods-max-2" width="1600" height="1200" alt="auraPods Max 2 en color medianoche, en tres cuartos sobre una superficie negra brillante: diadema con malla, orejeras de aluminio y su reflejo" loading="lazy" decoding="async">
+          <div class="aura-gallery" data-sizes="(min-width: 1024px) 704px, 80vw">
+            <img class="aura-img" src="../img/aurapods-max-2-medianoche-tres-cuartos.webp" srcset="../img/400/aurapods-max-2-medianoche-tres-cuartos.webp 400w, ../img/800/aurapods-max-2-medianoche-tres-cuartos.webp 800w, ../img/aurapods-max-2-medianoche-tres-cuartos.webp 1600w" sizes="auto, (min-width: 1024px) 704px, 80vw" data-slot="aurapods-max-2-medianoche-tres-cuartos" data-fallback="aurapods-max-2" width="1600" height="1200" alt="auraPods Max 2 medianoche en tres cuartos, con una orejera vista por fuera y la otra por el lado de la almohadilla, sobre fondo negro" loading="lazy" decoding="async">
           </div>
           <fieldset class="aura-colorway__picker">
             <legend class="visually-hidden">Acabados de los auraPods Max 2</legend>
@@ -299,7 +303,7 @@
             </div>
           </div>
           <div class="aura-split__media aura-media aura-media--halo">
-            <img class="aura-img" src="../img/aurapods-5.webp" data-slot="aurapods-5" width="1600" height="1200" alt="auraPods 5 blancos sobre fondo negro: el estuche de carga abierto, con los dos auriculares sin almohadilla dentro" loading="lazy" decoding="async" data-aura-reveal="scale">
+            <img class="aura-img" src="../img/aurapods-5-blanco-estuche-abierto.webp" srcset="../img/400/aurapods-5-blanco-estuche-abierto.webp 400w, ../img/800/aurapods-5-blanco-estuche-abierto.webp 800w, ../img/aurapods-5-blanco-estuche-abierto.webp 1600w" sizes="auto, (max-width: 991.98px) 88vw, (max-width: 1199.98px) 42vw, 532px" data-slot="aurapods-5-blanco-estuche-abierto" width="1600" height="1200" alt="Estuche de carga de los auraPods 5 abierto, con los dos auriculares sin almohadilla dentro, sobre fondo negro" loading="lazy" decoding="async" data-aura-reveal="scale">
           </div>
         </div>
       </div>
@@ -311,7 +315,7 @@
       <div class="aura-container">
         <div class="aura-split">
           <div class="aura-split__copy aurapods-copy">
-            <p class="aura-eyebrow aura-eyebrow--lg">auraPods Max 2</p>
+            <p class="aura-eyebrow aura-eyebrow--mono">auraPods Max 2</p>
             <h2 class="aura-h1 aurapods-frases" id="max-titulo"><span>Todo el estudio.</span> <span>En tu&nbsp;cabeza.</span></h2>
             <p class="aura-body">Orejeras de aluminio anodizado, una diadema de malla trenzada que reparte el peso y almohadillas de espuma viscoelástica que se adaptan a ti. La Digital Crown sube el volumen y el botón de control de ruido cambia de modo con un toque.</p>
             <ul class="aura-stats aura-stats--lg aurapods-stats-lg">
@@ -335,7 +339,7 @@
             </div>
           </div>
           <div class="aura-split__media aura-media aura-media--halo">
-            <img class="aura-img" src="../img/aurapods-max.webp" data-slot="aurapods-max" width="1600" height="1200" alt="auraPods Max 2 en color medianoche, en tres cuartos sobre una superficie negra brillante, con la Digital Crown en la orejera" loading="lazy" decoding="async" data-aura-reveal="scale">
+            <img class="aura-img" src="../img/aurapods-max.webp" srcset="../img/400/aurapods-max.webp 400w, ../img/800/aurapods-max.webp 800w, ../img/aurapods-max.webp 1600w" sizes="auto, (max-width: 991.98px) 88vw, (max-width: 1199.98px) 42vw, 532px" data-slot="aurapods-max" width="1600" height="1200" alt="auraPods Max 2 en color medianoche, en tres cuartos sobre una superficie negra brillante, con la Digital Crown en la orejera" loading="lazy" decoding="async" data-aura-reveal="scale">
           </div>
         </div>
       </div>
@@ -369,7 +373,7 @@
             </div>
           </div>
           <div class="aura-split__media aura-media aura-media--halo">
-            <img class="aura-img" src="../img/aurapods-ecosistema.webp" data-slot="aurapods-ecosistema" width="1600" height="1200" alt="Unos auriculares de diadema negros en penumbra, con un auraPhone detrás que reproduce una canción" loading="lazy" decoding="async" data-aura-reveal="scale">
+            <img class="aura-img" src="../img/aurapods-ecosistema.webp" srcset="../img/400/aurapods-ecosistema.webp 400w, ../img/800/aurapods-ecosistema.webp 800w, ../img/aurapods-ecosistema.webp 1600w" sizes="auto, (max-width: 991.98px) 88vw, (max-width: 1199.98px) 42vw, 532px" data-slot="aurapods-ecosistema" width="1600" height="1200" alt="Unos auriculares de diadema negros en penumbra, con un auraPhone detrás que reproduce una canción" loading="lazy" decoding="async" data-aura-reveal="scale">
           </div>
         </div>
       </div>
@@ -391,7 +395,7 @@
               <h3 class="aura-h3">Los guarda. Y los pone a&nbsp;dormir.</h3>
               <p class="aura-tile__text">Al meter los auraPods Max&nbsp;2 en su funda pasan a un modo de reposo que apenas gasta batería.</p>
             </div>
-            <div class="aura-tile__media aura-tile__media--blend"><img class="aura-img" src="../img/aurapods-max-2-azul.webp" data-slot="aurapods-max-2-azul" width="1600" height="1200" alt="auraPods Max 2 azules vistos desde arriba sobre fondo negro, con las orejeras dentro de su funda Smart Case" loading="lazy" decoding="async"></div>
+            <div class="aura-tile__media aura-tile__media--blend"><img class="aura-img" src="../img/aurapods-max-2-medianoche-trasera.webp" srcset="../img/400/aurapods-max-2-medianoche-trasera.webp 400w, ../img/800/aurapods-max-2-medianoche-trasera.webp 800w, ../img/aurapods-max-2-medianoche-trasera.webp 1600w" sizes="auto, (max-width: 767.98px) 80vw, (max-width: 1199.98px) 40vw, 522px" data-slot="aurapods-max-2-medianoche-trasera" width="1600" height="1200" alt="auraPods Max 2 medianoche de pie, vistos por el lado de las almohadillas de malla, sobre fondo negro" loading="lazy" decoding="async"></div>
           </article>
           <article class="aura-tile aura-tile--media-fit" data-aura-reveal style="--i:1">
             <div class="aura-tile__copy">
@@ -399,7 +403,7 @@
               <h3 class="aura-h3">Cinco tallas, de la XXS a la&nbsp;L.</h3>
               <p class="aura-tile__text">Los auraPods Pro&nbsp;3 vienen con las cinco, y la prueba de ajuste te dice cuál sella mejor tu&nbsp;oído.</p>
             </div>
-            <div class="aura-tile__media aura-tile__media--blend"><img class="aura-img" src="../img/aurapods-pro-3.webp" data-slot="aurapods-pro-3" width="1600" height="1200" alt="auraPods Pro 3 blancos sobre fondo negro: los dos auriculares con almohadilla junto al estuche de carga cerrado" loading="lazy" decoding="async"></div>
+            <div class="aura-tile__media aura-tile__media--blend"><img class="aura-img" src="../img/aurapods-pro-3-blanco-auriculares.webp" srcset="../img/400/aurapods-pro-3-blanco-auriculares.webp 400w, ../img/800/aurapods-pro-3-blanco-auriculares.webp 800w, ../img/aurapods-pro-3-blanco-auriculares.webp 1600w" sizes="auto, (max-width: 767.98px) 80vw, (max-width: 1199.98px) 40vw, 522px" data-slot="aurapods-pro-3-blanco-auriculares" width="1600" height="1200" alt="Los dos auraPods Pro 3 blancos fuera del estuche, uno frente a otro con sus almohadillas, sobre fondo negro" loading="lazy" decoding="async"></div>
           </article>
         </div>
       </div>

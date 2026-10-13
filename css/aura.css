@@ -1,7 +1,9 @@
 @charset "UTF-8";
 /* ==========================================================================
-   AURA — Sistema de diseño (v1.3)
+   AURA — Sistema de diseño (v2.0)
    Hoja única. Se carga DESPUÉS de Bootstrap 5.3 y de Bootstrap Icons.
+   Manda la guía v2; después, los prototipos; después, la v1. Cada desviación
+   de la v1 está anotada en la guía v2.
 
    Índice
      1. Tokens
@@ -36,6 +38,29 @@
    1. TOKENS
    ========================================================================== */
 
+/* Fuentes de reserva. Inter y Kanit llegan de Google Fonts con display=swap:
+   hasta entonces se pinta con una fuente del sistema, y al cambiar los textos
+   se ensanchaban o estrechaban y la página saltaba (≈ 0,17 de CLS a 390 en
+   comprar). Cada reserva es una fuente local (Segoe UI en Windows; si no
+   está, Arial) escalada para que ocupe lo mismo que la web: size-adjust =
+   ancho de un texto real en la fuente web ÷ en la local, al mismo tamaño y
+   peso (Inter a 16 px, con su tamaño óptico), y ascenso y descenso de la web
+   (Inter 96,9 / 24,1 %; Kanit 110 / 40 %) divididos por ese factor. Un tramo
+   de pesos por cara: así no se sintetiza la negrita y cada peso conserva su
+   ancho. Se usan en --font-ui y --font-display. */
+@font-face { font-family: "AURA Inter reserva Segoe"; src: local("Segoe UI"), local("SegoeUI"); font-weight: 100 449; font-display: swap; size-adjust: 106.62%; ascent-override: 90.86%; descent-override: 22.62%; line-gap-override: 0%; }
+@font-face { font-family: "AURA Inter reserva Segoe"; src: local("Segoe UI Semibold"), local("SegoeUI-Semibold"); font-weight: 450 549; font-display: swap; size-adjust: 105.02%; ascent-override: 92.24%; descent-override: 22.97%; line-gap-override: 0%; }
+@font-face { font-family: "AURA Inter reserva Segoe"; src: local("Segoe UI Semibold"), local("SegoeUI-Semibold"); font-weight: 550 649; font-display: swap; size-adjust: 105.96%; ascent-override: 91.43%; descent-override: 22.76%; line-gap-override: 0%; }
+@font-face { font-family: "AURA Inter reserva Segoe"; src: local("Segoe UI Bold"), local("SegoeUI-Bold"); font-weight: 650 900; font-display: swap; size-adjust: 102.83%; ascent-override: 94.21%; descent-override: 23.46%; line-gap-override: 0%; }
+@font-face { font-family: "AURA Inter reserva Arial"; src: local("Arial"), local("ArialMT"); font-weight: 100 449; font-display: swap; size-adjust: 104.07%; ascent-override: 93.09%; descent-override: 23.18%; line-gap-override: 0%; }
+@font-face { font-family: "AURA Inter reserva Arial"; src: local("Arial"), local("ArialMT"); font-weight: 450 549; font-display: swap; size-adjust: 104.98%; ascent-override: 92.28%; descent-override: 22.98%; line-gap-override: 0%; }
+@font-face { font-family: "AURA Inter reserva Arial"; src: local("Arial Bold"), local("Arial-BoldMT"); font-weight: 550 649; font-display: swap; size-adjust: 100.06%; ascent-override: 96.82%; descent-override: 24.11%; line-gap-override: 0%; }
+@font-face { font-family: "AURA Inter reserva Arial"; src: local("Arial Bold"), local("Arial-BoldMT"); font-weight: 650 900; font-display: swap; size-adjust: 100.93%; ascent-override: 95.98%; descent-override: 23.90%; line-gap-override: 0%; }
+@font-face { font-family: "AURA Kanit reserva Segoe"; src: local("Segoe UI Semibold"), local("SegoeUI-Semibold"); font-weight: 100 549; font-display: swap; size-adjust: 98.15%; ascent-override: 112.07%; descent-override: 40.75%; line-gap-override: 0%; }
+@font-face { font-family: "AURA Kanit reserva Segoe"; src: local("Segoe UI Semibold"), local("SegoeUI-Semibold"); font-weight: 550 900; font-display: swap; size-adjust: 99.46%; ascent-override: 110.60%; descent-override: 40.22%; line-gap-override: 0%; }
+@font-face { font-family: "AURA Kanit reserva Arial"; src: local("Arial"), local("ArialMT"); font-weight: 100 549; font-display: swap; size-adjust: 97.27%; ascent-override: 113.09%; descent-override: 41.12%; line-gap-override: 0%; }
+@font-face { font-family: "AURA Kanit reserva Arial"; src: local("Arial Bold"), local("Arial-BoldMT"); font-weight: 550 900; font-display: swap; size-adjust: 92.95%; ascent-override: 118.34%; descent-override: 43.03%; line-gap-override: 0%; }
+
 :root,
 [data-bs-theme="dark"] {
   color-scheme: dark;
@@ -49,8 +74,9 @@
 
   --accent: #0071e3;
   --accent-hover: #0074e8;            /* más luminoso y aún AA con texto blanco */
-  --accent-link: #2997ff;             /* azul para TEXTO sobre negro (6,9:1) */
-  --accent-bright: #1787f7;           /* hover de la guía §03: solo trazos (borde del secundario), nunca relleno con texto blanco */
+  --accent-link: #1787f7;             /* azul para TEXTO (el de la v1 y del prototipo de Inicio): 5,85:1 sobre negro, 5,03:1 sobre tarjeta */
+  --accent-link-hover: #4aa3ff;       /* hover del texto azul: más luminoso (7,97:1 sobre negro; 5,5:1 aun con el tinte --accent-soft encima de una tarjeta) */
+  --accent-bright: #1787f7;           /* hover de la guía §03: solo trazos (borde del secundario), nunca relleno con texto blanco. Hoy coincide con --accent-link */
   --accent-soft: rgba(0, 113, 227, .16);
   --accent-ring: rgba(0, 113, 227, .4);
   --gold: #e5a93c;
@@ -66,6 +92,7 @@
   --hairline-strong: rgba(255, 255, 255, .18);
   --edge-light: rgba(255, 255, 255, .16);   /* borde superior: la luz toca el material */
   --field-border: rgba(255, 255, 255, .36); /* límite de controles: ≥ 3:1 incluso sobre negro (3,13:1) */
+  --field-border-hover: rgba(255, 255, 255, .5); /* el mismo límite al pasar el ratón (campos y tarjetas-opción) */
 
   --fill-1: rgba(255, 255, 255, .04);
   --fill-2: rgba(255, 255, 255, .08);
@@ -101,6 +128,7 @@
        regular  → popover, barra global, barra local
        grueso   → hoja, buscador, menú móvil, barra de compra */
   --glass-nav-bg: rgba(0, 0, 0, .72);       /* la barra global es negra, con el filtro regular */
+  --glass-nav-thick-bg: rgba(0, 0, 0, .86); /* el menú móvil: negro como la barra, con el filtro grueso */
   --glass-thin-bg: rgba(29, 29, 31, .72);
   --glass-regular-bg: rgba(22, 22, 23, .74);
   --glass-thick-bg: rgba(22, 22, 23, .88);
@@ -119,6 +147,7 @@
 
   /* Radios (medidos en los prototipos: 20 px en superficies grandes, 12 px en
      tarjetas pequeñas y en la tabla) */
+  --radius-2xs: .375rem;              /*  6 px · solo casillas de verificación (20 px de lado) */
   --radius-xs: .5rem;                 /*  8 px · etiquetas, filas de lista */
   --radius-sm: .75rem;                /* 12 px · campos, tabla, tarjetas pequeñas y de cifra */
   --radius-md: 1rem;                  /* 16 px · opciones, notas, avisos, miniaturas */
@@ -130,11 +159,13 @@
   --shadow-1: 0 1px 2px rgba(0, 0, 0, .5);
   --shadow-2: 0 14px 36px -10px rgba(0, 0, 0, .7), 0 2px 8px rgba(0, 0, 0, .4);
   --shadow-3: 0 36px 90px -16px rgba(0, 0, 0, .85), 0 10px 28px rgba(0, 0, 0, .55);
-  --glow-accent: 0 0 0 1px rgba(41, 151, 255, .22), 0 10px 30px -6px rgba(0, 113, 227, .85);
+  --glow-accent: 0 0 0 1px rgba(23, 135, 247, .22), 0 10px 30px -6px rgba(0, 113, 227, .85);
 
-  /* Tipografía */
-  --font-display: "Kanit", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-ui: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  /* Tipografía. Detrás de cada fuente web, su reserva con métricas ajustadas
+     (ver «Fuentes de reserva», arriba): mientras llegan Inter y Kanit el texto
+     ya ocupa lo mismo y no salta al cambiar. */
+  --font-display: "Kanit", "AURA Kanit reserva Segoe", "AURA Kanit reserva Arial", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-ui: "Inter", "AURA Inter reserva Segoe", "AURA Inter reserva Arial", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
 
   /* Medidas */
@@ -145,6 +176,10 @@
   --gutter: clamp(1.25rem, 4vw, 2.5rem);
   --container: 73.75rem;              /* 1180 px de contenido */
   --gap: 1.25rem;
+  /* Ritmo vertical de las páginas de familia: entre bloques de una misma
+     sección (56 → 104 px) y antes de una fila de cifras (40 → 64 px). */
+  --space-block: clamp(3.5rem, 8vw, 6.5rem);
+  --space-stats: clamp(2.5rem, 5vw, 4rem);
 
   /* Movimiento */
   --ease-out: cubic-bezier(.2, .8, .2, 1);     /* entrada */
@@ -153,6 +188,10 @@
   --dur-1: 160ms;
   --dur-2: 240ms;
   --dur-3: 560ms;
+  --dur-check: 120ms;                 /* la marca de la casilla y del radio */
+  --dur-rm: 150ms;                    /* fundidos de los overlays con «reducir movimiento» */
+  --dur-exit: 200ms;                  /* salida de popover, aviso, buscador y menú, y fundido corto: galería, entrada de aviso y buscador, y con «reducir movimiento» apariciones, hoja y barra de compra */
+  --dur-enter: 320ms;                 /* desplazamiento de entrada de aviso, buscador y menú */
 
   /* Capas */
   --z-localnav: 1020;
@@ -196,9 +235,9 @@
   --bs-primary: var(--accent);
   --bs-primary-rgb: 0, 113, 227;
   --bs-link-color: var(--accent-link);
-  --bs-link-color-rgb: 41, 151, 255;
-  --bs-link-hover-color: #5ab0ff;
-  --bs-link-hover-color-rgb: 90, 176, 255;
+  --bs-link-color-rgb: 23, 135, 247;
+  --bs-link-hover-color: var(--accent-link-hover);
+  --bs-link-hover-color-rgb: 74, 163, 255;
   --bs-link-decoration: none;
   --bs-border-color: var(--hairline);
   --bs-border-color-translucent: var(--hairline);
@@ -223,6 +262,11 @@ html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   scroll-padding-top: calc(var(--sticky-top) + 1.5rem);
+  /* Bootstrap anima todos los saltos (scroll-behavior: smooth): las anclas
+     tardaban 0,7–1,5 s y los scrollBy encadenados se quedaban en un tercio
+     del recorrido. Aquí los saltos son inmediatos; el JS que quiera un
+     desplazamiento suave lo pide en la llamada (behavior: 'smooth'). */
+  scroll-behavior: auto;
   scrollbar-gutter: stable;
   background: var(--bg-main);
 }
@@ -326,8 +370,10 @@ hr {
    (temario DIW: toda tabla lleva caption). Bootstrap lo oculta a la vista sin
    sacarlo del árbol de accesibilidad (nunca display: none) y lo deja como
    caption (sin position: absolute), pero su margen de -1px por los cuatro
-   lados subiría la tabla 1px: aquí el caption ocupa exactamente 0px. */
-caption.visually-hidden { margin: 0 0 -1px !important; }
+   lados subiría la tabla 1px: aquí el caption no empuja la tabla. Va arriba
+   (caption-side: top): abajo, su caja de 1px sobresalía por debajo de la
+   tabla y el contenedor con desplazamiento horizontal podía bajar 1px. */
+caption.visually-hidden { margin: 0 0 -1px !important; caption-side: top; }
 
 
 /* ==========================================================================
@@ -395,9 +441,12 @@ h1, h2, h3, h4, h5, h6,
   .aura-h2 { letter-spacing: -.01em; }
 }
 
+/* Medida de línea: un «ch» es el ancho del «0» de Inter (≈ 0,63 em) y un
+   carácter medio de un texto en español, ≈ 0,48 em. Por eso 44ch dan los 56
+   caracteres de la guía en la entradilla, y 53ch los 68 del cuerpo. */
 .aura-lead {                            /* 17 → 21 px */
   margin: 0;
-  max-width: min(56ch, 100%);
+  max-width: min(44ch, 100%);
   font-size: clamp(1.0625rem, 1rem + .4vw, 1.3125rem);
   line-height: 1.5;
   letter-spacing: -.003em;
@@ -407,7 +456,7 @@ h1, h2, h3, h4, h5, h6,
 
 .aura-body {                            /* 16 px */
   margin: 0;
-  max-width: min(68ch, 100%);
+  max-width: min(53ch, 100%);
   font-size: 1rem;
   line-height: 1.6;
   letter-spacing: 0;
@@ -424,6 +473,12 @@ h1, h2, h3, h4, h5, h6,
   text-wrap: pretty;
 }
 .aura-caption--muted { color: var(--text-tertiary); }
+.aura-small {                           /* texto de componente: Inter 14 / 1,5 (el de tarjetas y características, para un texto suelto) */
+  margin: 0;
+  font-size: .875rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
 
 .aura-eyebrow {                         /* 12 px · Inter 650 */
   display: inline-flex;
@@ -506,7 +561,7 @@ h1, h2, h3, h4, h5, h6,
 
 /* Texto largo (legal, historia…): ritmo vertical y longitud de línea cómoda */
 .aura-prose {
-  max-width: 68ch;
+  max-width: 53ch;                      /* ≈ 68 caracteres (ver .aura-lead) */
   color: var(--text-secondary);
   line-height: 1.7;
 }
@@ -545,10 +600,11 @@ h1, h2, h3, h4, h5, h6,
 /* Textos de varias líneas de los componentes: sin una palabra sola en la
    última línea (text-wrap: pretty). Donde el navegador no lo evite en un
    texto corto de tarjeta, el autor pega las dos últimas palabras con &nbsp;. */
-:is(.aura-tile__text, .aura-feature__text, .aura-product-card__text, .aura-timeline__text,
+:is(.aura-small, .aura-tile__text, .aura-feature__text, .aura-product-card__text, .aura-timeline__text,
   .aura-note__text, .aura-empty__text, .aura-alert__text, .aura-check__label, .aura-auth-card__legal,
   .aura-bag-line__care-text, .aura-option__note, .aura-field__help, .aura-stat__label,
-  .aura-quote__cite, .aura-media__caption, .aura-accordion__panel p, .aura-accordion__panel li) {
+  .aura-quote__cite, .aura-media__caption, .aura-accordion__panel p, .aura-accordion__panel li,
+  .aura-footer__tagline, .aura-footer__copy, .aura-footer__demo) {
   text-wrap: pretty;
 }
 
@@ -720,15 +776,18 @@ h1, h2, h3, h4, h5, h6,
 }
 .aura-grid--auto { grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); }
 /* Umbrales en em (skill §15): con el tamaño de texto normal son 576, 768 y
-   992 px; si el usuario sube el texto, crecen con él y las columnas se
-   reparten antes de que un titular («Increíblemente») no quepa en la suya. */
+   1200 px; si el usuario sube el texto, crecen con él y las columnas se
+   reparten antes de que un titular («Increíblemente») no quepa en la suya.
+   La de cuatro va en 2 × 2 hasta 1200 px (como .aura-perks): a 1024, cuatro
+   columnas de 217 px partían los titulares en 3–4 líneas. La de tres no baja
+   a dos (dejaría una tarjeta sola). */
 @media (min-width: 36em) {
   .aura-grid--2, .aura-grid--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (min-width: 48em) {
   .aura-grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
-@media (min-width: 62em) {
+@media (min-width: 75em) {
   .aura-grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
 
@@ -994,7 +1053,7 @@ body:has(.aura-localnav) .aura-nav::after { display: none; }
    líneas según el ancho): aura-core.js lo mide y lo escribe en <html>; estos
    valores son solo la estimación hasta que llega. */
 html:has(.aura-ribbon) { --ribbon-h: 2.6875rem; }
-@media (min-width: 768px) and (max-width: 1023.98px) {
+@media (max-width: 575.98px), (min-width: 768px) and (max-width: 1023.98px) {
   html:has(.aura-ribbon) { --ribbon-h: 3.875rem; }
 }
 .aura-ribbon {
@@ -1010,6 +1069,16 @@ html:has(.aura-ribbon) { --ribbon-h: 2.6875rem; }
   line-height: 1.45;
   letter-spacing: .006em;
   text-wrap: balance;
+}
+/* Por debajo de 768 px, el texto corto (aura-core.js escribe los dos): con el
+   largo la cinta llegaba a 4 líneas y 99 px a 390, y a 3 líneas entre 576 y
+   767. Así son dos líneas (62 px) en el teléfono y una en horizontal; desde
+   768, el largo en dos líneas. El enlace va en los dos. */
+@media (max-width: 767.98px) {
+  .aura-ribbon__long { display: none; }
+}
+@media (min-width: 768px) {
+  .aura-ribbon__short { display: none; }
 }
 
 /* Barra local de las páginas de familia */
@@ -1162,12 +1231,24 @@ body:has(.aura-localnav) .aura-nav .aura-popover {
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
 }
-/* En el teléfono no caben los enlaces junto al título y «Comprar»: se pliegan
-   en un menú bajo la barra que abre el chevrón (lo añade aura-ui.js). Entra y
-   sale por el mismo camino, desde la barra. */
+/* Por debajo de 992 px (61,99 em: con texto grande, antes) no caben todos los
+   enlaces junto al título y «Comprar» (a 768–920 px se quedaban fuera
+   «Modelos», «Especificaciones» o «Comparar»): se pliegan en un menú bajo la
+   barra que abre el chevrón. El umbral es solo este: aura-ui.js abre el menú
+   mientras el chevrón se ve. Entra y sale por el mismo camino, desde la
+   barra. La barra llega del HTML con .has-menu y su chevrón, pero el menú
+   solo existe con .aura-ui (la pone aura-ui.js, que es quien lo abre): sin JS
+   se ve la tira desplazable de siempre. Con .aura-js y hasta que llega
+   aura-ui.js, la tira no se ve (sin salir del flujo), para no pintarse en
+   línea y saltar al menú un instante después; si aura-ui.js no llega, vuelve
+   a verse a los 2,5 s (aura-ready-fallback, §7). */
 .aura-localnav__toggle { display: none; }
-@media (max-width: 767.98px) {
-  .aura-localnav__toggle {
+@media (max-width: 61.99em) {
+  .aura-js:not(.aura-ui) .aura-localnav__links {
+    visibility: hidden;
+    animation: aura-ready-fallback 0s 2.5s forwards;
+  }
+  .aura-ui .aura-localnav__toggle {
     display: grid;
     place-items: center;
     flex: none;
@@ -1179,18 +1260,18 @@ body:has(.aura-localnav) .aura-nav .aura-popover {
     border-radius: 50%;
     background: none;
     color: var(--vibrant-label);
-    font-size: .875rem;
+    font-size: 1.0625rem;               /* 17 px en 44 × 44, como los demás iconos de barra (guía §05) */
     cursor: pointer;
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
     transition: transform var(--dur-press) ease-out;
   }
-  .aura-localnav__toggle > .bi { transition: transform var(--dur-2) var(--ease-out); }
-  .aura-localnav.is-open .aura-localnav__toggle > .bi { transform: rotate(180deg); }
-  .aura-localnav__toggle:active,
-  .aura-localnav__toggle.is-pressed { transform: scale(.92); }
-  .aura-localnav__toggle:focus-visible { outline-offset: -4px; }
-  .aura-localnav.has-menu .aura-localnav__links {
+  .aura-ui .aura-localnav__toggle > .bi { transition: transform var(--dur-2) var(--ease-out); }
+  .aura-ui .aura-localnav.is-open .aura-localnav__toggle > .bi { transform: rotate(180deg); }
+  .aura-ui .aura-localnav__toggle:active,
+  .aura-ui .aura-localnav__toggle.is-pressed { transform: scale(.92); }
+  .aura-ui .aura-localnav__toggle:focus-visible { outline-offset: -4px; }
+  .aura-ui .aura-localnav.has-menu .aura-localnav__links {
     position: absolute;
     top: 100%;
     left: 0;
@@ -1212,14 +1293,14 @@ body:has(.aura-localnav) .aura-nav .aura-popover {
     transform-origin: top center;
     transition: opacity var(--dur-2) var(--ease-in), transform var(--dur-2) var(--ease-in), visibility 0s linear var(--dur-2);
   }
-  .aura-localnav.has-menu.is-open .aura-localnav__links {
+  .aura-ui .aura-localnav.has-menu.is-open .aura-localnav__links {
     visibility: visible;
     opacity: 1;
     transform: none;
     transition: opacity var(--dur-2) var(--ease-out), transform var(--dur-2) var(--ease-out), visibility 0s;
   }
-  .aura-localnav.has-menu .aura-localnav__links > :first-child { margin-left: 0; }
-  .aura-localnav.has-menu .aura-localnav__link {
+  .aura-ui .aura-localnav.has-menu .aura-localnav__links > :first-child { margin-left: 0; }
+  .aura-ui .aura-localnav.has-menu .aura-localnav__link {
     height: auto;
     min-height: 2.75rem;
     padding: 0;
@@ -1227,7 +1308,7 @@ body:has(.aura-localnav) .aura-nav .aura-popover {
     font-size: .9375rem;
     letter-spacing: 0;
   }
-  .aura-localnav.has-menu .aura-localnav__link:last-child { border-bottom: 0; }
+  .aura-ui .aura-localnav.has-menu .aura-localnav__link:last-child { border-bottom: 0; }
 }
 
 /* Migas de pan */
@@ -1342,7 +1423,9 @@ body:has(.aura-localnav) .aura-nav .aura-popover {
 /* Contorno en el azul de la guía (#0071e3: 4,5:1 sobre negro y 3,9:1 sobre
    #161617 como límite de control); al pasar el ratón, el borde gana
    luminosidad (#1787f7, guía §03) y el fondo, el tinte azul. Etiqueta en el
-   azul para texto (--accent-link), que es el que llega a AA. */
+   azul para texto (--accent-link), que es el que llega a AA; con el tinte
+   (hover y foco) la etiqueta pasa a --accent-link-hover, porque #1787f7
+   sobre el tinte de una tarjeta se queda en 4,3:1. */
 .aura-btn--secondary {
   --btn-fg: var(--accent-link);
   --btn-border: var(--accent);
@@ -1377,9 +1460,10 @@ body:has(.aura-localnav) .aura-nav .aura-popover {
 @media (hover: hover) {
   .aura-btn:hover::before { opacity: 1; }
   .aura-btn--primary:hover::after { opacity: 1; }
-  .aura-btn--secondary:hover { border-color: var(--accent-bright); }
+  .aura-btn--secondary:hover { border-color: var(--accent-bright); --btn-fg: var(--accent-link-hover); }
 }
 .aura-btn:focus-visible::before { opacity: 1; }
+.aura-btn--secondary:focus-visible { --btn-fg: var(--accent-link-hover); }
 
 /* Pulsación: inmediata, en pointerdown (.is-pressed lo pone el JS) */
 .aura-btn:active,
@@ -1416,7 +1500,7 @@ body:has(.aura-localnav) .aura-nav .aura-popover {
 /* Estados forzados para la guía viva */
 .aura-btn.is-hover::before { opacity: 1; }
 .aura-btn--primary.is-hover::after { opacity: 1; }
-.aura-btn--secondary.is-hover { border-color: var(--accent-bright); }
+.aura-btn--secondary.is-hover { border-color: var(--accent-bright); --btn-fg: var(--accent-link-hover); }
 
 .aura-spinner {
   flex: none;
@@ -1599,7 +1683,7 @@ button.aura-chip:active, a.aura-chip:active, .aura-chip.is-pressed { transform: 
 }
 .aura-badge--mono {                     /* etiqueta técnica (estados de pedido, «Demostración») */
   padding: .1875rem .5rem;
-  border-radius: .375rem;
+  border-radius: var(--radius-xs);
   font-family: var(--font-mono);
   font-size: .6875rem;
   font-weight: 500;
@@ -1779,7 +1863,7 @@ a.aura-card:active, .aura-card--interactive:active, .aura-card.is-pressed {
 .aura-media--halo {
   background:
     radial-gradient(60% 55% at 50% 55%, rgba(0, 113, 227, .22), transparent 70%),
-    #030304;
+    var(--bg-main);
 }
 .aura-media--frame { border: 1px solid var(--hairline); }
 /* En un marco el hueco no lleva borde ni radio propios: el marco recorta (y,
@@ -1803,8 +1887,8 @@ a.aura-card:active, .aura-card--interactive:active, .aura-card.is-pressed {
   z-index: 1;
   padding: .3125rem .625rem;
   border: 1px solid var(--hairline-strong);
-  border-radius: .375rem;
-  background: rgba(0, 0, 0, .72);
+  border-radius: var(--radius-xs);
+  background: var(--glass-nav-bg);
   color: var(--text-primary);
   font-family: var(--font-mono);
   font-size: .6875rem;
@@ -1963,7 +2047,7 @@ a.aura-card:active, .aura-card--interactive:active, .aura-card.is-pressed {
   place-items: center;
   width: 3rem;
   height: 3rem;
-  border: 1px solid rgba(41, 151, 255, .5);
+  border: 1px solid rgba(23, 135, 247, .5);
   border-radius: 50%;
   color: var(--accent-link);
   font-size: 1.125rem;
@@ -2094,7 +2178,7 @@ a.aura-card:active, .aura-card--interactive:active, .aura-card.is-pressed {
   justify-content: flex-end;
   min-height: clamp(26rem, 42vw, 28rem);   /* en el teléfono, sitio para la imagen sobre el texto */
   border-color: transparent;
-  background: #050506;
+  background: var(--bg-main);
 }
 .aura-tile--cover .aura-tile__media {
   position: absolute;
@@ -2196,7 +2280,7 @@ a.aura-card:active, .aura-card--interactive:active, .aura-card.is-pressed {
   isolation: isolate;
   background:
     radial-gradient(70% 60% at 50% 62%, rgba(0, 113, 227, .16), transparent 70%),
-    #050506;
+    var(--bg-main);
 }
 .aura-product-card__media > .aura-img,
 .aura-product-card__media > .aura-slot {
@@ -2365,6 +2449,7 @@ a.aura-card:active, .aura-card--interactive:active, .aura-card.is-pressed {
   color: var(--text-primary);
 }
 .aura-feature__text {
+  max-width: min(60ch, 100%);           /* ≈ 79 caracteres como mucho (ver .aura-lead) */
   margin: 0;
   font-size: .875rem;
   line-height: 1.5;
@@ -2374,8 +2459,9 @@ a.aura-card:active, .aura-card--interactive:active, .aura-card.is-pressed {
 /* La rejilla alinea sus hijos al inicio (justify-items: start): cada uno
    mide lo que su contenido, y una palabra larga (un correo con texto grande)
    lo ensanchaba más allá de su columna. Con max-width: 100% no pasa de la
-   columna y break-word la parte dentro. */
+   columna y break-word la parte dentro. El texto conserva además su medida. */
 .aura-feature > * { max-width: 100%; }
+.aura-feature > .aura-feature__text { max-width: min(60ch, 100%); }
 .aura-feature--card {
   padding: 1.25rem;
   border: 1px solid var(--hairline);
@@ -2417,7 +2503,7 @@ a.aura-card:active, .aura-card--interactive:active, .aura-card.is-pressed {
   border-bottom: 1px solid var(--hairline);
   background:
     radial-gradient(70% 60% at 50% 62%, rgba(0, 113, 227, .16), transparent 70%),
-    #050506;
+    var(--bg-main);
 }
 .aura-family-card__media > .aura-img,
 .aura-family-card__media > .aura-slot {
@@ -2534,12 +2620,13 @@ a.aura-card:active, .aura-card--interactive:active, .aura-card.is-pressed {
   white-space: nowrap;
 }
 
-/* Tabla comparativa */
+/* Tabla comparativa. Superficie de la paleta: --bg-secondary, como su
+   cabecera (no --bg-band: en auraPhone la sección ya es franja). */
 .aura-table-card {
   overflow: hidden;
   border: 1px solid var(--hairline);
   border-radius: var(--radius-sm);
-  background: #0d0d0e;
+  background: var(--bg-secondary);
 }
 .aura-table-card__head {
   display: flex;
@@ -2570,9 +2657,15 @@ a.aura-card:active, .aura-card--interactive:active, .aura-card.is-pressed {
 @media (min-width: 768px) {
   .aura-table-card__hint { display: none; }
 }
+/* Solo se desplaza en horizontal. Con overflow-x: auto, overflow-y se
+   calcula como auto, y con 1 px de más (el caption o el filo de la columna
+   fija) la tabla se quedaba con la primera muesca o el primer arrastre
+   vertical en lugar de pasárselo a la página: overflow-y: hidden. Y el
+   vertical encadena siempre con la página (overscroll-behavior-x: auto). */
 .aura-table-wrap {
   overflow-x: auto;
-  overscroll-behavior-x: contain;
+  overflow-y: hidden;
+  overscroll-behavior-x: auto;
   -webkit-overflow-scrolling: touch;
 }
 .aura-table-wrap:focus-visible { outline-offset: -2px; }
@@ -2592,6 +2685,7 @@ a.aura-card:active, .aura-card--interactive:active, .aura-card.is-pressed {
   border-bottom: 1px solid var(--hairline);
   text-align: left;
   vertical-align: top;
+  text-wrap: balance;                   /* sin «IP68» o «cerrado» solos en la última línea */
 }
 .aura-table thead th {
   font-family: var(--font-ui);
@@ -2620,7 +2714,7 @@ a.aura-card:active, .aura-card--interactive:active, .aura-card.is-pressed {
   z-index: 1;
   width: 24%;
   min-width: 9rem;
-  background: #0d0d0e;
+  background: var(--bg-secondary);      /* opaca: lo que pasa por debajo no se transparenta */
 }
 /* Efecto de borde de la columna fija: solo cuando hay columnas pasando por
    debajo (.aura-table-wrap.is-scrolled lo pone aura-ui.js al desplazar). */
@@ -2638,6 +2732,8 @@ a.aura-card:active, .aura-card--interactive:active, .aura-card.is-pressed {
   transition: opacity var(--dur-1) ease;
 }
 .aura-table-wrap.is-scrolled .aura-table th:first-child::after { opacity: 1; }
+/* La última fila no lleva borde: ahí el filo no baja 1 px por debajo de la tabla. */
+.aura-table tbody tr:last-child th:first-child::after { bottom: 0; }
 /* Columna destacada: como el prototipo, solo el nombre del modelo en dorado.
    El dorado nunca rellena una superficie (guía §01): la columna no se tiñe. */
 .aura-table thead th.is-featured { color: var(--gold); }
@@ -2647,13 +2743,13 @@ a.aura-card:active, .aura-card--interactive:active, .aura-card.is-pressed {
   font-size: 1rem;
   font-weight: 500;
 }
-.aura-table__note {                     /* disponibilidad bajo el precio */
+.aura-table__note {                     /* disponibilidad bajo el precio (rol Nota: 12 / 1,55) */
   display: block;
   margin-top: .25rem;
   font-family: var(--font-ui);
   font-size: .75rem;
   font-weight: 400;
-  line-height: 1.45;
+  line-height: 1.55;
   letter-spacing: .012em;
   color: var(--text-secondary);
 }
@@ -2777,7 +2873,7 @@ a.aura-card:active, .aura-card--interactive:active, .aura-card.is-pressed {
   grid-row: 1 / span 2;
   width: 2.25rem;
   height: 2.25rem;
-  border-radius: .625rem;
+  border-radius: var(--radius-xs);
   background: var(--gold-soft);
   color: var(--gold);
   font-size: 1rem;
@@ -2792,6 +2888,7 @@ a.aura-card:active, .aura-card--interactive:active, .aura-card.is-pressed {
 }
 .aura-note__text {
   grid-column: 2;
+  max-width: min(60ch, 100%);
   margin: 0;
   font-size: .875rem;
   line-height: 1.55;
@@ -2835,7 +2932,7 @@ a.aura-card:active, .aura-card--interactive:active, .aura-card.is-pressed {
 .aura-footnotes__list {
   display: grid;
   gap: .625rem;
-  max-width: 62rem;
+  max-width: min(65ch, 100%);           /* ≈ 80 caracteres a 12 px (con 62rem llegaban a 168) */
   margin: 0;
   padding: 0 0 0 1.25rem;
   font-size: .75rem;
@@ -2941,7 +3038,7 @@ ul.aura-footnotes__list { list-style: none; }
   content: "";
   position: absolute;
   inset: 21%;
-  border: 1px solid rgba(41, 151, 255, .4);
+  border: 1px solid rgba(23, 135, 247, .4);
   border-radius: 50%;
   background: radial-gradient(closest-side, rgba(0, 113, 227, .28), transparent);
 }
@@ -3007,8 +3104,10 @@ ul.aura-footnotes__list { list-style: none; }
   font-family: var(--font-ui);
   font-size: .875rem;
   font-weight: 400;
+  line-height: 1.5;                     /* texto de varias líneas, no el 1,3 del titular */
   letter-spacing: .004em;
   color: var(--text-secondary);
+  text-wrap: pretty;
 }
 .aura-legend--sm strong { color: var(--text-primary); font-weight: 600; }
 /* El <legend> de un fieldset no es un elemento de su rejilla (el navegador lo
@@ -3092,7 +3191,7 @@ ul.aura-footnotes__list { list-style: none; }
 .aura-select option { background: var(--bg-elevated); color: var(--text-primary); }
 
 @media (hover: hover) {
-  .aura-input:hover, .aura-select:hover, .aura-textarea:hover { border-color: rgba(255, 255, 255, .5); }
+  .aura-input:hover, .aura-select:hover, .aura-textarea:hover { border-color: var(--field-border-hover); }
 }
 
 /* Foco (guía §04): borde azul + anillo azul al 40 % pegado + «cristal» (el
@@ -3297,8 +3396,8 @@ ul.aura-footnotes__list { list-style: none; }
   width: 1.25rem;
   height: 1.25rem;
   margin-top: .0625rem;
-  border: 1px solid rgba(255, 255, 255, .42);
-  border-radius: .375rem;
+  border: 1px solid var(--field-border);   /* el límite de los campos: 3,13:1 sobre negro y 3,35:1 sobre tarjeta */
+  border-radius: var(--radius-2xs);
   background: var(--fill-1);
 }
 .aura-radio__box { border-radius: 50%; }
@@ -3309,7 +3408,7 @@ ul.aura-footnotes__list { list-style: none; }
   inset: 0;
   opacity: 0;
   transform: scale(.6);
-  transition: opacity 120ms ease, transform var(--dur-1) var(--ease-out);
+  transition: opacity var(--dur-check) ease, transform var(--dur-1) var(--ease-out);
 }
 .aura-check__box::after {
   background: #fff;
@@ -3386,7 +3485,7 @@ ul.aura-footnotes__list { list-style: none; }
 /* Tarjeta de inicio de sesión / registro */
 .aura-auth {
   display: grid;
-  place-items: center;
+  place-items: start center;            /* arriba y no centrada en vertical: si el primer pintado llega antes que el pie, la tarjeta no sube al aparecer él */
   padding: clamp(2rem, 6vw, 4.5rem) var(--gutter);
   background: var(--bg-band);
 }
@@ -3397,10 +3496,10 @@ ul.aura-footnotes__list { list-style: none; }
   max-width: 32.5rem;
   padding: clamp(1.5rem, 5vw, 2.75rem);
   border: 1px solid var(--hairline-strong);
-  border-top-color: rgba(255, 255, 255, .24);
+  border-top-color: var(--edge-light);
   border-radius: var(--radius-lg);
-  background: linear-gradient(180deg, #1e1e21 0%, #18181a 100%);
-  box-shadow: var(--shadow-3);
+  background: var(--bg-elevated);       /* tarjeta plana, como el prototipo (#19191d); --shadow-3 queda para hojas y buscador */
+  box-shadow: var(--shadow-2);
 }
 .aura-auth-card--wide { max-width: 35rem; }   /* registro: 560 px */
 .aura-auth-card__head {
@@ -3599,7 +3698,7 @@ ul.aura-footnotes__list { list-style: none; }
 }
 .aura-option__input:checked + .aura-option__card {
   border-color: var(--accent-link);
-  background: rgba(0, 113, 227, .1);
+  background: var(--accent-soft);       /* el fondo de lo elegido (guía §01), como el chip activo */
   box-shadow: inset 0 0 0 1px var(--accent-link);
 }
 .aura-option__input:checked + .aura-option__card .aura-option__price { color: var(--text-primary); }
@@ -3615,7 +3714,7 @@ ul.aura-footnotes__list { list-style: none; }
 .aura-option:active .aura-option__card,
 .aura-option.is-pressed .aura-option__card { transform: scale(.985); }
 @media (hover: hover) {
-  .aura-option:hover .aura-option__input:not(:checked):not(:disabled) + .aura-option__card { border-color: rgba(255, 255, 255, .55); }
+  .aura-option:hover .aura-option__input:not(:checked):not(:disabled) + .aura-option__card { border-color: var(--field-border-hover); }
 }
 
 /* Cantidad */
@@ -3752,6 +3851,12 @@ ul.aura-footnotes__list { list-style: none; }
   white-space: nowrap;
   contain: inline-size;
 }
+.aura-buybar__color { color: var(--vibrant-secondary); }   /* el acabado, en su línea bajo el nombre (nunca recortado tras un «·») */
+/* En los teléfonos más estrechos (320–374 px) el nombre parte en dos líneas
+   antes que recortarse: «auraPhone 18 Pro …» se confundiría con el 18 Pro. */
+@media (max-width: 374.98px) {
+  .aura-buybar__name { overflow: visible; text-overflow: clip; white-space: normal; text-wrap: balance; }
+}
 .aura-buybar .aura-btn { flex: 1 0 auto; }
 /* El alto de la barra se reserva DENTRO del pie (su fondo llega hasta abajo:
    bajo el cristal no queda una franja negra); sin pie, en el <body>.
@@ -3789,9 +3894,12 @@ body.has-buybar:not(:has(.aura-footer)) { padding-bottom: var(--buybar-h, calc(4
   border-bottom: 1px solid var(--hairline);
 }
 /* La línea mide su propio ancho (no el de la ventana): con texto grande en
-   el teléfono, la imagen pasa encima y la información usa todo el ancho. */
+   el teléfono, la imagen pasa encima y la información usa todo el ancho.
+   Con el texto al 100 %, la lista mide 21,9 rem a 390 y 20 rem a 360: a
+   19 rem se siguen viendo miniatura e información lado a lado; al 125 %
+   (17,5 rem) se apila. */
 .aura-bag-list { container: aura-bag / inline-size; }
-@container aura-bag (max-width: 22rem) {
+@container aura-bag (max-width: 19rem) {
   .aura-bag-line:not(.aura-bag-line--compact) {
     grid-template-columns: minmax(0, 1fr);
     grid-template-areas: "media" "info" "price";
@@ -3812,7 +3920,7 @@ body.has-buybar:not(:has(.aura-footer)) { padding-bottom: var(--buybar-h, calc(4
   border-radius: var(--radius-md);
   background:
     radial-gradient(closest-side, rgba(0, 113, 227, .18), transparent),
-    #050506;
+    var(--bg-main);
 }
 .aura-bag-line__media > .aura-img,
 .aura-bag-line__media > .aura-slot {
@@ -3907,10 +4015,10 @@ body.has-buybar:not(:has(.aura-footer)) { padding-bottom: var(--buybar-h, calc(4
   align-self: start;
   width: 2rem;
   height: 2rem;
-  border-radius: .5rem;
+  border-radius: var(--radius-xs);
   background: var(--gold-soft);
   color: var(--gold);
-  font-size: .9375rem;
+  font-size: 1rem;
 }
 .aura-bag-line__care-title {
   margin: 0;
@@ -4102,11 +4210,16 @@ body.has-buybar:not(:has(.aura-footer)) { padding-bottom: var(--buybar-h, calc(4
 
 /* Imagen grande del configurador. Espera fotos de producto sobre negro puro
    (como todas las de assets/img): se funden con el panel y su halo con
-   mix-blend-mode: lighten (ver la tarjeta de modelo). */
+   mix-blend-mode: lighten (ver la tarjeta de modelo). Una sola celda del
+   tamaño de la caja útil (minmax(0, 1fr)): con la fila en auto, el
+   height: 100% de la foto se resolvía contra su alto natural (4:3), así que
+   quedaba 12 px por debajo del centro y, en la exhibición 16:10 del
+   auraPhone, cortada por abajo. */
 .aura-gallery {
   position: relative;
   isolation: isolate;
   display: grid;
+  grid-template: minmax(0, 1fr) / minmax(0, 1fr);
   place-items: center;
   aspect-ratio: 4 / 3;
   padding: clamp(1rem, 4vw, 3rem);
@@ -4115,7 +4228,7 @@ body.has-buybar:not(:has(.aura-footer)) { padding-bottom: var(--buybar-h, calc(4
   border-radius: var(--radius-lg);
   background:
     radial-gradient(60% 55% at 50% 56%, rgba(0, 113, 227, .22), transparent 70%),
-    var(--bg-band);
+    var(--bg-main);                     /* base de los paneles de foto: #000, como la tarjeta de modelo */
 }
 @media (min-width: 992px) {
   .aura-gallery--sticky { position: sticky; top: calc(var(--sticky-top) + 1.5rem); }
@@ -4137,19 +4250,22 @@ body.has-buybar:not(:has(.aura-footer)) { padding-bottom: var(--buybar-h, calc(4
 .aura-gallery > .aura-img,
 .aura-gallery > .aura-slot { grid-area: 1 / 1; }
 .aura-gallery > .aura-img,
-.aura-js .aura-gallery > img.aura-img[data-slot]:not([data-aura-reveal]) { transition: opacity 200ms ease; }
+.aura-js .aura-gallery > img.aura-img[data-slot]:not([data-aura-reveal]) { transition: opacity var(--dur-exit) ease; }
 .aura-gallery > .is-entering,
 .aura-gallery > .is-leaving { opacity: 0; }
 .aura-gallery > .is-leaving { pointer-events: none; }
+/* El nombre del color es contenido, no una etiqueta técnica: Caption de la
+   guía (Inter 13 px), no mono de 11 px en mayúsculas. */
 .aura-gallery__caption {
   position: absolute;
   left: 1.25rem;
   bottom: 1rem;
   margin: 0;
-  font-family: var(--font-mono);
-  font-size: .6875rem;
-  letter-spacing: .1em;
-  text-transform: uppercase;
+  font-family: var(--font-ui);
+  font-size: .8125rem;
+  line-height: 1.45;
+  letter-spacing: .006em;
+  text-transform: none;
   color: var(--text-tertiary);
 }
 
@@ -4213,9 +4329,14 @@ body.has-buybar:not(:has(.aura-footer)) { padding-bottom: var(--buybar-h, calc(4
   /* El foco del teclado se dibuja por dentro: por fuera caería en el borde de la pantalla */
   .aura-carousel--bleed .aura-carousel__viewport:focus-visible { outline-offset: -2px; }
 }
+/* Con JS la ventana ya no tiene scroll propio que contener: sin
+   overscroll-behavior: auto, un gesto de trackpad casi vertical con 1 px
+   horizontal que empezaba encima no movía la página (0 de 400 px). El
+   contain de arriba se queda para la versión sin JS. */
 .aura-carousel.is-ready .aura-carousel__viewport {
   overflow: hidden;
   scroll-snap-type: none;
+  overscroll-behavior: auto;
   touch-action: pan-y;                  /* el gesto horizontal es nuestro; el vertical, de la página */
   cursor: grab;
 }
@@ -4551,13 +4672,19 @@ body.has-buybar:not(:has(.aura-footer)) { padding-bottom: var(--buybar-h, calc(4
   padding-bottom: clamp(3rem, 7vw, 5.5rem);
 }
 .aura-scrub__canvas { display: none; }
+/* El póster (16:9) nunca pasa del 85 % del alto de la ventana, y su ancho se
+   ajusta a ese alto: en una pantalla ancha y baja (1920 × 900) se queda en
+   1360 × 765, centrado y entero, en lugar de ampliarse a todo el ancho y
+   perder un 29 % (al auraPhone le faltaba la meseta de cámaras). */
 .aura-scrub__poster {
   display: block;
-  width: 100%;
+  width: min(100%, calc(85vh * 16 / 9));
+  width: min(100%, calc(85svh * 16 / 9));
   height: auto;
   max-height: 85vh;
   max-height: 85svh;
-  object-fit: cover;
+  margin-inline: auto;
+  object-fit: contain;
   object-position: var(--aura-scrub-focus, 50% 50%);
   -webkit-mask-image: var(--photo-feather-y);
   mask-image: var(--photo-feather-y);
@@ -4575,6 +4702,9 @@ body.has-buybar:not(:has(.aura-footer)) { padding-bottom: var(--buybar-h, calc(4
   padding-right: max(var(--gutter), env(safe-area-inset-right));
 }
 .aura-scrub__text > * { max-width: min(100%, 40rem); }
+/* La medida de la entradilla y del cuerpo (ver .aura-lead) manda también aquí. */
+.aura-scrub__text > .aura-lead { max-width: min(100%, 44ch); }
+.aura-scrub__text > .aura-body { max-width: min(100%, 53ch); }
 .aura-scrub__text > :where(p, h2, h3, h4) { margin: 0; }
 /* Póster dentro de un <picture> (un fotograma para la escena y otro para la
    versión estática, §10 bis): el <picture> no crea caja y el <img> se coloca
@@ -4650,6 +4780,8 @@ body.has-buybar:not(:has(.aura-footer)) { padding-bottom: var(--buybar-h, calc(4
     pointer-events: none;
   }
   .aura-js .aura-scrub:not(.is-static) .aura-scrub__text > * { max-width: min(100%, 46rem); }
+  .aura-js .aura-scrub:not(.is-static) .aura-scrub__text > .aura-lead { max-width: min(100%, 44ch); }
+  .aura-js .aura-scrub:not(.is-static) .aura-scrub__text > .aura-body { max-width: min(100%, 53ch); }
   /* El titular de una escena que hace de héroe mide lo de un héroe centrado
      (.aura-hero--center, 52 rem): dos líneas en escritorio, no tres. */
   .aura-js .aura-scrub:not(.is-static) .aura-scrub__text > .aura-display { max-width: min(100%, 52rem); }
@@ -4659,7 +4791,7 @@ body.has-buybar:not(:has(.aura-footer)) { padding-bottom: var(--buybar-h, calc(4
   /* Sobre un fotograma que cambia, el botón secundario (contorno, sin fondo)
      lleva material oscuro: su etiqueta azul no depende de lo que haya detrás. */
   .aura-js .aura-scrub:not(.is-static) .aura-scrub__text .aura-btn--secondary {
-    --btn-bg: rgba(0, 0, 0, .78);
+    --btn-bg: var(--glass-thin-bg);
     -webkit-backdrop-filter: var(--glass-thin-filter);
     backdrop-filter: var(--glass-thin-filter);
   }
@@ -4715,6 +4847,8 @@ body.has-buybar:not(:has(.aura-footer)) { padding-bottom: var(--buybar-h, calc(4
     align-content: end;
   }
   .aura-js .aura-scrub:where([data-fit="contain"]):not(.is-static) .aura-scrub__text:is([data-pos="left"], [data-pos="right"]) > * { grid-column: 1; max-width: min(100%, 40rem); }
+  .aura-js .aura-scrub:where([data-fit="contain"]):not(.is-static) .aura-scrub__text:is([data-pos="left"], [data-pos="right"]) > .aura-lead { max-width: min(100%, 44ch); }
+  .aura-js .aura-scrub:where([data-fit="contain"]):not(.is-static) .aura-scrub__text:is([data-pos="left"], [data-pos="right"]) > .aura-body { max-width: min(100%, 53ch); }
   .aura-js .aura-scrub:where([data-fit="contain"]):not(.is-static) .aura-scrub__text:is([data-pos="left"], [data-pos="right"])::before { background: var(--photo-scrim); }
 }
 /* Menos transparencia / más contraste: la protección pasa a ser un velo casi
@@ -4819,7 +4953,7 @@ body.has-buybar:not(:has(.aura-footer)) { padding-bottom: var(--buybar-h, calc(4
   font-size: 1rem;
   line-height: 1.45;
   letter-spacing: 0;
-  text-wrap: pretty;
+  text-wrap: balance;                   /* líneas parejas: sin «teleobjetivo» sola al final */
 }
 
 /* Galería de fotos de ejemplo: un carrusel (--bleed --wide) de
@@ -4944,9 +5078,9 @@ body.has-buybar:not(:has(.aura-footer)) { padding-bottom: var(--buybar-h, calc(4
   pointer-events: none;
   transition:
     opacity var(--dur-1) var(--ease-in),
-    transform 200ms var(--ease-in),
+    transform var(--dur-exit) var(--ease-in),
     filter var(--dur-1) var(--ease-in),
-    visibility 0s linear 200ms;
+    visibility 0s linear var(--dur-exit);
 }
 .aura-popover.is-open {
   opacity: 1;
@@ -5095,7 +5229,7 @@ body.has-buybar:not(:has(.aura-footer)) { padding-bottom: var(--buybar-h, calc(4
   opacity: 0;
   transform: translate3d(0, -.75rem, 0) scale(.96);
   filter: blur(6px);
-  transition: opacity var(--dur-1) var(--ease-in), transform 200ms var(--ease-in), filter var(--dur-1) var(--ease-in);
+  transition: opacity var(--dur-1) var(--ease-in), transform var(--dur-exit) var(--ease-in), filter var(--dur-1) var(--ease-in);
   /* Se aparta con el dedo (aura-ui.js): hacia arriba en el teléfono, hacia la
      derecha desde 576 px. El gesto en su eje es nuestro. */
   touch-action: none;
@@ -5104,7 +5238,7 @@ body.has-buybar:not(:has(.aura-footer)) { padding-bottom: var(--buybar-h, calc(4
   opacity: 1;
   transform: none;
   filter: none;
-  transition: opacity 200ms var(--ease-out), transform 320ms var(--ease-out), filter 220ms var(--ease-out);
+  transition: opacity var(--dur-exit) var(--ease-out), transform var(--dur-enter) var(--ease-out), filter 220ms var(--ease-out);
 }
 @media (min-width: 576px) {
   .aura-toast { touch-action: pan-y; }
@@ -5339,13 +5473,13 @@ html.aura-lock .aura-toast {
   opacity: 0;
   transform: translate3d(0, -.75rem, 0) scale(.97);
   filter: blur(8px);
-  transition: opacity var(--dur-1) var(--ease-in), transform 200ms var(--ease-in), filter var(--dur-1) var(--ease-in);
+  transition: opacity var(--dur-1) var(--ease-in), transform var(--dur-exit) var(--ease-in), filter var(--dur-1) var(--ease-in);
 }
 .aura-search.is-open .aura-search__panel {
   opacity: 1;
   transform: none;
   filter: none;
-  transition: opacity 200ms var(--ease-out), transform 320ms var(--ease-out), filter 220ms var(--ease-out);
+  transition: opacity var(--dur-exit) var(--ease-out), transform var(--dur-enter) var(--ease-out), filter 220ms var(--ease-out);
 }
 .aura-search__form {
   display: flex;
@@ -5442,7 +5576,7 @@ html.aura-lock .aura-toast {
   padding-bottom: env(safe-area-inset-bottom);
   overflow-y: auto;
   overscroll-behavior: contain;
-  background: rgba(0, 0, 0, .86);       /* grueso, en negro como la barra */
+  background: var(--glass-nav-thick-bg);   /* grueso, en negro como la barra */
   -webkit-backdrop-filter: var(--glass-thick-filter);
   backdrop-filter: var(--glass-thick-filter);
   /* Se materializa (escala + opacidad) desde el botón de menú y vuelve a él.
@@ -5451,13 +5585,13 @@ html.aura-lock .aura-toast {
   opacity: 0;
   transform: scale(.95);
   visibility: hidden;
-  transition: opacity 200ms var(--ease-in), transform 200ms var(--ease-in), visibility 0s linear 200ms;
+  transition: opacity var(--dur-exit) var(--ease-in), transform var(--dur-exit) var(--ease-in), visibility 0s linear var(--dur-exit);
 }
 .aura-menu.is-open {
   opacity: 1;
   transform: none;
   visibility: visible;
-  transition: opacity var(--dur-2) var(--ease-out), transform 320ms var(--ease-out), visibility 0s;
+  transition: opacity var(--dur-2) var(--ease-out), transform var(--dur-enter) var(--ease-out), visibility 0s;
 }
 /* El contenido del menú se enfoca al llegar (el desenfoque va en la lista,
    no en la capa a pantalla completa: sería caro). */
@@ -5554,11 +5688,19 @@ html.aura-lock .aura-toast {
 }
 .aura-js [data-aura-reveal="fade"] { transform: none; }
 .aura-js [data-aura-reveal="scale"] { transform: scale(.96); }
+/* Acompaña al scroll: aura-ui.js la dispara en cuanto el elemento asoma (5 %
+   antes de entrar), el fundido dura 400 ms y el escalonado de una fila llega
+   como mucho a 2 × 60 ms. Con 560/760 ms y 80 ms × --i, a 1000 px/s se veían
+   hasta 539 px de tarjetas vacías. En el teléfono las tarjetas van apiladas:
+   sin escalonado. */
 .aura-js [data-aura-reveal].is-visible {
   opacity: 1;
   transform: none;
-  transition: opacity var(--dur-3) ease, transform 760ms var(--ease-out);
-  transition-delay: calc(var(--i, 0) * 80ms);
+  transition: opacity 400ms ease, transform 600ms var(--ease-out);
+  transition-delay: calc(min(var(--i, 0), 2) * 60ms);
+}
+@media (max-width: 767.98px) {
+  .aura-js [data-aura-reveal].is-visible { transition-delay: 0s; }
 }
 .aura-js:not(.aura-ui) [data-aura-reveal] { animation: aura-failsafe 1ms linear 2.5s forwards; }
 /* "stat": una cifra que aparece por partes, solo con opacidad (sin
@@ -5578,6 +5720,12 @@ html.aura-lock .aura-toast {
 
 @keyframes aura-failsafe {
   to { opacity: 1; transform: none; }
+}
+/* Red de seguridad de lo que se oculta (visibility: hidden, sin salir del
+   flujo) hasta el primer pintado del JS: si el JS no llega, se ve a los
+   2,5 s. Uso: animation: aura-ready-fallback 0s 2.5s forwards; */
+@keyframes aura-ready-fallback {
+  to { visibility: visible; }
 }
 @keyframes aura-fade-in {
   from { opacity: 0; }
@@ -5626,7 +5774,7 @@ html.aura-lock .aura-toast {
   .aura-js [data-aura-reveal="scale"] { transform: none; }
   .aura-js [data-aura-reveal].is-visible,
   .aura-js [data-aura-reveal="stat"].is-visible > * {
-    transition: opacity 200ms ease;
+    transition: opacity var(--dur-exit) ease;
     transition-delay: 0s;
   }
 
@@ -5669,18 +5817,18 @@ html.aura-lock .aura-toast {
   /* Fotos: aparecen sin fundido (siguen ocultas hasta estar decodificadas,
      para no verse a medias). La galería conserva su fundido de cambio. */
   .aura-js img.aura-img[data-slot]:not([data-aura-reveal]) { transition: none; }
-  .aura-js .aura-gallery > img.aura-img[data-slot]:not([data-aura-reveal]) { transition: opacity 200ms ease; }
+  .aura-js .aura-gallery > img.aura-img[data-slot]:not([data-aura-reveal]) { transition: opacity var(--dur-exit) ease; }
 
   /* Desplegable de la barra local: fundido corto, sin desplazarse ni girar. */
-  .aura-localnav.has-menu .aura-localnav__links {
+  .aura-ui .aura-localnav.has-menu .aura-localnav__links {
     transform: none;
-    transition: opacity 150ms ease, visibility 0s linear 150ms;
+    transition: opacity var(--dur-rm) ease, visibility 0s linear var(--dur-rm);
   }
-  .aura-localnav.has-menu.is-open .aura-localnav__links {
+  .aura-ui .aura-localnav.has-menu.is-open .aura-localnav__links {
     transform: none;
-    transition: opacity 150ms ease, visibility 0s;
+    transition: opacity var(--dur-rm) ease, visibility 0s;
   }
-  .aura-localnav__toggle > .bi { transition: none; }
+  .aura-ui .aura-localnav__toggle > .bi { transition: none; }
   a.aura-card:hover, .aura-card--interactive:hover,
   .aura-link:hover::after { transform: none; }
   .aura-nav__link::after { transform: none; transition: opacity var(--dur-1) ease; }
@@ -5689,7 +5837,7 @@ html.aura-lock .aura-toast {
   .aura-popover.is-open {
     transform: none;
     filter: none;
-    transition: opacity 150ms ease, visibility 0s linear 150ms;
+    transition: opacity var(--dur-rm) ease, visibility 0s linear var(--dur-rm);
   }
   .aura-popover.is-open { transition-delay: 0s; }
 
@@ -5699,21 +5847,21 @@ html.aura-lock .aura-toast {
   .aura-search.is-open .aura-search__panel {
     transform: none;
     filter: none;
-    transition: opacity 150ms ease;
+    transition: opacity var(--dur-rm) ease;
   }
   .aura-toast.is-dragging { transition: none; }
   .aura-menu,
   .aura-menu.is-open { transform: none; }
   .aura-menu__nav,
   .aura-menu.is-open .aura-menu__nav { filter: none; transition: none; }
-  .aura-menu { transition: opacity 150ms ease, visibility 0s linear 150ms; }
-  .aura-menu.is-open { transition: opacity 150ms ease, visibility 0s; }
+  .aura-menu { transition: opacity var(--dur-rm) ease, visibility 0s linear var(--dur-rm); }
+  .aura-menu.is-open { transition: opacity var(--dur-rm) ease, visibility 0s; }
   .aura-menu__list > li,
   .aura-menu__secondary > li,
   .aura-menu.is-open .aura-menu__list > li,
   .aura-menu.is-open .aura-menu__secondary > li {
     transform: none;
-    transition: opacity 150ms ease;
+    transition: opacity var(--dur-rm) ease;
     transition-delay: 0s;
   }
 
@@ -5721,28 +5869,28 @@ html.aura-lock .aura-toast {
      alterna .is-open y aquí se funde. Si se arrastra (lo mueve el usuario,
      1:1) manda el transform en línea, también mientras se funde al soltar
      (.is-releasing). */
-  .aura-sheet { transition: visibility 0s linear 200ms; }
+  .aura-sheet { transition: visibility 0s linear var(--dur-exit); }
   .aura-sheet.is-open { transition-delay: 0s; }
-  .aura-sheet > .aura-scrim { transition: opacity 200ms ease; }
+  .aura-sheet > .aura-scrim { transition: opacity var(--dur-exit) ease; }
   .aura-sheet:not(.is-dragging):not(.is-releasing) .aura-sheet__panel {
     transform: none !important;
   }
   .aura-sheet__panel,
   .aura-sheet.is-open .aura-sheet__panel {
-    transition: opacity 200ms ease;
+    transition: opacity var(--dur-exit) ease;
   }
   .aura-sheet.is-dragging .aura-sheet__panel,
   .aura-sheet.is-dragging > .aura-scrim { transition: none; }
   .aura-sheet__panel { opacity: 0; }
   .aura-sheet.is-open .aura-sheet__panel { opacity: 1; }
 
-  .aura-buybar { transition: opacity 200ms ease; }
+  .aura-buybar { transition: opacity var(--dur-exit) ease; }
   .aura-buybar.is-hidden { transform: none; opacity: 0; pointer-events: none; }
 
   .aura-carousel__dot::before { transition: opacity var(--dur-1) ease; }
   .aura-carousel__dot.is-active::before { transform: none; }
   .aura-accordion__icon,
-  .aura-check__box::after, .aura-radio__box::after { transition: opacity 120ms ease; }
+  .aura-check__box::after, .aura-radio__box::after { transition: opacity var(--dur-check) ease; }
   .aura-nav__count.is-bumped { animation: none; }
   .aura-spinner { animation-duration: 1.4s; }
 }
@@ -5752,6 +5900,7 @@ html.aura-lock .aura-toast {
   :root,
   [data-bs-theme="dark"] {
     --glass-nav-bg: #000000;
+    --glass-nav-thick-bg: #000000;
     --glass-thin-bg: #1d1d1f;
     --glass-regular-bg: #161617;
     --glass-thick-bg: #161617;
@@ -5767,8 +5916,6 @@ html.aura-lock .aura-toast {
     backdrop-filter: none;
   }
   .aura-popover, .aura-popover.is-open { filter: none; }
-  .aura-menu { background: #000; }
-  .aura-media__tag { background: #000; }
   /* Sin filtro, el efecto de borde vuelve a ser la línea --hairline (sin máscara). */
   .aura-nav::after,
   .aura-localnav::after,
@@ -5792,9 +5939,14 @@ html.aura-lock .aura-toast {
     --hairline-strong: rgba(255, 255, 255, .62);
     --edge-light: rgba(255, 255, 255, .62);
     --field-border: rgba(255, 255, 255, .78);
+    --field-border-hover: #ffffff;           /* el hover nunca baja el contraste del límite */
     --fill-1: rgba(255, 255, 255, .06);
     --accent-link: #6cb8ff;
+    --accent-link-hover: #9dd0ff;            /* el hover del texto azul, siempre más claro que el reposo */
+    --bs-link-color-rgb: 108, 184, 255;
+    --bs-link-hover-color-rgb: 157, 208, 255;
     --glass-nav-bg: #000000;
+    --glass-nav-thick-bg: #000000;
     --glass-thin-bg: #1d1d1f;
     --glass-regular-bg: #161617;
     --glass-thick-bg: #161617;
@@ -5827,7 +5979,6 @@ html.aura-lock .aura-toast {
     --text-tertiary: #c2c2c8;
     --text-placeholder: #c2c2c8;
   }
-  .aura-menu { background: #000; }
   /* Sin filtro, el efecto de borde vuelve a ser la línea --hairline (sin máscara). */
   .aura-nav::after,
   .aura-localnav::after,

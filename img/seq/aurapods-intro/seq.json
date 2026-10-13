@@ -31,5 +31,6 @@
   "desde el 40 %": "tercio izquierdo (x<33 %)",
   "movil": "mitad inferior (y>62 %)"
  },
- "estaticoRecomendado": "f-0026.webp", "estaticoMovil": "m/f-0016.webp"
+ "estaticoRecomendado": "f-0026.webp",
+ "estaticoMovil": "m/f-0016.webp"
 }

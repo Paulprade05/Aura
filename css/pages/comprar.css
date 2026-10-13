@@ -1,11 +1,23 @@
 /* ==========================================================================
    AURA — comprar.html (configurador)
    Solo lo que los componentes del sistema no cubren: ritmo entre pasos,
-   cabecera de compra con su estado de disponibilidad, línea de entrega y
-   confirmaciones del resumen, y el precio de la barra de compra. Los
+   cabecera de compra con su estado de disponibilidad, vistas de la galería,
+   línea de entrega y confirmaciones del resumen, y el acabado y el precio de
+   la barra de compra. Los
    objetivos táctiles, la leyenda y la barra --always en escritorio los pone
    aura.css. Todo con sus tokens.
    ========================================================================== */
+
+/* Sin saltos al cargar: el h1, el «Desde», la galería y los pasos salen del
+   catálogo y los pinta comprar.js después del primer pintado. Hasta que
+   termina (.is-ready en .comprar), la cabecera, el configurador y la barra de
+   compra (su alto depende del modelo y de la acción) ocupan su sitio sin
+   verse; si el JS fallara, aparecen a los 2,5 s igualmente. */
+.aura-js .comprar:not(.is-ready) :is(.comprar-head, .comprar-layout),
+.aura-js .comprar:not(.is-ready) ~ .comprar-buybar {
+  visibility: hidden;
+  animation: aura-ready-fallback 0s 2.5s forwards;
+}
 
 /* Cabecera: dónde estoy (familia, modelo, precio, disponibilidad) y adónde puedo ir */
 .comprar-head { margin-bottom: clamp(1.75rem, 3.5vw, 3rem); }
@@ -62,6 +74,67 @@
 .comprar-galeria-nota.is-off { visibility: hidden; }
 .comprar-galeria-nota > .aura-swatch-list__dot { flex: none; }
 
+/* Vistas del acabado: una fila de miniaturas 4:3 bajo la foto. Si el modelo
+   tiene varias vistas en algún acabado, la fila está siempre reservada (se
+   oculta sin dejar su sitio cuando el acabado solo tiene una): al cambiar de
+   color las muestras de debajo no se mueven. Cada miniatura mide 64 × 48 (72
+   × 54 desde 992 px): objetivo táctil de 44 px de sobra. La elegida lleva el
+   mismo aro que la muestra de color elegida. */
+.comprar-vistas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .5rem;
+  min-height: 3rem;
+}
+.comprar-vistas.is-off { visibility: hidden; }
+.comprar-vista {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  place-items: center;
+  width: 4rem;
+  height: 3rem;
+  margin: 0;
+  padding: .1875rem;
+  overflow: hidden;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-md);      /* el de las miniaturas */
+  background: var(--bg-band);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--dur-press) ease-out;
+}
+.comprar-vista__img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  mix-blend-mode: lighten;              /* el negro de la foto toma el fondo de la miniatura, como en la galería */
+}
+.comprar-vista[aria-pressed="true"] {
+  outline: 2px solid var(--accent-link);
+  outline-offset: 2px;
+}
+.comprar-vista:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 6px var(--accent-ring);
+}
+@media (hover: hover) {
+  .comprar-vista:hover { border-color: var(--hairline-strong); }
+}
+.comprar-vista:active { transform: scale(.94); }
+@media (prefers-reduced-motion: reduce) {
+  .comprar-vista:active { transform: none; opacity: .7; }   /* responde al instante, sin escala */
+}
+@media (min-width: 992px) {
+  .comprar-vistas { min-height: 3.375rem; }
+  .comprar-vista { width: 4.5rem; height: 3.375rem; }
+}
+/* Con varias vistas, la foto también se pasa deslizando el dedo: el gesto
+   vertical sigue siendo de la página. */
+.comprar-galeria.has-vistas { touch-action: pan-y; }
+
 /* Columna de pasos: aire generoso entre pasos, ajustado dentro de cada uno */
 .comprar-columna,
 .comprar-pasos {
@@ -80,7 +153,6 @@
    baja entera («¿Brillo intenso o cero reflejos?»), nunca partida por la
    mitad tras el nombre del paso. */
 .comprar-paso__titulo > .aura-text-secondary { display: inline-block; }
-.comprar-paso__texto { font-size: .9375rem; }
 
 /* Familia (solo cuando la dirección no trae un modelo válido) */
 .comprar-familias {
@@ -88,6 +160,12 @@
   gap: .5rem;
   justify-items: start;
   margin-bottom: .25rem;
+}
+/* De 992 a 1099 px la columna mide 399–413 px y las cuatro familias no caben
+   con el relleno de 18 px: «auraPods» bajaba sola a una segunda fila (y saltaba
+   42 px al llegar Inter). Con 14 px caben en una (381 px). */
+@media (min-width: 992px) and (max-width: 1099.98px) {
+  .comprar-familias .aura-segmented__item > input + span { padding-inline: .875rem; }
 }
 
 /* Insignia de disponibilidad junto al nombre del modelo; si no cabe, baja
@@ -196,6 +274,9 @@
 /* Notas al pie: la lista de fechas, a continuación de la numerada */
 .comprar-notas-fechas { margin-top: .625rem; }
 
+/* Barra de compra: el acabado va en su línea bajo el nombre, en el gris de
+   apoyo del cristal (.aura-buybar__color, en la base). */
+
 /* Precio y cuota en la barra de compra (la cuota, solo si cabe) */
 .comprar-buybar__precio {
   display: flex;
@@ -223,4 +304,6 @@
 .comprar-hecho[hidden],
 .comprar-notas-fechas[hidden],
 .comprar-galeria-nota[hidden],
+.comprar-vistas[hidden],
+.aura-buybar__color[hidden],
 .aura-footnotes[hidden] { display: none; }

@@ -35,7 +35,7 @@
 
   <!-- Iconos: favicon (ICO y PNG), icono de la pantalla de inicio y manifiesto de la aplicación web -->
   <link rel="icon" href="../favicon.ico" sizes="any">
-  <link rel="icon" type="image/png" href="../img/aura.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="../img/icon-192.png">
   <link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
   <link rel="manifest" href="../site.webmanifest">
   <!-- Manifiesto: por file:// (doble clic) el navegador lo bloquearía por CORS con un error en la consola, así que ahí se retira -->
@@ -69,12 +69,14 @@
 
     <!-- ================= Barra local =================
          Segundo <nav>, con nombre propio (aria-label): salta a los capítulos de esta página y lleva a comprar.
-         aura-ui.js la fija arriba al desplazarse, marca el capítulo visible y, en el teléfono, pliega los enlaces
-         en un menú; el «Comprar» corto completa su nombre con el modelo (aria-label). -->
-    <nav class="aura-localnav" aria-label="auraPad" data-aura-localnav>
+         aura-ui.js la fija arriba al desplazarse y marca el capítulo visible; el «Comprar» corto completa su nombre
+         con el modelo (aria-label). Llega ya plegable (.has-menu y el chevrón en el HTML, sin salto al cargar):
+         mientras los enlaces no caben (teléfono y tableta), el chevrón los despliega en un menú. -->
+    <nav class="aura-localnav has-menu" aria-label="auraPad" data-aura-localnav>
       <div class="aura-container aura-localnav__inner">
         <a class="aura-localnav__title" href="aurapad.html">auraPad</a>
-        <div class="aura-localnav__links">
+        <button type="button" class="aura-localnav__toggle" aria-expanded="false" aria-controls="localnav-secciones" aria-label="Secciones de auraPad"><i class="bi bi-chevron-down" aria-hidden="true"></i></button>
+        <div class="aura-localnav__links" id="localnav-secciones">
           <a class="aura-localnav__link" href="#modelos">Modelos</a>
           <a class="aura-localnav__link" href="#diseno">Diseño</a>
           <a class="aura-localnav__link" href="#pantalla">Pantalla</a>
@@ -102,7 +104,7 @@
           </div>
         </div>
         <div class="aura-hero__media">
-          <img class="aura-img" src="../img/aurapad-hero.webp" data-slot="aurapad-hero" width="1920" height="1080" alt="Tres auraPad en abanico sobre fondo negro: un Air azul y un Pro plata de espaldas, detrás de un Pro de frente con una nebulosa en la pantalla" loading="eager" fetchpriority="high" decoding="async">
+          <img class="aura-img" src="../img/aurapad-hero.webp" srcset="../img/400/aurapad-hero.webp 400w, ../img/800/aurapad-hero.webp 800w, ../img/aurapad-hero.webp 1920w" sizes="(min-width: 1024px) 960px, calc(100vw - 32px)" data-slot="aurapad-hero" width="1920" height="1080" alt="Tres auraPad en abanico sobre fondo negro: un Air azul y un Pro plata de espaldas, detrás de un Pro de frente con una nebulosa en la pantalla" loading="eager" fetchpriority="high" decoding="async">
         </div>
       </div>
     </section>
@@ -116,10 +118,17 @@
            de «reducir movimiento»; en el teléfono, los de m/ (versión vertical de 750 × 1100).
          - data-fit="contain": el fotograma entero sobre negro en cualquier ventana (no recorta la tableta). En
            el teléfono y en ventanas casi cuadradas, la base baja los textos left al pie, sobre el negro.
-         - Cuatro textos en tramos que no se solapan, cada uno donde el fotograma deja sitio: el titular y la
-           cifra abajo (la tableta de canto cruza el centro) y los dos últimos a la izquierda (la tableta
-           queda a la derecha). Entre la cifra y la pantalla, un tramo sin texto para ver cómo se levanta. -->
-    <section class="aura-scrub" id="intro" data-aura-scrub data-seq="../img/seq/aurapad-intro" data-frames="120" data-width="1600" data-height="900" data-mobile="true" data-length="360" data-fit="contain" aria-labelledby="intro-titulo">
+         - Tres textos en tramos que no se solapan, cada uno donde el fotograma deja sitio (seq.json), con 150 px
+           de fundido a cada lado (COMPONENTES.md §10 bis); 340 de largo: 2,4 pantallas pegada.
+           1. El titular con la cifra del grosor, abajo, mientras la tableta está de canto (f1–40: la lámina
+              cruza el centro).
+           (Sin texto mientras se levanta y se desplaza a la derecha, f40–60, con la pantalla aún apagada.)
+           2. «Se enciende…», a la izquierda, mientras se enciende la pantalla (0,5–0,83 = f60–100): termina
+              de entrar con ella (f63) y queda al 100 % unos 420 px.
+           3. El cierre, a la izquierda, con la tableta ya en tres cuartos (desde 0,87 = f104); sigue al 100 %
+              mientras el escenario sale.
+           La columna izquierda es más estrecha que la de la base (aurapad.css): así casi no pisa el bisel. -->
+    <section class="aura-scrub aurapad-escena" id="intro" data-aura-scrub data-seq="../img/seq/aurapad-intro" data-frames="120" data-width="1600" data-height="900" data-mobile="true" data-length="340" data-fit="contain" aria-labelledby="intro-titulo">
       <div class="aura-scrub__stage">
         <picture>
           <source media="(prefers-reduced-motion: reduce) and (max-width: 767.98px)" srcset="../img/seq/aurapad-intro/m/f-0120.webp" width="750" height="1100">
@@ -128,20 +137,16 @@
           <img class="aura-scrub__poster" src="../img/seq/aurapad-intro/poster.webp" width="1600" height="900" alt="auraPad Pro negro espacial sobre fondo negro: de canto, una lámina finísima que se levanta y enciende la pantalla con una aurora azul y violeta" loading="lazy" decoding="async">
         </picture>
         <canvas class="aura-scrub__canvas" aria-hidden="true"></canvas>
-        <div class="aura-scrub__text" data-from="0" data-to="0.24" data-pos="bottom">
+        <div class="aura-scrub__text" data-from="0" data-to="0.34" data-pos="bottom">
           <p class="aura-eyebrow aura-eyebrow--lg">auraPad Pro</p>
           <h2 class="aura-h1" id="intro-titulo">Una lámina de luz.</h2>
-          <p class="aura-lead">El auraPad más fino que hemos hecho. Y el más potente.</p>
+          <p class="aura-lead">5,1&nbsp;mm de grosor y 579&nbsp;gramos en el auraPad Pro 13″: el auraPad más fino que hemos hecho. Y el más potente.</p>
         </div>
-        <div class="aura-scrub__text" data-from="0.26" data-to="0.45" data-pos="bottom">
-          <h3 class="aura-h1">5,1&nbsp;mm.</h3>
-          <p class="aura-body">Es el grosor del auraPad Pro 13″, que pesa solo 579&nbsp;gramos. Casi desaparece en tus manos.</p>
-        </div>
-        <div class="aura-scrub__text" data-from="0.56" data-to="0.78" data-pos="left">
+        <div class="aura-scrub__text" data-from="0.5" data-to="0.83" data-pos="left">
           <h3 class="aura-h2">Se enciende. Y el negro sigue siendo negro.</h3>
           <p class="aura-body">Ultra Retina XDR con OLED en tándem: contraste de 2.000.000:1 y hasta 1.600&nbsp;nits en HDR.</p>
         </div>
-        <div class="aura-scrub__text" data-from="0.8" data-to="1" data-pos="left">
+        <div class="aura-scrub__text" data-from="0.87" data-to="1" data-pos="left">
           <h3 class="aura-h2">Tu estudio cabe en la mochila.</h3>
           <p class="aura-body">Chip AURA&nbsp;M5, auraPadOS&nbsp;27 y AURA Pencil Pro para dibujar, editar y montar allí donde llegue la idea.</p>
           <a class="aura-link" href="comprar.html?producto=aurapad-pro-13" data-aurapad-buy="aurapad-pro-13">Comprar auraPad Pro 13″</a>
@@ -181,11 +186,11 @@
         </header>
 
         <figure class="aurapad-canto" data-aura-reveal="fade">
-          <img class="aura-img" src="../img/aurapad-diseno.webp" data-slot="aurapad-diseno" width="1600" height="1200" alt="Canto inferior finísimo de un auraPad plateado, con el puerto USB‑C y las rejillas de altavoz, sobre fondo negro" loading="lazy" decoding="async">
-          <figcaption class="aura-caption">Unos pocos milímetros de aluminio, con sitio para el USB‑C y los altavoces.</figcaption>
+          <img class="aura-img" src="../img/aurapad-diseno.webp" srcset="../img/400/aurapad-diseno.webp 400w, ../img/800/aurapad-diseno.webp 800w, ../img/aurapad-diseno.webp 1600w" sizes="auto, (min-width: 1280px) 1180px, 92vw" data-slot="aurapad-diseno" width="1600" height="1200" alt="Canto inferior finísimo de un auraPad plateado, con el puerto USB-C y las rejillas de altavoz, sobre fondo negro" loading="lazy" decoding="async">
+          <figcaption class="aura-caption">Unos pocos milímetros de aluminio, con sitio para el USB-&#8288;C y los altavoces.</figcaption>
         </figure>
 
-        <ul class="aura-stats aura-stats--lg mt-5">
+        <ul class="aura-stats aura-stats--lg aurapad-fila">
           <li class="aura-stat aura-stat--lg" data-aura-reveal="stat" style="--i:0">
             <p class="aura-stat__pre">Solo</p>
             <p class="aura-stat__value">5,1<span class="aura-stat__unit">&nbsp;mm</span></p>
@@ -204,14 +209,14 @@
         </ul>
 
         <!-- Colores: una exhibición por línea (Pro y Air). Las muestras salen del catálogo; la foto por color
-             entra sola cuando el color está declarado en imageVariants de data.js (aquí, todos: traseras de cada
-             acabado). El <img> de partida es el del acabado de data-color, para que no haya fundido al cargar. -->
+             entra sola cuando el acabado tiene fotos en la galería por color de data.js (photos: la primera vista de
+             cada acabado; si no tiene, la del acabado por defecto, con la nota «Imagen en …»). El <img> de partida es el del acabado de data-color, para que no haya fundido al cargar. -->
         <div class="aura-grid aura-grid--2 aurapad-colors">
           <div class="aurapad-colors__item">
             <h3 class="aura-h3">auraPad Pro</h3>
             <div class="aura-colorway" data-aura-colorway="aurapad-pro-13" data-color="negro-espacial">
-              <div class="aura-gallery">
-                <img class="aura-img" src="../img/aurapad-pro-13-negro-espacial.webp" data-slot="aurapad-pro-13-negro-espacial" data-fallback="aurapad-pro-13" width="1600" height="1200" alt="Trasera negro espacial del auraPad Pro 13″, con el módulo de cámaras y el escáner LiDAR en la esquina, sobre fondo negro" loading="lazy" decoding="async">
+              <div class="aura-gallery" data-sizes="(min-width: 1200px) 462px, (min-width: 768px) 35vw, calc(100vw - 72px)">
+                <img class="aura-img" src="../img/aurapad-pro-negro-espacial-trasera.webp" srcset="../img/400/aurapad-pro-negro-espacial-trasera.webp 400w, ../img/800/aurapad-pro-negro-espacial-trasera.webp 800w, ../img/aurapad-pro-negro-espacial-trasera.webp 1600w" sizes="auto, (min-width: 1200px) 462px, (min-width: 768px) 35vw, calc(100vw - 72px)" data-slot="aurapad-pro-negro-espacial-trasera" data-fallback="aurapad-pro-13" width="1600" height="1200" alt="Trasera negro espacial del auraPad Pro 13″, con su módulo de cámaras en la esquina, sobre fondo negro" loading="lazy" decoding="async">
               </div>
               <fieldset class="aura-colorway__picker">
                 <legend class="visually-hidden">Acabados del auraPad Pro</legend>
@@ -223,8 +228,8 @@
           <div class="aurapad-colors__item">
             <h3 class="aura-h3">auraPad Air</h3>
             <div class="aura-colorway" data-aura-colorway="aurapad-air-13" data-color="azul">
-              <div class="aura-gallery">
-                <img class="aura-img" src="../img/aurapad-air-13.webp" data-slot="aurapad-air-13" width="1600" height="1200" alt="Trasera azul del auraPad Air 13″, con su única cámara en la esquina, sobre fondo negro" loading="lazy" decoding="async">
+              <div class="aura-gallery" data-sizes="(min-width: 1200px) 462px, (min-width: 768px) 35vw, calc(100vw - 72px)">
+                <img class="aura-img" src="../img/aurapad-air-13-azul-trasera.webp" srcset="../img/400/aurapad-air-13-azul-trasera.webp 400w, ../img/800/aurapad-air-13-azul-trasera.webp 800w, ../img/aurapad-air-13-azul-trasera.webp 1600w" sizes="auto, (min-width: 1200px) 462px, (min-width: 768px) 35vw, calc(100vw - 72px)" data-slot="aurapad-air-13-azul-trasera" data-fallback="aurapad-air-13" width="1600" height="1200" alt="Trasera azul del auraPad Air 13″, con su única cámara en la esquina y los tres puntos del conector, sobre fondo negro" loading="lazy" decoding="async">
               </div>
               <fieldset class="aura-colorway__picker">
                 <legend class="visually-hidden">Acabados del auraPad Air</legend>
@@ -248,11 +253,11 @@
             <p class="aura-body">Dos paneles OLED apilados en tándem suman su brillo para el HDR, con un contraste de 2.000.000:1. Y ProMotion ajusta la frecuencia de 10 a 120&nbsp;Hz según lo que haces: el trazo y el scroll van pegados al dedo.</p>
           </div>
           <div class="aura-split__media aura-media aura-media--halo m-0" data-aura-reveal="scale">
-            <img class="aura-img" src="../img/aurapad-pantalla.webp" data-slot="aurapad-pantalla" width="1600" height="1200" alt="Pantalla de un auraPad Pro en tres cuartos con una nebulosa azul y ámbar llena de estrellas, sobre fondo negro" loading="lazy" decoding="async">
+            <img class="aura-img" src="../img/aurapad-pantalla.webp" srcset="../img/400/aurapad-pantalla.webp 400w, ../img/800/aurapad-pantalla.webp 800w, ../img/aurapad-pantalla.webp 1600w" sizes="auto, (max-width: 991.98px) 88vw, (max-width: 1199.98px) 42vw, 532px" data-slot="aurapad-pantalla" width="1600" height="1200" alt="Pantalla de un auraPad Pro en tres cuartos con una nebulosa azul y ámbar llena de estrellas, sobre fondo negro" loading="lazy" decoding="async">
           </div>
         </div>
 
-        <ul class="aura-stats aura-stats--lg mt-5">
+        <ul class="aura-stats aura-stats--lg aurapad-fila">
           <li class="aura-stat aura-stat--lg" data-aura-reveal="stat" style="--i:0">
             <p class="aura-stat__pre">Hasta</p>
             <p class="aura-stat__value">1.600<span class="aura-stat__unit">&nbsp;nits</span></p>
@@ -270,7 +275,7 @@
           </li>
         </ul>
 
-        <div class="aura-grid aura-grid--2 mt-5">
+        <div class="aura-grid aura-grid--2 aurapad-fila">
           <div class="aura-feature aura-feature--inline" data-aura-reveal style="--i:0">
             <span class="aura-feature__icon"><i class="bi bi-brightness-alt-high" aria-hidden="true"></i></span>
             <h3 class="aura-feature__title">Vidrio nanotexturizado</h3>
@@ -297,11 +302,11 @@
             <a class="aura-link" href="#comparar">Ver especificaciones</a>
           </div>
           <div class="aura-split__media aura-media aura-media--halo m-0" data-aura-reveal="scale">
-            <img class="aura-img" src="../img/aurapad-chip.webp" data-slot="aurapad-chip" width="1600" height="1200" alt="Primer plano de la matriz de contactos de un chip sobre una placa oscura, con luz fría" loading="lazy" decoding="async">
+            <img class="aura-img" src="../img/aurapad-chip.webp" srcset="../img/400/aurapad-chip.webp 400w, ../img/800/aurapad-chip.webp 800w, ../img/aurapad-chip.webp 1600w" sizes="auto, (max-width: 991.98px) 88vw, (max-width: 1199.98px) 42vw, 532px" data-slot="aurapad-chip" width="1600" height="1200" alt="Primer plano de la matriz de contactos de un chip sobre una placa oscura, con luz fría" loading="lazy" decoding="async">
           </div>
         </div>
 
-        <ul class="aura-stats aura-stats--lg mt-5">
+        <ul class="aura-stats aura-stats--lg aurapad-fila">
           <li class="aura-stat aura-stat--lg" data-aura-reveal="stat" style="--i:0">
             <p class="aura-stat__pre">Hasta</p>
             <p class="aura-stat__value">10</p>
@@ -334,11 +339,11 @@
             <button class="aura-link" type="button" data-aura-sheet-open="caso-medir" aria-haspopup="dialog" aria-expanded="false" aria-controls="caso-medir">Ver cómo<span class="visually-hidden"> medir espacios con auraPad Pro</span></button>
           </div>
           <div class="aura-split__media aura-media aura-media--halo m-0" data-aura-reveal="scale">
-            <img class="aura-img" src="../img/aurapad-camaras.webp" data-slot="aurapad-camaras" width="1600" height="1200" alt="Módulo de cámaras de un auraPad Pro plateado, con el gran angular, el escáner LiDAR, el flash y el micrófono, sobre negro" loading="lazy" decoding="async">
+            <img class="aura-img" src="../img/aurapad-camaras.webp" srcset="../img/400/aurapad-camaras.webp 400w, ../img/800/aurapad-camaras.webp 800w, ../img/aurapad-camaras.webp 1600w" sizes="auto, (max-width: 991.98px) 88vw, (max-width: 1199.98px) 42vw, 532px" data-slot="aurapad-camaras" width="1600" height="1200" alt="Módulo de cámaras de un auraPad Pro plateado, con el gran angular, el escáner LiDAR, el flash y el micrófono, sobre negro" loading="lazy" decoding="async">
           </div>
         </div>
 
-        <div class="aura-grid aura-grid--3 mt-5">
+        <div class="aura-grid aura-grid--3 aurapad-fila">
           <div class="aura-feature aura-feature--card" data-aura-reveal style="--i:0">
             <span class="aura-feature__icon"><i class="bi bi-bounding-box-circles" aria-hidden="true"></i></span>
             <h3 class="aura-feature__title">Escáner LiDAR</h3>
@@ -366,14 +371,14 @@
           <div class="aura-split__copy">
             <p class="aura-eyebrow aura-eyebrow--mono">Batería y conexiones</p>
             <h2 class="aura-h1" id="bateria-titulo">Todo el día. Conectado a todo.</h2>
-            <p class="aura-body">Una carga da para la jornada entera, en clase o de viaje. Los auraPad Pro llevan Thunderbolt / USB&nbsp;4 para monitores y discos externos; el auraPad Air, USB‑C; y toda la gama, Wi‑Fi&nbsp;7, Bluetooth&nbsp;6 y 5G opcional con eSIM.</p>
+            <p class="aura-body">Una carga da para la jornada entera, en clase o de viaje. Los auraPad Pro llevan Thunderbolt / USB&nbsp;4 para monitores y discos externos; el auraPad Air, USB-&#8288;C; y toda la gama, Wi-&#8288;Fi&nbsp;7, Bluetooth&nbsp;6 y 5G opcional con eSIM.</p>
           </div>
           <div class="aura-split__media aura-media aura-media--halo m-0" data-aura-reveal="scale">
-            <img class="aura-img" src="../img/aurapad-bateria.webp" data-slot="aurapad-bateria" width="1600" height="1200" alt="Cable USB‑C blanco enrollado, con el conector en primer plano, sobre fondo negro" loading="lazy" decoding="async">
+            <img class="aura-img" src="../img/aurapad-bateria.webp" srcset="../img/400/aurapad-bateria.webp 400w, ../img/800/aurapad-bateria.webp 800w, ../img/aurapad-bateria.webp 1600w" sizes="auto, (max-width: 991.98px) 88vw, (max-width: 1199.98px) 42vw, 532px" data-slot="aurapad-bateria" width="1600" height="1200" alt="Cable USB-C blanco enrollado, con el conector en primer plano, sobre fondo negro" loading="lazy" decoding="async">
           </div>
         </div>
 
-        <ul class="aura-stats aura-stats--lg mt-5">
+        <ul class="aura-stats aura-stats--lg aurapad-fila">
           <li class="aura-stat aura-stat--lg" data-aura-reveal="stat" style="--i:0">
             <p class="aura-stat__pre">Hasta</p>
             <p class="aura-stat__value">10<span class="aura-stat__unit">&nbsp;h</span></p>
@@ -416,7 +421,7 @@
                     <button class="aura-link" type="button" data-aura-sheet-open="caso-ilustrar" aria-haspopup="dialog" aria-expanded="false" aria-controls="caso-ilustrar">Ver cómo<span class="visually-hidden"> ilustrar con auraPad</span></button>
                   </div>
                   <div class="aura-tile__media">
-                    <img class="aura-img" src="../img/aurapad-crear-ilustrar.webp" data-slot="aurapad-crear-ilustrar" width="1600" height="1200" alt="auraPad Pro con la ilustración de un gato atigrado a medio colorear y AURA Pencil al lado, sobre una alfombra oscura" loading="lazy" decoding="async">
+                    <img class="aura-img" src="../img/aurapad-crear-ilustrar.webp" srcset="../img/400/aurapad-crear-ilustrar.webp 400w, ../img/800/aurapad-crear-ilustrar.webp 800w, ../img/aurapad-crear-ilustrar.webp 1600w" sizes="auto, (max-width: 767.98px) 65vw, 375px" data-slot="aurapad-crear-ilustrar" width="1600" height="1200" alt="auraPad Pro con la ilustración de un gato atigrado a medio colorear y AURA Pencil al lado, sobre una alfombra oscura" loading="lazy" decoding="async">
                   </div>
                 </article>
               </li>
@@ -429,7 +434,7 @@
                     <button class="aura-link" type="button" data-aura-sheet-open="caso-video" aria-haspopup="dialog" aria-expanded="false" aria-controls="caso-video">Ver cómo<span class="visually-hidden"> editar vídeo con auraPad</span></button>
                   </div>
                   <div class="aura-tile__media">
-                    <img class="aura-img" src="../img/aurapad-crear-video.webp" data-slot="aurapad-crear-video" width="1600" height="1200" alt="Manos sujetando un auraPad Pro con una app de edición de vídeo abierta en su línea de tiempo, mientras eligen un clip con AURA Pencil" loading="lazy" decoding="async">
+                    <img class="aura-img" src="../img/aurapad-crear-video.webp" srcset="../img/400/aurapad-crear-video.webp 400w, ../img/800/aurapad-crear-video.webp 800w, ../img/aurapad-crear-video.webp 1600w" sizes="auto, (max-width: 767.98px) 65vw, 375px" data-slot="aurapad-crear-video" width="1600" height="1200" alt="Manos sujetando un auraPad Pro con una app de edición de vídeo abierta en su línea de tiempo, mientras eligen un clip con AURA Pencil" loading="lazy" decoding="async">
                   </div>
                 </article>
               </li>
@@ -442,7 +447,7 @@
                     <button class="aura-link" type="button" data-aura-sheet-open="caso-estudiar" aria-haspopup="dialog" aria-expanded="false" aria-controls="caso-estudiar">Ver cómo<span class="visually-hidden"> estudiar con auraPad</span></button>
                   </div>
                   <div class="aura-tile__media">
-                    <img class="aura-img" src="../img/aurapad-crear-estudiar.webp" data-slot="aurapad-crear-estudiar" width="1600" height="1200" alt="Mano con anillos subrayando con AURA Pencil un texto en la pantalla de un auraPad, en penumbra" loading="lazy" decoding="async">
+                    <img class="aura-img" src="../img/aurapad-crear-estudiar.webp" srcset="../img/400/aurapad-crear-estudiar.webp 400w, ../img/800/aurapad-crear-estudiar.webp 800w, ../img/aurapad-crear-estudiar.webp 1600w" sizes="auto, (max-width: 767.98px) 65vw, 375px" data-slot="aurapad-crear-estudiar" width="1600" height="1200" alt="Mano con anillos subrayando con AURA Pencil un texto en la pantalla de un auraPad, en penumbra" loading="lazy" decoding="async">
                   </div>
                 </article>
               </li>
@@ -455,7 +460,7 @@
                     <button class="aura-link" type="button" data-aura-sheet-open="caso-trabajar" aria-haspopup="dialog" aria-expanded="false" aria-controls="caso-trabajar">Ver cómo<span class="visually-hidden"> trabajar con auraPadOS&nbsp;27</span></button>
                   </div>
                   <div class="aura-tile__media">
-                    <img class="aura-img" src="../img/aurapad-crear-trabajar.webp" data-slot="aurapad-crear-trabajar" width="1600" height="1200" alt="auraPad Pro acoplado a un teclado blanco que lo sostiene en el aire, con ondas de luz ámbar en la pantalla, sobre una mesa oscura junto a una planta" loading="lazy" decoding="async">
+                    <img class="aura-img" src="../img/aurapad-crear-trabajar.webp" srcset="../img/400/aurapad-crear-trabajar.webp 400w, ../img/800/aurapad-crear-trabajar.webp 800w, ../img/aurapad-crear-trabajar.webp 1600w" sizes="auto, (max-width: 767.98px) 65vw, 375px" data-slot="aurapad-crear-trabajar" width="1600" height="1200" alt="auraPad Pro acoplado a un teclado blanco que lo sostiene en el aire, con ondas de luz ámbar en la pantalla, sobre una mesa oscura junto a una planta" loading="lazy" decoding="async">
                   </div>
                 </article>
               </li>
@@ -485,7 +490,7 @@
               <p class="aura-caption aurapad-compat" data-aurapad-compat="AURA Pencil Pro"><i class="bi bi-check2-circle" aria-hidden="true"></i><span>Compatible con toda la gama auraPad.</span></p>
             </div>
             <div class="aura-tile__media">
-              <img class="aura-img" src="../img/aurapad-accesorios-pencil.webp" data-slot="aurapad-accesorios-pencil" width="1600" height="1200" alt="AURA Pencil Pro al final de un trazo dorado recién dibujado en la pantalla de un auraPad Pro, en perspectiva sobre fondo negro" loading="lazy" decoding="async">
+              <img class="aura-img" src="../img/aurapad-accesorios-pencil.webp" srcset="../img/400/aurapad-accesorios-pencil.webp 400w, ../img/800/aurapad-accesorios-pencil.webp 800w, ../img/aurapad-accesorios-pencil.webp 1600w" sizes="auto, (max-width: 767.98px) 80vw, (max-width: 991.98px) 41vw, (max-width: 1199.98px) 24vw, 322px" data-slot="aurapad-accesorios-pencil" width="1600" height="1200" alt="AURA Pencil Pro al final de un trazo dorado recién dibujado en la pantalla de un auraPad Pro, en perspectiva sobre fondo negro" loading="lazy" decoding="async">
             </div>
           </article>
           <article class="aura-tile aura-tile--tall aura-tile--media-fit" data-aura-reveal style="--i:1">
@@ -496,7 +501,7 @@
               <p class="aura-caption aurapad-compat" data-aurapad-compat="Magic Keyboard"><i class="bi bi-check2-circle" aria-hidden="true"></i><span>Compatible con toda la gama auraPad.</span></p>
             </div>
             <div class="aura-tile__media">
-              <img class="aura-img" src="../img/aurapad-accesorios-teclado.webp" data-slot="aurapad-accesorios-teclado" width="1600" height="1200" alt="auraPad Pro acoplado a un Magic Keyboard blanco, abierto como un portátil, con ondas de luz azules y violetas en la pantalla" loading="lazy" decoding="async">
+              <img class="aura-img" src="../img/aurapad-accesorios-teclado.webp" srcset="../img/400/aurapad-accesorios-teclado.webp 400w, ../img/800/aurapad-accesorios-teclado.webp 800w, ../img/aurapad-accesorios-teclado.webp 1600w" sizes="auto, (max-width: 767.98px) 80vw, (max-width: 991.98px) 41vw, (max-width: 1199.98px) 24vw, 322px" data-slot="aurapad-accesorios-teclado" width="1600" height="1200" alt="auraPad Pro acoplado a un Magic Keyboard blanco, abierto como un portátil, con ondas de luz azules y violetas en la pantalla" loading="lazy" decoding="async">
             </div>
           </article>
           <article class="aura-tile aura-tile--tall aura-tile--media-fit" data-aura-reveal style="--i:2">
@@ -506,7 +511,7 @@
               <p class="aura-tile__text">Se sujeta con imanes, se pliega en atril para ver o para escribir y despierta el auraPad en cuanto la abres. Tan fina que la tableta sigue pareciendo una lámina.</p>
             </div>
             <div class="aura-tile__media">
-              <img class="aura-img" src="../img/aurapad-accesorio-funda.webp" data-slot="aurapad-accesorio-funda" width="1600" height="1200" alt="Funda Folio azul cerrada sobre un auraPad, de frente y en ligera perspectiva, sobre fondo negro" loading="lazy" decoding="async">
+              <img class="aura-img" src="../img/aurapad-accesorio-funda.webp" srcset="../img/400/aurapad-accesorio-funda.webp 400w, ../img/800/aurapad-accesorio-funda.webp 800w, ../img/aurapad-accesorio-funda.webp 1600w" sizes="auto, (max-width: 767.98px) 80vw, (max-width: 991.98px) 41vw, (max-width: 1199.98px) 24vw, 322px" data-slot="aurapad-accesorio-funda" width="1600" height="1200" alt="Funda Folio azul cerrada sobre un auraPad, de frente y en ligera perspectiva, sobre fondo negro" loading="lazy" decoding="async">
             </div>
           </article>
         </div>
@@ -520,7 +525,7 @@
         <div class="aura-split">
           <div class="aura-split__copy">
             <p class="aura-eyebrow aura-eyebrow--mono">Privacidad y medio ambiente</p>
-            <h2 class="aura-h2" id="responsable-titulo">Cuida de lo tuyo. Y de lo de todos.</h2>
+            <h2 class="aura-h1" id="responsable-titulo">Cuida de lo tuyo. Y de lo de todos.</h2>
             <div class="aura-stack" style="--stack:1.5rem">
               <div class="aura-stack" style="--stack:.5rem">
                 <h3 class="aura-h4">Tus datos, en tu auraPad.</h3>
@@ -534,7 +539,7 @@
             </div>
           </div>
           <div class="aura-split__media aura-media m-0" data-aura-reveal="scale">
-            <img class="aura-img" src="../img/aurapad-medio-ambiente.webp" data-slot="aurapad-medio-ambiente" width="1600" height="1200" alt="Fronda de helecho iluminada sobre fondo negro" loading="lazy" decoding="async">
+            <img class="aura-img" src="../img/aurapad-medio-ambiente.webp" srcset="../img/400/aurapad-medio-ambiente.webp 400w, ../img/800/aurapad-medio-ambiente.webp 800w, ../img/aurapad-medio-ambiente.webp 1600w" sizes="auto, (max-width: 991.98px) 88vw, (max-width: 1199.98px) 42vw, 532px" data-slot="aurapad-medio-ambiente" width="1600" height="1200" alt="Fronda de helecho iluminada sobre fondo negro" loading="lazy" decoding="async">
           </div>
         </div>
       </div>

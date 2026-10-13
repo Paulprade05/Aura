@@ -77,6 +77,11 @@
       lo largo que sea «Configurar» o la cuota.
    -------------------------------------------------------------------------- */
 .aura-carousel.index-shelf { --aura-slide: min(84%, 22rem); }
+/* En tableta caben dos justas: más estrechas, para que asome la tercera y se
+   vea que hay más (sin pasar del tope de 22 rem hacia 1000 px). */
+@media (min-width: 768px) and (max-width: 1023.98px) {
+  .aura-carousel.index-shelf { --aura-slide: min(42%, 22rem); }
+}
 .index-shelf .aura-carousel__slide { display: flex; }
 .index-shelf .aura-product-card { flex: 1 1 auto; }
 /* El pie de la tarjeta (precio arriba, botón debajo en estas tarjetas
@@ -95,6 +100,15 @@
 /* Las tres cifras van en el panel de cristal de la base
    (.aura-media__overlay--glass), igual que en acerca: se miden con el panel. */
 .index-about-media { aspect-ratio: 4 / 3; }
+/* La foto de la sede se funde con el negro por abajo y por los lados (el
+   anillo de luz sale por la izquierda), como en el héroe de acerca: sin
+   corte duro contra el borde redondeado. */
+.index-about-media > .aura-img {
+  -webkit-mask-image: linear-gradient(to top, transparent 0, #000 22%), linear-gradient(to right, transparent 0, #000 10%, #000 88%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to top, transparent 0, #000 22%), linear-gradient(to right, transparent 0, #000 10%, #000 88%, transparent);
+  mask-composite: intersect;
+}
 @media (max-width: 575.98px) {
   .index-about-media {
     aspect-ratio: auto;

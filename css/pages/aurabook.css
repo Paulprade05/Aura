@@ -9,6 +9,30 @@
    sueltos ya los resuelve la base.
    ========================================================================== */
 
+/* Lema del héroe: en el teléfono, el corto (el entero dejaba «AURA.» sola en
+   la tercera línea a 390 px), con cada frase en su línea («Increíblemente
+   fino.» / «Tan AURA.»). El que no toca no se pinta ni se lee. */
+.aurabook-lema-corto { display: none; }
+@media (max-width: 575.98px) {
+  .aurabook-lema { display: none; }
+  .aurabook-lema-corto,
+  .aurabook-lema-corto > span { display: block; }
+}
+
+/* Héroe de la escena en su versión estática: centrado, como el de auraPhone
+   y auraPad (.aura-hero--center) y como en la escena en marcha. */
+.aurabook-intro .aura-scrub__text:has(> h1) { justify-items: center; text-align: center; }
+.aurabook-intro .aura-scrub__text:has(> h1) .aura-hero__actions { justify-content: center; }
+
+/* Versión estática de la escena (sin aura-core.js, con «reducir movimiento» o
+   «ahorro de datos»): desde 992 px los textos que siguen al póster van
+   centrados bajo él, como el héroe, en lugar de una columna de 40 rem a la
+   izquierda con más de 500 px vacíos al lado. Con la escena en marcha mandan
+   las reglas de la base (más específicas). */
+@media (min-width: 992px) {
+  .aurabook-intro .aura-scrub__text { justify-items: center; text-align: center; }
+}
+
 /* Precio + cuota (+ disponibilidad): un único bloque, sin el hueco de
    .aura-stack entre líneas que se leen juntas. */
 .aurabook-price {
@@ -18,9 +42,11 @@
 
 /* Ritmo dentro de un capítulo: la fila de cifras, la foto ancha, la nota y
    los bloques secundarios se separan de lo anterior lo mismo en todas las
-   secciones (más aire en escritorio, como las páginas de producto). */
-.aurabook-stats { margin-top: clamp(2.5rem, 6vw, 4.5rem); }
-.aurabook-block { margin-top: clamp(4rem, 9vw, 7rem); }
+   secciones (más aire en escritorio, como las páginas de producto). Las
+   cifras y los bloques secundarios, con los tokens de aura.css: el mismo
+   ritmo en las cuatro familias. */
+.aurabook-stats { margin-top: var(--space-stats, clamp(2.5rem, 5vw, 4rem)); }
+.aurabook-block { margin-top: var(--space-block, clamp(3.5rem, 8vw, 6.5rem)); }
 .aurabook-wide {
   max-width: 60rem;
   margin: clamp(1rem, 3vw, 2rem) auto 0;

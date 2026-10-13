@@ -35,7 +35,7 @@
 
   <!-- Iconos: favicon (ICO y PNG), icono de la pantalla de inicio y manifiesto de la aplicación web -->
   <link rel="icon" href="../favicon.ico" sizes="any">
-  <link rel="icon" type="image/png" href="../img/aura.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="../img/icon-192.png">
   <link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
   <link rel="manifest" href="../site.webmanifest">
   <!-- Manifiesto: por file:// (doble clic) el navegador lo bloquearía por CORS con un error en la consola, así que ahí se retira -->
@@ -65,11 +65,13 @@
   <main id="contenido">
 
     <!-- Barra local: segundo <nav>, con nombre propio (aria-label); salta a las secciones de esta página.
-         aura-ui.js la fija arriba al desplazarse y marca la sección visible. -->
-    <nav class="aura-localnav" aria-label="Acerca de AURA" data-aura-localnav>
+         aura-ui.js la fija arriba al desplazarse y marca la sección visible. Llega ya plegable (.has-menu y el
+         chevrón en el HTML, sin salto al cargar): mientras los enlaces no caben, el chevrón los despliega en un menú. -->
+    <nav class="aura-localnav has-menu" aria-label="Acerca de AURA" data-aura-localnav>
       <div class="aura-container aura-localnav__inner">
         <a class="aura-localnav__title" href="acerca.html">Acerca de AURA</a>
-        <div class="aura-localnav__links">
+        <button type="button" class="aura-localnav__toggle" aria-expanded="false" aria-controls="localnav-secciones" aria-label="Secciones de Acerca de AURA"><i class="bi bi-chevron-down" aria-hidden="true"></i></button>
+        <div class="aura-localnav__links" id="localnav-secciones">
           <a class="aura-localnav__link" href="#historia">Historia</a>
           <a class="aura-localnav__link" href="#valores">Valores</a>
           <a class="aura-localnav__link" href="#newsroom">Newsroom</a>
@@ -93,7 +95,7 @@
         </div>
         <figure class="aura-hero__media aura-media aura-media--fill aura-media--halo acerca-hero__media">
           <span class="aura-media__tag">Cupertino / 37,3349°&nbsp;N</span>
-          <img class="aura-img" src="../img/acerca-hero.webp" data-slot="acerca-hero" width="1600" height="1200" alt="Edificio de techo circular de noche, con un anillo de luz azulada que recorre todo su borde" loading="eager" fetchpriority="high" decoding="async">
+          <img class="aura-img" src="../img/acerca-hero.webp" srcset="../img/400/acerca-hero.webp 400w, ../img/800/acerca-hero.webp 800w, ../img/acerca-hero.webp 1600w" sizes="(max-width: 575.98px) 90vw, (max-width: 991.98px) 90vw, (max-width: 1199.98px) 35vw, 580px" data-slot="acerca-hero" width="1600" height="1200" alt="Edificio de techo circular de noche, con un anillo de luz azulada que recorre todo su borde" loading="eager" fetchpriority="high" decoding="async">
           <!-- Las cifras van sobre la foto en un panel de material, como en el prototipo -->
           <figcaption class="aura-media__overlay aura-media__overlay--glass acerca-hero__cifras">
             <ul class="aura-stats" aria-label="AURA en cifras">
@@ -157,7 +159,7 @@
               <p class="aura-stat__label">Años en la encrucijada</p>
             </div>
             <figure class="aura-media aura-media--frame m-0" data-aura-reveal="scale">
-              <img class="aura-img" src="../img/acerca-historia.webp" data-slot="acerca-historia" width="1600" height="1200" alt="Un ordenador antiguo de color beige, con monitor de tubo y teclado integrado, iluminado en la penumbra" loading="lazy" decoding="async">
+              <img class="aura-img" src="../img/acerca-historia.webp" srcset="../img/400/acerca-historia.webp 400w, ../img/800/acerca-historia.webp 800w, ../img/acerca-historia.webp 1600w" sizes="auto, (max-width: 575.98px) 86vw, (max-width: 991.98px) 42vw, (max-width: 1199.98px) 39vw, 507px" data-slot="acerca-historia" width="1600" height="1200" alt="Un ordenador antiguo de color beige, con monitor de tubo y teclado integrado, iluminado en la penumbra" loading="lazy" decoding="async">
               <figcaption class="aura-media__caption">Un AURA de los años 80, en el archivo de Cupertino. Todavía arranca.</figcaption>
             </figure>
           </aside>
@@ -200,7 +202,7 @@
                 <a class="aura-link" href="soporte.html?tema=accesibilidad#contacto">Pedir ayuda con la accesibilidad</a>
               </div>
               <div class="aura-tile__media">
-                <img class="aura-img" src="../img/acerca-accesibilidad.webp" data-slot="acerca-accesibilidad" width="1600" height="1200" alt="Dos manos sostienen un auraPhone y un dedo se acerca al teclado de la pantalla, sobre fondo oscuro" loading="lazy" decoding="async">
+                <img class="aura-img" src="../img/acerca-accesibilidad.webp" srcset="../img/400/acerca-accesibilidad.webp 400w, ../img/800/acerca-accesibilidad.webp 800w, ../img/acerca-accesibilidad.webp 1600w" sizes="auto, (max-width: 575.98px) 79vw, (max-width: 991.98px) 38vw, (max-width: 1199.98px) 39vw, 522px" data-slot="acerca-accesibilidad" width="1600" height="1200" alt="Dos manos sostienen un auraPhone y un dedo se acerca al teclado de la pantalla, sobre fondo oscuro" loading="lazy" decoding="async">
               </div>
             </article>
 
@@ -236,7 +238,7 @@
                 <a class="aura-link" href="soporte.html?tema=responsabilidad#contacto">Contactar con el equipo</a>
               </div>
               <div class="aura-tile__media">
-                <img class="aura-img" src="../img/acerca-proveedores.webp" data-slot="acerca-proveedores" width="1600" height="1200" alt="Primer plano de una placa base azul oscuro sin componentes, con pistas y contactos dorados" loading="lazy" decoding="async">
+                <img class="aura-img" src="../img/acerca-proveedores.webp" srcset="../img/400/acerca-proveedores.webp 400w, ../img/800/acerca-proveedores.webp 800w, ../img/acerca-proveedores.webp 1600w" sizes="auto, (max-width: 575.98px) 79vw, (max-width: 991.98px) 38vw, (max-width: 1199.98px) 39vw, 522px" data-slot="acerca-proveedores" width="1600" height="1200" alt="Primer plano de una placa base azul oscuro sin componentes, con pistas y contactos dorados" loading="lazy" decoding="async">
               </div>
             </article>
           </div>
@@ -259,7 +261,7 @@
         <div class="aura-grid aura-grid--3 acerca-newsroom">
           <article class="aura-tile acerca-nota" aria-labelledby="nota-1-titulo" data-aura-reveal>
             <div class="aura-tile__media acerca-nota__media">
-              <img class="aura-img" src="../img/acerca-newsroom-1.webp" data-slot="acerca-newsroom-1" width="1600" height="1200" alt="Vista aérea de una planta solar que refleja la luz dorada del atardecer bajo un cielo con nubes" loading="lazy" decoding="async">
+              <img class="aura-img" src="../img/acerca-newsroom-1.webp" srcset="../img/400/acerca-newsroom-1.webp 400w, ../img/800/acerca-newsroom-1.webp 800w, ../img/acerca-newsroom-1.webp 1600w" sizes="auto, (max-width: 575.98px) 79vw, (max-width: 991.98px) 36vw, (max-width: 1199.98px) 24vw, 322px" data-slot="acerca-newsroom-1" width="1600" height="1200" alt="Vista aérea de una planta solar que refleja la luz dorada del atardecer bajo un cielo con nubes" loading="lazy" decoding="async">
             </div>
             <div class="aura-tile__copy">
               <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">Nota de prensa</p>
@@ -272,7 +274,7 @@
 
           <article class="aura-tile acerca-nota" aria-labelledby="nota-2-titulo" data-aura-reveal style="--i:1">
             <div class="aura-tile__media acerca-nota__media">
-              <img class="aura-img" src="../img/acerca-newsroom-2.webp" data-slot="acerca-newsroom-2" width="1600" height="1200" alt="Un procesador visto por su cara de contactos dorados, apoyado sobre una superficie negra" loading="lazy" decoding="async">
+              <img class="aura-img" src="../img/acerca-newsroom-2.webp" srcset="../img/400/acerca-newsroom-2.webp 400w, ../img/800/acerca-newsroom-2.webp 800w, ../img/acerca-newsroom-2.webp 1600w" sizes="auto, (max-width: 575.98px) 79vw, (max-width: 991.98px) 36vw, (max-width: 1199.98px) 24vw, 322px" data-slot="acerca-newsroom-2" width="1600" height="1200" alt="Un procesador visto por su cara de contactos dorados, apoyado sobre una superficie negra" loading="lazy" decoding="async">
             </div>
             <div class="aura-tile__copy">
               <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">Nota de prensa</p>
@@ -285,7 +287,7 @@
 
           <article class="aura-tile acerca-nota" aria-labelledby="nota-3-titulo" data-aura-reveal style="--i:2">
             <div class="aura-tile__media acerca-nota__media">
-              <img class="aura-img" src="../img/acerca-newsroom-3.webp" data-slot="acerca-newsroom-3" width="1600" height="1200" alt="El módulo de triple cámara de un auraPhone Pro negro surge de la oscuridad con un destello de luz" loading="lazy" decoding="async">
+              <img class="aura-img" src="../img/acerca-newsroom-3.webp" srcset="../img/400/acerca-newsroom-3.webp 400w, ../img/800/acerca-newsroom-3.webp 800w, ../img/acerca-newsroom-3.webp 1600w" sizes="auto, (max-width: 575.98px) 79vw, (max-width: 991.98px) 36vw, (max-width: 1199.98px) 24vw, 322px" data-slot="acerca-newsroom-3" width="1600" height="1200" alt="El módulo de triple cámara de un auraPhone Pro negro surge de la oscuridad con un destello de luz" loading="lazy" decoding="async">
             </div>
             <div class="aura-tile__copy">
               <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">Nota de prensa</p>
@@ -306,7 +308,7 @@
         <div class="aura-split">
           <div class="aura-split__copy">
             <p class="aura-eyebrow aura-eyebrow--mono">Oportunidades / Empleo</p>
-            <h2 class="aura-h2" id="oportunidades-titulo">Trabaja donde las esquinas se redondean a mano.</h2>
+            <h2 class="aura-h1" id="oportunidades-titulo">Trabaja donde las esquinas se redondean a mano.</h2>
             <p class="aura-body">Buscamos personas con criterio, curiosidad y una tolerancia razonable al minimalismo. Si te emociona quitar cosas hasta que solo quede lo esencial, ya hablas nuestro idioma.</p>
             <ul class="aura-checklist">
               <li>Formación continua y un mentor que no cree en las reuniones largas</li>
@@ -318,8 +320,8 @@
             </div>
             <p class="aura-caption aura-caption--muted">Te llevamos al formulario de contacto con el tema «Empleo» ya elegido. Las candidaturas, como todo en AURA, son de demostración.</p>
           </div>
-          <div class="aura-split__media aura-media aura-media--fill aura-media--frame acerca-oportunidades__media" data-aura-reveal="scale">
-            <img class="aura-img" src="../img/acerca-oportunidades.webp" data-slot="acerca-oportunidades" width="1600" height="1200" alt="Un equipo revisa diseños de pantallas en un portátil, ante una estantería iluminada con luz cálida" loading="lazy" decoding="async">
+          <div class="aura-split__media aura-media aura-media--fill acerca-oportunidades__media" data-aura-reveal="scale">
+            <img class="aura-img" src="../img/acerca-oportunidades.webp" srcset="../img/400/acerca-oportunidades.webp 400w, ../img/800/acerca-oportunidades.webp 800w, ../img/acerca-oportunidades.webp 1600w" sizes="auto, (max-width: 575.98px) 86vw, (max-width: 991.98px) 86vw, (max-width: 1199.98px) 41vw, 532px" data-slot="acerca-oportunidades" width="1600" height="1200" alt="Un equipo revisa diseños de pantallas en un portátil, ante una estantería iluminada con luz cálida" loading="lazy" decoding="async">
           </div>
         </div>
 

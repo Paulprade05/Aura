@@ -12,6 +12,9 @@
      3. Se sincroniza la URL (history.replaceState) para compartir o recargar;
         se conserva ?hoy=AAAA-MM-DD (simulación de fecha para pruebas).
 
+   Galería: todas las vistas del acabado elegido (AURA.catalog.views), con
+   una tira de miniaturas debajo; al cambiar de acabado vuelve a la primera.
+
    Acción principal según AURA.catalog.availability(producto):
      disponible   → «Añadir a la bolsa»
      reserva      → «Reservar» (se entrega el día del lanzamiento)
@@ -66,6 +69,7 @@
     galeria: q('[data-c-galeria]'),
     galeriaPie: q('[data-c-galeria-pie]'),
     galeriaNota: q('[data-c-galeria-nota]'),
+    vistas: q('[data-c-vistas]'),
     form: q('#configurador'),
     familias: q('[data-c-familias]'),
     modelos: q('[data-c-modelos]'),
@@ -99,6 +103,7 @@
     avisadoTexto: q('[data-c-avisado-texto]'),
     seguir: q('[data-c-seguir]'),
     barraNombre: q('[data-c-barra-nombre]'),
+    barraColor: q('[data-c-barra-color]'),
     barraPrecio: q('[data-c-barra-precio]'),
     barraCuota: q('[data-c-barra-cuota]'),
     anuncio: q('[data-c-anuncio]'),
@@ -639,19 +644,102 @@
   }
 
   /* ------------------------------------------------------------------------
-     Galería: la foto del modelo en el acabado elegido.
-     Solo hay foto por color si data.js la declara (imageVariants): casi
-     siempre, al tocar otro color, la foto es la misma y NO se funde nada; se
-     actualizan su alt y la nota «Imagen en azul glacial · Tu acabado: negro».
-     Cuando la foto cambia de verdad (otro modelo, o un color con foto propia),
-     la nueva se monta encima, invisible, y en cuanto está decodificada se funde
-     sobre la anterior mientras esta se funde a cero (fundido cruzado, sin
-     temporizadores de espera: la vieja sigue a la vista hasta entonces). Son
-     transiciones de opacidad, así que un cambio nuevo parte del valor en curso;
-     volver a la foto que se estaba yendo la recupera sin pedir nada.
+     Galería: las fotos del modelo en el acabado elegido.
+     Cada acabado puede tener varias vistas (data.js: photos; las da
+     AURA.catalog.views): la tira bajo la galería enseña una miniatura por
+     vista y la elegida se ve en grande. Al cambiar de acabado o de modelo se
+     vuelve a la primera. Si el acabado no tiene fotos propias, se ven las del
+     acabado por defecto y la nota lo dice («Imagen en azul glacial · Tu
+     acabado: negro»). Sin views() en el catálogo, una sola foto, como antes.
+     Cuando la foto cambia de verdad, la nueva se monta encima, invisible, y en
+     cuanto está decodificada se funde sobre la anterior mientras esta se funde
+     a cero (fundido cruzado, sin temporizadores de espera: la vieja sigue a la
+     vista hasta entonces). Son transiciones de opacidad, así que un cambio
+     nuevo parte del valor en curso; volver a la foto que se estaba yendo la
+     recupera sin pedir nada. Si la foto es la misma, solo cambia su alt.
      ------------------------------------------------------------------------ */
 
-  function infoImagen() { return cat.image(estado.producto, estado.colorId); }
+  var IMG = A.isHtmlDir === false ? 'img/' : '../img/';
+  var vistas = [];            // las del acabado elegido: [{ slot, vista, label, alt, exact, color }]
+  var vistaActual = 0;
+
+  /* Nombre de cada miniatura: el del catálogo («Vista trasera», «Estuche
+     abierto»…: views().aria) o, si faltara, su etiqueta o su número. */
+  function nombreVista(v, i) { return v.aria || v.label || 'Vista ' + (i + 1); }
+
+  /* Las vistas de un modelo en un acabado; sin views() (o sin fotos), la
+     foto de siempre como única vista. */
+  function vistasDe(p, colorId) {
+    var vs = [];
+    if (typeof cat.views === 'function') {
+      try { vs = list(cat.views(p, colorId)).filter(function (v) { return v && v.slot; }); } catch (e) { vs = []; }
+    }
+    if (vs.length) { return vs; }
+    var info = cat.image(p, colorId);
+    return info.slot ? [{ slot: info.slot, fallback: info.fallback, vista: info.vista || '', label: '', alt: info.alt, exact: info.exact, color: info.color }] : [];
+  }
+
+  /* La fila de miniaturas se reserva si algún modelo de la familia tiene
+     varias vistas en algún acabado: cambiar de color o de modelo no la hace
+     aparecer ni irse (las muestras de debajo no se mueven bajo el dedo). */
+  function reservarVistas(p) {
+    return cat.products(p.family).some(function (m) {
+      var cs = list(m.colors);
+      return (cs.length ? cs : [{ id: '' }]).some(function (c) { return vistasDe(m, c.id).length > 1; });
+    });
+  }
+
+  /* La vista a la vista: { slot, fallback, exact, color, alt }. El respaldo
+     (la foto de siempre) lo da catalog.image(producto, acabado, vista). */
+  function infoImagen() {
+    var v = vistas[vistaActual] || vistas[0];
+    if (!v) { return cat.image(estado.producto, estado.colorId); }
+    var base = cat.image(estado.producto, estado.colorId, v.vista || undefined) || {};
+    return {
+      slot: v.slot,
+      fallback: v.fallback || (base.slot === v.slot ? base.fallback : ''),
+      exact: v.exact !== false,
+      color: v.color || null,
+      alt: v.alt || ''
+    };
+  }
+
+  /* Tira de miniaturas: la pinta de nuevo al cambiar de acabado o de modelo
+     (el foco nunca está en ella entonces: está en la muestra o el modelo). */
+  function pintarVistas() {
+    var p = estado.producto;
+    vistas = vistasDe(p, estado.colorId);
+    vistaActual = 0;
+    var varias = vistas.length > 1;
+    el.galeria.classList.toggle('has-vistas', varias);
+    if (!el.vistas) { return; }
+    el.vistas.hidden = !reservarVistas(p);
+    el.vistas.classList.toggle('is-off', !varias);
+    el.vistas.setAttribute('aria-label', 'Vistas ' + gram(p).del + ' ' + p.name);
+    el.vistas.innerHTML = !varias ? '' : vistas.map(function (v, i) {
+      /* La miniatura de 240 × 180 (img/thumbs/); si aún no existe, la foto grande. */
+      return '<button class="comprar-vista" type="button" data-c-vista="' + i + '" aria-pressed="' + (i === vistaActual) + '"' +
+          ' tabindex="' + (i === vistaActual ? '0' : '-1') + '" aria-label="' + esc(nombreVista(v, i)) + '">' +
+          '<img class="comprar-vista__img" src="' + IMG + 'thumbs/' + esc(v.slot) + '.webp" data-c-vista-hueco="' + esc(v.slot) + '"' +
+            ' width="240" height="180" alt="" loading="lazy" decoding="async">' +
+        '</button>';
+    }).join('');
+  }
+
+  /* Elige la vista i: la tira lo marca (un solo punto de tabulación, en la
+     elegida) y la galería la funde sobre la anterior. */
+  function elegirVista(i, opciones) {
+    opciones = opciones || {};
+    if (!vistas[i] || i === vistaActual) { return; }
+    vistaActual = i;
+    var botones = el.vistas ? qa('[data-c-vista]', el.vistas) : [];
+    botones.forEach(function (b, k) {
+      b.setAttribute('aria-pressed', String(k === i));
+      b.tabIndex = k === i ? 0 : -1;
+    });
+    if (opciones.foco && botones[i]) { botones[i].focus(); }
+    mostrarImagen();
+  }
 
   /* El alt describe la foto real (catálogo); si faltara, modelo y acabado. */
   function altDe(info) {
@@ -680,24 +768,40 @@
        móvil) no se mueven bajo el dedo al aparecer o irse la nota. */
     el.galeriaNota.hidden = !(cat.image(p).color && list(p.colors).length > 1);
     el.galeriaNota.classList.toggle('is-off', !otro);
-    el.galeriaNota.innerHTML = otro
-      ? '<span class="aura-swatch-list__dot" style="--swatch:' + esc(info.color.hex) + '" aria-hidden="true"></span>' +
-        '<span>Imagen en ' + esc(info.color.name.toLowerCase()) + SEP + 'Tu acabado: ' + esc(color.name.toLowerCase()) + '</span>'
+    /* Sin nada que decir, la nota guarda (invisible) la más larga de este
+       modelo: en el teléfono «Imagen en blanco estelar · Tu acabado: cielo
+       nocturno» ocupa dos líneas, y su sitio ya está hecho al elegir ese color. */
+    var texto = otro ? notaImagen(info.color, color) : list(p.colors).map(function (c) {
+      var i = cat.image(p, c.id);
+      return i && !i.exact && i.color && i.color.id !== c.id ? notaImagen(i.color, c) : '';
+    }).sort(function (a, b) { return b.length - a.length; })[0] || '';
+    el.galeriaNota.innerHTML = texto
+      ? '<span class="aura-swatch-list__dot" style="--swatch:' + esc((otro ? info.color : color || {}).hex || '') + '" aria-hidden="true"></span>' +
+        '<span>' + esc(texto) + '</span>'
       : '';
+  }
+  function notaImagen(visto, elegido) {
+    return 'Imagen en ' + visto.name.toLowerCase() + SEP + 'Tu acabado: ' + elegido.name.toLowerCase();
   }
 
   /* El fundido cruzado es el de la base (AURA.ui.gallery, §8 de COMPONENTES):
      la misma foto solo cambia su alt; otra se monta encima, invisible, y se
      funde sobre la anterior en cuanto está decodificada. La primera es la
-     imagen principal de la página: sin carga diferida y con prioridad. */
+     imagen principal de la página: sin carga diferida y con prioridad.
+     Otro acabado u otro modelo: sus vistas, desde la primera. */
   var galeria = null;
   function cambiarImagen() {
+    pintarVistas();
+    mostrarImagen();
+  }
+  function mostrarImagen() {
     var info = infoImagen();
     pintarPieImagen(info);
     if (!info.slot) { return; }
     galeria = galeria || (A.ui && A.ui.gallery ? A.ui.gallery(el.galeria) : null);
     if (galeria) {
-      galeria.show(info.slot, { fallback: info.fallback, alt: altDe(info), priority: true });
+      /* sizes: el hueco real de la galería (600 px desde 992; si no, el ancho de la pantalla menos los márgenes). */
+      galeria.show(info.slot, { fallback: info.fallback, alt: altDe(info), priority: true, sizes: '(min-width: 992px) 600px, calc(100vw - 32px)' });
       return;
     }
     var actual = qa('.aura-img, .aura-slot', el.galeria);
@@ -751,7 +855,15 @@
     if (el.entregaIcono) { el.entregaIcono.className = 'bi ' + e.icono; }
     el.entrega.parentNode.classList.toggle('comprar-entrega--fecha', e.fecha);
 
-    el.barraNombre.textContent = p.name + (nombreColor ? ' · ' + nombreColor : '');
+    /* Nombre y acabado, cada uno en su línea: el acabado elegido nunca queda
+       cortado tras el nombre («auraBook Pro 14″ · Negr…»). */
+    el.barraNombre.textContent = p.name;
+    if (el.barraColor) {
+      el.barraColor.textContent = nombreColor;
+      el.barraColor.hidden = !nombreColor;
+    } else if (nombreColor) {
+      el.barraNombre.textContent = p.name + ' · ' + nombreColor;
+    }
     el.barraPrecio.textContent = fmt.eur(c.total);
     if (el.barraCuota) { el.barraCuota.textContent = 'o ' + fmt.mes(c.total) + ' durante ' + meses() + NBSP + 'meses'; }
 
@@ -1045,6 +1157,7 @@
       actualizar({ silencio: true });
     });
     document.addEventListener('aura:bag', pintarAnadido);
+    enlazarVistas();
     /* Otra pestaña activa o cancela el aviso: esta se pone al día. */
     window.addEventListener('storage', function (e) {
       if (!e || e.key === CLAVE_AVISOS || e.key === null) { pintarAccion(); }
@@ -1052,9 +1165,62 @@
   }
 
 
+  /* Vistas: clic o toque en una miniatura; con el teclado, la tira es un solo
+     punto de tabulación y se recorre con ← → (vuelven al principio), Inicio y
+     Fin, que la eligen al llegar. En el teléfono, deslizar la foto a un lado
+     pasa a la vista siguiente o a la anterior (el gesto vertical sigue siendo
+     de la página: touch-action pan-y, escuchadores pasivos). */
+  function enlazarVistas() {
+    if (el.vistas) {
+      el.vistas.addEventListener('click', function (e) {
+        var b = e.target && e.target.closest ? e.target.closest('[data-c-vista]') : null;
+        if (b) { elegirVista(Number(b.getAttribute('data-c-vista'))); }
+      });
+      el.vistas.addEventListener('keydown', function (e) {
+        var n = vistas.length;
+        if (n < 2) { return; }
+        var destino = { ArrowRight: (vistaActual + 1) % n, ArrowLeft: (vistaActual - 1 + n) % n, Home: 0, End: n - 1 }[e.key];
+        if (destino === undefined) { return; }
+        e.preventDefault();
+        elegirVista(destino, { foco: true });
+      });
+      /* Una miniatura que aún no existe (img/thumbs/) pasa a la foto grande;
+         si tampoco está, se queda el botón vacío (la vista sigue disponible). */
+      el.vistas.addEventListener('error', function (e) {
+        var img = e.target;
+        if (!img || img.tagName !== 'IMG' || !img.hasAttribute('data-c-vista-hueco')) { return; }
+        if (img.hasAttribute('data-c-respaldo')) { img.hidden = true; return; }
+        img.setAttribute('data-c-respaldo', '');
+        img.src = IMG + img.getAttribute('data-c-vista-hueco') + '.webp';
+      }, true);
+    }
+    var toque = null;
+    el.galeria.addEventListener('pointerdown', function (e) {
+      toque = e.pointerType !== 'mouse' && vistas.length > 1 ? { id: e.pointerId, x: e.clientX, y: e.clientY } : null;
+    }, { passive: true });
+    el.galeria.addEventListener('pointercancel', function () { toque = null; }, { passive: true });
+    el.galeria.addEventListener('pointerup', function (e) {
+      if (!toque || e.pointerId !== toque.id) { return; }
+      var dx = e.clientX - toque.x;
+      var dy = e.clientY - toque.y;
+      toque = null;
+      if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy) * 1.5) { return; }
+      var i = vistaActual + (dx < 0 ? 1 : -1);
+      if (i >= 0 && i < vistas.length) { elegirVista(i); }
+    }, { passive: true });
+  }
+
+
   /* ------------------------------------------------------------------------
      Arranque
      ------------------------------------------------------------------------ */
+
+  /* Primer render terminado: la cabecera y el configurador se ven (comprar.css
+     los oculta sin sacarlos del flujo hasta ahora, para que no salten). */
+  function listo() {
+    var seccion = q('.comprar');
+    if (seccion) { seccion.classList.add('is-ready'); }
+  }
 
   function arrancar() {
     var params;
@@ -1113,5 +1279,7 @@
     enlazar();
   }
 
-  arrancar();
+  /* Al terminar el arranque (también sin modelos o si algo fallara), la
+     página se ve. */
+  try { arrancar(); } finally { listo(); }
 })();

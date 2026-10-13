@@ -246,10 +246,12 @@
     var a = l.availability && l.availability.status === 'reserva' ? l.availability : null;
     var release = a ? parseDay(a.release) : null;
     return '<li class="aura-bag-line aura-bag-line--compact">' +
-        '<div class="aura-bag-line__media">' + (img.slot ? AURA.html.img(img.slot, { fallback: img.fallback, alt: img.alt || l.name }) : '') + '</div>' +
+        '<div class="aura-bag-line__media">' + (img.slot ? AURA.html.img(img.slot, { fallback: img.fallback, alt: img.alt || l.name, sizes: '56px' }) : '') + '</div>' +
         '<div class="aura-bag-line__info">' +
           '<p class="aura-bag-line__name">' + esc(l.name) + '</p>' +
           (meta ? '<p class="aura-bag-line__meta">' + meta + '</p>' : '') +
+          /* Si la foto enseña otro acabado que el elegido, se dice (como en comprar y en la bolsa). */
+          (img.slot && img.exact === false && img.color ? '<p class="aura-bag-line__meta aura-bag-line__photo">Imagen en ' + esc(String(img.color.name).toLowerCase()) + '</p>' : '') +
           (release ? '<p class="aura-bag-line__meta checkout-line__reserva"><i class="bi bi-calendar-event" aria-hidden="true"></i><span>Reserva · llega a partir del ' + esc(shortDay(release)) + '</span></p>' : '') +
         '</div>' +
         '<div class="aura-bag-line__price">' +
@@ -603,9 +605,17 @@
     co('invitado').hidden = !!user;
     co('login').hidden = !!user;
     co('contacto').classList.toggle('is-single', !!user);
-    /* Con sesión no hay nada que elegir: solo confirmar el correo. */
-    var h = document.getElementById('paso-1-titulo');
-    if (h) { h.textContent = user ? '¿Dónde te enviamos la confirmación?' : '¿Cómo quieres continuar?'; }
+    /* Con sesión no hay nada que elegir: solo confirmar el correo (las dos
+       preguntas están en el HTML; sin ellas, se escribe la que toca). */
+    var tInvitado = co('titulo-invitado');
+    var tUsuario = co('titulo-usuario');
+    if (tInvitado && tUsuario) {
+      tInvitado.hidden = !!user;
+      tUsuario.hidden = !user;
+    } else {
+      var h = document.getElementById('paso-1-titulo');
+      if (h) { h.textContent = user ? '¿Dónde te enviamos la confirmación?' : '¿Cómo quieres continuar?'; }
+    }
     if (user) {
       setText('usuario-inicial', String(user.nombre || user.email || 'A').charAt(0).toUpperCase());
       setText('usuario-nombre', [user.nombre, user.apellidos].filter(Boolean).join(' ') || user.email);
@@ -1087,14 +1097,19 @@
      Inicio
      ------------------------------------------------------------------------ */
 
-  paintStatic();
-  applyMetodo(false);
-  applyPago(false);
-  paintContact();
-  paintLines();
-  paintDates();
-  paintTotals(false);
-  paintSteps();
+  try {
+    paintStatic();
+    applyMetodo(false);
+    applyPago(false);
+    paintContact();
+    paintLines();
+    paintDates();
+    paintTotals(false);
+    paintSteps();
+  } finally {
+    /* Primer render terminado: el resumen y las notas ya se ven (checkout.css). */
+    document.documentElement.classList.add('is-ready');
+  }
 
   if (AURA.storage && AURA.storage.persistent === false) {
     toast({ kind: 'warn', title: 'Este navegador no guarda datos', text: 'El pedido solo existirá mientras esta página esté abierta.' });

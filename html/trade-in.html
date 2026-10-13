@@ -35,7 +35,7 @@
 
   <!-- Iconos: favicon (ICO y PNG), icono de la pantalla de inicio y manifiesto de la aplicación web -->
   <link rel="icon" href="../favicon.ico" sizes="any">
-  <link rel="icon" type="image/png" href="../img/aura.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="../img/icon-192.png">
   <link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
   <link rel="manifest" href="../site.webmanifest">
   <!-- Manifiesto: por file:// (doble clic) el navegador lo bloquearía por CORS con un error en la consola, así que ahí se retira -->
@@ -65,20 +65,20 @@
   <main id="contenido" class="ti">
 
     <!-- ============ Héroe (bloque Trade In del prototipo de inicio) ============
-         El h1 de la página: trade-in.js escribe la cifra desde el catálogo. La foto es la imagen principal:
+         El h1 de la página, ya con la cifra (el tope de data.js): trade-in.js solo la cambia si el catálogo da otra, así no gana una línea al cargar. La foto es la imagen principal:
          sin carga diferida y con prioridad alta; sin leyenda, así que va sin <figure>. -->
     <section class="aura-hero aura-hero--split aura-hero--band ti-hero" aria-labelledby="ti-titulo">
       <div class="aura-container aura-hero__inner">
         <div class="aura-hero__copy">
           <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">AURA Trade In</p>
-          <h1 class="aura-h1" id="ti-titulo">Consigue <span data-ti-range>un descuento</span><sup class="aura-footnote-ref"><a href="#ti-nota-valores" id="ti-ref-valores" aria-label="Nota 1">1</a></sup> al entregar tu dispositivo anterior.</h1>
+          <h1 class="aura-h1" id="ti-titulo">Consigue <span data-ti-range>entre 30&nbsp;€ y 800&nbsp;€ de descuento</span><sup class="aura-footnote-ref"><a href="#ti-nota-valores" id="ti-ref-valores" aria-label="Nota 1">1</a></sup> al entregar tu dispositivo anterior.</h1>
           <p class="aura-lead">Lo reciclaremos de forma responsable o le daremos una segunda vida. Tú estrenas AURA; el planeta respira.</p>
           <div class="aura-hero__actions">
             <a class="aura-btn aura-btn--primary" href="#calculadora">Valorar mi dispositivo <i class="bi bi-arrow-right" aria-hidden="true"></i></a>
           </div>
         </div>
         <div class="aura-hero__media">
-          <img class="aura-img" src="../img/trade-in-hero.webp" data-slot="trade-in-hero" width="1600" height="1200" alt="El módulo de triple cámara de un auraPhone negro nuevo asoma de su caja abierta, sobre fondo negro" loading="eager" fetchpriority="high" decoding="async">
+          <img class="aura-img" src="../img/trade-in-hero.webp" srcset="../img/400/trade-in-hero.webp 400w, ../img/800/trade-in-hero.webp 800w, ../img/trade-in-hero.webp 1600w" sizes="(max-width: 575.98px) 90vw, (max-width: 991.98px) 67vw, (max-width: 1199.98px) 37vw, 472px" data-slot="trade-in-hero" width="1600" height="1200" alt="El módulo de triple cámara de un auraPhone negro nuevo asoma de su caja abierta, sobre fondo negro" loading="eager" fetchpriority="high" decoding="async">
         </div>
       </div>
     </section>
@@ -205,7 +205,7 @@
         <div class="aura-split aura-split--reverse">
           <div class="aura-split__copy">
             <p class="aura-eyebrow aura-eyebrow--mono">Medio ambiente</p>
-            <h2 class="aura-h2" id="planeta-titulo">Una segunda vida. O&nbsp;un reciclaje impecable. Nunca un cajón.</h2>
+            <h2 class="aura-h1" id="planeta-titulo">Una segunda vida. O&nbsp;un reciclaje impecable. Nunca un cajón.</h2>
             <p class="aura-body">Si tu dispositivo todavía tiene mucho que dar, lo reacondicionamos para otra persona. Si ya no, nuestros socios de reciclaje recuperan su aluminio, su cobalto y sus tierras raras para fabricar los próximos AURA.</p>
             <ul class="aura-checklist">
               <li>Borrado certificado de tus datos antes de cualquier otro paso</li>
@@ -215,12 +215,11 @@
             </ul>
             <a class="aura-link" href="acerca.html#medio-ambiente">Nuestro compromiso medioambiental</a>
           </div>
-          <div class="aura-split__media">
-            <figure class="aura-media aura-media--frame m-0" data-aura-reveal="scale">
-              <img class="aura-img" src="../img/trade-in-reciclaje.webp" data-slot="trade-in-reciclaje" width="1600" height="1200" alt="Un teléfono abierto deja ver el chasis, la batería y los circuitos, sobre una superficie oscura" loading="lazy" decoding="async">
-              <figcaption class="aura-media__caption">Cada material vuelve a la cadena: nada termina en un vertedero.</figcaption>
-            </figure>
-          </div>
+          <!-- Sin marco (como los bloques texto + imagen de las familias): la foto se funde con el negro y su pie va debajo -->
+          <figure class="aura-split__media m-0" data-aura-reveal="scale">
+            <img class="aura-img" src="../img/trade-in-reciclaje.webp" srcset="../img/400/trade-in-reciclaje.webp 400w, ../img/800/trade-in-reciclaje.webp 800w, ../img/trade-in-reciclaje.webp 1600w" sizes="auto, (max-width: 575.98px) 86vw, (max-width: 991.98px) 86vw, (max-width: 1199.98px) 41vw, 532px" data-slot="trade-in-reciclaje" width="1600" height="1200" alt="Un teléfono abierto deja ver el chasis, la batería y los circuitos, sobre una superficie oscura" loading="lazy" decoding="async">
+            <figcaption class="aura-caption ti-planeta__pie">Cada material vuelve a la cadena: nada termina en un vertedero.</figcaption>
+          </figure>
         </div>
         <ul class="aura-stats ti-stats">
           <li class="aura-stat aura-stat--card" data-aura-reveal><p class="aura-stat__value">100&nbsp;%</p><p class="aura-stat__label">De los dispositivos que recibimos se reutilizan o se reciclan</p></li>

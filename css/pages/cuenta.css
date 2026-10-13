@@ -26,7 +26,30 @@
 /* Vista «ya has iniciado sesión» del login */
 .cuenta-acceso__sesion > p { margin: 0; text-align: center; }
 
+/* Login y registro abiertos con sesión: aura-core.js marca .aura-has-session
+   en <html> desde el <head>, así la tarjeta nace con el marcado de quien ya
+   ha entrado (en el login, sus botones en lugar del formulario; en el
+   registro, el aviso) y no cambia de alto cuando llega el JS. El saludo con
+   el nombre lo escribe login.js: hasta entonces su sitio no se ve. Desde
+   .is-ready manda lo que escribe el JS (atributos hidden). */
+html.aura-has-session:not(.is-ready) :is(#login-form, #login-alt) { display: none !important; }
+html.aura-has-session:not(.is-ready) :is(#login-sesion, #registro-sesion)[hidden] { display: grid !important; }
+html.aura-has-session:not(.is-ready) :is(#login-titulo, #login-entradilla) {
+  visibility: hidden;
+  animation: aura-ready-fallback 0s 2.5s forwards;
+}
+/* «Ir a tu cuenta», en su propia línea: entre 740 y 880 px de ventana la frase
+   cabía en una con la fuente de reserva y en dos con Inter, y el formulario
+   bajaba 21 px al llegar la fuente. */
+#registro-sesion .aura-alert__text > a { display: block; width: fit-content; }
+
 /* ---- Cabecera de la cuenta ---------------------------------------------- */
+
+/* #cuenta-app está oculto hasta que cuenta.js pinta los datos: sin un alto
+   mínimo, el primer fotograma enseña el pie entero bajo la barra y luego lo
+   empuja fuera de la pantalla. Con una pantalla de alto, el pie ya empieza
+   fuera de ella. */
+.aura-js .cuenta-main { min-height: calc(100svh - var(--nav-h)); }
 
 .cuenta-hero { padding-bottom: clamp(2rem, 4vw, 3rem); }
 .cuenta-hero__head { gap: .75rem; margin-bottom: 0; }

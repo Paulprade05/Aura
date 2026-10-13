@@ -21,6 +21,15 @@
   align-content: end;
   min-height: min-content;
 }
+/* La foto de la sede (la misma que en inicio) se funde con el negro por
+   abajo y por los lados: el suelo iluminado, la esfera y el anillo de luz ya
+   no se cortan contra el borde redondeado. */
+.acerca-hero__media > .aura-img {
+  -webkit-mask-image: linear-gradient(to top, transparent 0, #000 22%), linear-gradient(to right, transparent 0, #000 10%, #000 88%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to top, transparent 0, #000 22%), linear-gradient(to right, transparent 0, #000 10%, #000 88%, transparent);
+  mask-composite: intersect;
+}
 /* El panel de cristal y sus cifras son los de la base
    (.aura-media__overlay--glass, como en inicio). Aquí solo cambia dónde va:
    en el flujo, en la misma celda que la foto (no en posición absoluta), con

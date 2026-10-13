@@ -332,10 +332,13 @@
   function paintStaticTexts() {
     var all = range(DEVICES);
     var cap = AURA.tradeIn.cap;
+    /* El HTML ya trae el rango de data.js: solo se reescribe si el catálogo da
+       otra cifra (así el titular no cambia de alto al cargar). */
     if (el.heroRange && all.hi) {
-      el.heroRange.textContent = all.lo < all.hi
+      var rango = all.lo < all.hi
         ? 'entre ' + fmt.eur0(all.lo) + ' y ' + fmt.eur0(all.hi) + ' de descuento'
         : 'hasta ' + fmt.eur0(all.hi) + ' de descuento';
+      if (el.heroRange.textContent !== rango) { el.heroRange.textContent = rango; }
     }
     var factors = CONDITIONS.map(function (c) { return String(c.label).toLowerCase() + ', el ' + pct(c.factor); });
     var capText = cap > 0 ? fmt.eur0(cap) + ' por dispositivo ni ' : '';

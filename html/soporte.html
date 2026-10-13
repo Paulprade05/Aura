@@ -35,7 +35,7 @@
 
   <!-- Iconos: favicon (ICO y PNG), icono de la pantalla de inicio y manifiesto de la aplicación web -->
   <link rel="icon" href="../favicon.ico" sizes="any">
-  <link rel="icon" type="image/png" href="../img/aura.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="../img/icon-192.png">
   <link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
   <link rel="manifest" href="../site.webmanifest">
   <!-- Manifiesto: por file:// (doble clic) el navegador lo bloquearía por CORS con un error en la consola, así que ahí se retira -->
@@ -62,11 +62,14 @@
   <!-- Contenido principal: buscador, temas, preguntas frecuentes, contacto y notas -->
   <main id="contenido">
 
-    <!-- Barra local (navegación secundaria de la página, con su propio nombre): anclas a las secciones y «Contactar» -->
-    <nav class="aura-localnav" aria-label="Soporte" data-aura-localnav>
+    <!-- Barra local (navegación secundaria de la página, con su propio nombre): anclas a las secciones y «Contactar».
+         Llega ya plegable (.has-menu y el chevrón en el HTML, sin salto al cargar): mientras los enlaces no caben,
+         el chevrón los despliega en un menú (aura-ui.js). -->
+    <nav class="aura-localnav has-menu" aria-label="Soporte" data-aura-localnav>
       <div class="aura-container aura-localnav__inner">
         <a class="aura-localnav__title" href="soporte.html">Soporte</a>
-        <div class="aura-localnav__links">
+        <button type="button" class="aura-localnav__toggle" aria-expanded="false" aria-controls="localnav-secciones" aria-label="Secciones de Soporte"><i class="bi bi-chevron-down" aria-hidden="true"></i></button>
+        <div class="aura-localnav__links" id="localnav-secciones">
           <a class="aura-localnav__link" href="#temas">Temas</a>
           <a class="aura-localnav__link" href="#preguntas">Preguntas</a>
         </div>
@@ -268,7 +271,7 @@
             <div class="aura-accordion__panel">
               <!-- Texto según la disponibilidad del día (AURA.catalog.availability); este es el de reserva sin fechas -->
               <p data-soporte-duo-estado>El auraPhone Duo se puede reservar unos días antes de su salida. Configúralo como cualquier otro auraPhone y pulsa «Reservar»: pagas al reservar y te lo enviamos para que llegue el día de su salida.</p>
-              <p><a href="comprar.html?producto=auraphone-duo" data-soporte-duo-cta>Configurar el auraPhone Duo</a></p>
+              <p><a class="aura-link aura-link--control" href="comprar.html?producto=auraphone-duo" data-soporte-duo-cta>Configurar el auraPhone Duo</a></p>
             </div>
           </details>
           <details class="aura-accordion__item" name="faq" data-soporte-item data-soporte-claves="pago pagar financiación financiar plazos cuotas meses intereses tarjeta">
@@ -296,14 +299,14 @@
             <summary class="aura-accordion__summary"><span>¿Cómo funciona AURA Trade In?</span><span class="aura-accordion__icon" aria-hidden="true"></span></summary>
             <div class="aura-accordion__panel">
               <p>Elige tu dispositivo y su estado, y te decimos al momento su valor: hasta <strong data-soporte-tradein-max>un buen pellizco</strong> de descuento en tu próxima compra.<sup class="aura-footnote-ref"><a href="#nota-3" id="ref-3" aria-label="Nota 3">3</a></sup> El crédito se aplica solo en la bolsa.</p>
-              <p><a href="trade-in.html">Valorar mi dispositivo</a></p>
+              <p><a class="aura-link aura-link--control" href="trade-in.html">Valorar mi dispositivo</a></p>
             </div>
           </details>
           <details class="aura-accordion__item" name="faq" data-soporte-item data-soporte-claves="id de aura cuenta registro invitado comprar sin cuenta">
             <summary class="aura-accordion__summary"><span>¿Necesito un ID de AURA para comprar?</span><span class="aura-accordion__icon" aria-hidden="true"></span></summary>
             <div class="aura-accordion__panel">
               <p>No: puedes comprar como invitado. Con un ID de AURA verás todos tus pedidos en un mismo sitio y no tendrás que escribir tus datos cada vez.</p>
-              <p><a href="registro.html">Crear un ID de AURA</a></p>
+              <p><a class="aura-link aura-link--control" href="registro.html">Crear un ID de AURA</a></p>
             </div>
           </details>
           <details class="aura-accordion__item" name="faq" data-soporte-item data-soporte-claves="demostración demo cuenta prueba usuario contraseña test simulado">
@@ -443,10 +446,11 @@
           </div>
 
           <!-- Ficha de la tienda: complementa el formulario (aside con nombre propio). La foto no lleva leyenda, así que
-               va en un contenedor sin semántica (no en <figure>) y su alt describe lo que se ve -->
+               va en un contenedor sin semántica (no en <figure>) y su alt describe lo que se ve. Sin marco: la foto, en
+               clave baja, se funde con el negro por sus bordes -->
           <aside class="aura-stack aura-stack--stretch soporte-tienda" aria-labelledby="tienda-titulo" style="--stack:1.25rem">
-            <div class="aura-media aura-media--frame aura-media--fill m-0 soporte-tienda__foto" data-aura-reveal="scale">
-              <img class="aura-img" src="../img/soporte-contacto.webp" data-slot="soporte-contacto" width="1600" height="1200" alt="Vista cenital de un especialista que atiende a un cliente junto a una mesa de madera clara con un auraPad expositor" loading="lazy" decoding="async">
+            <div class="aura-media aura-media--fill m-0 soporte-tienda__foto" data-aura-reveal="scale">
+              <img class="aura-img" src="../img/soporte-contacto.webp" srcset="../img/400/soporte-contacto.webp 400w, ../img/800/soporte-contacto.webp 800w, ../img/soporte-contacto.webp 1600w" sizes="auto, (max-width: 575.98px) 86vw, (max-width: 991.98px) 42vw, (max-width: 1199.98px) 36vw, 369px" data-slot="soporte-contacto" width="1600" height="1200" alt="Esquina de una mesa de madera en una sala a oscuras, con un haz de luz cálida sobre el tablero y otro sobre el suelo de hormigón" loading="lazy" decoding="async">
             </div>
             <div class="aura-card">
               <div class="aura-stack" style="--stack:1.125rem">

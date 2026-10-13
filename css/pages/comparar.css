@@ -20,6 +20,23 @@
 
 
 /* --------------------------------------------------------------------------
+   Sin saltos al cargar: la entrada, los modelos y la tabla salen del
+   catálogo y los pinta comparar.js después del primer pintado. Hasta que
+   termina (.is-ready en main.cmp), todo lo que va bajo el titular ocupa su
+   sitio sin verse, y la entrada reserva sus dos líneas (la de auraPods ocupa
+   tres a 1440 px, pero la barra de familias aún no se ve: no se mueve nada
+   visible). Si el JS fallara, aparece a los 2,5 s igualmente.
+   -------------------------------------------------------------------------- */
+
+.aura-js .cmp:not(.is-ready) > :not(.cmp-intro),
+.aura-js .cmp:not(.is-ready) :is([data-cmp-lead], .cmp-intro__nav) {
+  visibility: hidden;
+  animation: aura-ready-fallback 0s 2.5s forwards;
+}
+.cmp-intro [data-cmp-lead] { min-height: 2lh; }
+
+
+/* --------------------------------------------------------------------------
    Cabecera
    -------------------------------------------------------------------------- */
 
@@ -116,7 +133,7 @@
 @media (max-width: 575.98px) {
   .cmp-heads { row-gap: .5rem; }
   .cmp-head__media { margin-bottom: .5rem; }
-  .cmp-head__price .aura-price { font-size: 1.0625rem; }
+  .cmp-head__price .aura-price { font-size: 1rem; letter-spacing: 0; }   /* el de .aura-price--sm */
   .cmp-head__actions { gap: .25rem .75rem; }
 }
 
@@ -146,11 +163,7 @@
   gap: .75rem;
   padding-bottom: 1rem;
 }
-.cmp-group__head .aura-feature__icon {
-  width: 2.25rem;
-  height: 2.25rem;
-  font-size: 1rem;
-}
+/* El icono de cada grupo es el de característica de la base (40 px, glifo de 18). */
 
 /* Tabla nativa (sin roles ARIA: sigue siendo tabla) maquetada en rejilla:
    la etiqueta encima de su fila y un valor por columna. */
@@ -193,13 +206,16 @@
   overflow-wrap: anywhere;
 }
 .cmp-cell__main {
-  font-size: 1rem;
-  font-weight: 500;
-  line-height: 1.45;
   color: var(--text-primary);
   text-wrap: pretty;                    /* sin palabras huérfanas («1 TB o / 2 TB») */
 }
-.cmp-cell__main.aura-price { font-size: 1.125rem; }
+/* El precio es el .aura-price--sm de la base (Kanit 16 / 1,2); la letra de
+   la tabla, solo para el texto de las demás celdas. */
+.cmp-cell__main:not(.aura-price) {
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.45;
+}
 .cmp-cell__more {
   font-size: .875rem;
   line-height: 1.5;
@@ -215,7 +231,7 @@
 .cmp-row--actions .aura-btn { justify-self: start; }
 @media (max-width: 575.98px) {
   .cmp-row { padding-block: 1rem 1.125rem; }
-  .cmp-cell__main { font-size: .9375rem; }
+  .cmp-cell__main:not(.aura-price) { font-size: .9375rem; }
   .cmp-cell__more { font-size: .8125rem; }
 }
 

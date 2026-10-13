@@ -50,7 +50,7 @@
    ancha («Touch ID», 3,7 em de la cifra más el relleno) por columna. */
 .auraphone-cifras {
   container: auraphone-cifras / inline-size;
-  margin-top: clamp(2.5rem, 5vw, 4rem);
+  margin-top: var(--space-stats, clamp(2.5rem, 5vw, 4rem));
 }
 .auraphone-stats {
   grid-template-columns: minmax(0, 1fr);
@@ -77,7 +77,9 @@
    ritmo vertical entre las piezas de la base, el encuadre de las fotos, las
    columnas de las cifras y dónde van los textos de la escena. Las piezas
    (escena con scroll, exhibición de color, cifras --lg, galería, teselas)
-   son de aura.css.
+   son de aura.css. El ritmo, con sus tokens (los mismos en las cuatro
+   familias): --space-stats antes de una fila de cifras y --space-block
+   antes de un bloque secundario.
    -------------------------------------------------------------------------- */
 
 /* Exhibición de color: la foto, protagonista y centrada, bajo el titular del
@@ -93,7 +95,7 @@
   padding: 0;
 }
 .auraphone-colores > .aura-gallery > :is(.aura-img, .aura-slot) { object-fit: cover; }
-.auraphone-bloque { margin-top: clamp(3.5rem, 8vw, 6.5rem); }
+.auraphone-bloque { margin-top: var(--space-block, clamp(3.5rem, 8vw, 6.5rem)); }
 
 /* Foto protagonista con leyenda (cámaras, chip): panorámica 16:9 dentro de
    su marco; el encuadre lo da --photo-focus (por defecto, el centro). */
@@ -104,14 +106,14 @@
 }
 
 /* Cifras grandes en fila bajo la foto protagonista */
-.auraphone-cifras-fila { margin-top: clamp(2.5rem, 5vw, 4rem); }
+.auraphone-cifras-fila { margin-top: var(--space-stats, clamp(2.5rem, 5vw, 4rem)); }
 
 /* Cifras grandes dentro de la columna de texto de un bloque texto + imagen.
    La columna es el contenedor (consulta en rem: sigue al tamaño de letra) y
    decide las columnas sin que ninguna cifra quede sola en su fila: una
-   debajo de otra si no caben, dos en fila desde 18 rem y tres desde 26 rem
-   (la cifra más ancha, «3.000», cabe en la mitad de 18 rem; por eso su
-   unidad va en el texto de debajo). */
+   debajo de otra hasta 26 rem y, desde ahí, dos o tres en fila. Con 18 rem
+   la cifra cabía, pero su pie quedaba en ~165 px (22 caracteres por línea a
+   390); por eso el umbral es el mismo para dos y para tres. */
 .auraphone-copy { container: auraphone-copy / inline-size; }
 .auraphone-stats-lg {
   justify-self: stretch;
@@ -119,16 +121,23 @@
   gap: 1.5rem clamp(1.25rem, 3vw, 2rem);
   margin-top: .75rem;
 }
-@container auraphone-copy (min-width: 18rem) {
-  .auraphone-stats-lg:has(> :last-child:nth-child(2)) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
 @container auraphone-copy (min-width: 26rem) {
+  .auraphone-stats-lg:has(> :last-child:nth-child(2)) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .auraphone-stats-lg:has(> :last-child:nth-child(3)) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
 /* Galería de fotos de ejemplo: subtítulo del capítulo con aire por encima */
-.auraphone-galeria { margin-top: clamp(4rem, 9vw, 7rem); }
+.auraphone-galeria { margin-top: var(--space-block, clamp(3.5rem, 8vw, 6.5rem)); }
 .auraphone-galeria > .aura-section-head { margin-bottom: clamp(1.5rem, 3vw, 2.5rem); }
+
+/* Versión estática de la escena (sin aura-core.js, con «reducir movimiento» o
+   «ahorro de datos»): desde 992 px los textos que siguen al póster van
+   centrados bajo él, como el héroe, en lugar de una columna de 40 rem a la
+   izquierda con más de 500 px vacíos al lado. Con la escena en marcha mandan
+   las reglas de la base (más específicas). */
+@media (min-width: 992px) {
+  .auraphone-escena .aura-scrub__text { justify-items: center; text-align: center; }
+}
 
 /* Escena del auraPhone 18 Pro (componente de la base, «contain» y apoyada
    abajo). Los textos van a las zonas tranquilas de los fotogramas
