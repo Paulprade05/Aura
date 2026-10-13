@@ -1,0 +1,85 @@
+@charset "UTF-8";
+/* ==========================================================================
+   AURA — aurapods.html
+   Solo lo que no cubre ningún componente del sistema: el ritmo vertical entre
+   las piezas de cada capítulo, las columnas de las cifras y el encuadre de la
+   exhibición de color. Tokens de aura.css; sin colores sueltos ni
+   transiciones propias (el movimiento es del sistema). La escena con scroll
+   (.aura-scrub, también el <picture> del póster, el ancho del titular del
+   héroe y el centrado de sus acciones), la exhibición de color, las cifras
+   destacadas (.aura-stat--lg), las teselas, las notas al pie y los 44 px de
+   los enlaces sueltos ya los resuelve la base.
+   ========================================================================== */
+
+/* Titulares de dos frases: cada frase empieza en su línea (nunca «… fuera. Tu /
+   música»); dentro de cada una manda el equilibrado de la clase. */
+.aurapods-frases > span { display: block; }
+
+/* --------------------------------------------------------------------------
+   1. Cifras destacadas dentro de la columna de texto de un bloque texto +
+      imagen (cancelación, auraPods Max). La columna es el contenedor (consulta
+      en rem: sigue al tamaño de letra) y decide las columnas sin que ninguna
+      cifra quede sola en su fila: una debajo de otra si no caben y dos en
+      fila desde 18 rem.
+   -------------------------------------------------------------------------- */
+.aurapods-copy { container: aurapods-copy / inline-size; }
+.aurapods-stats-lg {
+  justify-self: stretch;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.5rem clamp(1.25rem, 3vw, 2rem);
+  margin-top: .75rem;
+}
+@container aurapods-copy (min-width: 18rem) {
+  .aurapods-stats-lg:has(> :last-child:nth-child(2)) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* Precio + cuota del capítulo auraPods Max: un único bloque, sin el hueco de
+   .aura-stack entre dos líneas que se leen juntas (como el configurador). */
+.aurapods-price {
+  display: grid;
+  gap: .25rem;
+  justify-items: start;
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   2. Autonomía y pesos: una cifra por modelo bajo el titular centrado. Tres en
+      fila cuando caben (las columnas de 13 rem de .aura-stats--lg); con texto
+      grande o en el teléfono, una debajo de otra, nunca dos y una huérfana.
+   -------------------------------------------------------------------------- */
+.aurapods-autonomia,
+.aurapods-pesos {
+  max-width: 60rem;
+  margin-inline: auto;
+  text-align: start;
+}
+.aurapods-pesos { margin-top: clamp(3rem, 7vw, 5rem); }
+@media (min-width: 576px) and (max-width: 991.98px) {
+  .aurapods-autonomia,
+  .aurapods-pesos { grid-template-columns: minmax(0, 1fr); max-width: 26rem; }
+}
+
+/* --------------------------------------------------------------------------
+   3. Salud: cuatro tarjetas de la misma altura (rejilla --4 de la base: dos
+      columnas desde 576 px y cuatro desde 992 px).
+   -------------------------------------------------------------------------- */
+.aurapods-salud > .aura-feature { height: 100%; }
+
+/* --------------------------------------------------------------------------
+   4. Exhibición de color de los auraPods Max 2: la foto, centrada bajo el
+      titular, entera (4:3 de la base: el reflejo de la foto medianoche llega
+      casi al borde inferior y un recorte lo cortaría en seco).
+   -------------------------------------------------------------------------- */
+.aurapods-colores { margin-inline: auto; }
+
+/* --------------------------------------------------------------------------
+   5. Escena (componente de la base, «contain»): los tramos 2 y 3 van a la
+      columna izquierda, la zona tranquila de los fotogramas desde el 30 % del
+      recorrido (img/seq/aurapods-intro/seq.json: los auriculares se desplazan a
+      la derecha). En ventanas más altas que 3:2 el fotograma deja una franja
+      negra arriba: los textos laterales suben a ella en lugar de quedar sobre
+      la diadema. En el teléfono manda la colocación de la base (al pie).
+   -------------------------------------------------------------------------- */
+@media screen and (prefers-reduced-motion: no-preference) and (min-width: 768px) and (max-aspect-ratio: 3/2) {
+  .aura-js .aurapods-escena.aura-scrub:not(.is-static) .aura-scrub__text[data-pos] { align-content: start; }
+}

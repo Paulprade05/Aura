@@ -7,7 +7,18 @@ Contrato de marcado del sistema de diseño (`assets/css/aura.css`). Guía viva: 
 - Todo el texto en español de España. La marca es siempre AURA: nunca la marca original ni sus nombres de producto (ver equivalencias del encargo).
 - Toda página nueva cumple la lista de [§15 Accesibilidad y metadatos (temario DIW)](#15-accesibilidad-y-metadatos-temario-diw): `<head>` completo y comentado, un `h1`, tablas con `<caption>`, formularios con `label` y validación HTML5, ARIA solo donde el HTML no llega.
 
-## Cambios recientes (v1.6, 10 de octubre de 2026)
+## Cambios de la v1.7 (11 de octubre de 2026): familia auraPods
+
+Una cuarta familia, **auraPods** (auriculares: auraPods Max 2, auraPods Pro 3 y auraPods 5), con su página `html/aurapods.html` (+ `css/pages/aurapods.css`, `js/pages/aurapods.js`) y la misma arquitectura que las otras tres. **El aspecto y el comportamiento de lo anterior no cambian.** Qué hay nuevo en la base:
+
+| Área | Cambio |
+| --- | --- |
+| Catálogo | `families[]` admite `plural: true` («los auraPods»). Nuevo `AURA.catalog.grammar(producto \| familia)` → `{ plural, el, del, al, un, tu, nuevo }`: los textos generados concuerdan («Los auraPods 5, desde…», «de tus nuevos auraPods», «unos auraPods», «por tus auraPods 4») en ventajas de compra, bolsa, checkout, cuenta, comprar, comparar, Trade In y soporte ([§14.3](#143-auracatalog)). Un producto puede no tener `options` (`[]`): se configura solo por acabado y AuraCare+. `care.prices.aurapods` y seis dispositivos auraPods en `tradeIn.devices`. |
+| Navegación | `<aura-header>`: siete enlaces (auraPods tras auraBook; caben de 992 a 1440 px), clave `active="aurapods"`, «Ver auraPods» en la bolsa vacía y el escalonado del menú móvil sigue al número de enlaces. `<aura-footer>`: auraPods en «Productos». Buscador: icono `bi-earbuds` y el texto «Prueba con…» sale de las familias del catálogo ([§12.1](#121-aura-header), [§12.2](#122-aura-footer)). |
+| Formato | `fmt.units` cambia el guion de «USB-C» por uno que no parte (U+2011): nunca «USB- / C» en tablas y comparador ([§14.2](#142-aurafmt)). |
+| Páginas | Comparador: `?familia=aurapods` y grupos «Sonido» (`cancelacion`, `audio`) y «Salud» (`salud`); `estuche`, `resistencia` y `controles` se suman a sus grupos. Inicio: cuarta familia en «Toda la gama» (doce tarjetas) y una tesela a lo ancho en Novedades. Trade In, bolsa vacía y soporte: rejilla `--4` para las tarjetas de familia. |
+
+## Cambios de la v1.6 (10 de octubre de 2026)
 
 Piezas nuevas para que las páginas de familia cuenten el producto como una presentación: una escena que avanza con el scroll y componentes pequeños que la acompañan. **Nada de lo anterior cambia** de aspecto ni de comportamiento. **Qué hay nuevo** (detalle en cada sección):
 
@@ -151,7 +162,7 @@ Revisión de la base a partir de lo que encontraron las páginas. **Qué ha camb
 
 ## Índice
 
-0. [Cambios recientes](#cambios-recientes-v16-10-de-octubre-de-2026)
+0. [Cambios recientes](#cambios-de-la-v17-11-de-octubre-de-2026-familia-aurapods) (v1.7) y [v1.6](#cambios-de-la-v16-10-de-octubre-de-2026)
 1. [Convenciones globales](#1-convenciones-globales)
 2. [Tipografía](#2-tipografía)
 3. [Layout](#3-layout)
@@ -1392,7 +1403,7 @@ HTML **exacto** que deben producir `aura-core.js` y `aura-ui.js`. Reparto sugeri
 
 ### 12.1 `<aura-header>`
 
-Atributos: `active` (`inicio` | `auraphone` | `aurapad` | `aurabook` | `comparar` | `tradein` | `soporte` | `bolsa` | `cuenta` | `acerca` | `''`), `ribbon="off"` (no genera la cinta). El elemento es `display: contents`: sus hijos se maquetan como hijos de `<body>`.
+Atributos: `active` (`inicio` | `auraphone` | `aurapad` | `aurabook` | `aurapods` | `comparar` | `tradein` | `soporte` | `bolsa` | `cuenta` | `acerca` | `''`), `ribbon="off"` (no genera la cinta). El elemento es `display: contents`: sus hijos se maquetan como hijos de `<body>`.
 
 ```html
 <aura-header active="auraphone">
@@ -1407,6 +1418,7 @@ Atributos: `active` (`inicio` | `auraphone` | `aurapad` | `aurabook` | `comparar
         <a class="aura-nav__link is-active" href="auraphone.html" aria-current="page">auraPhone</a>
         <a class="aura-nav__link" href="aurapad.html">auraPad</a>
         <a class="aura-nav__link" href="aurabook.html">auraBook</a>
+        <a class="aura-nav__link" href="aurapods.html">auraPods</a>
         <a class="aura-nav__link" href="comparar.html" title="Compara los modelos de cada familia frente a frente">Comparar</a>
         <a class="aura-nav__link" href="trade-in.html" title="AURA Trade In: entrega tu dispositivo anterior y consigue un descuento">Trade In</a>
         <a class="aura-nav__link" href="soporte.html">Soporte</a>
@@ -1427,7 +1439,7 @@ Atributos: `active` (`inicio` | `auraphone` | `aurapad` | `aurabook` | `comparar
 
   <aside class="aura-ribbon" aria-label="Promoción">
     <div class="aura-container">
-      <p class="aura-ribbon__text">Ahorra con AURA Trade In: entrega tu antiguo dispositivo mundano y llévate hasta 800&nbsp;€ de descuento en tu nuevo auraPhone, auraPad o auraBook. <a class="aura-link" href="trade-in.html" title="AURA Trade In: calcula cuánto vale tu dispositivo anterior">Comprobar valor cuántico</a></p>
+      <p class="aura-ribbon__text">Ahorra con AURA Trade In: entrega tu antiguo dispositivo mundano y llévate hasta 800&nbsp;€ de descuento en tu nuevo auraPhone, auraPad, auraBook o auraPods. <a class="aura-link" href="trade-in.html" title="AURA Trade In: calcula cuánto vale tu dispositivo anterior">Comprobar valor cuántico</a></p>
     </div>
   </aside>
 
@@ -1439,8 +1451,8 @@ Atributos: `active` (`inicio` | `auraphone` | `aurapad` | `aurabook` | `comparar
 Reglas:
 
 - Nombres y textos emergentes: el `nav` de la barra y el del menú móvil se llaman «Principal» (nunca se ven a la vez: por debajo de 992 px la barra no pinta sus enlaces y, por encima, el menú está oculto con `aria-hidden`). `title` solo donde dice algo que el texto visible no dice (el logotipo, «Comparar», «Trade In» y el enlace de la cinta); nunca repite la etiqueta. En el logotipo, `aria-label` y `title` llevan el mismo texto: el lector de pantalla lo anuncia una sola vez. Los botones de icono se nombran con `aria-label` y su icono lleva `aria-hidden="true"`; los que abren algo exponen `aria-haspopup`, `aria-controls` y `aria-expanded` (lo actualiza `aura-ui.js`).
-- Enlace activo: `.is-active` + `aria-current="page"` en el `.aura-nav__link` cuya clave coincide con `active` (`auraphone`, `aurapad`, `aurabook`, `comparar`, `tradein`, `soporte`). Con `inicio`, `bolsa`, `cuenta`, `acerca` o vacío no se marca ninguno. Lo mismo en `.aura-menu__link`. Cada enlace lleva además `data-aura-key="CLAVE"` (lo usa el JS para marcarlo). El atributo `active` se puede cambiar después de cargar (`AURA.header.setActive('aurapad')` en `comprar.html`): la cabecera se repinta sola.
-- El «›» del enlace de la cinta lo pinta el CSS. El texto de la cinta sale del catálogo: la cifra es `AURA.fmt.eur0(AURA.tradeIn.max())` (con el espacio indivisible de `fmt`: «800 €» nunca se parte) y las familias, `AURA.catalog.families()` («auraPhone, auraPad o auraBook»). No lo escribas a mano.
+- Enlace activo: `.is-active` + `aria-current="page"` en el `.aura-nav__link` cuya clave coincide con `active` (`auraphone`, `aurapad`, `aurabook`, `aurapods`, `comparar`, `tradein`, `soporte`). Con `inicio`, `bolsa`, `cuenta`, `acerca` o vacío no se marca ninguno. Lo mismo en `.aura-menu__link`. Cada enlace lleva además `data-aura-key="CLAVE"` (lo usa el JS para marcarlo). El atributo `active` se puede cambiar después de cargar (`AURA.header.setActive('aurapad')` en `comprar.html`): la cabecera se repinta sola.
+- El «›» del enlace de la cinta lo pinta el CSS. El texto de la cinta sale del catálogo: la cifra es `AURA.fmt.eur0(AURA.tradeIn.max())` (con el espacio indivisible de `fmt`: «800 €» nunca se parte) y las familias, `AURA.catalog.families()` («auraPhone, auraPad, auraBook o auraPods»). No lo escribas a mano. Con siete enlaces (v1.7) la barra cabe entera de 992 a 1440 px: por debajo de 992 px los enlaces van al menú.
 - Sesión iniciada: `href="cuenta.html"` y la etiqueta es el nombre (`<span class="aura-nav__action-label">Lucía</span>`); añade `aria-label="Tu cuenta, Lucía"`. Sin sesión: `href="login.html"`, «Iniciar sesión». La etiqueta solo se ve desde 1200 px; por debajo es texto accesible oculto.
 - Contador: `.aura-nav__count` con el total de unidades. Con la bolsa vacía, texto vacío (el CSS lo oculta con `:empty`) y `aria-label="Bolsa, vacía"`. Con 1: `aria-label="Bolsa, 1 artículo"`. Al cambiar la cantidad, `aura-core.js` añade `.is-bumped` (y la quita en `animationend`).
 - `aura-ui.js` añade `.is-scrolled` a `.aura-nav` cuando `window.scrollY > 4` (listener de `scroll` pasivo) y la quita al volver arriba: es el efecto de borde. En páginas con barra local (`body.has-localnav`) la global no flota y el CSS no pinta su borde: lo pinta `.aura-localnav.is-stuck` (§4).
@@ -1489,6 +1501,7 @@ Vacía:
   <li><a href="auraphone.html"><i class="bi bi-phone" aria-hidden="true"></i>Ver auraPhone</a></li>
   <li><a href="aurapad.html"><i class="bi bi-tablet-landscape" aria-hidden="true"></i>Ver auraPad</a></li>
   <li><a href="aurabook.html"><i class="bi bi-laptop" aria-hidden="true"></i>Ver auraBook</a></li>
+  <li><a href="aurapods.html"><i class="bi bi-earbuds" aria-hidden="true"></i>Ver auraPods</a></li>
   <li><a href="login.html"><i class="bi bi-person-circle" aria-hidden="true"></i>Iniciar sesión</a></li>
 </ul>
 ```
@@ -1525,9 +1538,9 @@ Vacía:
 </div>
 ```
 
-- Iconos por familia: `bi-phone` (auraphone), `bi-tablet-landscape` (aurapad), `bi-laptop` (aurabook).
+- Iconos por familia: `bi-phone` (auraphone), `bi-tablet-landscape` (aurapad), `bi-laptop` (aurabook), `bi-earbuds` (aurapods).
 - Sin texto: solo «Accesos rápidos» (Comparar modelos, AURA Trade In, Soporte, Bolsa, Tu cuenta / Iniciar sesión). Al escribir: productos que coinciden (nombre, familia, sin distinguir acentos ni mayúsculas) y accesos que coinciden. Los resultados se filtran en cada `input`, sin espera artificial.
-- Sin resultados: `<p class="aura-search__empty">No hay resultados para «texto». Prueba con auraPhone, auraPad o auraBook.</p>`.
+- Sin resultados: `<p class="aura-search__empty">No hay resultados para «texto». Prueba con auraPhone, auraPad, auraBook o auraPods.</p>` (las familias salen del catálogo).
 - `[data-aura-search-status]` anuncia «3 resultados» / «Sin resultados».
 - Teclado: ↓/↑ mueven `.is-active` entre los `.aura-search__item`; Intro (submit) abre el activo o el primero; Esc cierra.
 - Abrir: `.is-open`, `aria-hidden="false"`, `aria-expanded="true"` en el disparador, `html.aura-lock`, foco en el input, foco atrapado. Cerrar (Esc, velo, botón): lo inverso y devuelve el foco al disparador.
@@ -1548,14 +1561,15 @@ Vacía:
       <li style="--i:0"><a class="aura-menu__link is-active" href="auraphone.html" aria-current="page">auraPhone<i class="bi bi-chevron-right" aria-hidden="true"></i></a></li>
       <li style="--i:1"><a class="aura-menu__link" href="aurapad.html">auraPad<i class="bi bi-chevron-right" aria-hidden="true"></i></a></li>
       <li style="--i:2"><a class="aura-menu__link" href="aurabook.html">auraBook<i class="bi bi-chevron-right" aria-hidden="true"></i></a></li>
-      <li style="--i:3"><a class="aura-menu__link" href="comparar.html" title="Compara los modelos de cada familia frente a frente">Comparar<i class="bi bi-chevron-right" aria-hidden="true"></i></a></li>
-      <li style="--i:4"><a class="aura-menu__link" href="trade-in.html" title="AURA Trade In: entrega tu dispositivo anterior y consigue un descuento">Trade In<i class="bi bi-chevron-right" aria-hidden="true"></i></a></li>
-      <li style="--i:5"><a class="aura-menu__link" href="soporte.html">Soporte<i class="bi bi-chevron-right" aria-hidden="true"></i></a></li>
+      <li style="--i:3"><a class="aura-menu__link" href="aurapods.html">auraPods<i class="bi bi-chevron-right" aria-hidden="true"></i></a></li>
+      <li style="--i:4"><a class="aura-menu__link" href="comparar.html" title="Compara los modelos de cada familia frente a frente">Comparar<i class="bi bi-chevron-right" aria-hidden="true"></i></a></li>
+      <li style="--i:5"><a class="aura-menu__link" href="trade-in.html" title="AURA Trade In: entrega tu dispositivo anterior y consigue un descuento">Trade In<i class="bi bi-chevron-right" aria-hidden="true"></i></a></li>
+      <li style="--i:6"><a class="aura-menu__link" href="soporte.html">Soporte<i class="bi bi-chevron-right" aria-hidden="true"></i></a></li>
     </ul>
     <ul class="aura-menu__secondary">
-      <li style="--i:6"><a href="login.html"><i class="bi bi-person-circle" aria-hidden="true"></i>Iniciar sesión</a></li>
-      <li style="--i:7"><a href="bolsa.html"><i class="bi bi-bag" aria-hidden="true"></i>Bolsa (2)</a></li>
-      <li style="--i:8"><a href="acerca.html"><i class="bi bi-info-circle" aria-hidden="true"></i>Acerca de AURA</a></li>
+      <li style="--i:7"><a href="login.html"><i class="bi bi-person-circle" aria-hidden="true"></i>Iniciar sesión</a></li>
+      <li style="--i:8"><a href="bolsa.html"><i class="bi bi-bag" aria-hidden="true"></i>Bolsa (2)</a></li>
+      <li style="--i:9"><a href="acerca.html"><i class="bi bi-info-circle" aria-hidden="true"></i>Acerca de AURA</a></li>
     </ul>
   </nav>
 </div>
@@ -1608,6 +1622,7 @@ Desde JS (repinta el pie): `AURA.footer.setCrumbs([{ label: 'auraPhone', href: '
               <li><a href="auraphone.html">auraPhone</a></li>
               <li><a href="aurapad.html">auraPad</a></li>
               <li><a href="aurabook.html">auraBook</a></li>
+              <li><a href="aurapods.html">auraPods</a></li>
               <li><a href="comparar.html">Comparar modelos</a></li>
             </ul>
           </div>
@@ -1913,7 +1928,7 @@ Con `prefers-reduced-motion: reduce`: sin muelle; se coloca directamente en el d
 
 ### 12.9 Bloques de tienda
 
-Lo que se repite en inicio y en las tres familias sale de la base, con las cifras del catálogo. Basta con el contenedor:
+Lo que se repite en inicio y en las cuatro familias sale de la base, con las cifras del catálogo (los textos concuerdan con `catalog.grammar`: «Los auraPods 5, desde…», «de tus nuevos auraPods»). Basta con el contenedor:
 
 ```html
 <!-- «Por qué comprar en AURA»: cuatro ventajas, siempre en el mismo orden -->
@@ -1946,8 +1961,8 @@ Lo que se repite en inicio y en las tres familias sale de la base, con las cifra
   </div>
 </section>
 
-<!-- Una tarjeta por familia (bolsa vacía, «¿Qué vas a estrenar?» de Trade In) -->
-<div class="aura-grid aura-grid--3" data-aura-family-cards></div>
+<!-- Una tarjeta por familia (bolsa vacía, «¿Qué vas a estrenar?» de Trade In): --4 con cuatro familias, sin huérfanas -->
+<div class="aura-grid aura-grid--4" data-aura-family-cards></div>
 ```
 
 | Atributo | Pinta |
@@ -2121,6 +2136,7 @@ Lee de `AURA.data` (= `window.AURA_DATA`). Donde se pide un producto vale su `id
 | `optionLabels(producto, selections)` | `['512 GB', 'Wi-Fi + 5G']`, también sobre las selecciones resueltas. |
 | `color(producto, colorId)` | `{ id, name, hex }` (si no existe o no se indica, el acabado por defecto: el de la foto). |
 | `carePrice(producto \| familyId)` | Precio de AuraCare+ por unidad. |
+| `grammar(producto \| familyId)` | Concordancia del nombre (v1.7, `family.plural` de `data.js`): `{ plural, el, del, al, un, tu, nuevo }` → en singular `el`, `del`, `al`, `un`, `tu`, `nuevo`; en plural `los`, `de los`, `a los`, `unos`, `tus`, `nuevos`. Úsalo en todo texto que pegue un artículo o un posesivo al nombre de un producto o una familia: «Comprar los auraPods Max 2», «Protege tus nuevos auraPods». |
 | `image(producto, colorId)` | `{ slot, fallback, exact, color, alt }`. `slot`: la foto de ese color si existe (`imageVariants`; con la base en `fallback`), si no la base directamente (`fallback: ''`). `color`: el acabado que se **ve** en la foto (`null` si no se aprecia). `exact`: `false` si la foto enseña otro acabado que el pedido (díselo al usuario). `alt`: descripción de la foto real. |
 | `today()` | Hoy, como `Date` a medianoche local. Si la URL con la que se abrió la página lleva `?hoy=AAAA-MM-DD`, ese día (ver abajo). |
 | `availability(producto, día?)` | `{ status, title, label, text, labelHtml, html, canBuy, preorder, release }` (ver abajo). `día` opcional (`'AAAA-MM-DD'` o `Date`); por defecto, `today()`. |
@@ -2452,7 +2468,7 @@ f.form.addEventListener('change', function (e) {
 | `updated` | Fecha de la revisión (`'AAAA-MM-DD'`, día local): `AURA.fmt.fecha(AURA.data.updated)`. |
 | `financing.months` | Meses de financiación de `fmt.mes`. |
 | `shipping: { standard, express }` | Envío en euros: estándar `0` (gratis) y exprés `9.95`. El checkout lo lee de `AURA.data.shipping`; no escribas el importe en la página. |
-| `families[]` | `id`, `name`, `page`, `os`, `tagline`, `description`, `compareRows` (la fila `precio` la calcula el sistema). |
+| `families[]` | `id`, `name`, `page`, `os`, `tagline`, `description`, `compareRows` (la fila `precio` la calcula el sistema) y `plural` (opcional, v1.7: `true` en auraPods). Ids: `auraphone`, `aurapad`, `aurabook`, `aurapods`. |
 | `products[]` | `id`, `family`, `rank`, `name`, `badge`, `tagline`, `description`, `basePrice`, `availability: { preorder, release }` (opcional), `colors`, `options`, `specs` (sin `precio`), `highlights`, `image`, `imageColor` (id del acabado que se ve en la foto base; `''` si no se aprecia), `imageAlt` (alt de la foto real) e `imageVariants` (opcional: `{ idDeColor: alt }` con las fotos por color que **existen** en `assets/img`). |
 | `care` | `name`, `description`, `prices` por familia. |
 | `tradeIn.cap` | Tope por dispositivo (800). |

@@ -182,6 +182,7 @@
     { id: 'auraphone', titulo: 'auraPhone', test: function (s) { return s.indexOf('auraphone-') === 0; } },
     { id: 'aurapad', titulo: 'auraPad', test: function (s) { return s.indexOf('aurapad-') === 0; } },
     { id: 'aurabook', titulo: 'auraBook', test: function (s) { return s.indexOf('aurabook-') === 0; } },
+    { id: 'aurapods', titulo: 'auraPods', test: function (s) { return s.indexOf('aurapods-') === 0; } },
     { id: 'acerca', titulo: 'Acerca de AURA', test: function (s) { return s.indexOf('acerca-') === 0; } },
     { id: 'trade-in', titulo: 'AURA Trade In', test: function (s) { return s.indexOf('trade-in-') === 0; } },
     { id: 'otras', titulo: 'Soporte y otras páginas', test: function () { return true; } }

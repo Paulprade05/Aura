@@ -29,8 +29,10 @@
   var GROUPS = [
     {
       id: 'rendimiento', icon: 'bi-cpu', keys: ['chip', 'memoria', 'almacenamiento'],
-      title: function () { return 'Rendimiento y capacidad'; }
+      title: function (keys) { return keys.length === 1 && keys[0] === 'chip' ? 'Chip' : 'Rendimiento y capacidad'; }
     },
+    /* auraPods: lo que se oye */
+    { id: 'sonido', icon: 'bi-soundwave', keys: ['cancelacion', 'audio'], title: function () { return 'Sonido'; } },
     {
       id: 'pantalla', icon: 'bi-display', keys: ['pantalla', 'camaras', 'camara'],
       title: function (keys) {
@@ -40,17 +42,23 @@
       }
     },
     {
-      id: 'energia', icon: 'bi-battery-charging', keys: ['bateria', 'conectividad', 'puertos'],
+      id: 'energia', icon: 'bi-battery-charging', keys: ['bateria', 'conectividad', 'puertos', 'estuche'],
       title: function (keys) {
+        if (keys.indexOf('estuche') !== -1) { return 'Autonomía y estuche'; }
         if (keys.indexOf('puertos') !== -1) { return 'Batería y puertos'; }
         if (keys.indexOf('conectividad') !== -1) { return 'Batería y conectividad'; }
         return 'Batería';
       }
     },
     {
-      id: 'diseno', icon: 'bi-bounding-box', keys: ['materiales', 'peso', 'accesorios'],
-      title: function (keys) { return keys.indexOf('accesorios') !== -1 ? 'Diseño y accesorios' : 'Diseño'; }
+      id: 'diseno', icon: 'bi-bounding-box', keys: ['materiales', 'peso', 'accesorios', 'resistencia', 'controles'],
+      title: function (keys) {
+        if (keys.indexOf('controles') !== -1) { return 'Diseño y controles'; }
+        return keys.indexOf('accesorios') !== -1 ? 'Diseño y accesorios' : 'Diseño';
+      }
     },
+    /* auraPods: sensores de salud */
+    { id: 'salud', icon: 'bi-heart-pulse', keys: ['salud'], title: function () { return 'Salud'; } },
     { id: 'software', icon: 'bi-grid', keys: ['sistema'], title: function () { return 'Software'; } },
     { id: 'otros', icon: 'bi-list-ul', keys: [], title: function () { return 'Otras características'; } },
     { id: 'precio', icon: 'bi-tag', keys: ['precio'], title: function () { return 'Precio'; } }
@@ -260,8 +268,9 @@
     /* AURA Trade In: la cifra y el enlace, de la familia que se compara. */
     var top = AURA.tradeIn && typeof AURA.tradeIn.max === 'function' ? AURA.tradeIn.max(fam.id) : 0;
     if (el.tradeText && top > 0) {
-      el.tradeText.textContent = 'Consigue hasta ' + fmt.eur0(top) + ' por tu ' + fam.name +
-        ' anterior con AURA Trade In y descuéntalo de tu nuevo modelo.';
+      var g = cat.grammar ? cat.grammar(fam.id) : { plural: false, tu: 'tu' };   // «por tus auraPods anteriores»
+      el.tradeText.textContent = 'Consigue hasta ' + fmt.eur0(top) + ' por ' + g.tu + ' ' + fam.name +
+        (g.plural ? ' anteriores' : ' anterior') + ' con AURA Trade In y descuéntalo de tu nuevo modelo.';
     }
     if (el.tradeLink) {
       el.tradeLink.setAttribute('href', 'trade-in.html?familia=' + encodeURIComponent(fam.id) + '#calculadora');

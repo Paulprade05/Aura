@@ -46,7 +46,8 @@
     vidrio: '¿Brillo intenso o cero reflejos?',
     pantalla: '¿Brillo intenso o cero reflejos?',
     chip: '¿Cuánta potencia necesitas?',
-    memoria: '¿Cuánta memoria quieres?'
+    memoria: '¿Cuánta memoria quieres?',
+    estuche: '¿Por cable o sin cables?'
   };
 
   function q(sel, root) { return (root || document).querySelector(sel); }
@@ -135,6 +136,13 @@
   }
 
   function paginaFamilia(f) { return f && f.page ? f.page : '../index.html'; }
+
+  /* Concordancia del nombre («el auraPhone 18 Pro» / «los auraPods Pro 3»): data.js, family.plural. */
+  function gram(p) {
+    return typeof cat.grammar === 'function' ? cat.grammar(p)
+      : { plural: false, el: 'el', del: 'del', al: 'al', un: 'un', tu: 'tu', nuevo: 'nuevo' };
+  }
+  function mayus(t) { return t ? t.charAt(0).toUpperCase() + t.slice(1) : ''; }
 
   /* { status: 'proximamente' | 'reserva' | 'disponible', title, label, text, canBuy, preorder, release } */
   function disp(p) {
@@ -395,7 +403,7 @@
       var icono = '';
       if (avisado) {
         texto = esc('Aviso activado');
-        nombre = 'Aviso activado: te recordaremos la apertura de las reservas del ' + p.name;
+        nombre = 'Aviso activado: te recordaremos la apertura de las reservas ' + gram(p).del + ' ' + p.name;
         icono = 'bi-check-lg';
       } else if (m === 'avisar') {
         /* En la barra de compra del móvil solo cabe «Avísame»; desde 768 px,
@@ -403,7 +411,7 @@
         texto = enBarra
           ? '<span>Avísame<span class="comprar-accion__resto"> cuando abran las reservas</span></span>'
           : esc('Avísame cuando abran las reservas');
-        nombre = 'Avísame cuando abran las reservas del ' + p.name;
+        nombre = 'Avísame cuando abran las reservas ' + gram(p).del + ' ' + p.name;
         icono = 'bi-bell';
       } else if (m === 'reservar') {
         texto = esc('Reservar');
@@ -539,7 +547,7 @@
     var care = (A.data && A.data.care) || {};
     if (el.pasoCare) { el.pasoCare.hidden = !(precio > 0); }
     if (!(precio > 0)) { estado.care = false; el.care.innerHTML = ''; return; }
-    el.carePregunta.textContent = 'Protege tu nuevo ' + f.name + '.';
+    el.carePregunta.textContent = 'Protege ' + gram(p).tu + ' ' + gram(p).nuevo + ' ' + f.name + '.';
     el.careTexto.textContent = care.description || '';
     el.careTexto.hidden = !care.description;
     var opcion = function (valor, titulo, nota, precioTxt, marcado) {
@@ -565,7 +573,8 @@
   function pintarTradeIn() {
     var t = A.tradeIn ? A.tradeIn.get() : null;
     if (t) {
-      var origen = t.deviceName ? 'Por tu ' + t.deviceName + (t.conditionLabel ? ' (' + t.conditionLabel.toLowerCase() + ')' : '') + '. ' : '';
+      var dTrade = t.deviceId && A.data && A.data.tradeIn ? list(A.data.tradeIn.devices).filter(function (d) { return d && d.id === t.deviceId; })[0] : null;
+      var origen = t.deviceName ? 'Por ' + (dTrade ? gram(dTrade.family).tu : 'tu') + ' ' + t.deviceName + (t.conditionLabel ? ' (' + t.conditionLabel.toLowerCase() + ')' : '') + '. ' : '';
       el.trade.innerHTML =
         '<div class="aura-note comprar-trade">' +
           '<span class="aura-note__icon"><i class="bi bi-arrow-repeat" aria-hidden="true"></i></span>' +
@@ -613,7 +622,7 @@
     if (!tipo) { el.aviso.hidden = true; el.aviso.innerHTML = ''; return; }
     var aviso = tipo === 'invalido' || tipo === 'vacio';
     var cambia = estado.producto
-      ? 'Te mostramos el ' + pegado(estado.producto.name) + ': cambia de familia o de modelo cuando quieras.'
+      ? 'Te mostramos ' + gram(estado.producto).el + ' ' + pegado(estado.producto.name) + ': cambia de familia o de modelo cuando quieras.'
       : 'Cambia de familia o de modelo cuando quieras.';
     var titulo = { falta: 'Elige tu modelo para empezar', invalido: 'No encontramos ese modelo', vacio: 'Ahora mismo no hay modelos a la venta' }[tipo];
     var pedidoCorto = String(pedido || '').length > 40 ? String(pedido).slice(0, 39) + '…' : String(pedido || '');
@@ -721,8 +730,8 @@
 
     el.colorNombre.textContent = nombreColor;
 
-    /* «Tu nuevo auraPhone Duo.»; tras «16″» no se añade el punto. */
-    el.rTitulo.textContent = 'Tu nuevo ' + p.name + (/[0-9a-záéíóúñ]$/i.test(p.name) ? '.' : '');
+    /* «Tu nuevo auraPhone Duo.» / «Tus nuevos auraPods 5.»; tras «16″» no se añade el punto. */
+    el.rTitulo.textContent = mayus(gram(p).tu) + ' ' + gram(p).nuevo + ' ' + p.name + (/[0-9a-záéíóúñ]$/i.test(p.name) ? '.' : '');
     /* Cada elemento de la configuración («GPU 20 núcleos», «Pantalla
        estándar») va entero en su línea: solo se parte entre elementos. */
     var piezas = [];
@@ -834,7 +843,8 @@
       toast({
         kind: 'status',
         title: 'Acabado ajustado',
-        text: 'El ' + nuevo.name + ' no se fabrica en ' + colorAnterior.name.toLowerCase() + '. Te lo mostramos en ' + (color ? color.name.toLowerCase() : 'su primer acabado') + '.'
+        text: mayus(gram(nuevo).el) + ' ' + nuevo.name + (gram(nuevo).plural ? ' no se fabrican en ' : ' no se fabrica en ') + colorAnterior.name.toLowerCase() +
+          '. ' + (gram(nuevo).plural ? 'Te los mostramos en ' : 'Te lo mostramos en ') + (color ? color.name.toLowerCase() : 'su primer acabado') + '.'
       });
     }
   }
@@ -928,7 +938,7 @@
       kind: 'ok',
       title: reserva ? 'Reserva añadida a tu bolsa' : 'Añadido a la bolsa',
       text: linea.name + ' · ' + describir(linea) + (linea.qty > 1 ? ' (× ' + linea.qty + ')' : '') +
-        (reserva && a.release ? '. Te lo entregamos a partir del ' + diaLargo(a.release) + '.' : ''),
+        (reserva && a.release ? (gram(linea.productId).plural ? '. Te los entregamos' : '. Te lo entregamos') + ' a partir del ' + diaLargo(a.release) + '.' : ''),
       action: { label: 'Ver bolsa', onClick: function () { window.location.href = 'bolsa.html'; } }
     });
     anadidoEnSesion = true;
@@ -941,7 +951,7 @@
     var a = disp(p);
     if (a.status !== 'proximamente') { anadir(); return; }
     var cuando = diaLargo(a.preorder);
-    var texto = 'Las reservas del ' + p.name + ' abren el ' + cuando + '. Te lo recordaremos en esta página.';
+    var texto = 'Las reservas ' + gram(p).del + ' ' + p.name + ' abren el ' + cuando + '. Te lo recordaremos en esta página.';
     if (avisoDe(p.id)) {
       toast({ kind: 'status', title: 'Ya tienes el aviso activado', text: texto });
       return;
@@ -972,7 +982,7 @@
     toast({
       kind: 'warn',
       title: 'Aviso cancelado',
-      text: 'Ya no te recordaremos la apertura de las reservas' + (p ? ' del ' + p.name : '') + '.',
+      text: 'Ya no te recordaremos la apertura de las reservas' + (p ? ' ' + gram(p).del + ' ' + p.name : '') + '.',
       action: {
         label: 'Deshacer',
         onClick: function () { fijarAviso(id, quitado); pintarAccion(); }
@@ -989,7 +999,7 @@
     fijarAviso(p.id, null);
     toast({
       kind: 'ok',
-      title: a.status === 'reserva' ? 'Ya puedes reservar el ' + p.name : 'El ' + p.name + ' ya está a la venta',
+      title: a.status === 'reserva' ? 'Ya puedes reservar ' + gram(p).el + ' ' + p.name : mayus(gram(p).el) + ' ' + p.name + (gram(p).plural ? ' ya están a la venta' : ' ya está a la venta'),
       text: a.status === 'reserva' && a.release
         ? 'Nos pediste que te avisáramos: las reservas están abiertas y las entregas empiezan el ' + diaLargo(a.release) + '.'
         : 'Nos pediste que te avisáramos. Configúralo y añádelo a la bolsa cuando quieras.'

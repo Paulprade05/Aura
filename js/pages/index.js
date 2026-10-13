@@ -10,7 +10,7 @@
         la misma frase que la tarjeta de modelo), «Desde X €» y el verbo y el
         destino de los botones y enlaces de compra (AURA.catalog.cta / .url:
         Configurar / Reservar / Comprar, con ?hoy).
-     2. «Toda la gama»: las nueve tarjetas del carrusel (AURA.html.productCard,
+     2. «Toda la gama»: las doce tarjetas del carrusel (AURA.html.productCard,
         por familia y rank), el segmentado que salta a cada familia y sigue al
         carrusel también mientras se arrastra (su pastilla se desliza con el
         gesto), y el enlace «Comparar todos los modelos» de la familia elegida.

@@ -283,7 +283,8 @@
       return String(text == null ? '' : text)
         .replace(/(\d) (?=(?:GB|TB|MB|Hz|kHz|MP|Mpx|mm|cm|kg|g|h|min|s|W|Wh|mAh|nits|%|€|núcleos|horas|fps|dB|ppp|cd\/m²|x)(?![0-9A-Za-zÀ-ÿ]))/g, '$1' + NBSP)
         .replace(/(^|[\s(])(USB|Wi-Fi|Wi‑Fi|Bluetooth|AURA|A\d+|M\d+|x\d+) (?=[0-9A-Z])/g, '$1$2' + NBSP)
-        .replace(/(^|[\s(])(A\d+|M\d+) (?=(?:Pro|Max|Ultra)\b)/g, '$1$2' + NBSP);   // «AURA M5 Pro» entero
+        .replace(/(^|[\s(])(A\d+|M\d+) (?=(?:Pro|Max|Ultra)\b)/g, '$1$2' + NBSP)    // «AURA M5 Pro» entero
+        .replace(/\bUSB-C\b/g, 'USB‑C');                                         // guion que no parte: nunca «USB- / C»
     }
   };
   AURA.fmt = fmt;
@@ -560,6 +561,20 @@
       var fam = p ? p.family : ref;
       var care = data().care;
       return care && isObj(care.prices) ? toNumber(care.prices[fam]) : 0;
+    },
+
+    /**
+     * Concordancia de un producto o de una familia (data.js: family.plural),
+     * para los textos que se escriben con su nombre: «el auraPhone 18 Pro» /
+     * «los auraPods Pro 3», «un auraPad» / «unos auraPods», «tu nuevo» / «tus
+     * nuevos». grammar(producto | idDeFamilia) → { plural, el, del, al, un, tu, nuevo }.
+     */
+    grammar: function (ref) {
+      var p = getProduct(ref);
+      var fam = catalog.family(p ? p.family : ref);
+      return fam && fam.plural
+        ? { plural: true, el: 'los', del: 'de los', al: 'a los', un: 'unos', tu: 'tus', nuevo: 'nuevos' }
+        : { plural: false, el: 'el', del: 'del', al: 'al', un: 'un', tu: 'tu', nuevo: 'nuevo' };
     },
 
     /**
@@ -1587,6 +1602,8 @@
     var careName = care.name || 'AuraCare+';
     var carePrices = isObj(care.prices) ? care.prices : {};
     var careFrom = fam ? catalog.carePrice(fam.id) : 0;
+    var g = catalog.grammar(fam ? fam.id : '');            // «tu nuevo auraPad» / «tus nuevos auraPods»
+    var gEntry = entry ? catalog.grammar(entry) : g;       // «El auraPad Air 13″» / «Los auraPods 5»
     if (!fam) {
       Object.keys(carePrices).forEach(function (k) {
         var v = toNumber(carePrices[k]);
@@ -1601,12 +1618,12 @@
       { icon: 'bi-credit-card-2-front', value: '0' + NBSP + '% TAE',
         title: 'Paga en ' + m + NBSP + 'meses sin intereses',
         text: entry && toNumber(entry.basePrice) > 0
-          ? 'El ' + entry.name + ', desde ' + fmt.mes(entry.basePrice) + ', con la cuota a la vista antes de decidir.'
+          ? (gEntry.plural ? 'Los ' : 'El ') + entry.name + ', desde ' + fmt.mes(entry.basePrice) + ', con la cuota a la vista antes de decidir.'
           : 'Con la cuota a la vista antes de decidir, en todos los modelos.',
         link: 'Ver cómo financiar', href: resolvePageUrl('soporte.html?q=financiar#preguntas') },
       { icon: 'bi-arrow-repeat', value: tradeMax > 0 ? 'Hasta ' + fmt.eur0(tradeMax) : '',
         title: 'AURA' + NBSP + 'Trade' + NBSP + 'In',
-        text: 'Entrega tu dispositivo actual y descuenta su valor de tu nuevo ' + (famName || 'AURA') + ', al instante.',
+        text: 'Entrega tu dispositivo actual y descuenta su valor de ' + (famName ? g.tu + ' ' + g.nuevo + ' ' + famName : 'tu nuevo AURA') + ', al instante.',
         link: 'Valorar mi dispositivo', href: resolvePageUrl('trade-in.html') },
       { icon: 'bi-shield-check', value: careFrom > 0 ? (fam ? '' : 'Desde ') + fmt.eur0(careFrom) : '',
         title: careName,
@@ -1721,7 +1738,7 @@
      9. Buscador (lógica pura: aura-ui.js pone el comportamiento)
      ------------------------------------------------------------------------ */
 
-  var FAMILY_ICON = { auraphone: 'bi-phone', aurapad: 'bi-tablet-landscape', aurabook: 'bi-laptop' };
+  var FAMILY_ICON = { auraphone: 'bi-phone', aurapad: 'bi-tablet-landscape', aurabook: 'bi-laptop', aurapods: 'bi-earbuds' };
 
   /** Minúsculas, sin acentos ni comillas de pulgadas: «auraPad Pro 13″» → «aurapad pro 13». */
   function norm(text) {
@@ -1796,7 +1813,8 @@
       var r = search.query(text);
       var out = '';
       if (r.query && !r.total) {
-        return '<p class="aura-search__empty">No hay resultados para «' + esc(String(text).trim()) + '». Prueba con auraPhone, auraPad o auraBook.</p>';
+        return '<p class="aura-search__empty">No hay resultados para «' + esc(String(text).trim()) + '». Prueba con ' +
+          esc(orList(catalog.families().map(function (f) { return f.name; })) || 'el nombre de un producto') + '.</p>';
       }
       if (r.products.length) {
         out += '<p class="aura-search__heading">Productos</p><ul class="aura-search__list">';
@@ -1844,6 +1862,7 @@
     { key: 'auraphone', label: 'auraPhone', href: resolvePageUrl('auraphone.html') },
     { key: 'aurapad', label: 'auraPad', href: resolvePageUrl('aurapad.html') },
     { key: 'aurabook', label: 'auraBook', href: resolvePageUrl('aurabook.html') },
+    { key: 'aurapods', label: 'auraPods', href: resolvePageUrl('aurapods.html') },
     { key: 'comparar', label: 'Comparar', href: resolvePageUrl('comparar.html'), title: 'Compara los modelos de cada familia frente a frente' },
     { key: 'tradein', label: 'Trade In', href: resolvePageUrl('trade-in.html'), title: 'AURA Trade In: entrega tu dispositivo anterior y consigue un descuento' },
     { key: 'soporte', label: 'Soporte', href: resolvePageUrl('soporte.html') }
@@ -1891,6 +1910,7 @@
           '<li><a href="' + resolvePageUrl('auraphone.html') + '"><i class="bi bi-phone" aria-hidden="true"></i>Ver auraPhone</a></li>' +
           '<li><a href="' + resolvePageUrl('aurapad.html') + '"><i class="bi bi-tablet-landscape" aria-hidden="true"></i>Ver auraPad</a></li>' +
           '<li><a href="' + resolvePageUrl('aurabook.html') + '"><i class="bi bi-laptop" aria-hidden="true"></i>Ver auraBook</a></li>' +
+          '<li><a href="' + resolvePageUrl('aurapods.html') + '"><i class="bi bi-earbuds" aria-hidden="true"></i>Ver auraPods</a></li>' +
           (user
             ? '<li><a href="' + resolvePageUrl('cuenta.html') + '"><i class="bi bi-person-circle" aria-hidden="true"></i>Tu cuenta</a></li>'
             : '<li><a href="' + resolvePageUrl('login.html') + '"><i class="bi bi-person-circle" aria-hidden="true"></i>Iniciar sesión</a></li>') +
@@ -1924,11 +1944,12 @@
   function menuSecondaryHTML() {
     var user = auth.user();
     var count = bag.count();
+    var n = NAV.length;   // el escalonado sigue al de los enlaces principales (--i: 0 … n − 1)
     return (user
-        ? '<li style="--i:6"><a href="' + resolvePageUrl('cuenta.html') + '"><i class="bi bi-person-circle" aria-hidden="true"></i>Tu cuenta, ' + esc(user.nombre) + '</a></li>'
-        : '<li style="--i:6"><a href="' + resolvePageUrl('login.html') + '"><i class="bi bi-person-circle" aria-hidden="true"></i>Iniciar sesión</a></li>') +
-      '<li style="--i:7"><a href="' + resolvePageUrl('bolsa.html') + '"><i class="bi bi-bag" aria-hidden="true"></i>Bolsa' + (count ? ' (' + count + ')' : '') + '</a></li>' +
-      '<li style="--i:8"><a href="' + resolvePageUrl('acerca.html') + '"><i class="bi bi-info-circle" aria-hidden="true"></i>Acerca de AURA</a></li>';
+        ? '<li style="--i:' + n + '"><a href="' + resolvePageUrl('cuenta.html') + '"><i class="bi bi-person-circle" aria-hidden="true"></i>Tu cuenta, ' + esc(user.nombre) + '</a></li>'
+        : '<li style="--i:' + n + '"><a href="' + resolvePageUrl('login.html') + '"><i class="bi bi-person-circle" aria-hidden="true"></i>Iniciar sesión</a></li>') +
+      '<li style="--i:' + (n + 1) + '"><a href="' + resolvePageUrl('bolsa.html') + '"><i class="bi bi-bag" aria-hidden="true"></i>Bolsa' + (count ? ' (' + count + ')' : '') + '</a></li>' +
+      '<li style="--i:' + (n + 2) + '"><a href="' + resolvePageUrl('acerca.html') + '"><i class="bi bi-info-circle" aria-hidden="true"></i>Acerca de AURA</a></li>';
   }
 
   /* «auraPhone, auraPad o auraBook» */
@@ -2153,7 +2174,7 @@
           '</ul>' +
         '</div>' +
         '<nav class="aura-footer__directory" aria-label="Pie de página">' +
-          footerCol('Productos', [['auraphone.html', 'auraPhone'], ['aurapad.html', 'auraPad'], ['aurabook.html', 'auraBook'], ['comparar.html', 'Comparar modelos']]) +
+          footerCol('Productos', [['auraphone.html', 'auraPhone'], ['aurapad.html', 'auraPad'], ['aurabook.html', 'auraBook'], ['aurapods.html', 'auraPods'], ['comparar.html', 'Comparar modelos']]) +
           footerCol('Cuenta', [['cuenta.html', 'Gestionar ID de AURA'], ['bolsa.html', 'Bolsa'], ['trade-in.html', 'AURA Trade In'], ['soporte.html', 'Soporte']]) +
           footerCol('Valores', [['legal.html#privacidad', 'Privacidad'], ['acerca.html#accesibilidad', 'Accesibilidad'], ['acerca.html#medio-ambiente', 'Medio ambiente'], ['acerca.html#proveedores', 'Proveedores']]) +
           footerCol('Empresa', [['acerca.html', 'Acerca de AURA'], ['acerca.html#newsroom', 'Newsroom', 'Sala de prensa: las últimas noticias de AURA'], ['acerca.html#oportunidades', 'Oportunidades', 'Empleo en AURA'], ['soporte.html#contacto', 'Contacto']]) +

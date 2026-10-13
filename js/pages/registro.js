@@ -18,7 +18,7 @@
 
   /* ---- Destino seguro (?volver=) ---------------------------------------- */
 
-  var PAGINAS = ['index.html', 'auraphone.html', 'aurapad.html', 'aurabook.html', 'comprar.html',
+  var PAGINAS = ['index.html', 'auraphone.html', 'aurapad.html', 'aurabook.html', 'aurapods.html', 'comprar.html',
     'bolsa.html', 'checkout.html', 'cuenta.html', 'comparar.html', 'trade-in.html', 'acerca.html',
     'soporte.html', 'legal.html'];
 

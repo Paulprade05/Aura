@@ -8,10 +8,10 @@
   <meta name="color-scheme" content="dark">
 
   <!-- SEO: título y descripción únicos, autoría, palabras clave, indexación (se indexa y se siguen sus enlaces) y URL canónica -->
-  <title>auraPhone, auraPad y auraBook con envío gratis — AURA</title>
+  <title>auraPhone, auraPad, auraBook y auraPods con envío gratis — AURA</title>
   <meta name="description" content="Descubre el auraPhone Duo, el primer auraPhone plegable, el auraPad Pro con chip AURA M5 y el auraBook Pro. Financiación sin intereses, Trade In y envío gratis.">
   <meta name="author" content="Paulprade05">
-  <meta name="keywords" content="AURA, tienda AURA, auraPhone, auraPhone Duo, auraPad, auraBook, móvil plegable, AURA Trade In, financiación sin intereses">
+  <meta name="keywords" content="AURA, tienda AURA, auraPhone, auraPhone Duo, auraPad, auraBook, auraPods, móvil plegable, auriculares, AURA Trade In, financiación sin intereses">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://aura-lyart-beta.vercel.app/">
 
@@ -19,7 +19,7 @@
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="AURA">
   <meta property="og:locale" content="es_ES">
-  <meta property="og:title" content="auraPhone, auraPad y auraBook con envío gratis">
+  <meta property="og:title" content="auraPhone, auraPad, auraBook y auraPods con envío gratis">
   <meta property="og:description" content="Descubre el auraPhone Duo, el primer auraPhone plegable, el auraPad Pro con chip AURA M5 y el auraBook Pro. Financiación sin intereses, Trade In y envío gratis.">
   <meta property="og:url" content="https://aura-lyart-beta.vercel.app/">
   <meta property="og:image" content="https://aura-lyart-beta.vercel.app/img/og/og-aura.jpg">
@@ -28,7 +28,7 @@
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Logotipo de AURA sobre fondo negro con un auraPad, un auraBook y un auraPhone Duo, y el lema «Lo mejor de AURA, en una sola tienda».">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="auraPhone, auraPad y auraBook con envío gratis">
+  <meta name="twitter:title" content="auraPhone, auraPad, auraBook y auraPods con envío gratis">
   <meta name="twitter:description" content="Descubre el auraPhone Duo, el primer auraPhone plegable, el auraPad Pro con chip AURA M5 y el auraBook Pro. Financiación sin intereses, Trade In y envío gratis.">
   <meta name="twitter:image" content="https://aura-lyart-beta.vercel.app/img/og/og-aura.jpg">
   <meta name="twitter:image:alt" content="Logotipo de AURA sobre fondo negro con un auraPad, un auraBook y un auraPhone Duo, y el lema «Lo mejor de AURA, en una sola tienda».">
@@ -132,12 +132,13 @@
     </section>
 
     <!-- ================= 2 · Novedades (bento) =================
-         Cada tesela es un <article>: una novedad que se entiende sola, con su título, su texto y sus enlaces. -->
+         Cada tesela es un <article>: una novedad que se entiende sola, con su título, su texto y sus enlaces.
+         Debajo de las dos columnas, una tesela a lo ancho (.aura-tile--wide) para la familia auraPods. -->
     <section class="aura-section aura-section--band" id="novedades" aria-labelledby="novedades-titulo">
       <div class="aura-container">
         <header class="aura-section-head">
           <p class="aura-eyebrow aura-eyebrow--mono">Novedades / 2026</p>
-          <h2 class="aura-h2" id="novedades-titulo">Cuatro formas de entrar en otra dimensión.</h2>
+          <h2 class="aura-h2" id="novedades-titulo">Cinco formas de entrar en otra dimensión.</h2>
           <p class="aura-lead">Diseñadas juntas. Extraordinarias por separado. Esta es la nueva generación AURA.</p>
         </header>
 
@@ -205,6 +206,22 @@
               </div>
             </article>
           </div>
+
+          <!-- Tesela a lo ancho: texto a la izquierda y foto a la derecha desde 768 px (index.css); en el teléfono, una tesela más -->
+          <article class="aura-tile aura-tile--wide index-wide" data-aura-reveal style="--i:3">
+            <div class="aura-tile__copy">
+              <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">auraPods</p>
+              <h3 class="aura-h3">Escucha lo que quieres. Silencia lo demás.</h3>
+              <p class="aura-tile__text">auraPods Max&nbsp;2, auraPods Pro&nbsp;3 y auraPods&nbsp;5: el chip AURA&nbsp;H2 y cancelación activa de ruido en los tres, de la diadema de aluminio a los de tallo corto sin almohadilla.</p>
+              <div class="aura-cluster index-links">
+                <a class="aura-link" href="html/aurapods.html">Más información<span class="visually-hidden"> sobre auraPods</span></a>
+                <a class="aura-link" href="html/comprar.html?producto=aurapods-5" data-index-cta="aurapods-5 aurapods-pro-3 aurapods-max-2">Comprar<span class="visually-hidden"> auraPods 5</span></a>
+              </div>
+            </div>
+            <div class="aura-tile__media aura-tile__media--blend">
+              <img class="aura-img" src="img/aurapods-max-2.webp" data-slot="aurapods-max-2" width="1600" height="1200" alt="auraPods Max 2 en color medianoche, en tres cuartos sobre una superficie negra brillante: diadema con malla, orejeras de aluminio y su reflejo" loading="lazy" decoding="async">
+            </div>
+          </article>
         </div>
       </div>
     </section>
@@ -225,6 +242,7 @@
             <label class="aura-segmented__item"><input type="radio" name="gama-familia" value="auraphone" checked><span>auraPhone</span></label>
             <label class="aura-segmented__item"><input type="radio" name="gama-familia" value="aurapad"><span>auraPad</span></label>
             <label class="aura-segmented__item"><input type="radio" name="gama-familia" value="aurabook"><span>auraBook</span></label>
+            <label class="aura-segmented__item"><input type="radio" name="gama-familia" value="aurapods"><span>auraPods</span></label>
           </div>
         </header>
 
@@ -234,7 +252,7 @@
           </div>
         </div>
         <noscript>
-          <p class="aura-body mt-3">Activa JavaScript para ver los modelos y sus precios, o entra en <a href="html/auraphone.html">auraPhone</a>, <a href="html/aurapad.html">auraPad</a> o <a href="html/aurabook.html">auraBook</a>.</p>
+          <p class="aura-body mt-3">Activa JavaScript para ver los modelos y sus precios, o entra en <a href="html/auraphone.html">auraPhone</a>, <a href="html/aurapad.html">auraPad</a>, <a href="html/aurabook.html">auraBook</a> o <a href="html/aurapods.html">auraPods</a>.</p>
         </noscript>
       </div>
     </section>
