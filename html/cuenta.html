@@ -35,7 +35,7 @@
 
   <!-- Iconos: favicon (ICO y PNG), icono de la pantalla de inicio y manifiesto de la aplicación web -->
   <link rel="icon" href="../favicon.ico" sizes="any">
-  <link rel="icon" type="image/png" href="../img/aura.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="../img/icon-192.png">
   <link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
   <link rel="manifest" href="../site.webmanifest">
   <!-- Manifiesto: por file:// (doble clic) el navegador lo bloquearía por CORS con un error en la consola, así que ahí se retira -->
@@ -59,8 +59,9 @@
   <a class="aura-skip" href="#contenido">Saltar al contenido</a>
   <aura-header active="cuenta" ribbon="off"></aura-header>
 
-  <!-- Contenido principal. Sin sesión, cuenta.js lleva a login.html; con sesión, muestra #cuenta-app -->
-  <main id="contenido">
+  <!-- Contenido principal. Sin sesión, cuenta.js lleva a login.html; con sesión, muestra #cuenta-app.
+       Mide al menos una pantalla: mientras la cuenta no está pintada, el pie no sube a ocupar su sitio -->
+  <main id="contenido" class="cuenta-main">
     <!-- Sin JavaScript: los datos viven en el navegador, así que solo se explica por qué no se ven -->
     <noscript>
       <section class="aura-section" aria-labelledby="cuenta-sin-js">

@@ -35,7 +35,7 @@
 
   <!-- Iconos: favicon (ICO y PNG), icono de la pantalla de inicio y manifiesto de la aplicación web -->
   <link rel="icon" href="../favicon.ico" sizes="any">
-  <link rel="icon" type="image/png" href="../img/aura.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="../img/icon-192.png">
   <link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
   <link rel="manifest" href="../site.webmanifest">
   <!-- Manifiesto: por file:// (doble clic) el navegador lo bloquearía por CORS con un error en la consola, así que ahí se retira -->
@@ -87,12 +87,16 @@
 
         <div class="aura-layout aura-layout--config comprar-layout">
 
-          <!-- La galería y su nota van juntas (pegajosas desde 992 px): si el
+          <!-- La galería, sus vistas y su nota van juntas (pegajosas desde 992 px): si el
                acabado elegido no tiene foto propia, la nota dice cuál se ve. -->
           <div class="comprar-visual">
             <div class="aura-gallery comprar-galeria" data-c-galeria>
               <p class="aura-gallery__caption" aria-hidden="true" data-c-galeria-pie></p>
             </div>
+            <!-- Vistas del acabado elegido (trasera, frente, perfil…): una miniatura por foto, que la pinta comprar.js
+                 desde AURA.catalog.views. Barra de herramientas con un solo punto de tabulación y flechas; cada
+                 miniatura es un botón (aria-pressed). Con una sola foto no hay tira. -->
+            <div class="comprar-vistas" role="toolbar" aria-label="Vistas" data-c-vistas hidden></div>
             <p class="aura-caption comprar-galeria-nota" data-c-galeria-nota hidden></p>
           </div>
 
@@ -258,10 +262,14 @@
     </section>
 
     <!-- Barra de compra fija: la misma acción que el resumen (no una segunda).
-         Se esconde mientras el botón del resumen está a la vista. -->
+         Se esconde mientras el botón del resumen está a la vista. También en
+         escritorio (--always, desviación anotada en la guía): el resumen va
+         debajo de los pasos y sin la barra no habría acción a la vista.
+         El acabado va en su propia línea, bajo el nombre: así nunca se corta. -->
     <div class="aura-buybar aura-buybar--always comprar-buybar" data-aura-buybar="#comprar-anadir">
       <div class="aura-buybar__info">
         <p class="aura-buybar__name" data-c-barra-nombre></p>
+        <p class="aura-buybar__name aura-buybar__color" data-c-barra-color hidden></p>
         <div class="comprar-buybar__precio">
           <p class="aura-price" data-c-barra-precio></p>
           <p class="aura-caption comprar-buybar__cuota" data-c-barra-cuota></p>

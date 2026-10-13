@@ -7,6 +7,26 @@ Contrato de marcado del sistema de diseño (`assets/css/aura.css`). Guía viva: 
 - Todo el texto en español de España. La marca es siempre AURA: nunca la marca original ni sus nombres de producto (ver equivalencias del encargo).
 - Toda página nueva cumple la lista de [§15 Accesibilidad y metadatos (temario DIW)](#15-accesibilidad-y-metadatos-temario-diw): `<head>` completo y comentado, un `h1`, tablas con `<caption>`, formularios con `label` y validación HTML5, ARIA solo donde el HTML no llega.
 
+## Cambios de la v2.0 (13 de octubre de 2026): auditoría de scroll, fotos y coherencia con la guía
+
+La base, la guía de estilo v2.0 (`guia-de-estilo/guia-de-estilo.html`) y este documento pasan a la misma versión (`aura.css`: «Sistema de diseño (v2.0)»). **Qué fuente manda**: la guía v2, después los prototipos de página y después la v1; cada desviación de la v1 está en la guía §00 con su motivo. Qué cambia (detalle en cada sección):
+
+| Área | Cambio |
+| --- | --- |
+| Scroll | La tabla comparativa ya no se queda con la rueda ni con el dedo: `.aura-table-wrap` con `overflow-y: hidden` (1 px de más, del caption o del filo de la última fila, bastaba para perder una muesca o un arrastre entero) ([§6](#tabla-comparativa)). Los carruseles devuelven el gesto vertical a la página (`overscroll-behavior: auto` con `.is-ready`) y no tienen `touchmove` no pasivo. `html { scroll-behavior: auto }`: los saltos a un ancla son inmediatos ([§13](#movimiento)). |
+| Escena con scroll | El fundido de los textos se mide en píxeles: 150 px por entrada y salida (`SCRUB_FADE_PX`), como mucho un tercio del tramo. Reglas de ritmo: `data-length` ≤ 340 (2,4 pantallas), como mucho 3 mensajes, cada uno ≥ 400 px al 100 %. Por http(s) y con el lienzo en la GPU, los fotogramas cercanos se decodifican de antemano fuera del hilo principal (`createImageBitmap` del Blob) y al pintar solo se escalan; sin GPU y por `file://`, como antes ([§10 bis](#10-bis-escena-que-avanza-con-el-scroll)). |
+| Apariciones | `[data-aura-reveal]` se dispara al asomar (`threshold: [0]`, `rootMargin: '0px 0px 5% 0px'`), con fundido de 400 / 600 ms y escalonado de 60 ms × `--i` hasta 2, sin retraso en el teléfono ([§11](#11-movimiento)). |
+| Color | `--accent-link` pasa a #1787f7 (el de la v1 y del prototipo de Inicio: 5,85:1 sobre negro, 5,03:1 sobre tarjeta) y `--accent-link-hover` #4aa3ff; el secundario en hover y en foco pone su etiqueta en `--accent-link-hover`. Nuevo `--field-border-hover` (50 %; blanco con «más contraste»). Superficies solo de la paleta (tabla, tesela `--cover`, tarjeta de acceso) y base #000 en los paneles de foto, también `.aura-gallery` (el halo se queda). Los trazos decorativos (aro del primario, icono del marcador de imagen, `.aura-glow`) pasan al mismo azul (`rgba(23, 135, 247, …)`). Única excepción a «lo que no se pulsa no va en azul»: el acabado de la tarjeta de modelo ([§1](#tokens-root), [§13](#color)). |
+| Tipografía | Medida en caracteres reales: `.aura-lead` 44ch, `.aura-body` y `.aura-prose` 53ch (≈ 56 y 68 caracteres), notas y características 60ch, notas al pie 65ch. Roles que faltaban en la guía: texto de componente (14 / 1,5), botón (15 / 600), nota (12 / 1,55 / 400, también la de tabla), navegación y cifras (con las clases que ya los llevan; para un texto suelto de ese rol, `.aura-small`, Inter 14 / 1,5). Pie sin palabras sueltas; `.aura-gallery__caption` en Inter 13; tablas con `text-wrap: balance`. «USB-⁠C» con guion normal + WORD JOINER (U+2060): no se parte y el guion es de Inter (el U+2011 de la v1.7 salía de Segoe UI) ([§14.2](#142-aurafmt)). Fuentes de reserva con métricas ajustadas (`size-adjust`) detrás de Inter y Kanit: el texto no salta al llegar la fuente ([§2](#2-tipografía)). |
+| Fotos | **Galería por color**: `photos` en `data.js` (bloque generado `FOTOS`), `AURA.catalog.views(p, color)` y `catalog.image(p, color, vista?)`; fotos reales igualadas (`img/<diseño>-<color>-<vista>.webp`, fondo #000, escala fija por tipo, exposición común, pantalla AURA común). Comprar enseña todas las vistas del acabado con una tira de miniaturas. `srcset` de 400 / 800 / 1600 px con `sizes` por hueco. La galería ajusta la foto a su caja (sin corte ni desfase). Bolsa, popover y checkout dicen «Imagen en …» si la foto es de otro acabado ([§1](#huecos-de-imagen), [§8](#galería-del-configurador), [§14.3](#143-auracatalog)). |
+| Layout | `.aura-grid--4` a cuatro columnas desde 1200 px (75 em; dos entre 576 y 1199). Tokens `--space-block` y `--space-stats` para el ritmo vertical. La cinta lleva un texto corto en el teléfono. La barra local pliega sus enlaces en el menú del chevrón mientras no caben (por debajo de 992 px) y llega con `.has-menu` en el HTML (sin salto al cargar) ([§3](#3-layout), [§4](#barra-local-páginas-de-familia), [§12.1](#121-aura-header)). |
+| Tienda | En comprar la barra de compra va también en escritorio (`--always`, excepción documentada) y lleva el acabado en su propia línea (`.aura-buybar__color`). Las páginas que pintan con JS no saltan al cargar: comprar, comparar, cuenta, bolsa y checkout ocultan sin sacar del flujo lo que aún no está pintado hasta su `.is-ready`, con la red de seguridad `aura-ready-fallback` (2,5 s); Trade In escribe ya en el HTML el texto de su titular. `html.aura-has-session` (de `aura-core.js`, en el `<head>`) marca la sesión antes del primer pintado y lo usan checkout y cuenta ([§8](#barra-de-compra-fija-móvil)). |
+| Materiales y radios | `--glass-nav-thick-bg` (el menú móvil, negro al 86 %), `--radius-2xs` (6 px, casillas), duraciones con token (`--dur-check`, `--dur-rm`, `--dur-exit`, `--dur-enter`). Sombras: `--shadow-2` es de popover, tarjeta elevada, tarjeta de acceso y paneles de cristal; las tarjetas no llevan sombra ([§1](#tokens-root)). |
+| Iconos | Nunca por debajo de 16 px, salvo en línea con un texto menor (1em). El chevrón de la barra local, 17 px. La marca del sitio es `img/aura-72.png` (72 px, unos 3 KB); `aura.png` queda para los iconos. |
+| Guía de estilo | Nuevo capítulo 00 «Fuentes y desviaciones» (jerarquía v2 › prototipos › v1, tabla de desviaciones de la v1 y de excepciones); §14 reescrito para la galería por color; tablas de la escena con auraPods y los tamaños reales de `m/`. |
+
+**Qué deben hacer las páginas** (y cualquier página nueva): enlazar las fotos de producto solo a través de `AURA.catalog.image()` / `views()`; no escribir `font-size`, `line-height` ni `letter-spacing` propios (usar `.aura-body`, `.aura-caption` o los roles de §2); separar bloques con `--space-block` (nunca `mt-5`); en un bloque texto + imagen, titular `.aura-h1` y antetítulo `--mono`; en una cabecera de sección, `.aura-h2`; escena con `data-length` ≤ 340 y ≤ 3 textos; la barra local con `.has-menu` y su chevrón en el HTML; enlaces sueltos con `aura-link aura-link--control`.
+
 ## Cambios de la v1.7 (11 de octubre de 2026): familia auraPods
 
 Una cuarta familia, **auraPods** (auriculares: auraPods Max 2, auraPods Pro 3 y auraPods 5), con su página `html/aurapods.html` (+ `css/pages/aurapods.css`, `js/pages/aurapods.js`) y la misma arquitectura que las otras tres. **El aspecto y el comportamiento de lo anterior no cambian.** Qué hay nuevo en la base:
@@ -25,7 +45,7 @@ Piezas nuevas para que las páginas de familia cuenten el producto como una pres
 | Área | Cambio |
 | --- | --- |
 | Escena con scroll | `section.aura-scrub[data-aura-scrub]`: secuencia de fotogramas (`img/seq/<nombre>/f-0001.webp…`) pintada en un `<canvas>` que sigue al scroll 1:1, con textos HTML que entran y se van por tramos (`data-from` / `data-to` / `data-pos`). Carga progresiva (uno de cada 8, luego el resto), versión de teléfono (`m/`), y sin escena con «reducir movimiento», «ahorro de datos», al imprimir o sin JS: póster fijo y textos en orden ([§10 bis](#10-bis-escena-que-avanza-con-el-scroll)). `AURA.ui.scrub(el)`. |
-| Exhibición de color | `.aura-colorway[data-aura-colorway="idDeProducto"]`: muestras del catálogo que cambian la foto con el fundido cruzado de la galería y anuncian el acabado; si el color no tiene foto propia, lo dice («Plata · Imagen en Azul glacial») ([§8](#exhibición-de-color)). `AURA.ui.colorway(el)`, evento `aura:colorway`. |
+| Exhibición de color | `.aura-colorway[data-aura-colorway="idDeProducto"]`: muestras del catálogo que cambian la foto con el fundido cruzado de la galería y anuncian el acabado; si el color no tiene foto propia, lo dice («Plata · Imagen en azul glacial») ([§8](#exhibición-de-color)). `AURA.ui.colorway(el)`, evento `aura:colorway`. |
 | Cifra destacada | `.aura-stat--lg` (+ `.aura-stats--lg`, `__pre`, `__unit`) y `data-aura-reveal="stat"`: la cifra aparece y después lo que la explica, solo con opacidad (sin contador) ([§6](#cifra)). |
 | Galería de fotos | `.aura-carousel--wide`: una foto grande por vista en el carrusel de siempre; cada foto, un `figure.aura-media--frame` con su pie ([§10](#carrusel)). |
 | Movimiento | §13: los fondos en movimiento siguen prohibidos **salvo la escena con scroll**, que nunca se mueve sola (solo avanza mientras el usuario desplaza la página, 1:1) y con «reducir movimiento» es una imagen fija. |
@@ -46,7 +66,7 @@ Marcado, metadatos y accesibilidad según el temario de «Desarrollo de Interfac
 
 | Área | Cambio |
 | --- | --- |
-| Tablas | Las que genera el JS llevan `<caption class="visually-hidden">` además de `<thead>`, `<tbody>` y `th` con `scope`: «Comparativa técnica de los modelos auraPhone» en `[data-aura-compare]` (configurable con `data-aura-compare-caption`) y «Precio: comparativa de auraPhone Duo, … y …» en cada grupo de `comparar.html` (el caption da nombre a la tabla; ya no hay `aria-labelledby`). `caption.visually-hidden` ocupa 0 px (aura.css §2): la tabla no se mueve. Un valor que falta es «—» a la vista y «Sin dato» para el lector de pantalla ([§12.5](#125-tabla-de-data-aura-compare)). |
+| Tablas | Las que genera el JS llevan `<caption class="visually-hidden">` además de `<thead>`, `<tbody>` y `th` con `scope`: «Comparativa técnica de los modelos auraPhone» en `[data-aura-compare]` (configurable con `data-aura-compare-caption`) y «Precio: comparativa de auraPhone Duo, … y …» en cada grupo de `comparar.html` (el caption da nombre a la tabla; ya no hay `aria-labelledby`). `caption.visually-hidden` no empuja la tabla (aura.css §2) *(corregido en la v2.0: abajo, su caja de 1 px sobresalía por debajo de la tabla y el contenedor con desplazamiento horizontal se quedaba con la primera muesca de la rueda; ahora va arriba y `.aura-table-wrap` lleva `overflow-y: hidden`, ver §6)*. Un valor que falta es «—» a la vista y «Sin dato» para el lector de pantalla ([§12.5](#125-tabla-de-data-aura-compare)). |
 | Navegación | Nombres de `nav` propios: «Principal» (barra y menú móvil), «Migas de pan» (antes «Ruta de navegación») y «Pie de página» (antes «Directorio»). `title` solo donde dice algo que el texto no dice: logotipo «AURA — Volver al inicio» (igual que su `aria-label`, que antes era «AURA, inicio»), «Comparar» y «Trade In» de la barra y del menú, enlace de la cinta, iconos sociales, «Newsroom», «Oportunidades» y «Créditos de imágenes» ([§12.1](#121-aura-header), [§12.2](#122-aura-footer)). |
 | Título | `comparar.html` escribe un `document.title` de 40–65 caracteres con el formato «… — AURA» («Comparar modelos de auraPhone: especificaciones y precios — AURA»). |
 | Documentación | Nueva [§15](#15-accesibilidad-y-metadatos-temario-diw): la lista que debe cumplir cualquier página nueva, con la plantilla del `<head>`. |
@@ -162,7 +182,7 @@ Revisión de la base a partir de lo que encontraron las páginas. **Qué ha camb
 
 ## Índice
 
-0. [Cambios recientes](#cambios-de-la-v17-11-de-octubre-de-2026-familia-aurapods) (v1.7) y [v1.6](#cambios-de-la-v16-10-de-octubre-de-2026)
+0. [Cambios recientes](#cambios-de-la-v20-13-de-octubre-de-2026-auditoría-de-scroll-fotos-y-coherencia-con-la-guía) (v2.0), [v1.7](#cambios-de-la-v17-11-de-octubre-de-2026-familia-aurapods) y [v1.6](#cambios-de-la-v16-10-de-octubre-de-2026)
 1. [Convenciones globales](#1-convenciones-globales)
 2. [Tipografía](#2-tipografía)
 3. [Layout](#3-layout)
@@ -201,23 +221,23 @@ Usa siempre el token: no escribas `rgba()` ni `blur()` a mano en las páginas.
 | Grupo | Token | Uso |
 | --- | --- | --- |
 | Fondos | `--bg-main` #000 · `--bg-band` #0a0a0b · `--bg-secondary` #161617 · `--bg-elevated` #1d1d1f · `--bg-footer` #111113 | Lienzo · franja alterna · tarjetas · capas sobre tarjeta · pie. |
-| Acento | `--accent` #0071e3 · `--accent-hover` · `--accent-bright` #1787f7 · `--accent-soft` · `--accent-ring` | Relleno de la acción primaria (con texto blanco) y contorno del secundario · hover del relleno (#0074e8: el más luminoso que conserva 4,5:1 con la etiqueta blanca) · hover del contorno del secundario (el de la guía §03; **solo trazos**, nunca un relleno con texto) · fondo suave de lo elegido · anillo de foco al 40 % de la guía. |
-| | `--accent-link` #2997ff | Azul para **texto** e iconos sobre negro (6,9:1). |
+| Acento | `--accent` #0071e3 · `--accent-hover` · `--accent-bright` #1787f7 · `--accent-soft` · `--accent-ring` | Relleno de la acción primaria (con texto blanco) y contorno del secundario · hover del relleno (#0074e8: el más luminoso que conserva 4,5:1 con la etiqueta blanca; la v1 aclaraba a #1787f7, 3,59:1) · hover del contorno del secundario (el de la guía §03; **solo trazos**, nunca un relleno con texto; hoy coincide con `--accent-link`) · fondo suave de lo elegido · anillo de foco al 40 % de la guía. |
+| | `--accent-link` #1787f7 · `--accent-link-hover` #4aa3ff | Azul para **texto** e iconos (v2.0: el de la v1 y del prototipo de Inicio): 5,85:1 sobre negro, 5,51:1 sobre franja, 5,03:1 sobre tarjeta, 4,68:1 sobre `--bg-elevated` · su hover, más luminoso (7,97:1 sobre negro): etiqueta del secundario en hover y en foco y enlaces sin clase (`.aura-link` se subraya, sin cambiar de color) (#1787f7 sobre el tinte `--accent-soft` de una tarjeta se queda en 4,34:1 y en 4,06:1 sobre `--bg-elevated`; #4aa3ff da 5,92:1 y 5,54:1). Con «más contraste», #6cb8ff y #9dd0ff. |
 | Dorado | `--gold` #e5a93c · `--gold-soft` | Valor premium (antetítulos, columna destacada) · fondo de insignias y notas. |
 | Texto | `--text-primary` · `--text-secondary` · `--text-tertiary` · `--text-placeholder` · `--text-disabled` | Títulos · cuerpo · notas · `placeholder` de los campos (≥ 4,7:1 también enfocado) · desactivado. Dentro de un material de cristal los tres intermedios se redefinen con vibrancia (§13). |
-| Líneas | `--hairline` · `--hairline-strong` · `--edge-light` · `--field-border` | Separadores · bordes visibles · borde superior de un material (la luz lo toca) · límite de campos, opciones y cantidad (≥ 3:1 incluso sobre negro). |
+| Líneas | `--hairline` · `--hairline-strong` · `--edge-light` · `--field-border` · `--field-border-hover` | Separadores · bordes visibles · borde superior de un material (la luz lo toca) · límite de campos, casillas, opciones y cantidad (36 %: 3,14:1 sobre negro, 3,35:1 sobre tarjeta) · el mismo límite con el ratón encima (50 %, 5,32:1; blanco con «más contraste», para que el hover nunca baje el contraste). |
 | Rellenos | `--fill-1/2/3` · `--fill-selected` · `--fill-disabled` | Fondos planos de controles (reposo · hover · pulsado) · la pastilla elegida del segmentado · el botón desactivado (#252528, guía §03). |
 | Campos | `--field-bg` · `--field-bg-focus` | Fondo de los campos en reposo y en foco (sobre la Base, los de la guía §04; dentro de una superficie elevada bajan a 4 % / 7 %). |
 | Botones | `--inverse-hover` | Hover del botón inverso (#e8e8ed, guía §03). |
 | Fotos | `--photo-feather-x` · `--photo-feather-y` · `--photo-scrim` · `--photo-scrim-top` · `--photo-focus` | Máscara con la que una foto real se funde con el negro por sus bordes · degradado estático de protección del texto sobre una foto · el mismo arriba, para la etiqueta de una tesela `--cover` · encuadre (`object-position`) de una foto recortada (§1, huecos de imagen). |
 | Estado | `--ok` · `--warn` · `--error` | Completado · aviso · error (siempre con icono y texto). |
-| Materiales | `--glass-thin-bg/-filter` · `--glass-regular-bg/-filter` · `--glass-thick-bg/-filter` · `--glass-nav-bg` · `--scrim` | Fino (avisos, tarjeta de cristal) · regular (popover, barra global y local) · grueso (hoja, buscador, menú, barra de compra). Fondo y filtro van siempre del mismo nivel. `--scrim`: velo de las tareas modales. Para una superficie de cristal propia usa la clase `.aura-material` (abajo). |
+| Materiales | `--glass-thin-bg/-filter` · `--glass-regular-bg/-filter` · `--glass-thick-bg/-filter` · `--glass-nav-bg` · `--glass-nav-thick-bg` · `--scrim` | Fino (avisos, tarjeta de cristal, botón secundario sobre la escena) · regular (popover, barra global y local) · grueso (hoja, buscador, barra de compra) · negro regular de la barra global (72 %; también la etiqueta `.aura-media__tag` sobre una foto) · negro grueso del menú móvil (86 %, v2.0). Fondo y filtro van siempre del mismo nivel. `--scrim`: velo de las tareas modales. Para una superficie de cristal propia usa la clase `.aura-material` (abajo). |
 | Vibrancia | `--vibrant-label` (82 %) · `--vibrant-secondary` (74 %) · `--vibrant-tertiary` (62 %) | Texto sobre cristal: blanco translúcido, nunca gris plano. Controles y texto de apoyo con peso · secundario · terciario y `placeholder`. Con «más contraste» pasan a opacos. |
-| Radios | `--radius-xs` 8 · `--radius-sm` 12 · `--radius-md` 16 · `--radius-lg` 20 · `--radius-xl` 28 · `--radius-pill` | Etiquetas · campos, tabla, tarjetas pequeñas y de cifra · opciones, notas, avisos · tarjetas, teselas, imágenes, popover, acceso (como el prototipo) · solo hojas y buscador · botones y chips. |
-| Sombras | `--shadow-1/2/3` · `--glow-accent` | Más profunda cuanto mayor la superficie · halo del botón primario. |
+| Radios | `--radius-2xs` 6 · `--radius-xs` 8 · `--radius-sm` 12 · `--radius-md` 16 · `--radius-lg` 20 · `--radius-xl` 28 · `--radius-pill` | Solo la caja de las casillas (v2.0) · etiquetas, insignia mono · campos, tabla, tarjetas pequeñas y de cifra · opciones, notas, avisos · tarjetas, teselas, imágenes, popover, acceso (como el prototipo) · solo hojas y buscador · botones y chips. Ningún radio escrito a mano. |
+| Sombras | `--shadow-1/2/3` · `--glow-accent` | Más profunda cuanto mayor la superficie: `--shadow-1` la pastilla del segmentado · `--shadow-2` popover, tarjeta elevada, tarjeta de acceso y paneles de cristal · `--shadow-3` hojas y buscador. Las tarjetas normales no llevan sombra: solo su borde `--hairline`. `--glow-accent`: halo del botón primario (.55 en reposo, 1 en hover). |
 | Fuentes | `--font-display` (Kanit) · `--font-ui` (Inter) · `--font-mono` | |
-| Medidas | `--nav-h` · `--localnav-h` · `--ribbon-h` · `--sticky-top` · `--gutter` · `--container` · `--gap` | `--ribbon-h`: alto real de la cinta de `<aura-header>` (una o dos líneas según el ancho; lo mide `aura-core.js`, 0 sin cinta). Para «pantalla menos cabecera»: `calc(100svh - var(--nav-h) - var(--ribbon-h))`. |
-| Movimiento | `--ease-out` (entrada) · `--ease-in` (salida, la misma curva espejada) · `--dur-press` · `--dur-1/2/3` | |
+| Medidas | `--nav-h` · `--localnav-h` · `--ribbon-h` · `--sticky-top` · `--gutter` · `--container` · `--gap` · `--space-block` · `--space-stats` | `--ribbon-h`: alto real de la cinta de `<aura-header>` (una o dos líneas: en el teléfono lleva su texto corto; lo mide `aura-core.js`, 0 sin cinta). Para «pantalla menos cabecera»: `calc(100svh - var(--nav-h) - var(--ribbon-h))`. `--space-block` (`clamp(3.5rem, 8vw, 6.5rem)`, 56 → 104 px): entre dos bloques de una misma sección. `--space-stats` (`clamp(2.5rem, 5vw, 4rem)`, 40 → 64 px): antes de una fila de cifras (v2.0; nunca `mt-5` ni una medida propia de página). |
+| Movimiento | `--ease-out` (entrada) · `--ease-in` (salida, la misma curva espejada) · `--dur-press` 100 · `--dur-1` 160 · `--dur-2` 240 · `--dur-3` 560 · `--dur-check` 120 · `--dur-rm` 150 · `--dur-exit` 200 · `--dur-enter` 320 | Pulsación · halo, capa de hover y «›» · foto que llega · (reserva) · marca de casilla y radio · fundidos con «reducir movimiento» · salida de popover, aviso, buscador y menú, y fundido de la galería · desplazamiento de entrada de aviso, buscador y menú. Ninguna duración escrita a mano (v2.0). |
 | Capas | `--z-localnav` · `--z-buybar` · `--z-nav` · `--z-overlay` · `--z-sheet` · `--z-toast` | Orden de apilado de lo fijo. |
 
 ### Material de cristal propio
@@ -258,9 +278,20 @@ Fondo + desenfoque del nivel elegido y la vibrancia (redefine `--text-secondary`
 <img class="aura-img" src="assets/img/NOMBRE.webp" data-slot="NOMBRE" width="1600" height="1200" alt="…" loading="eager" fetchpriority="high" decoding="async">
 ```
 
-Las fotos del sitio son `.webp`: el hueco la pide directamente. Si falta, `aura-core.js` prueba `NOMBRE.png`, `NOMBRE.jpg`, luego `data-fallback="OTRO"` (`.webp`, `.png`, `.jpg`) y, si nada carga, lo sustituye por el marcador `.aura-slot` ([§12.3](#123-marcador-de-hueco-aura-slot)). El logotipo (`assets/img/aura.png`) no es un hueco. Las imágenes se diseñan para fondo negro. El `alt` describe **lo que se ve en la foto real**, no lo que anuncia el texto.
+Las fotos del sitio son `.webp`: el hueco la pide directamente. Si falta, `aura-core.js` prueba `NOMBRE.png`, `NOMBRE.jpg`, luego `data-fallback="OTRO"` (`.webp`, `.png`, `.jpg`) y, si nada carga, lo sustituye por el marcador `.aura-slot` ([§12.3](#123-marcador-de-hueco-aura-slot)). El logotipo (`assets/img/aura-72.png`, 72 px y unos 3 KB: nítido a 36 px en retina; `aura.png`, de 512 px, queda para los iconos) no es un hueco. Las imágenes se diseñan para fondo negro. El `alt` describe **lo que se ve en la foto real**, no lo que anuncia el texto.
 
-**Con una imagen por producto basta.** Las tarjetas, la bolsa y el configurador sacan el hueco de `AURA.catalog.image(producto, colorId)`: si ese color tiene foto propia (`imageVariants` en `data.js`) piden `auraphone-18-pro-negro.webp` con la base como `data-fallback`; si no, piden directamente la base (`auraphone-18-pro.webp`): ninguna petición fallida y, al cambiar de color, el hueco no cambia (no hay fundido). El marcador enseña como ruta principal la base y, en pequeño, «Opcional, una por color: …-negro.webp».
+**Galería por color (v2.0).** Cada acabado tiene sus fotos reales, en varias vistas y con el mismo estilo (guía §14): `img/<diseño>-<color>-<vista>.webp`, declaradas en `photos` de `data.js` (§14.12). Las tarjetas, la bolsa, el checkout, el buscador y el comparador sacan el hueco de `AURA.catalog.image(producto, colorId)` (la primera vista, la de tarjeta, con la base `product.image` como `data-fallback`); el configurador enseña todas con `AURA.catalog.views(producto, colorId)` (§8). Si ese acabado no tiene fotos, se enseñan las del acabado por defecto con `exact: false` y la página lo dice («Imagen en plata · Tu acabado: negro»): ninguna petición fallida. Un producto sin `photos` sigue con su foto de siempre (`image`, o la de `imageVariants` si declara ese acabado). El marcador enseña como ruta principal la base y, en pequeño, «Opcional, una por color: …».
+
+**Fotos de producto igualadas** (para que todas parezcan de la misma sesión; detalle y ejemplos en la guía §14):
+
+| Requisito | Valor |
+| --- | --- |
+| Marco y fondo | 1600 × 1200 (4:3), negro #000 exacto hasta el borde, sin viñeta, reflejo ni halo horneados (el halo lo pone el panel) |
+| Encuadre y escala | Producto centrado; su caja ocupa una fracción fija del marco según el tipo: teléfono, plegable y tableta 80 % (manda el alto en los altos: 960 px), portátil 84 % del ancho (1344 px), auriculares de diadema 76 % × 78 %, estuche y auriculares 70 % |
+| Luz | Exposición común (las luces del producto al mismo nivel en todas) y el mismo balance |
+| Vistas | La misma vista con el mismo ángulo en todos los colores, en este orden: teléfono y tableta `trasera`, `tres-cuartos`, `frontal`, `lateral`; plegable `trasera`, `abierto`, `frontal`, `cerrado`; portátil `tres-cuartos`, `abierto`, `frontal`, `cerrado`, `lateral`; diadema `frontal`, `tres-cuartos`, `trasera`, `lateral`; in-ear `estuche-abierto`, `auriculares`, `estuche-cerrado`. La primera es la de tarjeta y, siempre que se pueda, la misma en todos los modelos de una familia. Un color tiene las que hay en foto real buena |
+| Pantalla | En las vistas con pantalla, la misma imagen AURA en todos los aparatos (con su isla o su muesca) |
+| Retoque | Logotipos y marcas borrados; sin manos, cables ni soportes; sin textos de pantalla en inglés. Nunca se recolorea una foto para fingir otro acabado |
 
 **Presentación (v1.3)** — lo hace la base, sin marcado extra:
 
@@ -275,12 +306,35 @@ Tamaños recomendados (`width`/`height`):
 
 | Uso | Tamaño | Proporción |
 | --- | --- | --- |
-| Producto (tarjeta, configurador, bolsa) | 1600 × 1200 | 4:3 |
+| Producto (galería, tarjeta, exhibición) | 1600 × 1200, con sus variantes de 800 × 600 (`img/800/`) y 400 × 300 (`img/400/`) | 4:3 |
+| Producto en un hueco de más de 800 px CSS (exhibición del auraPhone) | 2400 × 1800 cuando el original lo permita (hoy ninguno: se sirve la de 1600, sin `img/2400/`) | 4:3 |
+| Miniatura de producto (bolsa, checkout, popover) | 800 × 800, recorte de la primera vista con el producto al 80 % (por hacer: hoy la línea usa la foto 4:3 entera) | 1:1 |
 | Héroe dividido, teselas, bloques texto + imagen | 1600 × 1200 | 4:3 |
+| Retrato de tarjeta (perfiles) | 1200 × 1500 | 4:5 |
 | Héroe centrado, imagen panorámica | 1920 × 1080 | 16:9 |
-| Miniaturas sueltas | 800 × 800 | 1:1 |
+| Banda a todo el ancho | 2400 × 600 | 4:1 |
+| Miniatura (créditos de `legal.html#imagenes`, tira de vistas de comprar) | 240 × 180 (`img/thumbs/`: una por foto y por póster de escena, recortada al centro) | 4:3 |
 
-Nombres en minúsculas con guiones: `inicio-hero-auraphone`, `auraphone-18-pro-max` (base del producto: `product.image`), `aurapad-air-13-gris-espacial` (por color: `product.image + '-' + color.id`, solo si su id está en `imageVariants`). En el JS sácalos siempre de `AURA.catalog.image(producto, colorId)`; no los escribas a mano. Los créditos de cada foto (autor, fuente, licencia) están en `legal.html#imagenes`, generados en `assets/js/creditos.js`.
+Nombres en minúsculas con guiones: `inicio-hero-auraphone`, `auraphone-18-pro-max` (base del producto: `product.image`, respaldo), `auraphone-18-pro-negro-trasera` (galería: `<diseño>-<color>-<vista>`; un diseño puede servir a varios modelos, como `aurabook-pro` para el de 14″ y el de 16″). En el JS sácalos siempre de `AURA.catalog.image()` y `AURA.catalog.views()`; no los escribas a mano. Los créditos de cada foto (autor, fuente, licencia) están en `legal.html#imagenes`, generados en `assets/js/creditos.js`.
+
+**`srcset` y `sizes` (v2.0).** `AURA.html.img` y `AURA.slots.set` escriben `srcset="img/400/x.webp 400w, img/800/x.webp 800w, img/x.webp 1600w"` y el `sizes` del hueco (por defecto `100vw`; en las perezosas, `auto` delante: el ancho real del hueco donde el navegador lo entiende). Si una variante no existe, el hueco quita el `srcset` y se queda el original antes de probar `.png` o `.jpg`. En el HTML, el mismo patrón con el `sizes` de su hueco:
+
+| Hueco | `sizes` |
+| --- | --- |
+| Tarjeta de modelo | `(min-width: 1024px) 380px, 90vw` |
+| Tarjeta de familia | `(min-width: 1200px) 280px, (min-width: 576px) 50vw, calc(100vw - 32px)` |
+| Galería de comprar | `(min-width: 992px) 600px, calc(100vw - 32px)` |
+| Exhibición de color del auraPhone | `(min-width: 1024px) 960px, calc(100vw - 32px)` |
+| Exhibición de color de auraPad y auraBook | `(min-width: 1200px) 462px, (min-width: 768px) 35vw, calc(100vw - 72px)` |
+| Exhibición de color de los auraPods Max 2 | `(min-width: 1024px) 704px, 80vw` |
+| Bloque texto + imagen (`.aura-split`) | `(max-width: 991.98px) 88vw, (max-width: 1199.98px) 42vw, 532px` |
+| Foto a todo el contenedor | `(min-width: 1280px) 1180px, 92vw` |
+| Teselas del carrusel de una familia (252 px a 390) | `(max-width: 767.98px) 65vw, 375px` |
+| Accesorios en dos columnas · en tres | `(max-width: 767.98px) 80vw, (max-width: 1199.98px) 40vw, 522px` · `(max-width: 767.98px) 80vw, (max-width: 991.98px) 41vw, (max-width: 1199.98px) 24vw, 322px` |
+| Teselas de 322–358 px | `(max-width: 767.98px) calc(100vw - 32px), 360px` |
+| Línea de la bolsa · checkout y popover | `128px` (`88px` en el teléfono) · `56px` |
+
+En una exhibición de color (o cualquier `.aura-gallery` que cambie de foto con `AURA.ui.gallery`), el `sizes` de su hueco va en `data-sizes` del `.aura-gallery` (o en `show(slot, { sizes })`): la base lo pone en cada foto que monta. Sin él, el `srcset` elegiría por el ancho de la pantalla (`100vw`) y en escritorio pediría el original de 1600 para un hueco de 460–600 px.
 
 Dentro de `.aura-product-card__media`, `.aura-tile__media`, `.aura-bag-line__media`, `.aura-gallery` y `.aura-media--fill` la imagen (o su marcador) llena el contenedor; fuera, ocupa el 100 % del ancho con la proporción de `width`/`height`.
 
@@ -290,23 +344,27 @@ Dentro de `.aura-product-card__media`, `.aura-tile__media`, `.aura-bag-line__med
 
 | Clase | Uso | Tamaño |
 | --- | --- | --- |
-| `.aura-display` | Momento héroe (un único por página) | 36–72 px (40 px a 390) |
-| `.aura-h1` | Título de página | 34–56 px |
-| `.aura-h2` | Título de sección | 28–42 px |
+| `.aura-display` | Momento héroe (un único por página). Nivel nuevo de la v2 (la v1 llega al «Hero Title» de 56 px, que es `.aura-h1`) | 36–72 px (40 px a 390) |
+| `.aura-h1` | Título de página; titular de un bloque texto + imagen (`.aura-split`) | 34–56 px |
+| `.aura-h2` | Título de sección (`.aura-section-head`) | 28–42 px |
 | `.aura-h3` | Título de tarjeta | 22–28 px |
 | `.aura-h4` | Subtítulo | 20 px |
-| `.aura-lead` | Entradilla (máx. 56 caracteres por línea) | 17–21 px |
-| `.aura-body` | Cuerpo (máx. 68 caracteres por línea) | 16 px |
+| `.aura-lead` | Entradilla: `max-width: min(44ch, 100%)` ≈ 56 caracteres por línea | 17–21 px |
+| `.aura-body` | Cuerpo: `min(53ch, 100%)` ≈ 68 caracteres (`.aura-prose`, 53ch) | 16 px |
 | `.aura-caption` (+ `--muted`) | Notas, precios al mes | 13 px |
 | `.aura-eyebrow` | Antetítulo dorado con punto | 12 px |
 | `.aura-price` (+ `--sm`, `--lg`) | Precios | 16 / 20 / 28–36 px |
 | `.aura-mono` | Etiqueta técnica en mono mayúsculas | 12 px |
 
+Roles que la v1 no tenía como clase de texto (v2.0, para no inventar tamaños en las páginas): **texto de componente** Inter 14 / 1,5 / 400 (`.aura-small` para un texto suelto; dentro de un componente, `.aura-feature__text`, `.aura-product-card__text`; la tesela, `.aura-tile__text`, 15); **botón** Inter 15 / 600 (`.aura-btn`; la v1 dibujaba 14 / 400); **nota** Inter 12 / 1,55 / 400 (`.aura-footnotes__list`, `.aura-table__note`, `max-width: min(65ch, 100%)`); **navegación** Inter 13 / 450 (barra global), Inter 12 / 450 (barra local) y Kanit 19 / 500 (título de la barra local); **cifras** Kanit 24 (`.aura-feature__value`), 26–38 (`.aura-stat`), 48–80 (`--lg`), 56–76 (`--md`) y 80–160 (`--xl`). Las hojas de página no escriben `font-size`, `line-height` ni `letter-spacing`: usan estas clases o la del componente.
+
+**Medida en caracteres reales (v2.0).** Un `ch` es el ancho del «0» de Inter (≈ 0,63 em) y un carácter medio de un texto en español ronda 0,48 em: por eso 44ch dan los 56 caracteres de la entradilla y 53ch los 68 del cuerpo (con 56ch y 68ch salían 73 y 88). Notas y características: `min(60ch, 100%)`.
+
 La clase da el aspecto; el nivel semántico lo da la etiqueta (`<h2 class="aura-h3">` es válido). Todas llevan `margin: 0`: el espacio lo ponen los contenedores (`.aura-section-head`, `.aura-stack`, `.aura-hero__copy`).
 
 Tracking e interlineado vienen con cada clase y cambian con el tamaño: negativo en los titulares, ~0 en el cuerpo, positivo en lo pequeño. Por debajo de 768 px los titulares grandes miden casi la mitad y se aprietan menos (`.aura-display` −0,016em, `.aura-h1` −0,012em, `.aura-h2` −0,01em, frente a −0,025 / −0,02 / −0,015em en escritorio).
 
-Inter se carga con su eje óptico para que `font-optical-sizing: auto` adapte el dibujo al tamaño. URL de fuentes del esqueleto de **todas** las páginas:
+Inter se carga con su eje óptico para que `font-optical-sizing: auto` adapte el dibujo al tamaño. **Fuentes de reserva (v2.0):** mientras llegan (`display=swap`), el texto se pinta con «AURA Inter reserva Segoe / Arial» y «AURA Kanit reserva Segoe / Arial», caras locales escaladas con `size-adjust`, `ascent-override` y `descent-override` (un tramo de pesos por cara) para ocupar lo mismo que la fuente web; van detrás de Inter y Kanit en `--font-ui` y `--font-display`, así el texto no salta al cambiar (≈ 0,17 de CLS a 390 px en comprar). URL de fuentes del esqueleto de **todas** las páginas:
 
 ```html
 <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&family=Kanit:wght@500;600&display=swap" rel="stylesheet">
@@ -409,7 +467,8 @@ Héroe de familia: primaria «Comprar auraX» con `data-aura-buy="familia"` (mod
 ```
 
 `.aura-split` (+ `--reverse`, `--wide-media`). Dos columnas desde 992 px; `--wide-media` (texto 0,8 / imagen 1,2) solo desde 1200 px: entre 992 y 1199 px se apila (texto primero), porque su columna de texto quedaría en ~350 px.
-`.aura-grid` + `--2`, `--3`, `--4`, `--auto` (columnas iguales, responsive). Ajusta el hueco con `style="--gap:2rem"`. Los umbrales de `--2`, `--3` y `--4` van en `em` (36 / 48 / 62 em = 576 / 768 / 992 px con el texto normal): si el usuario sube el tamaño de letra, crecen con él y las columnas se reparten antes de que un titular deje de caber en la suya.
+`.aura-grid` + `--2`, `--3`, `--4`, `--auto` (columnas iguales, responsive). Ajusta el hueco con `style="--gap:2rem"`. Los umbrales van en `em`: `--2` a dos columnas desde 36 em (576 px con el texto normal); `--3` a tres desde 48 em (768 px; no pasa por dos, dejaría una tarjeta sola); `--4` a dos desde 36 em y a cuatro desde 75 em (1200 px; v2.0: a 1024 px cuatro columnas de 217 px partían los titulares en 3–4 líneas). Si el usuario sube el tamaño de letra, crecen con él y las columnas se reparten antes de que un titular deje de caber en la suya.
+**Ritmo vertical (v2.0).** Dentro de una sección, dos bloques seguidos (cabecera y bento, un bloque texto + imagen y el siguiente) se separan con `margin-top: var(--space-block)` y una fila de cifras con `var(--space-stats)` (§1, tokens): igual en las cuatro familias, sin `mt-5` ni medidas propias.
 `.aura-layout` + `--aside` (contenido + columna de 320–384 px: bolsa, checkout, cuenta) o `--config` (galería + opciones: comprar). Una sola columna por debajo de 992 px.
 `.aura-stack` (apila con hueco `--stack`, por defecto 1 rem; `--stretch` para hijos a todo el ancho) y `.aura-cluster` (fila que envuelve, hueco `--cluster`).
 
@@ -424,10 +483,12 @@ Héroe de familia: primaria «Comprar auraX» con `data-aura-buy="familia"` (mod
 Va dentro de `<main>`, justo después del héroe o como primer hijo. Requiere `<body class="has-localnav">`.
 
 ```html
-<nav class="aura-localnav" aria-label="auraPhone" data-aura-localnav>
+<nav class="aura-localnav has-menu" aria-label="auraPhone" data-aura-localnav>
   <div class="aura-container aura-localnav__inner">
     <a class="aura-localnav__title" href="auraphone.html">auraPhone</a>
-    <div class="aura-localnav__links">
+    <!-- v2.0: el chevrón y .has-menu vienen en el HTML (sin salto al cargar); aura-ui.js solo engancha los eventos -->
+    <button type="button" class="aura-localnav__toggle" aria-expanded="false" aria-controls="localnav-secciones" aria-label="Secciones de auraPhone"><i class="bi bi-chevron-down" aria-hidden="true"></i></button>
+    <div class="aura-localnav__links" id="localnav-secciones">
       <a class="aura-localnav__link" href="#modelos">Modelos</a>
       <a class="aura-localnav__link" href="#detalles">Detalles</a>
       <a class="aura-localnav__link" href="#comparativa">Comparativa</a>
@@ -443,7 +504,7 @@ Estado: `.is-active` / `aria-current="true"` en el enlace de la sección visible
 
 **La acción de la barra local es el enlace contextual de la guía** (v1.4), no un botón: `<a class="aura-link aura-localnav__action">`, con su «›», todo el alto de la barra como objetivo y sin partirse. La barra es cromo de cristal: la única primaria azul a la vista es la del héroe (una primaria por contexto), y los botones de la guía miden siempre 48 px (no hay `--sm`). En las familias es «Comprar ›» con `data-aura-buy="familia" data-aura-buy-short`: la base pone el enlace del modelo de entrada (`AURA.catalog.entry`), el verbo según la disponibilidad y el nombre en `aria-label`. Igual en las tres familias; no escribas el ID a mano. En soporte, «Contactar ›».
 
-**En el teléfono** (< 768 px) los enlaces no caben junto al título y «Comprar»: `aura-ui.js` añade un chevrón (`button.aura-localnav__toggle`, `aria-expanded`, `aria-controls`) y los enlaces se pliegan en un menú bajo la barra (superficie opaca: la barra ya es de cristal). Entra y sale por el mismo camino; lo cierran un enlace, Esc (el foco vuelve al chevrón), un toque fuera o pasar a ≥ 768 px. Sin marcado extra.
+**Mientras los enlaces no caben** junto al título y «Comprar» (por debajo de 992 px, 61,99 em: con texto grande, antes; v2.0, antes solo < 768 px y a 768–920 px se quedaban fuera «Modelos» o «Especificaciones») se pliegan en un menú bajo la barra que abre el chevrón (`button.aura-localnav__toggle`, 17 px en su caja de 44, `aria-expanded`, `aria-controls`; superficie opaca: la barra ya es de cristal). Entra y sale por el mismo camino; lo cierran un enlace, Esc (el foco vuelve al chevrón), un toque fuera o ensanchar la ventana hasta que el chevrón desaparece. **La barra llega plegable del HTML** (`.has-menu` y el botón, como arriba): así se pinta ya plegada y no salta al cargar (CLS de 0,13–0,33 a 390 px). Si el HTML no los trae, `aura-ui.js` los crea. El menú solo existe con `.aura-ui` en `<html>` (la pone `aura-ui.js`, que es quien lo abre): sin JS se ve la tira desplazable de siempre, con todos sus enlaces; con `.aura-js` y hasta que llega `aura-ui.js`, por debajo de 61,99 em la tira no se ve (sin salir del flujo) y, si no llega, vuelve a verse a los 2,5 s (`aura-ready-fallback`).
 
 Lo que añade `aura-ui.js` a toda `.aura-localnav` (sin marcado extra):
 
@@ -455,7 +516,7 @@ Lo que añade `aura-ui.js` a toda `.aura-localnav` (sin marcado extra):
 ```html
 <nav aria-label="Migas de pan">
   <ol class="aura-crumbs">
-    <li><a href="index.html" title="AURA — Volver al inicio"><img src="assets/img/aura.png" width="20" height="20" alt="AURA — Volver al inicio"></a></li>
+    <li><a href="index.html" title="AURA — Volver al inicio"><img src="assets/img/aura-72.png" width="20" height="20" alt="AURA — Volver al inicio"></a></li>
     <li><a href="auraphone.html">auraPhone</a></li>
     <li aria-current="page">auraPhone 18 Pro Max</li>
   </ol>
@@ -468,7 +529,7 @@ Siempre dentro de un `<nav aria-label="Migas de pan">` (un `nav` por cada navega
 
 ```html
 <span class="aura-brand aura-brand--lg">
-  <img class="aura-brand__mark" src="assets/img/aura.png" width="36" height="36" alt="">
+  <img class="aura-brand__mark" src="assets/img/aura-72.png" width="36" height="36" alt="">
   <span class="aura-brand__word">AURA</span>
 </span>
 ```
@@ -496,7 +557,9 @@ Siempre dentro de un `<nav aria-label="Migas de pan">` (un `nav` por cada navega
 
 **Un solo tamaño** (v1.4): 48 px de alto, radio 999 y 24 px de relleno, como la guía. No hay variante pequeña: la fila de acciones de una tabla usa el botón normal y la barra local, el enlace contextual (§4).
 
-Estados: `:hover` (capa más luminosa; en el primario, además, el halo pasa de .55 a 1; en el secundario, el contorno pasa de `--accent` a `--accent-bright` y el fondo toma el tinte azul, como la guía §03), `:active` / `.is-pressed` (`scale(.97)`, 100 ms), `:focus-visible`, `:disabled` / `[aria-disabled="true"]` / `.is-disabled`, `.is-loading`. Solo para la guía: `.is-hover`. **Desactivado** igual en primario, secundario e inverso (relleno `--fill-disabled` #252528, sin borde, etiqueta `--text-disabled`, legible); el destructivo conserva su contorno. Los cambios de color son instantáneos (sin transición).
+**Etiqueta y halo (v2.0, desviación de la v1 anotada en la guía §00).** Inter 15 / 600 y, en el primario, el halo `--glow-accent` al .55 en reposo, como el prototipo de Inicio; la v1 dibujaba 14 / 400 con relleno plano.
+
+Estados: `:hover` (capa más luminosa; en el primario, además, el halo pasa de .55 a 1 y el relleno a `--accent-hover` #0074e8 —la v1 aclaraba a #1787f7, pero el blanco sobre ese azul da 3,59:1—; en el secundario, el contorno pasa de `--accent` a `--accent-bright`, el fondo toma el tinte `--accent-soft` y la etiqueta pasa a `--accent-link-hover`, también con `:focus-visible`, como la guía §03), `:active` / `.is-pressed` (`scale(.97)`, 100 ms), `:focus-visible`, `:disabled` / `[aria-disabled="true"]` / `.is-disabled`, `.is-loading`. Solo para la guía: `.is-hover`. **Desactivado** igual en primario, secundario e inverso (relleno `--fill-disabled` #252528, sin borde, etiqueta `--text-disabled` #6e6e73: 3,01:1, legible; la v1 usaba #4d4d51, 1,82:1); el destructivo conserva su contorno. El color de base no se anima: la capa de hover (`::before`) y el halo (`::after`) se funden en 160 ms (`--dur-1`).
 
 **Texto grande.** Los botones cortos siguen en una línea; un botón solo se parte (líneas equilibradas, `text-wrap: balance`) cuando no cabe, y nunca es más ancho que su contenedor (`max-width: 100%`). En una fila no cede ante sus vecinos (`flex-shrink: 0`). Los 48 px son un mínimo: con dos líneas crece en alto, con el mismo radio y relleno. `--block` ocupa todo el ancho.
 
@@ -566,7 +629,7 @@ El «›» lo añade el CSS: no lo escribas. `--plain` (sin «›»), `--muted` 
 </div>
 ```
 
-- `.aura-badge`: tipografía de la guía («Eyebrow / Badge», Inter 12 / 650) en píldora dorada; `--blue`, `--ok`, `--warn`, `--error`, `--neutral` cambian el color. `--mono` la convierte en etiqueta técnica (mono, mayúsculas, 11 px) para estados de pedido o «Demostración».
+- `.aura-badge`: tipografía de la guía («Eyebrow / Badge», Inter 12 / 650) en píldora dorada rellena de 24 px, sin borde (la v1 la dibuja contorneada, de 30 px y peso medio, pero escribe 12 / 650: la v2 sigue el texto, guía §00); `--blue`, `--ok`, `--warn`, `--error`, `--neutral` cambian el color. `--mono` la convierte en etiqueta técnica (mono, mayúsculas, 11 px) para estados de pedido o «Demostración».
 - Segmentado: 40 px de alto con puntero fino y 44 px en pantallas táctiles; responde a la pulsación con `scale(.96)`. Con radios, la pastilla es el `<span>` que sigue al `<input>` y llena su etiqueta; con enlaces o botones, la pastilla es el propio ítem a su ancho natural (se reparten el sobrante). Cualquier otro `<span>` dentro de un enlace o botón es solo texto (no hereda el estilo de pastilla). Elegido: `:checked`, `.is-active`, `aria-current`, `aria-pressed="true"` o `aria-selected="true"`.
 - **Nombre del grupo de radios (v1.5).** Los radios siempre van en un grupo con nombre (§15.5), de una de estas dos formas: dentro de un `<fieldset>` cuya `<legend>` es la pregunta, y entonces el segmentado no lleva `role` (`trade-in.html`, «¿Qué vas a entregar?»); o suelto, con `role="radiogroup"` y `aria-label` (o `aria-labelledby` a su etiqueta visible), que hacen de fieldset y leyenda (`index.html`, «Ir a una familia»). Si comparte `<fieldset>` con otro grupo de radios, conserva su `role="radiogroup"` con su propio nombre (`comprar.html`: «Familia» dentro del paso «Modelo»). El propio `.aura-segmented` no puede ser el `<fieldset>`: `aura-ui.js` le inserta la pastilla como primer hijo y la `<legend>` tiene que ser el primero.
 - **Pastilla que se desliza (v1.3, v1.4).** `aura-ui.js` añade a cada `.aura-segmented` un único `<span class="aura-segmented__thumb" aria-hidden="true">` (primer hijo) y la clase `.has-thumb`: el ítem elegido deja de pintar su fondo y lo pinta la pastilla (mismo `--fill-selected`, blanco al 16 %), que viaja de un ítem a otro con un muelle crítico (response .35), desde donde esté en pantalla e interrumpible; su ancho acompaña al avance. **Solo se anima `transform`**: el avance es `translate3d` y el ancho, un `scaleX` sobre el ancho real de la caja, que se escribe solo en reposo. Sigue al estado, lo ponga quien lo ponga: el `change` de los radios, `input.checked = …` desde JS (el setter de cada radio del control está interceptado), o la página cambiando `aria-selected` / `aria-pressed` / `aria-current` / `.is-active` / `hidden`. En radios y botones **se arrastra**: se agarra el ítem elegido, sigue al dedo 1:1 con goma en los extremos y, al soltar, va al ítem más cercano a donde iba (proyección 0,99) heredando la velocidad, y activa ese ítem con `click()` (la página recibe su `change` o su `click` de siempre). Con enlaces no se arrastra (navegaría). Con «reducir movimiento», la pastilla aparece en su sitio con un fundido. `AURA.ui.segmented(el)` lo inicializa a mano o, si ya lo está, recoloca la pastilla; devuelve `{ el, sync(animar?) }` (no hace falta: es automático, también con el HTML que se inserte después).
@@ -648,7 +711,7 @@ La pinta `[data-aura-lineup]` ([§12.4](#124-tarjetas-de-data-aura-lineup)). En 
 Para meterla en otro sitio (un carrusel, una rejilla propia) usa `AURA.html.productCard(producto, { heading: 'h3' })`: devuelve el mismo marcado. No lo copies a mano.
 
 - `.aura-lineup`: una columna; dos entre 768 y 991 px (la tercera tarjeta, a lo ancho, con la imagen a la izquierda); tres desde 992 px.
-- Título al escalón H3 de la guía (Kanit 500, 22 → 28 px, las métricas de `.aura-h3`). Botón primario de 48 px (sin `--sm`). Acabado (`__finish`) en azul: refleja la muestra elegida, como el prototipo. Por defecto enseña el acabado de la foto (`imageColor`), así la etiqueta dice lo que se ve. Al pulsar la foto o el nombre, la tarjeta entera responde (`scale(.985)`).
+- Título al escalón H3 de la guía (Kanit 500, 22 → 28 px, las métricas de `.aura-h3`). Botón primario de 48 px (sin `--sm`). Acabado (`__finish`) en azul: refleja la muestra elegida, como el prototipo; es **la única excepción** a «lo que no se pulsa no va en azul» (guía §00 y §01). Por defecto enseña el acabado de la foto (`imageColor`), así la etiqueta dice lo que se ve. Al pulsar la foto o el nombre, la tarjeta entera responde (`scale(.985)`).
 - **El pie siempre igual en una fila.** Estado, precio y botón se colocan según el ancho de la tarjeta (consulta de contenedor en `__body`), nunca según lo largos que sean «Configurar» o la cuota: por debajo de 20 rem de contenido, precio y cuota arriba y el botón debajo; con sitio, el botón a la derecha del precio, alineado con su última línea (como el prototipo). Las tarjetas de una fila miden lo mismo, así que todas eligen lo mismo. No hace falta ninguna regla de página.
 
 ### Característica
@@ -709,7 +772,9 @@ Para meterla en otro sitio (un carrusel, una rejilla propia) usa `AURA.html.prod
 
 La pinta `[data-aura-compare]` ([§12.5](#125-tabla-de-data-aura-compare)): `<div data-aura-compare="auraphone"></div>`. Para una tabla escrita a mano usa el mismo marcado. La columna destacada lleva `.is-featured` en su `<th>` y en cada `<td>`: como en el prototipo, solo el nombre del modelo va en dorado; la columna no se tiñe (el dorado nunca rellena una superficie). Una nota bajo un valor (p. ej. la disponibilidad bajo el precio) va en `<span class="aura-table__note">`.
 
-Toda tabla (también las escritas a mano) lleva `<caption>` con lo que compara, `<thead>` / `<tbody>` (y `<tfoot>` si hay totales) y `th` con `scope="col"` en la cabecera y `scope="row"` en la primera celda de cada fila. Si el diseño ya la titula con un encabezado visible, el caption se oculta solo a la vista con `class="visually-hidden"` (nunca `display: none`: lo borraría también para el lector de pantalla); `caption.visually-hidden` no ocupa sitio (aura.css §2). Nunca una tabla para maquetar.
+Toda tabla (también las escritas a mano) lleva `<caption>` con lo que compara, `<thead>` / `<tbody>` (y `<tfoot>` si hay totales) y `th` con `scope="col"` en la cabecera y `scope="row"` en la primera celda de cada fila. Si el diseño ya la titula con un encabezado visible, el caption se oculta solo a la vista con `class="visually-hidden"` (nunca `display: none`: lo borraría también para el lector de pantalla); `caption.visually-hidden` va arriba (`caption-side: top`) y no empuja la tabla (aura.css §2). Nunca una tabla para maquetar.
+
+**El scroll vertical es de la página (v2.0).** `.aura-table-wrap` solo se desplaza en horizontal: `overflow-x: auto; overflow-y: hidden; overscroll-behavior-x: auto`. Con `overflow-y` en `auto` (lo que el navegador calcula si solo se escribe `overflow-x`), 1 px de más (el caption abajo o el filo de la última fila de la columna fija) bastaba para que la tabla se quedara con la primera muesca de la rueda y con un arrastre entero del dedo. Cualquier contenedor propio con desplazamiento horizontal hace lo mismo.
 
 ### Cronología, cita, nota, lista
 
@@ -797,7 +862,7 @@ No se animan: nada de bucles lentos ni fondos en movimiento. `.aura-halo` ocupa 
 </div>
 ```
 
-- Controles: `.aura-input`, `.aura-select` (`<select>` nativo), `.aura-textarea`. Altura mínima 56 px (como la guía de estilo y los prototipos), texto de 16 px. Fondo `--field-bg` (sobre la Base negra se ve como el #161617 de la guía) y, en foco, `--field-bg-focus` («cristal», ≈ #1f1f24) + borde `--accent-link` + anillo `--accent-ring` pegado, sin resplandor exterior; el cambio es instantáneo y el cristal nunca sustituye al borde azul. Dentro de una superficie ya elevada (`.aura-card`, `.aura-auth-card`, `.aura-summary`, hoja, popover, nota, tesela) los dos tokens bajan a 4 % / 7 %. Un `.aura-input` con `type="search"` no muestra el aspa nativa de borrar (no llega a 44 px ni lleva el estilo del sistema): si hace falta, pon un `.aura-icon-btn` propio.
+- Controles: `.aura-input`, `.aura-select` (`<select>` nativo), `.aura-textarea`. Altura mínima 56 px (como la guía de estilo y los prototipos), texto de 16 px. Fondo `--field-bg` (sobre la Base negra se ve como el #161617 de la guía) y, en foco, `--field-bg-focus` («cristal», ≈ #1f1f24) + borde `--accent-link` + anillo `--accent-ring` pegado, sin resplandor exterior; el cambio es instantáneo y el cristal nunca sustituye al borde azul. Con el ratón encima, el borde en reposo pasa a `--field-border-hover` (50 %). Sobre la v1 (guía §00): el foco sigue su texto («Ring / Blue 40%»: anillo de 4 px) y no su dibujo; la etiqueta pasa a azul (13 / 500); el borde en reposo (36 %, 3,14:1) y el `placeholder` (#98989d) se aclararon desde #45454b y #6e6e73 para llegar a AA. Casillas: borde `--field-border` y radio `--radius-2xs`. Dentro de una superficie ya elevada (`.aura-card`, `.aura-auth-card`, `.aura-summary`, hoja, popover, nota, tesela) los dos tokens bajan a 4 % / 7 %. Un `.aura-input` con `type="search"` no muestra el aspa nativa de borrar (no llega a 44 px ni lleva el estilo del sistema): si hace falta, pon un `.aura-icon-btn` propio.
 - La etiqueta es siempre visible (nunca solo `placeholder`). El `placeholder` usa `--text-placeholder` (≥ 4,7:1 también con el fondo de foco).
 - `.aura-field__error` está **siempre en el DOM y vacío**; solo se ve con `.is-invalid`.
 - Estados (en `.aura-field`): `.is-invalid`, `.is-valid`, `.is-focused` (solo para la guía; el real es `:focus`). `disabled` en el control. Un campo válido muestra el borde verde y la marca; **al enfocarlo manda el foco** (borde azul + anillo) y el verde vuelve al salir.
@@ -918,7 +983,7 @@ En error: `.aura-field.is-invalid` (casilla) o `.aura-fieldset.is-invalid` (grup
 <main id="contenido" class="aura-auth">
   <div class="aura-auth-card">                        <!-- --wide para el registro -->
     <div class="aura-auth-card__head">
-      <span class="aura-brand aura-brand--lg"><img class="aura-brand__mark" src="assets/img/aura.png" width="36" height="36" alt=""><span class="aura-brand__word">AURA</span></span>
+      <span class="aura-brand aura-brand--lg"><img class="aura-brand__mark" src="assets/img/aura-72.png" width="36" height="36" alt=""><span class="aura-brand__word">AURA</span></span>
       <h1 class="aura-auth-card__title">Inicia sesión con tu ID de AURA</h1>
       <p class="aura-auth-card__lead">Un solo acceso para tus dispositivos, servicios y experiencias AURA.</p>
     </div>
@@ -989,7 +1054,7 @@ El elegido lleva anillo azul (por `:checked`, sin JS). Versión informativa para
 </fieldset>
 ```
 
-Estados por `:checked`, `:disabled` y `:focus-visible` del input (sin JS). El orden input → card es obligatorio. Si título y precio no caben en una fila (texto grande, «Próximamente»), el precio baja bajo el título. Desactivada: borde discontinuo, título y precio en `--text-disabled` y la nota que explica por qué («Solo con M5 Max») en `--text-tertiary`, legible.
+Estados por `:checked`, `:disabled` y `:focus-visible` del input (sin JS). Elegida: borde azul y fondo `--accent-soft` (el de lo elegido); con el ratón encima, el borde de una sin elegir pasa a `--field-border-hover`. El orden input → card es obligatorio. Si título y precio no caben en una fila (texto grande, «Próximamente»), el precio baja bajo el título. Desactivada: borde discontinuo, título y precio en `--text-disabled` y la nota que explica por qué («Solo con M5 Max») en `--text-tertiary`, legible.
 
 ### Cantidad
 
@@ -1045,7 +1110,7 @@ Pegajoso desde 992 px (`--static` lo desactiva). Va en la segunda columna de `.a
 </ul>
 ```
 
-`--compact`: versión pequeña sin acciones (popover de la bolsa, resumen del checkout, pedidos de la cuenta). La lista (`.aura-bag-list`) es contenedor de consulta: si una línea normal mide menos de 22 rem (texto grande en el teléfono), la imagen pasa encima y la información y el precio usan todo el ancho. Eliminar una línea no pide confirmación: se elimina y se ofrece «Deshacer» en un aviso (`AURA.bag.restore`). En táctil, el nombre enlazado mide 44 px de objetivo sin mover la línea.
+`--compact`: versión pequeña sin acciones (popover de la bolsa, resumen del checkout, pedidos de la cuenta); nombre y precio en Inter 14 / 600. La lista (`.aura-bag-list`) es contenedor de consulta: si una línea normal mide menos de 19 rem (texto al 125 % en el teléfono; v2.0: a 390 px con el texto normal, la lista mide 21,9 rem y la miniatura sigue al lado), la imagen pasa encima y la información y el precio usan todo el ancho. Eliminar una línea no pide confirmación: se elimina y se ofrece «Deshacer» en un aviso (`AURA.bag.restore`). En táctil, el nombre enlazado mide 44 px de objetivo sin mover la línea.
 
 **AuraCare+ en la línea** (cuarto hijo opcional, después de `__price`): una fila propia, a todo el ancho en móvil y bajo la información y el precio desde 576 px. Sin él, la línea no cambia.
 
@@ -1097,9 +1162,11 @@ En móvil (menos de 576 px) solo se ve la etiqueta del paso actual, y ese paso m
 </div>
 ```
 
-Espera fotos de producto sobre negro puro (las de `assets/img`): se funden con el panel y su halo (`mix-blend-mode: lighten`).
+Espera fotos de producto sobre negro puro (las de `assets/img`): se funden con el panel y su halo (`mix-blend-mode: lighten`; base `--bg-main` #000). La galería es una sola celda del tamaño de su caja útil (`grid-template: minmax(0, 1fr) / minmax(0, 1fr)`, v2.0): la foto se ajusta entera y centrada (antes quedaba 12 px por debajo del centro y, en la exhibición 16:10 del auraPhone, cortada por abajo). El pie (`.aura-gallery__caption`, el nombre del color) va en Caption: Inter 13 px, no mono.
 
-**Cambio de foto: fundido cruzado (v1.4).** `AURA.ui.gallery(el).show(info.slot, { fallback: info.fallback, alt, priority })` con `info = AURA.catalog.image(p, color)`. Si ese hueco ya está (a la vista o yéndose), solo cambia su `alt` y vuelve: un color sin foto propia **no funde nada** (cambia solo lo que dice la página: con `exact: false`, el `alt` de la foto y la nota «Imagen en Azul glacial · Tu acabado: Negro» bajo la galería). Si es otra foto, se monta encima invisible (`.is-entering`) y, en cuanto está decodificada, se funde sobre la anterior mientras esta se va a 0 (`.is-leaving`) y se retira: las dos ocupan la misma celda y nunca hay un bache a negro. Sin temporizadores de espera; un cambio nuevo parte de la opacidad en curso y manda sobre los anteriores. Si el hueco no existe, la base prueba sus reservas y promueve el marcador. Sin foto todavía, `show()` monta la primera (`priority: true` para la imagen principal de la página). `.is-swapping` (fundido a negro) se retiró.
+**Vistas del acabado (v2.0).** El configurador enseña todas las fotos del acabado elegido: `AURA.catalog.views(p, color)` → `[{ slot, vista, label, aria, alt, exact, color, fallback }]`. Bajo la galería, una tira de miniaturas (`comprar.html`: `.comprar-vistas`, `role="toolbar"` con `aria-label` «Vistas del auraPhone 18 Pro»): un `<button>` por vista con `aria-label` «Vista trasera», «Vista frontal», «Estuche abierto»… (`aria` de `views()`), `aria-pressed` en la elegida y un solo punto de tabulación (roving tabindex): ← → (dan la vuelta), Inicio y Fin la eligen al llegar. La miniatura es la de 240 × 180 de `img/thumbs/` (si falta, la foto grande). Cada botón llama a `AURA.ui.gallery(el).show(vista.slot, { fallback, alt })`: el mismo fundido cruzado. Al cambiar de color o de modelo vuelve a la primera vista; si el acabado tiene una sola foto, la tira se oculta sin dejar de ocupar su sitio (las muestras de debajo no se mueven), y si ningún modelo de la familia tiene varias, no se reserva. Con varias vistas la foto también se pasa deslizando el dedo (`touch-action: pan-y`: el gesto vertical sigue siendo de la página). Si `exact` es `false`, la nota de siempre: «Imagen en plata · Tu acabado: negro». Sin nada que decir, la nota guarda invisible la más larga del modelo (en el teléfono, la del Duo ocupa dos líneas): las muestras no se mueven al aparecer.
+
+**Cambio de foto: fundido cruzado (v1.4).** `AURA.ui.gallery(el).show(info.slot, { fallback: info.fallback, alt, priority })` con `info = AURA.catalog.image(p, color)`. Si ese hueco ya está (a la vista o yéndose), solo cambia su `alt` y vuelve: un color sin foto propia **no funde nada** (cambia solo lo que dice la página: con `exact: false`, el `alt` de la foto y la nota «Imagen en azul glacial · Tu acabado: negro» bajo la galería). Si es otra foto, se monta encima invisible (`.is-entering`) y, en cuanto está decodificada, se funde sobre la anterior mientras esta se va a 0 (`.is-leaving`) y se retira: las dos ocupan la misma celda y nunca hay un bache a negro. Sin temporizadores de espera; un cambio nuevo parte de la opacidad en curso y manda sobre los anteriores. Si el hueco no existe, la base prueba sus reservas y promueve el marcador. Sin foto todavía, `show()` monta la primera (`priority: true` para la imagen principal de la página). `.is-swapping` (fundido a negro) se retiró.
 
 ### Exhibición de color
 
@@ -1123,7 +1190,7 @@ Para las páginas de familia (no para el configurador, que tiene su galería y s
 | `data-aura-colorway="id"` | — | Id del producto en `data.js`. Si `.aura-swatches` está vacío, se pintan sus colores en orden (`.aura-swatch` con radio, `--swatch: hex` y el nombre en `.visually-hidden`). Vacío (`data-aura-colorway=""`): las muestras se escriben a mano y cada `input` puede llevar `data-slot`, `data-fallback` y `data-alt`. |
 | `data-color="idDeColor"` | el de la foto (`imageColor`) | Acabado elegido al cargar. El JS lo actualiza al cambiar. |
 
-- **La foto**: `AURA.catalog.image(producto, color)`. Si el color tiene foto propia, se pide `img/<image>-<color>.webp` (con la base de reserva) y entra con el **fundido cruzado** de la galería (`AURA.ui.gallery`, solo opacidad, también con «reducir movimiento»). La foto por color **solo se pide si está declarada en `imageVariants`** de `data.js` (`{ 'plata': 'alt real de esa foto' }`): guardar el archivo no basta. Sin ella, la foto no cambia (no hay fundido ni petición fallida) y el nombre lo dice: «**Plata** · Imagen en Azul glacial» (`.aura-colorway__note`).
+- **La foto**: `AURA.catalog.image(producto, color)`, la primera vista de ese acabado (v2.0: galería por color, `photos` de `data.js`). Si el color tiene fotos, entra con el **fundido cruzado** de la galería (`AURA.ui.gallery`, solo opacidad, también con «reducir movimiento»). Una foto **solo se pide si está declarada** en `photos` (o, en un producto sin galería, en `imageVariants`): guardar el archivo no basta. Sin ella, se queda la del acabado por defecto (no hay fundido ni petición fallida) y el nombre lo dice: «**Plata** · Imagen en azul glacial» (`.aura-colorway__note`).
 - **El nombre** (`.aura-colorway__name`) se reescribe al cambiar; el JS le pone `aria-live="polite"` después de pintarlo la primera vez (no se anuncia al cargar la página). El `alt` de la foto pasa a ser el de la foto que se ve.
 - Sin caja: «aclarar» funde el negro de la foto con el fondo de la sección (negro o franja); la foto mide como mucho 50 rem de ancho (4:3).
 - Evento en la raíz: `aura:colorway` con `detail: { colorId, name, exact, slot }`. API: `AURA.ui.colorway(el)` → `{ el, color(), set(colorId) }`.
@@ -1133,14 +1200,15 @@ Para las páginas de familia (no para el configurador, que tiene su galería y s
 ```html
 <div class="aura-buybar" data-aura-buybar>
   <div class="aura-buybar__info">
-    <p class="aura-buybar__name">auraPhone 18 Pro Max · Negro</p>
+    <p class="aura-buybar__name">auraPhone 18 Pro Max</p>
+    <p class="aura-buybar__name aura-buybar__color">Negro</p>   <!-- v2.0: el acabado en su línea, nunca tras un «·» -->
     <p class="aura-price">1.619,00 €</p>
   </div>
   <button class="aura-btn aura-btn--primary" type="button">Añadir a la bolsa</button>
 </div>
 ```
 
-Solo visible por debajo de 992 px (`--always` para verla siempre). Si precio y botón no caben en una fila (texto al 125–150 %), el botón baja a una segunda fila a todo el ancho y nunca tapa el precio; el nombre se recorta con puntos suspensivos. `aura-ui.js` la saca de `<main>` (justo detrás, sin cambiar el orden de lectura) y escribe su alto real en `--buybar-h`. Requiere `<body class="has-buybar">`, que reserva ese alto dentro del pie (su fondo llega hasta abajo: bajo el cristal no queda una franja negra); con `--always`, también en escritorio (`body.has-buybar:has(.aura-buybar--always)`), y su contenido se alinea con `.aura-container`. `.is-hidden` la esconde hacia abajo (por ejemplo, mientras el botón principal de la página está a la vista). Es la **misma** acción primaria que la del resumen de escritorio, no una segunda.
+Solo visible por debajo de 992 px (`--always` para verla siempre). **En comprar va siempre** (`aura-buybar--always`, excepción documentada en la guía §00): el resumen va debajo de los pasos y, sin la barra, en escritorio no habría ninguna acción a la vista. El acabado va en su propia línea bajo el nombre (`.aura-buybar__color`, en `--vibrant-secondary`): con «Nombre · Color» en una línea se recortaba el color en 17 de 30 acabados a 390 px. Si precio y botón no caben en una fila (texto al 125–150 %), el botón baja a una segunda fila a todo el ancho y nunca tapa el precio; el nombre se recorta con puntos suspensivos, salvo por debajo de 375 px (v2.0), donde parte en dos líneas equilibradas: a 360 «auraPhone 18 Pro …» se confundía con el 18 Pro (la barra pasa de 95 a 115 px solo cuando hace falta). `aura-ui.js` la saca de `<main>` (justo detrás, sin cambiar el orden de lectura) y escribe su alto real en `--buybar-h`. Requiere `<body class="has-buybar">`, que reserva ese alto dentro del pie (su fondo llega hasta abajo: bajo el cristal no queda una franja negra); con `--always`, también en escritorio (`body.has-buybar:has(.aura-buybar--always)`), y su contenido se alinea con `.aura-container`. `.is-hidden` la esconde hacia abajo (por ejemplo, mientras el botón principal de la página está a la vista). Es la **misma** acción primaria que la del resumen de escritorio, no una segunda.
 
 ---
 
@@ -1303,7 +1371,8 @@ La escena de las páginas de producto: un vídeo convertido en fotogramas que av
 | `data-width` · `data-height` | `1600` · `900` | Tamaño de los fotogramas de escritorio: el mismo `width` / `height` del póster (el JS dibuja con el tamaño real de cada imagen). |
 | `data-mobile` | `false` | `"true"`: por debajo de 768 px usa `<data-seq>/m/` (mismo patrón; p. ej. 750 × 1100, en vertical). Si `m/` no existe (dos fallos sin ninguna carga), vuelve a la de escritorio. Al cruzar los 768 px cambia de carpeta. |
 | `data-mobile-frames` | `= data-frames` | Fotogramas de `m/`, si son otros. |
-| `data-length` | `300` (mín. `120`) | Alto de la sección en % del alto de pantalla (`svh`). La escena avanza durante `data-length − 100`: con 300, dos pantallas de scroll. Con 96 fotogramas, 300–400; con 48, 250–320. |
+| `data-mobile-width` · `data-mobile-height` | — | Tamaño de los fotogramas de `m/` (v2.0): con él (y con `data-width` / `data-height` en escritorio) los fotogramas se escalan al lienzo antes de que llegue ninguno. Si falta, lo da el primero que se decodifica. |
+| `data-length` | `300` (mín. `120`) | Alto de la sección en % del alto de pantalla (`svh`). La escena queda pegada y avanza durante `data-length − 100`: con 300, dos pantallas de scroll. **Máximo 340** (2,4 pantallas; v2.0): más recorrido cuesta bajar y no se lee mejor. Con 48 fotogramas, 250–320. |
 | `data-fit` | `cover` | `cover`: llena el escenario y recorta (vídeo con ambiente). `contain`: el fotograma entero con negro alrededor (aparato sobre negro). |
 | `data-mobile-fit` | `= data-fit` | Ajuste en el teléfono (`contain` suele ir mejor con fotogramas horizontales). |
 | `data-focus` | `"0.5 0.5"` | Punto que manda en el recorte (x y, de 0 a 1), como `--photo-focus`; vale también para el póster. |
@@ -1316,15 +1385,28 @@ La escena de las páginas de producto: un vídeo convertido en fotogramas que av
 | `data-to` | `1` | Progreso en el que **ha terminado** de irse. Con `1` se queda hasta que la escena se va. |
 | `data-pos` | `center` | `center` (centrado), `left` / `right` (columna de 30 rem alineada con `.aura-container`, con un degradado de protección desde su lado), `bottom` (centrado abajo, con `--photo-scrim`). En el teléfono, `left` y `right` bajan al pie; con `data-fit="contain"`, también en tableta vertical o ventana casi cuadrada (desde 768 px y hasta 5:4), donde el fotograma apaisado deja negro arriba y abajo. Coloca cada texto en una zona tranquila de sus fotogramas (`zonasTranquilas` de `seq.json`); si la página necesita otra colocación (p. ej. arriba), la fija en su hoja con `align-content`. |
 
-Entrada y salida ocupan un tercio del tramo cada una (como mucho el 10 % de la escena): opacidad 0 → 1 subiendo 40 px y, al irse, 1 → 0 subiendo otros 40 px (en el sentido del scroll). Para que un texto se vaya antes de que llegue el siguiente, que sus tramos no se solapen (`0–0.3`, `0.32–0.64`…). Cada texto lleva su propio degradado de protección (se funde con él), así que el contraste no depende del fotograma.
+**Entrada y salida se miden en píxeles de scroll (v2.0):** 150 px cada una (`SCRUB_FADE_PX` en `aura-ui.js`: una muesca y media de rueda, medio arrastre en el teléfono), como mucho un tercio del tramo, igual en todas las escenas y en cualquier alto de pantalla (antes era un tercio del tramo: los textos centrales solo se veían enteros 150–260 px). Opacidad 0 → 1 subiendo 40 px y, al irse, 1 → 0 subiendo otros 40 px (en el sentido del scroll). Un texto con `data-from="0"` ya está a la vista y uno con `data-to="1"` se queda hasta que la escena se va. Para que un texto se vaya antes de que llegue el siguiente, que sus tramos no se solapen (`0–0.28`, `0.33–0.67`…). Cada texto lleva su propio degradado de protección (se funde con él), así que el contraste no depende del fotograma.
+
+**Ritmo de una escena (v2.0)**, para que ni cueste bajar ni pase todo de golpe:
+
+| Regla | Valor |
+| --- | --- |
+| Pegada | (`data-length` − 100) % de la pantalla, como mucho 2,4 pantallas (`data-length` ≤ 340: 2160 px con una pantalla de 900) |
+| Mensajes | Como mucho 3 por escena; lo demás, en los bloques de debajo |
+| Lectura | Cada texto al 100 % durante al menos 400 px de scroll (cuatro muescas, más de un arrastre), en una zona tranquila de sus fotogramas (`zonasTranquilas` de `seq.json`) |
+| Fundido | 150 px por entrada y por salida (lo pone la base; la página solo elige los tramos) |
+| Secuencia | Sin destellos: entre dos fotogramas seguidos, la diferencia de luz no pasa de unas tres veces la mediana de la secuencia |
+
+Con una pantalla de alto `H`, un texto de tramo `[a, b]` se ve entero `(b − a) × (data-length − 100) / 100 × H − 300` px (`− 150` si empieza en 0 o acaba en 1, porque no tiene entrada o salida). Compruébalo con `AURA.ui.scrub(el).refresh()` a varios progresos y capturas de la ventana.
 
 ### Comportamiento (skill «apple-design»)
 
 - **1:1 con el scroll**: en cada `requestAnimationFrame` se lee la posición (`progreso = −top / (alto − alto del escenario)`) y se pinta el fotograma `round(progreso × (n − 1))`. Sin inercia, sin suavizado, sin temporizadores. **Solo se repinta si cambia el fotograma** (o el tamaño). Solo se calcula mientras la escena está en pantalla (`IntersectionObserver`).
 - **Lienzo**: tamaño del escenario × `devicePixelRatio` (como mucho 2), recorte tipo *cover* (o *contain*) con el punto de `data-focus`. Aparece sobre el póster con un fundido de 240 ms al pintar su primer fotograma (`.is-painted`); el póster sigue debajo.
-- **Carga progresiva**: empieza cuando la escena está a pantalla y media (`IntersectionObserver`), con `new Image()` (funciona igual por `file://` que por http; no hay `fetch` y el lienzo nunca se lee). Primero el fotograma 1, uno de cada 8 y el último (así siempre hay uno cerca: si el exacto no ha llegado, se pinta el más próximo); el resto, **después del evento `load` de la página**, con `fetchPriority = 'low'` y como mucho 4 descargas a la vez: no frena ni el resto de la página ni sus fotos.
+- **Sin decodificar en el hilo principal** (v2.0): por http(s) y con el lienzo en la GPU, cada fotograma se descarga como Blob y los ±6 que rodean al actual se decodifican de antemano fuera del hilo principal (`createImageBitmap` del Blob; unos 75 MB con 1600 × 900), primero en el sentido del scroll; al pintar solo se escalan (en la GPU). Los que salen de la ventana se cierran (`close()`). Sin GPU (WebGL con `failIfMajorPerformanceCaveat` no disponible) y por `file://`, el camino de siempre con `new Image()`: sin GPU, escalar un `ImageBitmap` en el hilo principal costaba más que decodificar. No sirven `createImageBitmap(<img>)` (decodifica en el hilo principal), sus opciones `resizeWidth` / `resizeHeight` (escalan en el hilo principal: 15–20 ms por fotograma) ni escalar en un Worker con `OffscreenCanvas` (con la CPU ocupada, el fotograma exacto llegaba 50–640 ms tarde). Antes cada fotograma nuevo se decodificaba y escalaba en el hilo principal: dentro de la escena se perdían muchos más fotogramas que fuera.
+- **Carga progresiva**: empieza cuando la escena está a pantalla y media (`IntersectionObserver`). Por http(s) cada fotograma se descarga como Blob (`fetch`); por `file://` (donde `fetch` no lee archivos locales), o si el navegador no tiene `createImageBitmap`, con `new Image()`, como antes (el lienzo nunca se lee). Primero el fotograma 1, uno de cada 8 y el último (así siempre hay uno cerca: si el exacto no ha llegado, se pinta el más próximo); el resto, **después del evento `load` de la página**, con `fetchPriority = 'low'` y como mucho 4 descargas a la vez: no frena ni el resto de la página ni sus fotos.
 - **Textos**: solo `opacity` y `transform` en línea, ligados al progreso; `.is-on` (opacidad > 0,5) deja pulsar sus enlaces (los invisibles no tapan a los visibles). Si el foco de teclado cae en un texto que no se ve, la página se desplaza al centro de su tramo.
-- **Sin escena** (versión estática): con `prefers-reduced-motion: reduce`, con «ahorro de datos» (`navigator.connection.saveData`; `.is-static`), al imprimir, sin `aura-core.js` o sin `<canvas>`. El póster se queda en el flujo (fundido con el fondo por arriba y por abajo, hasta el 85 % del alto de pantalla) y los textos se leen debajo, uno tras otro, en su orden. **No se descarga ningún fotograma.** Si el usuario cambia «reducir movimiento» con la página abierta, la escena cambia en el acto.
+- **Sin escena** (versión estática): con `prefers-reduced-motion: reduce`, con «ahorro de datos» (`navigator.connection.saveData`; `.is-static`), al imprimir, sin `aura-core.js` o sin `<canvas>`. El póster se queda en el flujo (fundido con el fondo por arriba y por abajo, hasta el 85 % del alto de pantalla; v2.0: entero y centrado, `object-fit: contain` y `width: min(100%, 85svh × 16 / 9)`, así en una pantalla ancha y baja —1920 × 900— no se amplía ni se recorta) y los textos se leen debajo, uno tras otro, en su orden. **No se descarga ningún fotograma.** Si el usuario cambia «reducir movimiento» con la página abierta, la escena cambia en el acto.
 - **Menos transparencia / más contraste**: el degradado de cada texto pasa a un velo casi sólido (72 % / 84 % de negro). Con colores forzados no hay degradado (el modo pone su placa tras el texto).
 - **Lectores de pantalla**: el lienzo es `aria-hidden`; el póster (con su `alt`) y los textos están siempre en el HTML y en orden, también los que aún no se ven.
 
@@ -1350,12 +1432,21 @@ img/seq/NOMBRE/
     poster.webp · f-0001.webp …
 ```
 
-- Un tramo **continuo** del vídeo (sin cortes de plano), de 3 a 8 s. Escritorio: 1600 × 900 (o 1280 × 720), WebP calidad 60–70, **≤ 120 fotogramas y ≤ 4 MB**; teléfono: 750 px de ancho, en vertical (750 × 1100) siempre que el sujeto quepa, ≤ 2 MB. Con 96 basta para 3–5 s de movimiento; 120 para recorridos largos de 6–8 s (`data-length` 360–420), siempre dentro de los 4 MB. Más fotogramas no se notan y pesan.
+- Un tramo **continuo** del vídeo (sin cortes de plano), de 3 a 8 s. Escritorio: 1600 × 900 (o 1280 × 720), WebP calidad 60–70, **≤ 120 fotogramas y ≤ 4 MB**; teléfono: hasta 750 px de ancho, en vertical (≈ 750 × 1100) siempre que el sujeto quepa, ≤ 2 MB. Con 96 basta para 3–5 s de movimiento y 120 para recorridos de 6–8 s, siempre con `data-length` ≤ 340 y dentro de los 4 MB: más fotogramas hacen el avance más fino, no el recorrido más largo.
+- Lo que hay hoy (v2.0):
+
+| Escena | Escritorio | Teléfono (`m/`) |
+| --- | --- | --- |
+| auraPhone | 120 · 1600 × 900 · 3,34 MB | 120 · 640 × 1136 · 1,01 MB |
+| auraPad | 120 · 1600 × 900 · 1,23 MB | 120 · 750 × 1100 · 0,46 MB |
+| auraBook | 120 · 1600 × 900 · 1,66 MB | 120 · 760 × 900 · 1,08 MB |
+| auraPods | 96 · 1600 × 900 · 1,78 MB | 56 · 750 × 1100 · 0,82 MB |
+| Prueba (`demo`, guía viva) | 48 · 1280 × 720 · 0,51 MB | 48 · 600 × 900 · 0,26 MB |
 - Con ffmpeg: `ffmpeg -ss 2 -to 8 -i clip.mp4 -vf "fps=16,scale=1600:900:force_original_aspect_ratio=increase,crop=1600:900" -frames:v 96 -c:v libwebp -quality 70 img/seq/NOMBRE/f-%04d.webp` y `poster.webp` = `f-0001.webp`.
 - Vídeos con licencia libre (Pexels, Unsplash…), sin logotipos ni marcas reconocibles y con su crédito en `legal.html#imagenes`. El `alt` del póster describe lo que se ve de verdad.
 - Para probarla, emula la preferencia de forma explícita (el navegador sin ventana no siempre hereda la del sistema): `prefers-reduced-motion: no-preference` para la escena y `reduce` para la versión estática. Las capturas de página completa estiran la ventana y la escena con ella: compruébala con capturas de la ventana a varios progresos.
 
-**Lista de comprobación de una página con escena**: sección con `aria-labelledby` a su titular · un solo `h1` en la página · jerarquía sin saltos dentro de la escena · póster con `width`, `height` y `alt` real · `<canvas aria-hidden="true">` · tramos sin solapar · póster de la escena = fotograma 1 (o `<picture>` con el estático aparte) · versión estática revisada (con «reducir movimiento» emulado) · sin desborde a 390 px · peso de la secuencia dentro de lo indicado · su crédito en `img/creditos/seq-NOMBRE.json` si sale de un vídeo o una foto de terceros.
+**Lista de comprobación de una página con escena**: sección con `aria-labelledby` a su titular · un solo `h1` en la página · jerarquía sin saltos dentro de la escena · póster con `width`, `height` y `alt` real · `<canvas aria-hidden="true">` · tramos sin solapar · `data-length` ≤ 340, ≤ 3 textos y cada uno ≥ 400 px al 100 % · póster de la escena = fotograma 1 (o `<picture>` con el estático aparte) · versión estática revisada (con «reducir movimiento» emulado) · sin desborde a 390 px · peso de la secuencia dentro de lo indicado · su crédito en `img/creditos/seq-NOMBRE.json` si sale de un vídeo o una foto de terceros.
 
 ---
 
@@ -1365,13 +1456,14 @@ img/seq/NOMBRE/
 
 ```html
 <div data-aura-reveal>…</div>
-<div data-aura-reveal style="--i:1">…</div>      <!-- escalonado: 80 ms por unidad de --i -->
+<div data-aura-reveal style="--i:1">…</div>      <!-- escalonado en una fila: 60 ms por unidad de --i, como mucho 2 -->
 <div data-aura-reveal="fade">…</div>             <!-- solo opacidad -->
 <div data-aura-reveal="scale">…</div>            <!-- escala .96 → 1 (imágenes) -->
 <li class="aura-stat aura-stat--lg" data-aura-reveal="stat">…</li>   <!-- v1.6: la cifra y luego su texto, solo opacidad (§6) -->
 ```
 
-- `aura-ui.js` observa con `IntersectionObserver` (umbral ≈ 0.15, `rootMargin: '0px 0px -8% 0px'`), añade `.is-visible` **una sola vez** y deja de observar. Sin `IntersectionObserver`: `.is-visible` a todos de inmediato.
+- `aura-ui.js` observa con `IntersectionObserver` (v2.0: `threshold: [0]` y `rootMargin: '0px 0px 5% 0px'`: se dispara en cuanto el elemento asoma, un 5 % antes del borde inferior), añade `.is-visible` **una sola vez** y deja de observar. Sin `IntersectionObserver`: `.is-visible` a todos de inmediato.
+- **Acompaña al scroll** (v2.0): opacidad en 400 ms y desplazamiento en 600 ms (`--ease-out`); el escalonado (`--i`) es de 60 ms por unidad y llega como mucho a 2 × 60 ms, y en el teléfono (< 768 px, tarjetas apiladas) no hay retraso. Con el umbral de 0,15, 560/760 ms y 80 ms × `--i`, a 1000 px/s se veían hasta 539 px de tarjetas vacías. `="stat"` conserva su ritmo por partes (560 ms, 120 ms entre partes, 80 ms entre cifras).
 - Seguro: si `aura-ui.js` no llega, el CSS muestra todo a los 2,5 s; si llega más tarde, lo que ya se mostró se queda visible (no vuelve a fundirse). Al imprimir, todo está visible.
 - No lo pongas en el contenido principal del primer pantallazo (el titular del héroe debe estar ahí al instante) ni en contenedores enteros de sección: úsalo en tarjetas, teselas e imágenes.
 - Con «reducir movimiento» el CSS lo convierte en un fundido de 200 ms sin desplazamiento.
@@ -1389,7 +1481,7 @@ img/seq/NOMBRE/
 | Foto que llega | CSS | `opacity` de `.is-pending` a `.is-loaded` (240 ms) |
 | Carrusel | JS | muelle sobre `transform` de `.aura-carousel__track`; **el CSS no define transición** |
 | Hoja | JS | muelle sobre `transform` de `.aura-sheet__panel` y `opacity` del velo: damping 1 / response 0.3 al abrir o cerrar con un botón, el velo o Esc; damping 0.8 solo al soltar un arrastre con impulso |
-| Reveal | CSS | transición al añadir `.is-visible` (`"stat"`: solo la opacidad de sus hijos, escalonada) |
+| Reveal | CSS | transición al añadir `.is-visible`: opacidad 400 ms y `transform` 600 ms, escalonado ≤ 2 × 60 ms (`"stat"`: solo la opacidad de sus hijos, escalonada) |
 | Escena con scroll | JS | en cada `requestAnimationFrame` con scroll: el fotograma del progreso en el `<canvas>` (solo si cambia) y `opacity` + `transform` en línea de cada texto; ninguna transición ni muelle: es 1:1 con el scroll (§10 bis) |
 | Exhibición de color | CSS | el fundido cruzado de la galería (`opacity`, 200 ms) |
 
@@ -1411,7 +1503,7 @@ Atributos: `active` (`inicio` | `auraphone` | `aurapad` | `aurabook` | `aurapods
   <header class="aura-nav" data-aura-nav>
     <div class="aura-container aura-nav__inner">
       <a class="aura-brand" href="index.html" aria-label="AURA — Volver al inicio" title="AURA — Volver al inicio">
-        <img class="aura-brand__mark" src="assets/img/aura.png" width="28" height="28" alt="">
+        <img class="aura-brand__mark" src="assets/img/aura-72.png" width="28" height="28" alt="">
         <span class="aura-brand__word">AURA</span>
       </a>
       <nav class="aura-nav__links" aria-label="Principal">
@@ -1439,7 +1531,7 @@ Atributos: `active` (`inicio` | `auraphone` | `aurapad` | `aurabook` | `aurapods
 
   <aside class="aura-ribbon" aria-label="Promoción">
     <div class="aura-container">
-      <p class="aura-ribbon__text">Ahorra con AURA Trade In: entrega tu antiguo dispositivo mundano y llévate hasta 800&nbsp;€ de descuento en tu nuevo auraPhone, auraPad, auraBook o auraPods. <a class="aura-link" href="trade-in.html" title="AURA Trade In: calcula cuánto vale tu dispositivo anterior">Comprobar valor cuántico</a></p>
+      <p class="aura-ribbon__text"><span class="aura-ribbon__long">Ahorra con AURA Trade In: entrega tu antiguo dispositivo mundano y llévate hasta 800&nbsp;€ de descuento en tu nuevo auraPhone, auraPad, auraBook o auraPods.</span><span class="aura-ribbon__short">Hasta 800&nbsp;€ por tu dispositivo mundano.</span> <a class="aura-link" href="trade-in.html" title="AURA Trade In: calcula cuánto vale tu dispositivo anterior">Comprobar valor cuántico</a></p>
     </div>
   </aside>
 
@@ -1452,7 +1544,7 @@ Reglas:
 
 - Nombres y textos emergentes: el `nav` de la barra y el del menú móvil se llaman «Principal» (nunca se ven a la vez: por debajo de 992 px la barra no pinta sus enlaces y, por encima, el menú está oculto con `aria-hidden`). `title` solo donde dice algo que el texto visible no dice (el logotipo, «Comparar», «Trade In» y el enlace de la cinta); nunca repite la etiqueta. En el logotipo, `aria-label` y `title` llevan el mismo texto: el lector de pantalla lo anuncia una sola vez. Los botones de icono se nombran con `aria-label` y su icono lleva `aria-hidden="true"`; los que abren algo exponen `aria-haspopup`, `aria-controls` y `aria-expanded` (lo actualiza `aura-ui.js`).
 - Enlace activo: `.is-active` + `aria-current="page"` en el `.aura-nav__link` cuya clave coincide con `active` (`auraphone`, `aurapad`, `aurabook`, `aurapods`, `comparar`, `tradein`, `soporte`). Con `inicio`, `bolsa`, `cuenta`, `acerca` o vacío no se marca ninguno. Lo mismo en `.aura-menu__link`. Cada enlace lleva además `data-aura-key="CLAVE"` (lo usa el JS para marcarlo). El atributo `active` se puede cambiar después de cargar (`AURA.header.setActive('aurapad')` en `comprar.html`): la cabecera se repinta sola.
-- El «›» del enlace de la cinta lo pinta el CSS. El texto de la cinta sale del catálogo: la cifra es `AURA.fmt.eur0(AURA.tradeIn.max())` (con el espacio indivisible de `fmt`: «800 €» nunca se parte) y las familias, `AURA.catalog.families()` («auraPhone, auraPad, auraBook o auraPods»). No lo escribas a mano. Con siete enlaces (v1.7) la barra cabe entera de 992 a 1440 px: por debajo de 992 px los enlaces van al menú.
+- El «›» del enlace de la cinta lo pinta el CSS. El texto de la cinta sale del catálogo: la cifra es `AURA.fmt.eur0(AURA.tradeIn.max())` (con el espacio indivisible de `fmt`: «800 €» nunca se parte) y las familias, `AURA.catalog.families()` («auraPhone, auraPad, auraBook o auraPods»). No lo escribas a mano. **Texto corto en el teléfono (v2.0):** la cinta lleva los dos textos, `.aura-ribbon__long` y `.aura-ribbon__short` («Hasta 800 € por tu dispositivo mundano.», `AURA.header.ribbonShortText()`), con el mismo enlace; el CSS enseña el corto por debajo de 576 px y el largo desde ahí: una o dos líneas, nunca cuatro. Con siete enlaces (v1.7) la barra cabe entera de 992 a 1440 px: por debajo de 992 px los enlaces van al menú.
 - Sesión iniciada: `href="cuenta.html"` y la etiqueta es el nombre (`<span class="aura-nav__action-label">Lucía</span>`); añade `aria-label="Tu cuenta, Lucía"`. Sin sesión: `href="login.html"`, «Iniciar sesión». La etiqueta solo se ve desde 1200 px; por debajo es texto accesible oculto.
 - Contador: `.aura-nav__count` con el total de unidades. Con la bolsa vacía, texto vacío (el CSS lo oculta con `:empty`) y `aria-label="Bolsa, vacía"`. Con 1: `aria-label="Bolsa, 1 artículo"`. Al cambiar la cantidad, `aura-core.js` añade `.is-bumped` (y la quita en `animationend`).
 - `aura-ui.js` añade `.is-scrolled` a `.aura-nav` cuando `window.scrollY > 4` (listener de `scroll` pasivo) y la quita al volver arriba: es el efecto de borde. En páginas con barra local (`body.has-localnav`) la global no flota y el CSS no pinta su borde: lo pinta `.aura-localnav.is-stuck` (§4).
@@ -1490,7 +1582,7 @@ Con artículos:
 </div>
 ```
 
-`IMG` = el hueco de `AURA.catalog.image(line.productId, line.colorId)`: la foto del color si existe (`imageVariants`, con la base de respaldo) o, si no, la base `line.image` directamente (sin peticiones fallidas). Meta = color · etiquetas de opciones · «AuraCare+» si procede · `× cantidad`. Precio = `unitPrice × qty`.
+`IMG` = el hueco de `AURA.catalog.image(line.productId, line.colorId)`: la vista de tarjeta de ese acabado (con la base de respaldo y `sizes="56px"`) o, si ese acabado no tiene foto, la del acabado por defecto; entonces la línea lo dice debajo con `<p class="aura-bag-line__meta aura-bag-line__photo">Imagen en plata</p>` (v2.0, igual que la bolsa y el checkout). Meta = color · etiquetas de opciones · «AuraCare+» si procede · `× cantidad`. Precio = `unitPrice × qty`.
 
 Vacía:
 
@@ -1551,7 +1643,7 @@ Vacía:
 <div class="aura-menu" id="aura-menu" role="dialog" aria-modal="true" aria-label="Menú" aria-hidden="true">
   <div class="aura-container aura-menu__bar">
     <a class="aura-brand" href="index.html" aria-label="AURA — Volver al inicio" title="AURA — Volver al inicio">
-      <img class="aura-brand__mark" src="assets/img/aura.png" width="28" height="28" alt="">
+      <img class="aura-brand__mark" src="assets/img/aura-72.png" width="28" height="28" alt="">
       <span class="aura-brand__word">AURA</span>
     </a>
     <button class="aura-icon-btn" type="button" data-aura-menu-close aria-label="Cerrar el menú"><i class="bi bi-x-lg" aria-hidden="true"></i></button>
@@ -1596,7 +1688,7 @@ Desde JS (repinta el pie): `AURA.footer.setCrumbs([{ label: 'auraPhone', href: '
 
       <nav class="aura-footer__crumbs" aria-label="Migas de pan">
         <ol class="aura-crumbs">
-          <li><a href="index.html" title="AURA — Volver al inicio"><img src="assets/img/aura.png" width="20" height="20" alt="AURA — Volver al inicio"></a></li>
+          <li><a href="index.html" title="AURA — Volver al inicio"><img src="assets/img/aura-72.png" width="20" height="20" alt="AURA — Volver al inicio"></a></li>
           <li aria-current="page">auraPhone</li>
         </ol>
       </nav>
@@ -1604,7 +1696,7 @@ Desde JS (repinta el pie): `AURA.footer.setCrumbs([{ label: 'auraPhone', href: '
       <div class="aura-footer__main">
         <div class="aura-footer__brand">
           <a class="aura-brand" href="index.html" aria-label="AURA — Volver al inicio" title="AURA — Volver al inicio">
-            <img class="aura-brand__mark" src="assets/img/aura.png" width="28" height="28" alt="">
+            <img class="aura-brand__mark" src="assets/img/aura-72.png" width="28" height="28" alt="">
             <span class="aura-brand__word">AURA</span>
           </a>
           <p class="aura-footer__tagline">Tecnología inmersiva diseñada para ampliar lo que imaginas. Precisión, profundidad y energía AURA.</p>
@@ -1758,7 +1850,7 @@ Cuando un `<img class="aura-img" data-slot="NOMBRE">` (que pide `NOMBRE.webp`) f
 | Dato | Origen |
 | --- | --- |
 | `ID` | `product.id` |
-| `IMG` / `IMG-COLOR` | `AURA.catalog.image(product, colorId)`: `product.image`, o `product.image + '-' + colorId` (con la base en `data-fallback`) solo si ese color está en `imageVariants` |
+| `IMG` | `AURA.catalog.image(product, colorId)`: la primera vista de ese acabado (`photos`, con la base en `data-fallback`; v2.0) o, sin galería, `product.image` / `product.image + '-' + colorId` si ese color está en `imageVariants`. Con `srcset` y `sizes="(min-width: 1024px) 380px, 90vw"` |
 | Antetítulo | `product.badge` (si está vacío, no se genera el `<p>`) |
 | Nombre | `product.name` |
 | Acabado | el color de `colorId` o, por defecto, el de la foto (`imageColor`; si no hay, el primero) |
@@ -1820,7 +1912,7 @@ Botón según la disponibilidad ([§14.3](#143-auracatalog)): «Configurar» si 
 - Los valores pasan por `AURA.fmt.units`: cifra y unidad no se separan al cambiar de línea («120 Hz», «1 TB»).
 - La fila con `key: 'precio'` se calcula siempre con `'Desde ' + AURA.fmt.eur0(product.basePrice)` (en `data.js` no hay `specs.precio`): al cambiar `basePrice`, la tabla se actualiza sola. Debajo, `.aura-table__note` con `AURA.catalog.availability(p).html` (el `text`, con la fecha en `<time datetime>`) si el modelo aún no está disponible.
 - Título configurable con `data-aura-compare-title="Especificaciones auraPad"`; por defecto «Especificaciones técnicas».
-- `<caption class="visually-hidden">` (temario DIW: toda tabla tiene título): «Comparativa técnica de los modelos FAMILIA» o el texto de `data-aura-compare-caption`. A la vista ya la titula la cabecera de la tarjeta; el caption no ocupa sitio (`caption.visually-hidden`, aura.css §2) y da nombre a la tabla en el lector de pantalla. `th` con `scope="col"` en la cabecera y `scope="row"` en cada fila.
+- `<caption class="visually-hidden">` (temario DIW: toda tabla tiene título): «Comparativa técnica de los modelos FAMILIA» o el texto de `data-aura-compare-caption`. A la vista ya la titula la cabecera de la tarjeta; el caption no empuja la tabla (`caption.visually-hidden`, arriba, aura.css §2) y da nombre a la tabla en el lector de pantalla. `th` con `scope="col"` en la cabecera y `scope="row"` en cada fila.
 - Un valor que falta se pinta `<span aria-hidden="true">—</span><span class="visually-hidden">Sin dato</span>`: raya a la vista, «Sin dato» al oído.
 - `.aura-table-wrap` es enfocable (`tabindex="0"`, `role="region"`) para poder desplazarla con el teclado en móvil. La primera columna es pegajosa.
 - Por debajo de 576 px la tabla se compacta (mín. 544 px, texto de 13 px) y la columna fija mide 104 px: a 360 px se ve siempre un modelo entero junto a su etiqueta.
@@ -1980,8 +2072,9 @@ Derivadas de las notas de uso de la guía de estilo AURA y de la skill «apple-d
 
 ### Color
 
-- El azul comunica **interacción** (botones, enlaces, foco, selección). El dorado aporta **valor premium** (antetítulos, metadatos, columna destacada, hitos, el icono de AuraCare+ y Trade In). Nunca como superficies extensas ni compitiendo por la misma jerarquía en un mismo bloque. Lo que no se pulsa no va en azul: iconos de característica neutros, marcas de lista en gris.
-- Para texto azul sobre negro usa siempre `--accent-link` (#2997ff), nunca `--accent` (#0071e3 no llega a AA como texto sobre negro). `--accent` es para rellenos con texto blanco.
+- El azul comunica **interacción** (botones, enlaces, foco, selección). El dorado aporta **valor premium** (antetítulos, metadatos, columna destacada, hitos, el icono de AuraCare+ y Trade In). Nunca como superficies extensas ni compitiendo por la misma jerarquía en un mismo bloque. Lo que no se pulsa no va en azul: iconos de característica neutros, marcas de lista en gris. **Excepciones documentadas** (guía §00): el acabado de la tarjeta de modelo y el halo de los paneles de foto de producto (sobre base #000).
+- Para texto azul usa siempre `--accent-link` (#1787f7, el de la v1: 5,85:1 sobre negro y 5,03:1 sobre tarjeta), nunca `--accent` (#0071e3 no llega a AA como texto sobre negro). `--accent` es para rellenos con texto blanco. `--accent-link-hover` (#4aa3ff) es el de la etiqueta del secundario en hover y en foco y el de los enlaces sin clase (`--bs-link-hover-color`); `.aura-link` no cambia de color: se subraya.
+- **Qué fuente manda** (v2.0): la guía v2 (y este documento), después los prototipos de página y después la v1. Cada desviación de la v1 está escrita en la guía §00 con su motivo; una nueva se escribe ahí antes de llegar a una página.
 - El estado nunca se comunica solo con color: los errores llevan icono y texto; el paso completado, una marca; el elegido, un anillo o un borde.
 - Alterna fondos negro (`.aura-section`) y franja (`.aura-section--band`) para dar ritmo; las tarjetas viven sobre cualquiera de los dos.
 
@@ -2033,12 +2126,14 @@ Derivadas de las notas de uso de la guía de estilo AURA y de la skill «apple-d
 - Lo mismo se ve igual: las cifras sobre una foto van en el mismo panel (`.aura-media__overlay--glass`) en todas las páginas.
 - Bajo lo que flota no hay una línea fija: el borde aparece solo cuando el contenido pasa por debajo (barra global al hacer scroll, barra local al quedarse pegada, columna fija de la tabla al desplazarla), y en las barras es el propio material que se desvanece (desenfoque progresivo), no una línea.
 - Una tarea modal vela **y** empuja hacia atrás la página (hoja inferior, buscador); un panel paralelo (popover, aviso, barra de compra) ni vela ni empuja.
-- Las fotos se funden con el negro: sin marcos alrededor de una foto real en héroes y bloques texto + imagen; las de producto, sobre el halo de su panel.
+- Las fotos se funden con el negro: sin marcos alrededor de una foto real en héroes y bloques texto + imagen; las de producto, sobre el halo de su panel (base `--bg-main` #000; el halo azul es una excepción documentada).
+- Superficies solo de la paleta: la tabla comparativa y su columna fija en `--bg-secondary`, la tesela `--cover` en `--bg-main`, la tarjeta de acceso en `--bg-elevated` con `--shadow-2`. Nada de `#0d0d0e`, `#050506` ni `#030304`.
 
 ### Movimiento
 
 - La respuesta empieza en la pulsación (`pointerdown`), no al soltar. Sin retardos artificiales ni «debounce» en el camino de la entrada.
-- Solo se animan `transform` y `opacity` (y `filter` al materializar cristal). Los cambios de color son instantáneos.
+- Solo se animan `transform` y `opacity` (y `filter` al materializar cristal). El color de base no se anima: el hover de los botones funde una capa (`::before`) y el halo en 160 ms.
+- **El scroll es del usuario** (v2.0): ninguna pieza se queda con el gesto vertical (tablas con `overflow-y: hidden`, carruseles con `overscroll-behavior: auto` una vez iniciados), los saltos a un ancla son inmediatos (`html { scroll-behavior: auto }`; quien quiera un desplazamiento suave lo pide en la llamada) y lo que aparece al bajar llega a tiempo (§11).
 - Todo lo que se arrastra sigue al dedo 1:1, hereda su velocidad al soltar, se proyecta a donde iba y se puede volver a coger en pleno vuelo. Por eso carrusel y hoja usan muelles, no transiciones CSS.
 - Rebote (damping 0.8) solo cuando el gesto llevaba impulso; lo demás, amortiguación crítica (1.0). Abrir una hoja con un botón no rebota.
 - Un golpe de carrusel mueve una diapositiva; un muelle nunca va mucho más deprisa que el dedo que lo soltó.
@@ -2061,7 +2156,7 @@ Derivadas de las notas de uso de la guía de estilo AURA y de la skill «apple-d
 
 ## 14. API JavaScript
 
-Dos scripts clásicos (sin módulos, sin `fetch`), un único global: `window.AURA`.
+Dos scripts clásicos (sin módulos; ningún `fetch` del que dependa la página: la escena lo usa solo por http(s) y por `file://` vuelve a `new Image()`), un único global: `window.AURA`.
 
 | Archivo | Dónde | Qué aporta |
 | --- | --- | --- |
@@ -2114,7 +2209,7 @@ document.addEventListener('aura:bag', function (e) {
 | `fmt.fecha(valor)` | `'2026-10-16'` → `16 de octubre de 2026` · `'2026-10-03T08:00:00Z'` o un `Date` → `3 de octubre de 2026` |
 | `fmt.diaMes(valor)` | `'2026-10-23'` → `23 de octubre` (sin el año) |
 | `fmt.dia(valor, ref?)` | Sin el año si es el de hoy (o el de `ref`), con él si no: `23 de octubre` / `16 de enero de 2027`. La disponibilidad lo usa. |
-| `fmt.units(texto)` | Cifra y unidad juntas: `'50 % en 15 min'`, `'SSD de 1 TB a 8 TB'`, `'USB-C (USB 3)'` → con espacio indivisible entre número y unidad (y tras `USB`, `Wi-Fi`, `AURA`, `M5`…). Úsalo al pintar `specs` y `highlights`. |
+| `fmt.units(texto)` | Cifra y unidad juntas: `'50 % en 15 min'`, `'SSD de 1 TB a 8 TB'`, `'USB-C (USB 3)'` → con espacio indivisible entre número y unidad (y tras `USB`, `Wi-Fi`, `AURA`, `M5`…), y «USB-C» → «USB-⁠C» (guion normal + WORD JOINER, U+2060: no se parte y el guion es de Inter; el U+2011 salía de Segoe UI). En el HTML, `USB-&#8288;C`. Úsalo al pintar `specs` y `highlights`. |
 
 Las fechas llevan espacios indivisibles en «16 de octubre» (como mucho se parten antes de «de 2026»): no hace falta ningún arreglo en la página. **Si recortas o analizas una de estas cadenas con una expresión regular, usa `\s` (o `[\s\u00a0]`), nunca un espacio normal**: `/ de (\d{4})$/` no encuentra «9 de octubre de 2026» y falla sin dar error (le pasó a «Miembro desde…» en `cuenta.js`). El espacio antes de `€` es indivisible (` `) y los negativos llevan el signo menos tipográfico (`−`). En el resumen se escribe `'− ' + AURA.fmt.eur(descuento)` con el descuento en positivo.
 
@@ -2137,7 +2232,8 @@ Lee de `AURA.data` (= `window.AURA_DATA`). Donde se pide un producto vale su `id
 | `color(producto, colorId)` | `{ id, name, hex }` (si no existe o no se indica, el acabado por defecto: el de la foto). |
 | `carePrice(producto \| familyId)` | Precio de AuraCare+ por unidad. |
 | `grammar(producto \| familyId)` | Concordancia del nombre (v1.7, `family.plural` de `data.js`): `{ plural, el, del, al, un, tu, nuevo }` → en singular `el`, `del`, `al`, `un`, `tu`, `nuevo`; en plural `los`, `de los`, `a los`, `unos`, `tus`, `nuevos`. Úsalo en todo texto que pegue un artículo o un posesivo al nombre de un producto o una familia: «Comprar los auraPods Max 2», «Protege tus nuevos auraPods». |
-| `image(producto, colorId)` | `{ slot, fallback, exact, color, alt }`. `slot`: la foto de ese color si existe (`imageVariants`; con la base en `fallback`), si no la base directamente (`fallback: ''`). `color`: el acabado que se **ve** en la foto (`null` si no se aprecia). `exact`: `false` si la foto enseña otro acabado que el pedido (díselo al usuario). `alt`: descripción de la foto real. |
+| `views(producto, colorId)` | v2.0, galería por color: `[{ slot, vista, label, aria, alt, exact, color, fallback }]`, las vistas de ese acabado en su orden (la primera es la de tarjeta). `vista`: `'trasera'`, `'frontal'`, `'tres-cuartos'`, `'lateral'`, `'abierto'`, `'cerrado'`, `'estuche-abierto'`, `'estuche-cerrado'` o `'auriculares'`; `label`: «Trasera», «Frente», «Tres cuartos», «Perfil», «Abierto», «Cerrado», «Estuche abierto», «Estuche cerrado», «Auriculares»; `aria`: el nombre del botón de su miniatura («Vista trasera», «Vista frontal»…). Si ese acabado no tiene fotos, las del acabado por defecto con `exact: false` y `color` = el acabado que **sí** se ve. Sin `colorId`, las del acabado por defecto (`exact: true`). Un producto sin `photos`: una sola entrada con la foto de siempre (`vista: ''`). `fallback`: la foto base (`product.image`). `[]` si el producto no existe. |
+| `image(producto, colorId, vista?)` | `{ slot, fallback, exact, color, alt, vista, label, aria }`: la primera de `views()` (la de tarjeta: tarjetas, bolsa, checkout, buscador, comparar) o, con `vista`, esa si el acabado la tiene. `color`: el acabado que se **ve** en la foto (`null` si no se aprecia). `exact`: `false` si la foto enseña otro acabado que el pedido (díselo al usuario). `alt`: descripción de la foto real. |
 | `today()` | Hoy, como `Date` a medianoche local. Si la URL con la que se abrió la página lleva `?hoy=AAAA-MM-DD`, ese día (ver abajo). |
 | `availability(producto, día?)` | `{ status, title, label, text, labelHtml, html, canBuy, preorder, release }` (ver abajo). `día` opcional (`'AAAA-MM-DD'` o `Date`); por defecto, `today()`. |
 | `cta(producto)` | `'Configurar'` si aún no se puede reservar (`proximamente`), `'Reservar'` en reserva y `'Comprar'` si está disponible. |
@@ -2184,16 +2280,25 @@ function alCambiar(grupo, opcion) {
   cuota.textContent = 'o ' + AURA.fmt.mes(unidad) + ' durante ' + AURA.data.financing.months + ' meses';
 }
 
+var vistas = [], actual = 0;
+
 function alCambiarColor(colorId) {
   estado.colorId = colorId;
-  var img = AURA.catalog.image(producto, colorId);
+  vistas = AURA.catalog.views(producto, colorId);                         // [{ slot, vista, label, aria, alt, exact, color, fallback }]
+  actual = 0;                                                             // otro acabado: desde la primera vista
+  pintarMiniaturas(vistas);                                               // un <button aria-label="{aria}" aria-pressed> por vista
+  mostrar(0);
   var color = AURA.catalog.color(producto, colorId);
-  AURA.slots.set(galeria.querySelector('.aura-img, .aura-slot'), img.slot, {   // mismo hueco → no cambia nada
-    fallback: img.fallback,
-    alt: img.exact ? producto.name + ' en ' + color.name.toLowerCase() : img.alt
-  });
-  nota.hidden = img.exact || !img.color;                                    // «Imagen en Azul glacial · Tu acabado: Negro»
-  if (!nota.hidden) { nota.textContent = 'Imagen en ' + img.color.name + ' · Tu acabado: ' + color.name; }
+  var v = vistas[0];
+  nota.hidden = !v || v.exact || !v.color;                                // «Imagen en azul glacial · Tu acabado: negro»
+  if (!nota.hidden) { nota.textContent = 'Imagen en ' + v.color.name + ' · Tu acabado: ' + color.name; }
+}
+
+function mostrar(i) {
+  var v = vistas[i];
+  if (!v) { return; }
+  actual = i;
+  AURA.ui.gallery(galeria).show(v.slot, { fallback: v.fallback, alt: v.alt });   // mismo hueco → solo cambia el alt
 }
 ```
 
@@ -2298,8 +2403,8 @@ AURA.tradeIn.clear();
 
 | Función | Notas |
 | --- | --- |
-| `AURA.html.img(nombre, { alt, fallback, width, height, eager, priority, className })` | Cadena con el `<img class="aura-img" src="assets/img/NOMBRE.webp" …>` exacto del sistema (1600 × 1200, `loading="lazy"` y `decoding="async"` por defecto). `eager`: sin carga diferida; `priority`: la del primer héroe (`loading="eager" fetchpriority="high"`). |
-| `AURA.html.productCard(producto, { heading, colorId })` | Cadena con la tarjeta de modelo de [§12.4](#124-tarjetas-de-data-aura-lineup) (la de `[data-aura-lineup]`), con estado y botón según la disponibilidad. `heading`: `'h3'` por defecto. `''` si el producto no existe. Para carruseles o rejillas propias: `pista.innerHTML = productos.map(function (p) { return '<li class="aura-carousel__slide">' + AURA.html.productCard(p) + '</li>'; }).join('')`. |
+| `AURA.html.img(nombre, { alt, fallback, width, height, eager, priority, className, sizes, srcset })` | Cadena con el `<img class="aura-img" src="assets/img/NOMBRE.webp" …>` exacto del sistema (1600 × 1200, `loading="lazy"` y `decoding="async"` por defecto). `eager`: sin carga diferida; `priority`: la del primer héroe (`loading="eager" fetchpriority="high"`). v2.0: con `srcset` de 400, 800 y 1600 px (`img/400/`, `img/800/`) y `sizes` (el ancho del hueco; por defecto `100vw`, con `auto` delante si es perezosa); `srcset: false`, solo el original (§1). |
+| `AURA.html.productCard(producto, { heading, colorId, eager })` | Cadena con la tarjeta de modelo de [§12.4](#124-tarjetas-de-data-aura-lineup) (la de `[data-aura-lineup]`), con estado y botón según la disponibilidad y la vista de tarjeta de ese acabado. `heading`: `'h3'` por defecto. `eager: true` en las tarjetas de la primera pantalla (la imagen LCP no va diferida: bolsa y checkout vacíos). `''` si el producto no existe. Para carruseles o rejillas propias: `pista.innerHTML = productos.map(function (p) { return '<li class="aura-carousel__slide">' + AURA.html.productCard(p) + '</li>'; }).join('')`. |
 | `AURA.html.esc(texto)` | Escapa para `innerHTML` o atributos. |
 | `AURA.html.storePerks(familia?, { heading })` · `AURA.html.familyCard(familia, { heading, href })` | Los bloques de tienda de [§12.9](#129-bloques-de-tienda) (los pintan `data-aura-perks` y `data-aura-family-cards`). |
 | `AURA.legal.text(clave)` · `AURA.legal.fill(raíz)` | Textos comunes de las notas al pie (§6): `precios`, `financiacion`, `tradein`, `reservas`, `envio`, `cifras`, `demo`. `fill` rellena los `[data-aura-legal]` (se hace solo al cargar y con el HTML que se inserte después). |
@@ -2375,7 +2480,7 @@ Atributos que `aura-ui.js` atiende por delegación (no hay que inicializar nada)
 | `data-aura-colorway="idDeProducto"` (+ `data-color`) | `.aura-colorway` | Exhibición de color (§8). |
 | `data-aura-lineup="familia"` (+ `data-aura-heading="h2"`) | contenedor | Tres tarjetas de modelo. |
 | `data-aura-compare="familia"` (+ `data-aura-compare-title`, `data-aura-heading`) | contenedor | Tabla comparativa. |
-| `data-aura-localnav` | `.aura-localnav` | Marca el enlace de la sección visible y, por debajo de 768 px, pliega los enlaces en un menú con chevrón. |
+| `data-aura-localnav` | `.aura-localnav` | Marca el enlace de la sección visible y, mientras los enlaces no caben (por debajo de 992 px), los pliega en el menú del chevrón (que viene en el HTML con `.has-menu`, §4). |
 | `data-aura-perks="familia"` · `data-aura-family-cards` · `data-aura-from="familia"` · `data-aura-buy="familia"` (+ `data-aura-buy-short`) | contenedor / texto / enlace | Bloques de tienda (§12.9). |
 | `data-aura-legal="clave"` | `<li>` o `<span>` de una nota | Texto común de `AURA.legal`. |
 | `data-aura-buybar="#selector"` | `.aura-buybar` | La esconde (`.is-hidden`) mientras ese elemento está a la vista. Sin valor, no hace nada. |
@@ -2456,6 +2561,7 @@ f.form.addEventListener('change', function (e) {
 - Carrusel y hoja capturan el puntero al reconocer el arrastre (10 px), no en `pointerdown`, salvo cuando se agarran en pleno vuelo.
 - Hoja: el foco entra al abrir y vuelve al disparador al pedir el cierre, sin esperar al muelle.
 - Añadidos: `catalog.resolve/choices/optionLabels/color/carePrice/image/cta/url/line`, `auth.update/remove`, `tradeIn.estimate/discount`, `fmt.num/articulos/fecha`, `AURA.slots`, `AURA.html`, `AURA.header`, `AURA.search`, `ui.busy`, `ui.passwordRules`, `ui.popover`, `ui.search`, `ui.menu`, `ui.init`, `ui.lineup`, `ui.compare`, `data-aura-stepper`, `data-aura-buybar="#selector"`, `data-aura-no-drag`.
+- v2.0: `catalog.views()` y `catalog.image(p, color, vista)` (galería por color, `photos` en `data.js`); `html.img({ sizes, srcset })` con variantes de 400 y 800 px; `html.productCard({ eager })` y `html.familyCard({ eager })`; `header.ribbonShortText()`; `html.aura-has-session` antes del primer pintado; la escena decodifica sus fotogramas fuera del hilo principal por http(s); `SCRUB_FADE_PX` (fundido de 150 px).
 - v1.6: `ui.scrub` y `[data-aura-scrub]` (escena con scroll), `ui.colorway` y `[data-aura-colorway]` con el evento `aura:colorway`, `data-aura-reveal="stat"`.
 - v1.3: `catalog.image()` con `exact`, `color` y `alt`; `catalog.defaults()` / `catalog.color()` con el acabado de la foto; `html.img({ priority })`; huecos en `.webp`; `ui.haptic`; `ui.segmented`; avisos que se apartan con el dedo; hojas y barras de compra fuera de `<main>`; `--buybar-h`.
 - v1.2: `fmt.dia`, `fmt.units` y fechas con espacios indivisibles; `catalog.entry` y `catalog.withHoy` (`url` conserva `?hoy`); `orders.create` con el día simulado; `tradeIn.get` validado; `AURA.legal`; `html.storePerks` y `html.familyCard` con sus atributos; `ui.fixInches`; menú plegable de la barra local; ancla dentro de un carrusel; `role="region"` automático.
@@ -2469,7 +2575,8 @@ f.form.addEventListener('change', function (e) {
 | `financing.months` | Meses de financiación de `fmt.mes`. |
 | `shipping: { standard, express }` | Envío en euros: estándar `0` (gratis) y exprés `9.95`. El checkout lo lee de `AURA.data.shipping`; no escribas el importe en la página. |
 | `families[]` | `id`, `name`, `page`, `os`, `tagline`, `description`, `compareRows` (la fila `precio` la calcula el sistema) y `plural` (opcional, v1.7: `true` en auraPods). Ids: `auraphone`, `aurapad`, `aurabook`, `aurapods`. |
-| `products[]` | `id`, `family`, `rank`, `name`, `badge`, `tagline`, `description`, `basePrice`, `availability: { preorder, release }` (opcional), `colors`, `options`, `specs` (sin `precio`), `highlights`, `image`, `imageColor` (id del acabado que se ve en la foto base; `''` si no se aprecia), `imageAlt` (alt de la foto real) e `imageVariants` (opcional: `{ idDeColor: alt }` con las fotos por color que **existen** en `assets/img`). |
+| `products[]` | `id`, `family`, `rank`, `name`, `badge`, `tagline`, `description`, `basePrice`, `availability: { preorder, release }` (opcional), `colors`, `options`, `specs` (sin `precio`), `highlights`, `image`, `imageColor` (id del acabado por defecto, el que se ve en la foto de tarjeta; `''` si no se aprecia), `imageAlt` (alt de la foto real), `photos` (v2.0, galería por color: `{ idDeColor: [{ slot, vista, alt }, …] }`, en el orden de su tipo; la primera es la de tarjeta) e `imageVariants` (opcional, solo en productos sin `photos`: `{ idDeColor: alt }`). `image`, `imageColor` e `imageAlt` se quedan como respaldo. |
+| Bloque `FOTOS` | Al final de `data.js`, entre `/* FOTOS:INICIO */` y `/* FOTOS:FIN */`: rellena `photos` (y el `imageColor` que tenga foto) a partir de los manifiestos de las fotos igualadas. Es **generado**: no se edita a mano; se vuelve a generar cuando cambian las fotos. |
 | `care` | `name`, `description`, `prices` por familia. |
 | `tradeIn.cap` | Tope por dispositivo (800). |
 | `tradeIn.conditions[]` | `id`, `label`, `factor` y `description` (texto para el radio de cada estado). |
@@ -2561,7 +2668,7 @@ Plantilla para una página de `html/` (en `index.html`, las rutas sin `../`). Ca
 ### 15.4 Tablas
 
 - [ ] Solo para datos (comparativas, especificaciones), nunca para maquetar.
-- [ ] `<caption>` con lo que compara la tabla. Si el diseño ya la titula con un encabezado visible, `class="visually-hidden"` (nunca `display: none`); `caption.visually-hidden` no ocupa sitio (aura.css §2).
+- [ ] `<caption>` con lo que compara la tabla. Si el diseño ya la titula con un encabezado visible, `class="visually-hidden"` (nunca `display: none`); `caption.visually-hidden` no empuja la tabla (aura.css §2). Su contenedor desplazable, solo en horizontal (`overflow-y: hidden`, §6).
 - [ ] `<thead>` y `<tbody>` (y `<tfoot>` si hay totales u observaciones); `th scope="col"` en la cabecera y `th scope="row"` en la primera celda de cada fila; `colspan` / `rowspan` solo cuando agrupan de verdad.
 - [ ] Una celda sin dato no queda muda: raya visual con `aria-hidden="true"` y «Sin dato» en `.visually-hidden`.
 - [ ] Sin roles ARIA en la tabla ni en sus partes (`table`, `rowgroup`, `row`, `columnheader`, `rowheader`, `cell`), aunque el CSS cambie su `display` (rejilla o bloque, como `comparar.html`): son redundantes y el validador del W3C los da como error en `<tr>`, `<th>` y `<td>`. Comprobado en Edge: con y sin roles, el árbol de accesibilidad de `comparar.html` tiene las mismas tablas, filas, cabeceras y celdas.

@@ -204,11 +204,11 @@
 
   /* Exhibición de color («Diseño»): los acabados del 18 Pro y del 18 Pro Max
      (mismo diseño y mismos colores). Las muestras salen del catálogo y la foto
-     de cada una también (AURA.catalog.image: imageColor e imageVariants de
-     data.js, con su alt): la del 18 Pro si la tiene y, si no, la del 18 Pro
-     Max (así el burdeos enseña el Pro Max burdeos). Un color sin foto en
-     ninguno de los dos enseña la base del 18 Pro y el nombre lo dice
-     («Verde · Imagen en Negro»). La base (AURA.ui.colorway) hace el fundido
+     de cada una también (AURA.catalog.image: la primera vista de ese acabado
+     en la galería por color, photos de data.js, con su alt): la del 18 Pro si
+     la tiene y, si no, la del 18 Pro Max. Un color sin foto en ninguno de los
+     dos enseña la base del 18 Pro y el nombre lo dice («Verde · Imagen en
+     negro»). La base (AURA.ui.colorway) hace el fundido
      cruzado y el aria-live del nombre. */
   var expo = one('[data-ap-colorway]');
   var expoP = expo ? cat.product(expo.getAttribute('data-ap-colorway')) : null;
@@ -244,7 +244,7 @@
       if (!nombre || !sinFoto[d.colorId] || !base.color || one('.aura-colorway__note', nombre)) { return; }
       var nota = document.createElement('span');
       nota.className = 'aura-colorway__note';
-      nota.textContent = ' · Imagen en ' + base.color.name;
+      nota.textContent = ' · Imagen en ' + base.color.name.toLowerCase();
       nombre.appendChild(nota);
     });
     ui.colorway(expo);

@@ -35,7 +35,7 @@
 
   <!-- Iconos: favicon (ICO y PNG), icono de la pantalla de inicio y manifiesto de la aplicación web -->
   <link rel="icon" href="../favicon.ico" sizes="any">
-  <link rel="icon" type="image/png" href="../img/aura.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="../img/icon-192.png">
   <link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
   <link rel="manifest" href="../site.webmanifest">
   <!-- Manifiesto: por file:// (doble clic) el navegador lo bloquearía por CORS con un error en la consola, así que ahí se retira -->
@@ -71,7 +71,7 @@
         <div class="aura-section-head aura-section-head--split checkout-head">
           <div class="aura-section-head__text">
             <p class="aura-eyebrow aura-eyebrow--mono">Bolsa / Tramitar pedido</p>
-            <h1 class="aura-h2" id="checkout-titulo">Finaliza tu pedido.</h1>
+            <h1 class="aura-h1" id="checkout-titulo">Finaliza tu pedido.</h1>
           </div>
           <a class="aura-link checkout-head__summary" href="#resumen">Ver el resumen&nbsp;·&nbsp;<span data-co="total-corto"></span></a>
         </div>
@@ -94,7 +94,9 @@
                  Aquí: continuar como invitado (formulario) o iniciar sesión con el ID de AURA (enlaces). -->
             <section class="checkout-step" id="paso-1" data-co-panel="1" aria-labelledby="paso-1-titulo">
               <header class="checkout-step__head">
-                <h2 class="aura-h3" id="paso-1-titulo" tabindex="-1">¿Cómo quieres continuar?</h2>
+                <!-- Las dos preguntas ya escritas: checkout.js deja a la vista la de invitado o la de quien ha iniciado sesión
+                     (y, con sesión, checkout.css la enseña desde el primer pintado: el paso no cambia de alto al cargar) -->
+                <h2 class="aura-h3" id="paso-1-titulo" tabindex="-1"><span data-co="titulo-invitado">¿Cómo quieres continuar?</span><span data-co="titulo-usuario" hidden>¿Dónde te enviamos la confirmación?</span></h2>
               </header>
 
               <div class="checkout-contact" data-co="contacto">

@@ -35,7 +35,7 @@
 
   <!-- Iconos: favicon (ICO y PNG), icono de la pantalla de inicio y manifiesto de la aplicación web -->
   <link rel="icon" href="../favicon.ico" sizes="any">
-  <link rel="icon" type="image/png" href="../img/aura.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="../img/icon-192.png">
   <link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
   <link rel="manifest" href="../site.webmanifest">
   <!-- Manifiesto: por file:// (doble clic) el navegador lo bloquearía por CORS con un error en la consola, así que ahí se retira -->
@@ -65,12 +65,14 @@
   <main id="contenido">
 
     <!-- Barra local: segundo <nav>, con nombre propio (aria-label); salta a los capítulos de esta página y lleva a comprar.
-         aura-ui.js la fija arriba al desplazarse (en el teléfono pliega los enlaces en un menú); el «Comprar» corto
-         completa su nombre con el modelo de entrada (aria-label). -->
-    <nav class="aura-localnav" aria-label="auraBook" data-aura-localnav>
+         aura-ui.js la fija arriba al desplazarse; el «Comprar» corto completa su nombre con el modelo de entrada
+         (aria-label). Llega ya plegable (.has-menu y el chevrón en el HTML, sin salto al cargar): mientras los
+         enlaces no caben (teléfono y tableta), el chevrón los despliega en un menú. -->
+    <nav class="aura-localnav has-menu" aria-label="auraBook" data-aura-localnav>
       <div class="aura-container aura-localnav__inner">
         <a class="aura-localnav__title" href="aurabook.html">auraBook</a>
-        <div class="aura-localnav__links">
+        <button type="button" class="aura-localnav__toggle" aria-expanded="false" aria-controls="localnav-secciones" aria-label="Secciones de auraBook"><i class="bi bi-chevron-down" aria-hidden="true"></i></button>
+        <div class="aura-localnav__links" id="localnav-secciones">
           <a class="aura-localnav__link" href="#modelos">Modelos</a>
           <a class="aura-localnav__link" href="#diseno">Diseño</a>
           <a class="aura-localnav__link" href="#rendimiento">Rendimiento</a>
@@ -89,8 +91,11 @@
          un poco para dejar abajo sitio a los textos. Los textos son HTML real, en orden, y entran por tramos que no se
          solapan; sus cifras salen del catálogo (aurabook.js).
          Póster: <picture> elige el fotograma 1 para la escena (coincide con lo primero que pinta el lienzo) y el 120
-         (pantalla encendida) para la versión estática («reducir movimiento»), con la versión m/ en el teléfono. -->
-    <section class="aura-scrub aurabook-intro" id="descripcion" data-aura-scrub data-seq="../img/seq/aurabook-intro" data-frames="120" data-width="1600" data-height="900" data-mobile="true" data-fit="contain" data-focus="0.5 0.38" data-length="420" aria-labelledby="hero-titulo">
+         (pantalla encendida) para la versión estática («reducir movimiento»), con la versión m/ en el teléfono.
+         Ritmo (COMPONENTES.md §10 bis): 340 de largo (2,4 pantallas pegada) y tres tramos con 150 px de fundido a
+         cada lado. La autonomía y el peso van juntos en el último, que se queda hasta que la escena se va: el peso
+         lleva su propio data-ab-product="lightest" (si no, saldría el peso del modelo de más autonomía). -->
+    <section class="aura-scrub aurabook-intro" id="descripcion" data-aura-scrub data-seq="../img/seq/aurabook-intro" data-frames="120" data-width="1600" data-height="900" data-mobile="true" data-fit="contain" data-focus="0.5 0.38" data-length="340" aria-labelledby="hero-titulo">
       <div class="aura-scrub__stage">
         <picture>
           <source media="(prefers-reduced-motion: reduce) and (max-width: 767.98px)" srcset="../img/seq/aurabook-intro/m/f-0120.webp" width="760" height="900">
@@ -100,10 +105,12 @@
         </picture>
         <canvas class="aura-scrub__canvas" aria-hidden="true"></canvas>
 
-        <!-- Tramo 1 (titular): a la vista al llegar; se va antes de que se encienda la pantalla -->
-        <div class="aura-scrub__text" data-from="0" data-to="0.2">
+        <!-- Tramo 1 (titular): a la vista al llegar; se va antes de que se encienda la pantalla.
+             El lema entero no cabe bien en el teléfono («AURA.» quedaba sola en la tercera línea): por debajo de
+             576 px se lee el corto (aurabook.css), y los dos salen del catálogo (family.tagline / taglineShort). -->
+        <div class="aura-scrub__text" data-from="0" data-to="0.22">
           <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">Gama auraBook</p>
-          <h1 class="aura-display" id="hero-titulo" data-ab="family-tagline">Increíblemente fino. Asombrosamente AURA.</h1>
+          <h1 class="aura-display" id="hero-titulo"><span class="aurabook-lema" data-ab="family-tagline">Increíblemente fino. Asombrosamente AURA.</span><span class="aurabook-lema-corto" data-ab="family-tagline-short"><span>Increíblemente fino.</span> <span>Tan AURA.</span></span></h1>
           <p class="aura-lead">auraBook Pro y auraBook Air, con AURA Silicon. Potencia de estudio en un portátil que te acompaña todo el día.</p>
           <div class="aura-hero__actions">
             <a class="aura-btn aura-btn--primary" href="comprar.html?producto=aurabook-air-15" data-aura-buy="aurabook">Comprar auraBook</a>
@@ -111,24 +118,19 @@
           </div>
         </div>
 
-        <!-- Tramo 2 (cifra clave): mientras se enciende la pantalla, su brillo y su frecuencia (los del auraBook más brillante) -->
-        <div class="aura-scrub__text" data-from="0.24" data-to="0.5" data-pos="bottom" data-ab-product="brightest">
+        <!-- Tramo 2 (cifra clave): mientras se enciende la pantalla (f33–72), su brillo y su frecuencia (los del auraBook más brillante) -->
+        <div class="aura-scrub__text" data-from="0.27" data-to="0.6" data-pos="bottom" data-ab-product="brightest">
           <p class="aura-eyebrow aura-eyebrow--mono">Liquid Retina XDR</p>
           <h2 class="aura-h1"><span data-ab="nits">1.600</span>&nbsp;nits.</h2>
           <p class="aura-body">De brillo máximo y ProMotion a <span data-ab="hz">120</span>&nbsp;Hz en los auraBook&nbsp;Pro.</p>
         </div>
 
-        <!-- Tramo 3 (cifra clave): con la pantalla ya encendida, la autonomía del modelo que más dura -->
-        <div class="aura-scrub__text" data-from="0.54" data-to="0.78" data-pos="bottom" data-ab-product="longest">
-          <p class="aura-eyebrow aura-eyebrow--mono">Autonomía</p>
+        <!-- Tramo 3 (cierre, con la pantalla encendida y la cámara acercándose): la autonomía del modelo que más
+             dura y el peso del más ligero (cada cifra con su modelo); se queda hasta que la escena se va. Corto (una
+             cifra y dos líneas): bajo el portátil, que crece, no queda sitio para más. -->
+        <div class="aura-scrub__text" data-from="0.65" data-to="1" data-pos="bottom" data-ab-product="longest">
           <h2 class="aura-h1">Hasta <span data-ab="hours">24</span>&nbsp;horas.</h2>
-          <p class="aura-body">De vídeo sin enchufe en el <span data-ab="name">auraBook Pro 16″</span>, la mayor autonomía en un auraBook.</p>
-        </div>
-
-        <!-- Tramo 4 (cierre): se queda hasta que la escena se va; peso del modelo más ligero -->
-        <div class="aura-scrub__text" data-from="0.82" data-to="1" data-pos="bottom" data-ab-product="lightest">
-          <h2 class="aura-h2">Ligero para llevarlo. Potente para no soltarlo.</h2>
-          <p class="aura-body">Desde <span data-ab="weight">1,51 kg</span> y con AURA Silicon en los tres modelos.</p>
+          <p class="aura-body">De vídeo sin enchufe en el <span data-ab="name">auraBook Pro 16″</span>. Y <span data-ab-product="lightest">desde <span data-ab="weight">1,51 kg</span></span>: ligero para llevarlo, potente para no soltarlo.</p>
         </div>
       </div>
     </section>
@@ -167,8 +169,8 @@
           <div class="aurabook-finish" data-ab-product="aurabook-pro-14">
             <h3 class="aura-h3 aurabook-finish__title" data-ab="name">auraBook Pro 14″</h3>
             <div class="aura-colorway" data-aura-colorway="aurabook-pro-14" data-color="negro-espacial">
-              <div class="aura-gallery">
-                <img class="aura-img" src="../img/aurabook-pro-14.webp" data-slot="aurabook-pro-14" width="1600" height="1200" alt="auraBook Pro 14″ en negro espacial abierto sobre negro, con la pantalla de ondas ámbar y rosa" loading="lazy" decoding="async">
+              <div class="aura-gallery" data-sizes="(min-width: 1200px) 462px, (min-width: 768px) 35vw, calc(100vw - 72px)">
+                <img class="aura-img" src="../img/aurabook-pro-negro-espacial-tres-cuartos.webp" srcset="../img/400/aurabook-pro-negro-espacial-tres-cuartos.webp 400w, ../img/800/aurabook-pro-negro-espacial-tres-cuartos.webp 800w, ../img/aurabook-pro-negro-espacial-tres-cuartos.webp 1600w" sizes="auto, (min-width: 1200px) 462px, (min-width: 768px) 35vw, calc(100vw - 72px)" data-slot="aurabook-pro-negro-espacial-tres-cuartos" data-fallback="aurabook-pro-14" width="1600" height="1200" alt="auraBook Pro 14″ negro espacial abierto, visto en tres cuartos desde la derecha, con la pantalla AURA encendida, sobre fondo negro" loading="lazy" decoding="async">
               </div>
               <fieldset class="aura-colorway__picker">
                 <legend class="visually-hidden">Acabados del <span data-ab="name">auraBook Pro 14″</span></legend>
@@ -182,8 +184,8 @@
           <div class="aurabook-finish" data-ab-product="aurabook-air-15">
             <h3 class="aura-h3 aurabook-finish__title" data-ab="name">auraBook Air 15″</h3>
             <div class="aura-colorway" data-aura-colorway="aurabook-air-15" data-color="plata">
-              <div class="aura-gallery">
-                <img class="aura-img" src="../img/aurabook-air-15.webp" data-slot="aurabook-air-15" width="1600" height="1200" alt="auraBook Air 15″ plateado, fino y abierto sobre negro, con la pantalla de ondas turquesa" loading="lazy" decoding="async">
+              <div class="aura-gallery" data-sizes="(min-width: 1200px) 462px, (min-width: 768px) 35vw, calc(100vw - 72px)">
+                <img class="aura-img" src="../img/aurabook-air-15-plata-tres-cuartos.webp" srcset="../img/400/aurabook-air-15-plata-tres-cuartos.webp 400w, ../img/800/aurabook-air-15-plata-tres-cuartos.webp 800w, ../img/aurabook-air-15-plata-tres-cuartos.webp 1600w" sizes="auto, (min-width: 1200px) 462px, (min-width: 768px) 35vw, calc(100vw - 72px)" data-slot="aurabook-air-15-plata-tres-cuartos" data-fallback="aurabook-air-15" width="1600" height="1200" alt="auraBook Air 15″ plateado abierto y visto en tres cuartos, con la pantalla AURA encendida, sobre fondo negro" loading="lazy" decoding="async">
               </div>
               <fieldset class="aura-colorway__picker">
                 <legend class="visually-hidden">Acabados del <span data-ab="name">auraBook Air 15″</span></legend>
@@ -212,7 +214,7 @@
             </ul>
           </div>
           <div class="aura-split__media" data-aura-reveal="scale">
-            <img class="aura-img" src="../img/aurabook-diseno.webp" data-slot="aurabook-diseno" width="1600" height="1200" alt="Perfil de un auraBook Pro casi cerrado, con el teclado iluminado por el brillo de la pantalla" loading="lazy" decoding="async">
+            <img class="aura-img" src="../img/aurabook-diseno.webp" srcset="../img/400/aurabook-diseno.webp 400w, ../img/800/aurabook-diseno.webp 800w, ../img/aurabook-diseno.webp 1600w" sizes="auto, (max-width: 991.98px) 88vw, (max-width: 1199.98px) 42vw, 532px" data-slot="aurabook-diseno" width="1600" height="1200" alt="Perfil de un auraBook Pro casi cerrado, con el teclado iluminado por el brillo de la pantalla" loading="lazy" decoding="async">
           </div>
         </div>
       </div>
@@ -235,7 +237,7 @@
             <a class="aura-btn aura-btn--primary" href="comprar.html?producto=aurabook-pro-16" data-ab="href cta-name">Comprar auraBook Pro 16″</a>
           </div>
           <div class="aura-split__media aura-media aura-media--halo m-0" data-aura-reveal="scale">
-            <img class="aura-img" src="../img/aurabook-chip.webp" data-slot="aurabook-chip" width="1600" height="1200" alt="Chip AURA Silicon con cuatro módulos de memoria, en perspectiva sobre negro con un canto dorado" loading="lazy" decoding="async">
+            <img class="aura-img" src="../img/aurabook-chip.webp" srcset="../img/400/aurabook-chip.webp 400w, ../img/800/aurabook-chip.webp 800w, ../img/aurabook-chip.webp 1600w" sizes="auto, (max-width: 991.98px) 88vw, (max-width: 1199.98px) 42vw, 532px" data-slot="aurabook-chip" width="1600" height="1200" alt="Chip AURA Silicon con cuatro módulos de memoria, en perspectiva sobre negro con un canto dorado" loading="lazy" decoding="async">
           </div>
         </div>
 
@@ -276,7 +278,7 @@
         </header>
 
         <div class="aurabook-wide aura-hero__media" data-aura-reveal="scale">
-          <img class="aura-img" src="../img/aurabook-pantalla.webp" data-slot="aurabook-pantalla" width="1600" height="1200" alt="auraBook Pro abierto en la oscuridad, con ondas de luz naranjas, rosas y violetas en la pantalla, bajo la muesca de la cámara" loading="lazy" decoding="async">
+          <img class="aura-img" src="../img/aurabook-pantalla.webp" srcset="../img/400/aurabook-pantalla.webp 400w, ../img/800/aurabook-pantalla.webp 800w, ../img/aurabook-pantalla.webp 1600w" sizes="auto, (min-width: 1200px) 922px, 88vw" data-slot="aurabook-pantalla" width="1600" height="1200" alt="auraBook Pro abierto en la oscuridad, con ondas de luz naranjas, rosas y violetas en la pantalla, bajo la muesca de la cámara" loading="lazy" decoding="async">
         </div>
 
         <ul class="aura-stats aura-stats--lg aurabook-stats" aria-label="Pantalla del auraBook Pro 16″">
@@ -318,7 +320,7 @@
             <p class="aura-lead">Hasta <span data-ab="hours">24</span> horas de batería en el <span data-ab="name">auraBook Pro 16″</span><sup class="aura-footnote-ref"><a href="#nota-1" id="ref-1" aria-label="Nota 1">1</a></sup>. Edita, compila, presenta y reproduce durante todo el día con la eficiencia de AURA Silicon, enchufado o no: rinde igual.</p>
           </div>
           <div class="aura-split__media" data-aura-reveal="scale">
-            <img class="aura-img" src="../img/aurabook-bateria.webp" data-slot="aurabook-bateria" width="1600" height="1200" alt="auraBook Pro abierto en la oscuridad, enchufado con el piloto de carga encendido y la pantalla rosa y dorada" loading="lazy" decoding="async">
+            <img class="aura-img" src="../img/aurabook-bateria.webp" srcset="../img/400/aurabook-bateria.webp 400w, ../img/800/aurabook-bateria.webp 800w, ../img/aurabook-bateria.webp 1600w" sizes="auto, (max-width: 991.98px) 88vw, (max-width: 1199.98px) 42vw, 532px" data-slot="aurabook-bateria" width="1600" height="1200" alt="auraBook Pro abierto en la oscuridad, enchufado con el piloto de carga encendido y la pantalla rosa y dorada" loading="lazy" decoding="async">
           </div>
         </div>
         <ul class="aura-stats aura-stats--lg aurabook-stats aurabook-hours" data-ab-list="hours" aria-label="Autonomía de cada modelo"></ul>
@@ -342,7 +344,7 @@
               <h3 class="aura-h3">HDMI, SDXC y Thunderbolt, de serie.</h3>
               <p class="aura-tile__text">El monitor, la tarjeta de la cámara y el disco externo se conectan directamente. MagSafe&nbsp;3 deja libres los demás puertos mientras carga.</p>
             </div>
-            <div class="aura-tile__media"><img class="aura-img" src="../img/aurabook-puertos.webp" data-slot="aurabook-puertos" width="1600" height="1200" alt="Lateral de un auraBook Pro con ranura para tarjetas SD, puerto USB-C y HDMI bajo una luz cálida" loading="lazy" decoding="async"></div>
+            <div class="aura-tile__media"><img class="aura-img" src="../img/aurabook-puertos.webp" srcset="../img/400/aurabook-puertos.webp 400w, ../img/800/aurabook-puertos.webp 800w, ../img/aurabook-puertos.webp 1600w" sizes="auto, (max-width: 767.98px) 80vw, (max-width: 1199.98px) 40vw, 522px" data-slot="aurabook-puertos" width="1600" height="1200" alt="Lateral de un auraBook Pro con ranura para tarjetas SD, puerto USB-C y HDMI bajo una luz cálida" loading="lazy" decoding="async"></div>
           </article>
           <article class="aura-tile aura-tile--media-fit" data-aura-reveal style="--i:1">
             <div class="aura-tile__copy">
@@ -350,7 +352,7 @@
               <h3 class="aura-h3">Un teclado que invita a escribir.</h3>
               <p class="aura-tile__text">Teclas retroiluminadas de tamaño completo, fila de funciones y un trackpad amplio que responde en cualquier punto.</p>
             </div>
-            <div class="aura-tile__media"><img class="aura-img" src="../img/aurabook-teclado.webp" data-slot="aurabook-teclado" width="1600" height="1200" alt="Primer plano del teclado negro de un auraBook Pro junto al trackpad, en penumbra" loading="lazy" decoding="async"></div>
+            <div class="aura-tile__media"><img class="aura-img" src="../img/aurabook-teclado.webp" srcset="../img/400/aurabook-teclado.webp 400w, ../img/800/aurabook-teclado.webp 800w, ../img/aurabook-teclado.webp 1600w" sizes="auto, (max-width: 767.98px) 80vw, (max-width: 1199.98px) 40vw, 522px" data-slot="aurabook-teclado" width="1600" height="1200" alt="Primer plano del teclado negro de un auraBook Pro junto al trackpad, en penumbra" loading="lazy" decoding="async"></div>
           </article>
         </div>
 
@@ -360,7 +362,8 @@
     </section>
 
     <!-- 8. auraOS y AURA Intelligence: tarjeta (Elevación/01) con las ventajas del sistema y foto con pie, por eso
-         <figure> + <figcaption>. El nombre del sistema sale del catálogo. -->
+         <figure> + <figcaption>; la foto va sin marco, como en los demás bloques texto + imagen (nunca una caja
+         dentro de otra). El nombre del sistema sale del catálogo. -->
     <section class="aura-section aura-section--band" id="auraos" aria-labelledby="auraos-titulo">
       <div class="aura-container">
         <header class="aura-section-head">
@@ -398,9 +401,9 @@
             </div>
           </div>
 
-          <figure class="aura-split__media aura-media aura-media--frame aurabook-eco__media m-0" data-aura-reveal style="--i:1">
+          <figure class="aura-split__media aura-media aurabook-eco__media m-0" data-aura-reveal style="--i:1">
             <span class="aura-media__tag">auraOS</span>
-            <img class="aura-img" src="../img/aurabook-ecosistema.webp" data-slot="aurabook-ecosistema" width="1600" height="1200" alt="auraBook Pro abierto entre unos auriculares de diadema y un ratón, bañados por una luz cálida en la penumbra" loading="lazy" decoding="async">
+            <img class="aura-img" src="../img/aurabook-ecosistema.webp" srcset="../img/400/aurabook-ecosistema.webp 400w, ../img/800/aurabook-ecosistema.webp 800w, ../img/aurabook-ecosistema.webp 1600w" sizes="auto, (min-width: 1200px) 815px, 92vw" data-slot="aurabook-ecosistema" width="1600" height="1200" alt="auraBook Pro abierto entre unos auriculares de diadema y un ratón, bañados por una luz cálida en la penumbra" loading="lazy" decoding="async">
             <figcaption class="aura-media__caption">Tus auriculares y tu ratón se conectan solos al abrir la tapa.</figcaption>
           </figure>
         </div>
@@ -424,7 +427,7 @@
             <ul class="aura-carousel__track">
               <li class="aura-carousel__slide" aria-roledescription="diapositiva" aria-label="1 de 5">
                 <article class="aura-tile aura-tile--cover h-100">
-                  <div class="aura-tile__media"><img class="aura-img" src="../img/aurabook-perfil-desarrollo.webp" data-slot="aurabook-perfil-desarrollo" width="1600" height="1200" alt="auraBook Pro con un editor de código y una terminal en pantalla, bajo una luz roja y naranja" loading="lazy" decoding="async"></div>
+                  <div class="aura-tile__media"><img class="aura-img" src="../img/aurabook-perfil-desarrollo.webp" srcset="../img/400/aurabook-perfil-desarrollo.webp 400w, ../img/800/aurabook-perfil-desarrollo.webp 800w, ../img/aurabook-perfil-desarrollo.webp 1600w" sizes="auto, 600px" data-slot="aurabook-perfil-desarrollo" width="1600" height="1200" alt="auraBook Pro con un editor de código y una terminal en pantalla, bajo una luz roja y naranja" loading="lazy" decoding="async"></div>
                   <p class="aura-eyebrow aura-eyebrow--mono aura-tile__tag">Desarrollo</p>
                   <div class="aura-tile__copy">
                     <h3 class="aura-h3">Compila antes de que se enfríe el café.</h3>
@@ -435,7 +438,7 @@
               </li>
               <li class="aura-carousel__slide" aria-roledescription="diapositiva" aria-label="2 de 5">
                 <article class="aura-tile aura-tile--cover h-100">
-                  <div class="aura-tile__media"><img class="aura-img" src="../img/aurabook-perfil-fotografia.webp" data-slot="aurabook-perfil-fotografia" width="1600" height="1200" alt="auraBook Pro abierto junto a una cámara sin espejo con objetivo zoom, en un escritorio en penumbra" loading="lazy" decoding="async"></div>
+                  <div class="aura-tile__media"><img class="aura-img" src="../img/aurabook-perfil-fotografia.webp" srcset="../img/400/aurabook-perfil-fotografia.webp 400w, ../img/800/aurabook-perfil-fotografia.webp 800w, ../img/aurabook-perfil-fotografia.webp 1600w" sizes="auto, 600px" data-slot="aurabook-perfil-fotografia" width="1600" height="1200" alt="auraBook Pro abierto junto a una cámara sin espejo con objetivo zoom, en un escritorio en penumbra" loading="lazy" decoding="async"></div>
                   <p class="aura-eyebrow aura-eyebrow--mono aura-tile__tag">Fotografía</p>
                   <div class="aura-tile__copy">
                     <h3 class="aura-h3">Revela miles de RAW de una sentada.</h3>
@@ -446,7 +449,7 @@
               </li>
               <li class="aura-carousel__slide" aria-roledescription="diapositiva" aria-label="3 de 5">
                 <article class="aura-tile aura-tile--cover h-100">
-                  <div class="aura-tile__media"><img class="aura-img" src="../img/aurabook-perfil-video.webp" data-slot="aurabook-perfil-video" width="1600" height="1200" alt="auraBook Pro abierto junto a un dron plegado, con un montaje de vídeo 8K en la pantalla: el visor con un atardecer y la línea de tiempo con sus clips" loading="lazy" decoding="async"></div>
+                  <div class="aura-tile__media"><img class="aura-img" src="../img/aurabook-perfil-video.webp" srcset="../img/400/aurabook-perfil-video.webp 400w, ../img/800/aurabook-perfil-video.webp 800w, ../img/aurabook-perfil-video.webp 1600w" sizes="auto, 600px" data-slot="aurabook-perfil-video" width="1600" height="1200" alt="auraBook Pro abierto junto a un dron plegado, con un montaje de vídeo 8K en la pantalla: el visor con un atardecer y la línea de tiempo con sus clips" loading="lazy" decoding="async"></div>
                   <p class="aura-eyebrow aura-eyebrow--mono aura-tile__tag">Vídeo 8K</p>
                   <div class="aura-tile__copy">
                     <h3 class="aura-h3">Edita en 8K como si fuera un borrador.</h3>
@@ -457,7 +460,7 @@
               </li>
               <li class="aura-carousel__slide" aria-roledescription="diapositiva" aria-label="4 de 5">
                 <article class="aura-tile aura-tile--cover h-100">
-                  <div class="aura-tile__media"><img class="aura-img" src="../img/aurabook-perfil-estudios.webp" data-slot="aurabook-perfil-estudios" width="1600" height="1200" alt="Un estudiante de espaldas, con auriculares, toma apuntes con un lápiz junto a su auraBook en una biblioteca antigua" loading="lazy" decoding="async"></div>
+                  <div class="aura-tile__media"><img class="aura-img" src="../img/aurabook-perfil-estudios.webp" srcset="../img/400/aurabook-perfil-estudios.webp 400w, ../img/800/aurabook-perfil-estudios.webp 800w, ../img/aurabook-perfil-estudios.webp 1600w" sizes="auto, 600px" data-slot="aurabook-perfil-estudios" width="1600" height="1200" alt="Un estudiante de espaldas, con auriculares, toma apuntes con un lápiz junto a su auraBook en una biblioteca antigua" loading="lazy" decoding="async"></div>
                   <p class="aura-eyebrow aura-eyebrow--mono aura-tile__tag">Estudios</p>
                   <div class="aura-tile__copy">
                     <h3 class="aura-h3">Apuntes, trabajos y series. Sin cargador.</h3>
@@ -468,7 +471,7 @@
               </li>
               <li class="aura-carousel__slide" aria-roledescription="diapositiva" aria-label="5 de 5">
                 <article class="aura-tile aura-tile--cover h-100">
-                  <div class="aura-tile__media"><img class="aura-img" src="../img/aurabook-perfil-musica.webp" data-slot="aurabook-perfil-musica" width="1600" height="1200" alt="auraBook Pro abierto en la penumbra, con un secuenciador de audio en la pantalla: siete pistas de colores y el mezclador, bajo una luz azul" loading="lazy" decoding="async"></div>
+                  <div class="aura-tile__media"><img class="aura-img" src="../img/aurabook-perfil-musica.webp" srcset="../img/400/aurabook-perfil-musica.webp 400w, ../img/800/aurabook-perfil-musica.webp 800w, ../img/aurabook-perfil-musica.webp 1600w" sizes="auto, 600px" data-slot="aurabook-perfil-musica" width="1600" height="1200" alt="auraBook Pro abierto en la penumbra, con un secuenciador de audio en la pantalla: siete pistas de colores y el mezclador, bajo una luz azul" loading="lazy" decoding="async"></div>
                   <p class="aura-eyebrow aura-eyebrow--mono aura-tile__tag">Música</p>
                   <div class="aura-tile__copy">
                     <h3 class="aura-h3">Tu estudio cabe en la mochila.</h3>
@@ -489,7 +492,7 @@
         <div class="aura-split aura-split--reverse">
           <div class="aura-split__copy">
             <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--ok">Medio ambiente</p>
-            <h2 class="aura-h2" id="medio-ambiente-titulo">Hecho para durar. Pensado para el planeta.</h2>
+            <h2 class="aura-h1" id="medio-ambiente-titulo">Hecho para durar. Pensado para el planeta.</h2>
             <p class="aura-body">Carcasa de aluminio reciclado, un embalaje de fibra sin plásticos y un chip que consume tan poco que el cargador descansa más que tú. Y cuando quieras renovarlo, AURA Trade In le da una segunda vida.</p>
             <div class="aura-cluster" style="--cluster:.25rem 2rem">
               <a class="aura-link" href="acerca.html#medio-ambiente">Conocer el compromiso de AURA</a>
@@ -497,7 +500,7 @@
             </div>
           </div>
           <div class="aura-split__media" data-aura-reveal="scale">
-            <img class="aura-img" src="../img/aurabook-medio-ambiente.webp" data-slot="aurabook-medio-ambiente" width="1600" height="1200" alt="Hoja de helecho verde intenso sobre un fondo casi negro" loading="lazy" decoding="async">
+            <img class="aura-img" src="../img/aurabook-medio-ambiente.webp" srcset="../img/400/aurabook-medio-ambiente.webp 400w, ../img/800/aurabook-medio-ambiente.webp 800w, ../img/aurabook-medio-ambiente.webp 1600w" sizes="auto, (max-width: 991.98px) 88vw, (max-width: 1199.98px) 42vw, 532px" data-slot="aurabook-medio-ambiente" width="1600" height="1200" alt="Hoja de helecho verde intenso sobre un fondo casi negro" loading="lazy" decoding="async">
           </div>
         </div>
       </div>

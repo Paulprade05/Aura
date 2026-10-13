@@ -284,7 +284,7 @@
         .replace(/(\d) (?=(?:GB|TB|MB|Hz|kHz|MP|Mpx|mm|cm|kg|g|h|min|s|W|Wh|mAh|nits|%|€|núcleos|horas|fps|dB|ppp|cd\/m²|x)(?![0-9A-Za-zÀ-ÿ]))/g, '$1' + NBSP)
         .replace(/(^|[\s(])(USB|Wi-Fi|Wi‑Fi|Bluetooth|AURA|A\d+|M\d+|x\d+) (?=[0-9A-Z])/g, '$1$2' + NBSP)
         .replace(/(^|[\s(])(A\d+|M\d+) (?=(?:Pro|Max|Ultra)\b)/g, '$1$2' + NBSP)    // «AURA M5 Pro» entero
-        .replace(/\bUSB-C\b/g, 'USB‑C');                                         // guion que no parte: nunca «USB- / C»
+        .replace(/\bUSB-C\b/g, 'USB-\u2060C');                                   // guion + WORD JOINER: nunca «USB- / C» y el guion es de Inter (U+2011 salía de Segoe UI)
     }
   };
   AURA.fmt = fmt;
@@ -325,18 +325,54 @@
     return null;
   }
 
-  /* El acabado que se ve en la foto base (data.js: imageColor), o null. */
-  function imageColorOf(p) {
-    var id = p && p.imageColor;
-    if (!id) { return null; }
-    var colors = list(p.colors);
-    for (var i = 0; i < colors.length; i++) { if (colors[i].id === id) { return colors[i]; } }
+  /* El color del producto con ese id, o null (sin caer en el de por defecto). */
+  function colorById(p, id) {
+    var colors = list(p && p.colors);
+    for (var i = 0; i < colors.length; i++) { if (id && colors[i].id === id) { return colors[i]; } }
     return null;
+  }
+
+  /* El acabado por defecto que se ve en la foto (data.js: imageColor; con
+     galería por color lo fija el bloque FOTOS: uno con foto en la vista de
+     tarjeta), o null. */
+  function imageColorOf(p) {
+    return colorById(p, p && p.imageColor);
   }
 
   /* Acabado por defecto: el de la foto si existe; si no, el primero. */
   function defaultColorOf(p) {
     return imageColorOf(p) || list(p && p.colors)[0] || null;
+  }
+
+  /* Galería por color (data.js: photos, bloque FOTOS). Nombre de cada vista en
+     pantalla (`label`, para la tira de miniaturas) y en el lector de pantalla
+     (`aria`, la etiqueta de su botón). */
+  var VIEW_NAMES = {
+    'trasera': ['Trasera', 'Vista trasera'],
+    'frontal': ['Frente', 'Vista frontal'],
+    'tres-cuartos': ['Tres cuartos', 'Vista en tres cuartos'],
+    'lateral': ['Perfil', 'Vista lateral'],
+    'abierto': ['Abierto', 'Abierto'],
+    'cerrado': ['Cerrado', 'Cerrado'],
+    'estuche-abierto': ['Estuche abierto', 'Estuche abierto'],
+    'estuche-cerrado': ['Estuche cerrado', 'Estuche cerrado'],
+    'auriculares': ['Auriculares', 'Auriculares fuera del estuche']
+  };
+
+  /* Las vistas de un acabado que existen (con slot), en su orden, o []. */
+  function photosOf(p, colorId) {
+    var all = p && isObj(p.photos) ? p.photos : null;
+    return all && colorId && has(all, colorId) ? list(all[colorId]).filter(function (v) { return isObj(v) && v.slot; }) : [];
+  }
+
+  /* El acabado cuyas fotos se enseñan cuando el pedido no tiene: el de por
+     defecto si tiene fotos y, si no, el primero que las tenga (o null). */
+  function photoColorOf(p) {
+    var shown = imageColorOf(p);
+    if (shown && photosOf(p, shown.id).length) { return shown; }
+    var colors = list(p && p.colors);
+    for (var i = 0; i < colors.length; i++) { if (photosOf(p, colors[i].id).length) { return colors[i]; } }
+    return null;
   }
 
   function findChoice(group, choiceId) {
@@ -578,30 +614,61 @@
     },
 
     /**
-     * Foto de un producto para un acabado: { slot, fallback, exact, color, alt }.
-     * - Solo se pide la foto por color si `imageVariants` dice que existe; si
-     *   no, `slot` es directamente la foto base (sin peticiones fallidas ni
-     *   parpadeo al cambiar de color: el hueco no cambia).
-     * - `color`: el acabado que se VE en la foto (null si no se aprecia).
-     * - `exact`: false si la foto enseña OTRO acabado que el pedido (la
-     *   página debe decirlo: «Imagen en Azul glacial · Tu acabado: Negro»).
-     * - `alt`: descripción de la foto real (data.js: imageAlt / imageVariants).
+     * Vistas de un producto en un acabado (galería por color, data.js: photos):
+     * [{ slot, vista, label, aria, alt, exact, color, fallback }], en su orden;
+     * la primera es la de tarjeta (la misma vista en los modelos de una familia).
+     * - Si ese acabado no tiene fotos, las del acabado por defecto (imageColor)
+     *   con `exact: false`: la página debe decirlo («Imagen en Plata · Tu
+     *   acabado: Negro»). Sin colorId (o con uno que no es del producto), las
+     *   del acabado por defecto con `exact: true`.
+     * - `color`: el acabado que se VE en la foto. `label`: «Trasera», «Frente»,
+     *   «Tres cuartos»…; `aria`: «Vista trasera»… (botones de la tira).
+     * - `fallback`: la foto base (product.image), por si faltara el archivo.
+     * - Un producto sin `photos`: una sola entrada con la foto de siempre (la
+     *   base, o la de imageVariants si declara ese acabado), con vista ''.
      */
-    image: function (productRef, colorId) {
+    views: function (productRef, colorId) {
       var p = getProduct(productRef);
-      if (!p || !p.image) { return { slot: '', fallback: '', exact: true, color: null, alt: '' }; }
-      var variants = isObj(p.imageVariants) ? p.imageVariants : {};
-      if (colorId && has(variants, colorId)) {
-        return { slot: p.image + '-' + colorId, fallback: p.image, exact: true, color: catalog.color(p, colorId), alt: String(variants[colorId] || p.imageAlt || '') };
+      if (!p) { return []; }
+      var asked = colorById(p, colorId);
+      var shown = asked && photosOf(p, asked.id).length ? asked : photoColorOf(p);
+      if (shown) {
+        var exact = !asked || asked.id === shown.id;
+        return photosOf(p, shown.id).map(function (v) {
+          var names = VIEW_NAMES[v.vista] || ['', ''];
+          return {
+            slot: String(v.slot),
+            vista: String(v.vista || ''),
+            label: names[0],
+            aria: names[1],
+            alt: String(v.alt || p.imageAlt || ''),
+            exact: exact,
+            color: shown,
+            fallback: p.image && p.image !== v.slot ? p.image : ''
+          };
+        });
       }
-      var shown = imageColorOf(p);
-      return {
-        slot: p.image,
-        fallback: '',
-        exact: !colorId || !shown || shown.id === colorId,
-        color: shown,
-        alt: String(p.imageAlt || '')
-      };
+      if (!p.image) { return []; }
+      /* Sin galería: la foto base y, si data.js la declara, la de ese acabado. */
+      var variants = isObj(p.imageVariants) ? p.imageVariants : {};
+      if (asked && has(variants, asked.id)) {
+        return [{ slot: p.image + '-' + asked.id, vista: '', label: '', aria: '', alt: String(variants[asked.id] || p.imageAlt || ''), exact: true, color: asked, fallback: p.image }];
+      }
+      var base = imageColorOf(p);
+      return [{ slot: p.image, vista: '', label: '', aria: '', alt: String(p.imageAlt || ''), exact: !asked || !base || base.id === asked.id, color: base, fallback: '' }];
+    },
+
+    /**
+     * Foto de un producto para un acabado: { slot, fallback, exact, color, alt,
+     * vista, label, aria } (los campos de views()). Sin `vista`, la primera (la
+     * de tarjeta: tarjetas, bolsa, checkout, buscador, comparar); con ella, esa
+     * vista si el acabado la tiene y, si no, la primera.
+     */
+    image: function (productRef, colorId, vista) {
+      var all = catalog.views(productRef, colorId);
+      var pick = all[0];
+      for (var i = 0; vista && i < all.length; i++) { if (all[i].vista === vista) { pick = all[i]; break; } }
+      return pick || { slot: '', fallback: '', exact: true, color: null, alt: '', vista: '', label: '', aria: '' };
     },
 
     /** Fecha de hoy (Date a medianoche local); ?hoy=AAAA-MM-DD en la URL la cambia para pruebas. */
@@ -1084,6 +1151,17 @@
   };
   AURA.auth = auth;
 
+  /* Sesión marcada en <html> antes del primer pintado (este archivo va en el
+     <head>): con .aura-has-session el CSS de checkout, login y registro enseña
+     desde el principio el marcado de quien ya ha iniciado sesión, sin el salto
+     de invitado a usuario al cargar. Sigue al día al entrar, salir o cambiar
+     la sesión en otra pestaña ('aura:auth'). */
+  function markSession() {
+    try { html.classList.toggle('aura-has-session', !!auth.user()); } catch (e) { /* nada */ }
+  }
+  markSession();
+  document.addEventListener('aura:auth', markSession);
+
 
   /* ------------------------------------------------------------------------
      6. Pedidos (simulados). Jamás se guardan datos de tarjeta: cualquier campo
@@ -1294,6 +1372,14 @@
      imágenes no burbujean) y se registran aquí, en el <head>, antes de que
      exista ninguna imagen.
 
+     Tamaños (srcset): cada foto de img/ tiene sus variantes de 400 y 800 px
+     en img/400/ e img/800/ (las genera variantes.mjs) y el original es la de
+     1600. AURA.html.img y slots.set escriben el srcset y un `sizes` con el
+     ancho del hueco (por defecto 100vw y, en las perezosas, «auto»: el ancho
+     real del hueco en los navegadores que lo entienden). Si una variante no
+     existe, se quita el srcset y se queda el original; luego, la cola de
+     siempre.
+
      Presentación (skill: aparición corta, solo opacidad): una foto que aún
      no ha llegado lleva .is-pending (opacidad 0) y, al decodificarse, pasa a
      .is-loaded con un fundido de 240 ms (sin animación con «reducir
@@ -1309,6 +1395,18 @@
   function slotDir(img) {
     var m = /^(.*\/)[^\/]*$/.exec(img.getAttribute('src') || '');
     return m ? m[1] : IMG_DIR;
+  }
+
+  /* «img/400/x.webp 400w, img/800/x.webp 800w, img/x.webp 1600w» */
+  function srcsetOf(dir, name) {
+    return dir + '400/' + name + '.webp 400w, ' + dir + '800/' + name + '.webp 800w, ' + dir + name + '.webp 1600w';
+  }
+
+  /* `sizes` de un hueco: el que diga la página o 100vw (el tope: nunca pide
+     más que la pantalla); en las perezosas, «auto» delante (el ancho real). */
+  function sizesOf(sizes, lazy) {
+    sizes = String(sizes || '100vw');
+    return lazy && !/^\s*auto\b/.test(sizes) ? 'auto, ' + sizes : sizes;
   }
 
   function slotQueue(dir, slot, fallback) {
@@ -1367,6 +1465,15 @@
 
   function handleImageError(img) {
     if (!img || img.tagName !== 'IMG' || !img.hasAttribute || !img.hasAttribute('data-slot')) { return; }
+    /* Con srcset, lo que falló puede ser una variante (img/400/, img/800/):
+       sin srcset el navegador vuelve a pedir el src, el original. Si lo que
+       falló era el propio original, sigue la cola de siempre. */
+    if (img.hasAttribute('srcset')) {
+      var failed = img.currentSrc || '';
+      img.removeAttribute('srcset');
+      img.removeAttribute('sizes');
+      if (!failed || failed !== img.src) { return; }
+    }
     var slot = img.getAttribute('data-slot') || '';
     var fallback = img.getAttribute('data-fallback') || '';
     var current = img.getAttribute('src') || '';
@@ -1477,6 +1584,9 @@
      * el <img> o el marcador .aura-slot que lo sustituyó. Devuelve el <img>.
      * Si la nueva imagen tampoco existe volverá a convertirse en marcador: no
      * guardes la referencia, vuelve a buscar '.aura-img, .aura-slot'.
+     * opts: { fallback, alt, dir, sizes, srcset }. El srcset se rehace con el
+     * nombre nuevo (srcset: false lo quita); el `sizes` que ya tuviera el
+     * <img> se respeta y, si no tiene, se pone opts.sizes o 100vw.
      */
     set: function (el, name, opts) {
       try {
@@ -1508,6 +1618,13 @@
         if (opts.fallback) { img.setAttribute('data-fallback', opts.fallback); } else { img.removeAttribute('data-fallback'); }
         var src = dir + name + '.webp';
         if (img.getAttribute('src') !== src) {
+          if (opts.srcset === false) {
+            img.removeAttribute('srcset');
+            img.removeAttribute('sizes');
+          } else {
+            if (!img.getAttribute('sizes')) { img.setAttribute('sizes', sizesOf(opts.sizes, img.getAttribute('loading') === 'lazy')); }
+            img.setAttribute('srcset', srcsetOf(dir, name));
+          }
           img.setAttribute('src', src);
           markImage(img);                 // ya en caché: sigue visible; si no, se funde al llegar
         }
@@ -1518,26 +1635,37 @@
 
   /**
    * HTML de un hueco de imagen con el marcado exacto del sistema.
-   * opts: { className, fallback, width, height, alt, eager, priority }.
+   * opts: { className, fallback, width, height, alt, eager, priority, sizes, srcset }.
    * `priority: true` = la imagen del primer héroe (sin carga diferida y con
    * fetchpriority="high"); `eager` sin `priority`, solo sin carga diferida.
+   * `sizes`: el ancho que ocupa el hueco («(min-width: 1024px) 380px, 90vw»;
+   * por defecto 100vw, y «auto» delante si es perezosa). `srcset: false`, sin
+   * variantes (solo el original).
    */
   function imgHTML(name, opts) {
     opts = opts || {};
+    var lazy = !(opts.eager || opts.priority);
     return '<img class="aura-img' + (opts.className ? ' ' + esc(opts.className) : '') + '"' +
       ' src="' + IMG_DIR + esc(name) + '.webp" data-slot="' + esc(name) + '"' +
+      (opts.srcset === false ? '' : ' srcset="' + esc(srcsetOf(IMG_DIR, name)) + '" sizes="' + esc(sizesOf(opts.sizes, lazy)) + '"') +
       (opts.fallback ? ' data-fallback="' + esc(opts.fallback) + '"' : '') +
       ' width="' + esc(opts.width || 1600) + '" height="' + esc(opts.height || 1200) + '"' +
       ' alt="' + esc(opts.alt || '') + '"' +
-      ' loading="' + (opts.eager || opts.priority ? 'eager' : 'lazy') + '"' +
+      ' loading="' + (lazy ? 'lazy' : 'eager') + '"' +
       (opts.priority ? ' fetchpriority="high"' : '') + ' decoding="async">';
   }
 
   /**
    * Tarjeta de modelo (docs/COMPONENTES.md §12.4): la que pinta [data-aura-lineup]
    * y la que cualquier página puede meter en un carrusel o una rejilla.
-   * productCard(producto | id, { heading: 'h3', colorId }) → cadena HTML ('' si no existe).
+   * productCard(producto | id, { heading: 'h3', colorId, eager }) → cadena HTML ('' si no existe).
+   * La foto es la vista de tarjeta (la primera de catalog.views). `eager: true`
+   * para las tarjetas de la primera pantalla (la imagen LCP no va diferida).
    */
+  var CARD_SIZES = '(min-width: 1024px) 380px, 90vw';
+  var FAMILY_CARD_SIZES = '(min-width: 1200px) 280px, (min-width: 576px) 50vw, calc(100vw - 32px)';
+  var LINE_SIZES = '56px';
+
   function productCardHTML(productRef, opts) {
     var p = getProduct(productRef);
     if (!p) { return ''; }
@@ -1553,7 +1681,7 @@
     var price = toNumber(p.basePrice);     // sin precio válido (0, texto…) no se enseña «Desde 0 €»
     return '<article class="aura-product-card" data-product="' + esc(p.id) + '" data-status="' + a.status + '">' +
       '<a class="aura-product-card__media" href="' + href + '" tabindex="-1" aria-hidden="true">' +
-        (image.slot ? imgHTML(image.slot, { fallback: image.fallback }) : '') +
+        (image.slot ? imgHTML(image.slot, { fallback: image.fallback, sizes: CARD_SIZES, eager: !!opts.eager }) : '') +
       '</a>' +
       '<div class="aura-product-card__body">' +
         (p.badge ? '<p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">' + esc(p.badge) + '</p>' : '') +
@@ -1644,7 +1772,8 @@
   /**
    * Tarjeta de familia (bolsa vacía, «¿Qué vas a estrenar?» de Trade In,
    * comparador vacío): imagen del modelo de entrada, nombre, lema, «Desde X €»
-   * y «Ver FAMILIA». familyCard(familia, { heading: 'h3', href }) → cadena HTML.
+   * y «Ver FAMILIA». familyCard(familia, { heading: 'h3', href, eager }) → cadena HTML.
+   * `eager: true` si la tarjeta sale en la primera pantalla (bolsa vacía: LCP).
    */
   function familyCardHTML(familyId, opts) {
     opts = opts || {};
@@ -1660,7 +1789,7 @@
     var img = catalog.image(entry);
     var href = opts.href || resolvePageUrl(fam.page) || '';
     return '<a class="aura-card aura-card--flush aura-family-card" href="' + esc(href) + '">' +
-        '<div class="aura-family-card__media">' + (img.slot ? imgHTML(img.slot, { alt: '' }) : '') + '</div>' +
+        '<div class="aura-family-card__media">' + (img.slot ? imgHTML(img.slot, { alt: '', fallback: img.fallback, sizes: FAMILY_CARD_SIZES, eager: !!opts.eager }) : '') + '</div>' +
         '<div class="aura-family-card__body">' +
           '<p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">' + esc(fam.name) + '</p>' +
           '<' + tag + ' class="aura-h4">' + esc(fam.tagline || '') + '</' + tag + '>' +
@@ -1872,10 +2001,13 @@
 
   /* El logotipo lleva a inicio: `title` lo dice a quien pasa el ratón por
      encima y aria-label, con el mismo texto, a los lectores de pantalla (un
-     solo anuncio: nombre y descripción iguales no se repiten). */
+     solo anuncio: nombre y descripción iguales no se repiten). La marca es
+     img/aura-72.png (72 px, unos 3 KB: nítida a 36 px en retina); aura.png,
+     de 512 px, queda para los iconos. */
+  var BRAND_MARK = (isHtmlDir ? '../img/' : 'img/') + 'aura-72.png';
   var BRAND =
     '<a class="aura-brand" href="' + resolvePageUrl('index.html') + '" aria-label="AURA — Volver al inicio" title="AURA — Volver al inicio">' +
-      '<img class="aura-brand__mark" src="' + (isHtmlDir ? '../img/' : 'img/') + 'aura.png" width="28" height="28" alt="">' +
+      '<img class="aura-brand__mark" src="' + BRAND_MARK + '" width="28" height="28" alt="">' +
       '<span class="aura-brand__word">AURA</span>' +
     '</a>';
 
@@ -1893,11 +2025,21 @@
     return parts.join(' · ');
   }
 
-  /* Solo la foto que existe (la del color si hay variante; si no, la base). */
-  function lineImage(line) {
+  /* La foto de la línea: la vista de tarjeta de su acabado o, si ese acabado
+     no tiene foto, la del de por defecto (img.exact false: la línea lo dice). */
+  function lineImageInfo(line) {
     var img = catalog.image(line.productId, line.colorId);
-    if (!img.slot && line.image) { img = { slot: line.image, fallback: '' }; }
-    return img.slot ? imgHTML(img.slot, { fallback: img.fallback }) : '';
+    return !img.slot && line.image ? { slot: line.image, fallback: '', exact: true, color: null } : img;
+  }
+
+  function lineImage(img) {
+    return img.slot ? imgHTML(img.slot, { fallback: img.fallback, sizes: LINE_SIZES }) : '';
+  }
+
+  /* «Imagen en plata»: la foto enseña otro acabado que el de la línea (como
+     la nota de comprar, la bolsa y el checkout). */
+  function linePhotoNote(img) {
+    return !img.exact && img.color ? '<p class="aura-bag-line__meta aura-bag-line__photo">Imagen en ' + esc(String(img.color.name).toLowerCase()) + '</p>' : '';
   }
 
   function bagPopoverHTML() {
@@ -1921,11 +2063,13 @@
       '<ul class="aura-popover__list">';
     items.forEach(function (line) {
       var href = esc(catalog.url(line.productId));
+      var img = lineImageInfo(line);
       out += '<li class="aura-bag-line aura-bag-line--compact">' +
-        '<a class="aura-bag-line__media" href="' + href + '" tabindex="-1" aria-hidden="true">' + lineImage(line) + '</a>' +
+        '<a class="aura-bag-line__media" href="' + href + '" tabindex="-1" aria-hidden="true">' + lineImage(img) + '</a>' +
         '<div class="aura-bag-line__info">' +
           '<p class="aura-bag-line__name"><a href="' + href + '">' + esc(line.name) + '</a></p>' +
           '<p class="aura-bag-line__meta">' + esc(lineMeta(line)) + '</p>' +
+          linePhotoNote(img) +
         '</div>' +
         '<div class="aura-bag-line__price"><span class="aura-price">' + esc(fmt.eur(line.unitPrice * line.qty)) + '</span>' +
           (line.qty > 1 ? '<span class="aura-bag-line__qty">' + esc(line.qty + ' × ' + fmt.eur(line.unitPrice)) + '</span>' : '') +
@@ -1969,6 +2113,14 @@
       (families ? ' en tu nuevo ' + families : '') + '.';
   }
 
+  /* La misma oferta en corto, para el teléfono: con el enlace cabe en dos
+     líneas (el CSS enseña .aura-ribbon__short por debajo de 768 px y
+     .aura-ribbon__long desde ahí). */
+  function ribbonShortText() {
+    var best = tradeIn.max();
+    return (best > 0 ? 'Hasta ' + fmt.eur0(best) : 'Un descuento') + ' por tu dispositivo mundano.';
+  }
+
   function headerHTML(host) {
     var ribbon = (host.getAttribute('ribbon') || '').toLowerCase() !== 'off';
     var out =
@@ -1996,7 +2148,10 @@
       out +=
         '<aside class="aura-ribbon" aria-label="Promoción">' +
           '<div class="aura-container">' +
-            '<p class="aura-ribbon__text">' + esc(ribbonText()) + ' <a class="aura-link" href="' + resolvePageUrl('trade-in.html') + '" title="AURA Trade In: calcula cuánto vale tu dispositivo anterior">Comprobar valor cuántico</a></p>' +
+            '<p class="aura-ribbon__text">' +
+              '<span class="aura-ribbon__long">' + esc(ribbonText()) + '</span>' +
+              '<span class="aura-ribbon__short">' + esc(ribbonShortText()) + '</span>' +
+              ' <a class="aura-link" href="' + resolvePageUrl('trade-in.html') + '" title="AURA Trade In: calcula cuánto vale tu dispositivo anterior">Comprobar valor cuántico</a></p>' +
           '</div>' +
         '</aside>';
     }
@@ -2149,7 +2304,7 @@
     if (!items.length) { return ''; }
     return '<nav class="aura-footer__crumbs" aria-label="Migas de pan">' +
       '<ol class="aura-crumbs">' +
-        '<li><a href="' + resolvePageUrl('index.html') + '" title="AURA — Volver al inicio"><img src="' + (isHtmlDir ? '../img/' : 'img/') + 'aura.png" width="20" height="20" alt="AURA — Volver al inicio"></a></li>' +
+        '<li><a href="' + resolvePageUrl('index.html') + '" title="AURA — Volver al inicio"><img src="' + BRAND_MARK + '" width="20" height="20" alt="AURA — Volver al inicio"></a></li>' +
         items.map(function (c, i) {
           if (i === items.length - 1) { return '<li aria-current="page">' + esc(c.label) + '</li>'; }
           return c.href ? '<li><a href="' + esc(resolvePageUrl(c.href)) + '">' + esc(c.label) + '</a></li>' : '<li>' + esc(c.label) + '</li>';
@@ -2166,7 +2321,7 @@
       '<div class="aura-footer__main">' +
         '<div class="aura-footer__brand">' +
           BRAND +
-          '<p class="aura-footer__tagline">Tecnología inmersiva diseñada para ampliar lo que imaginas. Precisión, profundidad y energía AURA.</p>' +
+          '<p class="aura-footer__tagline">Tecnología inmersiva diseñada para ampliar lo que imaginas. Precisión, profundidad y energía' + NBSP + 'AURA.</p>' +
           '<ul class="aura-footer__social">' +
             '<li><a class="aura-footer__social-link" href="' + resolvePageUrl('acerca.html#newsroom') + '" aria-label="AURA en Instagram: novedades" title="AURA en Instagram: novedades"><i class="bi bi-instagram" aria-hidden="true"></i></a></li>' +
             '<li><a class="aura-footer__social-link" href="' + resolvePageUrl('acerca.html#newsroom') + '" aria-label="AURA en YouTube: novedades" title="AURA en YouTube: novedades"><i class="bi bi-youtube" aria-hidden="true"></i></a></li>' +
@@ -2249,7 +2404,9 @@
       each(headers(), function (h) { h.setAttribute('active', key || ''); if (!window.customElements) { paintActive(h); } });
     },
     /** Texto de la cinta de Trade In, calculado desde el catálogo (sin el enlace). */
-    ribbonText: function () { return ribbonText(); }
+    ribbonText: function () { return ribbonText(); },
+    /** La versión corta de la cinta (la del teléfono), también sin el enlace. */
+    ribbonShortText: function () { return ribbonShortText(); }
   };
 
   var defined = false;

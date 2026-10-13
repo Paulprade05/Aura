@@ -165,9 +165,10 @@
      ------------------------------------------------------------------------ */
 
   /* Accesos a las familias: la tarjeta de familia de la base (la misma que
-     «¿Qué vas a estrenar?» de Trade In). */
+     «¿Qué vas a estrenar?» de Trade In). Están en la primera pantalla de la
+     bolsa vacía (su foto es la imagen principal): sin carga diferida. */
   function familyCards() {
-    return catalog.families().map(function (f) { return AURA.html.familyCard(f.id); }).join('');
+    return catalog.families().map(function (f) { return AURA.html.familyCard(f.id, { eager: true }); }).join('');
   }
 
 
@@ -358,11 +359,13 @@
         /* Enlace duplicado del nombre (fuera del árbol de accesibilidad); el alt
            describe igualmente la foto real. */
         '<a class="aura-bag-line__media" href="' + href + '" tabindex="-1" aria-hidden="true">' +
-          (img.slot ? AURA.html.img(img.slot, { fallback: img.fallback, alt: img.alt || line.name }) : '') +
+          (img.slot ? AURA.html.img(img.slot, { fallback: img.fallback, alt: img.alt || line.name, sizes: '(max-width: 575.98px) 88px, 128px' }) : '') +
         '</a>' +
         '<div class="aura-bag-line__info">' +
           '<h2 class="aura-bag-line__name"><a href="' + href + '">' + esc(line.name) + '</a></h2>' +
           (meta ? '<p class="aura-bag-line__meta">' + meta + '</p>' : '') +
+          /* Si la foto enseña otro acabado que el elegido, se dice (como en comprar). */
+          (img.slot && img.exact === false && img.color ? '<p class="aura-bag-line__meta aura-bag-line__photo">Imagen en ' + esc(String(img.color.name).toLowerCase()) + '</p>' : '') +
           '<p class="bolsa-line__ship" data-b-ship></p>' +
           '<div class="aura-bag-line__actions">' +
             stepper +
@@ -900,7 +903,10 @@
   document.addEventListener('aura:auth', function () { if (mode === 'vacia') { renderEmpty(); } });
 
   fillStatic();
-  render();
+  try { render(); } finally {
+    /* Primer render terminado: lo que va bajo la bolsa ya se ve (bolsa.css). */
+    document.documentElement.classList.add('is-ready');
+  }
 
   /* Llegada desde el checkout: bolsa vacía o algo que aún no se puede pedir. */
   try {

@@ -347,9 +347,9 @@
   function headHTML(p, slot, rows) {
     var fam = cat.family(p.family);
     var colors = Array.isArray(p.colors) ? p.colors : [];
-    /* La foto en el acabado que enseña (el de la foto, como la tarjeta de
-       modelo): su alt describe la foto real. */
-    var img = cat.image(p);
+    /* La foto en el acabado por defecto, la misma vista que la tarjeta de
+       modelo (catalog.color sin id da ese acabado): su alt describe la foto real. */
+    var img = cat.image(p, (cat.color(p) || {}).id);
     var href = cat.url(p);
     var cta = cat.cta(p);
     var a = availability(p);
@@ -358,7 +358,7 @@
     return '<article class="cmp-head" aria-labelledby="' + nameId + '" data-product="' + esc(p.id) + '" data-status="' + esc(a.status) + '">' +
       '<a class="aura-product-card__media cmp-head__media" href="' + esc(href) + '" tabindex="-1" aria-hidden="true">' +
         /* Primer pantallazo de la página: sin carga diferida. */
-        (img.slot ? AURA.html.img(img.slot, { fallback: img.fallback, alt: img.alt || p.name, eager: true }) : '') +
+        (img.slot ? AURA.html.img(img.slot, { fallback: img.fallback, alt: img.alt || p.name, eager: true, sizes: '(min-width: 1024px) 380px, 34vw' }) : '') +
       '</a>' +
       (rows.badge
         ? '<p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain cmp-head__badge">' + esc(p.badge || '') + '</p>'
@@ -722,15 +722,22 @@
   /* Arranque                                                           */
   /* ------------------------------------------------------------------ */
 
+  /* Primer render terminado: lo que va bajo el titular se ve (comparar.css lo
+     oculta sin sacarlo del flujo hasta ahora, para que no salte). */
+  function ready() {
+    var main = q('.cmp');
+    if (main) { main.classList.add('is-ready'); }
+  }
+
   /* La URL se reescribe solo si no traía una familia válida (?familia=auraphone por defecto). */
   var start = familyFromUrl();
   if (!start.id) {
     /* Catálogo sin familias: la página lo dice en lugar de quedarse vacía. */
     if (el.families) { el.families.hidden = true; }
-    renderColumns(false);
+    try { renderColumns(false); } finally { ready(); }
     return;
   }
-  setFamily(start.id, { url: !start.canonical, animate: false });
+  try { setFamily(start.id, { url: !start.canonical, animate: false }); } finally { ready(); }
 
   /* Estado de la página, para pruebas y depuración. */
   AURA.pages = AURA.pages || {};

@@ -166,13 +166,15 @@
   /* Solo enlaces web (nada de javascript: ni rutas raras en un dato generado). */
   function url(u) { u = String(u || ''); return /^https:\/\/[^\s"'<>]+$/.test(u) ? u : ''; }
 
-  /* Las fotos de producto (tarjetas, configurador, bolsa) salen del catálogo. */
+  /* Las fotos de producto (tarjetas, configurador, bolsa) salen del catálogo:
+     la base y las vistas de cada acabado (AURA.catalog.views: galería por color). */
   var producto = {};
   try {
     (AURA.catalog ? AURA.catalog.products() : []).forEach(function (p) {
-      if (!p.image) { return; }
-      producto[p.image] = true;
-      Object.keys(p.imageVariants || {}).forEach(function (c) { producto[p.image + '-' + c] = true; });
+      if (p.image) { producto[p.image] = true; }
+      (Array.isArray(p.colors) && p.colors.length ? p.colors : [{ id: '' }]).forEach(function (c) {
+        (typeof AURA.catalog.views === 'function' ? AURA.catalog.views(p, c.id) : []).forEach(function (v) { if (v && v.slot) { producto[v.slot] = true; } });
+      });
     });
   } catch (e) { producto = {}; }
 
@@ -205,11 +207,13 @@
   function item(c) {
     /* Solo la descripción de lo que se ve (nunca el título original del banco de imágenes, que nombra marcas). */
     var desc = c.descripcion || 'Foto sin descripción';
-    /* Miniatura: la foto de su hueco o, en una secuencia, su póster (c.media, img/seq/…/poster.webp). */
+    /* Miniatura de 240 × 180 (img/thumbs/<slot>.webp, unos 4 KB). Si aún no
+       existe, la foto de su hueco o, en una secuencia, su póster (c.media,
+       img/seq/…/poster.webp): data-legal-grande. */
     var propia = !!c.media && c.media !== 'img/' + c.slot + '.webp' && /^img\/[a-z0-9\/._-]+\.webp$/i.test(c.media);
-    var img = !propia && AURA.html && AURA.html.img
-      ? AURA.html.img(c.slot, { className: 'legal-credito__img', alt: '', width: 1600, height: 1200 })
-      : '<img class="legal-credito__img" src="../' + esc(propia ? c.media : 'img/' + c.slot + '.webp') + '" width="1600" height="' + (propia ? 900 : 1200) + '" alt="" loading="lazy" decoding="async">';
+    var grande = '../' + (propia ? c.media : 'img/' + c.slot + '.webp');
+    var img = '<img class="legal-credito__img" src="../img/thumbs/' + esc(c.slot) + '.webp" data-legal-grande="' + esc(grande) + '"' +
+      ' width="240" height="180" alt="" loading="lazy" decoding="async">';
     /* Cambios: siempre recortada y ajustada; si hubo retoque, lo que se hizo (creditos.js: retoque). */
     var cambios = 'Recortada y ajustada de tono' +
       (c.retoque ? '. ' + String(c.retoque).replace(/\.\s*$/, '') : (c.retocada ? '; logotipos o textos de pantalla borrados' : ''));
@@ -238,6 +242,16 @@
     '</section>';
   });
   caja.innerHTML = html;
+
+  /* Una miniatura que falta pasa a la foto grande; si tampoco está, se queda
+     el recuadro vacío (el texto de al lado ya la describe). Los errores de
+     imagen no suben: se escuchan en la fase de captura. */
+  caja.addEventListener('error', function (e) {
+    var img = e.target;
+    if (!img || img.tagName !== 'IMG' || !img.hasAttribute('data-legal-grande')) { return; }
+    var grande = img.getAttribute('data-legal-grande');
+    if (img.getAttribute('src') !== grande) { img.setAttribute('src', grande); } else { img.hidden = true; }
+  }, true);
 
   /* Llegar con legal.html#imagenes: el ancla ya existe (la sección está en el HTML). */
 })(window, document);

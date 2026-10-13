@@ -35,7 +35,7 @@
 
   <!-- Iconos: favicon (ICO y PNG) e icono de la pantalla de inicio -->
   <link rel="icon" href="../favicon.ico" sizes="any">
-  <link rel="icon" type="image/png" href="../img/aura.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="../img/icon-192.png">
   <link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
 
   <!-- Estilos: fuentes Inter y Kanit, Bootstrap 5.3 (utilidades), Bootstrap Icons, hoja de AURA (los componentes que se ven
@@ -122,8 +122,6 @@
     .g-tab.is-current .g-tab__top > span:first-child { color: var(--gold); }
     @media (hover: hover) { .g-tab:hover { border-color: var(--g-line-2); color: var(--text-primary); } }
     .g-tab:active { opacity: .7; }
-    .g-tab--legend { justify-content: center; gap: .375rem; border-style: dashed; background: transparent; color: var(--text-tertiary); font-size: .8125rem; }
-    .g-tab--legend strong { color: var(--gold); font-weight: 500; }
 
     /* --- Sección a dos columnas --- */
     .g-section { border-top: 1px solid var(--g-line); padding-block: 5.625rem 5.5rem; }
@@ -156,6 +154,7 @@
     .g-grid--3 { --cols: 3; }
     .g-grid--4 { --cols: 4; gap: 1rem; }
     .g-grid--6 { --cols: 6; gap: .75rem; }
+    .g-sources { margin: 0; padding: 0; list-style: none; }
     .g-card { min-width: 0; padding: 1.5rem; border: 1px solid var(--g-line); border-radius: .75rem; background: var(--g-card); }
     .g-card--base { background: var(--g-bg); }
     .g-card--band { background: var(--g-band); }
@@ -198,7 +197,8 @@
     .g-surface__text { margin: 0; max-width: 16rem; font-size: .9375rem; line-height: 1.45; color: var(--text-secondary); }
 
     /* Tablas de referencia (tokens, medidas, reglas) */
-    .g-scroll { min-width: 0; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    /* Solo desplazamiento horizontal: con overflow-y en auto, 1 px de más se quedaría con la rueda y el dedo */
+    .g-scroll { min-width: 0; overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; }
     .g-table { width: 100%; margin: 0; border-collapse: collapse; font-size: .8125rem; line-height: 1.5; color: var(--text-secondary); }
     .g-table caption { caption-side: top; padding: 0 0 1rem; text-align: left; font-family: var(--g-mono); font-size: .6875rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--text-secondary); }
     .g-table th, .g-table td { padding: .75rem 1rem .75rem 0; border-bottom: 1px solid var(--g-line); text-align: left; vertical-align: top; }
@@ -216,6 +216,11 @@
     .g-spec__meta { margin: .375rem 0 0; font-family: var(--g-mono); font-size: .6875rem; letter-spacing: .04em; color: var(--text-tertiary); }
     .g-spec__class { margin: .25rem 0 0; font-family: var(--g-mono); font-size: .6875rem; color: var(--accent-link); }
     .g-spec__sample { min-width: 0; }
+    /* Muestra de la tipografía de navegación (los valores de .aura-localnav__title, __link y .aura-nav__link) */
+    .g-navspec { display: flex; flex-wrap: wrap; align-items: baseline; gap: .5rem 1.5rem; margin: 0; }
+    .g-navspec__title { font-family: var(--font-display); font-size: 1.1875rem; font-weight: 500; color: var(--text-primary); }
+    .g-navspec__local { font-size: .75rem; font-weight: 450; letter-spacing: .012em; color: var(--vibrant-label); }
+    .g-navspec__global { font-size: .8125rem; font-weight: 450; color: var(--vibrant-label); }
     .g-family { display: flex; flex-direction: column; justify-content: space-between; min-height: 13.6rem; }
     .g-family__top { display: flex; justify-content: space-between; gap: 1rem; font-family: var(--g-mono); font-size: .6875rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
     .g-family__top span:last-child { font-weight: 400; color: var(--text-tertiary); }
@@ -231,6 +236,12 @@
     .g-matrix__name { margin: 0; font-size: .9375rem; color: var(--text-primary); }
     .g-matrix__meta { margin: .375rem 0 0; font-family: var(--g-mono); font-size: .6875rem; letter-spacing: .04em; color: var(--text-tertiary); }
     .g-matrix__cells { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; }
+    /* De 992 a 1099 px aparece la columna lateral y, con la de 12,5 rem, las celdas bajaban a 98–108 px: «Continuar ↗»
+       se salía de su botón. Ahí, como en el móvil, el nombre del estado va encima de sus tres celdas. */
+    @media (min-width: 992px) and (max-width: 1099.98px) {
+      .g-matrix__head { display: none; }
+      .g-matrix__row { grid-template-columns: minmax(0, 1fr); gap: 1rem; }
+    }
     .g-state { display: grid; gap: .875rem; justify-items: stretch; min-width: 0; }
     .g-state__label { font-family: var(--g-mono); font-size: .625rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; text-align: center; color: var(--text-tertiary); }
     .g-state__label--hover { color: var(--accent-link); }
@@ -244,7 +255,7 @@
 
     /* Formularios: tarjetas de estado y anatomía */
     .g-fieldcard { display: grid; gap: 1.5rem; align-content: start; padding: 2rem; border: 1px solid var(--g-line); border-radius: .75rem; background: var(--g-bg); }
-    .g-fieldcard--focus { border-color: rgba(41, 151, 255, .35); background: #111116; }
+    .g-fieldcard--focus { border-color: rgba(23, 135, 247, .35); background: #111116; }
     .g-fieldcard__head { display: flex; justify-content: space-between; gap: 1rem; font-family: var(--g-mono); font-size: .6875rem; letter-spacing: .06em; text-transform: uppercase; color: var(--text-tertiary); }
     .g-fieldcard__head > :first-child { color: var(--text-secondary); font-weight: 600; }
     .g-fieldcard--focus .g-fieldcard__head > :first-child { color: var(--accent-link); }
@@ -274,6 +285,18 @@
     .g-demo .aura-summary { position: static; }
     .g-demo .aura-hero, .g-demo .aura-section { padding-block: 3rem; }
     .g-demo .aura-footer { margin-top: 0; }
+
+    /* Tira de vistas del configurador (capítulo 10): copia estática de .comprar-vistas (css/pages/comprar.css) */
+    .g-views { display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem; }
+    .g-view { display: grid; place-items: center; width: 4rem; height: 3rem; padding: .1875rem; overflow: hidden; border: 1px solid var(--hairline); border-radius: var(--radius-sm); background: var(--bg-band); }
+    .g-view > img { width: 100%; height: 100%; object-fit: contain; mix-blend-mode: lighten; }
+    .g-view.is-pressed { outline: 2px solid var(--accent-link); outline-offset: 2px; }
+    @media (min-width: 992px) { .g-view { width: 4.5rem; height: 3.375rem; } }
+
+    /* Fotos de producto de muestra (capítulo 14): lista de figuras sobre negro, dos por fila en el teléfono */
+    .g-photos { margin: 0; padding: 0; list-style: none; }
+    .g-photo { height: 100%; margin: 0; padding: 0; overflow: hidden; }
+    .g-photo > figcaption { margin: 0; padding: 0 1rem 1rem; }
 
     /* Iconos */
     .g-icons { display: grid; grid-template-columns: repeat(auto-fill, minmax(7.25rem, 1fr)); gap: .75rem; margin: 0; padding: 0; list-style: none; }
@@ -309,8 +332,10 @@
     .g-strip figcaption { margin-top: .5rem; font-family: var(--g-mono); font-size: .625rem; letter-spacing: .06em; text-transform: uppercase; color: var(--text-tertiary); }
     .g-timeline { position: relative; height: 4.75rem; margin-top: 1.5rem; }
     .g-timeline__axis { position: absolute; left: 0; right: 0; top: 2.25rem; height: 1px; background: var(--g-line-2); }
-    .g-timeline__seg { position: absolute; top: 1.5rem; height: 1.5rem; left: calc(var(--a) * 100%); width: calc((var(--b) - var(--a)) * 100%); border-radius: .375rem; background: linear-gradient(90deg, rgba(41, 151, 255, .15), rgba(41, 151, 255, .55) 33%, rgba(41, 151, 255, .55) 67%, rgba(41, 151, 255, .15)); border: 1px solid rgba(41, 151, 255, .55); }
+    /* --fi / --fo: parte del tramo que ocupan la entrada y la salida (150 px de scroll entre el recorrido del tramo) */
+    .g-timeline__seg { position: absolute; top: 1.5rem; height: 1.5rem; left: calc(var(--a) * 100%); width: calc((var(--b) - var(--a)) * 100%); border-radius: .375rem; background: linear-gradient(90deg, rgba(23, 135, 247, .15), rgba(23, 135, 247, .55) calc(var(--fi, .33) * 100%), rgba(23, 135, 247, .55) calc(100% - var(--fo, .33) * 100%), rgba(23, 135, 247, .15)); border: 1px solid rgba(23, 135, 247, .55); }
     .g-timeline__seg span { position: absolute; left: .5rem; top: -1.375rem; font-family: var(--g-mono); font-size: .625rem; letter-spacing: .04em; color: var(--text-secondary); white-space: nowrap; }
+    .g-timeline__seg span b { font-weight: inherit; }
     .g-timeline__seg--end span { left: auto; right: .5rem; }
     .g-timeline__ticks { position: absolute; left: 0; right: 0; bottom: 0; display: flex; justify-content: space-between; font-family: var(--g-mono); font-size: .625rem; color: var(--text-tertiary); }
 
@@ -326,7 +351,7 @@
     .g-wire { display: grid; gap: .375rem; margin: 0; padding: 0; list-style: none; }
     .g-wire li { display: flex; align-items: center; justify-content: space-between; gap: .75rem; min-height: 2.125rem; padding: .375rem .75rem; border: 1px solid var(--g-line); border-radius: .375rem; background: var(--g-bg); font-size: .75rem; line-height: 1.35; color: var(--text-secondary); }
     .g-wire li.is-band { background: var(--g-band); }
-    .g-wire li.is-key { border-color: rgba(41, 151, 255, .45); color: var(--text-primary); }
+    .g-wire li.is-key { border-color: rgba(23, 135, 247, .45); color: var(--text-primary); }
     .g-wire li.is-gold { border-color: rgba(229, 169, 60, .4); }
     .g-wire li.is-opt { border-style: dashed; }
     .g-wire li code { flex: none; font-size: .625rem; color: var(--text-tertiary); }
@@ -371,6 +396,8 @@
       .g-tag { white-space: normal; }
       .g-grid--2, .g-grid--3, .g-grid--4 { --cols: 1; }
       .g-grid--6 { --cols: 2; }
+      .g-grid--4.g-photos { --cols: 2; gap: .75rem; }
+      .g-photo > figcaption { padding: 0 .75rem .75rem; }
       .g-spec { grid-template-columns: minmax(0, 1fr); padding-block: 1.25rem; }
       .g-matrix { padding: 1rem; }
       .g-matrix__head { display: none; }
@@ -383,6 +410,7 @@
       .g-linkrow { padding: 1.25rem; }
       .g-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); }
       .g-strip li:nth-child(n + 4) { display: none; }
+      .g-timeline__seg span b { display: none; }
       .g-stage { aspect-ratio: 3 / 4; }
       .g-stage__meta { display: none; }
       .g-stage__text { left: 1rem; right: 1rem; top: auto; bottom: 1rem; max-width: none; transform: none; }
@@ -402,7 +430,7 @@
       <p class="g-logo"><span class="g-mark" aria-hidden="true"></span>AURA</p>
       <div class="g-header__meta">
         <p class="g-kicker">Design System</p>
-        <p class="g-pill" title="Versión 2.0 de la guía de estilo (sustituye a la 1.0)">V 2.0</p>
+        <p class="g-pill" title="Versión 2.0 de la guía de estilo: manda sobre los prototipos y sobre la 1.0">V 2.0</p>
       </div>
     </div>
   </header>
@@ -419,7 +447,8 @@
           <p class="g-lead">Una referencia práctica para construir experiencias de tecnología inmersiva con precisión, profundidad y coherencia premium.</p>
           <ul class="g-hero__meta" aria-label="Datos de esta versión">
             <li><strong>V 2.0</strong> · octubre de 2026</li>
-            <li>17 capítulos · 4 ampliados · 13 nuevos</li>
+            <li>18 capítulos (00–17) · 4 ampliados · 14 nuevos</li>
+            <li>Manda: <span class="g-white">v2 › prototipos › v1</span></li>
             <li>Fuente: <span class="g-white">css/aura.css · docs/COMPONENTES.md</span></li>
           </ul>
         </div>
@@ -442,7 +471,8 @@
     <nav class="g-tabs" aria-label="Capítulos de la guía">
       <div class="g-wrap">
         <ol class="g-tabs__list">
-          <li><a class="g-tab is-current" href="#colores"><span class="g-tab__top"><span>01</span><span class="g-tab__state">Ampliado</span></span>Colores &amp; Superficies</a></li>
+          <li><a class="g-tab is-current" href="#fuentes"><span class="g-tab__top"><span>00</span><span class="g-tab__state g-tab__state--new">Nuevo</span></span>Fuentes y desviaciones</a></li>
+          <li><a class="g-tab" href="#colores"><span class="g-tab__top"><span>01</span><span class="g-tab__state">Ampliado</span></span>Colores &amp; Superficies</a></li>
           <li><a class="g-tab" href="#tipografia"><span class="g-tab__top"><span>02</span><span class="g-tab__state">Ampliado</span></span>Tipografía</a></li>
           <li><a class="g-tab" href="#botones"><span class="g-tab__top"><span>03</span><span class="g-tab__state">Ampliado</span></span>Botones &amp; Acciones</a></li>
           <li><a class="g-tab" href="#formularios"><span class="g-tab__top"><span>04</span><span class="g-tab__state">Ampliado</span></span>Formularios</a></li>
@@ -459,10 +489,84 @@
           <li><a class="g-tab" href="#accesibilidad"><span class="g-tab__top"><span>15</span><span class="g-tab__state g-tab__state--new">Nuevo</span></span>Accesibilidad</a></li>
           <li><a class="g-tab" href="#voz"><span class="g-tab__top"><span>16</span><span class="g-tab__state g-tab__state--new">Nuevo</span></span>Voz y tono</a></li>
           <li><a class="g-tab" href="#familias"><span class="g-tab__top"><span>17</span><span class="g-tab__state g-tab__state--new">Nuevo</span></span>Familias y plantillas</a></li>
-          <li aria-hidden="true"><span class="g-tab g-tab--legend"><span><strong>V 2.0</strong> · sustituye a la V 1.0</span><span>13 capítulos nuevos</span></span></li>
         </ol>
       </div>
     </nav>
+
+    <!-- ================= 00 Fuentes y desviaciones (nuevo en la v2.0): qué manda cuando dos fuentes no coinciden
+         y en qué se aparta esta guía de la v1 (cada fila remite al capítulo donde se aplica) ================= -->
+    <section class="g-section g-section--base" id="fuentes" aria-labelledby="fuentes-titulo">
+      <div class="g-wrap g-section__grid">
+        <div class="g-aside">
+          <p class="g-index">00</p>
+          <h2 class="g-aside__title" id="fuentes-titulo">Fuentes y desviaciones</h2>
+          <p class="g-aside__desc">Qué manda cuando dos fuentes no dicen lo mismo y en qué se aparta la web de la v1.</p>
+          <p class="g-aside__state g-aside__state--new">Nuevo en V 2.0</p>
+        </div>
+        <div class="g-main">
+          <p class="g-eyebrow">Jerarquía de fuentes</p>
+          <div class="g-head">
+            <p class="g-statement">Una sola respuesta para cada duda.</p>
+            <p class="g-tag">v2 › prototipos › v1</p>
+          </div>
+          <p class="g-intro">Hay tres fuentes de diseño y no siempre coinciden. Manda la primera que diga algo sobre la pieza; la web (<code>css/aura.css</code> y <code>docs/COMPONENTES.md</code>) es la implementación de esta guía, y cuando esta guía se aparta de la v1 lo dice aquí, con su motivo.</p>
+
+          <div class="g-content">
+            <div class="g-block">
+              <ol class="g-grid g-grid--3 g-sources">
+                <li class="g-card"><p class="g-card__label"><span>1 · Manda</span><span>Esta guía</span></p><p class="g-card__title">Guía de estilo v2.0</p><p class="g-card__text">Lo que está escrito en estos capítulos y en <code>COMPONENTES.md</code>. Si una página no lo cumple, se corrige la página.</p></li>
+                <li class="g-card"><p class="g-card__label"><span>2 · Completa</span><span>PDF</span></p><p class="g-card__title">Prototipos de página</p><p class="g-card__text">«AURA · Inicio», «auraPhone», «auraPad», «auraBook», «Iniciar sesión» y «Crear cuenta»: lo que la v2 no detalla (proporciones, textos, orden de los bloques) se toma de ellos.</p></li>
+                <li class="g-card"><p class="g-card__label"><span>3 · Origen</span><span>PDF</span></p><p class="g-card__title">Guía de estilo v1.0</p><p class="g-card__text">El punto de partida: tokens, Kanit + Inter, escala 56 / 42 / 28 y botones de 48 / 999 / 24. Solo decide lo que no dicen ni la v2 ni los prototipos.</p></li>
+              </ol>
+            </div>
+
+            <div class="g-block">
+              <div class="g-scroll">
+                <table class="g-table g-table--wide">
+                  <caption>Desviaciones de la v1 · qué cambia y por qué</caption>
+                  <thead><tr><th scope="col">Pieza</th><th scope="col">v1</th><th scope="col">v2 y la web</th><th scope="col">Motivo</th><th scope="col">Cap.</th></tr></thead>
+                  <tbody>
+                    <tr><th scope="row">Azul de texto</th><td class="g-num">#1787f7</td><td><code>--accent-link</code> #1787f7 (igual que la v1; la primera v2 usaba #2997ff)</td><td>5,85:1 sobre negro y 5,03:1 sobre tarjeta: cumple AA sin cambiarlo</td><td class="g-num">01</td></tr>
+                    <tr><th scope="row">Hover del primario</th><td>Relleno #1787f7, más claro</td><td>Relleno <code>--accent-hover</code> #0074e8 y el halo de .55 a 1</td><td>Blanco sobre #1787f7 da 3,59:1 (no AA); sobre #0074e8, 4,50:1</td><td class="g-num">01 · 03</td></tr>
+                    <tr><th scope="row">Etiqueta del botón</th><td>Inter 14 / 400, relleno plano</td><td>Inter 15 / 600 y halo <code>--glow-accent</code> al .55 en reposo</td><td>Es lo que dibuja el prototipo de Inicio («Más información», 120 px)</td><td class="g-num">03</td></tr>
+                    <tr><th scope="row">Botón desactivado</th><td>Etiqueta #4d4d51 (1,82:1)</td><td><code>--text-disabled</code> #6e6e73 sobre #252528 (3,01:1), igual en primario, secundario e inverso</td><td>Desactivado no es invisible: la etiqueta se tiene que leer</td><td class="g-num">03</td></tr>
+                    <tr><th scope="row">Hover del secundario</th><td>Tinte azul ≈ 12 %</td><td><code>--accent-soft</code> 16 % y contorno #1787f7</td><td>El mismo tinte que lo elegido (opciones, segmentado)</td><td class="g-num">03</td></tr>
+                    <tr><th scope="row">Enlace contextual</th><td>Inter 16 / 600</td><td>Inter 500, al tamaño del texto que acompaña (13 en cinta y cabeceras, 16 en el cuerpo)</td><td>Acompaña al texto: no compite con la primaria</td><td class="g-num">03</td></tr>
+                    <tr><th scope="row">Campo en reposo</th><td>Borde #45454b (2,21:1) · placeholder #6e6e73</td><td>Borde <code>--field-border</code> 36 % (3,14:1) · placeholder #98989d (6,30:1)</td><td>AA: 3:1 para el límite de un control y 4,5:1 para el texto</td><td class="g-num">04</td></tr>
+                    <tr><th scope="row">Campo en foco</th><td>Borde #0071e3 de 1,5 px, etiqueta blanca (dibujo)</td><td>Borde <code>--accent-link</code>, anillo <code>--accent-ring</code> de 4 px al 40 % y etiqueta azul 13 / 500</td><td>La v1 escribe «Ring / Blue 40%»: manda su texto sobre su dibujo</td><td class="g-num">04</td></tr>
+                    <tr><th scope="row">Titular de héroe</th><td>Hero Title (H1) Kanit 56</td><td>Nivel nuevo Display, Kanit 36–72 (el H1 sigue en 34–56)</td><td>Héroes a pantalla completa; el prototipo de Inicio ronda los 60 px</td><td class="g-num">02</td></tr>
+                    <tr><th scope="row">Insignia</th><td>Píldora de 30 px con borde dorado al 35 % y peso medio</td><td>Píldora rellena de 24 px (<code>--gold-soft</code>), sin borde, Inter 12 / 650</td><td>La v1 escribe «Eyebrow / Badge · 12 / 650» para las dos piezas: se sigue el texto</td><td class="g-num">02 · 03</td></tr>
+                    <tr><th scope="row">Iconos pequeños</th><td>Nunca por debajo de 16 px</td><td>Igual, salvo en línea con un texto menor: 1em (12–13 px en notas y estados)</td><td>Un icono de 16 px junto a un texto de 12 se desalinea</td><td class="g-num">05</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="g-block">
+              <div class="g-scroll">
+                <table class="g-table g-table--wide">
+                  <caption>Excepciones de esta guía · las únicas que hay</caption>
+                  <thead><tr><th scope="col">Regla</th><th scope="col">Excepción</th><th scope="col">Por qué</th><th scope="col">Cap.</th></tr></thead>
+                  <tbody>
+                    <tr><th scope="row">Lo que no se pulsa no va en azul</th><td>El acabado de la tarjeta de modelo (<code>.aura-product-card__finish</code>) va en <code>--accent-link</code></td><td>Refleja la muestra elegida, como el prototipo</td><td class="g-num">01 · 09</td></tr>
+                    <tr><th scope="row">Desde 992 px no hay barra de compra fija</th><td>En comprar sí: <code>.aura-buybar--always</code></td><td>El resumen va debajo del formulario; sin la barra no habría ninguna acción a la vista</td><td class="g-num">07 · 10</td></tr>
+                    <tr><th scope="row">El azul no es una superficie</th><td>Halo azul detrás de los paneles de foto de producto, sobre base #000</td><td>Es la luz del panel: la foto (negro puro) se funde con él con «aclarar»</td><td class="g-num">14</td></tr>
+                    <tr><th scope="row">Nada se mueve con el scroll</th><td>La escena con scroll (<code>[data-aura-scrub]</code>)</td><td>Avanza solo mientras el usuario desplaza la página, 1:1; con «reducir movimiento» es una imagen fija</td><td class="g-num">12 · 13</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <hr class="g-rule">
+          <div class="g-note">
+            <span class="g-note__icon"><i class="bi bi-signpost-2" aria-hidden="true"></i></span>
+            <p class="g-note__title">Nota de uso</p>
+            <p class="g-note__text">Una desviación nueva de la v1 (o una excepción nueva) no se decide en una página: se escribe primero en esta tabla, con su motivo, y después en <code>css/aura.css</code> y en <code>COMPONENTES.md</code> (sección «Cambios de la v2.0»).</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <!-- ================= 01 Colores & Superficies (ampliado en la v2.0) ================= -->
     <section class="g-section g-section--band" id="colores" aria-labelledby="colores-titulo">
@@ -498,9 +602,9 @@
                 <div class="g-swatch g-swatch--sm" style="--c:#0a0a0b"><div class="g-swatch__chip"></div><div class="g-swatch__body"><div class="g-swatch__row"><p class="g-swatch__name">Franja</p><span class="g-swatch__hex">#0a0a0b</span></div><p class="g-swatch__use">Secciones alternas, casi negras.</p><span class="g-swatch__var">--bg-band</span></div></div>
                 <div class="g-swatch g-swatch--sm" style="--c:#1d1d1f"><div class="g-swatch__chip"></div><div class="g-swatch__body"><div class="g-swatch__row"><p class="g-swatch__name">Elevado</p><span class="g-swatch__hex">#1d1d1f</span></div><p class="g-swatch__use">Capas sobre una tarjeta; popover sólido.</p><span class="g-swatch__var">--bg-elevated</span></div></div>
                 <div class="g-swatch g-swatch--sm" style="--c:#111113"><div class="g-swatch__chip"></div><div class="g-swatch__body"><div class="g-swatch__row"><p class="g-swatch__name">Pie</p><span class="g-swatch__hex">#111113</span></div><p class="g-swatch__use">Fondo del pie global.</p><span class="g-swatch__var">--bg-footer</span></div></div>
-                <div class="g-swatch g-swatch--sm" style="--c:#2997ff"><div class="g-swatch__chip"></div><div class="g-swatch__body"><div class="g-swatch__row"><p class="g-swatch__name">Azul de texto</p><span class="g-swatch__hex">#2997ff</span></div><p class="g-swatch__use">Enlaces, iconos y foco sobre negro (6,96:1).</p><span class="g-swatch__var">--accent-link</span></div></div>
-                <div class="g-swatch g-swatch--sm" style="--c:#0074e8"><div class="g-swatch__chip"></div><div class="g-swatch__body"><div class="g-swatch__row"><p class="g-swatch__name">Acento hover</p><span class="g-swatch__hex">#0074e8</span></div><p class="g-swatch__use">Relleno primario al pasar el ratón (4,5:1 con blanco).</p><span class="g-swatch__var">--accent-hover</span></div></div>
-                <div class="g-swatch g-swatch--sm" style="--c:#1787f7"><div class="g-swatch__chip"></div><div class="g-swatch__body"><div class="g-swatch__row"><p class="g-swatch__name">Contorno hover</p><span class="g-swatch__hex">#1787f7</span></div><p class="g-swatch__use">Solo trazos: borde del secundario en hover.</p><span class="g-swatch__var">--accent-bright</span></div></div>
+                <div class="g-swatch g-swatch--sm" style="--c:#1787f7"><div class="g-swatch__chip"></div><div class="g-swatch__body"><div class="g-swatch__row"><p class="g-swatch__name">Azul de texto</p><span class="g-swatch__hex">#1787f7</span></div><p class="g-swatch__use">Enlaces, iconos, foco y contorno del secundario en hover: 5,85:1 sobre negro, 5,03:1 sobre tarjeta. El de la v1.</p><span class="g-swatch__var">--accent-link · --accent-bright</span></div></div>
+                <div class="g-swatch g-swatch--sm" style="--c:#4aa3ff"><div class="g-swatch__chip"></div><div class="g-swatch__body"><div class="g-swatch__row"><p class="g-swatch__name">Azul de texto hover</p><span class="g-swatch__hex">#4aa3ff</span></div><p class="g-swatch__use">Etiqueta del secundario en hover y en foco, y enlaces sin clase: más luz, nunca menos contraste (7,97:1).</p><span class="g-swatch__var">--accent-link-hover</span></div></div>
+                <div class="g-swatch g-swatch--sm" style="--c:#0074e8"><div class="g-swatch__chip"></div><div class="g-swatch__body"><div class="g-swatch__row"><p class="g-swatch__name">Acento hover</p><span class="g-swatch__hex">#0074e8</span></div><p class="g-swatch__use">Relleno primario al pasar el ratón (4,50:1 con blanco). La v1 aclaraba a #1787f7: 3,59:1, no AA.</p><span class="g-swatch__var">--accent-hover</span></div></div>
                 <div class="g-swatch g-swatch--sm"><div class="g-swatch__chip g-chip-checker" style="--c:rgba(0,113,227,.16)"><i></i></div><div class="g-swatch__body"><div class="g-swatch__row"><p class="g-swatch__name">Azul suave</p><span class="g-swatch__hex">16 %</span></div><p class="g-swatch__use">Fondo de lo elegido y tinte del secundario.</p><span class="g-swatch__var">--accent-soft</span></div></div>
                 <div class="g-swatch g-swatch--sm"><div class="g-swatch__chip g-chip-checker" style="--c:rgba(0,113,227,.4)"><i></i></div><div class="g-swatch__body"><div class="g-swatch__row"><p class="g-swatch__name">Anillo de foco</p><span class="g-swatch__hex">40 %</span></div><p class="g-swatch__use">Anillo de los campos en foco (guía §04).</p><span class="g-swatch__var">--accent-ring</span></div></div>
                 <div class="g-swatch g-swatch--sm"><div class="g-swatch__chip g-chip-checker" style="--c:rgba(229,169,60,.14)"><i></i></div><div class="g-swatch__body"><div class="g-swatch__row"><p class="g-swatch__name">Dorado suave</p><span class="g-swatch__hex">14 %</span></div><p class="g-swatch__use">Fondo de insignias e iconos de nota.</p><span class="g-swatch__var g-swatch__var--gold">--gold-soft</span></div></div>
@@ -528,7 +632,8 @@
                     <div><div style="height:1px;background:var(--hairline)"></div><p class="g-card__text"><code>--hairline</code> · 10 % · separadores de lista y tarjeta</p></div>
                     <div><div style="height:1px;background:var(--hairline-strong)"></div><p class="g-card__text"><code>--hairline-strong</code> · 18 % · bordes visibles</p></div>
                     <div><div style="height:1px;background:var(--edge-light)"></div><p class="g-card__text"><code>--edge-light</code> · 16 % · filo superior de un material (la luz lo toca)</p></div>
-                    <div><div style="height:1px;background:var(--field-border)"></div><p class="g-card__text"><code>--field-border</code> · 36 % · límite de campos y opciones (3,14:1)</p></div>
+                    <div><div style="height:1px;background:var(--field-border)"></div><p class="g-card__text"><code>--field-border</code> · 36 % · límite de campos, casillas y opciones (3,14:1; 3,35:1 sobre tarjeta)</p></div>
+                    <div><div style="height:1px;background:var(--field-border-hover)"></div><p class="g-card__text"><code>--field-border-hover</code> · 50 % · el mismo límite con el ratón encima (5,32:1); blanco con «más contraste»</p></div>
                   </div>
                 </div>
                 <div class="g-card g-card--base">
@@ -562,12 +667,13 @@
                     <tr><th scope="row">Texto primario sobre negro</th><td class="g-num">#f5f5f7 / #000</td><td class="g-num g-white">19,29:1</td><td>AAA · titulares y cuerpo principal</td></tr>
                     <tr><th scope="row">Texto secundario sobre tarjeta</th><td class="g-num">#a1a1a6 / #161617</td><td class="g-num g-white">7,03:1</td><td>AAA · cuerpo y notas (8,16:1 sobre negro)</td></tr>
                     <tr><th scope="row">Texto terciario sobre negro</th><td class="g-num">#8e8e93 / #000</td><td class="g-num g-white">6,44:1</td><td>AA · metadatos y etiquetas</td></tr>
-                    <tr><th scope="row">Azul de texto sobre tarjeta</th><td class="g-num">#2997ff / #161617</td><td class="g-num g-white">6,00:1</td><td>AA · enlaces (6,96:1 sobre negro)</td></tr>
+                    <tr><th scope="row">Azul de texto sobre tarjeta</th><td class="g-num">#1787f7 / #161617</td><td class="g-num g-white">5,03:1</td><td>AA · enlaces (5,85:1 sobre negro, 5,51:1 sobre franja, 4,68:1 sobre elevado)</td></tr>
+                    <tr><th scope="row">Azul de texto en hover</th><td class="g-num">#4aa3ff / #000</td><td class="g-num g-white">7,97:1</td><td>AA · etiqueta del secundario sobre su tinte (5,92:1 en una tarjeta)</td></tr>
                     <tr><th scope="row">Blanco sobre acento</th><td class="g-num">#fff / #0071e3</td><td class="g-num g-white">4,70:1</td><td>AA · etiqueta del botón primario (4,50:1 en hover)</td></tr>
                     <tr><th scope="row">Acento como texto</th><td class="g-num">#0071e3 / #000</td><td class="g-num" style="color:var(--error)">4,47:1</td><td>No llega a AA como texto: solo rellenos y contornos (≥ 3:1)</td></tr>
                     <tr><th scope="row">Dorado sobre negro</th><td class="g-num">#e5a93c / #000</td><td class="g-num g-white">10,07:1</td><td>AAA · antetítulos y metadatos premium</td></tr>
                     <tr><th scope="row">Error sobre negro</th><td class="g-num">#ff453a / #000</td><td class="g-num g-white">6,16:1</td><td>AA · mensajes y botón destructivo</td></tr>
-                    <tr><th scope="row">Borde de campo sobre negro</th><td class="g-num">36 % / #000</td><td class="g-num g-white">3,14:1</td><td>Límite de control ≥ 3:1</td></tr>
+                    <tr><th scope="row">Borde de campo sobre negro</th><td class="g-num">36 % / #000</td><td class="g-num g-white">3,14:1</td><td>Límite de control ≥ 3:1 (5,32:1 en hover, con el 50 %)</td></tr>
                   </tbody>
                 </table>
               </div>
@@ -579,7 +685,7 @@
             <span class="g-note__icon"><i class="bi bi-circle-half" aria-hidden="true"></i></span>
             <p class="g-note__title">Nota de uso</p>
             <p class="g-note__text">El azul eléctrico comunica interacción; el dorado aporta valor premium. Evita usarlos como superficies extensas o competir por la misma jerarquía.</p>
-            <p class="g-note__text">Texto azul sobre negro siempre en <code>--accent-link</code> (#2997ff); <code>--accent</code> (#0071e3) es para rellenos con texto blanco y contornos. Lo que no se pulsa no va en azul, y un estado nunca se comunica solo con color.</p>
+            <p class="g-note__text">Texto azul sobre negro siempre en <code>--accent-link</code> (#1787f7, el de la v1); <code>--accent</code> (#0071e3) es para rellenos con texto blanco y contornos. Lo que no se pulsa no va en azul, con una sola excepción: el acabado de la tarjeta de modelo (capítulo 09), que refleja la muestra elegida como en el prototipo. Un estado nunca se comunica solo con color.</p>
           </div>
         </div>
       </div>
@@ -626,16 +732,21 @@
             <div class="g-block">
               <div class="g-sub"><h3 class="g-sub__title">Escala tipográfica</h3><p class="g-sub__meta">Clase · familia / tamaño / peso</p></div>
               <div class="g-card g-card--base py-0">
-                <div class="g-spec"><div><p class="g-spec__name">Display</p><p class="g-spec__meta">Kanit / 36–72 / 500</p><p class="g-spec__class">.aura-display</p></div><div class="g-spec__sample"><p class="aura-display">Titanio. Tan AURA.</p></div></div>
+                <div class="g-spec"><div><p class="g-spec__name">Display <span class="g-gold">· v2</span></p><p class="g-spec__meta">Kanit / 36–72 / 500 · nivel nuevo (la v1 llega a 56)</p><p class="g-spec__class">.aura-display</p></div><div class="g-spec__sample"><p class="aura-display">Titanio. Tan AURA.</p></div></div>
                 <div class="g-spec"><div><p class="g-spec__name">Hero Title (H1)</p><p class="g-spec__meta">Kanit / 34–56 / 500</p><p class="g-spec__class">.aura-h1</p></div><div class="g-spec__sample"><p class="aura-h1">AURA</p></div></div>
                 <div class="g-spec"><div><p class="g-spec__name">Section Title (H2)</p><p class="g-spec__meta">Kanit / 28–42 / 500</p><p class="g-spec__class">.aura-h2</p></div><div class="g-spec__sample"><p class="aura-h2">Increíblemente fino.</p></div></div>
                 <div class="g-spec"><div><p class="g-spec__name">Card Title (H3)</p><p class="g-spec__meta">Kanit / 22–28 / 500</p><p class="g-spec__class">.aura-h3</p></div><div class="g-spec__sample"><p class="aura-h3">Nuevos flechazos.</p></div></div>
                 <div class="g-spec"><div><p class="g-spec__name">Subtitle (H4)</p><p class="g-spec__meta">Kanit / 20 / 500</p><p class="g-spec__class">.aura-h4</p></div><div class="g-spec__sample"><p class="aura-h4">Diseño ultraligero</p></div></div>
-                <div class="g-spec"><div><p class="g-spec__name">Lead</p><p class="g-spec__meta">Inter / 17–21 / 400 · 56 car.</p><p class="g-spec__class">.aura-lead</p></div><div class="g-spec__sample"><p class="aura-lead">Diseñadas juntas. Extraordinarias por separado. Esta es la nueva generación AURA.</p></div></div>
-                <div class="g-spec"><div><p class="g-spec__name">Body Text</p><p class="g-spec__meta">Inter / 16 / 400 · 68 car.</p><p class="g-spec__class">.aura-body</p></div><div class="g-spec__sample"><p class="aura-body g-white">El chip AURA A20 Pro lleva los gráficos y la frecuencia vibracional a un nivel nunca visto en la industria móvil.</p></div></div>
+                <div class="g-spec"><div><p class="g-spec__name">Lead</p><p class="g-spec__meta">Inter / 17–21 / 400 · 44ch ≈ 56 car.</p><p class="g-spec__class">.aura-lead</p></div><div class="g-spec__sample"><p class="aura-lead">Diseñadas juntas. Extraordinarias por separado. Esta es la nueva generación AURA.</p></div></div>
+                <div class="g-spec"><div><p class="g-spec__name">Body Text</p><p class="g-spec__meta">Inter / 16 / 400 · 53ch ≈ 68 car.</p><p class="g-spec__class">.aura-body</p></div><div class="g-spec__sample"><p class="aura-body g-white">El chip AURA A20 Pro lleva los gráficos y la frecuencia vibracional a un nivel nunca visto en la industria móvil.</p></div></div>
+                <div class="g-spec"><div><p class="g-spec__name">Texto de componente <span class="g-gold">· v2</span></p><p class="g-spec__meta">Inter / 14 / 1,5 / 400 (la tesela, 15)</p><p class="g-spec__class">.aura-small · .aura-feature__text · .aura-product-card__text</p></div><div class="g-spec__sample"><p class="aura-feature__text">Cancelación activa hasta dos veces la de la generación anterior, con modo Ambiente y audio espacial.</p></div></div>
                 <div class="g-spec"><div><p class="g-spec__name">Caption</p><p class="g-spec__meta">Inter / 13 / 400</p><p class="g-spec__class">.aura-caption</p></div><div class="g-spec__sample"><p class="aura-caption">Precios con IVA incluido. Financiación a 24 meses sin intereses, sujeta a aprobación.</p></div></div>
+                <div class="g-spec"><div><p class="g-spec__name">Nota <span class="g-gold">· v2</span></p><p class="g-spec__meta">Inter / 12 / 1,55 / 400</p><p class="g-spec__class">.aura-footnotes__list · .aura-table__note</p></div><div class="g-spec__sample"><ul class="aura-footnotes__list"><li>La autonomía depende del uso, la configuración y otros factores; los resultados reales pueden variar.</li></ul></div></div>
+                <div class="g-spec"><div><p class="g-spec__name">Botón <span class="g-gold">· v2</span></p><p class="g-spec__meta">Inter / 15 / 600 · sustituye al 14 / 400 de la v1</p><p class="g-spec__class">.aura-btn (capítulo 03)</p></div><div class="g-spec__sample" inert><div class="aura-cluster"><span class="aura-btn aura-btn--secondary">Más información</span><span class="aura-btn aura-btn--primary">Comprar</span></div></div></div>
+                <div class="g-spec"><div><p class="g-spec__name">Navegación <span class="g-gold">· v2</span></p><p class="g-spec__meta">Inter 13 / 450 · Inter 12 / 450 · Kanit 19 / 500</p><p class="g-spec__class">.aura-nav__link · .aura-localnav__link · __title</p></div><div class="g-spec__sample"><p class="g-navspec"><span class="g-navspec__title">auraPhone</span><span class="g-navspec__local">Destacado · Diseño · Cámaras</span><span class="g-navspec__global">auraPad · auraBook · Comparar · Soporte</span></p></div></div>
+                <div class="g-spec"><div><p class="g-spec__name">Cifras <span class="g-gold">· v2</span></p><p class="g-spec__meta">Kanit / 24 · 26–38 · 48–80 · 80–160 / 500</p><p class="g-spec__class">.aura-feature__value · .aura-stat (--lg, --xl)</p></div><div class="g-spec__sample"><div class="aura-cluster" style="--cluster:.75rem 2rem;align-items:baseline"><p class="aura-feature__value m-0">AURA H2</p><p class="aura-stat__value">24&nbsp;h</p></div></div></div>
                 <div class="g-spec"><div><p class="g-spec__name">Eyebrow / Badge</p><p class="g-spec__meta">Inter / 12 / 650</p><p class="g-spec__class">.aura-eyebrow · .aura-badge</p></div><div class="g-spec__sample"><div class="aura-cluster" style="--cluster:.75rem 1.5rem"><span class="aura-badge">auraPhone 18 Pro</span><p class="aura-eyebrow">auraPhone Duo</p><p class="aura-eyebrow aura-eyebrow--mono">Novedades / 2026</p><p class="aura-eyebrow aura-eyebrow--lg">auraBook Pro</p></div></div></div>
-                <div class="g-spec"><div><p class="g-spec__name">Precio</p><p class="g-spec__meta">Kanit / 16 · 20 · 28–36 / 500</p><p class="g-spec__class">.aura-price (--sm, --lg)</p></div><div class="g-spec__sample"><div class="aura-cluster" style="--cluster:.75rem 2rem;align-items:baseline"><p class="aura-price aura-price--lg">1.469,00&nbsp;€</p><p class="aura-price">Desde 1.469&nbsp;€</p><p class="aura-price aura-price--sm">61,21&nbsp;€/mes</p></div></div></div>
+                <div class="g-spec"><div><p class="g-spec__name">Precio</p><p class="g-spec__meta">Kanit / 16 · 20 · 28–36 / 500 · en la línea compacta (bolsa, checkout, popover), Inter 14 / 600, a juego con el nombre</p><p class="g-spec__class">.aura-price (--sm, --lg) · .aura-bag-line--compact</p></div><div class="g-spec__sample"><div class="aura-cluster" style="--cluster:.75rem 2rem;align-items:baseline"><p class="aura-price aura-price--lg">1.469,00&nbsp;€</p><p class="aura-price">Desde 1.469&nbsp;€</p><p class="aura-price aura-price--sm">61,21&nbsp;€/mes</p></div></div></div>
                 <div class="g-spec"><div><p class="g-spec__name">Mono</p><p class="g-spec__meta">Sistema / 12 / 400 · mayúsculas</p><p class="g-spec__class">.aura-mono</p></div><div class="g-spec__sample"><p class="aura-mono">AURA / Signal 01 · AU-2026-000123</p></div></div>
               </div>
             </div>
@@ -650,8 +761,10 @@
                     <tr><th scope="row"><code>.aura-h1</code></th><td class="g-num">34–56 px</td><td class="g-num">1,08</td><td class="g-num">−0,02em</td><td class="g-num">−0,012em</td></tr>
                     <tr><th scope="row"><code>.aura-h2</code></th><td class="g-num">28–42 px</td><td class="g-num">1,14</td><td class="g-num">−0,015em</td><td class="g-num">−0,01em</td></tr>
                     <tr><th scope="row"><code>.aura-h3</code> · <code>.aura-h4</code></th><td class="g-num">22–28 · 20 px</td><td class="g-num">1,22 · 1,3</td><td class="g-num">−0,008 · −0,004em</td><td class="g-num">igual</td></tr>
-                    <tr><th scope="row"><code>.aura-lead</code> · <code>.aura-body</code></th><td class="g-num">17–21 · 16 px</td><td class="g-num">1,5 · 1,6</td><td class="g-num">−0,003em · 0</td><td class="g-num">56 / 68 caracteres</td></tr>
+                    <tr><th scope="row"><code>.aura-lead</code> · <code>.aura-body</code></th><td class="g-num">17–21 · 16 px</td><td class="g-num">1,5 · 1,6</td><td class="g-num">−0,003em · 0</td><td class="g-num">44ch · 53ch (≈ 56 / 68 car.)</td></tr>
+                    <tr><th scope="row">Texto de componente (<code>.aura-small</code>, <code>__text</code>)</th><td class="g-num">14 px · tesela 15</td><td class="g-num">1,5</td><td class="g-num">0</td><td class="g-num">igual · 60ch</td></tr>
                     <tr><th scope="row"><code>.aura-caption</code></th><td class="g-num">13 px</td><td class="g-num">1,45</td><td class="g-num">+0,006em</td><td class="g-num">igual</td></tr>
+                    <tr><th scope="row">Nota (<code>.aura-footnotes__list</code>)</th><td class="g-num">12 px</td><td class="g-num">1,55</td><td class="g-num">+0,012em</td><td class="g-num">igual · 65ch</td></tr>
                     <tr><th scope="row"><code>.aura-eyebrow</code> · <code>--mono</code></th><td class="g-num">12 · 11 px</td><td class="g-num">1,35</td><td class="g-num">+0,04 · +0,12em</td><td class="g-num">mono en mayúsculas</td></tr>
                   </tbody>
                 </table>
@@ -670,14 +783,17 @@
 
             <div class="g-block">
               <div class="g-sub"><h3 class="g-sub__title">Detalles de composición</h3><p class="g-sub__meta">Los resuelve la base</p></div>
-              <div class="g-grid g-grid--4">
+              <div class="g-grid g-grid--3">
+                <div class="g-card"><p class="g-card__title">Medida en caracteres reales</p><p class="g-card__text">El objetivo sigue siendo 56 caracteres por línea en la entradilla y 68 en el cuerpo, pero un <code>ch</code> de Inter es más estrecho que un carácter medio: se consigue con <code>44ch</code> (<code>.aura-lead</code>) y <code>53ch</code> (<code>.aura-body</code>, <code>.aura-prose</code>); notas y características, <code>60ch</code>; notas al pie, <code>65ch</code>.</p></div>
+                <div class="g-card"><p class="g-card__title">Tamaños solo con clases</p><p class="g-card__text">Las hojas de página no escriben <code>font-size</code>, <code>line-height</code> ni <code>letter-spacing</code>: usan <code>.aura-body</code>, <code>.aura-caption</code> o la clase del componente. Un tamaño nuevo se añade aquí antes de usarse.</p></div>
                 <div class="g-card"><p class="g-card__title">Sin palabras huérfanas</p><p class="g-card__text">Titulares con <code>text-wrap: balance</code>; textos de componente con <code>pretty</code>. En un texto corto de tarjeta, <code>&amp;nbsp;</code> entre las dos últimas palabras.</p></div>
                 <div class="g-card"><p class="g-card__title">Pulgadas con Inter</p><p class="g-card__text"><span class="aura-h4">auraPad Pro 13<span class="aura-inch">″</span></span><br>El signo ″ (U+2033) se dibuja siempre con Inter (<code>.aura-inch</code>): Kanit y mono lo pintan como comillas.</p></div>
                 <div class="g-card"><p class="g-card__title">Texto grande</p><p class="g-card__text">Todo en <code>rem</code>: con la letra al 150 % las columnas se reparten antes y un titular parte una palabra larga antes que salirse.</p></div>
-                <div class="g-card"><p class="g-card__title">Cifras y unidades</p><p class="g-card__text">Precios con cifras tabulares. Cifra y unidad nunca se separan: «120&nbsp;Hz», «1&nbsp;TB», «800&nbsp;€» (espacio indivisible).</p></div>
+                <div class="g-card"><p class="g-card__title">Cifras y unidades</p><p class="g-card__text">Precios con cifras tabulares. Cifra y unidad nunca se separan: «120&nbsp;Hz», «1&nbsp;TB», «800&nbsp;€» (espacio indivisible). «USB-&#8288;C» lleva guion normal + WORD JOINER (U+2060): no se parte y el guion es de Inter (el U+2011 salía de Segoe UI).</p></div>
               </div>
               <pre class="g-code mt-3"><span class="c">&lt;!-- Fuentes de todas las páginas: Inter con su eje óptico y Kanit 500 / 600 --&gt;</span>
 <span class="t">&lt;link</span> <span class="a">href</span>="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&amp;family=Kanit:wght@500;600&amp;display=swap" <span class="a">rel</span>="stylesheet"<span class="t">&gt;</span></pre>
+              <p class="g-demo__caption">Mientras llegan, el texto se pinta con una reserva local (Segoe UI o Arial) escalada con <code>size-adjust</code>, <code>ascent-override</code> y <code>descent-override</code> para ocupar lo mismo que Inter y Kanit (<code>--font-ui</code> y <code>--font-display</code> la llevan detrás): al cambiar de fuente, el texto no salta.</p>
             </div>
           </div>
 
@@ -686,7 +802,7 @@
             <span class="g-note__icon"><i class="bi bi-type" aria-hidden="true"></i></span>
             <p class="g-note__title">Nota de uso</p>
             <p class="g-note__text">Usa Kanit para condensar intención y ritmo en titulares. Inter sostiene lecturas largas y controles; conserva una longitud de línea cómoda y contraste alto.</p>
-            <p class="g-note__text">Un solo <code>.aura-display</code> y un solo <code>h1</code> por página. La clase da el aspecto y la etiqueta el nivel (<code>&lt;h2 class="aura-h3"&gt;</code> es válido). No fijes <code>letter-spacing</code> ni <code>line-height</code> a mano: cada clase trae los de su tamaño.</p>
+            <p class="g-note__text">Un solo <code>.aura-display</code> y un solo <code>h1</code> por página. La clase da el aspecto y la etiqueta el nivel (<code>&lt;h2 class="aura-h3"&gt;</code> es válido). No fijes <code>letter-spacing</code> ni <code>line-height</code> a mano: cada clase trae los de su tamaño. Display es una ampliación de la v2 sobre la v1 (su «Hero Title» de 56 px es el <code>.aura-h1</code>); insignia y antetítulo comparten «12 / 650», como escribe la v1.</p>
           </div>
         </div>
       </div>
@@ -713,7 +829,7 @@
               <div class="g-matrix" inert>
                 <div class="g-matrix__head" aria-hidden="true"><span>Variante</span><span>Estados disponibles</span></div>
                 <div class="g-matrix__row">
-                  <div><p class="g-matrix__name">Botón Primario</p><p class="g-matrix__meta">48H / 999R / 24PX</p></div>
+                  <div><p class="g-matrix__name">Botón Primario</p><p class="g-matrix__meta">48H / 999R / 24PX</p><p class="g-matrix__meta">Inter 15 / 600 · halo .55 → 1</p></div>
                   <div class="g-matrix__cells">
                     <div class="g-state"><span class="g-state__label">Normal</span><div class="g-state__cell"><button class="aura-btn aura-btn--primary" type="button">Continuar <i class="bi bi-arrow-up-right" aria-hidden="true"></i></button></div></div>
                     <div class="g-state"><span class="g-state__label g-state__label--hover">Hover</span><div class="g-state__cell"><button class="aura-btn aura-btn--primary is-hover" type="button">Continuar <i class="bi bi-arrow-up-right" aria-hidden="true"></i></button></div></div>
@@ -721,7 +837,7 @@
                   </div>
                 </div>
                 <div class="g-matrix__row">
-                  <div><p class="g-matrix__name">Botón Secundario</p><p class="g-matrix__meta">48H / 999R / 24PX</p></div>
+                  <div><p class="g-matrix__name">Botón Secundario</p><p class="g-matrix__meta">48H / 999R / 24PX</p><p class="g-matrix__meta">Contorno #0071e3 → #1787f7</p></div>
                   <div class="g-matrix__cells">
                     <div class="g-state"><span class="g-state__label">Normal</span><div class="g-state__cell"><button class="aura-btn aura-btn--secondary" type="button">Más información</button></div></div>
                     <div class="g-state"><span class="g-state__label g-state__label--hover">Hover</span><div class="g-state__cell"><button class="aura-btn aura-btn--secondary is-hover" type="button">Más información</button></div></div>
@@ -753,6 +869,7 @@
                   </div>
                 </div>
               </div>
+              <p class="g-demo__caption">Etiqueta en Inter 15 / 600 y halo <code>--glow-accent</code> al .55 en reposo, como el prototipo de Inicio: sustituyen al 14 / 400 con relleno plano de la v1 (capítulo 00). En hover el halo pasa a 1 y el relleno a <code>--accent-hover</code> #0074e8; la v1 aclaraba a #1787f7, pero el blanco sobre ese azul da 3,59:1. Desactivado: relleno <code>--fill-disabled</code> #252528 y etiqueta <code>--text-disabled</code> #6e6e73 (3,01:1; la v1 usaba #4d4d51, 1,82:1).</p>
             </div>
 
             <div class="g-block">
@@ -768,8 +885,8 @@
 
             <div class="g-block">
               <div class="g-linkrow">
-                <div><p class="g-linkrow__label">Enlace contextual</p><p class="g-linkrow__text">Acción de baja intensidad dentro del flujo. El «›» lo pone el CSS.</p></div>
-                <a class="aura-link" href="../html/trade-in.html" style="font-size:1.0625rem;font-weight:600">Comprobar valor cuántico</a>
+                <div><p class="g-linkrow__label">Enlace contextual</p><p class="g-linkrow__text">Acción de baja intensidad dentro del flujo. Inter 500 al tamaño del texto que acompaña (la v1 lo dibuja a 16 / 600); en hover se subraya y el «›» avanza, sin cambiar de color. El «›» lo pone el CSS.</p></div>
+                <a class="aura-link" href="../html/trade-in.html">Comprobar valor cuántico</a>
               </div>
               <div class="g-linkrow">
                 <div><p class="g-linkrow__label">Variantes <span class="g-gold">· V 2.0</span></p><p class="g-linkrow__text"><code>--plain</code> sin «›» · <code>--muted</code> gris · <code>button.aura-link</code> como control de 44 px · <code>--control</code> si va solo en un párrafo.</p></div>
@@ -862,8 +979,8 @@
           <div class="g-note">
             <span class="g-note__icon"><i class="bi bi-hand-index" aria-hidden="true"></i></span>
             <p class="g-note__title">Nota de uso</p>
-            <p class="g-note__text">Mantén una sola acción primaria por contexto. El estado hover aumenta la luminosidad; disabled reduce contraste sin perder la etiqueta.</p>
-            <p class="g-note__text">Desactivado igual en primario, secundario e inverso (relleno <code>--fill-disabled</code> #252528, etiqueta <code>--text-disabled</code>); el destructivo conserva su contorno. Hover del secundario: contorno <code>--accent-bright</code> y tinte azul; del inverso, <code>--inverse-hover</code> #e8e8ed. Los cambios de color son instantáneos.</p>
+            <p class="g-note__text">Mantén una sola acción primaria por contexto. El estado hover gana luminosidad con el halo (de .55 a 1) y el relleno #0074e8, sin bajar del 4,5:1 de la etiqueta; disabled reduce contraste sin perder la etiqueta.</p>
+            <p class="g-note__text">Desactivado igual en primario, secundario e inverso (relleno <code>--fill-disabled</code> #252528, etiqueta <code>--text-disabled</code>); el destructivo conserva su contorno. Hover del secundario: contorno <code>--accent-bright</code> (#1787f7), tinte <code>--accent-soft</code> y etiqueta <code>--accent-link-hover</code> (también con el foco: #1787f7 sobre el tinte de una tarjeta se queda en 4,3:1); del inverso, <code>--inverse-hover</code> #e8e8ed. El color de base no se anima: la capa de hover y el halo se funden en 160 ms (<code>--dur-1</code>).</p>
           </div>
         </div>
       </div>
@@ -932,7 +1049,7 @@
                   <ol class="g-steps-list">
                     <li>Etiqueta persistente y descriptiva (<code>label for</code>), nunca solo el placeholder</li>
                     <li>Icono de apoyo, nunca decorativo, siempre antes del control</li>
-                    <li>Anillo azul + cristal en estado focus: <code>--accent-link</code>, <code>--accent-ring</code>, <code>--field-bg-focus</code></li>
+                    <li>Anillo azul + cristal en estado focus: borde <code>--accent-link</code> de 1 px, anillo <code>--accent-ring</code> de 4 px al 40 % pegado al borde, fondo <code>--field-bg-focus</code> y la etiqueta en azul (Inter 13 / 500)</li>
                     <li>Ayuda opcional (<code>.aura-field__help</code>) y pista a la derecha de la etiqueta</li>
                     <li>Mensaje de error siempre en el DOM y vacío, enlazado con <code>aria-describedby</code></li>
                   </ol>
@@ -1059,6 +1176,7 @@
             <span class="g-note__icon"><i class="bi bi-fullscreen" aria-hidden="true"></i></span>
             <p class="g-note__title">Nota de uso</p>
             <p class="g-note__text">El efecto cristal aparece al enfocar y no sustituye el borde azul. La etiqueta permanece visible para mantener orientación y accesibilidad.</p>
+            <p class="g-note__text">Sobre la v1: el foco sigue su texto («Ring / Blue 40%»: anillo de 4 px) y no su dibujo (borde de 1,5 px sin anillo y etiqueta blanca); el borde en reposo (blanco al 36 %, 3,14:1) y el <code>placeholder</code> (#98989d, 6,30:1) se aclararon desde #45454b y #6e6e73 para llegar a AA. Con el ratón encima, campos, casillas y opciones pasan a <code>--field-border-hover</code> (50 %).</p>
             <p class="g-note__text">Valida en línea, al salir del campo, con el mensaje junto a él. Pide solo lo necesario, en el momento en que hace falta, y di junto al pago que nunca se guardan datos de tarjeta. Las reglas van dos veces: en el HTML (<code>required</code>, <code>pattern</code>, <code>minlength</code>) y en <code>AURA.ui.form</code>, con <code>novalidate</code> en el formulario.</p>
           </div>
         </div>
@@ -1142,12 +1260,13 @@
               <div class="g-grid g-grid--2">
                 <div class="g-card g-card--base">
                   <div class="g-sizes">
+                    <div class="g-size"><i class="bi bi-arrow-return-left" style="font-size:.75rem" aria-hidden="true"></i><span class="g-mono g-muted">1em · nota</span></div>
                     <div class="g-size"><i class="bi bi-envelope" style="font-size:1rem" aria-hidden="true"></i><span class="g-mono g-muted">16 · campo</span></div>
-                    <div class="g-size"><i class="bi bi-search" style="font-size:1.0625rem" aria-hidden="true"></i><span class="g-mono g-muted">17 · barra</span></div>
+                    <div class="g-size"><i class="bi bi-search" style="font-size:1.0625rem" aria-hidden="true"></i><span class="g-mono g-muted">17 · barras</span></div>
                     <div class="g-size"><i class="bi bi-cpu" style="font-size:1.125rem" aria-hidden="true"></i><span class="g-mono g-muted">18 · tarjeta</span></div>
                     <div class="g-size"><i class="bi bi-bag" style="font-size:1.75rem" aria-hidden="true"></i><span class="g-mono g-muted">28 · vacío</span></div>
                   </div>
-                  <p class="g-card__text mt-3">Iconos en línea con el texto a 1em; en botones de icono, 17 px dentro de una caja de 44 px. Nunca por debajo de 16 px.</p>
+                  <p class="g-card__text mt-3">Nunca por debajo de 16 px, salvo en línea con un texto menor, donde va a 1em: el de la nota al pie, el estado de disponibilidad o el aviso de la tarjeta de acceso (12–13 px). En botones de icono y en el chevrón de la barra local, 17 px dentro de su caja de 44 px.</p>
                 </div>
                 <div class="g-card g-card--base">
                   <div class="aura-cluster" style="--cluster:1rem 1.25rem;align-items:center" inert>
@@ -1157,7 +1276,7 @@
                     <button class="aura-icon-btn aura-icon-btn--solid" type="button" aria-label="Siguiente"><i class="bi bi-chevron-right" aria-hidden="true"></i></button>
                     <span class="g-note__icon" style="grid-row:auto"><i class="bi bi-lightbulb" aria-hidden="true"></i></span>
                   </div>
-                  <p class="g-card__text mt-3">Característica neutra (<code>--fill-2</code>, 40 px) · dorada solo para valor premium (AuraCare+, Trade In) · AuraCare+ en la bolsa (32 px) · botón de icono (44 px) · icono de nota (36 px, <code>--gold-soft</code>).</p>
+                  <p class="g-card__text mt-3">Característica neutra (<code>--fill-2</code>, 40 px, icono de 18) · dorada solo para valor premium (AuraCare+, Trade In) · AuraCare+ en la bolsa (32 px, icono de 16; incluido: azul de elegido, <code>bi-shield-fill-check</code>) · botón de icono (44 px) · icono de nota (36 px, <code>--gold-soft</code>).</p>
                 </div>
               </div>
             </div>
@@ -1166,12 +1285,12 @@
               <div class="g-sub"><h3 class="g-sub__title">Marca</h3><p class="g-sub__meta">Logotipo · señal · nombres</p></div>
               <div class="g-grid g-grid--3">
                 <div class="g-card g-card--base">
-                  <p class="g-card__label"><span>Logotipo del sitio</span><span>img/aura.png</span></p>
+                  <p class="g-card__label"><span>Logotipo del sitio</span><span>img/aura-72.png</span></p>
                   <div class="d-grid gap-3" inert>
-                    <span class="aura-brand"><img class="aura-brand__mark" src="../img/aura.png" width="28" height="28" alt=""><span class="aura-brand__word">AURA</span></span>
-                    <span class="aura-brand aura-brand--lg"><img class="aura-brand__mark" src="../img/aura.png" width="36" height="36" alt=""><span class="aura-brand__word">AURA</span></span>
+                    <span class="aura-brand"><img class="aura-brand__mark" src="../img/aura-72.png" width="28" height="28" alt=""><span class="aura-brand__word">AURA</span></span>
+                    <span class="aura-brand aura-brand--lg"><img class="aura-brand__mark" src="../img/aura-72.png" width="36" height="36" alt=""><span class="aura-brand__word">AURA</span></span>
                   </div>
-                  <p class="g-card__text"><code>.aura-brand</code> (28 px) en barra y pie; <code>--lg</code> (36 px) en la tarjeta de acceso. Enlace con <code>aria-label</code> y <code>title</code> «AURA — Volver al inicio».</p>
+                  <p class="g-card__text"><code>.aura-brand</code> (28 px) en barra y pie; <code>--lg</code> (36 px) en la tarjeta de acceso. La marca es <code>aura-72.png</code> (72 px, unos 3 KB: nítida a 36 px en retina); <code>aura.png</code> (512 px) queda para los iconos. Enlace con <code>aria-label</code> y <code>title</code> «AURA — Volver al inicio».</p>
                 </div>
                 <div class="g-card g-card--base">
                   <p class="g-card__label"><span>Señal de la guía</span><span>Anillo + punto</span></p>
@@ -1265,8 +1384,9 @@
                     <tr><th scope="row">Aviso</th><td>Fino (sólido si hay una tarea modal abierta)</td><td>No</td><td>Sigue igual</td></tr>
                     <tr><th scope="row">Popover · barra global · barra local</th><td>Regular (el de la bolsa, sólido <code>--bg-elevated</code> sobre la barra local)</td><td>No</td><td>Sigue igual</td></tr>
                     <tr><th scope="row">Hoja inferior · buscador</th><td>Grueso, sombra <code>--shadow-3</code></td><td><code>--scrim</code> 58 %</td><td>Retrocede al 96,5 %</td></tr>
-                    <tr><th scope="row">Cajón lateral · menú móvil</th><td>Grueso</td><td>Sí</td><td>Se bloquea el scroll (<code>html.aura-lock</code>)</td></tr>
+                    <tr><th scope="row">Cajón lateral · menú móvil</th><td>Grueso (el menú, en negro como la barra global: <code>--glass-nav-thick-bg</code> 86 %)</td><td>Sí</td><td>Se bloquea el scroll (<code>html.aura-lock</code>)</td></tr>
                     <tr><th scope="row">Barra de compra</th><td>Grueso</td><td>No (panel paralelo)</td><td>Sigue igual</td></tr>
+                    <tr><th scope="row">Botón secundario sobre la escena · etiqueta sobre una foto</th><td>Fino (<code>--glass-thin-bg</code>) · regular negro (<code>--glass-nav-bg</code>)</td><td>No</td><td>Sigue igual</td></tr>
                     <tr><th scope="row">Superficie propia de una página</th><td><code>.aura-material</code> (+ <code>--thin</code>, <code>--thick</code>) o <code>.aura-glass-bar</code></td><td>—</td><td>Nunca <code>rgba()</code> ni <code>blur()</code> a mano</td></tr>
                   </tbody>
                 </table>
@@ -1276,9 +1396,9 @@
             <div class="g-block">
               <div class="g-sub"><h3 class="g-sub__title">Sombras y radios</h3><p class="g-sub__meta">Más profunda cuanto mayor la superficie</p></div>
               <div class="g-grid g-grid--4">
-                <div class="g-card g-card--band" style="display:grid;place-items:center;gap:1rem;min-height:9rem"><span style="width:4.5rem;height:3rem;border-radius:.75rem;background:var(--bg-elevated);box-shadow:var(--shadow-1)"></span><span class="g-mono g-muted">--shadow-1 · chips</span></div>
-                <div class="g-card g-card--band" style="display:grid;place-items:center;gap:1rem;min-height:9rem"><span style="width:4.5rem;height:3rem;border-radius:.75rem;background:var(--bg-elevated);box-shadow:var(--shadow-2)"></span><span class="g-mono g-muted">--shadow-2 · tarjetas</span></div>
-                <div class="g-card g-card--band" style="display:grid;place-items:center;gap:1rem;min-height:9rem"><span style="width:4.5rem;height:3rem;border-radius:.75rem;background:var(--bg-elevated);box-shadow:var(--shadow-3)"></span><span class="g-mono g-muted">--shadow-3 · hojas</span></div>
+                <div class="g-card g-card--band" style="display:grid;place-items:center;gap:1rem;min-height:9rem"><span style="width:4.5rem;height:3rem;border-radius:.75rem;background:var(--bg-elevated);box-shadow:var(--shadow-1)"></span><span class="g-mono g-muted">--shadow-1 · pastilla del segmentado</span></div>
+                <div class="g-card g-card--band" style="display:grid;place-items:center;gap:1rem;min-height:9rem"><span style="width:4.5rem;height:3rem;border-radius:.75rem;background:var(--bg-elevated);box-shadow:var(--shadow-2)"></span><span class="g-mono g-muted">--shadow-2 · popover y paneles de cristal</span></div>
+                <div class="g-card g-card--band" style="display:grid;place-items:center;gap:1rem;min-height:9rem"><span style="width:4.5rem;height:3rem;border-radius:.75rem;background:var(--bg-elevated);box-shadow:var(--shadow-3)"></span><span class="g-mono g-muted">--shadow-3 · hojas y buscador</span></div>
                 <div class="g-card g-card--band" style="display:grid;place-items:center;gap:1rem;min-height:9rem"><span style="width:4.5rem;height:3rem;border-radius:999px;background:var(--accent);box-shadow:var(--glow-accent)"></span><span class="g-mono g-muted">--glow-accent · primario</span></div>
               </div>
               <div class="g-grid g-grid--6 mt-3">
@@ -1289,6 +1409,7 @@
                 <div class="g-card g-card--base" style="padding:1rem"><span style="display:block;height:3.5rem;border:1px solid var(--g-line-2);border-radius:1.75rem;background:var(--g-card)"></span><p class="g-card__text"><code>--radius-xl</code> 28<br>Hojas, buscador</p></div>
                 <div class="g-card g-card--base" style="padding:1rem"><span style="display:block;height:3.5rem;border:1px solid var(--g-line-2);border-radius:999px;background:var(--g-card)"></span><p class="g-card__text"><code>--radius-pill</code><br>Botones, chips</p></div>
               </div>
+              <p class="g-demo__caption">Las tarjetas, teselas y tarjetas de modelo no llevan sombra: las separa su borde <code>--hairline</code> y el filo <code>--edge-light</code>. <code>--shadow-2</code> es de lo que flota a la altura de la página (popover, tarjeta elevada, tarjeta de acceso, paneles de cristal sobre foto); <code>--shadow-3</code>, de lo que tapa la página (hoja, buscador). Radios siempre con token: <code>--radius-2xs</code> (6 px) solo para la caja de las casillas.</p>
             </div>
 
             <div class="g-block">
@@ -1346,7 +1467,7 @@
               <div class="g-card g-card--base">
                 <div style="display:grid;grid-template-columns:2.5rem minmax(0,1fr) 2.5rem;height:5.5rem;border-radius:.5rem;overflow:hidden;border:1px solid var(--g-line)">
                   <span class="g-chip-checker"></span>
-                  <span style="display:grid;place-items:center;background:var(--g-blue-tint);border-inline:1px dashed rgba(41,151,255,.55)"><span class="g-mono g-blue">--container · 1180 px de contenido</span></span>
+                  <span style="display:grid;place-items:center;background:var(--g-blue-tint);border-inline:1px dashed rgba(23,135,247,.55)"><span class="g-mono g-blue">--container · 1180 px de contenido</span></span>
                   <span class="g-chip-checker"></span>
                 </div>
                 <div class="d-flex justify-content-between mt-2"><span class="g-mono g-muted">--gutter 20–40 px</span><span class="g-mono g-muted">--gutter 20–40 px</span></div>
@@ -1366,7 +1487,7 @@
                 <li class="is-tall"><span><strong class="g-white">.aura-section--center</strong> · llamada final: todo centrado, con <code>.aura-halo</code></span><code>--center</code></li>
                 <li><span><strong class="g-white">.aura-section--tight</strong> · <span class="g-num">clamp(40, 5vw, 64 px)</span> · tareas y notas al pie</span><code>--tight</code></li>
               </ul>
-              <p class="g-demo__caption">Cabecera de sección (<code>.aura-section-head</code>): antetítulo, titular y entradilla con 14 px de hueco, máx. 46 rem; <code>--split</code> lleva el enlace a la derecha, en la línea base del último renglón; <code>--center</code> centra. Cada sección, <code>&lt;section aria-labelledby&gt;</code> a su titular.</p>
+              <p class="g-demo__caption">Cabecera de sección (<code>.aura-section-head</code>): antetítulo, titular y entradilla con 14 px de hueco, máx. 46 rem; <code>--split</code> lleva el enlace a la derecha, en la línea base del último renglón; <code>--center</code> centra. Cada sección, <code>&lt;section aria-labelledby&gt;</code> a su titular. Dentro de una sección, dos bloques seguidos (cabecera y bento, un bloque texto + imagen y el siguiente) se separan con <code>--space-block</code> (<code>clamp(3.5rem, 8vw, 6.5rem)</code>) y las cifras con <code>--space-stats</code> (<code>clamp(2.5rem, 5vw, 4rem)</code>): nunca con <code>mt-5</code> ni con medidas propias de la página.</p>
             </div>
 
             <div class="g-block">
@@ -1375,11 +1496,11 @@
                 <div class="d-grid gap-3">
                   <div><p class="g-mono g-muted mb-2"><code>.aura-grid--2</code> · desde 36 em (576 px)</p><div class="aura-grid aura-grid--2" style="--gap:.75rem"><span class="g-card" style="padding:.75rem"></span><span class="g-card" style="padding:.75rem"></span></div></div>
                   <div><p class="g-mono g-muted mb-2"><code>.aura-grid--3</code> · desde 48 em (768 px)</p><div class="aura-grid aura-grid--3" style="--gap:.75rem"><span class="g-card" style="padding:.75rem"></span><span class="g-card" style="padding:.75rem"></span><span class="g-card" style="padding:.75rem"></span></div></div>
-                  <div><p class="g-mono g-muted mb-2"><code>.aura-grid--4</code> · desde 62 em (992 px)</p><div class="aura-grid aura-grid--4" style="--gap:.75rem"><span class="g-card" style="padding:.75rem"></span><span class="g-card" style="padding:.75rem"></span><span class="g-card" style="padding:.75rem"></span><span class="g-card" style="padding:.75rem"></span></div></div>
+                  <div><p class="g-mono g-muted mb-2"><code>.aura-grid--4</code> · 2 desde 36 em (576 px) · 4 desde 75 em (1200 px)</p><div class="aura-grid aura-grid--4" style="--gap:.75rem"><span class="g-card" style="padding:.75rem"></span><span class="g-card" style="padding:.75rem"></span><span class="g-card" style="padding:.75rem"></span><span class="g-card" style="padding:.75rem"></span></div></div>
                 </div>
               </div>
               <div class="g-grid g-grid--3 mt-3">
-                <div class="g-card"><p class="g-card__title">Texto + imagen</p><ul class="g-wire mt-3"><li style="min-height:4rem">copy</li><li style="min-height:4rem;border-color:rgba(41,151,255,.45)">media</li></ul><p class="g-card__text"><code>.aura-split</code> (+ <code>--reverse</code>): dos columnas desde 992 px; <code>--wide-media</code> (0,8 / 1,2) desde 1200 px.</p></div>
+                <div class="g-card"><p class="g-card__title">Texto + imagen</p><ul class="g-wire mt-3"><li style="min-height:4rem">copy</li><li style="min-height:4rem;border-color:rgba(23,135,247,.45)">media</li></ul><p class="g-card__text"><code>.aura-split</code> (+ <code>--reverse</code>): dos columnas desde 992 px; <code>--wide-media</code> (0,8 / 1,2) desde 1200 px.</p></div>
                 <div class="g-card"><p class="g-card__title">Contenido + resumen</p><div class="d-grid mt-3" style="grid-template-columns:minmax(0,1fr) 34%;gap:.375rem"><span class="g-wire" style="display:block"><span style="display:block;min-height:6.5rem;border:1px solid var(--g-line);border-radius:.375rem;background:#000"></span></span><span style="display:block;border:1px solid rgba(229,169,60,.4);border-radius:.375rem;background:#000"></span></div><p class="g-card__text"><code>.aura-layout--aside</code>: columna de 320–384 px (bolsa, checkout, cuenta); <code>--config</code>: galería + opciones.</p></div>
                 <div class="g-card"><p class="g-card__title">Apilar y agrupar</p><div class="d-grid gap-2 mt-3"><span style="height:1.25rem;border-radius:.375rem;background:var(--fill-2)"></span><span style="height:1.25rem;border-radius:.375rem;background:var(--fill-2)"></span><span class="d-flex gap-2"><span style="height:1.5rem;width:30%;border-radius:999px;background:var(--fill-3)"></span><span style="height:1.5rem;width:22%;border-radius:999px;background:var(--fill-3)"></span></span></div><p class="g-card__text"><code>.aura-stack</code> (hueco <code>--stack</code>) y <code>.aura-cluster</code> (fila que envuelve; <code>--stack-sm</code> apila los botones en el teléfono).</p></div>
               </div>
@@ -1394,9 +1515,9 @@
                     <tr><th scope="row" class="g-num">390 px</th><td>Teléfono de referencia: una columna, titulares a la mitad (<code>.aura-display</code> 40 px), márgenes de 20 px. Ningún desborde horizontal.</td></tr>
                     <tr><th scope="row" class="g-num">&lt; 576 px</th><td>Dos o más botones se apilan con el mismo ancho; pasos del checkout solo con el actual; tabla compacta (mín. 544 px).</td></tr>
                     <tr><th scope="row" class="g-num">≥ 576 px</th><td>Filas de formulario a dos columnas; avisos a la derecha (se apartan hacia la derecha).</td></tr>
-                    <tr><th scope="row" class="g-num">≥ 768 px</th><td>La hoja pasa a cajón lateral; la barra local muestra sus enlaces (por debajo, menú con chevrón).</td></tr>
-                    <tr><th scope="row" class="g-num">≥ 992 px</th><td>Héroe y bloque texto + imagen a dos columnas; barra global con enlaces (por debajo, menú a pantalla completa); resumen pegajoso; sin barra de compra fija.</td></tr>
-                    <tr><th scope="row" class="g-num">≥ 1200 px</th><td>Etiqueta «Iniciar sesión» visible; <code>--wide-media</code>; las cuatro ventajas en una fila.</td></tr>
+                    <tr><th scope="row" class="g-num">≥ 768 px</th><td>La hoja pasa a cajón lateral; <code>.aura-grid--3</code> a tres columnas (no pasa por dos: dejaría una tarjeta sola).</td></tr>
+                    <tr><th scope="row" class="g-num">≥ 992 px</th><td>Héroe y bloque texto + imagen a dos columnas; barra global con enlaces (por debajo, menú a pantalla completa); la barra local enseña todos sus enlaces (por debajo, menú con chevrón); resumen pegajoso; sin barra de compra fija, salvo en comprar (<code>--always</code>, capítulo 00).</td></tr>
+                    <tr><th scope="row" class="g-num">≥ 1200 px</th><td>Etiqueta «Iniciar sesión» visible; <code>--wide-media</code>; <code>.aura-grid--4</code> y las cuatro ventajas en una fila (entre 576 y 1199 px, dos por fila: cuatro de 217 px dejaban titulares de cuatro líneas).</td></tr>
                   </tbody>
                 </table>
               </div>
@@ -1414,6 +1535,8 @@
                       <tr><th scope="row"><code>--ribbon-h</code></th><td class="g-num">alto real de la cinta</td></tr>
                       <tr><th scope="row"><code>--sticky-top</code></th><td class="g-num">lo que queda pegado arriba</td></tr>
                       <tr><th scope="row"><code>--gap</code></th><td class="g-num">20 px · rejillas</td></tr>
+                      <tr><th scope="row"><code>--space-block</code></th><td class="g-num">56–104 px · entre bloques de una sección</td></tr>
+                      <tr><th scope="row"><code>--space-stats</code></th><td class="g-num">40–64 px · antes y después de las cifras</td></tr>
                     </tbody>
                   </table>
                 </div>
@@ -1468,7 +1591,7 @@
               <div class="g-demo g-demo--flush" inert aria-hidden="true">
                 <header class="aura-nav is-scrolled">
                   <div class="aura-container aura-nav__inner">
-                    <span class="aura-brand"><img class="aura-brand__mark" src="../img/aura.png" width="28" height="28" alt=""><span class="aura-brand__word">AURA</span></span>
+                    <span class="aura-brand"><img class="aura-brand__mark" src="../img/aura-72.png" width="28" height="28" alt=""><span class="aura-brand__word">AURA</span></span>
                     <nav class="aura-nav__links" aria-label="Principal">
                       <a class="aura-nav__link is-active" href="../html/auraphone.html" aria-current="page">auraPhone</a>
                       <a class="aura-nav__link" href="../html/aurapad.html">auraPad</a>
@@ -1488,11 +1611,11 @@
                 </header>
                 <aside class="aura-ribbon" aria-label="Promoción">
                   <div class="aura-container">
-                    <p class="aura-ribbon__text">Ahorra con AURA Trade In: entrega tu antiguo dispositivo mundano y llévate hasta 800&nbsp;€ de descuento en tu nuevo auraPhone, auraPad, auraBook o auraPods. <a class="aura-link" href="../html/trade-in.html">Comprobar valor cuántico</a></p>
+                    <p class="aura-ribbon__text"><span class="aura-ribbon__long">Ahorra con AURA Trade In: entrega tu antiguo dispositivo mundano y llévate hasta 800&nbsp;€ de descuento en tu nuevo auraPhone, auraPad, auraBook o auraPods.</span><span class="aura-ribbon__short">Hasta 800&nbsp;€ por tu dispositivo mundano.</span> <a class="aura-link" href="../html/trade-in.html">Comprobar valor cuántico</a></p>
                   </div>
                 </aside>
               </div>
-              <p class="g-demo__caption">Material regular negro (<code>--glass-nav-bg</code>) en <code>::before</code>; el efecto de borde solo con <code>.is-scrolled</code>. Enlace activo con <code>.is-active</code> + <code>aria-current="page"</code>. La cifra y las familias de la cinta salen del catálogo. Por debajo de 992 px los enlaces pasan al menú y la etiqueta de la cuenta solo se ve desde 1200 px.</p>
+              <p class="g-demo__caption">Material regular negro (<code>--glass-nav-bg</code>) en <code>::before</code>; el efecto de borde solo con <code>.is-scrolled</code>. Enlace activo con <code>.is-active</code> + <code>aria-current="page"</code>. La cifra y las familias de la cinta salen del catálogo; por debajo de 576 px la cinta cambia a su texto corto («Hasta 800&nbsp;€ por tu dispositivo mundano.», con el mismo enlace), así ocupa una o dos líneas y no cuatro. Por debajo de 992 px los enlaces pasan al menú y la etiqueta de la cuenta solo se ve desde 1200 px.</p>
             </div>
 
             <div class="g-block">
@@ -1513,7 +1636,7 @@
                 </nav>
                 <div style="height:3.5rem;background:linear-gradient(180deg,#121214,#000)"></div>
               </div>
-              <p class="g-demo__caption">Se pega arriba y marca la sección visible (también en los bloques sin enlace sigue el último). Su acción es el enlace contextual «Comprar ›» (nunca un botón: la única primaria azul a la vista es la del héroe). En el teléfono, los enlaces se pliegan en un menú que abre un chevrón; el título se recorta antes que la acción.</p>
+              <p class="g-demo__caption">Se pega arriba y marca la sección visible (también en los bloques sin enlace sigue el último). Su acción es el enlace contextual «Comprar ›» (nunca un botón: la única primaria azul a la vista es la del héroe). Mientras los enlaces no caben junto al título y la acción (por debajo de 992 px), se pliegan en un menú que abre un chevrón de 17 px; el título se recorta antes que la acción.</p>
             </div>
 
             <div class="g-block">
@@ -1549,12 +1672,12 @@
                     <div class="aura-popover__header"><p class="aura-popover__title">Bolsa</p><span class="aura-caption">2 artículos</span></div>
                     <ul class="aura-popover__list">
                       <li class="aura-bag-line aura-bag-line--compact">
-                        <div class="aura-bag-line__media"><img class="aura-img" src="../img/aurapad-air-13.webp" width="1600" height="1200" alt="" loading="lazy" decoding="async"></div>
+                        <div class="aura-bag-line__media"><img class="aura-img" src="../img/aurapad-air-13-azul-trasera.webp" width="1600" height="1200" alt="" loading="lazy" decoding="async"></div>
                         <div class="aura-bag-line__info"><p class="aura-bag-line__name">auraPad Air 13<span class="aura-inch">″</span></p><p class="aura-bag-line__meta">Azul · 128 GB · Wi-Fi</p></div>
                         <div class="aura-bag-line__price"><span class="aura-price">999,00 €</span></div>
                       </li>
                       <li class="aura-bag-line aura-bag-line--compact">
-                        <div class="aura-bag-line__media"><img class="aura-img" src="../img/aurabook-air-15.webp" width="1600" height="1200" alt="" loading="lazy" decoding="async"></div>
+                        <div class="aura-bag-line__media"><img class="aura-img" src="../img/aurabook-air-15-plata-tres-cuartos.webp" width="1600" height="1200" alt="" loading="lazy" decoding="async"></div>
                         <div class="aura-bag-line__info"><p class="aura-bag-line__name">auraBook Air 15<span class="aura-inch">″</span></p><p class="aura-bag-line__meta">Plata · AuraCare+</p></div>
                         <div class="aura-bag-line__price"><span class="aura-price">1.729,00 €</span></div>
                       </li>
@@ -1576,7 +1699,7 @@
                 <div class="g-demo g-demo--photo g-demo--flush">
                   <div class="aura-menu is-open g-static">
                     <div class="aura-container aura-menu__bar">
-                      <span class="aura-brand"><img class="aura-brand__mark" src="../img/aura.png" width="28" height="28" alt=""><span class="aura-brand__word">AURA</span></span>
+                      <span class="aura-brand"><img class="aura-brand__mark" src="../img/aura-72.png" width="28" height="28" alt=""><span class="aura-brand__word">AURA</span></span>
                       <button class="aura-icon-btn" type="button" aria-label="Cerrar el menú"><i class="bi bi-x-lg" aria-hidden="true"></i></button>
                     </div>
                     <nav class="aura-container aura-menu__nav" aria-label="Principal">
@@ -1596,7 +1719,7 @@
                 <div class="d-grid gap-3 align-content-start">
                   <div class="g-demo">
                     <ol class="aura-crumbs">
-                      <li><span><img src="../img/aura.png" width="20" height="20" alt=""></span></li>
+                      <li><span><img src="../img/aura-72.png" width="20" height="20" alt=""></span></li>
                       <li><span>auraPhone</span></li>
                       <li aria-current="page">Comprar auraPhone 18 Pro</li>
                     </ol>
@@ -1617,7 +1740,7 @@
                   <div class="aura-container">
                     <div class="aura-footer__main">
                       <div class="aura-footer__brand">
-                        <span class="aura-brand"><img class="aura-brand__mark" src="../img/aura.png" width="28" height="28" alt=""><span class="aura-brand__word">AURA</span></span>
+                        <span class="aura-brand"><img class="aura-brand__mark" src="../img/aura-72.png" width="28" height="28" alt=""><span class="aura-brand__word">AURA</span></span>
                         <p class="aura-footer__tagline">Tecnología inmersiva diseñada para ampliar lo que imaginas. Precisión, profundidad y energía AURA.</p>
                         <ul class="aura-footer__social">
                           <li><span class="aura-footer__social-link"><i class="bi bi-instagram" aria-hidden="true"></i></span></li>
@@ -1740,7 +1863,7 @@
               <div class="g-sub"><h3 class="g-sub__title">Tarjeta de modelo</h3><p class="g-sub__meta">[data-aura-lineup] · AURA.html.productCard()</p></div>
               <div class="aura-lineup" inert aria-hidden="true">
                 <article class="aura-product-card" data-status="proximamente">
-                  <span class="aura-product-card__media"><img class="aura-img" src="../img/auraphone-duo.webp" width="1600" height="1200" alt="" loading="lazy" decoding="async"></span>
+                  <span class="aura-product-card__media"><img class="aura-img" src="../img/auraphone-duo-blanco-estelar-trasera.webp" width="1600" height="1200" alt="" loading="lazy" decoding="async"></span>
                   <div class="aura-product-card__body">
                     <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">Nuevo · Plegable</p>
                     <p class="aura-product-card__name"><span>auraPhone Duo</span></p>
@@ -1755,7 +1878,7 @@
                   </div>
                 </article>
                 <article class="aura-product-card">
-                  <span class="aura-product-card__media"><img class="aura-img" src="../img/aurapad-air-13.webp" width="1600" height="1200" alt="" loading="lazy" decoding="async"></span>
+                  <span class="aura-product-card__media"><img class="aura-img" src="../img/aurapad-air-13-azul-trasera.webp" width="1600" height="1200" alt="" loading="lazy" decoding="async"></span>
                   <div class="aura-product-card__body">
                     <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">Más versátil</p>
                     <p class="aura-product-card__name"><span>auraPad Air 13<span class="aura-inch">″</span></span></p>
@@ -1769,7 +1892,7 @@
                   </div>
                 </article>
                 <article class="aura-product-card">
-                  <span class="aura-product-card__media"><img class="aura-img" src="../img/aurabook-air-15.webp" width="1600" height="1200" alt="" loading="lazy" decoding="async"></span>
+                  <span class="aura-product-card__media"><img class="aura-img" src="../img/aurabook-air-15-plata-tres-cuartos.webp" width="1600" height="1200" alt="" loading="lazy" decoding="async"></span>
                   <div class="aura-product-card__body">
                     <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">Nuevo</p>
                     <p class="aura-product-card__name"><span>auraBook Air 15<span class="aura-inch">″</span></span></p>
@@ -1783,7 +1906,7 @@
                   </div>
                 </article>
               </div>
-              <p class="g-demo__caption">La pinta el catálogo (<code>data.js</code>): antetítulo (<code>badge</code>), nombre al escalón H3, acabado de la foto en azul, puntos de color, lema, precio «Desde» con la cuota y un botón cuyo verbo sale de la disponibilidad. La tarjeta entera responde al pulsar foto o nombre (<code>scale(.985)</code>) y el pie se coloca por el ancho de la tarjeta, igual en toda la fila.</p>
+              <p class="g-demo__caption">La pinta el catálogo (<code>data.js</code>): la primera vista del acabado por defecto (<code>AURA.catalog.image(p, color)</code>), antetítulo (<code>badge</code>), nombre al escalón H3, acabado de la foto en azul (la única excepción a «lo que no se pulsa no va en azul»: refleja la muestra elegida, como el prototipo), puntos de color, lema, precio «Desde» con la cuota y un botón cuyo verbo sale de la disponibilidad. La tarjeta entera responde al pulsar foto o nombre (<code>scale(.985)</code>) y el pie se coloca por el ancho de la tarjeta, igual en toda la fila.</p>
             </div>
 
             <div class="g-block">
@@ -1868,7 +1991,7 @@
               <div class="g-grid g-grid--2" inert aria-hidden="true">
                 <div class="g-demo">
                   <div class="aura-colorway">
-                    <div class="aura-gallery"><img class="aura-img" src="../img/aurapad-air-13-purpura.webp" width="1600" height="1200" alt="" loading="lazy" decoding="async"></div>
+                    <div class="aura-gallery"><img class="aura-img" src="../img/aurapad-air-13-azul-trasera.webp" width="1600" height="1200" alt="" loading="lazy" decoding="async"></div>
                     <fieldset class="aura-colorway__picker">
                       <legend class="visually-hidden">Acabados del auraPad Air 13″</legend>
                       <div class="aura-swatches">
@@ -1877,13 +2000,13 @@
                         <label class="aura-swatch" style="--swatch:#dad3e3"><input class="aura-swatch__input" type="radio" name="g-cw" value="purpura" checked><span class="aura-swatch__dot" aria-hidden="true"></span><span class="visually-hidden">Púrpura</span></label>
                         <label class="aura-swatch" style="--swatch:#f0e9de"><input class="aura-swatch__input" type="radio" name="g-cw" value="blanco-estrella"><span class="aura-swatch__dot" aria-hidden="true"></span><span class="visually-hidden">Blanco estrella</span></label>
                       </div>
-                      <p class="aura-colorway__name"><strong>Púrpura</strong></p>
+                      <p class="aura-colorway__name"><strong>Púrpura</strong><span class="aura-colorway__note"> · Imagen en azul</span></p>
                     </fieldset>
                   </div>
                 </div>
                 <figure class="aura-media aura-media--fill aura-media--halo m-0 aura-photo-bottom" style="aspect-ratio:4/3">
                   <span class="aura-media__tag">Cupertino / 37,3349°&nbsp;N</span>
-                  <img class="aura-img" src="../img/inicio-acerca.webp" width="1600" height="1200" alt="" loading="lazy" decoding="async">
+                  <img class="aura-img" src="../img/acerca-hero.webp" width="1600" height="1200" alt="" loading="lazy" decoding="async">
                   <figcaption class="aura-media__overlay aura-media__overlay--glass">
                     <ul class="aura-stats">
                       <li class="aura-stat"><p class="aura-stat__value">1976</p><p class="aura-stat__label">Año de fundación</p></li>
@@ -1893,7 +2016,7 @@
                   </figcaption>
                 </figure>
               </div>
-              <p class="g-demo__caption">Las muestras salen de <code>data.js</code>; si el acabado tiene foto propia (<code>imageVariants</code>), cambia con un fundido cruzado; si no, se queda la que hay y el nombre lo dice («Plata · Imagen en Azul glacial»). El nombre se anuncia al cambiar. Las cifras sobre una foto, siempre en el mismo panel de cristal.</p>
+              <p class="g-demo__caption">Las muestras salen de <code>data.js</code>; si el acabado tiene fotos propias (<code>photos</code>), entra su primera vista con un fundido cruzado; si no, se queda la del acabado por defecto y el nombre lo dice («Plata · Imagen en azul glacial»). El nombre se anuncia al cambiar. La foto se ajusta entera a su caja (sin recortar por abajo) y se funde con el halo del panel, sobre base #000. Las cifras sobre una foto, siempre en el mismo panel de cristal.</p>
             </div>
 
             <div class="g-block">
@@ -1967,9 +2090,16 @@
               <div class="g-sub"><h3 class="g-sub__title">Configurador</h3><p class="g-sub__meta">.aura-layout--config · comprar.html</p></div>
               <div class="g-demo" inert aria-hidden="true">
                 <div class="aura-layout aura-layout--config">
-                  <div class="aura-gallery">
-                    <img class="aura-img" src="../img/aurabook-air-15-medianoche.webp" width="1600" height="1200" alt="" loading="lazy" decoding="async">
-                    <p class="aura-gallery__caption">Medianoche</p>
+                  <div class="aura-stack aura-stack--stretch" style="--stack:1rem">
+                    <div class="aura-gallery">
+                      <img class="aura-img" src="../img/aurabook-air-15-medianoche-abierto.webp" width="1600" height="1200" alt="" loading="lazy" decoding="async">
+                      <p class="aura-gallery__caption">Medianoche</p>
+                    </div>
+                    <!-- Vista estática de la tira de vistas de comprar (.comprar-vistas, en css/pages/comprar.css) -->
+                    <div class="g-views">
+                      <span class="g-view is-pressed"><img src="../img/aurabook-air-15-medianoche-abierto.webp" width="1600" height="1200" alt="" loading="lazy" decoding="async"></span>
+                      <span class="g-view"><img src="../img/aurabook-air-15-medianoche-cerrado.webp" width="1600" height="1200" alt="" loading="lazy" decoding="async"></span>
+                    </div>
                   </div>
                   <div class="aura-stack aura-stack--stretch" style="--stack:1.75rem">
                     <fieldset class="aura-fieldset">
@@ -2001,7 +2131,7 @@
                   </div>
                 </div>
               </div>
-              <p class="g-demo__caption">Muestra elegida con anillo azul (por <code>:checked</code>, sin JS); tarjetas-opción con estados de <code>:checked</code>, <code>:disabled</code> y <code>:focus-visible</code> (desactivada: borde discontinuo y la nota que lo explica, legible); cantidad con «−» desactivado en 1. El precio y la cuota salen de <code>AURA.catalog.price()</code>; la foto cambia con un fundido cruzado y, si el color no tiene foto propia, se dice («Imagen en Plata · Tu acabado: Medianoche»).</p>
+              <p class="g-demo__caption">Muestra elegida con anillo azul (por <code>:checked</code>, sin JS); tarjetas-opción con estados de <code>:checked</code>, <code>:disabled</code> y <code>:focus-visible</code> (desactivada: borde discontinuo y la nota que lo explica, legible); cantidad con «−» desactivado en 1. El precio y la cuota salen de <code>AURA.catalog.price()</code>. La galería enseña todas las vistas del acabado elegido (<code>AURA.catalog.views()</code>): bajo la foto, una miniatura por vista (botones con <code>aria-label</code> «Abierto», «Vista trasera»…, <code>aria-pressed</code> y un solo punto de tabulación, con ← → Inicio Fin; en el teléfono, también deslizando la foto). Cada cambio es un fundido cruzado; al cambiar de color vuelve a la primera vista y, si el color no tiene fotos propias, se dice («Imagen en plata · Tu acabado: medianoche»).</p>
             </div>
 
             <div class="g-block">
@@ -2025,7 +2155,7 @@
                 <div class="d-grid gap-4">
                   <ul class="aura-bag-list">
                     <li class="aura-bag-line">
-                      <span class="aura-bag-line__media"><img class="aura-img" src="../img/aurabook-air-15-medianoche.webp" width="1600" height="1200" alt="" loading="lazy" decoding="async"></span>
+                      <span class="aura-bag-line__media"><img class="aura-img" src="../img/aurabook-air-15-medianoche-abierto.webp" width="1600" height="1200" alt="" loading="lazy" decoding="async"></span>
                       <div class="aura-bag-line__info">
                         <p class="aura-bag-line__name"><span>auraBook Air 15<span class="aura-inch">″</span></span></p>
                         <p class="aura-bag-line__meta">Medianoche · 16 GB · 512 GB</p>
@@ -2043,7 +2173,7 @@
                       </div>
                     </li>
                     <li class="aura-bag-line">
-                      <span class="aura-bag-line__media"><img class="aura-img" src="../img/aurapad-air-13.webp" width="1600" height="1200" alt="" loading="lazy" decoding="async"></span>
+                      <span class="aura-bag-line__media"><img class="aura-img" src="../img/aurapad-air-13-azul-trasera.webp" width="1600" height="1200" alt="" loading="lazy" decoding="async"></span>
                       <div class="aura-bag-line__info">
                         <p class="aura-bag-line__name"><span>auraPad Air 13<span class="aura-inch">″</span></span></p>
                         <p class="aura-bag-line__meta">Azul · 128 GB · Wi-Fi</p>
@@ -2068,7 +2198,7 @@
                   </aside>
                 </div>
               </div>
-              <p class="g-demo__caption">Eliminar no pide confirmación: se quita y se ofrece «Deshacer» en un aviso. AuraCare+ va en su fila (<code>.is-on</code> cuando está incluido). El resumen es pegajoso desde 992 px y su botón es la misma primaria que la barra de compra del teléfono. Descuentos con el signo menos tipográfico (−) y espacio indivisible antes de «€».</p>
+              <p class="g-demo__caption">Eliminar no pide confirmación: se quita y se ofrece «Deshacer» en un aviso. AuraCare+ va en su fila (<code>.is-on</code> cuando está incluido: icono en el azul de elegido). Si la foto enseña otro acabado que el de la línea, se dice debajo («Imagen en plata»), igual en la bolsa, su popover y el checkout. El resumen es pegajoso desde 992 px y su botón es la misma primaria que la barra de compra del teléfono. Descuentos con el signo menos tipográfico (−) y espacio indivisible antes de «€».</p>
             </div>
 
             <div class="g-block">
@@ -2092,12 +2222,12 @@
                 </div>
                 <div class="g-demo g-demo--photo g-demo--flush" style="display:flex;flex-direction:column;justify-content:flex-end;min-height:16rem">
                   <div class="aura-buybar g-static">
-                    <div class="aura-buybar__info"><p class="aura-buybar__name">auraBook Air 15<span class="aura-inch">″</span> · Medianoche</p><p class="aura-price">1.729,00&nbsp;€</p></div>
+                    <div class="aura-buybar__info"><p class="aura-buybar__name">auraBook Air 15<span class="aura-inch">″</span></p><p class="aura-buybar__name aura-buybar__color">Medianoche</p><p class="aura-price">1.729,00&nbsp;€</p></div>
                     <span class="aura-btn aura-btn--primary">Añadir a la bolsa</span>
                   </div>
                 </div>
               </div>
-              <p class="g-demo__caption">Paso completado con marca y «(completado)» para el lector; actual con <code>aria-current="step"</code>. En el teléfono solo se lee el paso actual. La barra de compra (material grueso) solo aparece por debajo de 992 px y se esconde mientras el botón principal está a la vista.</p>
+              <p class="g-demo__caption">Paso completado con marca y «(completado)» para el lector; actual con <code>aria-current="step"</code>. En el teléfono solo se lee el paso actual. La barra de compra (material grueso) aparece por debajo de 992 px y se esconde mientras el botón principal está a la vista; en comprar se queda también en escritorio (<code>.aura-buybar--always</code>), porque el resumen va debajo del formulario y sin ella no habría ninguna acción a la vista. El acabado va en su propia línea: nunca se recorta el color.</p>
             </div>
 
             <div class="g-block">
@@ -2285,9 +2415,14 @@
                       <thead><tr><th scope="col">Token</th><th scope="col">Uso</th></tr></thead>
                       <tbody>
                         <tr><th scope="row"><code>--dur-press</code> 100 ms</th><td>Pulsación</td></tr>
-                        <tr><th scope="row"><code>--dur-1</code> 160 ms</th><td>Halo, «›» del enlace</td></tr>
+                        <tr><th scope="row"><code>--dur-check</code> 120 ms</th><td>Marca de casilla y radio</td></tr>
+                        <tr><th scope="row"><code>--dur-rm</code> 150 ms</th><td>Overlays con «reducir movimiento»</td></tr>
+                        <tr><th scope="row"><code>--dur-1</code> 160 ms</th><td>Halo, capa de hover, «›» del enlace</td></tr>
+                        <tr><th scope="row"><code>--dur-exit</code> 200 ms</th><td>Salidas, fundido de la galería</td></tr>
                         <tr><th scope="row"><code>--dur-2</code> 240 ms</th><td>Foto que llega, tarjetas</td></tr>
-                        <tr><th scope="row"><code>--dur-3</code> 560 ms</th><td>Apariciones</td></tr>
+                        <tr><th scope="row"><code>--dur-enter</code> 320 ms</th><td>Entrada de aviso, buscador y menú</td></tr>
+                        <tr><th scope="row">400 · 600 ms</th><td>Apariciones (opacidad · desplazamiento)</td></tr>
+                        <tr><th scope="row"><code>--dur-3</code> 560 ms</th><td>Cifras <code>="stat"</code></td></tr>
                       </tbody>
                     </table>
                   </div>
@@ -2316,10 +2451,10 @@
             <div class="g-block">
               <div class="g-sub"><h3 class="g-sub__title">Apariciones al entrar en pantalla</h3><p class="g-sub__meta">data-aura-reveal · una sola vez</p></div>
               <div class="g-grid g-grid--4">
-                <div class="g-card"><p class="g-card__title"><code>data-aura-reveal</code></p><p class="g-card__text">Opacidad y un desplazamiento corto. Escalonado con <code>style="--i:1"</code> (80 ms por unidad).</p></div>
+                <div class="g-card"><p class="g-card__title"><code>data-aura-reveal</code></p><p class="g-card__text">Opacidad en 400 ms y un desplazamiento corto en 600 ms (<code>--ease-out</code>). Escalonado solo en filas, con <code>style="--i:1"</code>: 60 ms por unidad y como mucho dos (120 ms); en el teléfono, sin retraso.</p></div>
                 <div class="g-card"><p class="g-card__title"><code>="fade"</code> · <code>="scale"</code></p><p class="g-card__text">Solo opacidad · escala .96 → 1 (imágenes).</p></div>
                 <div class="g-card"><p class="g-card__title"><code>="stat"</code></p><p class="g-card__text">La cifra y después lo que la explica (120 ms entre partes), solo con opacidad.</p></div>
-                <div class="g-card"><p class="g-card__title">Seguro</p><p class="g-card__text">Umbral 0,15. Sin JS se ve todo a los 2,5 s; al imprimir, todo visible. Nunca en el titular del primer pantallazo.</p></div>
+                <div class="g-card"><p class="g-card__title">A tiempo y seguro</p><p class="g-card__text">Se dispara en cuanto el elemento asoma (umbral 0, 5 % antes del borde inferior): bajando deprisa no se ven tarjetas vacías. Sin JS se ve todo a los 2,5 s; al imprimir, todo visible. Nunca en el titular del primer pantallazo.</p></div>
               </div>
             </div>
 
@@ -2338,7 +2473,7 @@
           <div class="g-note">
             <span class="g-note__icon"><i class="bi bi-activity" aria-hidden="true"></i></span>
             <p class="g-note__title">Nota de uso</p>
-            <p class="g-note__text">Solo se animan <code>transform</code> y <code>opacity</code> (y <code>filter</code> al materializar cristal); los cambios de color son instantáneos. Rebote (0,8) solo cuando el gesto llevaba impulso; lo demás, amortiguación crítica (1,0). Sin bucles lentos, sin fondos en movimiento ni parallax: la única excepción es la escena con scroll, que nunca se mueve sola. Sin retardos artificiales en el camino de la entrada.</p>
+            <p class="g-note__text">Solo se animan <code>transform</code> y <code>opacity</code> (y <code>filter</code> al materializar cristal); el color de base no se anima (el hover funde una capa en 160 ms). El scroll es del usuario: los saltos a un ancla son inmediatos (<code>scroll-behavior: auto</code>) y ninguna pieza se queda con la rueda o el dedo (tablas y carruseles devuelven el gesto vertical a la página). Rebote (0,8) solo cuando el gesto llevaba impulso; lo demás, amortiguación crítica (1,0). Sin bucles lentos, sin fondos en movimiento ni parallax: la única excepción es la escena con scroll, que nunca se mueve sola. Sin retardos artificiales en el camino de la entrada.</p>
           </div>
         </div>
       </div>
@@ -2368,13 +2503,12 @@
               <div class="g-sub"><h3 class="g-sub__title">Escenario y textos superpuestos</h3><p class="g-sub__meta">section.aura-scrub[data-aura-scrub]</p></div>
               <figure class="m-0">
                 <div class="g-stage">
-                  <img src="../img/seq/aurapad-intro/f-0100.webp" width="1600" height="900" alt="auraPad Pro negro espacial de tres cuartos sobre fondo negro, con la pantalla encendida en una aurora azul y violeta" loading="lazy" decoding="async">
+                  <img src="../img/seq/aurapad-intro/f-0110.webp" width="1600" height="900" alt="auraPad Pro negro espacial de tres cuartos sobre fondo negro, con la pantalla encendida en una aurora azul y violeta" loading="lazy" decoding="async">
                   <div class="g-stage__text" aria-hidden="true">
-                    <p class="aura-eyebrow aura-eyebrow--lg">auraPad Pro</p>
-                    <p class="aura-h2">Una lámina de luz.</p>
-                    <p class="aura-body aura-text-primary">5,1 mm de aluminio con la pantalla Ultra Retina XDR.</p>
+                    <p class="aura-h2">Tu estudio cabe en la mochila.</p>
+                    <p class="aura-body aura-text-primary">Chip AURA&nbsp;M5, auraPadOS&nbsp;27 y AURA Pencil Pro para dibujar, editar y montar allí donde llegue la idea.</p>
                   </div>
-                  <p class="g-stage__meta">Fotograma 100 de 120 · data-pos="left"</p>
+                  <p class="g-stage__meta">Fotograma 110 de 120 · texto 3 · data-pos="left"</p>
                 </div>
                 <figcaption class="g-demo__caption">Cada texto lleva su propio degradado de protección y usa las clases de siempre (<code>.aura-eyebrow</code>, <code>.aura-h1</code> / <code>.aura-h2</code>, <code>.aura-lead</code>, <code>.aura-body</code>), con el apoyo en <code>--text-primary</code>: sobre una imagen que cambia, nunca un gris. Se coloca en una zona tranquila de sus fotogramas (<code>zonasTranquilas</code> de <code>seq.json</code>).</figcaption>
               </figure>
@@ -2387,12 +2521,22 @@
               </ul>
               <div class="g-timeline" aria-hidden="true">
                 <div class="g-timeline__axis"></div>
-                <div class="g-timeline__seg" style="--a:0;--b:.3"><span>Texto 1 · 0–0,3</span></div>
-                <div class="g-timeline__seg" style="--a:.32;--b:.64"><span>Texto 2 · 0,32–0,64</span></div>
-                <div class="g-timeline__seg g-timeline__seg--end" style="--a:.66;--b:1"><span>Texto 3 · 0,66–1</span></div>
+                <div class="g-timeline__seg" style="--a:0;--b:.34;--fi:0;--fo:.204"><span>Texto 1<b> · 0–0,34</b></span></div>
+                <div class="g-timeline__seg" style="--a:.5;--b:.83;--fi:.21;--fo:.21"><span>Texto 2<b> · 0,5–0,83</b></span></div>
+                <div class="g-timeline__seg g-timeline__seg--end" style="--a:.87;--b:1;--fi:.333;--fo:0"><span>Texto 3<b> · 0,87–1</b></span></div>
                 <div class="g-timeline__ticks"><span>0</span><span>0,25</span><span>0,5</span><span>0,75</span><span>1 · progreso</span></div>
               </div>
-              <p class="g-demo__caption">Texto 1 centrado (<code>data-pos="center"</code>), texto 2 a la izquierda (<code>left</code>) y texto 3 a la derecha (<code>right</code>). Cada texto entra en el primer tercio de su tramo (<code>data-from</code>) y se va en el último (<code>data-to</code>): opacidad 0 → 1 subiendo 40 px y 1 → 0 subiendo otros 40 px. Los tramos no se solapan para que un texto se vaya antes de que llegue el siguiente.</p>
+              <p class="g-demo__caption">Los tramos de la escena de auraPad (<code>data-length="340"</code>: 2160 px de recorrido con una pantalla de 900 px). El texto 1 abajo (<code>data-pos="bottom"</code>), el 2 y el 3 a la izquierda (<code>left</code>); entre 0,34 y 0,5 la tableta se levanta sin ningún texto encima; el texto 2 termina de entrar cuando se enciende la pantalla y queda al 100 % unos 420 px; el 3, corto mientras la escena está pegada, sigue al 100 % mientras el escenario sale. Cada texto entra en los primeros 150 px de scroll de su tramo y se va en los 150 últimos (como mucho un tercio del tramo): opacidad 0 → 1 subiendo 40 px y 1 → 0 subiendo otros 40 px. Con <code>data-from="0"</code> el primero ya está a la vista y con <code>data-to="1"</code> el último se queda hasta que la escena se va. Los tramos no se solapan: un texto se va antes de que llegue el siguiente.</p>
+            </div>
+
+            <div class="g-block">
+              <div class="g-sub"><h3 class="g-sub__title">Ritmo: cuánto dura y cuánto se lee</h3><p class="g-sub__meta">Medido en px de scroll, no en % del tramo</p></div>
+              <div class="g-grid g-grid--4">
+                <div class="g-card"><p class="g-card__label"><span>Pegada</span><span>≤ 2,4 pantallas</span></p><p class="g-card__text">La escena queda pegada (<code>data-length</code> − 100) % de la pantalla: con 340, 2,4 pantallas (2160 px a 900 px de alto). Nunca más de 340: más recorrido cuesta bajar y no se lee mejor.</p></div>
+                <div class="g-card"><p class="g-card__label"><span>Fundido</span><span>150 px</span></p><p class="g-card__text">Cada entrada y cada salida, 150 px de scroll (una muesca y media de rueda, medio arrastre en el teléfono), como mucho un tercio del tramo. Igual en todas las escenas y en cualquier alto de pantalla.</p></div>
+                <div class="g-card"><p class="g-card__label"><span>Mensajes</span><span>≤ 3</span></p><p class="g-card__text">Como mucho tres textos por escena, cada uno con una idea. Si hay más que contar, va en los bloques de debajo, no en la escena.</p></div>
+                <div class="g-card"><p class="g-card__label"><span>Lectura</span><span>≥ 400 px al 100 %</span></p><p class="g-card__text">Cada texto se ve entero durante al menos 400 px de scroll (cuatro muescas, más de un arrastre) y en una zona tranquila de sus fotogramas (<code>zonasTranquilas</code> de <code>seq.json</code>).</p></div>
+              </div>
             </div>
 
             <div class="g-block">
@@ -2400,7 +2544,7 @@
               <div class="g-grid g-grid--3">
                 <div class="g-card"><p class="g-card__title">1:1 con el scroll</p><p class="g-card__text">En cada <code>requestAnimationFrame</code>: progreso = −top / (alto − alto del escenario) y fotograma = round(progreso × (n − 1)). Sin inercia, sin suavizado, sin temporizadores; solo repinta si cambia el fotograma.</p></div>
                 <div class="g-card"><p class="g-card__title">Carga progresiva</p><p class="g-card__text">Empieza a pantalla y media: primero el fotograma 1, uno de cada 8 y el último; el resto, tras el <code>load</code> de la página, con prioridad baja y como mucho 4 a la vez. Si falta el exacto, se pinta el más cercano.</p></div>
-                <div class="g-card"><p class="g-card__title">Lienzo nítido</p><p class="g-card__text">Tamaño del escenario × <code>devicePixelRatio</code> (máx. 2), recorte <code>cover</code> o <code>contain</code> con el punto de <code>data-focus</code>. Aparece sobre el póster con un fundido de 240 ms.</p></div>
+                <div class="g-card"><p class="g-card__title">Lienzo nítido y fluido</p><p class="g-card__text">Tamaño del escenario × <code>devicePixelRatio</code> (máx. 2), recorte <code>cover</code> o <code>contain</code> con el punto de <code>data-focus</code>. Por http(s) y con el lienzo en la GPU, cada fotograma se descarga como Blob y los ±6 que rodean al actual se decodifican de antemano fuera del hilo principal (<code>createImageBitmap</code> del Blob); al pintar solo se escalan. Sin GPU y por <code>file://</code>, el camino de siempre con <code>&lt;img&gt;</code>. Aparece sobre el póster con un fundido de 240 ms.</p></div>
               </div>
             </div>
 
@@ -2413,27 +2557,29 @@
                     <tbody>
                       <tr><th scope="row"><code>data-seq</code></th><td>Carpeta: <code>../img/seq/NOMBRE</code></td></tr>
                       <tr><th scope="row"><code>data-frames</code></th><td>Número de fotogramas (<code>f-0001.webp</code>…)</td></tr>
-                      <tr><th scope="row"><code>data-length</code></th><td>Alto en % de pantalla (300 = dos pantallas de scroll)</td></tr>
+                      <tr><th scope="row"><code>data-length</code></th><td>Alto en % de pantalla: pegada durante (valor − 100) %. 300 = dos pantallas; máximo 340</td></tr>
                       <tr><th scope="row"><code>data-fit</code> · <code>data-focus</code></th><td><code>cover</code> o <code>contain</code> · punto que manda</td></tr>
                       <tr><th scope="row"><code>data-mobile</code></th><td>Usa <code>m/</code> por debajo de 768 px</td></tr>
+                      <tr><th scope="row"><code>data-width</code> · <code>data-mobile-width</code></th><td>Tamaño de los fotogramas (y su alto): con él se escalan antes de pintarlos</td></tr>
                     </tbody>
                   </table>
                 </div>
                 <div class="g-scroll">
                   <table class="g-table">
                     <caption>Peso y fotogramas</caption>
-                    <thead><tr><th scope="col">Escena</th><th scope="col">Escritorio</th><th scope="col">Teléfono</th></tr></thead>
+                    <thead><tr><th scope="col">Escena</th><th scope="col">Escritorio</th><th scope="col">Teléfono (m/)</th></tr></thead>
                     <tbody>
-                      <tr><th scope="row">Límite</th><td class="g-num">1600 × 900 · ≤ 4 MB</td><td class="g-num">750 × 1100 · ≤ 2 MB</td></tr>
-                      <tr><th scope="row">auraPhone</th><td class="g-num">120 · 3,34 MB</td><td class="g-num">1,01 MB</td></tr>
-                      <tr><th scope="row">auraPad</th><td class="g-num">120 · 1,23 MB</td><td class="g-num">0,46 MB</td></tr>
-                      <tr><th scope="row">auraBook</th><td class="g-num">120 · 1,66 MB</td><td class="g-num">1,08 MB</td></tr>
-                      <tr><th scope="row">Prueba (guía viva)</th><td class="g-num">48 · 0,51 MB</td><td class="g-num">0,26 MB</td></tr>
+                      <tr><th scope="row">Límite</th><td class="g-num">1600 × 900 · ≤ 120 · ≤ 4 MB</td><td class="g-num">≈ 750 × 1100 · ≤ 2 MB</td></tr>
+                      <tr><th scope="row">auraPhone</th><td class="g-num">120 · 3,34 MB</td><td class="g-num">120 · 640 × 1136 · 1,01 MB</td></tr>
+                      <tr><th scope="row">auraPad</th><td class="g-num">120 · 1,23 MB</td><td class="g-num">120 · 750 × 1100 · 0,46 MB</td></tr>
+                      <tr><th scope="row">auraBook</th><td class="g-num">120 · 1,66 MB</td><td class="g-num">120 · 760 × 900 · 1,08 MB</td></tr>
+                      <tr><th scope="row">auraPods</th><td class="g-num">96 · 1,78 MB</td><td class="g-num">56 · 750 × 1100 · 0,82 MB</td></tr>
+                      <tr><th scope="row">Prueba (guía viva)</th><td class="g-num">48 · 1280 × 720 · 0,51 MB</td><td class="g-num">48 · 600 × 900 · 0,26 MB</td></tr>
                     </tbody>
                   </table>
                 </div>
               </div>
-              <p class="g-demo__caption">Un tramo continuo del vídeo (sin cortes), de 3 a 8 s; WebP calidad 60–70; 96 fotogramas bastan para 3–5 s (<code>data-length</code> 300–400) y 120 para recorridos de 6–8 s. Más fotogramas no se notan y pesan. <code>seq.json</code> describe qué se ve en cada tramo, sus zonas tranquilas y el fotograma estático recomendado.</p>
+              <p class="g-demo__caption">Un tramo continuo del vídeo (sin cortes), de 3 a 8 s; WebP calidad 60–70; 96 fotogramas bastan para 3–5 s y 120 para 6–8 s, siempre con <code>data-length</code> ≤ 340: más fotogramas hacen el avance más fino, no el recorrido más largo. Entre dos fotogramas seguidos, la luz no salta más de unas tres veces lo normal de la secuencia (sin destellos). En el teléfono el límite es orientativo: auraPhone (1136 de alto) y auraBook (760 de ancho) lo pasan por poco. <code>seq.json</code> describe qué se ve en cada tramo, sus zonas tranquilas y el fotograma estático recomendado.</p>
             </div>
 
             <div class="g-block">
@@ -2441,7 +2587,7 @@
               <div class="g-grid g-grid--3">
                 <figure class="g-card g-card--base m-0" style="display:grid;justify-items:center;gap:1rem">
                   <img src="../img/seq/aurapad-intro/m/f-0120.webp" width="750" height="1100" alt="El mismo auraPad Pro encuadrado en vertical para el teléfono, con la pantalla encendida" loading="lazy" decoding="async" style="width:min(11rem,100%);height:auto;border:1px solid var(--g-line);border-radius:1.25rem">
-                  <figcaption class="g-card__text m-0 text-center">Fotogramas en vertical (750 × 1100) en <code>m/</code>; si no existen, vuelve a los de escritorio. <code>left</code> y <code>right</code> bajan al pie.</figcaption>
+                  <figcaption class="g-card__text m-0 text-center">Fotogramas en vertical (hasta 750 × 1100) en <code>m/</code>; si no existen, vuelve a los de escritorio. <code>left</code> y <code>right</code> bajan al pie.</figcaption>
                 </figure>
                 <div class="g-card" style="grid-column:span 2">
                   <p class="g-card__title">Sin escena, el mismo contenido</p>
@@ -2467,13 +2613,14 @@
       </div>
     </section>
 
-    <!-- ================= 14 Imagen y fotografía (nuevo en la v2.0) ================= -->
+    <!-- ================= 14 Imagen y fotografía (nuevo en la v2.0): galería por color con fotos reales igualadas
+         (las muestras son las fotos reales del catálogo, con sus nombres <diseño>-<color>-<vista>) ================= -->
     <section class="g-section g-section--band" id="imagen" aria-labelledby="imagen-titulo">
       <div class="g-wrap g-section__grid">
         <div class="g-aside">
           <p class="g-index">14</p>
           <h2 class="g-aside__title" id="imagen-titulo">Imagen y fotografía</h2>
-          <p class="g-aside__desc">Producto sobre negro, fiel al modelo y con su crédito.</p>
+          <p class="g-aside__desc">Fotos reales igualadas sobre negro: varias vistas por color, fieles al modelo y con su crédito.</p>
           <p class="g-aside__state g-aside__state--new">Nuevo en V 2.0</p>
         </div>
         <div class="g-main">
@@ -2482,28 +2629,61 @@
             <p class="g-statement">Producto sobre negro. Luz con intención.</p>
             <p class="g-tag">WebP / Fondo #000</p>
           </div>
+          <p class="g-intro">Las fotos de producto son fotos reales, recortadas y retocadas para que todas parezcan de la misma sesión: el mismo negro, el mismo tamaño para el mismo tipo de aparato, la misma luz y, en cada color, las mismas vistas con el mismo ángulo. Cada acabado tiene su galería; si un color no tiene una foto real buena, se enseña otro acabado y se dice.</p>
 
           <div class="g-content">
             <div class="g-block">
-              <div class="g-sub"><h3 class="g-sub__title">Fotos de producto</h3><p class="g-sub__meta">1600 × 1200 · 4:3 · centrado con aire</p></div>
-              <div class="g-grid g-grid--4">
-                <figure class="g-card g-card--base m-0" style="padding:0;overflow:hidden"><img class="aura-img" src="../img/aurapad-air-13.webp" width="1600" height="1200" alt="Trasera azul del auraPad Air 13″, con su única cámara en la esquina, sobre fondo negro" loading="lazy" decoding="async"><figcaption class="g-card__text" style="padding:0 1rem 1rem">aurapad-air-13 · <span class="g-white">Azul</span></figcaption></figure>
-                <figure class="g-card g-card--base m-0" style="padding:0;overflow:hidden"><img class="aura-img" src="../img/aurabook-pro-14.webp" width="1600" height="1200" alt="auraBook Pro 14″ en negro espacial abierto sobre negro, con la pantalla de ondas ámbar y rosa" loading="lazy" decoding="async"><figcaption class="g-card__text" style="padding:0 1rem 1rem">aurabook-pro-14 · <span class="g-white">Negro espacial</span></figcaption></figure>
-                <figure class="g-card g-card--base m-0" style="padding:0;overflow:hidden"><img class="aura-img" src="../img/aurapods-pro-3.webp" width="1600" height="1200" alt="auraPods Pro 3 blancos sobre fondo negro: el estuche de carga abierto y los dos auriculares con almohadilla" loading="lazy" decoding="async"><figcaption class="g-card__text" style="padding:0 1rem 1rem">aurapods-pro-3 · <span class="g-white">Blanco</span></figcaption></figure>
-                <figure class="g-card g-card--base m-0" style="padding:0;overflow:hidden"><img class="aura-img" src="../img/aurabook-air-15-azul-cielo.webp" width="1600" height="1200" alt="auraBook Air en azul cielo abierto sobre negro, con teclado negro y la pantalla de ondas turquesa" loading="lazy" decoding="async"><figcaption class="g-card__text" style="padding:0 1rem 1rem">aurabook-air-15-azul-cielo · <span class="g-white">variante</span></figcaption></figure>
+              <div class="g-sub"><h3 class="g-sub__title">Galería por color</h3><p class="g-sub__meta">auraPhone Duo · Blanco estelar · 4 vistas</p></div>
+              <ul class="g-grid g-grid--4 g-photos">
+                <li><figure class="g-card g-card--base g-photo"><img class="aura-img" src="../img/auraphone-duo-blanco-estelar-trasera.webp" width="1600" height="1200" alt="auraPhone Duo blanco estelar abierto y visto por detrás, con la cápsula de dos cámaras y la pantalla exterior AURA, sobre fondo negro" loading="lazy" decoding="async"><figcaption class="g-card__text"><span class="g-white">1 · Trasera</span> · la de la tarjeta</figcaption></figure></li>
+                <li><figure class="g-card g-card--base g-photo"><img class="aura-img" src="../img/auraphone-duo-blanco-estelar-abierto.webp" width="1600" height="1200" alt="auraPhone Duo blanco estelar abierto y de frente, con la gran pantalla interior AURA encendida, sobre fondo negro" loading="lazy" decoding="async"><figcaption class="g-card__text"><span class="g-white">2 · Abierto</span></figcaption></figure></li>
+                <li><figure class="g-card g-card--base g-photo"><img class="aura-img" src="../img/auraphone-duo-blanco-estelar-frontal.webp" width="1600" height="1200" alt="auraPhone Duo blanco estelar cerrado y de frente, con la pantalla exterior AURA encendida, sobre fondo negro" loading="lazy" decoding="async"><figcaption class="g-card__text"><span class="g-white">3 · Frente</span></figcaption></figure></li>
+                <li><figure class="g-card g-card--base g-photo"><img class="aura-img" src="../img/auraphone-duo-blanco-estelar-cerrado.webp" width="1600" height="1200" alt="auraPhone Duo blanco estelar cerrado y visto por detrás, con la cápsula de dos cámaras, sobre fondo negro" loading="lazy" decoding="async"><figcaption class="g-card__text"><span class="g-white">4 · Cerrado</span></figcaption></figure></li>
+              </ul>
+              <p class="g-demo__caption">Cada producto declara en <code>data.js</code> sus fotos por acabado (<code>photos: { colorId: [{ slot, vista, alt }] }</code>): la primera vista es la de la tarjeta, la bolsa, el checkout, el buscador y el comparador (<code>AURA.catalog.image(p, color)</code>); el configurador enseña todas (<code>AURA.catalog.views(p, color)</code>) con una tira de miniaturas y vuelve a la primera al cambiar de color. Archivo: <code>img/&lt;diseño&gt;-&lt;color&gt;-&lt;vista&gt;.webp</code>; un diseño puede servir a varios modelos (<code>aurabook-pro</code> es el de 14″ y el de 16″).</p>
+            </div>
+
+            <div class="g-block">
+              <div class="g-sub"><h3 class="g-sub__title">La misma vista en todos los colores</h3><p class="g-sub__meta">auraPhone 18 Pro y Pro Max · Trasera</p></div>
+              <ul class="g-grid g-grid--4 g-photos">
+                <li><figure class="g-card g-card--base g-photo"><img class="aura-img" src="../img/auraphone-18-pro-negro-trasera.webp" width="1600" height="1200" alt="auraPhone 18 Pro negro de espaldas, con la meseta de tres cámaras de lado a lado, sobre fondo negro" loading="lazy" decoding="async"><figcaption class="g-card__text"><span class="g-white">Negro</span></figcaption></figure></li>
+                <li><figure class="g-card g-card--base g-photo"><img class="aura-img" src="../img/auraphone-18-pro-plata-trasera.webp" width="1600" height="1200" alt="auraPhone 18 Pro plata de espaldas, con la meseta de tres cámaras y el cristal blanco mate, sobre fondo negro" loading="lazy" decoding="async"><figcaption class="g-card__text"><span class="g-white">Plata</span></figcaption></figure></li>
+                <li><figure class="g-card g-card--base g-photo"><img class="aura-img" src="../img/auraphone-18-pro-azul-glacial-trasera.webp" width="1600" height="1200" alt="auraPhone 18 Pro azul glacial de espaldas, con la meseta de tres cámaras, sobre fondo negro" loading="lazy" decoding="async"><figcaption class="g-card__text"><span class="g-white">Azul glacial</span></figcaption></figure></li>
+                <li><figure class="g-card g-card--base g-photo"><img class="aura-img" src="../img/auraphone-18-pro-burdeos-trasera.webp" width="1600" height="1200" alt="auraPhone 18 Pro Max burdeos de espaldas, con la meseta de tres cámaras, sobre fondo negro" loading="lazy" decoding="async"><figcaption class="g-card__text"><span class="g-white">Burdeos</span></figcaption></figure></li>
+              </ul>
+              <p class="g-demo__caption">Mismo ángulo, misma altura de cámara, la misma escala y la misma exposición: al cambiar de color en el configurador solo cambia el color. La vista ocupa la misma posición en la galería de todos los acabados.</p>
+            </div>
+
+            <div class="g-block">
+              <div class="g-scroll">
+                <table class="g-table g-table--wide">
+                  <caption>Escala y vistas por tipo de producto · marco de 1600 × 1200</caption>
+                  <thead><tr><th scope="col">Tipo</th><th scope="col">Caja del producto</th><th scope="col">Vistas, en este orden</th><th scope="col">Modelos</th></tr></thead>
+                  <tbody>
+                    <tr><th scope="row">Teléfono</th><td>80 % del alto (960 px)</td><td>Trasera · Tres cuartos · Frente · Perfil</td><td>auraPhone 18 Pro y 18 Pro Max</td></tr>
+                    <tr><th scope="row">Plegable</th><td>80 % del alto o del ancho, lo que llegue antes</td><td>Trasera · Abierto · Frente · Cerrado</td><td>auraPhone Duo</td></tr>
+                    <tr><th scope="row">Tableta</th><td>80 % del alto (960 px)</td><td>Trasera · Tres cuartos · Frente · Perfil</td><td>auraPad Pro y auraPad Air</td></tr>
+                    <tr><th scope="row">Portátil</th><td>84 % del ancho (1344 px)</td><td>Tres cuartos · Abierto · Frente · Cerrado · Perfil</td><td>auraBook Pro y auraBook Air</td></tr>
+                    <tr><th scope="row">Auriculares de diadema</th><td>78 % del alto o 76 % del ancho</td><td>Frente · Tres cuartos · Trasera · Perfil</td><td>auraPods Max 2</td></tr>
+                    <tr><th scope="row">Estuche y auriculares</th><td>70 % del alto o del ancho</td><td>Estuche abierto · Auriculares · Estuche cerrado</td><td>auraPods Pro 3 y auraPods 5</td></tr>
+                  </tbody>
+                </table>
               </div>
-              <p class="g-demo__caption">Una foto por producto basta (<code>product.image</code>); su acabado va en <code>imageColor</code> y su descripción en <code>imageAlt</code>. Las fotos por color (<code>-azul-cielo</code>) solo se piden si están declaradas en <code>imageVariants</code>. Sobre su panel se funden con «aclarar» (<code>mix-blend-mode: lighten</code>): nunca un rectángulo negro dentro de otro.</p>
+              <p class="g-demo__caption">La caja del producto (lo que no es negro) se centra en el marco y se escala hasta tocar el primero de sus dos límites: así un teléfono, que es alto, mide siempre 960 px de alto y un portátil, que es ancho, 1344 px de ancho. Un color no tiene por qué tener todas las vistas: tiene las que hay en foto real buena, en este orden. La primera es la de tarjeta y, siempre que se pueda, la misma en todos los modelos de la familia (en auraBook es «Abierto», la única que tienen los Pro). Nombres de las vistas en <code>data.js</code>: <code>trasera</code>, <code>frontal</code>, <code>tres-cuartos</code>, <code>lateral</code>, <code>abierto</code>, <code>cerrado</code>, <code>estuche-abierto</code>, <code>estuche-cerrado</code> y <code>auriculares</code>.</p>
             </div>
 
             <div class="g-block">
               <div class="g-sub"><h3 class="g-sub__title">Criterios</h3><p class="g-sub__meta">Sí · No</p></div>
               <div class="g-grid g-grid--3">
-                <div class="g-card g-do"><p class="g-do__mark g-do__mark--yes"><i class="bi bi-check-lg" aria-hidden="true"></i>Sí</p><p class="g-card__title">Fondo negro puro</p><p class="g-card__text">Todo el sitio es #000: las fotos se diseñan o recortan para fondo oscuro y se funden con el negro por sus bordes.</p></div>
-                <div class="g-card g-do"><p class="g-do__mark g-do__mark--yes"><i class="bi bi-check-lg" aria-hidden="true"></i>Sí</p><p class="g-card__title">Fiel al modelo</p><p class="g-card__text">La foto enseña el modelo y el acabado reales; si el color elegido no tiene foto, se dice: «Imagen en Azul glacial · Tu acabado: Negro».</p></div>
-                <div class="g-card g-do"><p class="g-do__mark g-do__mark--yes"><i class="bi bi-check-lg" aria-hidden="true"></i>Sí</p><p class="g-card__title">Alt de lo que se ve</p><p class="g-card__text">Describe la foto real («Trasera azul del auraPad Air 13″…»), no lo que anuncia el texto; <code>alt=""</code> si es decorativa o la acompaña un nombre enlazado.</p></div>
-                <div class="g-card g-do"><p class="g-do__mark g-do__mark--no"><i class="bi bi-x-lg" aria-hidden="true"></i>No</p><p class="g-card__title">Logotipos de otras marcas</p><p class="g-card__text">Fotos retocadas sin logotipos, marcas reconocibles ni textos de pantalla en inglés. Nunca la marca original ni sus productos.</p></div>
+                <div class="g-card g-do"><p class="g-do__mark g-do__mark--yes"><i class="bi bi-check-lg" aria-hidden="true"></i>Sí</p><p class="g-card__title">Fondo #000 puro</p><p class="g-card__text">Negro exacto hasta el borde (0, 0, 0), sin viñeta, reflejo ni halo horneados. El halo azul lo pone el panel, sobre base #000, y la foto se funde con él con «aclarar» (<code>mix-blend-mode: lighten</code>).</p></div>
+                <div class="g-card g-do"><p class="g-do__mark g-do__mark--yes"><i class="bi bi-check-lg" aria-hidden="true"></i>Sí</p><p class="g-card__title">Igualadas</p><p class="g-card__text">Centradas y a la escala de su tipo, con exposición común (las luces del producto al mismo nivel en todas) y el mismo balance: un plateado no se ve gris junto a otro, ni el aparato crece al cambiar de color.</p></div>
+                <div class="g-card g-do"><p class="g-do__mark g-do__mark--yes"><i class="bi bi-check-lg" aria-hidden="true"></i>Sí</p><p class="g-card__title">Pantalla AURA común</p><p class="g-card__text">En las vistas con pantalla, la misma imagen AURA en todos los aparatos, con su isla o su muesca. Nunca la pantalla de la foto original ni textos de tienda.</p></div>
+                <div class="g-card g-do"><p class="g-do__mark g-do__mark--yes"><i class="bi bi-check-lg" aria-hidden="true"></i>Sí</p><p class="g-card__title">Fiel al acabado</p><p class="g-card__text">Cada color con su foto real. Si no hay una buena, se enseña otro acabado y se dice: «Imagen en plata · Tu acabado: negro». Nunca se recolorea una foto para fingir un color.</p></div>
+                <div class="g-card g-do"><p class="g-do__mark g-do__mark--yes"><i class="bi bi-check-lg" aria-hidden="true"></i>Sí</p><p class="g-card__title">Alt de lo que se ve</p><p class="g-card__text">Describe la foto real («auraPhone 18 Pro negro de espaldas…»), no lo que anuncia el texto; <code>alt=""</code> si es decorativa o la acompaña un nombre enlazado.</p></div>
+                <div class="g-card g-do"><p class="g-do__mark g-do__mark--no"><i class="bi bi-x-lg" aria-hidden="true"></i>No</p><p class="g-card__title">Logotipos, manos y cables</p><p class="g-card__text">Se borran o se recortan: ni logotipos ni marcas reconocibles, ni dedos, cables antirrobo, peanas de tienda o textos de pantalla en inglés.</p></div>
                 <div class="g-card g-do"><p class="g-do__mark g-do__mark--no"><i class="bi bi-x-lg" aria-hidden="true"></i>No</p><p class="g-card__title">Marcos y recortes a mano</p><p class="g-card__text">Sin marco alrededor de una foto real en héroes ni bloques texto + imagen. El encuadre, con <code>--photo-focus</code> o <code>.aura-photo-top</code> / <code>-bottom</code> / <code>-left</code> / <code>-right</code>, nunca <code>object-position</code>.</p></div>
-                <div class="g-card g-do"><p class="g-do__mark g-do__mark--no"><i class="bi bi-x-lg" aria-hidden="true"></i>No</p><p class="g-card__title">Imágenes sin licencia</p><p class="g-card__text">Solo licencias libres (Wikimedia Commons, Unsplash, Pexels) o render propio, con autor, fuente y licencia en <code>legal.html#imagenes</code>.</p></div>
+                <div class="g-card g-do"><p class="g-do__mark g-do__mark--no"><i class="bi bi-x-lg" aria-hidden="true"></i>No</p><p class="g-card__title">Imágenes sin licencia</p><p class="g-card__text">Solo licencias libres (Wikimedia Commons, Unsplash, Pexels), con autor, fuente, licencia y lo que se retocó en <code>legal.html#imagenes</code>.</p></div>
+                <div class="g-card g-do"><p class="g-do__mark g-do__mark--no"><i class="bi bi-x-lg" aria-hidden="true"></i>No</p><p class="g-card__title">Vistas que no casan</p><p class="g-card__text">Una foto que no comparte ángulo, escala o luz con sus hermanas no entra en la galería, aunque sea de ese color: mejor una vista menos.</p></div>
               </div>
             </div>
 
@@ -2513,17 +2693,39 @@
                   <caption>Tamaños, formato y nombres</caption>
                   <thead><tr><th scope="col">Uso</th><th scope="col">Tamaño</th><th scope="col">Proporción</th><th scope="col">Dónde</th></tr></thead>
                   <tbody>
-                    <tr><th scope="row">Producto (tarjeta, configurador, bolsa)</th><td class="g-num">1600 × 1200</td><td class="g-num">4:3</td><td><code>img/&lt;producto&gt;.webp</code> · <code>-&lt;color&gt;.webp</code></td></tr>
+                    <tr><th scope="row">Producto (galería, tarjeta, exhibición)</th><td class="g-num">1600 × 1200 · 800 × 600 · 400 × 300</td><td class="g-num">4:3</td><td><code>img/&lt;diseño&gt;-&lt;color&gt;-&lt;vista&gt;.webp</code> · <code>img/800/</code> · <code>img/400/</code></td></tr>
+                    <tr><th scope="row">Producto en un hueco de más de 800 px CSS</th><td class="g-num">2400 × 1800</td><td class="g-num">4:3</td><td>Para la exhibición de color del auraPhone, cuando el original lo permita (hoy ninguno llega: se sirve la de 1600, sin <code>img/2400/</code>)</td></tr>
+                    <tr><th scope="row">Miniatura de producto (bolsa, checkout, popover)</th><td class="g-num">800 × 800</td><td class="g-num">1:1</td><td>Recorte de la primera vista con el producto al 80 % (por hacer: hoy la línea usa la foto 4:3 entera)</td></tr>
                     <tr><th scope="row">Héroe dividido, teselas, texto + imagen</th><td class="g-num">1600 × 1200</td><td class="g-num">4:3</td><td><code>img/&lt;página&gt;-&lt;bloque&gt;.webp</code></td></tr>
+                    <tr><th scope="row">Retrato de tarjeta</th><td class="g-num">1200 × 1500</td><td class="g-num">4:5</td><td>Tarjetas altas (perfiles)</td></tr>
                     <tr><th scope="row">Héroe centrado, panorámica</th><td class="g-num">1920 × 1080</td><td class="g-num">16:9</td><td><code>aurapad-hero.webp</code>…</td></tr>
-                    <tr><th scope="row">Miniatura suelta</th><td class="g-num">800 × 800</td><td class="g-num">1:1</td><td>—</td></tr>
+                    <tr><th scope="row">Banda a todo el ancho</th><td class="g-num">2400 × 600</td><td class="g-num">4:1</td><td>Franjas de foto a sangre</td></tr>
+                    <tr><th scope="row">Miniatura (créditos, tira de vistas)</th><td class="g-num">240 × 180</td><td class="g-num">4:3</td><td><code>img/thumbs/&lt;nombre&gt;.webp</code>: una por foto y por póster de escena, recortada al centro</td></tr>
                     <tr><th scope="row">Redes sociales (Open Graph)</th><td class="g-num">1200 × 630</td><td class="g-num">1,91:1</td><td><code>img/og/og-*.jpg</code> (URL absoluta)</td></tr>
-                    <tr><th scope="row">Escena con scroll</th><td class="g-num">1600 × 900 · 750 × 1100</td><td class="g-num">16:9 · vertical</td><td><code>img/seq/&lt;nombre&gt;/</code> y <code>m/</code></td></tr>
-                    <tr><th scope="row">Iconos del sitio</th><td class="g-num">512 · 192 · 180</td><td class="g-num">1:1</td><td><code>aura.png</code>, <code>icon-192.png</code>, <code>apple-touch-icon.png</code></td></tr>
+                    <tr><th scope="row">Escena con scroll</th><td class="g-num">1600 × 900 · ≈ 750 × 1100</td><td class="g-num">16:9 · vertical</td><td><code>img/seq/&lt;nombre&gt;/</code> y <code>m/</code></td></tr>
+                    <tr><th scope="row">Iconos del sitio</th><td class="g-num">512 · 192 · 180</td><td class="g-num">1:1</td><td><code>aura.png</code>, <code>icon-192.png</code>, <code>icon-512.png</code>, <code>apple-touch-icon.png</code></td></tr>
                   </tbody>
                 </table>
               </div>
-              <p class="g-demo__caption">WebP primero; si falta, el hueco prueba <code>.png</code>, <code>.jpg</code>, <code>data-fallback</code> y, al final, un marcador con la ruta y el tamaño recomendado. Nombres en minúsculas con guiones. Siempre <code>width</code> y <code>height</code> (sin saltos al cargar) y <code>loading="lazy" decoding="async"</code>, salvo la del primer héroe (<code>fetchpriority="high"</code>).</p>
+              <p class="g-demo__caption">WebP primero; si falta, el hueco prueba <code>.png</code>, <code>.jpg</code>, <code>data-fallback</code> y, al final, un marcador con la ruta y el tamaño recomendado. Nombres en minúsculas con guiones. Siempre <code>width</code> y <code>height</code> (sin saltos al cargar) y <code>loading="lazy" decoding="async"</code>, salvo la del primer héroe (<code>fetchpriority="high"</code>) y las primeras tarjetas de una página vacía (<code>eager</code>).</p>
+            </div>
+
+            <div class="g-block">
+              <div class="g-scroll">
+                <table class="g-table g-table--wide">
+                  <caption>srcset y sizes · cada hueco descarga lo que pinta (≈ 2 px por px CSS)</caption>
+                  <thead><tr><th scope="col">Hueco</th><th scope="col">sizes</th><th scope="col">Medida en pantalla (1440 / 390)</th></tr></thead>
+                  <tbody>
+                    <tr><th scope="row">Tarjeta de modelo y de familia</th><td><code>(min-width: 1024px) 380px, 90vw</code></td><td class="g-num">378 × 284 / 348 × 261</td></tr>
+                    <tr><th scope="row">Galería de comprar</th><td><code>(min-width: 992px) 600px, calc(100vw - 32px)</code></td><td class="g-num">600 × 450 / 350 × 263</td></tr>
+                    <tr><th scope="row">Exhibición de color del auraPhone</th><td><code>(min-width: 1024px) 960px, 100vw</code></td><td class="g-num">960 × 600 / 350 × 219</td></tr>
+                    <tr><th scope="row">Teselas de 322–358 px</th><td><code>(max-width: 767.98px) calc(100vw - 32px), 360px</code></td><td class="g-num">≤ 358 / 350</td></tr>
+                    <tr><th scope="row">Línea de la bolsa</th><td><code>128px</code> (<code>88px</code> en el teléfono)</td><td class="g-num">128 × 128 / 88 × 88</td></tr>
+                    <tr><th scope="row">Checkout y popover de la bolsa</th><td><code>56px</code></td><td class="g-num">56 × 56</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <p class="g-demo__caption"><code>AURA.html.img</code> y <code>AURA.slots.set</code> escriben <code>srcset="img/400/x.webp 400w, img/800/x.webp 800w, img/x.webp 1600w"</code> y el <code>sizes</code> de su hueco (por defecto <code>100vw</code>; en las perezosas, <code>auto</code> delante): el teléfono no descarga 1600 px para pintar 350. Las variantes se generan para cada foto de <code>img/</code> (WebP de calidad 80, el negro sigue en 0, 0, 0). Si una variante falla, el hueco quita el <code>srcset</code> y se queda el original antes de probar <code>.png</code> o <code>.jpg</code>. Nunca un <code>srcset</code> con anchos que no existan.</p>
             </div>
 
             <div class="g-block">
@@ -2531,7 +2733,7 @@
               <div class="g-grid g-grid--3">
                 <div class="g-card g-card--base">
                   <p class="g-card__title">Al llegar</p>
-                  <p class="g-card__text">Oculta mientras carga (<code>.is-pending</code>) y fundido de opacidad de 240 ms al decodificarse (<code>.is-loaded</code>), sin desplazamiento; sin fundido si ya estaba en caché o con «reducir movimiento». Texto sobre foto: degradado estático <code>--photo-scrim</code>.</p>
+                  <p class="g-card__text">Oculta mientras carga (<code>.is-pending</code>) y fundido de opacidad de 240 ms al decodificarse (<code>.is-loaded</code>), sin desplazamiento; sin fundido si ya estaba en caché o con «reducir movimiento». En las galerías la foto se ajusta entera a su caja (nunca se corta por abajo). Texto sobre foto: degradado estático <code>--photo-scrim</code>.</p>
                 </div>
                 <div class="g-card g-card--base" inert aria-hidden="true">
                   <div class="aura-slot" style="--w:1600;--h:1200"><div class="aura-slot__inner"><i class="aura-slot__icon bi bi-image" aria-hidden="true"></i><span class="aura-slot__path">img/aurapods-5.webp</span><span class="aura-slot__size">1600 × 1200 px</span></div></div>
@@ -2549,7 +2751,7 @@
           <div class="g-note">
             <span class="g-note__icon"><i class="bi bi-camera" aria-hidden="true"></i></span>
             <p class="g-note__title">Nota de uso</p>
-            <p class="g-note__text">Para sustituir una foto, guarda la nueva con exactamente el mismo nombre y la misma proporción, actualiza su <code>alt</code> (y <code>imageAlt</code> / <code>imageColor</code> en <code>data.js</code> si es de producto) y su crédito en <code>js/creditos.js</code>. En JS, los nombres salen siempre de <code>AURA.catalog.image(producto, color)</code>: nunca se escriben a mano.</p>
+            <p class="g-note__text">Una foto de producto nueva se iguala antes de entrar (fondo, centrado, escala de su tipo, exposición, pantalla AURA y borrado), se guarda como <code>img/&lt;diseño&gt;-&lt;color&gt;-&lt;vista&gt;.webp</code> con sus variantes y se declara en <code>photos</code> de <code>data.js</code> con su <code>alt</code> real (el bloque entre <code>FOTOS:INICIO</code> y <code>FOTOS:FIN</code> es generado: no se edita a mano), y su crédito va en <code>js/creditos.js</code>. <code>image</code>, <code>imageColor</code> e <code>imageAlt</code> se quedan como respaldo. En JS, las rutas salen siempre de <code>AURA.catalog.image()</code> y <code>AURA.catalog.views()</code>: nunca se escriben a mano.</p>
           </div>
         </div>
       </div>
@@ -2734,7 +2936,7 @@
               <div class="g-sub"><h3 class="g-sub__title">Familias de producto</h3><p class="g-sub__meta">.aura-family-card · [data-aura-family-cards]</p></div>
               <div class="g-grid g-grid--4" inert aria-hidden="true">
                 <span class="aura-card aura-card--flush aura-family-card">
-                  <span class="aura-family-card__media"><img class="aura-img" src="../img/auraphone-18-pro.webp" width="1600" height="1200" alt="" loading="lazy" decoding="async"></span>
+                  <span class="aura-family-card__media"><img class="aura-img" src="../img/auraphone-18-pro-negro-trasera.webp" width="1600" height="1200" alt="" loading="lazy" decoding="async"></span>
                   <span class="aura-family-card__body">
                     <span class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">auraPhone</span>
                     <span class="aura-h4">Ahora se pliega. Y sigue siendo Pro.</span>
@@ -2743,7 +2945,7 @@
                   </span>
                 </span>
                 <span class="aura-card aura-card--flush aura-family-card">
-                  <span class="aura-family-card__media"><img class="aura-img" src="../img/aurapad-air-13.webp" width="1600" height="1200" alt="" loading="lazy" decoding="async"></span>
+                  <span class="aura-family-card__media"><img class="aura-img" src="../img/aurapad-air-13-azul-trasera.webp" width="1600" height="1200" alt="" loading="lazy" decoding="async"></span>
                   <span class="aura-family-card__body">
                     <span class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">auraPad</span>
                     <span class="aura-h4">Un lienzo para cada forma de crear.</span>
@@ -2752,7 +2954,7 @@
                   </span>
                 </span>
                 <span class="aura-card aura-card--flush aura-family-card">
-                  <span class="aura-family-card__media"><img class="aura-img" src="../img/aurabook-air-15.webp" width="1600" height="1200" alt="" loading="lazy" decoding="async"></span>
+                  <span class="aura-family-card__media"><img class="aura-img" src="../img/aurabook-air-15-azul-cielo-abierto.webp" width="1600" height="1200" alt="" loading="lazy" decoding="async"></span>
                   <span class="aura-family-card__body">
                     <span class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">auraBook</span>
                     <span class="aura-h4">Increíblemente fino. Asombrosamente AURA.</span>
@@ -2761,9 +2963,9 @@
                   </span>
                 </span>
                 <span class="aura-card aura-card--flush aura-family-card">
-                  <span class="aura-family-card__media"><img class="aura-img" src="../img/aurapods-5.webp" width="1600" height="1200" alt="" loading="lazy" decoding="async"></span>
+                  <span class="aura-family-card__media"><img class="aura-img" src="../img/aurapods-5-blanco-estuche-abierto.webp" width="1600" height="1200" alt="" loading="lazy" decoding="async"></span>
                   <span class="aura-family-card__body">
-                    <span class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">auraPods <span class="aura-badge aura-badge--mono ms-1">Nuevo</span></span>
+                    <span class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">auraPods</span>
                     <span class="aura-h4">Escucha lo que quieres. Silencia lo demás.</span>
                     <span class="aura-caption">Tres auraPods con el chip AURA H2: los Max 2 de diadema, los Pro 3 con sensor de frecuencia cardiaca y los auraPods 5, ahora con cancelación de ruido.</span>
                     <span class="aura-family-card__foot"><span class="aura-caption">Desde 149&nbsp;€</span><span class="aura-link">Ver auraPods</span></span>
@@ -2790,8 +2992,8 @@
               <div class="g-grid g-grid--2">
                 <ol class="g-wire">
                   <li class="is-key"><span>Barra local: título, secciones y «Comprar ›»</span><code>.aura-localnav</code></li>
-                  <li class="is-tall"><span>Héroe: «Gama auraX», <code>.aura-display</code>, «Desde…», «Comprar auraX» + «Ver los modelos»</span><code>.aura-hero</code></li>
-                  <li class="is-opt is-tall"><span>Escena con scroll (o el propio héroe)</span><code>.aura-scrub</code></li>
+                  <li class="is-tall"><span>Héroe: «Gama auraX», <code>.aura-display</code>, «Desde…», «Comprar auraX» + «Ver los modelos» (o la escena hace de héroe)</span><code>.aura-hero</code></li>
+                  <li class="is-opt is-tall"><span>Escena con scroll: ≤ 3 mensajes, ≤ 2,4 pantallas</span><code>.aura-scrub</code></li>
                   <li class="is-band"><span>Lo más destacado: bento o carrusel de teselas</span><code>.aura-bento</code></li>
                   <li><span>Bloques por tema: diseño, pantalla, cámaras, rendimiento, batería…</span><code>.aura-split</code></li>
                   <li class="is-band"><span>Cifras destacadas y características</span><code>.aura-stats--lg</code></li>
@@ -2804,7 +3006,8 @@
                 </ol>
                 <div class="d-grid gap-3 align-content-start">
                   <div class="g-card"><p class="g-card__title">Lo que no cambia</p><p class="g-card__text">Secciones alternas negro / franja, cada una con su <code>id</code> para la barra local y <code>aria-labelledby</code>; un solo <code>h1</code> (el del héroe o el primer texto de la escena); acciones con los textos del glosario; precios y fechas desde el catálogo; notas al pie al final del <code>&lt;main&gt;</code>; migas «AURA › auraX» en el pie.</p></div>
-                  <div class="g-card"><p class="g-card__title">Lo que cambia por familia</p><p class="g-card__text">auraPhone: héroe centrado y escena tras él. auraPad: héroe y escena «Una lámina de luz». auraBook: la escena es el héroe. auraPods: la misma estructura, con la foto de cada modelo y su tabla (cancelación, autonomía, estuche, salud).</p></div>
+                  <div class="g-card"><p class="g-card__title">Lo que cambia por familia</p><p class="g-card__text">auraPhone y auraPad: héroe centrado (<code>.aura-hero--center</code>) y la escena tras él («Una lámina de luz» en auraPad). auraBook y auraPods: la escena es el héroe (su primer texto lleva el <code>h1</code>; con «reducir movimiento», ese texto va antes del póster). auraPods, además, con la foto de cada modelo y su tabla (cancelación, autonomía, estuche, salud).</p></div>
+                  <div class="g-card"><p class="g-card__title">Un titular por tipo de bloque</p><p class="g-card__text">El titular de un bloque texto + imagen (<code>.aura-split</code>) es <code>.aura-h1</code>; el de una cabecera de sección (<code>.aura-section-head</code>), <code>.aura-h2</code>: igual en las cuatro familias, en inicio, acerca y Trade In. La excepción es la llamada final «¿Cuál será tu auraX?», que es <code>.aura-h1</code> en las cuatro familias. El antetítulo de un bloque texto + imagen es <code>--mono</code>, nunca <code>--lg</code>. Entre bloques, <code>--space-block</code>.</p></div>
                   <div class="g-card"><p class="g-card__title">Esqueleto de toda página</p><p class="g-card__text"><code>aura-skip</code> → <code>&lt;aura-header active="…"&gt;</code> → <code>&lt;main id="contenido"&gt;</code> → <code>&lt;aura-footer crumbs="…"&gt;</code>. En el <code>&lt;head&gt;</code>, <code>data.js</code> y <code>aura-core.js</code> síncronos; al final, Bootstrap, <code>aura-ui.js</code> y el JS de la página. Clases con el prefijo <code>aura-</code> o el de la página.</p></div>
                 </div>
               </div>
@@ -2813,7 +3016,7 @@
             <div class="g-block">
               <div class="g-sub"><h3 class="g-sub__title">Plantillas de tienda</h3><p class="g-sub__meta">noindex en bolsa y checkout</p></div>
               <div class="g-grid g-grid--3">
-                <div class="g-card"><p class="g-card__title">Comprar</p><p class="g-card__text mb-3">comprar.html?producto=ID · <code>has-buybar</code></p><ol class="g-wire"><li class="is-key"><span>Título «Comprar X» y galería con fundido</span><code>--config</code></li><li><span>Pasos: modelo, acabado, opciones, AuraCare+, Trade In</span><code>fieldset</code></li><li class="is-gold"><span>Resumen pegajoso con la primaria</span><code>.aura-summary</code></li><li class="is-opt"><span>Barra de compra (&lt; 992 px)</span><code>.aura-buybar</code></li><li class="is-band"><span>Ventajas · preguntas · notas</span><code>--band</code></li></ol></div>
+                <div class="g-card"><p class="g-card__title">Comprar</p><p class="g-card__text mb-3">comprar.html?producto=ID · <code>has-buybar</code></p><ol class="g-wire"><li class="is-key"><span>Título «Comprar X» y galería con las vistas del acabado</span><code>--config</code></li><li><span>Pasos: modelo, acabado, opciones, AuraCare+, Trade In</span><code>fieldset</code></li><li class="is-gold"><span>Resumen con la primaria, bajo el formulario</span><code>.aura-summary</code></li><li class="is-key"><span>Barra de compra, también en escritorio</span><code>--always</code></li><li class="is-band"><span>Ventajas · preguntas · notas</span><code>--band</code></li></ol></div>
                 <div class="g-card"><p class="g-card__title">Bolsa</p><p class="g-card__text mb-3">bolsa.html · estado vacío con tarjetas de familia</p><ol class="g-wire"><li class="is-key"><span>«Bolsa / 2 artículos» y líneas</span><code>.aura-bag-list</code></li><li><span>AuraCare+ por línea y «Deshacer»</span><code>__care</code></li><li class="is-gold"><span>Resumen con Trade In y envío</span><code>--aside</code></li><li class="is-band"><span>Ventajas · preguntas · notas</span><code>--band</code></li></ol></div>
                 <div class="g-card"><p class="g-card__title">Tramitar pedido</p><p class="g-card__text mb-3">checkout.html · cuatro pasos con su título</p><ol class="g-wire"><li class="is-key"><span>Pasos: contacto, entrega, pago, revisión</span><code>.aura-steps</code></li><li><span>Un formulario por paso, campos condicionales con <code>hidden</code></span><code>AURA.ui.form</code></li><li class="is-opt"><span>Hoja «AURA Pay» (simulado)</span><code>.aura-sheet</code></li><li class="is-gold"><span>Resumen del pedido</span><code>--compact</code></li></ol></div>
               </div>
@@ -2825,7 +3028,7 @@
                 <div class="aura-auth" style="border-radius:.75rem;min-height:0;padding:2rem 1rem" inert aria-hidden="true">
                   <div class="aura-auth-card">
                     <div class="aura-auth-card__head">
-                      <span class="aura-brand aura-brand--lg"><img class="aura-brand__mark" src="../img/aura.png" width="36" height="36" alt=""><span class="aura-brand__word">AURA</span></span>
+                      <span class="aura-brand aura-brand--lg"><img class="aura-brand__mark" src="../img/aura-72.png" width="36" height="36" alt=""><span class="aura-brand__word">AURA</span></span>
                       <p class="aura-auth-card__title">Inicia sesión con tu ID de AURA</p>
                       <p class="aura-auth-card__lead">Un solo acceso para tus dispositivos, servicios y experiencias AURA.</p>
                     </div>
@@ -2879,7 +3082,7 @@
       </div>
       <div class="g-footer__right">
         <p class="g-mono g-gold">Style Guide / Design System</p>
-        <p class="g-footer__sections">Color · Tipografía · Acciones · Formularios · Iconos · Materiales · Layout · Navegación · Contenido · Tienda · Overlays · Movimiento · Escena · Imagen · Accesibilidad · Voz · Plantillas</p>
+        <p class="g-footer__sections">Fuentes · Color · Tipografía · Acciones · Formularios · Iconos · Materiales · Layout · Navegación · Contenido · Tienda · Overlays · Movimiento · Escena · Imagen · Accesibilidad · Voz · Plantillas</p>
         <p class="g-mono g-muted">AURA DS / V 2.0 · octubre de 2026</p>
       </div>
     </div>

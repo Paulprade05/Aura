@@ -128,6 +128,9 @@
   padding-top: 1rem;
   border-top: 1px solid var(--hairline);
 }
+/* «Hasta», «Según el modelo»: en gris. El dorado de la cifra --md no va en la
+   misma tarjeta que la primaria azul («Aplicar a mi compra»). */
+.ti-result .aura-stat__label { color: var(--text-tertiary); }
 
 
 /* --------------------------------------------------------------------------
@@ -139,6 +142,9 @@
   padding: 0;
   list-style: none;
 }
+
+/* Pie de la foto del reciclaje, bajo ella (sin marco alrededor) */
+.ti-planeta__pie { margin: .875rem 0 0; }
 
 .ti-stats {
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));

@@ -290,7 +290,7 @@
     /* Cada dato entero («CPU 10 núcleos», «× 2»): la línea solo parte después
        de un «·», nunca dentro de un dato ni con el «·» al principio. */
     var metaTexto = meta.filter(Boolean).join(' · ').split(' · ').map(entero).join(' · ');
-    var media = img && img.slot ? AURA.html.img(img.slot, { alt: '', fallback: img.fallback }) : '';
+    var media = img && img.slot ? AURA.html.img(img.slot, { alt: '', fallback: img.fallback, sizes: '56px' }) : '';
     return '<li class="aura-bag-line aura-bag-line--compact">' +
       (url
         ? '<a class="aura-bag-line__media" href="' + esc(url) + '" tabindex="-1" aria-hidden="true">' + media + '</a>'
@@ -298,6 +298,8 @@
       '<div class="aura-bag-line__info">' +
         '<p class="aura-bag-line__name">' + (url ? '<a href="' + esc(url) + '">' + nombre + '</a>' : nombre) + '</p>' +
         '<p class="aura-bag-line__meta">' + esc(metaTexto) + '</p>' +
+        /* Si la foto enseña otro acabado que el pedido, se dice (como en comprar, la bolsa y el checkout). */
+        (img && img.slot && img.exact === false && img.color ? '<p class="aura-bag-line__meta aura-bag-line__photo">Imagen en ' + esc(String(img.color.name).toLowerCase()) + '</p>' : '') +
       '</div>' +
       '<div class="aura-bag-line__price"><span class="aura-price">' + esc(AURA.fmt.eur(unidad * qty)) + '</span></div>' +
     '</li>';

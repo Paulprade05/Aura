@@ -8,6 +8,14 @@
 
 /* Reserva sitio mientras bolsa.js pinta: el pie no salta al cargar */
 .bolsa { min-height: 32rem; }
+/* La bolsa (vacía o llena) la pinta bolsa.js después del primer pintado y
+   mide de 480 a 2500 px: lo que va debajo se queda en su sitio sin verse
+   hasta que termina (.is-ready en <html>), así no se ve empujado fuera de la
+   pantalla. Si el JS fallara, aparece a los 2,5 s igualmente. */
+.aura-js:not(.is-ready) #bolsa ~ section {
+  visibility: hidden;
+  animation: aura-ready-fallback 0s 2.5s forwards;
+}
 
 /* Cabecera: total y entradilla, centrados como en la tienda */
 .bolsa-head { margin-bottom: clamp(2rem, 4.5vw, 3.5rem); }
