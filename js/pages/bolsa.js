@@ -120,10 +120,11 @@
   function listNames(names) {
     return names.length < 2 ? names.join('') : names.slice(0, -1).join(', ') + ' y ' + names[names.length - 1];
   }
-  /* Nombres con artículo («el auraPhone Duo»), sin repetir. */
+  /* Nombres con artículo («el auraPhone Duo», «los auraPods 5»: AURA.catalog.grammar), sin repetir. */
+  function article(id) { return catalog.grammar ? catalog.grammar(id) : { el: 'el', un: 'un' }; }
   function uniqueNames(lines) {
     var out = [];
-    lines.forEach(function (l) { var n = 'el ' + l.name; if (out.indexOf(n) === -1) { out.push(n); } });
+    lines.forEach(function (l) { var n = article(l.productId).el + ' ' + l.name; if (out.indexOf(n) === -1) { out.push(n); } });
     return out;
   }
 
@@ -171,7 +172,7 @@
 
 
   function familyList() {
-    return listNames(catalog.families().map(function (f) { return 'un ' + f.name; })).replace(/ y (un [^,]+)$/, ' o $1');
+    return listNames(catalog.families().map(function (f) { return article(f.id).un + ' ' + f.name; })).replace(/ y ((?:un|unos) [^,]+)$/, ' o $1');
   }
 
   function renderEmpty() {
@@ -203,7 +204,7 @@
       '</div>' +
       '<div class="bolsa-familias">' +
         '<h2 class="aura-h3 bolsa-familias__title">Encuentra tu próximo AURA.</h2>' +
-        '<div class="aura-grid aura-grid--3 bolsa-familias__grid">' + familyCards() + '</div>' +
+        '<div class="aura-grid ' + (catalog.families().length === 4 ? 'aura-grid--4' : 'aura-grid--3') + ' bolsa-familias__grid">' + familyCards() + '</div>' +
       '</div>';
 
     document.body.classList.remove('has-buybar');

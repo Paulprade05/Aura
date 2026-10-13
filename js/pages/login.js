@@ -23,7 +23,7 @@
 
   /* Solo páginas del mapa del sitio, como ruta relativa: nada de «//», «:» ni
      rutas absolutas. login.html y registro.html no cuentan (serían un bucle). */
-  var PAGINAS = ['index.html', 'auraphone.html', 'aurapad.html', 'aurabook.html', 'comprar.html',
+  var PAGINAS = ['index.html', 'auraphone.html', 'aurapad.html', 'aurabook.html', 'aurapods.html', 'comprar.html',
     'bolsa.html', 'checkout.html', 'cuenta.html', 'comparar.html', 'trade-in.html', 'acerca.html',
     'soporte.html', 'legal.html'];
 

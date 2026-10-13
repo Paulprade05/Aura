@@ -77,7 +77,7 @@
       }
     }
     if (cta) {
-      cta.textContent = AURA.catalog.cta(p) + ' el ' + p.name;
+      cta.textContent = AURA.catalog.cta(p) + ' ' + (AURA.catalog.grammar ? AURA.catalog.grammar(p).el : 'el') + ' ' + p.name;
       cta.setAttribute('href', AURA.catalog.url(p));
     }
   }

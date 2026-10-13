@@ -355,7 +355,9 @@
   }
 
   function nombresFamilias() {
-    var nombres = (AURA.catalog.families() || []).map(function (f) { return 'un ' + f.name; });
+    var nombres = (AURA.catalog.families() || []).map(function (f) {
+      return (AURA.catalog.grammar ? AURA.catalog.grammar(f.id).un : 'un') + ' ' + f.name;   // «unos auraPods»
+    });
     if (nombres.length < 2) { return nombres.join('') || 'un dispositivo AURA'; }
     return nombres.slice(0, -1).join(', ') + ' o ' + nombres[nombres.length - 1];
   }

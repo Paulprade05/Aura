@@ -7,7 +7,7 @@
    editar aquí; no hay que tocar ningún HTML.
 
    CÓMO ACTUALIZAR «LOS TRES MEJORES MODELOS»
-   1. Cada familia (auraphone, aurapad, aurabook) debe tener EXACTAMENTE tres
+   1. Cada familia (auraphone, aurapad, aurabook, aurapods) debe tener EXACTAMENTE tres
       productos, con rank 1, 2 y 3 (1 = el mejor). El orden en pantalla sale
       de rank, no del orden en este archivo.
    2. Para sustituir un modelo: cambia su bloque en `products` (id, name,
@@ -56,6 +56,11 @@
      No escribas el estado ni las frases («Reserva a partir del…»): salen de
      las fechas. Para probar otro día, añade ?hoy=AAAA-MM-DD a la URL.
    - family.description: frase de apoyo para tarjetas y cabeceras.
+   - family.plural: true si el nombre se usa en plural («los auraPods», «unos
+     auraPods», «tus nuevos auraPods»). Los textos generados concuerdan con
+     AURA.catalog.grammar(producto | familia); sin el campo, singular.
+   - Un producto sin `options` (o con []) solo se configura por acabado y
+     AuraCare+ (auraPods Max 2 y Pro 3).
 
    Los colores `hex` son aproximaciones para pintar las muestras.
    ========================================================================== */
@@ -129,6 +134,30 @@ window.AURA_DATA = {
         { key: 'camara', label: 'Cámara' },
         { key: 'peso', label: 'Peso y grosor' },
         { key: 'sistema', label: 'Sistema operativo' },
+        { key: 'precio', label: 'Precio' }
+      ]
+    },
+    {
+      /* auraPods: el nombre va en plural («los auraPods», «tus nuevos
+         auraPods»): los textos generados concuerdan con `plural`. Las
+         funciones dependen de un auraPhone, auraPad o auraBook con `os`. */
+      id: 'aurapods',
+      name: 'auraPods',
+      page: 'aurapods.html',
+      os: 'auraOS 27',
+      plural: true,
+      tagline: 'Escucha lo que quieres. Silencia lo demás.',
+      description: 'Tres auraPods con el chip AURA H2: los Max 2 de diadema, los Pro 3 con sensor de frecuencia cardiaca y los auraPods 5, ahora con cancelación de ruido.',
+      compareRows: [
+        { key: 'chip', label: 'Chip' },
+        { key: 'cancelacion', label: 'Cancelación de ruido' },
+        { key: 'audio', label: 'Audio' },
+        { key: 'bateria', label: 'Autonomía' },
+        { key: 'estuche', label: 'Estuche y carga' },
+        { key: 'resistencia', label: 'Resistencia' },
+        { key: 'salud', label: 'Salud y sensores' },
+        { key: 'controles', label: 'Controles' },
+        { key: 'peso', label: 'Peso' },
         { key: 'precio', label: 'Precio' }
       ]
     }
@@ -239,10 +268,10 @@ window.AURA_DATA = {
         'Hasta 2 TB de almacenamiento'
       ],
       image: 'auraphone-18-pro-max',
-      imageColor: 'burdeos',
-      imageAlt: 'auraPhone 18 Pro Max burdeos de espaldas, con la meseta de cámaras de lado a lado, sobre fondo negro',
+      imageColor: 'plata',
+      imageAlt: 'auraPhone 18 Pro Max plata tumbado en diagonal, en tres cuartos, con la meseta de tres cámaras, sobre fondo negro',
       imageVariants: {
-        plata: 'auraPhone 18 Pro Max plata de espaldas, con la meseta de cámaras de lado a lado, sobre fondo negro'
+        burdeos: 'auraPhone 18 Pro Max burdeos de espaldas, con la meseta de cámaras de lado a lado, sobre fondo negro'
       }
     },
     {
@@ -293,7 +322,7 @@ window.AURA_DATA = {
       ],
       image: 'auraphone-18-pro',
       imageColor: 'negro',
-      imageAlt: 'auraPhone 18 Pro negro de espaldas, con la meseta de cámaras de lado a lado, sobre fondo negro',
+      imageAlt: 'auraPhone 18 Pro negro tumbado y visto a ras, con la meseta de tres cámaras en primer plano, sobre fondo negro',
       imageVariants: {
         plata: 'auraPhone 18 Pro plata de espaldas, con la meseta de cámaras de lado a lado, sobre fondo negro',
         'azul-glacial': 'auraPhone 18 Pro azul glacial de espaldas, con la meseta de cámaras de lado a lado, sobre fondo negro'
@@ -732,16 +761,152 @@ window.AURA_DATA = {
         'blanco-estrella': 'auraBook Air 15″ en blanco estrella abierto sobre negro, con la pantalla de ondas turquesa',
         medianoche: 'auraBook Air 15″ en color medianoche abierto sobre negro, con la pantalla de ondas turquesa'
       }
+    },
+
+    /* ======================= auraPods ======================== */
+    {
+      id: 'aurapods-max-2',
+      family: 'aurapods',
+      rank: 1,
+      name: 'auraPods Max 2',
+      badge: 'El más inmersivo',
+      tagline: 'Sonido de estudio. Silencio de biblioteca.',
+      description: 'Auriculares de diadema con el chip AURA H2: cancelación activa de ruido hasta 1,5 veces la de la generación anterior, audio sin pérdida por USB-C y hasta 20 horas de autonomía.',
+      basePrice: 579,
+      colors: [
+        { id: 'medianoche', name: 'Medianoche', hex: '#2c3038' },
+        { id: 'blanco-estrella', name: 'Blanco estrella', hex: '#ebe6dc' },
+        { id: 'azul', name: 'Azul', hex: '#3d6f99' },
+        { id: 'purpura', name: 'Púrpura', hex: '#c3b3d4' },
+        { id: 'naranja', name: 'Naranja', hex: '#e59a6e' }
+      ],
+      /* Sin opciones: se elige el acabado y, si se quiere, AuraCare+. */
+      options: [],
+      specs: {
+        chip: 'AURA H2 · nueve micrófonos',
+        cancelacion: 'Activa, hasta 1,5 veces la de la generación anterior · modo Ambiente',
+        audio: 'Audio espacial con seguimiento de la cabeza · sin pérdida por USB-C',
+        bateria: 'Hasta 20 h con cancelación de ruido',
+        estuche: 'Funda Smart Case · carga por USB-C',
+        resistencia: 'Sin certificación IP frente al agua o el polvo',
+        salud: 'Sensores ópticos y de posición en cada orejera · sin sensor cardiaco',
+        controles: 'Digital Crown y botón de control de ruido',
+        peso: '386,2 g'
+      },
+      highlights: [
+        'Cancelación activa de ruido hasta 1,5 veces la de la generación anterior',
+        'Chip AURA H2 y nueve micrófonos para la cancelación, las llamadas y el modo Ambiente',
+        'Audio espacial personalizado con seguimiento dinámico de la cabeza',
+        'Audio sin pérdida y latencia ultrabaja con el cable USB-C',
+        'Hasta 20 horas de autonomía con la cancelación de ruido activada',
+        'Aluminio anodizado, diadema de malla trenzada y almohadillas de espuma viscoelástica'
+      ],
+      image: 'aurapods-max-2',
+      imageColor: 'medianoche',
+      imageAlt: 'auraPods Max 2 en color medianoche, en tres cuartos sobre una superficie negra brillante: diadema con malla, orejeras de aluminio y su reflejo',
+      imageVariants: {
+        'blanco-estrella': 'auraPods Max 2 en blanco estrella vistos desde arriba sobre fondo negro: diadema con malla y dos orejeras de aluminio',
+        azul: 'auraPods Max 2 azules vistos desde arriba sobre fondo negro, con las orejeras dentro de su funda Smart Case',
+        purpura: 'auraPods Max 2 en púrpura vistos desde arriba sobre fondo negro: diadema con malla y dos orejeras de aluminio'
+      }
+    },
+    {
+      id: 'aurapods-pro-3',
+      family: 'aurapods',
+      rank: 2,
+      name: 'auraPods Pro 3',
+      badge: 'Con sensor cardiaco',
+      tagline: 'El doble de silencio. Tu pulso, al oído.',
+      description: 'Cancelación activa de ruido hasta 2 veces la de la generación anterior, un sensor de frecuencia cardiaca para entrenar y hasta 8 horas de autonomía, en 5,55 gramos.',
+      basePrice: 249,
+      colors: [
+        { id: 'blanco', name: 'Blanco', hex: '#f2f2f0' }
+      ],
+      options: [],
+      specs: {
+        chip: 'AURA H2 · Bluetooth 5.3',
+        cancelacion: 'Activa, hasta 2 veces la de la generación anterior · modo Ambiente',
+        audio: 'Audio espacial personalizado · audio adaptativo · detección de conversación',
+        bateria: 'Hasta 8 h con cancelación · hasta 24 h con el estuche',
+        estuche: 'MagSafe y USB-C · altavoz, enganche para correa y búsqueda de precisión',
+        resistencia: 'IP57 frente al sudor, el agua y el polvo',
+        salud: 'Sensor de frecuencia cardiaca · protección auditiva y función de audífono',
+        controles: 'Sensor de presión en el tallo · volumen deslizando',
+        peso: '5,55 g por auricular'
+      },
+      highlights: [
+        'Cancelación activa de ruido hasta 2 veces la de la generación anterior',
+        'Sensor de frecuencia cardiaca para medir tus entrenamientos',
+        'Hasta 8 horas de autonomía con cancelación de ruido y 24 con el estuche',
+        'Protección auditiva, prueba de audición y función de audífono',
+        'Traducción en tiempo real (beta) y resistencia IP57',
+        'Cinco tallas de almohadillas, de la XXS a la L'
+      ],
+      image: 'aurapods-pro-3',
+      imageColor: 'blanco',
+      imageAlt: 'auraPods Pro 3 blancos sobre fondo negro: los dos auriculares con almohadilla junto al estuche de carga cerrado'
+    },
+    {
+      id: 'aurapods-5',
+      family: 'aurapods',
+      rank: 3,
+      name: 'auraPods 5',
+      badge: 'Nuevo',
+      tagline: 'Ligeros como siempre. Silenciosos como nunca.',
+      description: 'El diseño abierto de siempre, sin almohadillas, ahora con cancelación activa de ruido, chip AURA H2, resistencia IP57 y traducción en tiempo real.',
+      basePrice: 149,
+      colors: [
+        { id: 'blanco', name: 'Blanco', hex: '#f2f2f0' }
+      ],
+      options: [
+        {
+          id: 'estuche',
+          label: 'Estuche de carga',
+          choices: [
+            { id: 'usb-c', label: 'Estuche de carga USB-C', delta: 0 },
+            {
+              id: 'inalambrico',
+              label: 'Estuche de carga inalámbrica',
+              delta: 20,
+              note: 'Carga inalámbrica, volumen deslizando, altavoz en el estuche y más autonomía'
+            }
+          ]
+        }
+      ],
+      specs: {
+        chip: 'AURA H2 · Bluetooth 5.3',
+        cancelacion: 'Activa, hasta 1,5 veces la de la generación anterior · modo Ambiente',
+        audio: 'Audio adaptativo · detección de conversación · audio espacial personalizado',
+        bateria: 'Hasta 4 h con cancelación y 6 h sin ella · 5 y 7 h con estuche inalámbrico',
+        estuche: 'USB-C · opcional: de carga inalámbrica con altavoz',
+        resistencia: 'IP57 frente al sudor, el agua y el polvo',
+        salud: 'Detección automática de oído · sin sensor cardiaco',
+        controles: 'Sensor de presión en el tallo · volumen deslizando con estuche inalámbrico',
+        peso: '4,3 g por auricular'
+      },
+      highlights: [
+        'Cancelación activa de ruido hasta 1,5 veces la de la generación anterior',
+        'Chip AURA H2 con audio adaptativo y detección de conversación',
+        'Audio espacial personalizado, sin almohadillas',
+        'Resistencia IP57 al sudor, al agua y al polvo',
+        'Traducción en tiempo real y Bluetooth 5.3',
+        'Estuche USB-C o de carga inalámbrica con altavoz y más autonomía'
+      ],
+      image: 'aurapods-5',
+      imageColor: 'blanco',
+      imageAlt: 'auraPods 5 blancos sobre fondo negro: el estuche de carga abierto, con los dos auriculares sin almohadilla dentro'
     }
   ],
 
   /* ------------------------------------------------------------------ */
   /* AuraCare+ (precio por familia, se añade por unidad)                */
+  /* auraPods: 59 € es un precio estimado (plausible para la gama), no   */
+  /* uno comprobado; revísalo con la tarifa oficial cuando la haya.      */
   /* ------------------------------------------------------------------ */
   care: {
     name: 'AuraCare+',
     description: 'Dos años de cobertura con reparaciones por daños accidentales y asistencia prioritaria de especialistas AURA.',
-    prices: { auraphone: 229, aurapad: 149, aurabook: 399 }
+    prices: { auraphone: 229, aurapad: 149, aurabook: 399, aurapods: 59 }
   },
 
   /* ------------------------------------------------------------------ */
@@ -785,7 +950,15 @@ window.AURA_DATA = {
       { id: 'aurabook-air-15-m4', family: 'aurabook', name: 'auraBook Air 15″ (AURA M4)', max: 520 },
       { id: 'aurabook-air-13-m4', family: 'aurabook', name: 'auraBook Air 13″ (AURA M4)', max: 450 },
       { id: 'aurabook-air-15-m3', family: 'aurabook', name: 'auraBook Air 15″ (AURA M3)', max: 400 },
-      { id: 'aurabook-air-13-m2', family: 'aurabook', name: 'auraBook Air 13″ (AURA M2)', max: 280 }
+      { id: 'aurabook-air-13-m2', family: 'aurabook', name: 'auraBook Air 13″ (AURA M2)', max: 280 },
+
+      /* auraPods (valores estimados, coherentes con el resto: como mucho ~150 €) */
+      { id: 'aurapods-max-usb-c', family: 'aurapods', name: 'auraPods Max (USB-C)', max: 150 },
+      { id: 'aurapods-max-1', family: 'aurapods', name: 'auraPods Max (1.ª generación)', max: 110 },
+      { id: 'aurapods-pro-2', family: 'aurapods', name: 'auraPods Pro 2', max: 80 },
+      { id: 'aurapods-4-anc', family: 'aurapods', name: 'auraPods 4 (cancelación de ruido)', max: 60 },
+      { id: 'aurapods-4', family: 'aurapods', name: 'auraPods 4', max: 45 },
+      { id: 'aurapods-pro-1', family: 'aurapods', name: 'auraPods Pro (1.ª generación)', max: 30 }
     ]
   }
 };

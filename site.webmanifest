@@ -1,7 +1,7 @@
 {
   "name": "AURA",
   "short_name": "AURA",
-  "description": "Tienda de demostración de AURA: auraPhone, auraPad y auraBook, con AURA Trade In y financiación sin intereses.",
+  "description": "Tienda de demostración de AURA: auraPhone, auraPad, auraBook y auraPods, con AURA Trade In y financiación sin intereses.",
   "lang": "es",
   "dir": "ltr",
   "start_url": "/",

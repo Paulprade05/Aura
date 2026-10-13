@@ -101,6 +101,11 @@
   function device(id) { return findById(DEVICES, id); }
   function condition(id) { return findById(CONDITIONS, id); }
   function devicesOf(family) { return DEVICES.filter(function (d) { return d.family === family; }); }
+  /* «por tu auraPhone 16 Pro» / «por tus auraPods 4»: concordancia de la familia del dispositivo (data.js, plural). */
+  function tu(deviceId) {
+    var d = device(deviceId);
+    return d && cat && typeof cat.grammar === 'function' ? cat.grammar(d.family).tu : 'tu';
+  }
   function pct(factor) { return Math.round((Number(factor) || 0) * 100) + ' %'; }   /* «75 %» sin partir */
 
   /** Lo que vale un dispositivo en el mejor estado (con el tope del catálogo). */
@@ -251,7 +256,7 @@
       el.applyNote.textContent = same
         ? 'Ya está aplicado: se descontará en tu bolsa. Cambia el modelo o el estado para recalcularlo.'
         : (credit
-          ? 'Sustituirá a tu crédito actual de ' + fmt.eur0(credit.value) + (creditName(credit) ? ' por tu ' + display(creditName(credit)) : '') + '.'
+          ? 'Sustituirá a tu crédito actual de ' + fmt.eur0(credit.value) + (creditName(credit) ? ' por ' + tu(credit.deviceId) + ' ' + display(creditName(credit)) : '') + '.'
           : DEFAULT_NOTE);
     }
   }
@@ -288,7 +293,7 @@
       el.live.textContent = r.mode === 'exact'
         ? 'Valor estimado: ' + fmt.eur0(r.value) + '. ' + r.d.name + ', ' + String(r.c.label).toLowerCase() + '.'
         : (r.mode === 'device'
-          ? 'Hasta ' + fmt.eur0(r.value) + ' por tu ' + r.d.name + ' si está como nuevo. Elige su estado.'
+          ? 'Hasta ' + fmt.eur0(r.value) + ' por ' + tu(r.d.id) + ' ' + r.d.name + ' si está como nuevo. Elige su estado.'
           : 'Hasta ' + fmt.eur0(r.value) + ', según el modelo.');
     }
 
@@ -377,7 +382,7 @@
     if (!d || !c) { return; }
     var prev = AURA.tradeIn.get();
     if (prev && prev.deviceId === d.id && prev.conditionId === c.id && prev.value === AURA.tradeIn.estimate(d.id, c.id)) {
-      AURA.ui.toast({ kind: 'status', title: 'Este crédito ya está aplicado', text: fmt.eur0(prev.value) + ' por tu ' + display(creditName(prev) || d.name) + '. Se descontará en tu bolsa.' });
+      AURA.ui.toast({ kind: 'status', title: 'Este crédito ya está aplicado', text: fmt.eur0(prev.value) + ' por ' + tu(prev.deviceId || d.id) + ' ' + display(creditName(prev) || d.name) + '. Se descontará en tu bolsa.' });
       return;
     }
     var saved = AURA.tradeIn.set({ deviceId: d.id, conditionId: c.id });
@@ -398,14 +403,14 @@
       ? { label: 'Deshacer', onClick: function () {
           var back = AURA.tradeIn.set(prev);
           if (back) {
-            AURA.ui.toast({ kind: 'status', title: 'Vuelves a tener ' + fmt.eur0(back.value) + ' de crédito', text: 'Por tu ' + display(back.deviceName || creditName(prev)) + '.' });
+            AURA.ui.toast({ kind: 'status', title: 'Vuelves a tener ' + fmt.eur0(back.value) + ' de crédito', text: 'Por ' + tu(back.deviceId) + ' ' + display(back.deviceName || creditName(prev)) + '.' });
           }
         } }
       : { label: next.label, onClick: function () { window.location.href = next.href; } };
     AURA.ui.toast({
       kind: 'ok',
       title: (prev ? 'Crédito sustituido: ' : 'Crédito aplicado: ') + fmt.eur0(saved.value),
-      text: 'Por tu ' + display(saved.deviceName) + '. Se descontará en tu bolsa al tramitar el pedido.',
+      text: 'Por ' + tu(saved.deviceId) + ' ' + display(saved.deviceName) + '. Se descontará en tu bolsa al tramitar el pedido.',
       action: action
     });
     haptic('exito');                 /* en el mismo instante que el aviso (completado) */

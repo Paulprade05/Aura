@@ -1,6 +1,6 @@
 # AURA — tienda online de tecnología de alta gama
 
-Web de demostración de **AURA**, una marca inventada que parodia a Apple: vende los tres mejores modelos actuales de cada familia (auraPhone, auraPad y auraBook) con el diseño, el tono y la forma de trabajar de apple.com, siguiendo la guía de estilo AURA y la skill [`apple-design`](.agents/skills/apple-design/SKILL.md).
+Web de demostración de **AURA**, una marca inventada que parodia a Apple: vende los tres mejores modelos actuales de cada familia (auraPhone, auraPad, auraBook y auraPods) con el diseño, el tono y la forma de trabajar de apple.com, siguiendo la guía de estilo AURA y la skill [`apple-design`](.agents/skills/apple-design/SKILL.md).
 
 HTML, CSS y JavaScript sin compilación, con Bootstrap 5.3 (rejilla y utilidades), Bootstrap Icons y las fuentes Kanit e Inter.
 
@@ -22,7 +22,7 @@ Hace falta conexión a internet la primera vez, para las fuentes, Bootstrap y lo
 | Página | Qué es |
 |---|---|
 | `index.html` | Inicio: héroes por familia, novedades, la gama en un carrusel, por qué AURA, About us y Trade In |
-| `auraphone.html` · `aurapad.html` · `aurabook.html` | Páginas de familia con barra local, modelos, destacados, carrusel y comparativa |
+| `auraphone.html` · `aurapad.html` · `aurabook.html` · `aurapods.html` | Páginas de familia con barra local, escena con scroll, modelos, capítulos, exhibición de color y comparativa |
 | `comprar.html?producto=ID` | Configurador: modelo, acabado, opciones con precio, AuraCare+, Trade In y resumen |
 | `bolsa.html` · `checkout.html` | Bolsa (cantidades, deshacer, crédito de Trade In) y pago simulado en 4 pasos |
 | `login.html` · `registro.html` · `cuenta.html` | ID de AURA: acceso, registro y cuenta con pedidos, datos y seguridad |
@@ -40,6 +40,9 @@ Todo el catálogo vive en **`js/data.js`** (datos reales de España a 3 de octub
 | auraPhone | auraPhone Duo (plegable, desde 2.339 €) | auraPhone 18 Pro Max (1.619 €) | auraPhone 18 Pro (1.469 €) |
 | auraPad | auraPad Pro 13″ (1.649 €) | auraPad Pro 11″ (1.299 €) | auraPad Air 13″ (999 €) |
 | auraBook | auraBook Pro 16″ (3.449 €) | auraBook Pro 14″ (2.229 €) | auraBook Air 15″ (1.729 €) |
+| auraPods | auraPods Max 2 (diadema, 579 €) | auraPods Pro 3 (249 €) | auraPods 5 (desde 149 €; 169 € con estuche de carga inalámbrica) |
+
+Los auraPods se añadieron el 11 de octubre de 2026 (gama comprobada el 10/10/2026): AuraCare+ cuesta 59 € (precio estimado) y AURA Trade In admite seis auriculares anteriores (hasta 150 €). El nombre de la familia va en plural (`plural: true` en `data.js`): los textos que genera el sitio dicen «los auraPods», «unos auraPods» o «tus nuevos auraPods».
 
 El **auraPhone Duo** cambia de estado solo según la fecha:
 
@@ -55,7 +58,7 @@ Para probar otro día sin esperar, añade `?hoy=AAAA-MM-DD` a la URL (por ejempl
 
 Las fotos de `img/` (WebP) son fotos reales con licencia libre (Wikimedia Commons, Unsplash y Pexels) de los modelos actuales, recortadas y ajustadas de tono para el fondo negro; en algunas se han borrado logotipos o textos de la pantalla. Sus autores y licencias aparecen en `html/legal.html#imagenes`. Para cambiar una, sustituye el archivo con el mismo nombre (lista completa en **[`img/LEEME.md`](img/LEEME.md)**); si falta alguna, la web muestra un marcador con su ruta y tamaño. El logotipo (`img/aura.png`) no cambia.
 
-Las páginas de auraPhone, auraPad y auraBook abren con una **escena que avanza con el scroll**: una secuencia de 120 fotogramas por familia en `img/seq/<familia>-intro/` (con versión ligera para móvil en `m/`), pintada en un `<canvas>` al ritmo del scroll y con textos superpuestos. Con «reducir movimiento» o ahorro de datos se muestra una imagen fija con los textos. El componente está documentado en `guia-de-estilo/docs/COMPONENTES.md` (§10 bis).
+Las páginas de auraPhone, auraPad, auraBook y auraPods abren con una **escena que avanza con el scroll**: una secuencia de fotogramas por familia en `img/seq/<familia>-intro/` (96–120; con versión ligera para móvil en `m/`; la de auraPods se compone por código a partir de una foto de estudio), pintada en un `<canvas>` al ritmo del scroll y con textos superpuestos. Con «reducir movimiento» o ahorro de datos se muestra una imagen fija con los textos. El componente está documentado en `guia-de-estilo/docs/COMPONENTES.md` (§10 bis).
 
 ## Tienda simulada
 
@@ -76,10 +79,12 @@ js/aura-core.js                núcleo: catálogo, bolsa, sesión, pedidos, cabe
 js/aura-ui.js                  interfaz: muelles, carrusel con inercia, hojas, avisos, formularios
 js/pages/*.js                  lógica de cada página
 img/                           logotipo, imágenes y LEEME.md
-guia-de-estilo/                guía de estilo oficial en PDF y prototipos
+guia-de-estilo/                guía de estilo v2 (HTML y PDF), la v1 original en PDF y prototipos
 ```
 
 ## Diseño
+
+La guía de estilo completa es la **v2**: [`guia-de-estilo/guia-de-estilo.html`](guia-de-estilo/guia-de-estilo.html) (también en [PDF](<guia-de-estilo/AURA — Guía de estilo v2.pdf>)). Recoge los 17 capítulos del sistema: amplía los 4 de la v1 y añade 13 nuevos con todo lo que ha traído la web (iconografía, materiales, layout, navegación, componentes de contenido, tienda, overlays, movimiento, escena con scroll, imagen, accesibilidad, voz y familias). La v1 original, `AURA — Guía de estilo.pdf`, se conserva tal cual.
 
 - **Guía de estilo AURA:**
   - Fondo `#000` y `#161617`, azul `#0071e3` solo para lo interactivo y dorado `#e5a93c` para los acentos.

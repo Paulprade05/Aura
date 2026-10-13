@@ -140,7 +140,8 @@
       var a = availabilityOf(l);
       if (a.status !== 'reserva') { return; }
       var d = parseDay(a.release);
-      if (out.names.indexOf('el ' + l.name) === -1) { out.names.push('el ' + l.name); }
+      var nombre = (AURA.catalog.grammar ? AURA.catalog.grammar(l.productId).el : 'el') + ' ' + l.name;   // «los auraPods 5»
+      if (out.names.indexOf(nombre) === -1) { out.names.push(nombre); }
       if (d && (!out.date || d > out.date)) { out.date = d; }
     });
     return out;

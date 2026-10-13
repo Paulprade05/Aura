@@ -52,6 +52,23 @@
    flotando): .aura-tile__media--blend de la base (las fotos con ambiente
    —cámara, teleobjetivo— conservan su marco). */
 
+/* Tesela a lo ancho de auraPods (.aura-tile--wide de la base, toda la fila del
+   bento): desde 768 px, el texto a la izquierda, centrado en vertical, y la
+   foto a la derecha con su proporción 4:3 (sin recortar los auriculares). En el
+   teléfono es una tesela más, con la foto debajo. */
+@media (min-width: 768px) {
+  .index-wide {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+    align-items: center;
+    gap: clamp(1.25rem, 3vw, 2.5rem);
+  }
+  .index-wide > .aura-tile__media {
+    min-height: 0;
+    aspect-ratio: 4 / 3;
+  }
+}
+
 /* --------------------------------------------------------------------------
    2. «Toda la gama»: unas tres tarjetas y el asomo de la siguiente en
       escritorio; una y un asomo en móvil. Todas las tarjetas de la fila miden

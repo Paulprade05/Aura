@@ -7,7 +7,7 @@ Todas las imágenes ya están colocadas: fotos reales con licencia libre (Wikime
 - **Tamaño:** el indicado o mayor con la misma proporción (la proporción importa más que los píxeles exactos).
 - Listado generado automáticamente el 2026-10-03 (fotos colocadas el 2026-10-09) recorriendo todas las páginas. Si cambias la gama en `js/data.js`, vuelve a mirar la tabla de productos.
 
-## 1. Productos (imprescindibles: 9 imágenes)
+## 1. Productos (imprescindibles: 12 imágenes)
 
 Una imagen por producto basta: se usa en las tarjetas, el comparador, el configurador, la bolsa y el buscador. **1600 × 1200 px (4:3)**, el dispositivo centrado y con aire alrededor.
 
@@ -22,6 +22,9 @@ Una imagen por producto basta: se usa en las tarjetas, el comparador, el configu
 | `auraphone-duo.webp` | auraPhone Duo | auraPhone |
 | `auraphone-18-pro-max.webp` | auraPhone 18 Pro Max | auraPhone |
 | `auraphone-18-pro.webp` | auraPhone 18 Pro | auraPhone |
+| `aurapods-max-2.webp` | auraPods Max 2 | auraPods |
+| `aurapods-pro-3.webp` | auraPods Pro 3 | auraPods |
+| `aurapods-5.webp` | auraPods 5 | auraPods |
 
 ### Opcional: una imagen por color
 
@@ -38,6 +41,7 @@ Si quieres que el configurador y las exhibiciones de color cambien de imagen al 
 | auraBook Pro 16″ | `aurabook-pro-16-negro-espacial.webp` (Negro espacial) · `aurabook-pro-16-plata.webp` (Plata) |
 | auraBook Pro 14″ | `aurabook-pro-14-negro-espacial.webp` (Negro espacial) · `aurabook-pro-14-plata.webp` (Plata) |
 | auraBook Air 15″ | `aurabook-air-15-azul-cielo.webp` (Azul cielo) · `aurabook-air-15-plata.webp` (Plata) · `aurabook-air-15-blanco-estrella.webp` (Blanco estrella) · `aurabook-air-15-medianoche.webp` (Medianoche) |
+| auraPods Max 2 | `aurapods-max-2-blanco-estrella.webp` (Blanco estrella) · `aurapods-max-2-azul.webp` (Azul) · `aurapods-max-2-purpura.webp` (Púrpura) · `aurapods-max-2-naranja.webp` (Naranja, aún sin foto); la base enseña el medianoche |
 
 ## 2. Imágenes de cada página
 
@@ -98,6 +102,18 @@ La columna «Qué debe mostrar» es el texto alternativo que ya lleva la imagen:
 | `aurabook-perfil-video.webp` | 1600 × 1200 | Vídeo 8K | Una línea de tiempo de vídeo 8K con varias pistas en un auraBook Pro 16″, en una sala de montaje a oscuras |
 | `aurabook-perfil-estudios.webp` | 1600 × 1200 | Estudios | Un estudiante toma apuntes con un auraBook Air en la mesa de una biblioteca |
 | `aurabook-perfil-musica.webp` | 1600 × 1200 | Música | Una productora musical con un auraBook Pro, un teclado MIDI y unos auriculares en un estudio doméstico |
+
+### aurapods.html
+
+| Archivo | Tamaño | Dónde | Qué debe mostrar |
+|---|---|---|---|
+| `seq/aurapods-intro/` | 96 × 1600 × 900 (+ 56 × 750 × 1100 en `m/`) | #descripcion Escena del héroe | Los auraPods Max 2 aparecen desde el negro, la cámara se acerca y la luz cruza el aluminio (fotogramas compuestos por código desde una foto de estudio) |
+| `aurapods-cancelacion.webp` | 1600 × 1200 | #cancelacion Cancelación activa de ruido | Dos auriculares blancos con almohadilla sobre una superficie de cuero negro |
+| `aurapods-audio.webp` | 1600 × 1200 | #audio Audio espacial | De cerca, las orejeras de aluminio y las almohadillas de malla de unos auraPods Max 2 en color medianoche |
+| `aurapods-max.webp` | 1600 × 1200 | #max auraPods Max 2 | auraPods Max 2 en color medianoche, en tres cuartos sobre una superficie negra brillante |
+| `aurapods-ecosistema.webp` | 1600 × 1200 | #ecosistema Con auraPhone y auraBook | Auriculares de diadema negros en penumbra, con un auraPhone detrás que reproduce una canción |
+
+El estuche (#estuche) y los accesorios (#accesorios) usan las fotos de producto `aurapods-5`, `aurapods-max-2-azul` y `aurapods-pro-3`.
 
 ### trade-in.html
 
