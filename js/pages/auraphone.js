@@ -228,11 +228,14 @@
     var grupo = 'auraphone-acabado';
     var elegido = expo.getAttribute('data-color');
     if (!expoP.colors.some(function (c) { return c.id === elegido; })) { elegido = expoP.colors[0].id; }
+    /* Cada radio lleva id y su etiqueta for= (TAW solo cuenta <label for>, no la
+       que envuelve al control): grupo + acabado, único en la página. */
     muestras.innerHTML = expoP.colors.map(function (c) {
       var foto = fotoDe(c.id);
       if (!foto) { sinFoto[c.id] = true; foto = base; }
-      return '<label class="aura-swatch" style="--swatch:' + esc(c.hex || '#888') + '">' +
-        '<input class="aura-swatch__input" type="radio" name="' + grupo + '" value="' + esc(c.id) + '"' +
+      var id = grupo + '-' + String(c.id).replace(/[^A-Za-z0-9_-]+/g, '-');
+      return '<label class="aura-swatch" for="' + esc(id) + '" style="--swatch:' + esc(c.hex || '#888') + '">' +
+        '<input class="aura-swatch__input" id="' + esc(id) + '" type="radio" name="' + grupo + '" value="' + esc(c.id) + '"' +
         ' data-slot="' + esc(foto.slot) + '" data-fallback="' + esc(foto.fallback || base.slot) + '" data-alt="' + esc(foto.alt) + '"' +
         (c.id === elegido ? ' checked' : '') + '>' +
         '<span class="aura-swatch__dot" aria-hidden="true"></span>' +
@@ -295,9 +298,10 @@
       var volver = one('.aura-footnotes__back', li);
       if (volver) {
         volver.hidden = !refs.some(function (a) { return !a.closest('[hidden]'); });
-        /* Enlace de solo icono: nombre (aria-label) y texto emergente (title) con el número nuevo. */
+        /* Enlace de solo icono: nombre (su texto oculto) y texto emergente (title) con el número nuevo. */
         if (visible) {
-          volver.setAttribute('aria-label', 'Volver al texto de la nota ' + n);
+          var nombre = one('.visually-hidden', volver);
+          if (nombre) { nombre.textContent = 'Volver al texto de la nota ' + n; }
           volver.setAttribute('title', 'Volver al texto de la nota ' + n);
         }
       }
@@ -387,7 +391,7 @@
     });
     estadoAviso.forEach(function (el) {
       el.innerHTML = aviso
-        ? '<i class="bi bi-check-circle-fill" aria-hidden="true"></i>Te avisaremos en ' + esc(aviso.email.trim()) + ' ' + esc(cuando) + '.'
+        ? '<span class="bi bi-check-circle-fill" aria-hidden="true"></span>Te avisaremos en ' + esc(aviso.email.trim()) + ' ' + esc(cuando) + '.'
         : '';
       el.hidden = !aviso;
     });

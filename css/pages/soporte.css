@@ -16,6 +16,33 @@
 }
 /* El sitio para «Borrar la búsqueda» lo reserva la base
    (.aura-field__control:has(.aura-field__toggle)). */
+/* La lupa es el botón de envío («Buscar»): el mismo dibujo, color y sitio que
+   el icono de apoyo de la base (centro a 24 px del borde), pero se puede pulsar
+   y ocupa 44 × 44 px, como «Borrar la búsqueda» al otro lado. */
+.soporte-buscador__enviar {
+  left: .125rem;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  pointer-events: auto;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: transform var(--dur-press) ease-out;
+}
+@media (hover: hover) {
+  .soporte-buscador__enviar:hover { color: var(--text-primary); }
+}
+.soporte-buscador__enviar:active, .soporte-buscador__enviar.is-pressed { transform: scale(.92); }
+.soporte-buscador__enviar:focus-visible { outline-offset: -4px; }
+@media (prefers-reduced-motion: reduce) {
+  /* Responde al instante, sin escala: se atenúa (como «Borrar la búsqueda»). */
+  .soporte-buscador__enviar:active, .soporte-buscador__enviar.is-pressed { transform: none; opacity: .7; }
+}
 .soporte-buscador__sugerencias {
   display: grid;
   gap: .625rem;

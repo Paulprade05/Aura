@@ -93,6 +93,9 @@
   margin-bottom: .875rem;
   border-radius: var(--radius-lg);
 }
+/* La foto no es un enlace (comparar.js sigue el del nombre al pulsarla):
+   el mismo cursor que cuando lo era. */
+.cmp-head__media[data-cmp-media] { cursor: pointer; }
 .cmp-head__badge { align-self: end; }
 .cmp-head__name { align-self: start; }   /* .aura-product-card__name: letra, hover y 44 px táctiles de la base */
 .cmp-head__finishes {

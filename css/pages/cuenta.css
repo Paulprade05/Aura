@@ -125,6 +125,13 @@ html.aura-has-session:not(.is-ready) :is(#login-titulo, #login-entradilla) {
 /* Los datos de la configuración van enteros (espacios duros en cuenta.js);
    si uno solo no cabe en la línea, que parta antes que desbordar. */
 .cuenta-pedido__lineas .aura-bag-line__meta { overflow-wrap: anywhere; }
+/* La foto no es un enlace (el del nombre ya lleva al producto): cuenta.js
+   sigue ese enlace al pulsarla. Responde como antes: se atenúa. */
+.cuenta-pedido__lineas .aura-bag-line__media[data-cuenta-foto] {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.cuenta-pedido__lineas .aura-bag-line__media[data-cuenta-foto]:active { opacity: .8; }
 /* En móvil el precio baja bajo el detalle: el texto de la configuración respira */
 @media (max-width: 575.98px) {
   .cuenta-pedido__lineas .aura-bag-line--compact {

@@ -78,7 +78,7 @@
           </div>
           <div class="aura-hero__actions">
             <a class="aura-btn aura-btn--secondary" href="html/auraphone.html">Más información<span class="visually-hidden"> sobre auraPhone</span></a>
-            <a class="aura-btn aura-btn--primary" href="html/comprar.html?producto=auraphone-duo" data-index-cta="auraphone-duo">Configurar</a>
+            <a class="aura-btn aura-btn--primary" href="html/comprar.html?producto=auraphone-duo" data-index-cta="auraphone-duo">Configurar<span class="visually-hidden"> auraPhone Duo</span></a>
           </div>
         </div>
         <div class="aura-hero__media">
@@ -100,7 +100,7 @@
           </div>
           <div class="aura-hero__actions">
             <a class="aura-btn aura-btn--secondary" href="html/aurapad.html">Más información<span class="visually-hidden"> sobre auraPad</span></a>
-            <a class="aura-btn aura-btn--primary" href="html/comprar.html?producto=aurapad-pro-11" data-index-cta="aurapad-pro-11 aurapad-pro-13">Comprar</a>
+            <a class="aura-btn aura-btn--primary" href="html/comprar.html?producto=aurapad-pro-11" data-index-cta="aurapad-pro-11 aurapad-pro-13">Comprar<span class="visually-hidden"> auraPad Pro 11″</span></a>
           </div>
         </div>
         <div class="aura-hero__media" data-aura-reveal="scale">
@@ -122,7 +122,7 @@
           </div>
           <div class="aura-hero__actions">
             <a class="aura-btn aura-btn--secondary" href="html/aurabook.html">Más información<span class="visually-hidden"> sobre auraBook</span></a>
-            <a class="aura-btn aura-btn--primary" href="html/comprar.html?producto=aurabook-pro-14" data-index-cta="aurabook-pro-14 aurabook-pro-16">Comprar</a>
+            <a class="aura-btn aura-btn--primary" href="html/comprar.html?producto=aurabook-pro-14" data-index-cta="aurabook-pro-14 aurabook-pro-16">Comprar<span class="visually-hidden"> auraBook Pro 14″</span></a>
           </div>
         </div>
         <div class="aura-hero__media" data-aura-reveal="scale">
@@ -228,7 +228,8 @@
 
     <!-- ================= 3 · Toda la gama (carrusel desde el catálogo) =================
          index.js pinta las tarjetas desde data.js. El segmentado es el componente documentado del sistema
-         (COMPONENTES.md §5): radios nativos agrupados con role="radiogroup" y su nombre en aria-label. -->
+         (COMPONENTES.md §5): radios nativos agrupados en un <fieldset> con su nombre en la <legend> (oculta a la
+         vista) y cada uno con su <label for>. -->
     <section class="aura-section index-gama" id="gama" aria-labelledby="gama-titulo">
       <div class="aura-container">
         <header class="aura-section-head aura-section-head--split">
@@ -238,12 +239,13 @@
             <p class="aura-lead">Los tres mejores modelos de cada familia, uno junto a otro.</p>
             <a class="aura-link" href="html/comparar.html?familia=auraphone" data-index-compare>Comparar todos los modelos<span class="visually-hidden" data-index-compare-name> de auraPhone</span></a>
           </div>
-          <div class="aura-segmented index-families" role="radiogroup" aria-label="Ir a una familia" data-index-families>
-            <label class="aura-segmented__item"><input type="radio" name="gama-familia" value="auraphone" checked><span>auraPhone</span></label>
-            <label class="aura-segmented__item"><input type="radio" name="gama-familia" value="aurapad"><span>auraPad</span></label>
-            <label class="aura-segmented__item"><input type="radio" name="gama-familia" value="aurabook"><span>auraBook</span></label>
-            <label class="aura-segmented__item"><input type="radio" name="gama-familia" value="aurapods"><span>auraPods</span></label>
-          </div>
+          <fieldset class="aura-segmented index-families" data-index-families>
+            <legend class="visually-hidden">Ir a una familia</legend>
+            <label class="aura-segmented__item" for="gama-familia-auraphone"><input type="radio" id="gama-familia-auraphone" name="gama-familia" value="auraphone" checked><span>auraPhone</span></label>
+            <label class="aura-segmented__item" for="gama-familia-aurapad"><input type="radio" id="gama-familia-aurapad" name="gama-familia" value="aurapad"><span>auraPad</span></label>
+            <label class="aura-segmented__item" for="gama-familia-aurabook"><input type="radio" id="gama-familia-aurabook" name="gama-familia" value="aurabook"><span>auraBook</span></label>
+            <label class="aura-segmented__item" for="gama-familia-aurapods"><input type="radio" id="gama-familia-aurapods" name="gama-familia" value="aurapods"><span>auraPods</span></label>
+          </fieldset>
         </header>
 
         <div class="aura-carousel aura-carousel--bleed index-shelf" data-aura-carousel data-index-shelf role="region" aria-roledescription="carrusel" aria-label="Toda la gama AURA">
@@ -309,7 +311,7 @@
             <p class="aura-eyebrow aura-eyebrow--mono">AURA Trade In</p>
             <h2 class="aura-h1" id="tradein-titulo">Consigue <span data-index-tradein-range>un</span> descuento al entregar tu dispositivo anterior.</h2>
             <p class="aura-lead">Lo reciclaremos de forma responsable o le daremos una segunda vida. Tú estrenas AURA; el planeta respira.</p>
-            <a class="aura-btn aura-btn--primary" href="html/trade-in.html">Valorar mi dispositivo <i class="bi bi-arrow-right" aria-hidden="true"></i></a>
+            <a class="aura-btn aura-btn--primary" href="html/trade-in.html">Valorar mi dispositivo <span class="bi bi-arrow-right" aria-hidden="true"></span></a>
           </div>
           <div class="aura-split__media" data-aura-reveal="scale">
             <img class="aura-img" src="img/inicio-trade-in.webp" srcset="img/400/inicio-trade-in.webp 400w, img/800/inicio-trade-in.webp 800w, img/inicio-trade-in.webp 1600w" sizes="auto, (max-width: 575.98px) 86vw, (max-width: 991.98px) 86vw, (max-width: 1199.98px) 41vw, 532px" data-slot="inicio-trade-in" width="1600" height="1200" alt="Un teléfono desmontado, con los componentes internos a la vista, sobre una mesa azul oscuro" loading="lazy" decoding="async">

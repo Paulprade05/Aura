@@ -65,12 +65,13 @@
   <main id="contenido">
 
     <!-- Barra local: segundo <nav>, con nombre propio (aria-label); salta a las secciones de esta página.
-         aura-ui.js la fija arriba al desplazarse y marca la sección visible. Llega ya plegable (.has-menu y el
-         chevrón en el HTML, sin salto al cargar): mientras los enlaces no caben, el chevrón los despliega en un menú. -->
+         aura-ui.js la fija arriba al desplazarse y marca la sección visible. El título no es un enlace (es esta
+         página: aria-current; enlazado, repetía el «Acerca de AURA» de la cabecera). Llega ya plegable (.has-menu y
+         el chevrón en el HTML, sin salto al cargar): mientras los enlaces no caben, el chevrón los despliega en un menú. -->
     <nav class="aura-localnav has-menu" aria-label="Acerca de AURA" data-aura-localnav>
       <div class="aura-container aura-localnav__inner">
-        <a class="aura-localnav__title" href="acerca.html">Acerca de AURA</a>
-        <button type="button" class="aura-localnav__toggle" aria-expanded="false" aria-controls="localnav-secciones" aria-label="Secciones de Acerca de AURA"><i class="bi bi-chevron-down" aria-hidden="true"></i></button>
+        <span class="aura-localnav__title" aria-current="page">Acerca de AURA</span>
+        <button type="button" class="aura-localnav__toggle" aria-expanded="false" aria-controls="localnav-secciones"><span class="bi bi-chevron-down" aria-hidden="true"></span><span class="visually-hidden">Secciones de Acerca de AURA</span></button>
         <div class="aura-localnav__links" id="localnav-secciones">
           <a class="aura-localnav__link" href="#historia">Historia</a>
           <a class="aura-localnav__link" href="#valores">Valores</a>
@@ -302,7 +303,7 @@
     </section>
 
     <!-- Oportunidades: texto + foto (sin leyenda: va en un <div>, no en <figure>) y la lista de puestos,
-         cada uno un <article> con su enlace para solicitarlo (aria-label con el nombre del puesto) -->
+         cada uno un <article> con su enlace para solicitarlo (el nombre del puesto completa su texto, oculto a la vista) -->
     <section class="aura-section aura-section--band" id="oportunidades" aria-labelledby="oportunidades-titulo">
       <div class="aura-container">
         <div class="aura-split">
@@ -316,7 +317,7 @@
               <li>Horario flexible y teletrabajo en los puestos que lo permiten</li>
             </ul>
             <div class="aura-cluster mt-2">
-              <a class="aura-btn aura-btn--primary" href="soporte.html?tema=empleo#contacto">Enviar mi candidatura <i class="bi bi-arrow-right" aria-hidden="true"></i></a>
+              <a class="aura-btn aura-btn--primary" href="soporte.html?tema=empleo#contacto">Enviar mi candidatura <span class="bi bi-arrow-right" aria-hidden="true"></span></a>
             </div>
             <p class="aura-caption aura-caption--muted">Te llevamos al formulario de contacto con el tema «Empleo» ya elegido. Las candidaturas, como todo en AURA, son de demostración.</p>
           </div>
@@ -333,7 +334,7 @@
               <h4 class="aura-h4" id="puesto-1">Ingeniero/a de frecuencias vibracionales</h4>
               <p class="aura-body">Afinarás la frecuencia vibracional de cada auraPhone hasta que suene a silencio. Se valora oído absoluto y paciencia infinita con los diapasones.</p>
               <p class="aura-caption aura-caption--muted acerca-puesto__ref">Hardware · Ref. AU-0412</p>
-              <a class="aura-link" href="soporte.html?tema=empleo&amp;puesto=AU-0412#contacto" aria-label="Solicitar este puesto: Ingeniero/a de frecuencias vibracionales">Solicitar este puesto</a>
+              <a class="aura-link" href="soporte.html?tema=empleo&amp;puesto=AU-0412#contacto">Solicitar este puesto<span class="visually-hidden">: Ingeniero/a de frecuencias vibracionales</span></a>
             </article>
           </li>
           <li data-aura-reveal style="--i:1">
@@ -342,7 +343,7 @@
               <h4 class="aura-h4" id="puesto-2">Diseñador/a de esquinas redondeadas</h4>
               <p class="aura-body">Decidirás el radio exacto de cada esquina y defenderás por qué 12 no es 13. Imprescindible un portfolio con al menos una curva continua.</p>
               <p class="aura-caption aura-caption--muted acerca-puesto__ref">Diseño industrial · Ref. AU-0518</p>
-              <a class="aura-link" href="soporte.html?tema=empleo&amp;puesto=AU-0518#contacto" aria-label="Solicitar este puesto: Diseñador/a de esquinas redondeadas">Solicitar este puesto</a>
+              <a class="aura-link" href="soporte.html?tema=empleo&amp;puesto=AU-0518#contacto">Solicitar este puesto<span class="visually-hidden">: Diseñador/a de esquinas redondeadas</span></a>
             </article>
           </li>
           <li data-aura-reveal>
@@ -351,7 +352,7 @@
               <h4 class="aura-h4" id="puesto-3">Tasador/a de AURA Trade In</h4>
               <p class="aura-body">Valorarás dispositivos usados para AURA Trade In con empatía y una calculadora. Sabrás explicar con tacto por qué la funda de purpurina no suma.</p>
               <p class="aura-caption aura-caption--muted acerca-puesto__ref">AURA Store · Ref. AU-0623</p>
-              <a class="aura-link" href="soporte.html?tema=empleo&amp;puesto=AU-0623#contacto" aria-label="Solicitar este puesto: Tasador/a de AURA Trade In">Solicitar este puesto</a>
+              <a class="aura-link" href="soporte.html?tema=empleo&amp;puesto=AU-0623#contacto">Solicitar este puesto<span class="visually-hidden">: Tasador/a de AURA Trade In</span></a>
             </article>
           </li>
           <li data-aura-reveal style="--i:1">
@@ -360,7 +361,7 @@
               <h4 class="aura-h4" id="puesto-4">Redactor/a de frases de tres palabras</h4>
               <p class="aura-body">Escribirás titulares. Cortos. Rotundos. Se valorará la capacidad de terminar cada frase con un punto y de resistirse a los adverbios.</p>
               <p class="aura-caption aura-caption--muted acerca-puesto__ref">Marketing · Ref. AU-0707</p>
-              <a class="aura-link" href="soporte.html?tema=empleo&amp;puesto=AU-0707#contacto" aria-label="Solicitar este puesto: Redactor/a de frases de tres palabras">Solicitar este puesto</a>
+              <a class="aura-link" href="soporte.html?tema=empleo&amp;puesto=AU-0707#contacto">Solicitar este puesto<span class="visually-hidden">: Redactor/a de frases de tres palabras</span></a>
             </article>
           </li>
         </ul>
@@ -368,14 +369,14 @@
     </section>
 
     <!-- Letra pequeña: su <h2> está oculto a la vista, pero da nombre a la sección para el lector de pantalla.
-         Cada nota tiene un enlace de vuelta (solo icono: aria-label y title dicen adónde lleva). -->
+         Cada nota tiene un enlace de vuelta (solo icono: su texto oculto y el title dicen adónde lleva). -->
     <section class="aura-section aura-section--tight aura-footnotes" aria-labelledby="notas-titulo">
       <div class="aura-container">
         <h2 class="visually-hidden" id="notas-titulo">Notas</h2>
         <ol class="aura-footnotes__list">
-          <li id="nota-1">Cifra orientativa de dispositivos AURA en uso en todo el mundo, incluidos los auraPhone, auraPad y auraBook de generaciones anteriores. <a class="aura-footnotes__back" href="#ref-1" aria-label="Volver al texto de la nota 1" title="Volver al texto de la nota 1"><i class="bi bi-arrow-return-left" aria-hidden="true"></i></a></li>
-          <li id="nota-2">Electricidad que consumen las oficinas, las tiendas y los centros de datos de AURA, procedente de fuentes renovables propias o contratadas. <a class="aura-footnotes__back" href="#ref-2" aria-label="Volver al texto de la nota 2" title="Volver al texto de la nota 2"><i class="bi bi-arrow-return-left" aria-hidden="true"></i></a></li>
-          <li id="nota-3">Objetivo para 2030: huella de carbono neutra en toda la cadena, desde la fabricación y el transporte hasta el uso y el reciclaje de cada producto. <a class="aura-footnotes__back" href="#ref-3" aria-label="Volver al texto de la nota 3" title="Volver al texto de la nota 3"><i class="bi bi-arrow-return-left" aria-hidden="true"></i></a></li>
+          <li id="nota-1">Cifra orientativa de dispositivos AURA en uso en todo el mundo, incluidos los auraPhone, auraPad y auraBook de generaciones anteriores. <a class="aura-footnotes__back" href="#ref-1" title="Volver al texto de la nota 1"><span class="bi bi-arrow-return-left" aria-hidden="true"></span><span class="visually-hidden">Volver al texto de la nota 1</span></a></li>
+          <li id="nota-2">Electricidad que consumen las oficinas, las tiendas y los centros de datos de AURA, procedente de fuentes renovables propias o contratadas. <a class="aura-footnotes__back" href="#ref-2" title="Volver al texto de la nota 2"><span class="bi bi-arrow-return-left" aria-hidden="true"></span><span class="visually-hidden">Volver al texto de la nota 2</span></a></li>
+          <li id="nota-3">Objetivo para 2030: huella de carbono neutra en toda la cadena, desde la fabricación y el transporte hasta el uso y el reciclaje de cada producto. <a class="aura-footnotes__back" href="#ref-3" title="Volver al texto de la nota 3"><span class="bi bi-arrow-return-left" aria-hidden="true"></span><span class="visually-hidden">Volver al texto de la nota 3</span></a></li>
         </ol>
         <ul class="aura-footnotes__list mt-3">
           <li>AURA es un proyecto de demostración: la empresa, su historia, las personas, las notas de prensa y las ofertas de empleo son ficticias. Cualquier parecido con una empresa de Cupertino es pura parodia.</li>

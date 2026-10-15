@@ -69,7 +69,11 @@
 /* La llamada final y «Por qué comprar» son de la base (data-aura-from,
    data-aura-buy, data-aura-perks); el carrusel usa .aura-tile--media-fit. */
 
-/* Hoja del aviso: «Cancelar el aviso» centrado bajo el botón principal */
+/* Hoja del aviso: el <form> envuelve el cuerpo y el pie (su botón de envío
+   queda dentro) sin caja propia: cuerpo y pie siguen siendo hijos flex del
+   panel, como en las demás hojas. «Cancelar el aviso», centrado bajo el
+   botón principal. */
+.auraphone-aviso { display: contents; }
 .auraphone-cancelar { justify-self: center; }
 
 /* --------------------------------------------------------------------------

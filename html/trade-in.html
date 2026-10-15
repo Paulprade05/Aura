@@ -74,7 +74,7 @@
           <h1 class="aura-h1" id="ti-titulo">Consigue <span data-ti-range>entre 30&nbsp;€ y 800&nbsp;€ de descuento</span><sup class="aura-footnote-ref"><a href="#ti-nota-valores" id="ti-ref-valores" aria-label="Nota 1">1</a></sup> al entregar tu dispositivo anterior.</h1>
           <p class="aura-lead">Lo reciclaremos de forma responsable o le daremos una segunda vida. Tú estrenas AURA; el planeta respira.</p>
           <div class="aura-hero__actions">
-            <a class="aura-btn aura-btn--primary" href="#calculadora">Valorar mi dispositivo <i class="bi bi-arrow-right" aria-hidden="true"></i></a>
+            <a class="aura-btn aura-btn--primary" href="#calculadora">Valorar mi dispositivo <span class="bi bi-arrow-right" aria-hidden="true"></span></a>
           </div>
         </div>
         <div class="aura-hero__media">
@@ -94,7 +94,7 @@
         </div>
 
         <div class="aura-alert aura-alert--ok ti-credit" data-ti-credit hidden>
-          <i class="bi bi-check-circle-fill" aria-hidden="true"></i>
+          <span class="bi bi-check-circle-fill" aria-hidden="true"></span>
           <p class="aura-alert__title" data-ti-credit-title>Tienes un crédito activo</p>
           <p class="aura-alert__text" data-ti-credit-text></p>
           <div class="ti-credit__actions">
@@ -104,7 +104,7 @@
         </div>
 
         <div class="aura-empty ti-empty" data-ti-empty hidden>
-          <span class="aura-empty__icon"><i class="bi bi-arrow-repeat" aria-hidden="true"></i></span>
+          <span class="aura-empty__icon"><span class="bi bi-arrow-repeat" aria-hidden="true"></span></span>
           <h3 class="aura-h3 aura-empty__title">La calculadora no está disponible ahora mismo</h3>
           <p class="aura-empty__text">Aun así, no lo guardes en un cajón: recogemos tu dispositivo anterior y lo reciclamos gratis.</p>
           <div class="aura-empty__actions"><a class="aura-btn aura-btn--secondary" href="soporte.html#contacto">Pedir la recogida gratuita</a></div>
@@ -116,14 +116,15 @@
         <form class="aura-layout aura-layout--aside ti-calc" id="ti-form" novalidate>
           <div class="ti-steps" data-ti-steps>
 
-            <!-- El fieldset ya agrupa y nombra estos radios: el segmentado no lleva role="radiogroup" (sería redundante) -->
+            <!-- El fieldset ya agrupa y nombra estos radios: el segmentado no lleva role="radiogroup" ni otro <fieldset>
+                 (sería redundante); cada radio tiene su <label for> -->
             <fieldset class="aura-fieldset ti-step" data-ti-step="familia">
               <legend class="aura-legend ti-step__legend"><span class="ti-step__num" aria-hidden="true">1</span>¿Qué vas a entregar?</legend>
               <div class="aura-segmented ti-families" data-ti-families>
-                <label class="aura-segmented__item"><input type="radio" name="familia" value="auraphone" checked><span>auraPhone</span></label>
-                <label class="aura-segmented__item"><input type="radio" name="familia" value="aurapad"><span>auraPad</span></label>
-                <label class="aura-segmented__item"><input type="radio" name="familia" value="aurabook"><span>auraBook</span></label>
-                <label class="aura-segmented__item"><input type="radio" name="familia" value="aurapods"><span>auraPods</span></label>
+                <label class="aura-segmented__item" for="ti-familia-auraphone"><input type="radio" id="ti-familia-auraphone" name="familia" value="auraphone" checked><span>auraPhone</span></label>
+                <label class="aura-segmented__item" for="ti-familia-aurapad"><input type="radio" id="ti-familia-aurapad" name="familia" value="aurapad"><span>auraPad</span></label>
+                <label class="aura-segmented__item" for="ti-familia-aurabook"><input type="radio" id="ti-familia-aurabook" name="familia" value="aurabook"><span>auraBook</span></label>
+                <label class="aura-segmented__item" for="ti-familia-aurapods"><input type="radio" id="ti-familia-aurapods" name="familia" value="aurapods"><span>auraPods</span></label>
               </div>
             </fieldset>
 
@@ -177,19 +178,19 @@
         </div>
         <ol class="aura-grid aura-grid--3 ti-how">
           <li class="aura-feature aura-feature--card" data-aura-reveal>
-            <span class="aura-feature__icon"><i class="bi bi-calculator" aria-hidden="true"></i></span>
+            <span class="aura-feature__icon"><span class="bi bi-calculator" aria-hidden="true"></span></span>
             <p class="aura-feature__value" aria-hidden="true">01</p>
             <h3 class="aura-feature__title">Valóralo aquí</h3>
             <p class="aura-feature__text">Elige tu dispositivo y su estado. Verás al instante cuánto vale, sin registrarte y sin esperas.</p>
           </li>
           <li class="aura-feature aura-feature--card" data-aura-reveal style="--i:1">
-            <span class="aura-feature__icon"><i class="bi bi-bag-check" aria-hidden="true"></i></span>
+            <span class="aura-feature__icon"><span class="bi bi-bag-check" aria-hidden="true"></span></span>
             <p class="aura-feature__value" aria-hidden="true">02</p>
             <h3 class="aura-feature__title">Descuéntalo de tu compra</h3>
             <p class="aura-feature__text">Aplica el crédito y se restará en la bolsa al tramitar el pedido de tu nuevo auraPhone, auraPad, auraBook o auraPods.</p>
           </li>
           <li class="aura-feature aura-feature--card" data-aura-reveal style="--i:2">
-            <span class="aura-feature__icon"><i class="bi bi-box-seam" aria-hidden="true"></i></span>
+            <span class="aura-feature__icon"><span class="bi bi-box-seam" aria-hidden="true"></span></span>
             <p class="aura-feature__value" aria-hidden="true">03</p>
             <h3 class="aura-feature__title">Entrégalo sin moverte</h3>
             <p class="aura-feature__text">Cuando recibas tu nuevo AURA, un mensajero recoge el anterior en casa, con la caja de envío incluida. Lo revisamos y confirmamos el valor.</p>

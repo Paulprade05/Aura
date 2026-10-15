@@ -66,13 +66,13 @@
 
     <!-- ================= Barra local =================
          Segundo <nav>, con nombre propio (aria-label): salta a los capítulos de esta página y lleva a comprar.
-         aura-ui.js la fija arriba al desplazarse y el «Comprar» corto completa su nombre con el modelo (aria-label).
-         Llega ya plegable (.has-menu y el chevrón en el HTML, sin salto al cargar): mientras los enlaces no caben
-         (teléfono y tableta), el chevrón los despliega en un menú. -->
+         aura-ui.js la fija arriba al desplazarse y el «Comprar» corto completa su nombre con el modelo (texto oculto);
+         el título no es un enlace (es esta página: aria-current). Llega ya plegable (.has-menu y el chevrón en el HTML,
+         sin salto al cargar): mientras los enlaces no caben (teléfono y tableta), el chevrón los despliega en un menú. -->
     <nav class="aura-localnav has-menu" aria-label="auraPhone" data-aura-localnav>
       <div class="aura-container aura-localnav__inner">
-        <a class="aura-localnav__title" href="auraphone.html">auraPhone</a>
-        <button type="button" class="aura-localnav__toggle" aria-expanded="false" aria-controls="localnav-secciones" aria-label="Secciones de auraPhone"><i class="bi bi-chevron-down" aria-hidden="true"></i></button>
+        <span class="aura-localnav__title" aria-current="page">auraPhone</span>
+        <button type="button" class="aura-localnav__toggle" aria-expanded="false" aria-controls="localnav-secciones"><span class="bi bi-chevron-down" aria-hidden="true"></span><span class="visually-hidden">Secciones de auraPhone</span></button>
         <div class="aura-localnav__links" id="localnav-secciones">
           <a class="aura-localnav__link" href="#descripcion">Descripción</a>
           <a class="aura-localnav__link" href="#duo">Duo</a>
@@ -83,7 +83,7 @@
           <a class="aura-localnav__link" href="#modelos">Modelos</a>
           <a class="aura-localnav__link" href="#comparativa">Especificaciones</a>
         </div>
-        <a class="aura-link aura-localnav__action" href="comprar.html?producto=auraphone-18-pro" data-aura-buy="auraphone" data-aura-buy-short aria-label="Comprar auraPhone 18 Pro">Comprar</a>
+        <a class="aura-link aura-localnav__action" href="comprar.html?producto=auraphone-18-pro" data-aura-buy="auraphone" data-aura-buy-short>Comprar<span class="visually-hidden"> auraPhone 18 Pro</span></a>
       </div>
     </nav>
 
@@ -244,14 +244,14 @@
             <p class="aura-eyebrow aura-eyebrow--mono">auraPhone Duo / Plegable</p>
             <h2 class="aura-h1 auraphone-frases" id="duo-titulo"><span>Cabe en el bolsillo.</span> <span>Se abre a lo grande.</span></h2>
             <p class="aura-body">El primer auraPhone plegable despliega una pantalla Super Retina XDR de 7,6&nbsp;pulgadas sobre una bisagra de titanio. Cerrado, es un auraPhone de 5,4&nbsp;pulgadas; abierto, pone dos apps lado a lado con Split View. Y dentro, el mismo AURA A20 Pro que los 18&nbsp;Pro.</p>
-            <p class="aura-caption auraphone-estado" data-ap-bloque="duo-estado" hidden><i class="bi bi-calendar-event" aria-hidden="true"></i><span><span data-ap="duo-estado"></span><sup class="aura-footnote-ref"><a href="#nota-duo" id="ref-duo" aria-label="Nota 2">2</a></sup></span></p>
+            <p class="aura-caption auraphone-estado" data-ap-bloque="duo-estado" hidden><span class="bi bi-calendar-event" aria-hidden="true"></span><span><span data-ap="duo-estado"></span><sup class="aura-footnote-ref"><a href="#nota-duo" id="ref-duo" aria-label="Nota 2">2</a></sup></span></p>
             <p class="auraphone-price" data-ap-bloque="duo-precio" hidden>
               <span class="aura-price aura-price--lg" data-ap="duo-precio"></span>
               <span class="aura-caption" data-ap="duo-cuota"></span>
             </p>
             <div class="aura-cluster aura-cluster--stack-sm">
               <a class="aura-btn aura-btn--primary" href="comprar.html?producto=auraphone-duo" data-ap="duo-cta">Configurar auraPhone Duo</a>
-              <button class="aura-btn aura-btn--secondary" type="button" data-aura-sheet-open="aviso-duo" aria-haspopup="dialog" aria-expanded="false" aria-controls="aviso-duo" data-ap-aviso hidden><i class="bi bi-bell" aria-hidden="true"></i><span data-ap="aviso-boton">Avísame</span><span class="visually-hidden" data-ap="aviso-boton-extra"> cuando abran las reservas</span></button>
+              <button class="aura-btn aura-btn--secondary" type="button" data-aura-sheet-open="aviso-duo" aria-haspopup="dialog" aria-expanded="false" aria-controls="aviso-duo" data-ap-aviso hidden><span class="bi bi-bell" aria-hidden="true"></span><span data-ap="aviso-boton">Avísame</span><span class="visually-hidden" data-ap="aviso-boton-extra"> cuando abran las reservas</span></button>
             </div>
             <p class="aura-caption auraphone-aviso-estado" data-ap="aviso-estado" hidden></p>
           </div>
@@ -483,17 +483,17 @@
             <p class="aura-body">AURA Intelligence resume, redacta y encuentra lo que buscas, en el propio auraPhone siempre que puede: tus datos no salen de casa<sup class="aura-footnote-ref"><a href="#nota-intelligence" id="ref-intelligence" aria-label="Nota 6">6</a></sup>.</p>
             <div class="aura-stack" style="--stack:1.5rem">
               <div class="aura-feature aura-feature--inline">
-                <span class="aura-feature__icon"><i class="bi bi-stars" aria-hidden="true"></i></span>
+                <span class="aura-feature__icon"><span class="bi bi-stars" aria-hidden="true"></span></span>
                 <h3 class="aura-feature__title">Escribe y resume por ti</h3>
                 <p class="aura-feature__text">Un correo largo en tres líneas o una respuesta con el tono justo, sin salir de la app.</p>
               </div>
               <div class="aura-feature aura-feature--inline">
-                <span class="aura-feature__icon"><i class="bi bi-capsule" aria-hidden="true"></i></span>
+                <span class="aura-feature__icon"><span class="bi bi-capsule" aria-hidden="true"></span></span>
                 <h3 class="aura-feature__title">Dynamic Island</h3>
                 <p class="aura-feature__text">Hasta tres actividades en directo a la vez: el pedido, el partido y el temporizador.</p>
               </div>
               <div class="aura-feature aura-feature--inline">
-                <span class="aura-feature__icon"><i class="bi bi-layout-split" aria-hidden="true"></i></span>
+                <span class="aura-feature__icon"><span class="bi bi-layout-split" aria-hidden="true"></span></span>
                 <h3 class="aura-feature__title">Split View en el Duo</h3>
                 <p class="aura-feature__text">Dos apps lado a lado en la pantalla de 7,6&nbsp;pulgadas.</p>
               </div>
@@ -517,17 +517,17 @@
             <p class="aura-body">Tu cara o tu huella desbloquean, pagan y rellenan contraseñas. Y lo que te identifica se queda en tu auraPhone.</p>
             <div class="aura-stack" style="--stack:1.5rem">
               <div class="aura-feature aura-feature--inline">
-                <span class="aura-feature__icon"><i class="bi bi-person-bounding-box" aria-hidden="true"></i></span>
+                <span class="aura-feature__icon"><span class="bi bi-person-bounding-box" aria-hidden="true"></span></span>
                 <h3 class="aura-feature__title">Face ID y Touch ID</h3>
                 <p class="aura-feature__text">Face ID en los 18 Pro y Touch ID en el botón lateral del Duo. Tus datos biométricos no salen del dispositivo.</p>
               </div>
               <div class="aura-feature aura-feature--inline">
-                <span class="aura-feature__icon"><i class="bi bi-wallet2" aria-hidden="true"></i></span>
+                <span class="aura-feature__icon"><span class="bi bi-wallet2" aria-hidden="true"></span></span>
                 <h3 class="aura-feature__title">AURA Pay</h3>
                 <p class="aura-feature__text">Acercas el auraPhone al datáfono y confirmas con la cara o la huella, sin sacar la tarjeta.</p>
               </div>
               <div class="aura-feature aura-feature--inline">
-                <span class="aura-feature__icon"><i class="bi bi-key" aria-hidden="true"></i></span>
+                <span class="aura-feature__icon"><span class="bi bi-key" aria-hidden="true"></span></span>
                 <h3 class="aura-feature__title">Contraseñas</h3>
                 <p class="aura-feature__text">Se rellenan solas al iniciar sesión, siempre después de reconocerte.</p>
               </div>
@@ -665,18 +665,18 @@
 
     <!-- ================= Notas al pie =================
          Letra pequeña: su <h2> está oculto a la vista, pero da nombre a la sección para el lector de pantalla.
-         Cada nota tiene un enlace de vuelta (solo icono: aria-label y title dicen adónde lleva). -->
+         Cada nota tiene un enlace de vuelta (solo icono: su texto oculto y el title dicen adónde lleva). -->
     <section class="aura-section aura-section--tight aura-footnotes" aria-labelledby="notas-titulo">
       <div class="aura-container">
         <h2 class="visually-hidden" id="notas-titulo">Notas</h2>
         <!-- Numeradas, en el orden de sus llamadas en la página: el número lo pone auraphone.js según las notas visibles -->
         <ol class="aura-footnotes__list" data-ap-notas>
-          <li id="nota-financiacion"><span data-aura-legal="financiacion">Financiación sin intereses, sujeta a la aprobación de la entidad financiera.</span> <a class="aura-footnotes__back" href="#ref-financiacion" aria-label="Volver al texto de la nota 1" title="Volver al texto de la nota 1"><i class="bi bi-arrow-return-left" aria-hidden="true"></i></a></li>
-          <li id="nota-duo" hidden><span data-ap="nota-duo"></span> <a class="aura-footnotes__back" href="#ref-duo" aria-label="Volver al texto de la nota 2" title="Volver al texto de la nota 2"><i class="bi bi-arrow-return-left" aria-hidden="true"></i></a></li>
-          <li id="nota-zoom">El zoom x8 de calidad óptica combina el teleobjetivo de 48&nbsp;Mpx con el recorte del sensor: equivale a una focal de 200&nbsp;mm. <a class="aura-footnotes__back" href="#ref-zoom" aria-label="Volver al texto de la nota 3" title="Volver al texto de la nota 3"><i class="bi bi-arrow-return-left" aria-hidden="true"></i></a></li>
-          <li id="nota-fotos">Las fotos de ejemplo son de bancos de imágenes con licencia libre y muestran el tipo de foto de cada modo: no se han hecho con un auraPhone. Autoría y licencias en <a href="legal.html#imagenes">Créditos de las imágenes</a>. <a class="aura-footnotes__back" href="#ref-fotos" aria-label="Volver al texto de la nota 4" title="Volver al texto de la nota 4"><i class="bi bi-arrow-return-left" aria-hidden="true"></i></a></li>
-          <li id="nota-bateria">Las cifras de autonomía son de reproducción de vídeo y dependen del uso, la configuración y la cobertura. Medidas por AURA Labs con unidades de preproducción. <a class="aura-footnotes__back" href="#ref-bateria" aria-label="Volver al texto de la nota 5" title="Volver al texto de la nota 5"><i class="bi bi-arrow-return-left" aria-hidden="true"></i></a></li>
-          <li id="nota-intelligence">Algunas funciones de AURA Intelligence llegarán más adelante y pueden no estar disponibles en todos los idiomas. <a class="aura-footnotes__back" href="#ref-intelligence" aria-label="Volver al texto de la nota 6" title="Volver al texto de la nota 6"><i class="bi bi-arrow-return-left" aria-hidden="true"></i></a></li>
+          <li id="nota-financiacion"><span data-aura-legal="financiacion">Financiación sin intereses, sujeta a la aprobación de la entidad financiera.</span> <a class="aura-footnotes__back" href="#ref-financiacion" title="Volver al texto de la nota 1"><span class="bi bi-arrow-return-left" aria-hidden="true"></span><span class="visually-hidden">Volver al texto de la nota 1</span></a></li>
+          <li id="nota-duo" hidden><span data-ap="nota-duo"></span> <a class="aura-footnotes__back" href="#ref-duo" title="Volver al texto de la nota 2"><span class="bi bi-arrow-return-left" aria-hidden="true"></span><span class="visually-hidden">Volver al texto de la nota 2</span></a></li>
+          <li id="nota-zoom">El zoom x8 de calidad óptica combina el teleobjetivo de 48&nbsp;Mpx con el recorte del sensor: equivale a una focal de 200&nbsp;mm. <a class="aura-footnotes__back" href="#ref-zoom" title="Volver al texto de la nota 3"><span class="bi bi-arrow-return-left" aria-hidden="true"></span><span class="visually-hidden">Volver al texto de la nota 3</span></a></li>
+          <li id="nota-fotos">Las fotos de ejemplo son de bancos de imágenes con licencia libre y muestran el tipo de foto de cada modo: no se han hecho con un auraPhone. Autoría y licencias en <a href="legal.html#imagenes">Créditos de las imágenes</a>. <a class="aura-footnotes__back" href="#ref-fotos" title="Volver al texto de la nota 4"><span class="bi bi-arrow-return-left" aria-hidden="true"></span><span class="visually-hidden">Volver al texto de la nota 4</span></a></li>
+          <li id="nota-bateria">Las cifras de autonomía son de reproducción de vídeo y dependen del uso, la configuración y la cobertura. Medidas por AURA Labs con unidades de preproducción. <a class="aura-footnotes__back" href="#ref-bateria" title="Volver al texto de la nota 5"><span class="bi bi-arrow-return-left" aria-hidden="true"></span><span class="visually-hidden">Volver al texto de la nota 5</span></a></li>
+          <li id="nota-intelligence">Algunas funciones de AURA Intelligence llegarán más adelante y pueden no estar disponibles en todos los idiomas. <a class="aura-footnotes__back" href="#ref-intelligence" title="Volver al texto de la nota 6"><span class="bi bi-arrow-return-left" aria-hidden="true"></span><span class="visually-hidden">Volver al texto de la nota 6</span></a></li>
         </ol>
         <ul class="aura-footnotes__list mt-3">
           <li data-aura-legal="precios">Precios de venta recomendados en España, IVA incluido.</li>
@@ -696,19 +696,22 @@
         <div class="aura-sheet__grabber" aria-hidden="true"></div>
         <header class="aura-sheet__header">
           <h2 class="aura-sheet__title" id="aviso-duo-titulo">Te avisamos del auraPhone Duo</h2>
-          <button class="aura-icon-btn" type="button" data-aura-sheet-close aria-label="Cerrar" title="Cerrar"><i class="bi bi-x-lg" aria-hidden="true"></i></button>
+          <button class="aura-icon-btn" type="button" data-aura-sheet-close title="Cerrar"><span class="bi bi-x-lg" aria-hidden="true"></span><span class="visually-hidden">Cerrar</span></button>
         </header>
+        <!-- Formulario del aviso. Envuelve el cuerpo y el pie de la hoja para que «Activar el aviso» sea su botón de
+             envío dentro del <form> (TAW, H32); no tiene caja propia (display: contents, auraphone.css), así que la hoja
+             se ve igual. Las reglas van también en el HTML (required, type="email", pattern y maxlength):
+             documentan el campo y el lector de pantalla anuncia «obligatorio». novalidate deja la comprobación
+             a AURA.ui.form (auraphone.js), que da mensajes más claros que los del navegador: en línea, junto al
+             campo, con icono y texto (.aura-field__error, enlazado con aria-describedby) y aria-invalid. -->
+        <form class="auraphone-aviso" id="aviso-duo-form" novalidate>
         <div class="aura-sheet__body">
-          <!-- Formulario del aviso. Las reglas van también en el HTML (required, type="email", pattern y maxlength):
-               documentan el campo y el lector de pantalla anuncia «obligatorio». novalidate deja la comprobación
-               a AURA.ui.form (auraphone.js), que da mensajes más claros que los del navegador: en línea, junto al
-               campo, con icono y texto (.aura-field__error, enlazado con aria-describedby) y aria-invalid. -->
-          <form class="aura-form" id="aviso-duo-form" novalidate>
+          <div class="aura-form">
             <p class="aura-body" id="aviso-duo-texto" data-ap="aviso-texto">Te escribiremos el día que abran las reservas, para que puedas ser de los primeros.</p>
             <div class="aura-field">
               <label class="aura-field__label" for="aviso-email">Correo electrónico</label>
               <div class="aura-field__control">
-                <i class="aura-field__icon bi bi-envelope" aria-hidden="true"></i>
+                <span class="aura-field__icon bi bi-envelope" aria-hidden="true"></span>
                 <!-- pattern: algo@dominio.ext con al menos dos letras tras el último punto (la misma regla que AURA.ui.form); 254 = longitud máxima de un correo -->
                 <input class="aura-input" id="aviso-email" name="email" type="email" inputmode="email" placeholder="tu@correo.com" autocomplete="email" required maxlength="254" pattern="[^\s@]+@[^\s@]+\.[^\s@]{2,}" title="Una dirección de correo como nombre@correo.com" aria-describedby="aviso-email-error">
               </div>
@@ -719,13 +722,14 @@
               <span class="aura-check__box" aria-hidden="true"></span>
               <span class="aura-check__label">Avisarme también de las novedades de auraPhone</span>
             </label>
-            <p class="aura-caption"><i class="bi bi-info-circle" aria-hidden="true"></i> Proyecto de demostración: no se envía ningún correo y el aviso se guarda solo en este navegador.</p>
-          </form>
+            <p class="aura-caption"><span class="bi bi-info-circle" aria-hidden="true"></span> Proyecto de demostración: no se envía ningún correo y el aviso se guarda solo en este navegador.</p>
+          </div>
         </div>
         <footer class="aura-sheet__footer">
-          <button class="aura-btn aura-btn--primary aura-btn--block" type="submit" form="aviso-duo-form" data-ap="aviso-enviar">Activar el aviso</button>
+          <button class="aura-btn aura-btn--primary aura-btn--block" type="submit" data-ap="aviso-enviar">Activar el aviso</button>
           <button class="aura-link aura-link--plain auraphone-cancelar" type="button" data-ap-aviso-cancelar hidden>Cancelar el aviso</button>
         </footer>
+        </form>
       </section>
     </div>
 

@@ -83,7 +83,7 @@
         <div class="aura-field">
           <label class="aura-field__label" for="login-email">Correo de tu ID de AURA</label>
           <div class="aura-field__control">
-            <i class="aura-field__icon bi bi-envelope" aria-hidden="true"></i>
+            <span class="aura-field__icon bi bi-envelope" aria-hidden="true"></span>
             <input class="aura-input" id="login-email" name="email" type="email" inputmode="email" placeholder="nombre@correo.com" required maxlength="254" pattern="[^\s@]+@[^\s@]+\.[^\s@]{2,}" autocomplete="username" autocapitalize="off" spellcheck="false" aria-describedby="login-email-error">
           </div>
           <p class="aura-field__error" id="login-email-error"></p>
@@ -92,10 +92,10 @@
         <div class="aura-field aura-field--toggle">
           <label class="aura-field__label" for="login-password">Contraseña</label>
           <div class="aura-field__control">
-            <i class="aura-field__icon bi bi-lock" aria-hidden="true"></i>
+            <span class="aura-field__icon bi bi-lock" aria-hidden="true"></span>
             <input class="aura-input" id="login-password" name="password" type="password" required autocomplete="current-password" aria-describedby="login-password-error">
-            <!-- Botón de icono: su nombre (aria-label) y su estado (aria-pressed) los actualiza aura-ui.js al pulsarlo -->
-            <button class="aura-field__toggle" type="button" data-aura-password-toggle aria-label="Mostrar la contraseña" aria-pressed="false"><i class="bi bi-eye" aria-hidden="true"></i></button>
+            <!-- Botón de icono: su nombre (el texto oculto) y su estado (aria-pressed) los actualiza aura-ui.js al pulsarlo -->
+            <button class="aura-field__toggle" type="button" data-aura-password-toggle aria-pressed="false"><span class="bi bi-eye" aria-hidden="true"></span><span class="visually-hidden">Mostrar la contraseña</span></button>
           </div>
           <p class="aura-field__error" id="login-password-error"></p>
         </div>
@@ -120,7 +120,7 @@
         <a class="aura-btn aura-btn--secondary" href="registro.html" data-login-registro>Crear uno ahora</a>
       </div>
 
-      <p class="aura-auth-card__note"><i class="bi bi-lock" aria-hidden="true"></i> Tu ID de AURA se guarda solo en este navegador.</p>
+      <p class="aura-auth-card__note"><span class="bi bi-lock" aria-hidden="true"></span> Tu ID de AURA se guarda solo en este navegador.</p>
     </div>
 
     <!-- Hoja modal: recuperar el ID de AURA o la contraseña. role="dialog" + aria-modal y su título como nombre
@@ -131,7 +131,7 @@
         <div class="aura-sheet__grabber" aria-hidden="true"></div>
         <header class="aura-sheet__header">
           <h2 class="aura-sheet__title" id="recuperar-titulo">Recupera tu ID de AURA</h2>
-          <button class="aura-icon-btn" type="button" data-aura-sheet-close aria-label="Cerrar"><i class="bi bi-x-lg" aria-hidden="true"></i></button>
+          <button class="aura-icon-btn" type="button" data-aura-sheet-close><span class="bi bi-x-lg" aria-hidden="true"></span><span class="visually-hidden">Cerrar</span></button>
         </header>
         <div class="aura-sheet__body">
           <form class="aura-form" id="recuperar-form" novalidate data-recuperar-paso="pedir">
@@ -139,7 +139,7 @@
             <div class="aura-field">
               <label class="aura-field__label" for="recuperar-email">Correo de tu ID de AURA</label>
               <div class="aura-field__control">
-                <i class="aura-field__icon bi bi-envelope" aria-hidden="true"></i>
+                <span class="aura-field__icon bi bi-envelope" aria-hidden="true"></span>
                 <input class="aura-input" id="recuperar-email" name="email" type="email" inputmode="email" placeholder="nombre@correo.com" required maxlength="254" pattern="[^\s@]+@[^\s@]+\.[^\s@]{2,}" autocomplete="email" autocapitalize="off" spellcheck="false" aria-describedby="recuperar-email-error">
               </div>
               <p class="aura-field__error" id="recuperar-email-error"></p>
@@ -149,12 +149,12 @@
 
           <div class="aura-stack aura-stack--stretch" data-recuperar-paso="hecho" hidden>
             <div class="aura-alert aura-alert--ok">
-              <i class="bi bi-check-circle-fill" aria-hidden="true"></i>
+              <span class="bi bi-check-circle-fill" aria-hidden="true"></span>
               <p class="aura-alert__title">Instrucciones enviadas</p>
               <p class="aura-alert__text">Si <strong data-recuperar-correo>tu correo</strong> tiene un ID de AURA, recibirás un enlace en unos minutos. Revisa también la carpeta de correo no deseado.</p>
             </div>
             <div class="aura-alert">
-              <i class="bi bi-info-circle-fill" aria-hidden="true"></i>
+              <span class="bi bi-info-circle-fill" aria-hidden="true"></span>
               <p class="aura-alert__title">Es una simulación</p>
               <p class="aura-alert__text">AURA es una demostración: no envía correos y tu contraseña solo existe cifrada en este navegador, así que no se puede recuperar. Si no la recuerdas, crea un ID de AURA con otro correo o borra los datos de AURA de este navegador desde <a href="legal.html#privacidad">Privacidad</a>.</p>
             </div>

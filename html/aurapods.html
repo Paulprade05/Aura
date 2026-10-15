@@ -67,12 +67,13 @@
     <!-- ================= Barra local =================
          Segundo <nav>, con nombre propio (aria-label): salta a los capítulos de esta página y lleva a comprar.
          aura-ui.js la fija arriba al desplazarse; el «Comprar» corto lleva al modelo de entrada (data-aura-buy) y
-         completa su nombre (aria-label). Llega ya plegable (.has-menu y el chevrón en el HTML, sin salto al
-         cargar): mientras los enlaces no caben (teléfono y tableta), el chevrón los despliega en un menú. -->
+         completa su nombre (texto oculto); el título no es un enlace (es esta página: aria-current). Llega ya plegable
+         (.has-menu y el chevrón en el HTML, sin salto al cargar): mientras los enlaces no caben (teléfono y tableta),
+         el chevrón los despliega en un menú. -->
     <nav class="aura-localnav has-menu" aria-label="auraPods" data-aura-localnav>
       <div class="aura-container aura-localnav__inner">
-        <a class="aura-localnav__title" href="aurapods.html">auraPods</a>
-        <button type="button" class="aura-localnav__toggle" aria-expanded="false" aria-controls="localnav-secciones" aria-label="Secciones de auraPods"><i class="bi bi-chevron-down" aria-hidden="true"></i></button>
+        <span class="aura-localnav__title" aria-current="page">auraPods</span>
+        <button type="button" class="aura-localnav__toggle" aria-expanded="false" aria-controls="localnav-secciones"><span class="bi bi-chevron-down" aria-hidden="true"></span><span class="visually-hidden">Secciones de auraPods</span></button>
         <div class="aura-localnav__links" id="localnav-secciones">
           <a class="aura-localnav__link" href="#modelos">Modelos</a>
           <a class="aura-localnav__link" href="#cancelacion">Cancelación</a>
@@ -83,7 +84,7 @@
           <a class="aura-localnav__link" href="#max">Max</a>
           <a class="aura-localnav__link" href="#comparativa">Especificaciones</a>
         </div>
-        <a class="aura-link aura-localnav__action" href="comprar.html?producto=aurapods-5" data-aura-buy="aurapods" data-aura-buy-short aria-label="Comprar auraPods 5">Comprar</a>
+        <a class="aura-link aura-localnav__action" href="comprar.html?producto=aurapods-5" data-aura-buy="aurapods" data-aura-buy-short>Comprar<span class="visually-hidden"> auraPods 5</span></a>
       </div>
     </nav>
 
@@ -150,7 +151,7 @@
 
         <div class="aura-cluster justify-content-center mt-4" style="--cluster:.5rem 2rem">
           <a class="aura-link" href="comparar.html?familia=aurapods">Comparar todos los modelos</a>
-          <a class="aura-link" href="trade-in.html?familia=aurapods">Valorar mi dispositivo</a>
+          <a class="aura-link" href="trade-in.html?familia=aurapods">Valorar mi dispositivo<span class="visually-hidden">: mis auraPods</span></a>
         </div>
       </div>
     </section>
@@ -185,17 +186,17 @@
             <p class="aura-body">Tus auraPods colocan cada instrumento a tu alrededor, como en la sala, y ajustan la escena a la forma de tus orejas. Gira la cabeza y el escenario se queda en su sitio.</p>
             <div class="aura-stack" style="--stack:1.5rem">
               <div class="aura-feature aura-feature--inline">
-                <span class="aura-feature__icon"><i class="bi bi-person-bounding-box" aria-hidden="true"></i></span>
+                <span class="aura-feature__icon"><span class="bi bi-person-bounding-box" aria-hidden="true"></span></span>
                 <h3 class="aura-feature__title">Seguimiento dinámico de la cabeza</h3>
                 <p class="aura-feature__text">Las películas y los conciertos suenan delante de ti aunque te muevas.</p>
               </div>
               <div class="aura-feature aura-feature--inline">
-                <span class="aura-feature__icon"><i class="bi bi-soundwave" aria-hidden="true"></i></span>
+                <span class="aura-feature__icon"><span class="bi bi-soundwave" aria-hidden="true"></span></span>
                 <h3 class="aura-feature__title">Audio adaptativo</h3>
                 <p class="aura-feature__text">Mezcla la cancelación de ruido y el modo Ambiente según lo que pasa a tu alrededor.</p>
               </div>
               <div class="aura-feature aura-feature--inline">
-                <span class="aura-feature__icon"><i class="bi bi-usb-c" aria-hidden="true"></i></span>
+                <span class="aura-feature__icon"><span class="bi bi-usb-c" aria-hidden="true"></span></span>
                 <h3 class="aura-feature__title">Sin pérdida por USB-C</h3>
                 <p class="aura-feature__text">En los auraPods Max&nbsp;2, con el cable: cada detalle de la grabación y una latencia ultrabaja para jugar o crear.</p>
               </div>
@@ -220,22 +221,22 @@
         </header>
         <div class="aura-grid aura-grid--4 aurapods-salud">
           <div class="aura-feature aura-feature--card" data-aura-reveal>
-            <span class="aura-feature__icon"><i class="bi bi-heart-pulse" aria-hidden="true"></i></span>
+            <span class="aura-feature__icon"><span class="bi bi-heart-pulse" aria-hidden="true"></span></span>
             <h3 class="aura-feature__title">Frecuencia cardiaca</h3>
             <p class="aura-feature__text">Un sensor en cada auricular sigue tu pulso al correr, en el gimnasio o en clase de ciclo, sin necesidad de reloj.</p>
           </div>
           <div class="aura-feature aura-feature--card" data-aura-reveal style="--i:1">
-            <span class="aura-feature__icon"><i class="bi bi-ear" aria-hidden="true"></i></span>
+            <span class="aura-feature__icon"><span class="bi bi-ear" aria-hidden="true"></span></span>
             <h3 class="aura-feature__title">Protección auditiva</h3>
             <p class="aura-feature__text">Baja los ruidos fuertes del entorno, como una obra o un concierto, sin dejar de oír lo que importa.</p>
           </div>
           <div class="aura-feature aura-feature--card" data-aura-reveal style="--i:2">
-            <span class="aura-feature__icon"><i class="bi bi-clipboard2-pulse" aria-hidden="true"></i></span>
+            <span class="aura-feature__icon"><span class="bi bi-clipboard2-pulse" aria-hidden="true"></span></span>
             <h3 class="aura-feature__title">Prueba de audición</h3>
             <p class="aura-feature__text">En unos cinco minutos, desde tu auraPhone, con un resultado claro que puedes guardar.</p>
           </div>
           <div class="aura-feature aura-feature--card" data-aura-reveal style="--i:3">
-            <span class="aura-feature__icon"><i class="bi bi-soundwave" aria-hidden="true"></i></span>
+            <span class="aura-feature__icon"><span class="bi bi-soundwave" aria-hidden="true"></span></span>
             <h3 class="aura-feature__title">Función de audífono</h3>
             <p class="aura-feature__text">Ajusta voces y sonidos a tu perfil de audición si tienes una pérdida leve o moderada.</p>
           </div>
@@ -356,17 +357,17 @@
             <p class="aura-body">Acerca los auraPods a tu auraPhone y se emparejan con un toque. A partir de ahí, saltan solos al auraPad o al auraBook cuando empiezas a ver algo allí<sup class="aura-footnote-ref"><a href="#nota-auraos" id="ref-auraos" aria-label="Nota 4">4</a></sup>.</p>
             <div class="aura-stack" style="--stack:1.5rem">
               <div class="aura-feature aura-feature--inline">
-                <span class="aura-feature__icon"><i class="bi bi-arrow-left-right" aria-hidden="true"></i></span>
+                <span class="aura-feature__icon"><span class="bi bi-arrow-left-right" aria-hidden="true"></span></span>
                 <h3 class="aura-feature__title">Cambio automático</h3>
                 <p class="aura-feature__text">De la llamada en el auraPhone a la película en el auraBook, sin volver a emparejar.</p>
               </div>
               <div class="aura-feature aura-feature--inline">
-                <span class="aura-feature__icon"><i class="bi bi-translate" aria-hidden="true"></i></span>
+                <span class="aura-feature__icon"><span class="bi bi-translate" aria-hidden="true"></span></span>
                 <h3 class="aura-feature__title">Traducción en tiempo real</h3>
                 <p class="aura-feature__text">Escucha en tu idioma lo que te dicen en otro, en los auraPods Pro&nbsp;3 y los auraPods&nbsp;5.</p>
               </div>
               <div class="aura-feature aura-feature--inline">
-                <span class="aura-feature__icon"><i class="bi bi-geo-alt" aria-hidden="true"></i></span>
+                <span class="aura-feature__icon"><span class="bi bi-geo-alt" aria-hidden="true"></span></span>
                 <h3 class="aura-feature__title">Búscalos en el mapa</h3>
                 <p class="aura-feature__text">Mira dónde los dejaste y haz que suenen desde cualquier dispositivo AURA.</p>
               </div>
@@ -460,15 +461,15 @@
 
     <!-- ================= Notas al pie =================
          Letra pequeña: su <h2> está oculto a la vista, pero da nombre a la sección para el lector de pantalla.
-         Cada nota tiene un enlace de vuelta (solo icono: aria-label y title dicen adónde lleva). -->
+         Cada nota tiene un enlace de vuelta (solo icono: su texto oculto y el title dicen adónde lleva). -->
     <section class="aura-section aura-section--tight aura-footnotes" aria-labelledby="notas-titulo">
       <div class="aura-container">
         <h2 class="visually-hidden" id="notas-titulo">Notas</h2>
         <ol class="aura-footnotes__list">
-          <li id="nota-ruido">La eficacia de la cancelación de ruido se compara con la de la generación anterior de cada modelo y depende del ajuste y del entorno. <a class="aura-footnotes__back" href="#ref-ruido" aria-label="Volver al texto de la nota 1" title="Volver al texto de la nota 1"><i class="bi bi-arrow-return-left" aria-hidden="true"></i></a></li>
-          <li id="nota-salud">La prueba de audición, la función de audífono y la medida de la frecuencia cardiaca son orientativas y no sustituyen un diagnóstico médico. La función de audífono es para personas adultas con pérdida auditiva leve o moderada. <a class="aura-footnotes__back" href="#ref-salud" aria-label="Volver al texto de la nota 2" title="Volver al texto de la nota 2"><i class="bi bi-arrow-return-left" aria-hidden="true"></i></a></li>
-          <li id="nota-bateria">Las cifras de autonomía son de reproducción de audio con la cancelación de ruido activada, salvo que se indique otra cosa, y dependen del volumen, del uso y de la configuración. Medidas por AURA Labs con unidades de preproducción. <a class="aura-footnotes__back" href="#ref-bateria" aria-label="Volver al texto de la nota 3" title="Volver al texto de la nota 3"><i class="bi bi-arrow-return-left" aria-hidden="true"></i></a></li>
-          <li id="nota-auraos">El cambio automático, la traducción en tiempo real y la búsqueda de precisión necesitan un dispositivo AURA con <span data-pods="os">auraOS 27</span> y la misma cuenta de ID de AURA. La traducción en tiempo real puede no estar disponible en todos los idiomas. <a class="aura-footnotes__back" href="#ref-auraos" aria-label="Volver al texto de la nota 4" title="Volver al texto de la nota 4"><i class="bi bi-arrow-return-left" aria-hidden="true"></i></a></li>
+          <li id="nota-ruido">La eficacia de la cancelación de ruido se compara con la de la generación anterior de cada modelo y depende del ajuste y del entorno. <a class="aura-footnotes__back" href="#ref-ruido" title="Volver al texto de la nota 1"><span class="bi bi-arrow-return-left" aria-hidden="true"></span><span class="visually-hidden">Volver al texto de la nota 1</span></a></li>
+          <li id="nota-salud">La prueba de audición, la función de audífono y la medida de la frecuencia cardiaca son orientativas y no sustituyen un diagnóstico médico. La función de audífono es para personas adultas con pérdida auditiva leve o moderada. <a class="aura-footnotes__back" href="#ref-salud" title="Volver al texto de la nota 2"><span class="bi bi-arrow-return-left" aria-hidden="true"></span><span class="visually-hidden">Volver al texto de la nota 2</span></a></li>
+          <li id="nota-bateria">Las cifras de autonomía son de reproducción de audio con la cancelación de ruido activada, salvo que se indique otra cosa, y dependen del volumen, del uso y de la configuración. Medidas por AURA Labs con unidades de preproducción. <a class="aura-footnotes__back" href="#ref-bateria" title="Volver al texto de la nota 3"><span class="bi bi-arrow-return-left" aria-hidden="true"></span><span class="visually-hidden">Volver al texto de la nota 3</span></a></li>
+          <li id="nota-auraos">El cambio automático, la traducción en tiempo real y la búsqueda de precisión necesitan un dispositivo AURA con <span data-pods="os">auraOS 27</span> y la misma cuenta de ID de AURA. La traducción en tiempo real puede no estar disponible en todos los idiomas. <a class="aura-footnotes__back" href="#ref-auraos" title="Volver al texto de la nota 4"><span class="bi bi-arrow-return-left" aria-hidden="true"></span><span class="visually-hidden">Volver al texto de la nota 4</span></a></li>
         </ol>
         <ul class="aura-footnotes__list mt-3">
           <li data-aura-legal="precios">Precios de venta recomendados en España, IVA incluido.</li>

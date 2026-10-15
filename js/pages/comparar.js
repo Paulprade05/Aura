@@ -356,10 +356,13 @@
     var nameId = 'cmp-modelo-nombre-' + slot;
 
     return '<article class="cmp-head" aria-labelledby="' + nameId + '" data-product="' + esc(p.id) + '" data-status="' + esc(a.status) + '">' +
-      '<a class="aura-product-card__media cmp-head__media" href="' + esc(href) + '" tabindex="-1" aria-hidden="true">' +
+      /* La foto no es un enlace: sin la fila de la insignia quedaría pegada al
+         enlace del nombre, al mismo modelo (H2 de TAW). Al pulsarla se sigue
+         el enlace del nombre (delegación en el.heads, como en la bolsa). */
+      '<div class="aura-product-card__media cmp-head__media" data-cmp-media aria-hidden="true">' +
         /* Primer pantallazo de la página: sin carga diferida. */
         (img.slot ? AURA.html.img(img.slot, { fallback: img.fallback, alt: img.alt || p.name, eager: true, sizes: '(min-width: 1024px) 380px, 34vw' }) : '') +
-      '</a>' +
+      '</div>' +
       (rows.badge
         ? '<p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain cmp-head__badge">' + esc(p.badge || '') + '</p>'
         : '') +
@@ -369,7 +372,7 @@
       (rows.tagline ? '<p class="cmp-head__tagline">' + esc(p.tagline || '') + '</p>' : '') +
       (rows.status
         ? '<p class="aura-product-card__status cmp-head__status">' +
-            (a.text ? '<i class="bi bi-calendar-event" aria-hidden="true"></i><span>' + (a.html || esc(a.text)) + '</span>' : '') +
+            (a.text ? '<span class="bi bi-calendar-event" aria-hidden="true"></span><span>' + (a.html || esc(a.text)) + '</span>' : '') +
           '</p>'
         : '') +
       '<p class="cmp-head__price">' +
@@ -379,8 +382,9 @@
           '<sup class="aura-footnote-ref"><a href="#' + NOTE_PRICE + '"' + (slot === 0 ? ' id="cmp-ref-precio"' : '') + ' aria-label="Nota 1">1</a></sup></span>' +
       '</p>' +
       '<div class="cmp-head__actions">' +
-        /* El botón de 48 px de la guía, como en la tarjeta de modelo. */
-        '<a class="aura-btn aura-btn--primary" href="' + esc(href) + '" aria-label="' + esc(cta + ' ' + p.name) + '">' + esc(cta) + '</a>' +
+        /* El botón de 48 px de la guía, como en la tarjeta de modelo; el nombre
+           del modelo completa su texto, oculto a la vista (no en aria-label). */
+        '<a class="aura-btn aura-btn--primary" href="' + esc(href) + '">' + esc(cta) + '<span class="visually-hidden"> ' + esc(p.name) + '</span></a>' +
         (fam && fam.page
           ? '<a class="aura-link" href="' + esc(fam.page) + '">Más información<span class="visually-hidden"> sobre ' + esc(fam.name) + '</span></a>'
           : '') +
@@ -446,7 +450,7 @@
       '<th class="visually-hidden" scope="row">Comprar</th>' +
       cols.map(function (p) {
         var cta = cat.cta(p);
-        return '<td class="cmp-cell"><a class="aura-btn aura-btn--secondary" href="' + esc(cat.url(p)) + '" aria-label="' + esc(cta + ' ' + p.name) + '">' + esc(cta) + '</a></td>';
+        return '<td class="cmp-cell"><a class="aura-btn aura-btn--secondary" href="' + esc(cat.url(p)) + '">' + esc(cta) + '<span class="visually-hidden"> ' + esc(p.name) + '</span></a></td>';
       }).join('') +
     '</tr>';
   }
@@ -466,7 +470,7 @@
         (b.def.id === 'precio' ? actionsRowHTML(cols) : '');
       return '<section class="cmp-group" aria-labelledby="' + gid + '" data-group="' + esc(b.def.id) + '">' +
         '<div class="cmp-group__head">' +
-          '<span class="aura-feature__icon" aria-hidden="true"><i class="bi ' + b.def.icon + '"></i></span>' +
+          '<span class="aura-feature__icon" aria-hidden="true"><span class="bi ' + b.def.icon + '" aria-hidden="true"></span></span>' +
           '<h3 class="aura-h4 cmp-group__title" id="' + gid + '">' + esc(title) + '</h3>' +
         '</div>' +
         /* Tabla nativa, sin roles ARIA (temario DIW: HTML nativo y sin roles
@@ -591,7 +595,7 @@
     el.notes.innerHTML = '<li id="' + NOTE_PRICE + '">' +
       esc('Precio de la configuración base de cada modelo; el precio final depende de las opciones que elijas al comprar. ' + legal('financiacion')) +
       (document.getElementById('cmp-ref-precio')
-        ? ' <a class="aura-footnotes__back" href="#cmp-ref-precio" aria-label="Volver al texto de la nota 1"><i class="bi bi-arrow-return-left" aria-hidden="true"></i></a>'
+        ? ' <a class="aura-footnotes__back" href="#cmp-ref-precio"><span class="bi bi-arrow-return-left" aria-hidden="true"></span><span class="visually-hidden">Volver al texto de la nota 1</span></a>'
         : '') + '</li>';
     var notes = [{ text: legal('precios') }];
     products().forEach(function (p) {
@@ -679,6 +683,16 @@
       setFamily(link.getAttribute('data-family'), { animate: true });
     });
   }
+
+  /* La foto de una columna lleva a su modelo: el mismo enlace del nombre
+     (con Ctrl, Cmd o Mayús, en otra pestaña, como un enlace). Las cabeceras
+     se repintan con innerHTML; su contenedor no. */
+  el.heads.addEventListener('click', function (e) {
+    var foto = e.target && e.target.closest ? e.target.closest('[data-cmp-media]') : null;
+    var enlace = foto && foto.parentNode ? foto.parentNode.querySelector('.cmp-head__name a') : null;
+    if (!enlace) { return; }
+    if (e.ctrlKey || e.metaKey || e.shiftKey) { window.open(enlace.href, '_blank', 'noopener'); } else { enlace.click(); }
+  });
 
   if (el.pickers) {
     el.pickers.addEventListener('change', function (e) {

@@ -100,11 +100,13 @@
             <p class="aura-caption comprar-galeria-nota" data-c-galeria-nota hidden></p>
           </div>
 
-          <div class="comprar-columna">
-            <!-- Formulario de configuración: cada paso es un <fieldset> de radios con su <legend> (el h2 del paso), porque
-                 agrupa las respuestas a una sola pregunta. Siempre hay una opción marcada, así que no hay nada obligatorio
-                 que rellenar ni se envía: cada cambio actualiza el resumen y la región viva al instante. -->
-            <form class="comprar-pasos" id="configurador" aria-labelledby="comprar-titulo" novalidate>
+          <!-- Formulario de configuración: la columna entera, los pasos y el resumen, así la acción principal del resumen
+               es su botón de envío (TAW, H32). Cada paso es un <fieldset> de radios con su <legend> (el h2 del paso),
+               porque agrupa las respuestas a una sola pregunta. Siempre hay una opción marcada, así que no hay nada
+               obligatorio que rellenar: cada cambio actualiza el resumen y la región viva al instante, y el envío
+               (el botón o su copia de la barra) añade a la bolsa, reserva o avisa sin salir de la página (comprar.js). -->
+          <form class="comprar-columna" id="configurador" aria-labelledby="comprar-titulo" novalidate>
+            <div class="comprar-pasos">
 
               <fieldset class="aura-fieldset comprar-paso" aria-describedby="paso-modelo-ayuda">
                 <legend class="aura-legend"><h2 class="aura-h3 comprar-paso__titulo">Modelo. <span class="aura-text-secondary">¿Cuál es para ti?</span></h2></legend>
@@ -133,10 +135,10 @@
                 <div data-c-tradein></div>
               </section>
 
-            </form>
+            </div>
 
-            <!-- Resumen (aside: complementa al formulario): importes en una lista de definición, fecha de entrega
-                 y la acción principal, que cambia con la disponibilidad (añadir, reservar o avisar) -->
+            <!-- Resumen (aside: complementa a los pasos): importes en una lista de definición, fecha de entrega
+                 y la acción principal, el botón de envío, que cambia con la disponibilidad (añadir, reservar o avisar) -->
             <aside class="aura-summary comprar-resumen" id="resumen" aria-labelledby="resumen-titulo">
               <div class="comprar-resumen__head">
                 <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">Resumen</p>
@@ -151,23 +153,23 @@
                 <div class="aura-summary__row aura-summary__row--total"><dt>Total</dt><dd data-c-resumen-total></dd></div>
               </dl>
               <p class="aura-summary__note" data-c-resumen-nota></p>
-              <p class="comprar-entrega"><i class="bi bi-truck" aria-hidden="true" data-c-entrega-icono></i><span data-c-entrega></span></p>
-              <button class="aura-btn aura-btn--primary aura-btn--block comprar-accion" id="comprar-anadir" type="button" data-c-accion>Añadir a la bolsa</button>
+              <p class="comprar-entrega"><span class="bi bi-truck" aria-hidden="true" data-c-entrega-icono></span><span data-c-entrega></span></p>
+              <button class="aura-btn aura-btn--primary aura-btn--block comprar-accion" id="comprar-anadir" type="submit" data-c-accion>Añadir a la bolsa</button>
               <div class="comprar-hecho" data-c-anadido hidden>
-                <p class="comprar-hecho__texto"><i class="bi bi-check-circle-fill" aria-hidden="true"></i><span data-c-anadido-texto>Está en tu bolsa.</span></p>
+                <p class="comprar-hecho__texto"><span class="bi bi-check-circle-fill" aria-hidden="true"></span><span data-c-anadido-texto>Está en tu bolsa.</span></p>
                 <ul class="comprar-hecho__links">
                   <li><a class="aura-link aura-link--control" href="bolsa.html">Revisar la bolsa</a></li>
                   <li><a class="aura-link aura-link--control" href="../index.html" data-c-seguir>Seguir comprando</a></li>
                 </ul>
               </div>
               <div class="comprar-hecho comprar-hecho--aviso" data-c-avisado hidden>
-                <p class="comprar-hecho__texto"><i class="bi bi-bell" aria-hidden="true"></i><span data-c-avisado-texto></span></p>
+                <p class="comprar-hecho__texto"><span class="bi bi-bell" aria-hidden="true"></span><span data-c-avisado-texto></span></p>
                 <ul class="comprar-hecho__links">
                   <li><button class="aura-link aura-link--plain" type="button" data-c-cancelar-aviso>Cancelar el aviso</button></li>
                 </ul>
               </div>
             </aside>
-          </div>
+          </form>
 
         </div>
       </div>
@@ -183,23 +185,23 @@
         </div>
         <ul class="aura-grid aura-grid--4 comprar-ventajas">
           <li class="aura-feature aura-feature--card" data-aura-reveal>
-            <span class="aura-feature__icon"><i class="bi bi-truck" aria-hidden="true"></i></span>
+            <span class="aura-feature__icon"><span class="bi bi-truck" aria-hidden="true"></span></span>
             <h3 class="aura-feature__title">Envío gratis a domicilio</h3>
             <p class="aura-feature__text">Lo recibes en 2–3 días laborables, sin pedido mínimo. Las reservas llegan el día del lanzamiento.</p>
           </li>
           <li class="aura-feature aura-feature--card" data-aura-reveal style="--i:1">
-            <span class="aura-feature__icon"><i class="bi bi-arrow-counterclockwise" aria-hidden="true"></i></span>
+            <span class="aura-feature__icon"><span class="bi bi-arrow-counterclockwise" aria-hidden="true"></span></span>
             <h3 class="aura-feature__title">Devolución en 14 días</h3>
             <p class="aura-feature__text">¿No te convence? Devuélvelo gratis en los 14 días siguientes a recibirlo.</p>
             <a class="aura-link aura-link--control" href="legal.html#condiciones">Condiciones de uso</a>
           </li>
           <li class="aura-feature aura-feature--card" data-aura-reveal style="--i:2">
-            <span class="aura-feature__icon"><i class="bi bi-credit-card" aria-hidden="true"></i></span>
+            <span class="aura-feature__icon"><span class="bi bi-credit-card" aria-hidden="true"></span></span>
             <h3 class="aura-feature__title">Paga en <span data-c-meses>24</span> meses</h3>
             <p class="aura-feature__text">Cuotas fijas y sin intereses. Cada configuración muestra la suya mientras eliges.</p>
           </li>
           <li class="aura-feature aura-feature--card" data-aura-reveal style="--i:3">
-            <span class="aura-feature__icon"><i class="bi bi-chat-dots" aria-hidden="true"></i></span>
+            <span class="aura-feature__icon"><span class="bi bi-chat-dots" aria-hidden="true"></span></span>
             <h3 class="aura-feature__title">Ayuda de especialistas</h3>
             <p class="aura-feature__text">¿Dudas entre dos modelos? Te ayudamos a elegir el que encaja contigo.</p>
             <a class="aura-link aura-link--control" href="soporte.html#contacto">Hablar con un especialista</a>
@@ -250,8 +252,8 @@
       <div class="aura-container">
         <h2 class="visually-hidden" id="notas-titulo">Notas</h2>
         <ol class="aura-footnotes__list">
-          <li id="nota-1"><span data-aura-legal="financiacion">Financiación sin intereses, sujeta a la aprobación de la entidad financiera.</span> <span data-aura-legal="envio">El envío estándar es gratuito.</span> <a class="aura-footnotes__back" href="#ref-1" aria-label="Volver al texto de la nota 1"><i class="bi bi-arrow-return-left" aria-hidden="true"></i></a></li>
-          <li id="nota-2"><span data-aura-legal="tradein">El valor de AURA Trade In depende del modelo y del estado del dispositivo.</span> <a class="aura-footnotes__back" href="#ref-2" aria-label="Volver al texto de la nota 2"><i class="bi bi-arrow-return-left" aria-hidden="true"></i></a></li>
+          <li id="nota-1"><span data-aura-legal="financiacion">Financiación sin intereses, sujeta a la aprobación de la entidad financiera.</span> <span data-aura-legal="envio">El envío estándar es gratuito.</span> <a class="aura-footnotes__back" href="#ref-1"><span class="bi bi-arrow-return-left" aria-hidden="true"></span><span class="visually-hidden">Volver al texto de la nota 1</span></a></li>
+          <li id="nota-2"><span data-aura-legal="tradein">El valor de AURA Trade In depende del modelo y del estado del dispositivo.</span> <a class="aura-footnotes__back" href="#ref-2"><span class="bi bi-arrow-return-left" aria-hidden="true"></span><span class="visually-hidden">Volver al texto de la nota 2</span></a></li>
         </ol>
         <ul class="aura-footnotes__list comprar-notas-fechas" data-c-notas-fechas hidden></ul>
         <ul class="aura-footnotes__list mt-3">
@@ -265,7 +267,8 @@
          Se esconde mientras el botón del resumen está a la vista. También en
          escritorio (--always, desviación anotada en la guía): el resumen va
          debajo de los pasos y sin la barra no habría acción a la vista.
-         El acabado va en su propia línea, bajo el nombre: así nunca se corta. -->
+         El acabado va en su propia línea, bajo el nombre: así nunca se corta. Está fuera del formulario:
+         form="configurador" hace que su botón lo envíe igual que el del resumen. -->
     <div class="aura-buybar aura-buybar--always comprar-buybar" data-aura-buybar="#comprar-anadir">
       <div class="aura-buybar__info">
         <p class="aura-buybar__name" data-c-barra-nombre></p>
@@ -275,7 +278,7 @@
           <p class="aura-caption comprar-buybar__cuota" data-c-barra-cuota></p>
         </div>
       </div>
-      <button class="aura-btn aura-btn--primary comprar-accion" type="button" data-c-accion data-c-barra-boton>Añadir a la bolsa</button>
+      <button class="aura-btn aura-btn--primary comprar-accion" type="submit" form="configurador" data-c-accion data-c-barra-boton>Añadir a la bolsa</button>
     </div>
 
     <!-- Región viva: anuncia al lector de pantalla el modelo y el nuevo total en cada cambio de configuración -->

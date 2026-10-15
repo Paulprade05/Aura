@@ -86,7 +86,7 @@
       return p.specs && norm(p.specs.accesorios).indexOf(key) !== -1;
     }).map(function (p) { return p.name; });
     if (!names.length) { el.hidden = true; return; }
-    var text = el.querySelector('span') || el;
+    var text = el.querySelector('span:not(.bi)') || el;   // el texto, no el icono
     text.textContent = 'Compatible con ' + joinList(names) + '.';
     el.hidden = false;
   });
@@ -105,7 +105,7 @@
         '</p>'
       : '';
     var status = a.status && a.status !== 'disponible' && a.text
-      ? '<p class="aura-caption aurapad-rec__status"><i class="bi bi-calendar-event" aria-hidden="true"></i> ' + (a.html || esc(a.text)) + '</p>'
+      ? '<p class="aura-caption aurapad-rec__status"><span class="bi bi-calendar-event" aria-hidden="true"></span> ' + (a.html || esc(a.text)) + '</p>'
       : '';
     box.innerHTML =
       '<div class="aura-stack" style="--stack:.25rem">' +

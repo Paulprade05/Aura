@@ -252,7 +252,7 @@
           (meta ? '<p class="aura-bag-line__meta">' + meta + '</p>' : '') +
           /* Si la foto enseña otro acabado que el elegido, se dice (como en comprar y en la bolsa). */
           (img.slot && img.exact === false && img.color ? '<p class="aura-bag-line__meta aura-bag-line__photo">Imagen en ' + esc(String(img.color.name).toLowerCase()) + '</p>' : '') +
-          (release ? '<p class="aura-bag-line__meta checkout-line__reserva"><i class="bi bi-calendar-event" aria-hidden="true"></i><span>Reserva · llega a partir del ' + esc(shortDay(release)) + '</span></p>' : '') +
+          (release ? '<p class="aura-bag-line__meta checkout-line__reserva"><span class="bi bi-calendar-event" aria-hidden="true"></span><span>Reserva · llega a partir del ' + esc(shortDay(release)) + '</span></p>' : '') +
         '</div>' +
         '<div class="aura-bag-line__price">' +
           '<span class="aura-price">' + esc(fmt.eur(round(unit * qty))) + '</span>' +
@@ -305,14 +305,14 @@
     var notes = '';
     if (order.tradeIn && descuento) {
       notes += '<div class="aura-note">' +
-        '<span class="aura-note__icon"><i class="bi bi-arrow-repeat" aria-hidden="true"></i></span>' +
+        '<span class="aura-note__icon"><span class="bi bi-arrow-repeat" aria-hidden="true"></span></span>' +
         '<p class="aura-note__title">Prepara tu ' + esc(order.tradeIn.deviceName || 'dispositivo') + '</p>' +
         '<p class="aura-note__text">Con el pedido llega un kit de envío gratuito para tu AURA Trade In. Haz una copia de seguridad y restablécelo antes de enviarlo.</p>' +
       '</div>';
     }
     if (guest) {
       notes += '<div class="aura-note">' +
-        '<span class="aura-note__icon"><i class="bi bi-person-plus" aria-hidden="true"></i></span>' +
+        '<span class="aura-note__icon"><span class="bi bi-person-plus" aria-hidden="true"></span></span>' +
         '<p class="aura-note__title">Sigue tus próximos pedidos con un ID de AURA</p>' +
         '<p class="aura-note__text">Has comprado como invitado: guarda el número de pedido. Con un ID de AURA, tus próximos pedidos aparecerán en Tu cuenta. <a class="aura-link" href="registro.html">Crear un ID de AURA</a></p>' +
       '</div>';
@@ -342,7 +342,7 @@
     sec.innerHTML =
       '<div class="aura-container aura-container--narrow">' +
         '<div class="checkout-confirm__head">' +
-          '<span class="checkout-confirm__icon" aria-hidden="true"><i class="bi bi-check-lg"></i></span>' +
+          '<span class="checkout-confirm__icon" aria-hidden="true"><span class="bi bi-check-lg" aria-hidden="true"></span></span>' +
           '<p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--ok">' + (reserva ? 'Reserva confirmada' : 'Pedido confirmado') + '</p>' +
           '<h1 class="aura-h1" id="confirmacion-titulo" tabindex="-1">Gracias por tu pedido.</h1>' +
           '<p class="aura-lead">' + esc(lead) + '</p>' +
@@ -368,7 +368,7 @@
         '</div>' +
 
         (notes ? '<div class="checkout-confirm__notes">' + notes + '</div>' : '') +
-        '<p class="aura-caption checkout-confirm__demo"><i class="bi bi-info-circle" aria-hidden="true"></i> Pedido de demostración: no se ha cobrado nada y no recibirás ningún envío ni correo. El pedido se guarda solo en este navegador.</p>' +
+        '<p class="aura-caption checkout-confirm__demo"><span class="bi bi-info-circle" aria-hidden="true"></span> Pedido de demostración: no se ha cobrado nada y no recibirás ningún envío ni correo. El pedido se guarda solo en este navegador.</p>' +
       '</div>';
 
     var current = document.getElementById('checkout') || document.getElementById('confirmacion');
@@ -1052,7 +1052,7 @@
 
   var payConfirm = co('pay-confirmar');
   if (payConfirm) {
-    payConfirm.innerHTML = '<i class="bi ' + (bioName() === 'Touch ID' ? 'bi-fingerprint' : 'bi-person-bounding-box') + '" aria-hidden="true"></i>Confirmar con ' + bioName();
+    payConfirm.innerHTML = '<span class="bi ' + (bioName() === 'Touch ID' ? 'bi-fingerprint' : 'bi-person-bounding-box') + '" aria-hidden="true"></span>Confirmar con ' + bioName();
     payConfirm.addEventListener('click', function () {
       if (placed) { return; }
       /* Confirmación simulada (la hoja lo dice): sin espera artificial. La hoja

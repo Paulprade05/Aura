@@ -86,7 +86,7 @@
   all('[data-index-availability]').forEach(function (el) {
     var a = availability(cheapest(idList(el, 'data-index-availability')));
     if (a.status === 'disponible' || !a.text) { el.hidden = true; return; }
-    el.innerHTML = '<i class="bi bi-calendar-event" aria-hidden="true"></i>' +
+    el.innerHTML = '<span class="bi bi-calendar-event" aria-hidden="true"></span>' +
       '<span>' + (a.title && a.label ? '<strong>' + esc(a.title) + '</strong> · ' + (a.labelHtml || esc(a.label)) : esc(a.text)) + '</span>';
     el.hidden = false;
   });

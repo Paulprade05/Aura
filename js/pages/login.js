@@ -137,7 +137,7 @@
     alerta.id = 'login-alerta';
     alerta.setAttribute('role', 'alert');
     alerta.innerHTML =
-      '<i class="bi bi-exclamation-octagon-fill" aria-hidden="true"></i>' +
+      '<span class="bi bi-exclamation-octagon-fill" aria-hidden="true"></span>' +
       '<p class="aura-alert__title">No hemos podido iniciar sesión</p>' +
       '<p class="aura-alert__text"></p>';
     alerta.querySelector('.aura-alert__text').textContent = texto;

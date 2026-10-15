@@ -186,7 +186,9 @@
     .g-swatch--sm .g-swatch__name { font-size: .875rem; }
     .g-swatch--sm .g-swatch__hex, .g-swatch--sm .g-swatch__var { font-size: .6875rem; }
     .g-chip-checker { background-color: #161617; background-image: linear-gradient(45deg, #232326 25%, transparent 25%, transparent 75%, #232326 75%), linear-gradient(45deg, #232326 25%, transparent 25%, transparent 75%, #232326 75%); background-size: 16px 16px; background-position: 0 0, 8px 8px; }
-    .g-chip-checker > i { display: block; height: 100%; background: var(--c); }
+    .g-chip-checker > span { display: block; height: 100%; background: var(--c); }
+    /* Muestra de una línea (capítulo 01): el grosor va en la hoja, no en el style (C28 de TAW: sin px en línea) */
+    .g-hairline { height: 1px; background: var(--c); }
 
     /* Superficies (Base / Elevación / Cristal) */
     .g-surface { position: relative; display: flex; flex-direction: column; justify-content: space-between; gap: 1rem; min-height: 15rem; padding: 1.5rem; border: 1px solid var(--g-line); border-radius: .75rem; background: var(--g-card); }
@@ -301,12 +303,12 @@
     /* Iconos */
     .g-icons { display: grid; grid-template-columns: repeat(auto-fill, minmax(7.25rem, 1fr)); gap: .75rem; margin: 0; padding: 0; list-style: none; }
     .g-icon { display: grid; justify-items: center; gap: .625rem; padding: 1.125rem .5rem 1rem; border: 1px solid var(--g-line); border-radius: .75rem; background: var(--g-card); text-align: center; }
-    .g-icon i { font-size: 1.375rem; line-height: 1; color: var(--text-primary); }
-    .g-icon span { font-family: var(--g-mono); font-size: .625rem; letter-spacing: .02em; color: var(--text-tertiary); overflow-wrap: anywhere; }
+    .g-icon > .bi { font-size: 1.375rem; line-height: 1; color: var(--text-primary); }
+    .g-icon > span:not(.bi) { font-family: var(--g-mono); font-size: .625rem; letter-spacing: .02em; color: var(--text-tertiary); overflow-wrap: anywhere; }
     .g-icon small { display: block; margin-top: -.25rem; font-size: .6875rem; color: var(--text-secondary); }
     .g-sizes { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 1.5rem 2.5rem; }
     .g-size { display: grid; justify-items: center; gap: .75rem; }
-    .g-size i { line-height: 1; color: var(--text-primary); }
+    .g-size .bi { line-height: 1; color: var(--text-primary); }
 
     /* Movimiento: gráficas */
     .g-chart { display: block; width: 100%; height: auto; margin-top: 1rem; overflow: visible; }
@@ -334,9 +336,8 @@
     .g-timeline__axis { position: absolute; left: 0; right: 0; top: 2.25rem; height: 1px; background: var(--g-line-2); }
     /* --fi / --fo: parte del tramo que ocupan la entrada y la salida (150 px de scroll entre el recorrido del tramo) */
     .g-timeline__seg { position: absolute; top: 1.5rem; height: 1.5rem; left: calc(var(--a) * 100%); width: calc((var(--b) - var(--a)) * 100%); border-radius: .375rem; background: linear-gradient(90deg, rgba(23, 135, 247, .15), rgba(23, 135, 247, .55) calc(var(--fi, .33) * 100%), rgba(23, 135, 247, .55) calc(100% - var(--fo, .33) * 100%), rgba(23, 135, 247, .15)); border: 1px solid rgba(23, 135, 247, .55); }
-    .g-timeline__seg span { position: absolute; left: .5rem; top: -1.375rem; font-family: var(--g-mono); font-size: .625rem; letter-spacing: .04em; color: var(--text-secondary); white-space: nowrap; }
-    .g-timeline__seg span b { font-weight: inherit; }
-    .g-timeline__seg--end span { left: auto; right: .5rem; }
+    .g-timeline__seg > span { position: absolute; left: .5rem; top: -1.375rem; font-family: var(--g-mono); font-size: .625rem; letter-spacing: .04em; color: var(--text-secondary); white-space: nowrap; }
+    .g-timeline__seg--end > span { left: auto; right: .5rem; }
     .g-timeline__ticks { position: absolute; left: 0; right: 0; bottom: 0; display: flex; justify-content: space-between; font-family: var(--g-mono); font-size: .625rem; color: var(--text-tertiary); }
 
     /* Hacer / no hacer */
@@ -410,7 +411,7 @@
       .g-linkrow { padding: 1.25rem; }
       .g-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); }
       .g-strip li:nth-child(n + 4) { display: none; }
-      .g-timeline__seg span b { display: none; }
+      .g-timeline__range { display: none; }
       .g-stage { aspect-ratio: 3 / 4; }
       .g-stage__meta { display: none; }
       .g-stage__text { left: 1rem; right: 1rem; top: auto; bottom: 1rem; max-width: none; transform: none; }
@@ -560,7 +561,7 @@
 
           <hr class="g-rule">
           <div class="g-note">
-            <span class="g-note__icon"><i class="bi bi-signpost-2" aria-hidden="true"></i></span>
+            <span class="g-note__icon"><span class="bi bi-signpost-2" aria-hidden="true"></span></span>
             <p class="g-note__title">Nota de uso</p>
             <p class="g-note__text">Una desviación nueva de la v1 (o una excepción nueva) no se decide en una página: se escribe primero en esta tabla, con su motivo, y después en <code>css/aura.css</code> y en <code>COMPONENTES.md</code> (sección «Cambios de la v2.0»).</p>
           </div>
@@ -605,9 +606,9 @@
                 <div class="g-swatch g-swatch--sm" style="--c:#1787f7"><div class="g-swatch__chip"></div><div class="g-swatch__body"><div class="g-swatch__row"><p class="g-swatch__name">Azul de texto</p><span class="g-swatch__hex">#1787f7</span></div><p class="g-swatch__use">Enlaces, iconos, foco y contorno del secundario en hover: 5,85:1 sobre negro, 5,03:1 sobre tarjeta. El de la v1.</p><span class="g-swatch__var">--accent-link · --accent-bright</span></div></div>
                 <div class="g-swatch g-swatch--sm" style="--c:#4aa3ff"><div class="g-swatch__chip"></div><div class="g-swatch__body"><div class="g-swatch__row"><p class="g-swatch__name">Azul de texto hover</p><span class="g-swatch__hex">#4aa3ff</span></div><p class="g-swatch__use">Etiqueta del secundario en hover y en foco, y enlaces sin clase: más luz, nunca menos contraste (7,97:1).</p><span class="g-swatch__var">--accent-link-hover</span></div></div>
                 <div class="g-swatch g-swatch--sm" style="--c:#0074e8"><div class="g-swatch__chip"></div><div class="g-swatch__body"><div class="g-swatch__row"><p class="g-swatch__name">Acento hover</p><span class="g-swatch__hex">#0074e8</span></div><p class="g-swatch__use">Relleno primario al pasar el ratón (4,50:1 con blanco). La v1 aclaraba a #1787f7: 3,59:1, no AA.</p><span class="g-swatch__var">--accent-hover</span></div></div>
-                <div class="g-swatch g-swatch--sm"><div class="g-swatch__chip g-chip-checker" style="--c:rgba(0,113,227,.16)"><i></i></div><div class="g-swatch__body"><div class="g-swatch__row"><p class="g-swatch__name">Azul suave</p><span class="g-swatch__hex">16 %</span></div><p class="g-swatch__use">Fondo de lo elegido y tinte del secundario.</p><span class="g-swatch__var">--accent-soft</span></div></div>
-                <div class="g-swatch g-swatch--sm"><div class="g-swatch__chip g-chip-checker" style="--c:rgba(0,113,227,.4)"><i></i></div><div class="g-swatch__body"><div class="g-swatch__row"><p class="g-swatch__name">Anillo de foco</p><span class="g-swatch__hex">40 %</span></div><p class="g-swatch__use">Anillo de los campos en foco (guía §04).</p><span class="g-swatch__var">--accent-ring</span></div></div>
-                <div class="g-swatch g-swatch--sm"><div class="g-swatch__chip g-chip-checker" style="--c:rgba(229,169,60,.14)"><i></i></div><div class="g-swatch__body"><div class="g-swatch__row"><p class="g-swatch__name">Dorado suave</p><span class="g-swatch__hex">14 %</span></div><p class="g-swatch__use">Fondo de insignias e iconos de nota.</p><span class="g-swatch__var g-swatch__var--gold">--gold-soft</span></div></div>
+                <div class="g-swatch g-swatch--sm"><div class="g-swatch__chip g-chip-checker" style="--c:rgba(0,113,227,.16)"><span></span></div><div class="g-swatch__body"><div class="g-swatch__row"><p class="g-swatch__name">Azul suave</p><span class="g-swatch__hex">16 %</span></div><p class="g-swatch__use">Fondo de lo elegido y tinte del secundario.</p><span class="g-swatch__var">--accent-soft</span></div></div>
+                <div class="g-swatch g-swatch--sm"><div class="g-swatch__chip g-chip-checker" style="--c:rgba(0,113,227,.4)"><span></span></div><div class="g-swatch__body"><div class="g-swatch__row"><p class="g-swatch__name">Anillo de foco</p><span class="g-swatch__hex">40 %</span></div><p class="g-swatch__use">Anillo de los campos en foco (guía §04).</p><span class="g-swatch__var">--accent-ring</span></div></div>
+                <div class="g-swatch g-swatch--sm"><div class="g-swatch__chip g-chip-checker" style="--c:rgba(229,169,60,.14)"><span></span></div><div class="g-swatch__body"><div class="g-swatch__row"><p class="g-swatch__name">Dorado suave</p><span class="g-swatch__hex">14 %</span></div><p class="g-swatch__use">Fondo de insignias e iconos de nota.</p><span class="g-swatch__var g-swatch__var--gold">--gold-soft</span></div></div>
                 <div class="g-swatch g-swatch--sm" style="--c:#8e8e93"><div class="g-swatch__chip"></div><div class="g-swatch__body"><div class="g-swatch__row"><p class="g-swatch__name">Texto terciario</p><span class="g-swatch__hex">#8e8e93</span></div><p class="g-swatch__use">Notas, metadatos y etiquetas mono.</p><span class="g-swatch__var">--text-tertiary</span></div></div>
                 <div class="g-swatch g-swatch--sm" style="--c:#98989d"><div class="g-swatch__chip"></div><div class="g-swatch__body"><div class="g-swatch__row"><p class="g-swatch__name">Placeholder</p><span class="g-swatch__hex">#98989d</span></div><p class="g-swatch__use">Ejemplo dentro del campo (5,7:1 en foco).</p><span class="g-swatch__var">--text-placeholder</span></div></div>
                 <div class="g-swatch g-swatch--sm" style="--c:#6e6e73"><div class="g-swatch__chip"></div><div class="g-swatch__body"><div class="g-swatch__row"><p class="g-swatch__name">Desactivado</p><span class="g-swatch__hex">#6e6e73</span></div><p class="g-swatch__use">Etiquetas de controles desactivados.</p><span class="g-swatch__var">--text-disabled</span></div></div>
@@ -629,11 +630,11 @@
                 <div class="g-card g-card--base">
                   <p class="g-card__label"><span>Líneas</span><span>Separan sin pesar</span></p>
                   <div class="g-stack" style="display:grid;gap:1.125rem">
-                    <div><div style="height:1px;background:var(--hairline)"></div><p class="g-card__text"><code>--hairline</code> · 10 % · separadores de lista y tarjeta</p></div>
-                    <div><div style="height:1px;background:var(--hairline-strong)"></div><p class="g-card__text"><code>--hairline-strong</code> · 18 % · bordes visibles</p></div>
-                    <div><div style="height:1px;background:var(--edge-light)"></div><p class="g-card__text"><code>--edge-light</code> · 16 % · filo superior de un material (la luz lo toca)</p></div>
-                    <div><div style="height:1px;background:var(--field-border)"></div><p class="g-card__text"><code>--field-border</code> · 36 % · límite de campos, casillas y opciones (3,14:1; 3,35:1 sobre tarjeta)</p></div>
-                    <div><div style="height:1px;background:var(--field-border-hover)"></div><p class="g-card__text"><code>--field-border-hover</code> · 50 % · el mismo límite con el ratón encima (5,32:1); blanco con «más contraste»</p></div>
+                    <div><div class="g-hairline" style="--c:var(--hairline)"></div><p class="g-card__text"><code>--hairline</code> · 10 % · separadores de lista y tarjeta</p></div>
+                    <div><div class="g-hairline" style="--c:var(--hairline-strong)"></div><p class="g-card__text"><code>--hairline-strong</code> · 18 % · bordes visibles</p></div>
+                    <div><div class="g-hairline" style="--c:var(--edge-light)"></div><p class="g-card__text"><code>--edge-light</code> · 16 % · filo superior de un material (la luz lo toca)</p></div>
+                    <div><div class="g-hairline" style="--c:var(--field-border)"></div><p class="g-card__text"><code>--field-border</code> · 36 % · límite de campos, casillas y opciones (3,14:1; 3,35:1 sobre tarjeta)</p></div>
+                    <div><div class="g-hairline" style="--c:var(--field-border-hover)"></div><p class="g-card__text"><code>--field-border-hover</code> · 50 % · el mismo límite con el ratón encima (5,32:1); blanco con «más contraste»</p></div>
                   </div>
                 </div>
                 <div class="g-card g-card--base">
@@ -682,7 +683,7 @@
 
           <hr class="g-rule">
           <div class="g-note">
-            <span class="g-note__icon"><i class="bi bi-circle-half" aria-hidden="true"></i></span>
+            <span class="g-note__icon"><span class="bi bi-circle-half" aria-hidden="true"></span></span>
             <p class="g-note__title">Nota de uso</p>
             <p class="g-note__text">El azul eléctrico comunica interacción; el dorado aporta valor premium. Evita usarlos como superficies extensas o competir por la misma jerarquía.</p>
             <p class="g-note__text">Texto azul sobre negro siempre en <code>--accent-link</code> (#1787f7, el de la v1); <code>--accent</code> (#0071e3) es para rellenos con texto blanco y contornos. Lo que no se pulsa no va en azul, con una sola excepción: el acabado de la tarjeta de modelo (capítulo 09), que refleja la muestra elegida como en el prototipo. Un estado nunca se comunica solo con color.</p>
@@ -799,7 +800,7 @@
 
           <hr class="g-rule">
           <div class="g-note">
-            <span class="g-note__icon"><i class="bi bi-type" aria-hidden="true"></i></span>
+            <span class="g-note__icon"><span class="bi bi-type" aria-hidden="true"></span></span>
             <p class="g-note__title">Nota de uso</p>
             <p class="g-note__text">Usa Kanit para condensar intención y ritmo en titulares. Inter sostiene lecturas largas y controles; conserva una longitud de línea cómoda y contraste alto.</p>
             <p class="g-note__text">Un solo <code>.aura-display</code> y un solo <code>h1</code> por página. La clase da el aspecto y la etiqueta el nivel (<code>&lt;h2 class="aura-h3"&gt;</code> es válido). No fijes <code>letter-spacing</code> ni <code>line-height</code> a mano: cada clase trae los de su tamaño. Display es una ampliación de la v2 sobre la v1 (su «Hero Title» de 56 px es el <code>.aura-h1</code>); insignia y antetítulo comparten «12 / 650», como escribe la v1.</p>
@@ -831,8 +832,8 @@
                 <div class="g-matrix__row">
                   <div><p class="g-matrix__name">Botón Primario</p><p class="g-matrix__meta">48H / 999R / 24PX</p><p class="g-matrix__meta">Inter 15 / 600 · halo .55 → 1</p></div>
                   <div class="g-matrix__cells">
-                    <div class="g-state"><span class="g-state__label">Normal</span><div class="g-state__cell"><button class="aura-btn aura-btn--primary" type="button">Continuar <i class="bi bi-arrow-up-right" aria-hidden="true"></i></button></div></div>
-                    <div class="g-state"><span class="g-state__label g-state__label--hover">Hover</span><div class="g-state__cell"><button class="aura-btn aura-btn--primary is-hover" type="button">Continuar <i class="bi bi-arrow-up-right" aria-hidden="true"></i></button></div></div>
+                    <div class="g-state"><span class="g-state__label">Normal</span><div class="g-state__cell"><button class="aura-btn aura-btn--primary" type="button">Continuar <span class="bi bi-arrow-up-right" aria-hidden="true"></span></button></div></div>
+                    <div class="g-state"><span class="g-state__label g-state__label--hover">Hover</span><div class="g-state__cell"><button class="aura-btn aura-btn--primary is-hover" type="button">Continuar <span class="bi bi-arrow-up-right" aria-hidden="true"></span></button></div></div>
                     <div class="g-state"><span class="g-state__label">Disabled</span><div class="g-state__cell"><button class="aura-btn aura-btn--primary" type="button" disabled>Continuar</button></div></div>
                   </div>
                 </div>
@@ -855,9 +856,9 @@
                 <div class="g-matrix__row">
                   <div><p class="g-matrix__name">Destructivo <span class="aura-badge aura-badge--mono aura-badge--neutral ms-1">V 2.0</span></p><p class="g-matrix__meta">Solo lo irreversible</p></div>
                   <div class="g-matrix__cells">
-                    <div class="g-state"><span class="g-state__label">Normal</span><div class="g-state__cell"><button class="aura-btn aura-btn--destructive" type="button"><i class="bi bi-trash3" aria-hidden="true"></i>Borrar datos</button></div></div>
-                    <div class="g-state"><span class="g-state__label g-state__label--hover">Hover</span><div class="g-state__cell"><button class="aura-btn aura-btn--destructive is-hover" type="button"><i class="bi bi-trash3" aria-hidden="true"></i>Borrar datos</button></div></div>
-                    <div class="g-state"><span class="g-state__label">Disabled</span><div class="g-state__cell"><button class="aura-btn aura-btn--destructive" type="button" disabled><i class="bi bi-trash3" aria-hidden="true"></i>Borrar datos</button></div></div>
+                    <div class="g-state"><span class="g-state__label">Normal</span><div class="g-state__cell"><button class="aura-btn aura-btn--destructive" type="button"><span class="bi bi-trash3" aria-hidden="true"></span>Borrar datos</button></div></div>
+                    <div class="g-state"><span class="g-state__label g-state__label--hover">Hover</span><div class="g-state__cell"><button class="aura-btn aura-btn--destructive is-hover" type="button"><span class="bi bi-trash3" aria-hidden="true"></span>Borrar datos</button></div></div>
+                    <div class="g-state"><span class="g-state__label">Disabled</span><div class="g-state__cell"><button class="aura-btn aura-btn--destructive" type="button" disabled><span class="bi bi-trash3" aria-hidden="true"></span>Borrar datos</button></div></div>
                   </div>
                 </div>
                 <div class="g-matrix__row">
@@ -877,7 +878,7 @@
               <div class="g-grid g-grid--4" inert>
                 <div class="g-state"><span class="g-state__label">Pulsado · scale(.97)</span><div class="g-state__cell"><button class="aura-btn aura-btn--primary is-pressed" type="button">Comprar</button></div></div>
                 <div class="g-state"><span class="g-state__label">Carga · AURA.ui.busy</span><div class="g-state__cell"><button class="aura-btn aura-btn--primary is-loading" type="button" aria-busy="true"><span class="aura-spinner" aria-hidden="true"></span>Procesando…</button></div></div>
-                <div class="g-state"><span class="g-state__label">Con icono</span><div class="g-state__cell"><button class="aura-btn aura-btn--secondary" type="button">Ver la película <i class="bi bi-play" aria-hidden="true"></i></button></div></div>
+                <div class="g-state"><span class="g-state__label">Con icono</span><div class="g-state__cell"><button class="aura-btn aura-btn--secondary" type="button">Ver la película <span class="bi bi-play" aria-hidden="true"></span></button></div></div>
                 <div class="g-state"><span class="g-state__label">Bloque · --block</span><div class="g-state__cell"><button class="aura-btn aura-btn--primary aura-btn--block" type="button">Tramitar pedido</button></div></div>
               </div>
               <p class="g-demo__caption">La pulsación es inmediata (100 ms) y se cancela en cuanto gana un arrastre. En carga el botón conserva su aspecto (trabaja, no está desactivado), lleva <code>aria-busy</code> y no deja reenviar el formulario. Los 48 px son un mínimo: con texto grande el botón crece en alto y se parte en líneas equilibradas, nunca más ancho que su contenedor.</p>
@@ -904,16 +905,16 @@
                 <div class="g-card g-card--base">
                   <p class="g-card__label"><span>Botón de icono</span><span>.aura-icon-btn</span></p>
                   <div class="aura-cluster">
-                    <button class="aura-icon-btn" type="button" aria-label="Cerrar"><i class="bi bi-x-lg" aria-hidden="true"></i></button>
-                    <button class="aura-icon-btn aura-icon-btn--solid" type="button" aria-label="Anterior"><i class="bi bi-chevron-left" aria-hidden="true"></i></button>
-                    <button class="aura-icon-btn aura-icon-btn--solid" type="button" aria-label="Siguiente"><i class="bi bi-chevron-right" aria-hidden="true"></i></button>
-                    <button class="aura-icon-btn aura-icon-btn--solid" type="button" aria-label="Siguiente" disabled><i class="bi bi-chevron-right" aria-hidden="true"></i></button>
-                    <button class="aura-icon-btn is-pressed" type="button" aria-label="Buscar"><i class="bi bi-search" aria-hidden="true"></i></button>
+                    <button class="aura-icon-btn" type="button"><span class="bi bi-x-lg" aria-hidden="true"></span><span class="visually-hidden">Cerrar</span></button>
+                    <button class="aura-icon-btn aura-icon-btn--solid" type="button"><span class="bi bi-chevron-left" aria-hidden="true"></span><span class="visually-hidden">Anterior</span></button>
+                    <button class="aura-icon-btn aura-icon-btn--solid" type="button"><span class="bi bi-chevron-right" aria-hidden="true"></span><span class="visually-hidden">Siguiente</span></button>
+                    <button class="aura-icon-btn aura-icon-btn--solid" type="button" disabled><span class="bi bi-chevron-right" aria-hidden="true"></span><span class="visually-hidden">Siguiente</span></button>
+                    <button class="aura-icon-btn is-pressed" type="button"><span class="bi bi-search" aria-hidden="true"></span><span class="visually-hidden">Buscar</span></button>
                   </div>
-                  <p class="g-card__text">Nombre siempre en <code>aria-label</code>; el icono, <code>aria-hidden</code>. Pulsado: <code>scale(.92)</code>.</p>
+                  <p class="g-card__text">Nombre siempre como texto oculto dentro del botón (<code>.visually-hidden</code>, no <code>aria-label</code>: <span class="g-gold">V 2.1</span>); el icono, <code>aria-hidden</code>. Pulsado: <code>scale(.92)</code>.</p>
                   <p class="g-card__label mt-4"><span>Chips</span><span>.aura-chip</span></p>
                   <div class="aura-cluster">
-                    <span class="aura-chip"><i class="bi bi-truck" aria-hidden="true"></i> Envío gratis</span>
+                    <span class="aura-chip"><span class="bi bi-truck" aria-hidden="true"></span> Envío gratis</span>
                     <button class="aura-chip is-active" type="button" aria-pressed="true">Todos</button>
                     <button class="aura-chip" type="button" aria-pressed="false">Pedidos</button>
                     <button class="aura-chip" type="button" aria-pressed="false">Garantías</button>
@@ -932,13 +933,14 @@
                     <span class="aura-badge aura-badge--mono aura-badge--neutral">AU-2026-000123</span>
                   </div>
                   <p class="g-card__label mt-4"><span>Control segmentado</span><span>.aura-segmented</span></p>
-                  <div class="aura-segmented" role="radiogroup" aria-label="Familia de ejemplo">
-                    <label class="aura-segmented__item"><input type="radio" name="g-familia" value="auraphone" checked><span>auraPhone</span></label>
-                    <label class="aura-segmented__item"><input type="radio" name="g-familia" value="aurapad"><span>auraPad</span></label>
-                    <label class="aura-segmented__item"><input type="radio" name="g-familia" value="aurabook"><span>auraBook</span></label>
-                    <label class="aura-segmented__item"><input type="radio" name="g-familia" value="aurapods"><span>auraPods</span></label>
-                  </div>
-                  <p class="g-card__text">Una sola pastilla (<code>__thumb</code>) que se desliza con un muelle crítico y se arrastra; con texto grande se reparte en filas (<code>.is-wrapped</code>). Con radios, enlaces o pestañas.</p>
+                  <fieldset class="aura-segmented">
+                    <legend class="visually-hidden">Familia de ejemplo</legend>
+                    <label class="aura-segmented__item" for="g-familia-auraphone"><input id="g-familia-auraphone" type="radio" name="g-familia" value="auraphone" checked><span>auraPhone</span></label>
+                    <label class="aura-segmented__item" for="g-familia-aurapad"><input id="g-familia-aurapad" type="radio" name="g-familia" value="aurapad"><span>auraPad</span></label>
+                    <label class="aura-segmented__item" for="g-familia-aurabook"><input id="g-familia-aurabook" type="radio" name="g-familia" value="aurabook"><span>auraBook</span></label>
+                    <label class="aura-segmented__item" for="g-familia-aurapods"><input id="g-familia-aurapods" type="radio" name="g-familia" value="aurapods"><span>auraPods</span></label>
+                  </fieldset>
+                  <p class="g-card__text">Una sola pastilla (<code>__thumb</code>) que se desliza con un muelle crítico y se arrastra; con texto grande se reparte en filas (<code>.is-wrapped</code>). Con radios, enlaces o pestañas. Con radios es un <code>&lt;fieldset&gt;</code> con su <code>&lt;legend class="visually-hidden"&gt;</code> y la pastilla mide en <code>rem</code> (<span class="g-gold">V 2.1</span>, capítulo 04).</p>
                 </div>
               </div>
             </div>
@@ -977,7 +979,7 @@
 
           <hr class="g-rule">
           <div class="g-note">
-            <span class="g-note__icon"><i class="bi bi-hand-index" aria-hidden="true"></i></span>
+            <span class="g-note__icon"><span class="bi bi-hand-index" aria-hidden="true"></span></span>
             <p class="g-note__title">Nota de uso</p>
             <p class="g-note__text">Mantén una sola acción primaria por contexto. El estado hover gana luminosidad con el halo (de .55 a 1) y el relleno #0074e8, sin bajar del 4,5:1 de la etiqueta; disabled reduce contraste sin perder la etiqueta.</p>
             <p class="g-note__text">Desactivado igual en primario, secundario e inverso (relleno <code>--fill-disabled</code> #252528, etiqueta <code>--text-disabled</code>); el destructivo conserva su contorno. Hover del secundario: contorno <code>--accent-bright</code> (#1787f7), tinte <code>--accent-soft</code> y etiqueta <code>--accent-link-hover</code> (también con el foco: #1787f7 sobre el tinte de una tarjeta se queda en 4,3:1); del inverso, <code>--inverse-hover</code> #e8e8ed. El color de base no se anima: la capa de hover y el halo se funden en 160 ms (<code>--dur-1</code>).</p>
@@ -1010,12 +1012,12 @@
                   <p class="g-fieldcard__head"><span>Estado normal</span><span>Border / 1px</span></p>
                   <div class="aura-field">
                     <label class="aura-field__label" for="g-f-mail-1">Correo electrónico</label>
-                    <div class="aura-field__control"><i class="aura-field__icon bi bi-envelope" aria-hidden="true"></i><input class="aura-input" id="g-f-mail-1" type="email" placeholder="tu@correo.com" autocomplete="off"></div>
+                    <div class="aura-field__control"><span class="aura-field__icon bi bi-envelope" aria-hidden="true"></span><input class="aura-input" id="g-f-mail-1" type="email" placeholder="tu@correo.com" autocomplete="off"></div>
                     <p class="aura-field__help">Estado en reposo</p>
                   </div>
                   <div class="aura-field aura-field--toggle">
                     <label class="aura-field__label" for="g-f-pass-1">Contraseña</label>
-                    <div class="aura-field__control"><i class="aura-field__icon bi bi-lock" aria-hidden="true"></i><input class="aura-input" id="g-f-pass-1" type="password" value="AuraCosmos" autocomplete="off"><button class="aura-field__toggle" type="button" aria-label="Mostrar la contraseña" aria-pressed="false"><i class="bi bi-eye" aria-hidden="true"></i></button></div>
+                    <div class="aura-field__control"><span class="aura-field__icon bi bi-lock" aria-hidden="true"></span><input class="aura-input" id="g-f-pass-1" type="password" value="AuraCosmos" autocomplete="off"><button class="aura-field__toggle" type="button" aria-pressed="false"><span class="bi bi-eye" aria-hidden="true"></span><span class="visually-hidden">Mostrar la contraseña</span></button></div>
                     <p class="aura-field__help">Estado en reposo</p>
                   </div>
                 </div>
@@ -1023,12 +1025,12 @@
                   <p class="g-fieldcard__head"><span>Estado focus</span><span>Ring / Blue 40%</span></p>
                   <div class="aura-field is-focused">
                     <label class="aura-field__label" for="g-f-mail-2">Correo electrónico <span class="g-flag">Focus</span></label>
-                    <div class="aura-field__control"><i class="aura-field__icon bi bi-envelope" aria-hidden="true"></i><input class="aura-input" id="g-f-mail-2" type="email" value="tu@correo.com" autocomplete="off"></div>
+                    <div class="aura-field__control"><span class="aura-field__icon bi bi-envelope" aria-hidden="true"></span><input class="aura-input" id="g-f-mail-2" type="email" value="tu@correo.com" autocomplete="off"></div>
                     <p class="aura-field__help">Entrada activa · acento azul</p>
                   </div>
                   <div class="aura-field aura-field--toggle is-focused">
                     <label class="aura-field__label" for="g-f-pass-2">Contraseña <span class="g-flag">Focus</span></label>
-                    <div class="aura-field__control"><i class="aura-field__icon bi bi-lock" aria-hidden="true"></i><input class="aura-input" id="g-f-pass-2" type="password" value="AuraCosmos" autocomplete="off"><button class="aura-field__toggle" type="button" aria-label="Mostrar la contraseña" aria-pressed="false"><i class="bi bi-eye" aria-hidden="true"></i></button></div>
+                    <div class="aura-field__control"><span class="aura-field__icon bi bi-lock" aria-hidden="true"></span><input class="aura-input" id="g-f-pass-2" type="password" value="AuraCosmos" autocomplete="off"><button class="aura-field__toggle" type="button" aria-pressed="false"><span class="bi bi-eye" aria-hidden="true"></span><span class="visually-hidden">Mostrar la contraseña</span></button></div>
                     <p class="aura-field__help">Entrada activa · acento azul</p>
                   </div>
                 </div>
@@ -1041,7 +1043,7 @@
                 <div inert>
                   <div class="aura-field is-focused">
                     <label class="aura-field__label" for="g-f-mail-3">Correo electrónico <span class="aura-field__hint">Opcional</span></label>
-                    <div class="aura-field__control"><i class="aura-field__icon bi bi-envelope" aria-hidden="true"></i><input class="aura-input" id="g-f-mail-3" type="email" value="tu@correo.com" autocomplete="off"></div>
+                    <div class="aura-field__control"><span class="aura-field__icon bi bi-envelope" aria-hidden="true"></span><input class="aura-input" id="g-f-mail-3" type="email" value="tu@correo.com" autocomplete="off"></div>
                     <p class="aura-field__help">Te enviaremos aquí la confirmación del pedido.</p>
                   </div>
                 </div>
@@ -1063,7 +1065,7 @@
                 <div class="g-fieldcard">
                   <div class="aura-field is-invalid">
                     <label class="aura-field__label" for="g-f-err">Correo electrónico</label>
-                    <div class="aura-field__control"><i class="aura-field__icon bi bi-envelope" aria-hidden="true"></i><input class="aura-input" id="g-f-err" type="email" value="lucia@correo" autocomplete="off" aria-invalid="true" aria-describedby="g-f-err-msg"></div>
+                    <div class="aura-field__control"><span class="aura-field__icon bi bi-envelope" aria-hidden="true"></span><input class="aura-input" id="g-f-err" type="email" value="lucia@correo" autocomplete="off" aria-invalid="true" aria-describedby="g-f-err-msg"></div>
                     <p class="aura-field__error" id="g-f-err-msg">Falta el dominio. Escribe una dirección como nombre@correo.com.</p>
                   </div>
                   <p class="g-card__text m-0"><code>.is-invalid</code> · <code>aria-invalid</code></p>
@@ -1071,7 +1073,7 @@
                 <div class="g-fieldcard">
                   <div class="aura-field is-valid">
                     <label class="aura-field__label" for="g-f-ok">Correo electrónico</label>
-                    <div class="aura-field__control"><i class="aura-field__icon bi bi-envelope" aria-hidden="true"></i><input class="aura-input" id="g-f-ok" type="email" value="lucia@correo.com" autocomplete="off"></div>
+                    <div class="aura-field__control"><span class="aura-field__icon bi bi-envelope" aria-hidden="true"></span><input class="aura-input" id="g-f-ok" type="email" value="lucia@correo.com" autocomplete="off"></div>
                   </div>
                   <p class="g-card__text m-0"><code>.is-valid</code> · al enfocarlo manda el foco</p>
                 </div>
@@ -1105,7 +1107,7 @@
                 <div class="g-fieldcard">
                   <div class="aura-field aura-field--toggle">
                     <label class="aura-field__label" for="g-f-new">Contraseña</label>
-                    <div class="aura-field__control"><i class="aura-field__icon bi bi-lock" aria-hidden="true"></i><input class="aura-input" id="g-f-new" type="text" value="AuraCosmos" autocomplete="off" aria-describedby="g-f-new-reglas"><button class="aura-field__toggle" type="button" aria-label="Ocultar la contraseña" aria-pressed="true"><i class="bi bi-eye-slash" aria-hidden="true"></i></button></div>
+                    <div class="aura-field__control"><span class="aura-field__icon bi bi-lock" aria-hidden="true"></span><input class="aura-input" id="g-f-new" type="text" value="AuraCosmos" autocomplete="off" aria-describedby="g-f-new-reglas"><button class="aura-field__toggle" type="button" aria-pressed="true"><span class="bi bi-eye-slash" aria-hidden="true"></span><span class="visually-hidden">Ocultar la contraseña</span></button></div>
                     <ul class="aura-rules" id="g-f-new-reglas" aria-label="Requisitos de la contraseña">
                       <li class="aura-rules__item is-met"><span class="visually-hidden">Cumplido: </span>8 caracteres</li>
                       <li class="aura-rules__item is-met"><span class="visually-hidden">Cumplido: </span>Una mayúscula</li>
@@ -1127,25 +1129,44 @@
                 <div class="g-fieldcard">
                   <fieldset class="aura-fieldset">
                     <legend class="aura-legend aura-legend--sm">Método de envío</legend>
-                    <label class="aura-radio"><input class="aura-radio__input" type="radio" name="g-envio" value="estandar" checked><span class="aura-radio__box" aria-hidden="true"></span><span class="aura-radio__label">Envío estándar gratuito, 2–3 días</span></label>
-                    <label class="aura-radio"><input class="aura-radio__input" type="radio" name="g-envio" value="expres"><span class="aura-radio__box" aria-hidden="true"></span><span class="aura-radio__label">Envío exprés, mañana · 9,95&nbsp;€</span></label>
+                    <label class="aura-radio" for="g-envio-estandar"><input class="aura-radio__input" id="g-envio-estandar" type="radio" name="g-envio" value="estandar" checked><span class="aura-radio__box" aria-hidden="true"></span><span class="aura-radio__label">Envío estándar gratuito, 2–3 días</span></label>
+                    <label class="aura-radio" for="g-envio-expres"><input class="aura-radio__input" id="g-envio-expres" type="radio" name="g-envio" value="expres"><span class="aura-radio__box" aria-hidden="true"></span><span class="aura-radio__label">Envío exprés, mañana · 9,95&nbsp;€</span></label>
                   </fieldset>
-                  <label class="aura-check" for="g-f-recordar"><input class="aura-check__input" id="g-f-recordar" type="checkbox" checked><span class="aura-check__box" aria-hidden="true"></span><span class="aura-check__label">Mantener la sesión iniciada en este dispositivo</span></label>
+                  <label class="aura-check" for="g-f-recordar"><input class="aura-check__input" id="g-f-recordar" type="checkbox" name="g-recordar" checked><span class="aura-check__box" aria-hidden="true"></span><span class="aura-check__label">Mantener la sesión iniciada en este dispositivo</span></label>
                 </div>
                 <div class="g-fieldcard">
                   <fieldset class="aura-fieldset is-invalid">
                     <legend class="aura-legend aura-legend--sm">Entrega <strong>(obligatorio)</strong></legend>
-                    <label class="aura-radio"><input class="aura-radio__input" type="radio" name="g-entrega" value="casa" aria-invalid="true"><span class="aura-radio__box" aria-hidden="true"></span><span class="aura-radio__label">A domicilio</span></label>
-                    <label class="aura-radio"><input class="aura-radio__input" type="radio" name="g-entrega" value="tienda" aria-invalid="true"><span class="aura-radio__box" aria-hidden="true"></span><span class="aura-radio__label">Recoger en una AURA Store</span></label>
+                    <label class="aura-radio" for="g-entrega-casa"><input class="aura-radio__input" id="g-entrega-casa" type="radio" name="g-entrega" value="casa" aria-invalid="true"><span class="aura-radio__box" aria-hidden="true"></span><span class="aura-radio__label">A domicilio</span></label>
+                    <label class="aura-radio" for="g-entrega-tienda"><input class="aura-radio__input" id="g-entrega-tienda" type="radio" name="g-entrega" value="tienda" aria-invalid="true"><span class="aura-radio__box" aria-hidden="true"></span><span class="aura-radio__label">Recoger en una AURA Store</span></label>
                     <p class="aura-field__error">Elige una opción para continuar.</p>
                   </fieldset>
                   <div class="aura-field is-invalid">
-                    <label class="aura-check" for="g-f-acepto"><input class="aura-check__input" id="g-f-acepto" type="checkbox" aria-invalid="true"><span class="aura-check__box" aria-hidden="true"></span><span class="aura-check__label">Acepto las Condiciones de uso</span></label>
+                    <label class="aura-check" for="g-f-acepto"><input class="aura-check__input" id="g-f-acepto" type="checkbox" name="g-acepto" aria-invalid="true"><span class="aura-check__box" aria-hidden="true"></span><span class="aura-check__label">Acepto las Condiciones de uso</span></label>
                     <p class="aura-field__error">Acepta las condiciones para continuar.</p>
                   </div>
                 </div>
               </div>
-              <p class="g-demo__caption">Orden obligatorio input → caja → etiqueta. La etiqueta envuelve el control (toda la fila se pulsa); la casilla suelta lleva además <code>for</code> + <code>id</code>. El error de una casilla va como hermano de la etiqueta, nunca dentro; el de un grupo, como último hijo de su <code>fieldset</code>.</p>
+              <p class="g-demo__caption">Orden obligatorio input → caja → etiqueta. La etiqueta envuelve el control (toda la fila se pulsa) y además lo nombra con <code>for</code> + <code>id</code>, en casillas y también en radios (<span class="g-gold">V 2.1</span>); cada casilla suelta con su propio <code>name</code>. El error de una casilla va como hermano de la etiqueta, nunca dentro; el de un grupo, como último hijo de su <code>fieldset</code>.</p>
+            </div>
+
+            <!-- V 2.1: las reglas del test TAW (WCAG 2.x AA) para formularios -->
+            <div class="g-block">
+              <div class="g-sub"><h3 class="g-sub__title">Etiquetas, grupos y envío</h3><p class="g-sub__meta">V 2.1 · test TAW · H44 · H71 · H32</p></div>
+              <div class="g-grid g-grid--3">
+                <div class="g-card"><p class="g-card__title">Siempre <code>label for</code></p><p class="g-card__text">Cada <code>input</code>, <code>select</code> y <code>textarea</code> con <code>id</code> y su <code>&lt;label for&gt;</code>, también si la etiqueta ya lo envuelve (radios, casillas, muestras de color, tarjetas-opción, segmentado): TAW solo cuenta <code>label for</code>. Sin etiqueta a la vista (el buscador), <code>&lt;label class="visually-hidden" for&gt;</code>; nunca solo <code>aria-label</code>.</p></div>
+                <div class="g-card"><p class="g-card__title">Radios en su <code>fieldset</code></p><p class="g-card__text">Todo grupo de radios, y de casillas con el mismo <code>name</code>, en <code>&lt;fieldset&gt;</code> con <code>&lt;legend&gt;</code> (oculta si no se ve). El segmentado de radios es el propio fieldset (<code>fieldset.aura-segmented</code>), sin <code>role="radiogroup"</code>; ← → siguen cambiando de opción.</p></div>
+                <div class="g-card"><p class="g-card__title">Un envío en cada <code>form</code></p><p class="g-card__text">Todo <code>&lt;form&gt;</code> tiene un <code>&lt;button type="submit"&gt;</code>: el botón principal, que hace lo mismo que antes, o, en el buscador, la lupa. Una muestra que solo enseña campos y no se envía no es un <code>&lt;form&gt;</code>.</p></div>
+              </div>
+              <pre class="g-code mt-3"><span class="c">&lt;!-- Control dentro de su etiqueta: la etiqueta lleva además for (a la vista no cambia nada) --&gt;</span>
+<span class="t">&lt;fieldset</span> <span class="a">class</span>="aura-fieldset"<span class="t">&gt;</span>
+  <span class="t">&lt;legend</span> <span class="a">class</span>="aura-legend aura-legend--sm"<span class="t">&gt;</span>Método de envío<span class="t">&lt;/legend&gt;</span>
+  <span class="t">&lt;label</span> <span class="a">class</span>="aura-radio" <span class="a">for</span>="envio-estandar"<span class="t">&gt;&lt;input</span> <span class="a">class</span>="aura-radio__input" <span class="a">id</span>="envio-estandar" <span class="a">type</span>="radio" <span class="a">name</span>="envio" <span class="a">value</span>="estandar"<span class="t">&gt;</span> …<span class="t">&lt;/label&gt;</span>
+<span class="t">&lt;/fieldset&gt;</span>
+<span class="c">&lt;!-- Segmentado de radios: el propio control es el fieldset, con su leyenda oculta de primer hijo --&gt;</span>
+<span class="t">&lt;fieldset</span> <span class="a">class</span>="aura-segmented"<span class="t">&gt;&lt;legend</span> <span class="a">class</span>="visually-hidden"<span class="t">&gt;</span>Familia<span class="t">&lt;/legend&gt;</span> … <span class="t">&lt;/fieldset&gt;</span>
+<span class="c">&lt;!-- Campo sin etiqueta a la vista: la suya, oculta --&gt;</span>
+<span class="t">&lt;label</span> <span class="a">class</span>="visually-hidden" <span class="a">for</span>="aura-search-input"<span class="t">&gt;</span>Buscar productos y páginas<span class="t">&lt;/label&gt;</span></pre>
             </div>
 
             <div class="g-block">
@@ -1154,7 +1175,7 @@
                 <div class="g-fieldcard">
                   <div class="aura-field">
                     <label class="aura-field__label" for="g-f-sel">Dispositivo que entregas <span class="aura-field__hint">Opcional</span></label>
-                    <div class="aura-field__control"><i class="aura-field__icon bi bi-phone" aria-hidden="true"></i><select class="aura-select" id="g-f-sel"><option>auraPhone 16 Pro</option><option>Otro teléfono</option></select></div>
+                    <div class="aura-field__control"><span class="aura-field__icon bi bi-phone" aria-hidden="true"></span><select class="aura-select" id="g-f-sel"><option>auraPhone 16 Pro</option><option>Otro teléfono</option></select></div>
                   </div>
                   <div class="aura-field">
                     <label class="aura-field__label" for="g-f-area">¿En qué podemos ayudarte?</label>
@@ -1162,10 +1183,10 @@
                   </div>
                 </div>
                 <div class="d-grid gap-3 align-content-start">
-                  <div class="aura-alert aura-alert--error"><i class="bi bi-exclamation-octagon-fill" aria-hidden="true"></i><p class="aura-alert__title">No hemos podido iniciar sesión</p><p class="aura-alert__text">El ID de AURA o la contraseña no coinciden.</p></div>
-                  <div class="aura-alert aura-alert--ok"><i class="bi bi-check-circle-fill" aria-hidden="true"></i><p class="aura-alert__title">Datos guardados</p><p class="aura-alert__text">Tu dirección de envío se ha actualizado.</p></div>
-                  <div class="aura-alert aura-alert--warn"><i class="bi bi-exclamation-triangle-fill" aria-hidden="true"></i><p class="aura-alert__title">Entrega en 2–3 semanas</p><p class="aura-alert__text">Este acabado tiene más demanda de la prevista.</p></div>
-                  <div class="aura-alert"><i class="bi bi-info-circle-fill" aria-hidden="true"></i><p class="aura-alert__title">Pedido de demostración</p><p class="aura-alert__text">Los pagos son simulados y nunca se guardan datos de tarjeta.</p></div>
+                  <div class="aura-alert aura-alert--error"><span class="bi bi-exclamation-octagon-fill" aria-hidden="true"></span><p class="aura-alert__title">No hemos podido iniciar sesión</p><p class="aura-alert__text">El ID de AURA o la contraseña no coinciden.</p></div>
+                  <div class="aura-alert aura-alert--ok"><span class="bi bi-check-circle-fill" aria-hidden="true"></span><p class="aura-alert__title">Datos guardados</p><p class="aura-alert__text">Tu dirección de envío se ha actualizado.</p></div>
+                  <div class="aura-alert aura-alert--warn"><span class="bi bi-exclamation-triangle-fill" aria-hidden="true"></span><p class="aura-alert__title">Entrega en 2–3 semanas</p><p class="aura-alert__text">Este acabado tiene más demanda de la prevista.</p></div>
+                  <div class="aura-alert"><span class="bi bi-info-circle-fill" aria-hidden="true"></span><p class="aura-alert__title">Pedido de demostración</p><p class="aura-alert__text">Los pagos son simulados y nunca se guardan datos de tarjeta.</p></div>
                 </div>
               </div>
             </div>
@@ -1173,11 +1194,12 @@
 
           <hr class="g-rule">
           <div class="g-note">
-            <span class="g-note__icon"><i class="bi bi-fullscreen" aria-hidden="true"></i></span>
+            <span class="g-note__icon"><span class="bi bi-fullscreen" aria-hidden="true"></span></span>
             <p class="g-note__title">Nota de uso</p>
             <p class="g-note__text">El efecto cristal aparece al enfocar y no sustituye el borde azul. La etiqueta permanece visible para mantener orientación y accesibilidad.</p>
             <p class="g-note__text">Sobre la v1: el foco sigue su texto («Ring / Blue 40%»: anillo de 4 px) y no su dibujo (borde de 1,5 px sin anillo y etiqueta blanca); el borde en reposo (blanco al 36 %, 3,14:1) y el <code>placeholder</code> (#98989d, 6,30:1) se aclararon desde #45454b y #6e6e73 para llegar a AA. Con el ratón encima, campos, casillas y opciones pasan a <code>--field-border-hover</code> (50 %).</p>
             <p class="g-note__text">Valida en línea, al salir del campo, con el mensaje junto a él. Pide solo lo necesario, en el momento en que hace falta, y di junto al pago que nunca se guardan datos de tarjeta. Las reglas van dos veces: en el HTML (<code>required</code>, <code>pattern</code>, <code>minlength</code>) y en <code>AURA.ui.form</code>, con <code>novalidate</code> en el formulario.</p>
+            <p class="g-note__text">V 2.1: lo que el lector de pantalla ya entendía (la etiqueta que envuelve, <code>role="radiogroup"</code>, <code>aria-label</code>) el test TAW lo da por falla. Por eso, <code>label for</code> en todos los controles, <code>fieldset</code> + <code>legend</code> en todos los grupos y un <code>type="submit"</code> en cada formulario (capítulo 15).</p>
           </div>
         </div>
       </div>
@@ -1198,60 +1220,60 @@
             <p class="g-statement">Iconos que explican. Nunca adornan.</p>
             <p class="g-tag">Trazo · aria-hidden</p>
           </div>
-          <p class="g-intro">Una sola familia de iconos, de trazo, cargada como fuente (<code>&lt;i class="bi bi-…" aria-hidden="true"&gt;&lt;/i&gt;</code>). El icono acompaña al texto o al <code>aria-label</code> del botón: para el lector de pantalla siempre es decorativo.</p>
+          <p class="g-intro">Una sola familia de iconos, de trazo, cargada como fuente (<code>&lt;span class="bi bi-…" aria-hidden="true"&gt;&lt;/span&gt;</code>; nunca <code>&lt;i&gt;</code>, que es una etiqueta de presentación). El icono acompaña al texto del botón o del enlace, visible u oculto: para el lector de pantalla siempre es decorativo.</p>
 
           <div class="g-content">
             <div class="g-block">
               <div class="g-sub"><h3 class="g-sub__title">Navegación y acciones</h3><p class="g-sub__meta">Barra, menú, hojas y carrusel</p></div>
               <ul class="g-icons">
-                <li class="g-icon"><i class="bi bi-search" aria-hidden="true"></i><span>search</span><small>Buscar</small></li>
-                <li class="g-icon"><i class="bi bi-bag" aria-hidden="true"></i><span>bag</span><small>Bolsa</small></li>
-                <li class="g-icon"><i class="bi bi-person-circle" aria-hidden="true"></i><span>person-circle</span><small>Cuenta</small></li>
-                <li class="g-icon"><i class="bi bi-list" aria-hidden="true"></i><span>list</span><small>Menú</small></li>
-                <li class="g-icon"><i class="bi bi-x-lg" aria-hidden="true"></i><span>x-lg</span><small>Cerrar</small></li>
-                <li class="g-icon"><i class="bi bi-chevron-right" aria-hidden="true"></i><span>chevron-right</span><small>Siguiente</small></li>
-                <li class="g-icon"><i class="bi bi-chevron-down" aria-hidden="true"></i><span>chevron-down</span><small>Barra local</small></li>
-                <li class="g-icon"><i class="bi bi-arrow-right" aria-hidden="true"></i><span>arrow-right</span><small>Avanzar</small></li>
-                <li class="g-icon"><i class="bi bi-arrow-up-right" aria-hidden="true"></i><span>arrow-up-right</span><small>Continuar</small></li>
-                <li class="g-icon"><i class="bi bi-arrow-return-left" aria-hidden="true"></i><span>arrow-return-left</span><small>Volver a la nota</small></li>
-                <li class="g-icon"><i class="bi bi-trash3" aria-hidden="true"></i><span>trash3</span><small>Borrar</small></li>
-                <li class="g-icon"><i class="bi bi-plus" aria-hidden="true"></i><span>plus · dash</span><small>Cantidad</small></li>
+                <li class="g-icon"><span class="bi bi-search" aria-hidden="true"></span><span>search</span><small>Buscar</small></li>
+                <li class="g-icon"><span class="bi bi-bag" aria-hidden="true"></span><span>bag</span><small>Bolsa</small></li>
+                <li class="g-icon"><span class="bi bi-person-circle" aria-hidden="true"></span><span>person-circle</span><small>Cuenta</small></li>
+                <li class="g-icon"><span class="bi bi-list" aria-hidden="true"></span><span>list</span><small>Menú</small></li>
+                <li class="g-icon"><span class="bi bi-x-lg" aria-hidden="true"></span><span>x-lg</span><small>Cerrar</small></li>
+                <li class="g-icon"><span class="bi bi-chevron-right" aria-hidden="true"></span><span>chevron-right</span><small>Siguiente</small></li>
+                <li class="g-icon"><span class="bi bi-chevron-down" aria-hidden="true"></span><span>chevron-down</span><small>Barra local</small></li>
+                <li class="g-icon"><span class="bi bi-arrow-right" aria-hidden="true"></span><span>arrow-right</span><small>Avanzar</small></li>
+                <li class="g-icon"><span class="bi bi-arrow-up-right" aria-hidden="true"></span><span>arrow-up-right</span><small>Continuar</small></li>
+                <li class="g-icon"><span class="bi bi-arrow-return-left" aria-hidden="true"></span><span>arrow-return-left</span><small>Volver a la nota</small></li>
+                <li class="g-icon"><span class="bi bi-trash3" aria-hidden="true"></span><span>trash3</span><small>Borrar</small></li>
+                <li class="g-icon"><span class="bi bi-plus" aria-hidden="true"></span><span>plus · dash</span><small>Cantidad</small></li>
               </ul>
             </div>
 
             <div class="g-block">
               <div class="g-sub"><h3 class="g-sub__title">Familias, formularios y tienda</h3><p class="g-sub__meta">Un icono por familia, el mismo en todo el sitio</p></div>
               <ul class="g-icons">
-                <li class="g-icon"><i class="bi bi-phone" aria-hidden="true"></i><span>phone</span><small>auraPhone</small></li>
-                <li class="g-icon"><i class="bi bi-tablet-landscape" aria-hidden="true"></i><span>tablet-landscape</span><small>auraPad</small></li>
-                <li class="g-icon"><i class="bi bi-laptop" aria-hidden="true"></i><span>laptop</span><small>auraBook</small></li>
-                <li class="g-icon"><i class="bi bi-earbuds" aria-hidden="true"></i><span>earbuds</span><small>auraPods</small></li>
-                <li class="g-icon"><i class="bi bi-envelope" aria-hidden="true"></i><span>envelope</span><small>Correo</small></li>
-                <li class="g-icon"><i class="bi bi-lock" aria-hidden="true"></i><span>lock</span><small>Contraseña</small></li>
-                <li class="g-icon"><i class="bi bi-eye" aria-hidden="true"></i><span>eye · eye-slash</span><small>Mostrar</small></li>
-                <li class="g-icon"><i class="bi bi-truck" aria-hidden="true"></i><span>truck</span><small>Envío</small></li>
-                <li class="g-icon"><i class="bi bi-credit-card-2-front" aria-hidden="true"></i><span>credit-card-2-front</span><small>Financiación</small></li>
-                <li class="g-icon"><i class="bi bi-arrow-repeat" aria-hidden="true"></i><span>arrow-repeat</span><small>Trade In</small></li>
-                <li class="g-icon"><i class="bi bi-shield-check" aria-hidden="true"></i><span>shield-check</span><small>AuraCare+</small></li>
-                <li class="g-icon"><i class="bi bi-calendar-event" aria-hidden="true"></i><span>calendar-event</span><small>Disponibilidad</small></li>
+                <li class="g-icon"><span class="bi bi-phone" aria-hidden="true"></span><span>phone</span><small>auraPhone</small></li>
+                <li class="g-icon"><span class="bi bi-tablet-landscape" aria-hidden="true"></span><span>tablet-landscape</span><small>auraPad</small></li>
+                <li class="g-icon"><span class="bi bi-laptop" aria-hidden="true"></span><span>laptop</span><small>auraBook</small></li>
+                <li class="g-icon"><span class="bi bi-earbuds" aria-hidden="true"></span><span>earbuds</span><small>auraPods</small></li>
+                <li class="g-icon"><span class="bi bi-envelope" aria-hidden="true"></span><span>envelope</span><small>Correo</small></li>
+                <li class="g-icon"><span class="bi bi-lock" aria-hidden="true"></span><span>lock</span><small>Contraseña</small></li>
+                <li class="g-icon"><span class="bi bi-eye" aria-hidden="true"></span><span>eye · eye-slash</span><small>Mostrar</small></li>
+                <li class="g-icon"><span class="bi bi-truck" aria-hidden="true"></span><span>truck</span><small>Envío</small></li>
+                <li class="g-icon"><span class="bi bi-credit-card-2-front" aria-hidden="true"></span><span>credit-card-2-front</span><small>Financiación</small></li>
+                <li class="g-icon"><span class="bi bi-arrow-repeat" aria-hidden="true"></span><span>arrow-repeat</span><small>Trade In</small></li>
+                <li class="g-icon"><span class="bi bi-shield-check" aria-hidden="true"></span><span>shield-check</span><small>AuraCare+</small></li>
+                <li class="g-icon"><span class="bi bi-calendar-event" aria-hidden="true"></span><span>calendar-event</span><small>Disponibilidad</small></li>
               </ul>
             </div>
 
             <div class="g-block">
               <div class="g-sub"><h3 class="g-sub__title">Estados y contenido</h3><p class="g-sub__meta">Relleno solo en los estados</p></div>
               <ul class="g-icons">
-                <li class="g-icon"><i class="bi bi-info-circle-fill g-blue" aria-hidden="true"></i><span>info-circle-fill</span><small>Estado</small></li>
-                <li class="g-icon"><i class="bi bi-check-circle-fill" style="color:var(--ok)" aria-hidden="true"></i><span>check-circle-fill</span><small>Completado</small></li>
-                <li class="g-icon"><i class="bi bi-exclamation-triangle-fill" style="color:var(--warn)" aria-hidden="true"></i><span>exclamation-triangle-fill</span><small>Aviso</small></li>
-                <li class="g-icon"><i class="bi bi-x-octagon-fill" style="color:var(--error)" aria-hidden="true"></i><span>x-octagon-fill</span><small>Error (aviso)</small></li>
-                <li class="g-icon"><i class="bi bi-exclamation-octagon-fill" style="color:var(--error)" aria-hidden="true"></i><span>exclamation-octagon-fill</span><small>Error (formulario)</small></li>
-                <li class="g-icon"><i class="bi bi-shield-fill-check g-blue" aria-hidden="true"></i><span>shield-fill-check</span><small>AuraCare+ incluido</small></li>
-                <li class="g-icon"><i class="bi bi-cpu" aria-hidden="true"></i><span>cpu</span><small>Chip</small></li>
-                <li class="g-icon"><i class="bi bi-camera" aria-hidden="true"></i><span>camera</span><small>Cámaras</small></li>
-                <li class="g-icon"><i class="bi bi-battery-full" aria-hidden="true"></i><span>battery-full</span><small>Batería</small></li>
-                <li class="g-icon"><i class="bi bi-brightness-high" aria-hidden="true"></i><span>brightness-high</span><small>Pantalla</small></li>
-                <li class="g-icon"><i class="bi bi-fingerprint" aria-hidden="true"></i><span>fingerprint</span><small>Privacidad</small></li>
-                <li class="g-icon"><i class="bi bi-image" aria-hidden="true"></i><span>image</span><small>Hueco de imagen</small></li>
+                <li class="g-icon"><span class="bi bi-info-circle-fill g-blue" aria-hidden="true"></span><span>info-circle-fill</span><small>Estado</small></li>
+                <li class="g-icon"><span class="bi bi-check-circle-fill" style="color:var(--ok)" aria-hidden="true"></span><span>check-circle-fill</span><small>Completado</small></li>
+                <li class="g-icon"><span class="bi bi-exclamation-triangle-fill" style="color:var(--warn)" aria-hidden="true"></span><span>exclamation-triangle-fill</span><small>Aviso</small></li>
+                <li class="g-icon"><span class="bi bi-x-octagon-fill" style="color:var(--error)" aria-hidden="true"></span><span>x-octagon-fill</span><small>Error (aviso)</small></li>
+                <li class="g-icon"><span class="bi bi-exclamation-octagon-fill" style="color:var(--error)" aria-hidden="true"></span><span>exclamation-octagon-fill</span><small>Error (formulario)</small></li>
+                <li class="g-icon"><span class="bi bi-shield-fill-check g-blue" aria-hidden="true"></span><span>shield-fill-check</span><small>AuraCare+ incluido</small></li>
+                <li class="g-icon"><span class="bi bi-cpu" aria-hidden="true"></span><span>cpu</span><small>Chip</small></li>
+                <li class="g-icon"><span class="bi bi-camera" aria-hidden="true"></span><span>camera</span><small>Cámaras</small></li>
+                <li class="g-icon"><span class="bi bi-battery-full" aria-hidden="true"></span><span>battery-full</span><small>Batería</small></li>
+                <li class="g-icon"><span class="bi bi-brightness-high" aria-hidden="true"></span><span>brightness-high</span><small>Pantalla</small></li>
+                <li class="g-icon"><span class="bi bi-fingerprint" aria-hidden="true"></span><span>fingerprint</span><small>Privacidad</small></li>
+                <li class="g-icon"><span class="bi bi-image" aria-hidden="true"></span><span>image</span><small>Hueco de imagen</small></li>
               </ul>
             </div>
 
@@ -1260,25 +1282,38 @@
               <div class="g-grid g-grid--2">
                 <div class="g-card g-card--base">
                   <div class="g-sizes">
-                    <div class="g-size"><i class="bi bi-arrow-return-left" style="font-size:.75rem" aria-hidden="true"></i><span class="g-mono g-muted">1em · nota</span></div>
-                    <div class="g-size"><i class="bi bi-envelope" style="font-size:1rem" aria-hidden="true"></i><span class="g-mono g-muted">16 · campo</span></div>
-                    <div class="g-size"><i class="bi bi-search" style="font-size:1.0625rem" aria-hidden="true"></i><span class="g-mono g-muted">17 · barras</span></div>
-                    <div class="g-size"><i class="bi bi-cpu" style="font-size:1.125rem" aria-hidden="true"></i><span class="g-mono g-muted">18 · tarjeta</span></div>
-                    <div class="g-size"><i class="bi bi-bag" style="font-size:1.75rem" aria-hidden="true"></i><span class="g-mono g-muted">28 · vacío</span></div>
+                    <div class="g-size"><span class="bi bi-arrow-return-left" style="font-size:.75rem" aria-hidden="true"></span><span class="g-mono g-muted">1em · nota</span></div>
+                    <div class="g-size"><span class="bi bi-envelope" style="font-size:1rem" aria-hidden="true"></span><span class="g-mono g-muted">16 · campo</span></div>
+                    <div class="g-size"><span class="bi bi-search" style="font-size:1.0625rem" aria-hidden="true"></span><span class="g-mono g-muted">17 · barras</span></div>
+                    <div class="g-size"><span class="bi bi-cpu" style="font-size:1.125rem" aria-hidden="true"></span><span class="g-mono g-muted">18 · tarjeta</span></div>
+                    <div class="g-size"><span class="bi bi-bag" style="font-size:1.75rem" aria-hidden="true"></span><span class="g-mono g-muted">28 · vacío</span></div>
                   </div>
                   <p class="g-card__text mt-3">Nunca por debajo de 16 px, salvo en línea con un texto menor, donde va a 1em: el de la nota al pie, el estado de disponibilidad o el aviso de la tarjeta de acceso (12–13 px). En botones de icono y en el chevrón de la barra local, 17 px dentro de su caja de 44 px.</p>
                 </div>
                 <div class="g-card g-card--base">
                   <div class="aura-cluster" style="--cluster:1rem 1.25rem;align-items:center" inert>
-                    <span class="aura-feature__icon"><i class="bi bi-cpu" aria-hidden="true"></i></span>
-                    <span class="aura-feature__icon aura-feature__icon--gold"><i class="bi bi-stars" aria-hidden="true"></i></span>
-                    <span class="aura-bag-line__care-icon"><i class="bi bi-shield-check" aria-hidden="true"></i></span>
-                    <button class="aura-icon-btn aura-icon-btn--solid" type="button" aria-label="Siguiente"><i class="bi bi-chevron-right" aria-hidden="true"></i></button>
-                    <span class="g-note__icon" style="grid-row:auto"><i class="bi bi-lightbulb" aria-hidden="true"></i></span>
+                    <span class="aura-feature__icon"><span class="bi bi-cpu" aria-hidden="true"></span></span>
+                    <span class="aura-feature__icon aura-feature__icon--gold"><span class="bi bi-stars" aria-hidden="true"></span></span>
+                    <span class="aura-bag-line__care-icon"><span class="bi bi-shield-check" aria-hidden="true"></span></span>
+                    <button class="aura-icon-btn aura-icon-btn--solid" type="button"><span class="bi bi-chevron-right" aria-hidden="true"></span><span class="visually-hidden">Siguiente</span></button>
+                    <span class="g-note__icon" style="grid-row:auto"><span class="bi bi-lightbulb" aria-hidden="true"></span></span>
                   </div>
                   <p class="g-card__text mt-3">Característica neutra (<code>--fill-2</code>, 40 px, icono de 18) · dorada solo para valor premium (AuraCare+, Trade In) · AuraCare+ en la bolsa (32 px, icono de 16; incluido: azul de elegido, <code>bi-shield-fill-check</code>) · botón de icono (44 px) · icono de nota (36 px, <code>--gold-soft</code>).</p>
                 </div>
               </div>
+            </div>
+
+            <!-- V 2.1: el marcado de un icono y el de un control que solo es un icono (test TAW: G140 y F89) -->
+            <div class="g-block">
+              <div class="g-sub"><h3 class="g-sub__title">Marcado</h3><p class="g-sub__meta">V 2.1 · &lt;span class="bi"&gt; · texto oculto</p></div>
+              <div class="g-grid g-grid--2">
+                <div class="g-card"><p class="g-card__title">El icono, siempre un <code>&lt;span&gt;</code></p><p class="g-card__text"><code>&lt;span class="bi bi-…" aria-hidden="true"&gt;&lt;/span&gt;</code> en el HTML, en las plantillas de JS y en esta guía: <code>&lt;i&gt;</code> y <code>&lt;b&gt;</code> son etiquetas de presentación (G140 de TAW). El CSS apunta a <code>.bi</code>, nunca a <code>i</code>; el énfasis es <code>&lt;strong&gt;</code> o <code>&lt;em&gt;</code>.</p></div>
+                <div class="g-card"><p class="g-card__title">Solo un icono: el nombre, en texto</p><p class="g-card__text">Un botón o enlace que a la vista es solo un icono lleva su nombre dentro, en <code>&lt;span class="visually-hidden"&gt;</code>, sin <code>aria-label</code> (un enlace sin texto es el F89 de TAW): cerrar, flechas y puntos del carrusel, bolsa, menú, ojo de la contraseña, «−» y «+», iconos sociales y el «volver» de las notas, que repiten su nombre en <code>title</code>.</p></div>
+              </div>
+              <pre class="g-code mt-3"><span class="t">&lt;button</span> <span class="a">class</span>="aura-icon-btn" <span class="a">type</span>="button"<span class="t">&gt;&lt;span</span> <span class="a">class</span>="bi bi-x-lg" <span class="a">aria-hidden</span>="true"<span class="t">&gt;&lt;/span&gt;&lt;span</span> <span class="a">class</span>="visually-hidden"<span class="t">&gt;</span>Cerrar<span class="t">&lt;/span&gt;&lt;/button&gt;</span>
+<span class="t">&lt;a</span> <span class="a">class</span>="aura-footer__social-link" <span class="a">href</span>="acerca.html#historia" <span class="a">title</span>="AURA en YouTube: nuestra historia"<span class="t">&gt;</span>
+  <span class="t">&lt;span</span> <span class="a">class</span>="bi bi-youtube" <span class="a">aria-hidden</span>="true"<span class="t">&gt;&lt;/span&gt;&lt;span</span> <span class="a">class</span>="visually-hidden"<span class="t">&gt;</span>AURA en YouTube: nuestra historia<span class="t">&lt;/span&gt;</span>
+<span class="t">&lt;/a&gt;</span></pre>
             </div>
 
             <div class="g-block">
@@ -1312,9 +1347,9 @@
 
           <hr class="g-rule">
           <div class="g-note">
-            <span class="g-note__icon"><i class="bi bi-bounding-box-circles" aria-hidden="true"></i></span>
+            <span class="g-note__icon"><span class="bi bi-bounding-box-circles" aria-hidden="true"></span></span>
             <p class="g-note__title">Nota de uso</p>
-            <p class="g-note__text">Un icono de apoyo dice qué se espera (el sobre en el correo, el candado en la contraseña): nunca es un adorno. Para el lector de pantalla es decorativo (<code>aria-hidden="true"</code>) y el nombre lo da el texto o el <code>aria-label</code> del botón. Lo que no se pulsa no va en azul: iconos de característica en neutro, marcas de lista en gris.</p>
+            <p class="g-note__text">Un icono de apoyo dice qué se espera (el sobre en el correo, el candado en la contraseña): nunca es un adorno. Para el lector de pantalla es decorativo (<code>aria-hidden="true"</code>) y el nombre lo da el texto del botón o del enlace, a la vista u oculto (<code>.visually-hidden</code>), nunca solo un <code>aria-label</code>. Lo que no se pulsa no va en azul: iconos de característica en neutro, marcas de lista en gris.</p>
           </div>
         </div>
       </div>
@@ -1437,7 +1472,7 @@
 
           <hr class="g-rule">
           <div class="g-note">
-            <span class="g-note__icon"><i class="bi bi-layers" aria-hidden="true"></i></span>
+            <span class="g-note__icon"><span class="bi bi-layers" aria-hidden="true"></span></span>
             <p class="g-note__title">Nota de uso</p>
             <p class="g-note__text">El cristal solo vive sobre fondos opacos: dentro de una hoja, un popover o una tarjeta de cristal se usan rellenos planos (<code>--fill-1</code>, <code>--fill-2</code>). Una tarea modal vela y empuja la página hacia atrás; un panel paralelo (popover, aviso, barra de compra) ni vela ni empuja. Lo mismo se ve igual: las cifras sobre una foto van siempre en <code>.aura-media__overlay--glass</code>.</p>
           </div>
@@ -1559,7 +1594,7 @@
 
           <hr class="g-rule">
           <div class="g-note">
-            <span class="g-note__icon"><i class="bi bi-grid" aria-hidden="true"></i></span>
+            <span class="g-note__icon"><span class="bi bi-grid" aria-hidden="true"></span></span>
             <p class="g-note__title">Nota de uso</p>
             <p class="g-note__text">Alterna secciones negras y franja para dar ritmo; las tarjetas viven sobre cualquiera de los dos. Espaciado en <code>rem</code> y umbrales en <code>em</code> para que todo crezca con el tamaño de letra del usuario, y columnas <code>minmax(0, 1fr)</code> que nunca crecen con una palabra larga. Usa las utilidades de Bootstrap (<code>d-flex</code>, <code>gap-3</code>, <code>mt-4</code>…), nunca sus componentes.</p>
           </div>
@@ -1602,10 +1637,10 @@
                       <a class="aura-nav__link" href="../html/soporte.html">Soporte</a>
                     </nav>
                     <div class="aura-nav__actions">
-                      <button class="aura-nav__action" type="button" aria-label="Buscar"><i class="bi bi-search" aria-hidden="true"></i></button>
-                      <a class="aura-nav__action aura-nav__account" href="../html/login.html"><i class="bi bi-person-circle" aria-hidden="true"></i><span class="aura-nav__action-label">Iniciar sesión</span></a>
-                      <div class="aura-nav__bag-wrap"><button class="aura-nav__action aura-nav__bag" type="button" aria-label="Bolsa, 2 artículos"><i class="bi bi-bag" aria-hidden="true"></i><span class="aura-nav__count" aria-hidden="true">2</span></button></div>
-                      <button class="aura-nav__action aura-nav__toggle" type="button" aria-label="Abrir el menú"><i class="bi bi-list" aria-hidden="true"></i></button>
+                      <button class="aura-nav__action" type="button"><span class="bi bi-search" aria-hidden="true"></span><span class="visually-hidden">Buscar</span></button>
+                      <a class="aura-nav__action aura-nav__account" href="../html/login.html"><span class="bi bi-person-circle" aria-hidden="true"></span><span class="aura-nav__action-label">Iniciar sesión</span></a>
+                      <div class="aura-nav__bag-wrap"><button class="aura-nav__action aura-nav__bag" type="button"><span class="bi bi-bag" aria-hidden="true"></span><span class="visually-hidden">Bolsa, 2 artículos</span><span class="aura-nav__count" aria-hidden="true">2</span></button></div>
+                      <button class="aura-nav__action aura-nav__toggle" type="button"><span class="bi bi-list" aria-hidden="true"></span><span class="visually-hidden">Abrir el menú</span></button>
                     </div>
                   </div>
                 </header>
@@ -1615,7 +1650,7 @@
                   </div>
                 </aside>
               </div>
-              <p class="g-demo__caption">Material regular negro (<code>--glass-nav-bg</code>) en <code>::before</code>; el efecto de borde solo con <code>.is-scrolled</code>. Enlace activo con <code>.is-active</code> + <code>aria-current="page"</code>. La cifra y las familias de la cinta salen del catálogo; por debajo de 576 px la cinta cambia a su texto corto («Hasta 800&nbsp;€ por tu dispositivo mundano.», con el mismo enlace), así ocupa una o dos líneas y no cuatro. Por debajo de 992 px los enlaces pasan al menú y la etiqueta de la cuenta solo se ve desde 1200 px.</p>
+              <p class="g-demo__caption">Material regular negro (<code>--glass-nav-bg</code>) en <code>::before</code>; el efecto de borde solo con <code>.is-scrolled</code>. Enlace activo con <code>.is-active</code> + <code>aria-current="page"</code>. La cifra y las familias de la cinta salen del catálogo; por debajo de 576 px la cinta cambia a su texto corto («Hasta 800&nbsp;€ por tu dispositivo mundano.», con el mismo enlace), así ocupa una o dos líneas y no cuatro. Por debajo de 992 px los enlaces pasan al menú y la etiqueta de la cuenta solo se ve desde 1200 px. Los botones de icono (buscar, bolsa, menú) llevan su nombre en texto oculto, que en la bolsa dice cuántos artículos hay (<span class="g-gold">V 2.1</span>).</p>
             </div>
 
             <div class="g-block">
@@ -1623,20 +1658,20 @@
               <div class="g-demo g-demo--flush" inert aria-hidden="true">
                 <nav class="aura-localnav is-stuck" aria-label="auraPhone">
                   <div class="aura-container aura-localnav__inner">
-                    <a class="aura-localnav__title" href="../html/auraphone.html">auraPhone</a>
+                    <span class="aura-localnav__title" aria-current="page">auraPhone</span>
                     <div class="aura-localnav__links">
-                      <a class="aura-localnav__link is-active" href="#navegacion" aria-current="true">Destacado</a>
-                      <a class="aura-localnav__link" href="#navegacion">Diseño</a>
-                      <a class="aura-localnav__link" href="#navegacion">Cámaras</a>
-                      <a class="aura-localnav__link" href="#navegacion">Modelos</a>
-                      <a class="aura-localnav__link" href="#navegacion">Comparativa</a>
+                      <span class="aura-localnav__link is-active" aria-current="true">Destacado</span>
+                      <span class="aura-localnav__link">Diseño</span>
+                      <span class="aura-localnav__link">Cámaras</span>
+                      <span class="aura-localnav__link">Modelos</span>
+                      <span class="aura-localnav__link">Comparativa</span>
                     </div>
-                    <a class="aura-link aura-localnav__action" href="../html/comprar.html">Comprar</a>
+                    <a class="aura-link aura-localnav__action" href="../html/comprar.html?producto=auraphone-18-pro">Comprar<span class="visually-hidden"> auraPhone 18 Pro</span></a>
                   </div>
                 </nav>
                 <div style="height:3.5rem;background:linear-gradient(180deg,#121214,#000)"></div>
               </div>
-              <p class="g-demo__caption">Se pega arriba y marca la sección visible (también en los bloques sin enlace sigue el último). Su acción es el enlace contextual «Comprar ›» (nunca un botón: la única primaria azul a la vista es la del héroe). Mientras los enlaces no caben junto al título y la acción (por debajo de 992 px), se pliegan en un menú que abre un chevrón de 17 px; el título se recorta antes que la acción.</p>
+              <p class="g-demo__caption">Se pega arriba y marca la sección visible (también en los bloques sin enlace sigue el último). Su acción es el enlace contextual «Comprar ›» (nunca un botón: la única primaria azul a la vista es la del héroe). Mientras los enlaces no caben junto al título y la acción (por debajo de 992 px), se pliegan en un menú que abre un chevrón de 17 px; el título se recorta antes que la acción. El título no es un enlace: nombra la página actual (<code>span</code> con <code>aria-current="page"</code>; enlazado a su página repetía el enlace de la cabecera y a <code>#contenido</code> daba el mismo texto con dos destinos), el chevrón se nombra en texto oculto («Secciones de auraPhone») y «Comprar ›» dice de qué modelo, también oculto (<span class="g-gold">V 2.1</span>).</p>
             </div>
 
             <div class="g-block">
@@ -1647,20 +1682,21 @@
                     <div class="aura-search__panel">
                       <div class="aura-container">
                         <div class="aura-search__form">
-                          <i class="bi bi-search" aria-hidden="true"></i>
-                          <input class="aura-search__input" type="search" value="pro" tabindex="-1" aria-label="Buscar productos y páginas">
-                          <button class="aura-icon-btn" type="button" aria-label="Cerrar el buscador"><i class="bi bi-x-lg" aria-hidden="true"></i></button>
+                          <button class="aura-search__submit" type="submit"><span class="bi bi-search" aria-hidden="true"></span><span class="visually-hidden">Buscar</span></button>
+                          <label class="visually-hidden" for="g-buscador">Buscar productos y páginas</label>
+                          <input class="aura-search__input" id="g-buscador" type="search" name="q" value="pro" tabindex="-1">
+                          <button class="aura-icon-btn" type="button"><span class="bi bi-x-lg" aria-hidden="true"></span><span class="visually-hidden">Cerrar el buscador</span></button>
                         </div>
                         <div class="aura-search__results">
                           <p class="aura-search__heading">Productos</p>
                           <ul class="aura-search__list">
-                            <li><span class="aura-search__item is-active"><i class="bi bi-phone" aria-hidden="true"></i><span class="aura-search__item-title">auraPhone 18 Pro</span><span class="aura-search__item-meta">Desde 1.469 €</span></span></li>
-                            <li><span class="aura-search__item"><i class="bi bi-tablet-landscape" aria-hidden="true"></i><span class="aura-search__item-title">auraPad Pro 13<span class="aura-inch">″</span></span><span class="aura-search__item-meta">Desde 1.649 €</span></span></li>
-                            <li><span class="aura-search__item"><i class="bi bi-earbuds" aria-hidden="true"></i><span class="aura-search__item-title">auraPods Pro 3</span><span class="aura-search__item-meta">Desde 249 €</span></span></li>
+                            <li><span class="aura-search__item is-active"><span class="bi bi-phone" aria-hidden="true"></span><span class="aura-search__item-title">auraPhone 18 Pro</span><span class="aura-search__item-meta">Desde 1.469 €</span></span></li>
+                            <li><span class="aura-search__item"><span class="bi bi-tablet-landscape" aria-hidden="true"></span><span class="aura-search__item-title">auraPad Pro 13<span class="aura-inch">″</span></span><span class="aura-search__item-meta">Desde 1.649 €</span></span></li>
+                            <li><span class="aura-search__item"><span class="bi bi-earbuds" aria-hidden="true"></span><span class="aura-search__item-title">auraPods Pro 3</span><span class="aura-search__item-meta">Desde 249 €</span></span></li>
                           </ul>
                           <p class="aura-search__heading">Accesos rápidos</p>
                           <ul class="aura-search__list">
-                            <li><span class="aura-search__item"><i class="bi bi-arrow-right-short" aria-hidden="true"></i><span class="aura-search__item-title">Comparar modelos</span></span></li>
+                            <li><span class="aura-search__item"><span class="bi bi-arrow-right-short" aria-hidden="true"></span><span class="aura-search__item-title">Comparar modelos</span></span></li>
                           </ul>
                         </div>
                       </div>
@@ -1690,7 +1726,7 @@
                   </div>
                 </div>
               </div>
-              <p class="g-demo__caption">El buscador baja desde la lupa (escala + desenfoque), vela, empuja la página al 96,5 % y atrapa el foco; filtra en cada pulsación, sin distinguir acentos, y se maneja con ↑ ↓ Intro y Esc. El popover nace de la bolsa, no vela ni bloquea el scroll, se cierra con Esc o al pulsar fuera y nunca se sale de la pantalla.</p>
+              <p class="g-demo__caption">El buscador baja desde la lupa (escala + desenfoque), vela, empuja la página al 96,5 % y atrapa el foco; filtra en cada pulsación, sin distinguir acentos, y se maneja con ↑ ↓ Intro y Esc. La lupa es el botón de envío del formulario (<code>.aura-search__submit</code>, «Buscar» en texto oculto) y el campo tiene su <code>&lt;label for&gt;</code> oculta: Intro o la lupa abren el resultado marcado o el primero (<span class="g-gold">V 2.1</span>). El popover nace de la bolsa, no vela ni bloquea el scroll, se cierra con Esc o al pulsar fuera y nunca se sale de la pantalla.</p>
             </div>
 
             <div class="g-block">
@@ -1700,18 +1736,18 @@
                   <div class="aura-menu is-open g-static">
                     <div class="aura-container aura-menu__bar">
                       <span class="aura-brand"><img class="aura-brand__mark" src="../img/aura-72.png" width="28" height="28" alt=""><span class="aura-brand__word">AURA</span></span>
-                      <button class="aura-icon-btn" type="button" aria-label="Cerrar el menú"><i class="bi bi-x-lg" aria-hidden="true"></i></button>
+                      <button class="aura-icon-btn" type="button"><span class="bi bi-x-lg" aria-hidden="true"></span><span class="visually-hidden">Cerrar el menú</span></button>
                     </div>
                     <nav class="aura-container aura-menu__nav" aria-label="Principal">
                       <ul class="aura-menu__list">
-                        <li style="--i:0"><span class="aura-menu__link is-active">auraPhone<i class="bi bi-chevron-right" aria-hidden="true"></i></span></li>
-                        <li style="--i:1"><span class="aura-menu__link">auraPad<i class="bi bi-chevron-right" aria-hidden="true"></i></span></li>
-                        <li style="--i:2"><span class="aura-menu__link">auraBook<i class="bi bi-chevron-right" aria-hidden="true"></i></span></li>
-                        <li style="--i:3"><span class="aura-menu__link">auraPods<i class="bi bi-chevron-right" aria-hidden="true"></i></span></li>
+                        <li style="--i:0"><span class="aura-menu__link is-active">auraPhone<span class="bi bi-chevron-right" aria-hidden="true"></span></span></li>
+                        <li style="--i:1"><span class="aura-menu__link">auraPad<span class="bi bi-chevron-right" aria-hidden="true"></span></span></li>
+                        <li style="--i:2"><span class="aura-menu__link">auraBook<span class="bi bi-chevron-right" aria-hidden="true"></span></span></li>
+                        <li style="--i:3"><span class="aura-menu__link">auraPods<span class="bi bi-chevron-right" aria-hidden="true"></span></span></li>
                       </ul>
                       <ul class="aura-menu__secondary">
-                        <li style="--i:4"><span><i class="bi bi-person-circle" aria-hidden="true"></i> Iniciar sesión</span></li>
-                        <li style="--i:5"><span><i class="bi bi-bag" aria-hidden="true"></i> Bolsa (2)</span></li>
+                        <li style="--i:4"><span><span class="bi bi-person-circle" aria-hidden="true"></span> Iniciar sesión</span></li>
+                        <li style="--i:5"><span><span class="bi bi-bag" aria-hidden="true"></span> Bolsa (2)</span></li>
                       </ul>
                     </nav>
                   </div>
@@ -1743,9 +1779,9 @@
                         <span class="aura-brand"><img class="aura-brand__mark" src="../img/aura-72.png" width="28" height="28" alt=""><span class="aura-brand__word">AURA</span></span>
                         <p class="aura-footer__tagline">Tecnología inmersiva diseñada para ampliar lo que imaginas. Precisión, profundidad y energía AURA.</p>
                         <ul class="aura-footer__social">
-                          <li><span class="aura-footer__social-link"><i class="bi bi-instagram" aria-hidden="true"></i></span></li>
-                          <li><span class="aura-footer__social-link"><i class="bi bi-youtube" aria-hidden="true"></i></span></li>
-                          <li><span class="aura-footer__social-link"><i class="bi bi-linkedin" aria-hidden="true"></i></span></li>
+                          <li><span class="aura-footer__social-link"><span class="bi bi-instagram" aria-hidden="true"></span><span class="visually-hidden">AURA en Instagram: novedades</span></span></li>
+                          <li><span class="aura-footer__social-link"><span class="bi bi-youtube" aria-hidden="true"></span><span class="visually-hidden">AURA en YouTube: nuestra historia</span></span></li>
+                          <li><span class="aura-footer__social-link"><span class="bi bi-linkedin" aria-hidden="true"></span><span class="visually-hidden">AURA en LinkedIn: empleo</span></span></li>
                         </ul>
                       </div>
                       <nav class="aura-footer__directory" aria-label="Pie de página">
@@ -1763,12 +1799,13 @@
                   </div>
                 </footer>
               </div>
+              <p class="g-demo__caption">Los iconos sociales llevan a tres secciones distintas de Acerca (novedades, historia y empleo: tres enlaces seguidos al mismo sitio son un fallo de TAW) y su nombre va en texto oculto y en <code>title</code>, el texto emergente (<span class="g-gold">V 2.1</span>).</p>
             </div>
           </div>
 
           <hr class="g-rule">
           <div class="g-note">
-            <span class="g-note__icon"><i class="bi bi-signpost-split" aria-hidden="true"></i></span>
+            <span class="g-note__icon"><span class="bi bi-signpost-split" aria-hidden="true"></span></span>
             <p class="g-note__title">Nota de uso</p>
             <p class="g-note__text">Cabecera y pie los generan <code>&lt;aura-header&gt;</code> y <code>&lt;aura-footer&gt;</code>: no se escriben a mano. Ningún overlay atrapa: Esc, velo y botón de cerrar siempre, y el foco vuelve a quien lo abrió. <code>title</code> solo donde dice algo que el texto no dice (logotipo, «Comparar», «Trade In», iconos sociales, «Créditos de imágenes»).</p>
           </div>
@@ -1863,7 +1900,7 @@
               <div class="g-sub"><h3 class="g-sub__title">Tarjeta de modelo</h3><p class="g-sub__meta">[data-aura-lineup] · AURA.html.productCard()</p></div>
               <div class="aura-lineup" inert aria-hidden="true">
                 <article class="aura-product-card" data-status="proximamente">
-                  <span class="aura-product-card__media"><img class="aura-img" src="../img/auraphone-duo-blanco-estelar-trasera.webp" width="1600" height="1200" alt="" loading="lazy" decoding="async"></span>
+                  <div class="aura-product-card__media"><img class="aura-img" src="../img/auraphone-duo-blanco-estelar-trasera.webp" width="1600" height="1200" alt="" loading="lazy" decoding="async"></div>
                   <div class="aura-product-card__body">
                     <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">Nuevo · Plegable</p>
                     <p class="aura-product-card__name"><span>auraPhone Duo</span></p>
@@ -1871,14 +1908,14 @@
                     <p class="aura-swatch-list"><span class="aura-swatch-list__dot" style="--swatch:#1f2530"></span><span class="aura-swatch-list__dot" style="--swatch:#f1eee7"></span></p>
                     <p class="aura-product-card__text">Dos pantallas. Un solo gesto.</p>
                     <div class="aura-product-card__foot">
-                      <p class="aura-product-card__status"><i class="bi bi-calendar-event" aria-hidden="true"></i><span>Próximamente · Reserva a partir del <time datetime="2026-10-16">16 de octubre</time></span></p>
+                      <p class="aura-product-card__status"><span class="bi bi-calendar-event" aria-hidden="true"></span><span>Próximamente · Reserva a partir del <time datetime="2026-10-16">16 de octubre</time></span></p>
                       <p class="aura-product-card__price"><span class="aura-price">Desde 2.339&nbsp;€</span><span class="aura-caption">o 97,46&nbsp;€/mes durante 24&nbsp;meses</span></p>
-                      <span class="aura-btn aura-btn--primary">Configurar</span>
+                      <span class="aura-btn aura-btn--primary">Configurar<span class="visually-hidden"> auraPhone Duo</span></span>
                     </div>
                   </div>
                 </article>
                 <article class="aura-product-card">
-                  <span class="aura-product-card__media"><img class="aura-img" src="../img/aurapad-air-13-azul-trasera.webp" width="1600" height="1200" alt="" loading="lazy" decoding="async"></span>
+                  <div class="aura-product-card__media"><img class="aura-img" src="../img/aurapad-air-13-azul-trasera.webp" width="1600" height="1200" alt="" loading="lazy" decoding="async"></div>
                   <div class="aura-product-card__body">
                     <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">Más versátil</p>
                     <p class="aura-product-card__name"><span>auraPad Air 13<span class="aura-inch">″</span></span></p>
@@ -1887,12 +1924,12 @@
                     <p class="aura-product-card__text">Ligero de llevar. Enorme al crear.</p>
                     <div class="aura-product-card__foot">
                       <p class="aura-product-card__price"><span class="aura-price">Desde 999&nbsp;€</span><span class="aura-caption">o 41,63&nbsp;€/mes durante 24&nbsp;meses</span></p>
-                      <span class="aura-btn aura-btn--primary">Comprar</span>
+                      <span class="aura-btn aura-btn--primary">Comprar<span class="visually-hidden"> auraPad Air 13″</span></span>
                     </div>
                   </div>
                 </article>
                 <article class="aura-product-card">
-                  <span class="aura-product-card__media"><img class="aura-img" src="../img/aurabook-air-15-plata-tres-cuartos.webp" width="1600" height="1200" alt="" loading="lazy" decoding="async"></span>
+                  <div class="aura-product-card__media"><img class="aura-img" src="../img/aurabook-air-15-plata-tres-cuartos.webp" width="1600" height="1200" alt="" loading="lazy" decoding="async"></div>
                   <div class="aura-product-card__body">
                     <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">Nuevo</p>
                     <p class="aura-product-card__name"><span>auraBook Air 15<span class="aura-inch">″</span></span></p>
@@ -1901,12 +1938,12 @@
                     <p class="aura-product-card__text">Increíblemente fino. Asombrosamente AURA.</p>
                     <div class="aura-product-card__foot">
                       <p class="aura-product-card__price"><span class="aura-price">Desde 1.729&nbsp;€</span><span class="aura-caption">o 72,04&nbsp;€/mes durante 24&nbsp;meses</span></p>
-                      <span class="aura-btn aura-btn--primary">Comprar</span>
+                      <span class="aura-btn aura-btn--primary">Comprar<span class="visually-hidden"> auraBook Air 15″</span></span>
                     </div>
                   </div>
                 </article>
               </div>
-              <p class="g-demo__caption">La pinta el catálogo (<code>data.js</code>): la primera vista del acabado por defecto (<code>AURA.catalog.image(p, color)</code>), antetítulo (<code>badge</code>), nombre al escalón H3, acabado de la foto en azul (la única excepción a «lo que no se pulsa no va en azul»: refleja la muestra elegida, como el prototipo), puntos de color, lema, precio «Desde» con la cuota y un botón cuyo verbo sale de la disponibilidad. La tarjeta entera responde al pulsar foto o nombre (<code>scale(.985)</code>) y el pie se coloca por el ancho de la tarjeta, igual en toda la fila.</p>
+              <p class="g-demo__caption">La pinta el catálogo (<code>data.js</code>): la primera vista del acabado por defecto (<code>AURA.catalog.image(p, color)</code>), antetítulo (<code>badge</code>), nombre al escalón H3, acabado de la foto en azul (la única excepción a «lo que no se pulsa no va en azul»: refleja la muestra elegida, como el prototipo), puntos de color, lema, precio «Desde» con la cuota y un botón cuyo verbo sale de la disponibilidad. La tarjeta entera lleva al configurador con un solo enlace, el del nombre, estirado sobre ella con su <code>::after</code>: la foto ya no es un enlace (sería uno sin texto) y el botón, con el modelo en texto oculto («Comprar» + «auraPad Air 13″»), queda por encima como su propio objetivo (<span class="g-gold">V 2.1</span>). Responde entera al pulsarla (<code>scale(.985)</code>) y el pie se coloca por el ancho de la tarjeta, igual en toda la fila.</p>
             </div>
 
             <div class="g-block">
@@ -1927,17 +1964,17 @@
                     <li class="aura-stat aura-stat--card"><p class="aura-stat__value">192&nbsp;GB</p><p class="aura-stat__label">memoria unificada</p></li>
                   </ul>
                   <div class="aura-feature aura-feature--inline">
-                    <span class="aura-feature__icon aura-feature__icon--gold"><i class="bi bi-arrow-repeat" aria-hidden="true"></i></span>
+                    <span class="aura-feature__icon aura-feature__icon--gold"><span class="bi bi-arrow-repeat" aria-hidden="true"></span></span>
                     <p class="aura-feature__title">AURA Trade In · hasta 800&nbsp;€</p>
                     <p class="aura-feature__text">El dorado solo para valor premium, nunca junto a una primaria azul.</p>
                   </div>
                 </div>
               </div>
               <div class="g-grid g-grid--4 mt-3" inert aria-hidden="true">
-                <div class="aura-feature aura-feature--card"><span class="aura-feature__icon"><i class="bi bi-cpu" aria-hidden="true"></i></span><p class="aura-feature__value">AURA H2</p><p class="aura-feature__title">Chip de audio</p><p class="aura-feature__text">Cancelación, llamadas y modo Ambiente.</p></div>
-                <div class="aura-feature aura-feature--card"><span class="aura-feature__icon"><i class="bi bi-battery-full" aria-hidden="true"></i></span><p class="aura-feature__value">24 h</p><p class="aura-feature__title">Con el estuche</p><p class="aura-feature__text">Hasta 8 horas con cancelación activa.</p></div>
-                <div class="aura-feature aura-feature--card"><span class="aura-feature__icon"><i class="bi bi-brightness-high" aria-hidden="true"></i></span><p class="aura-feature__value">1.600 nits</p><p class="aura-feature__title">Liquid Retina XDR</p><p class="aura-feature__text">Contraste extremo y color de referencia.</p></div>
-                <div class="aura-feature aura-feature--card"><span class="aura-feature__icon"><i class="bi bi-camera" aria-hidden="true"></i></span><p class="aura-feature__value">LiDAR</p><p class="aura-feature__title">Cámaras Pro</p><p class="aura-feature__text">Gran angular y escáner espacial.</p></div>
+                <div class="aura-feature aura-feature--card"><span class="aura-feature__icon"><span class="bi bi-cpu" aria-hidden="true"></span></span><p class="aura-feature__value">AURA H2</p><p class="aura-feature__title">Chip de audio</p><p class="aura-feature__text">Cancelación, llamadas y modo Ambiente.</p></div>
+                <div class="aura-feature aura-feature--card"><span class="aura-feature__icon"><span class="bi bi-battery-full" aria-hidden="true"></span></span><p class="aura-feature__value">24 h</p><p class="aura-feature__title">Con el estuche</p><p class="aura-feature__text">Hasta 8 horas con cancelación activa.</p></div>
+                <div class="aura-feature aura-feature--card"><span class="aura-feature__icon"><span class="bi bi-brightness-high" aria-hidden="true"></span></span><p class="aura-feature__value">1.600 nits</p><p class="aura-feature__title">Liquid Retina XDR</p><p class="aura-feature__text">Contraste extremo y color de referencia.</p></div>
+                <div class="aura-feature aura-feature--card"><span class="aura-feature__icon"><span class="bi bi-camera" aria-hidden="true"></span></span><p class="aura-feature__value">LiDAR</p><p class="aura-feature__title">Cámaras Pro</p><p class="aura-feature__text">Gran angular y escáner espacial.</p></div>
               </div>
               <p class="g-demo__caption">La cifra destacada (<code>--lg</code>, Kanit 48 → 80 px) aparece primero y después lo que la explica, solo con opacidad (<code>data-aura-reveal="stat"</code>): nunca un contador. La gran cifra (<code>--xl</code>) es una caja cuadrada para que su resplandor sea un círculo; en columnas estrechas, <code>--md</code>. Las cifras salen del catálogo.</p>
             </div>
@@ -1979,8 +2016,8 @@
                 </div>
                 <div class="aura-carousel__controls" aria-hidden="true">
                   <div class="aura-carousel__dots"><span class="aura-carousel__dot is-active"></span><span class="aura-carousel__dot"></span><span class="aura-carousel__dot"></span></div>
-                  <span class="aura-icon-btn aura-icon-btn--solid" style="color:var(--text-disabled);background:var(--fill-1)"><i class="bi bi-chevron-left" aria-hidden="true"></i></span>
-                  <span class="aura-icon-btn aura-icon-btn--solid"><i class="bi bi-chevron-right" aria-hidden="true"></i></span>
+                  <span class="aura-icon-btn aura-icon-btn--solid" style="color:var(--text-disabled);background:var(--fill-1)"><span class="bi bi-chevron-left" aria-hidden="true"></span></span>
+                  <span class="aura-icon-btn aura-icon-btn--solid"><span class="bi bi-chevron-right" aria-hidden="true"></span></span>
                 </div>
               </div>
               <p class="g-demo__caption">Sigue al dedo 1:1, un golpe mueve una diapositiva y el muelle hereda la velocidad (capítulo 12). Puntos de 24 × 44 px (44 × 44 en táctil); si no caben, contador «3 de 9». Estado anunciado en una región <code>aria-live</code>; ← → Inicio Fin con el teclado. Sin JS es una pista con <code>scroll-snap</code>.</p>
@@ -1995,10 +2032,10 @@
                     <fieldset class="aura-colorway__picker">
                       <legend class="visually-hidden">Acabados del auraPad Air 13″</legend>
                       <div class="aura-swatches">
-                        <label class="aura-swatch" style="--swatch:#7d7e80"><input class="aura-swatch__input" type="radio" name="g-cw" value="gris-espacial"><span class="aura-swatch__dot" aria-hidden="true"></span><span class="visually-hidden">Gris espacial</span></label>
-                        <label class="aura-swatch" style="--swatch:#c9d6e2"><input class="aura-swatch__input" type="radio" name="g-cw" value="azul"><span class="aura-swatch__dot" aria-hidden="true"></span><span class="visually-hidden">Azul</span></label>
-                        <label class="aura-swatch" style="--swatch:#dad3e3"><input class="aura-swatch__input" type="radio" name="g-cw" value="purpura" checked><span class="aura-swatch__dot" aria-hidden="true"></span><span class="visually-hidden">Púrpura</span></label>
-                        <label class="aura-swatch" style="--swatch:#f0e9de"><input class="aura-swatch__input" type="radio" name="g-cw" value="blanco-estrella"><span class="aura-swatch__dot" aria-hidden="true"></span><span class="visually-hidden">Blanco estrella</span></label>
+                        <label class="aura-swatch" for="g-cw-gris-espacial" style="--swatch:#7d7e80"><input class="aura-swatch__input" id="g-cw-gris-espacial" type="radio" name="g-cw" value="gris-espacial"><span class="aura-swatch__dot" aria-hidden="true"></span><span class="visually-hidden">Gris espacial</span></label>
+                        <label class="aura-swatch" for="g-cw-azul" style="--swatch:#c9d6e2"><input class="aura-swatch__input" id="g-cw-azul" type="radio" name="g-cw" value="azul"><span class="aura-swatch__dot" aria-hidden="true"></span><span class="visually-hidden">Azul</span></label>
+                        <label class="aura-swatch" for="g-cw-purpura" style="--swatch:#dad3e3"><input class="aura-swatch__input" id="g-cw-purpura" type="radio" name="g-cw" value="purpura" checked><span class="aura-swatch__dot" aria-hidden="true"></span><span class="visually-hidden">Púrpura</span></label>
+                        <label class="aura-swatch" for="g-cw-blanco-estrella" style="--swatch:#f0e9de"><input class="aura-swatch__input" id="g-cw-blanco-estrella" type="radio" name="g-cw" value="blanco-estrella"><span class="aura-swatch__dot" aria-hidden="true"></span><span class="visually-hidden">Blanco estrella</span></label>
                       </div>
                       <p class="aura-colorway__name"><strong>Púrpura</strong><span class="aura-colorway__note"> · Imagen en azul</span></p>
                     </fieldset>
@@ -2045,23 +2082,23 @@
                 </div>
               </div>
               <div class="g-grid g-grid--2 mt-3" inert aria-hidden="true">
-                <div class="aura-note"><span class="aura-note__icon"><i class="bi bi-lightbulb" aria-hidden="true"></i></span><p class="aura-note__title">.aura-note</p><p class="aura-note__text">La nota de uso de las páginas: icono dorado sobre <code>--gold-soft</code>; <code>--blue</code> para una nota informativa.</p></div>
+                <div class="aura-note"><span class="aura-note__icon"><span class="bi bi-lightbulb" aria-hidden="true"></span></span><p class="aura-note__title">.aura-note</p><p class="aura-note__text">La nota de uso de las páginas: icono dorado sobre <code>--gold-soft</code>; <code>--blue</code> para una nota informativa.</p></div>
                 <div class="g-demo" style="padding:0">
                   <div class="aura-section aura-section--tight aura-footnotes" style="padding-block:1.5rem;border-top:0">
                     <div class="aura-container">
-                      <ol class="aura-footnotes__list"><li>La autonomía depende del uso y la configuración. <span class="aura-footnotes__back"><i class="bi bi-arrow-return-left" aria-hidden="true"></i></span></li></ol>
+                      <ol class="aura-footnotes__list"><li>La autonomía depende del uso y la configuración. <span class="aura-footnotes__back"><span class="bi bi-arrow-return-left" aria-hidden="true"></span><span class="visually-hidden">Volver al texto de la nota 1</span></span></li></ol>
                       <ul class="aura-footnotes__list mt-2"><li>Precios de venta recomendados en España, IVA incluido.</li><li>AURA es un proyecto de demostración.</li></ul>
                     </div>
                   </div>
                 </div>
               </div>
-              <p class="g-demo__caption">Acordeón nativo (<code>&lt;details name&gt;</code>): abre y recoge en el acto, solo se anima el icono. Notas al pie al final del <code>&lt;main&gt;</code>, siempre sobre negro: <code>&lt;ol&gt;</code> con «volver» para las que tienen llamada (<code>&lt;sup class="aura-footnote-ref"&gt;</code>, nunca en la cifra de un precio) y <code>&lt;ul&gt;</code> con los textos comunes de <code>AURA.legal</code>.</p>
+              <p class="g-demo__caption">Acordeón nativo (<code>&lt;details name&gt;</code>): abre y recoge en el acto, solo se anima el icono. Notas al pie al final del <code>&lt;main&gt;</code>, siempre sobre negro: <code>&lt;ol&gt;</code> con «volver» para las que tienen llamada (<code>&lt;sup class="aura-footnote-ref"&gt;</code>, nunca en la cifra de un precio; el «volver» es solo una flecha, así que su nombre va en texto oculto y en <code>title</code>, <span class="g-gold">V 2.1</span>) y <code>&lt;ul&gt;</code> con los textos comunes de <code>AURA.legal</code>.</p>
             </div>
           </div>
 
           <hr class="g-rule">
           <div class="g-note">
-            <span class="g-note__icon"><i class="bi bi-bounding-box" aria-hidden="true"></i></span>
+            <span class="g-note__icon"><span class="bi bi-bounding-box" aria-hidden="true"></span></span>
             <p class="g-note__title">Nota de uso</p>
             <p class="g-note__text">Lo que se repite sale de la base y del catálogo: tarjetas de modelo (<code>data-aura-lineup</code>), tabla (<code>data-aura-compare</code>), ventajas (<code>data-aura-perks</code>), «Desde…» (<code>data-aura-from</code>) y «Comprar auraX» (<code>data-aura-buy</code>). Nunca se copia su marcado a mano ni se escribe un precio, una fecha o un tope en el HTML.</p>
           </div>
@@ -2106,32 +2143,32 @@
                       <legend class="aura-legend">Acabado</legend>
                       <p class="aura-legend aura-legend--sm">Color: <strong>Medianoche</strong></p>
                       <div class="aura-swatches">
-                        <label class="aura-swatch" style="--swatch:#c8d8e6"><input class="aura-swatch__input" type="radio" name="g-c-color" value="azul-cielo"><span class="aura-swatch__dot" aria-hidden="true"></span><span class="visually-hidden">Azul cielo</span></label>
-                        <label class="aura-swatch" style="--swatch:#e3e4e5"><input class="aura-swatch__input" type="radio" name="g-c-color" value="plata"><span class="aura-swatch__dot" aria-hidden="true"></span><span class="visually-hidden">Plata</span></label>
-                        <label class="aura-swatch" style="--swatch:#f0e5d3"><input class="aura-swatch__input" type="radio" name="g-c-color" value="blanco-estrella"><span class="aura-swatch__dot" aria-hidden="true"></span><span class="visually-hidden">Blanco estrella</span></label>
-                        <label class="aura-swatch" style="--swatch:#2e3641"><input class="aura-swatch__input" type="radio" name="g-c-color" value="medianoche" checked><span class="aura-swatch__dot" aria-hidden="true"></span><span class="visually-hidden">Medianoche</span></label>
+                        <label class="aura-swatch" for="g-c-color-azul-cielo" style="--swatch:#c8d8e6"><input class="aura-swatch__input" id="g-c-color-azul-cielo" type="radio" name="g-c-color" value="azul-cielo"><span class="aura-swatch__dot" aria-hidden="true"></span><span class="visually-hidden">Azul cielo</span></label>
+                        <label class="aura-swatch" for="g-c-color-plata" style="--swatch:#e3e4e5"><input class="aura-swatch__input" id="g-c-color-plata" type="radio" name="g-c-color" value="plata"><span class="aura-swatch__dot" aria-hidden="true"></span><span class="visually-hidden">Plata</span></label>
+                        <label class="aura-swatch" for="g-c-color-blanco-estrella" style="--swatch:#f0e5d3"><input class="aura-swatch__input" id="g-c-color-blanco-estrella" type="radio" name="g-c-color" value="blanco-estrella"><span class="aura-swatch__dot" aria-hidden="true"></span><span class="visually-hidden">Blanco estrella</span></label>
+                        <label class="aura-swatch" for="g-c-color-medianoche" style="--swatch:#2e3641"><input class="aura-swatch__input" id="g-c-color-medianoche" type="radio" name="g-c-color" value="medianoche" checked><span class="aura-swatch__dot" aria-hidden="true"></span><span class="visually-hidden">Medianoche</span></label>
                       </div>
                     </fieldset>
                     <fieldset class="aura-fieldset">
                       <legend class="aura-legend">Memoria unificada</legend>
                       <div class="aura-option-group">
-                        <label class="aura-option"><input class="aura-option__input" type="radio" name="g-c-mem" value="16gb" checked><span class="aura-option__card"><span class="aura-option__body"><span class="aura-option__title">16 GB</span><span class="aura-option__note">Para el día a día y los estudios</span></span><span class="aura-option__price">Incluido</span></span></label>
-                        <label class="aura-option"><input class="aura-option__input" type="radio" name="g-c-mem" value="24gb"><span class="aura-option__card"><span class="aura-option__body"><span class="aura-option__title">24 GB</span></span><span class="aura-option__price">+ 220,00&nbsp;€</span></span></label>
-                        <label class="aura-option"><input class="aura-option__input" type="radio" name="g-c-mem" value="32gb" disabled><span class="aura-option__card"><span class="aura-option__body"><span class="aura-option__title">32 GB</span><span class="aura-option__note">Agotado temporalmente (ejemplo de opción desactivada)</span></span><span class="aura-option__price">+ 440,00&nbsp;€</span></span></label>
+                        <label class="aura-option" for="g-c-mem-16gb"><input class="aura-option__input" id="g-c-mem-16gb" type="radio" name="g-c-mem" value="16gb" checked><span class="aura-option__card"><span class="aura-option__body"><span class="aura-option__title">16 GB</span><span class="aura-option__note">Para el día a día y los estudios</span></span><span class="aura-option__price">Incluido</span></span></label>
+                        <label class="aura-option" for="g-c-mem-24gb"><input class="aura-option__input" id="g-c-mem-24gb" type="radio" name="g-c-mem" value="24gb"><span class="aura-option__card"><span class="aura-option__body"><span class="aura-option__title">24 GB</span></span><span class="aura-option__price">+ 220,00&nbsp;€</span></span></label>
+                        <label class="aura-option" for="g-c-mem-32gb"><input class="aura-option__input" id="g-c-mem-32gb" type="radio" name="g-c-mem" value="32gb" disabled><span class="aura-option__card"><span class="aura-option__body"><span class="aura-option__title">32 GB</span><span class="aura-option__note">Agotado temporalmente (ejemplo de opción desactivada)</span></span><span class="aura-option__price">+ 440,00&nbsp;€</span></span></label>
                       </div>
                     </fieldset>
                     <div class="aura-cluster" style="--cluster:1rem 1.5rem">
                       <div class="aura-stepper" role="group" aria-label="Cantidad">
-                        <button class="aura-stepper__btn" type="button" aria-label="Quitar una unidad" disabled><i class="bi bi-dash" aria-hidden="true"></i></button>
+                        <button class="aura-stepper__btn" type="button" disabled><span class="bi bi-dash" aria-hidden="true"></span><span class="visually-hidden">Quitar una unidad</span></button>
                         <output class="aura-stepper__value">1</output>
-                        <button class="aura-stepper__btn" type="button" aria-label="Añadir una unidad"><i class="bi bi-plus" aria-hidden="true"></i></button>
+                        <button class="aura-stepper__btn" type="button"><span class="bi bi-plus" aria-hidden="true"></span><span class="visually-hidden">Añadir una unidad</span></button>
                       </div>
                       <div><p class="aura-price aura-price--lg">1.729,00&nbsp;€</p><p class="aura-caption">o 72,04&nbsp;€/mes durante 24&nbsp;meses</p></div>
                     </div>
                   </div>
                 </div>
               </div>
-              <p class="g-demo__caption">Muestra elegida con anillo azul (por <code>:checked</code>, sin JS); tarjetas-opción con estados de <code>:checked</code>, <code>:disabled</code> y <code>:focus-visible</code> (desactivada: borde discontinuo y la nota que lo explica, legible); cantidad con «−» desactivado en 1. El precio y la cuota salen de <code>AURA.catalog.price()</code>. La galería enseña todas las vistas del acabado elegido (<code>AURA.catalog.views()</code>): bajo la foto, una miniatura por vista (botones con <code>aria-label</code> «Abierto», «Vista trasera»…, <code>aria-pressed</code> y un solo punto de tabulación, con ← → Inicio Fin; en el teléfono, también deslizando la foto). Cada cambio es un fundido cruzado; al cambiar de color vuelve a la primera vista y, si el color no tiene fotos propias, se dice («Imagen en plata · Tu acabado: medianoche»).</p>
+              <p class="g-demo__caption">Muestra elegida con anillo azul (por <code>:checked</code>, sin JS); muestras y tarjetas-opción con <code>for</code> + <code>id</code> en su etiqueta, y el formulario de comprar con su «Añadir a la bolsa» como <code>type="submit"</code> (<span class="g-gold">V 2.1</span>); tarjetas-opción con estados de <code>:checked</code>, <code>:disabled</code> y <code>:focus-visible</code> (desactivada: borde discontinuo y la nota que lo explica, legible); cantidad con «−» desactivado en 1. El precio y la cuota salen de <code>AURA.catalog.price()</code>. La galería enseña todas las vistas del acabado elegido (<code>AURA.catalog.views()</code>): bajo la foto, una miniatura por vista (botones con su nombre en texto oculto, «Abierto», «Vista trasera»…, <code>aria-pressed</code> y un solo punto de tabulación, con ← → Inicio Fin; en el teléfono, también deslizando la foto). Cada cambio es un fundido cruzado; al cambiar de color vuelve a la primera vista y, si el color no tiene fotos propias, se dice («Imagen en plata · Tu acabado: medianoche»).</p>
             </div>
 
             <div class="g-block">
@@ -2155,31 +2192,31 @@
                 <div class="d-grid gap-4">
                   <ul class="aura-bag-list">
                     <li class="aura-bag-line">
-                      <span class="aura-bag-line__media"><img class="aura-img" src="../img/aurabook-air-15-medianoche-abierto.webp" width="1600" height="1200" alt="" loading="lazy" decoding="async"></span>
+                      <div class="aura-bag-line__media"><img class="aura-img" src="../img/aurabook-air-15-medianoche-abierto.webp" width="1600" height="1200" alt="" loading="lazy" decoding="async"></div>
                       <div class="aura-bag-line__info">
                         <p class="aura-bag-line__name"><span>auraBook Air 15<span class="aura-inch">″</span></span></p>
                         <p class="aura-bag-line__meta">Medianoche · 16 GB · 512 GB</p>
                         <div class="aura-bag-line__actions">
-                          <div class="aura-stepper" role="group" aria-label="Cantidad"><button class="aura-stepper__btn" type="button" aria-label="Quitar una unidad" disabled><i class="bi bi-dash" aria-hidden="true"></i></button><output class="aura-stepper__value">1</output><button class="aura-stepper__btn" type="button" aria-label="Añadir una unidad"><i class="bi bi-plus" aria-hidden="true"></i></button></div>
-                          <button class="aura-link aura-link--plain" type="button">Eliminar</button>
+                          <div class="aura-stepper" role="group" aria-label="Cantidad"><button class="aura-stepper__btn" type="button" disabled><span class="bi bi-dash" aria-hidden="true"></span><span class="visually-hidden">Quitar una unidad</span></button><output class="aura-stepper__value">1</output><button class="aura-stepper__btn" type="button"><span class="bi bi-plus" aria-hidden="true"></span><span class="visually-hidden">Añadir una unidad</span></button></div>
+                          <button class="aura-link aura-link--plain" type="button">Eliminar<span class="visually-hidden"> auraBook Air 15″ de la bolsa</span></button>
                         </div>
                       </div>
                       <div class="aura-bag-line__price"><span class="aura-price">1.729,00&nbsp;€</span><span class="aura-caption">72,04&nbsp;€/mes</span></div>
                       <div class="aura-bag-line__care">
-                        <span class="aura-bag-line__care-icon"><i class="bi bi-shield-check" aria-hidden="true"></i></span>
+                        <span class="aura-bag-line__care-icon"><span class="bi bi-shield-check" aria-hidden="true"></span></span>
                         <p class="aura-bag-line__care-title">Añade AuraCare+ por 399,00&nbsp;€</p>
                         <p class="aura-bag-line__care-text">Dos años de cobertura con reparaciones por daños accidentales y asistencia prioritaria.</p>
-                        <button class="aura-link" type="button">Añadir AuraCare+</button>
+                        <button class="aura-link" type="button">Añadir AuraCare+<span class="visually-hidden"> a auraBook Air 15″</span></button>
                       </div>
                     </li>
                     <li class="aura-bag-line">
-                      <span class="aura-bag-line__media"><img class="aura-img" src="../img/aurapad-air-13-azul-trasera.webp" width="1600" height="1200" alt="" loading="lazy" decoding="async"></span>
+                      <div class="aura-bag-line__media"><img class="aura-img" src="../img/aurapad-air-13-azul-trasera.webp" width="1600" height="1200" alt="" loading="lazy" decoding="async"></div>
                       <div class="aura-bag-line__info">
                         <p class="aura-bag-line__name"><span>auraPad Air 13<span class="aura-inch">″</span></span></p>
                         <p class="aura-bag-line__meta">Azul · 128 GB · Wi-Fi</p>
                         <div class="aura-bag-line__actions">
-                          <div class="aura-stepper" role="group" aria-label="Cantidad"><button class="aura-stepper__btn" type="button" aria-label="Quitar una unidad" disabled><i class="bi bi-dash" aria-hidden="true"></i></button><output class="aura-stepper__value">1</output><button class="aura-stepper__btn" type="button" aria-label="Añadir una unidad"><i class="bi bi-plus" aria-hidden="true"></i></button></div>
-                          <button class="aura-link aura-link--plain" type="button">Eliminar</button>
+                          <div class="aura-stepper" role="group" aria-label="Cantidad"><button class="aura-stepper__btn" type="button" disabled><span class="bi bi-dash" aria-hidden="true"></span><span class="visually-hidden">Quitar una unidad</span></button><output class="aura-stepper__value">1</output><button class="aura-stepper__btn" type="button"><span class="bi bi-plus" aria-hidden="true"></span><span class="visually-hidden">Añadir una unidad</span></button></div>
+                          <button class="aura-link aura-link--plain" type="button">Eliminar<span class="visually-hidden"> auraPad Air 13″ de la bolsa</span></button>
                         </div>
                       </div>
                       <div class="aura-bag-line__price"><span class="aura-price">999,00&nbsp;€</span><span class="aura-caption">41,63&nbsp;€/mes</span></div>
@@ -2198,7 +2235,7 @@
                   </aside>
                 </div>
               </div>
-              <p class="g-demo__caption">Eliminar no pide confirmación: se quita y se ofrece «Deshacer» en un aviso. AuraCare+ va en su fila (<code>.is-on</code> cuando está incluido: icono en el azul de elegido). Si la foto enseña otro acabado que el de la línea, se dice debajo («Imagen en plata»), igual en la bolsa, su popover y el checkout. El resumen es pegajoso desde 992 px y su botón es la misma primaria que la barra de compra del teléfono. Descuentos con el signo menos tipográfico (−) y espacio indivisible antes de «€».</p>
+              <p class="g-demo__caption">Eliminar no pide confirmación: se quita y se ofrece «Deshacer» en un aviso. La miniatura no es un enlace (el nombre ya lo es; al pulsarla, la página sigue el del nombre); «Añadir AuraCare+» y «Eliminar» dicen de qué línea en texto oculto y los «−» «+», que son solo un icono, llevan su nombre también oculto (<span class="g-gold">V 2.1</span>). AuraCare+ va en su fila (<code>.is-on</code> cuando está incluido: icono en el azul de elegido). Si la foto enseña otro acabado que el de la línea, se dice debajo («Imagen en plata»), igual en la bolsa, su popover y el checkout. El resumen es pegajoso desde 992 px y su botón es la misma primaria que la barra de compra del teléfono. Descuentos con el signo menos tipográfico (−) y espacio indivisible antes de «€».</p>
             </div>
 
             <div class="g-block">
@@ -2214,7 +2251,7 @@
               <div class="g-grid g-grid--2 mt-3" inert aria-hidden="true">
                 <div class="aura-card">
                   <div class="aura-empty">
-                    <span class="aura-empty__icon"><i class="bi bi-bag" aria-hidden="true"></i></span>
+                    <span class="aura-empty__icon"><span class="bi bi-bag" aria-hidden="true"></span></span>
                     <p class="aura-h3 aura-empty__title">Tu bolsa está vacía</p>
                     <p class="aura-empty__text">Cuando añadas un producto aparecerá aquí, listo para tramitar.</p>
                     <div class="aura-empty__actions"><span class="aura-btn aura-btn--primary">Ver auraPhone</span></div>
@@ -2233,10 +2270,10 @@
             <div class="g-block">
               <div class="g-sub"><h3 class="g-sub__title">Ventajas de comprar en AURA</h3><p class="g-sub__meta">[data-aura-perks] · cifras del catálogo</p></div>
               <div class="aura-perks" inert aria-hidden="true">
-                <div class="aura-feature aura-feature--card"><span class="aura-feature__icon"><i class="bi bi-truck" aria-hidden="true"></i></span><p class="aura-feature__value">Gratis</p><p class="aura-feature__title">Envío y devolución gratis</p><p class="aura-feature__text">Recíbelo en 2–3&nbsp;días laborables o recógelo en una AURA&nbsp;Store. Si no te convence, tienes 14&nbsp;días para devolverlo.</p><span class="aura-link">Ver envíos y devoluciones</span></div>
-                <div class="aura-feature aura-feature--card"><span class="aura-feature__icon"><i class="bi bi-credit-card-2-front" aria-hidden="true"></i></span><p class="aura-feature__value">0&nbsp;% TAE</p><p class="aura-feature__title">Paga en 24&nbsp;meses sin intereses</p><p class="aura-feature__text">Con la cuota a la vista antes de decidir, en todos los modelos.</p><span class="aura-link">Ver cómo financiar</span></div>
-                <div class="aura-feature aura-feature--card"><span class="aura-feature__icon"><i class="bi bi-arrow-repeat" aria-hidden="true"></i></span><p class="aura-feature__value">Hasta 800&nbsp;€</p><p class="aura-feature__title">AURA&nbsp;Trade&nbsp;In</p><p class="aura-feature__text">Entrega tu dispositivo actual y descuenta su valor de tu nuevo AURA, al instante.</p><span class="aura-link">Valorar mi dispositivo</span></div>
-                <div class="aura-feature aura-feature--card"><span class="aura-feature__icon"><i class="bi bi-shield-check" aria-hidden="true"></i></span><p class="aura-feature__value">Desde 59&nbsp;€</p><p class="aura-feature__title">AuraCare+</p><p class="aura-feature__text">Dos años de cobertura con reparaciones por daños accidentales y asistencia prioritaria de especialistas AURA.</p><span class="aura-link">Ver qué cubre AuraCare+</span></div>
+                <div class="aura-feature aura-feature--card"><span class="aura-feature__icon"><span class="bi bi-truck" aria-hidden="true"></span></span><p class="aura-feature__value">Gratis</p><p class="aura-feature__title">Envío y devolución gratis</p><p class="aura-feature__text">Recíbelo en 2–3&nbsp;días laborables o recógelo en una AURA&nbsp;Store. Si no te convence, tienes 14&nbsp;días para devolverlo.</p><span class="aura-link">Ver envíos y devoluciones</span></div>
+                <div class="aura-feature aura-feature--card"><span class="aura-feature__icon"><span class="bi bi-credit-card-2-front" aria-hidden="true"></span></span><p class="aura-feature__value">0&nbsp;% TAE</p><p class="aura-feature__title">Paga en 24&nbsp;meses sin intereses</p><p class="aura-feature__text">Con la cuota a la vista antes de decidir, en todos los modelos.</p><span class="aura-link">Ver cómo financiar</span></div>
+                <div class="aura-feature aura-feature--card"><span class="aura-feature__icon"><span class="bi bi-arrow-repeat" aria-hidden="true"></span></span><p class="aura-feature__value">Hasta 800&nbsp;€</p><p class="aura-feature__title">AURA&nbsp;Trade&nbsp;In</p><p class="aura-feature__text">Entrega tu dispositivo actual y descuenta su valor de tu nuevo AURA, al instante.</p><span class="aura-link">Valorar mi dispositivo</span></div>
+                <div class="aura-feature aura-feature--card"><span class="aura-feature__icon"><span class="bi bi-shield-check" aria-hidden="true"></span></span><p class="aura-feature__value">Desde 59&nbsp;€</p><p class="aura-feature__title">AuraCare+</p><p class="aura-feature__text">Dos años de cobertura con reparaciones por daños accidentales y asistencia prioritaria de especialistas AURA.</p><span class="aura-link">Ver qué cubre AuraCare+</span></div>
               </div>
               <p class="g-demo__caption">Siempre las cuatro y en el mismo orden (inicio y cada familia): una columna, 2 × 2 desde 576 px y cuatro en fila desde 1200 px. En una familia, la cuota del modelo de entrada y el «hasta» de Trade In de esa familia.</p>
             </div>
@@ -2244,7 +2281,7 @@
 
           <hr class="g-rule">
           <div class="g-note">
-            <span class="g-note__icon"><i class="bi bi-bag-check" aria-hidden="true"></i></span>
+            <span class="g-note__icon"><span class="bi bi-bag-check" aria-hidden="true"></span></span>
             <p class="g-note__title">Nota de uso</p>
             <p class="g-note__text">Precios, cuotas, fechas, topes y estados salen siempre del catálogo (<code>AURA.catalog</code>, <code>AURA.tradeIn</code>, <code>AURA.fmt</code>). Lo simulado (el pago) no se hace esperar: ningún temporizador entre el toque y la confirmación, y se dice que es una demostración. Nunca se guardan datos de tarjeta: como mucho, los cuatro últimos dígitos.</p>
           </div>
@@ -2273,11 +2310,11 @@
               <div class="g-sub"><h3 class="g-sub__title">Popover y hoja</h3><p class="g-sub__meta">Panel paralelo · tarea modal</p></div>
               <div class="g-grid g-grid--2" inert aria-hidden="true">
                 <div class="g-demo" style="display:grid;align-content:start;gap:.75rem;min-height:22rem">
-                  <div><span class="aura-btn aura-btn--secondary">Financiación <i class="bi bi-info-circle" aria-hidden="true"></i></span></div>
+                  <div><span class="aura-btn aura-btn--secondary">Financiación <span class="bi bi-info-circle" aria-hidden="true"></span></span></div>
                   <div class="aura-popover is-open g-static" style="width:min(22rem,100%)">
                     <div class="aura-popover__header"><p class="aura-popover__title">Financiación a 24 meses</p></div>
                     <p class="aura-popover__empty">Paga en 24 cuotas sin intereses. La cuota se calcula sobre el precio final de tu configuración.</p>
-                    <ul class="aura-popover__links"><li><span><i class="bi bi-credit-card-2-front" aria-hidden="true"></i>Ver cómo financiar</span></li></ul>
+                    <ul class="aura-popover__links"><li><span><span class="bi bi-credit-card-2-front" aria-hidden="true"></span>Ver cómo financiar</span></li></ul>
                   </div>
                   <p class="g-demo__caption m-0">Debajo y alineado al inicio del disparador (<code>--end</code>, <code>--top</code>); crece desde su botón (<code>--aura-origin</code>) y se desplaza solo si se saldría de la pantalla.</p>
                 </div>
@@ -2287,11 +2324,11 @@
                       <div class="aura-sheet__grabber" aria-hidden="true"></div>
                       <header class="aura-sheet__header">
                         <p class="aura-sheet__title">¿Eliminar tu ID de AURA?</p>
-                        <span class="aura-icon-btn"><i class="bi bi-x-lg" aria-hidden="true"></i></span>
+                        <span class="aura-icon-btn"><span class="bi bi-x-lg" aria-hidden="true"></span></span>
                       </header>
                       <div class="aura-sheet__body"><p class="aura-body">Se borrarán tus datos y tus pedidos de este navegador. No se puede deshacer.</p></div>
                       <footer class="aura-sheet__footer">
-                        <span class="aura-btn aura-btn--destructive aura-btn--block"><i class="bi bi-trash3" aria-hidden="true"></i>Eliminar ID de AURA</span>
+                        <span class="aura-btn aura-btn--destructive aura-btn--block"><span class="bi bi-trash3" aria-hidden="true"></span>Eliminar ID de AURA</span>
                         <span class="aura-btn aura-btn--ghost aura-btn--block">Cancelar</span>
                       </footer>
                     </section>
@@ -2305,10 +2342,10 @@
               <div class="g-sub"><h3 class="g-sub__title">Avisos</h3><p class="g-sub__meta">AURA.ui.toast({ kind })</p></div>
               <div class="g-grid g-grid--2">
                 <div class="aura-toasts aura-toasts--static" inert aria-hidden="true">
-                  <div class="aura-toast aura-toast--status is-visible"><i class="aura-toast__icon bi bi-info-circle-fill" aria-hidden="true"></i><div class="aura-toast__body"><p class="aura-toast__title">Sesión iniciada</p><p class="aura-toast__text">Hola de nuevo, Lucía.</p></div><span class="aura-toast__close"><i class="bi bi-x" aria-hidden="true"></i></span></div>
-                  <div class="aura-toast aura-toast--ok is-visible"><i class="aura-toast__icon bi bi-check-circle-fill" aria-hidden="true"></i><div class="aura-toast__body"><p class="aura-toast__title">Añadido a la bolsa</p><p class="aura-toast__text">auraPods Pro 3 · Blanco</p></div><span class="aura-toast__action">Ver bolsa</span><span class="aura-toast__close"><i class="bi bi-x" aria-hidden="true"></i></span></div>
-                  <div class="aura-toast aura-toast--warn is-visible"><i class="aura-toast__icon bi bi-exclamation-triangle-fill" aria-hidden="true"></i><div class="aura-toast__body"><p class="aura-toast__title">Artículo eliminado</p><p class="aura-toast__text">auraPad Air 13″ ya no está en tu bolsa.</p></div><span class="aura-toast__action">Deshacer</span><span class="aura-toast__close"><i class="bi bi-x" aria-hidden="true"></i></span></div>
-                  <div class="aura-toast aura-toast--error is-visible"><i class="aura-toast__icon bi bi-x-octagon-fill" aria-hidden="true"></i><div class="aura-toast__body"><p class="aura-toast__title">No se ha podido guardar</p><p class="aura-toast__text">Este navegador no permite almacenar datos.</p></div><span class="aura-toast__close"><i class="bi bi-x" aria-hidden="true"></i></span></div>
+                  <div class="aura-toast aura-toast--status is-visible"><span class="aura-toast__icon bi bi-info-circle-fill" aria-hidden="true"></span><div class="aura-toast__body"><p class="aura-toast__title">Sesión iniciada</p><p class="aura-toast__text">Hola de nuevo, Lucía.</p></div><span class="aura-toast__close"><span class="bi bi-x" aria-hidden="true"></span></span></div>
+                  <div class="aura-toast aura-toast--ok is-visible"><span class="aura-toast__icon bi bi-check-circle-fill" aria-hidden="true"></span><div class="aura-toast__body"><p class="aura-toast__title">Añadido a la bolsa</p><p class="aura-toast__text">auraPods Pro 3 · Blanco</p></div><span class="aura-toast__action">Ver bolsa</span><span class="aura-toast__close"><span class="bi bi-x" aria-hidden="true"></span></span></div>
+                  <div class="aura-toast aura-toast--warn is-visible"><span class="aura-toast__icon bi bi-exclamation-triangle-fill" aria-hidden="true"></span><div class="aura-toast__body"><p class="aura-toast__title">Artículo eliminado</p><p class="aura-toast__text">auraPad Air 13″ ya no está en tu bolsa.</p></div><span class="aura-toast__action">Deshacer</span><span class="aura-toast__close"><span class="bi bi-x" aria-hidden="true"></span></span></div>
+                  <div class="aura-toast aura-toast--error is-visible"><span class="aura-toast__icon bi bi-x-octagon-fill" aria-hidden="true"></span><div class="aura-toast__body"><p class="aura-toast__title">No se ha podido guardar</p><p class="aura-toast__text">Este navegador no permite almacenar datos.</p></div><span class="aura-toast__close"><span class="bi bi-x" aria-hidden="true"></span></span></div>
                 </div>
                 <div class="g-scroll">
                   <table class="g-table">
@@ -2344,7 +2381,7 @@
 
           <hr class="g-rule">
           <div class="g-note">
-            <span class="g-note__icon"><i class="bi bi-window-stack" aria-hidden="true"></i></span>
+            <span class="g-note__icon"><span class="bi bi-window-stack" aria-hidden="true"></span></span>
             <p class="g-note__title">Nota de uso</p>
             <p class="g-note__text">Velo solo en tareas modales (hoja, buscador, menú): el popover y los avisos no bloquean. Todo entra y sale por el mismo camino, desde su disparador, y se materializa (escala + desenfoque + opacidad), no solo se funde. Al cerrar, el foco vuelve a quien lo abrió. Nunca cristal sobre cristal.</p>
           </div>
@@ -2471,7 +2508,7 @@
 
           <hr class="g-rule">
           <div class="g-note">
-            <span class="g-note__icon"><i class="bi bi-activity" aria-hidden="true"></i></span>
+            <span class="g-note__icon"><span class="bi bi-activity" aria-hidden="true"></span></span>
             <p class="g-note__title">Nota de uso</p>
             <p class="g-note__text">Solo se animan <code>transform</code> y <code>opacity</code> (y <code>filter</code> al materializar cristal); el color de base no se anima (el hover funde una capa en 160 ms). El scroll es del usuario: los saltos a un ancla son inmediatos (<code>scroll-behavior: auto</code>) y ninguna pieza se queda con la rueda o el dedo (tablas y carruseles devuelven el gesto vertical a la página). Rebote (0,8) solo cuando el gesto llevaba impulso; lo demás, amortiguación crítica (1,0). Sin bucles lentos, sin fondos en movimiento ni parallax: la única excepción es la escena con scroll, que nunca se mueve sola. Sin retardos artificiales en el camino de la entrada.</p>
           </div>
@@ -2521,9 +2558,9 @@
               </ul>
               <div class="g-timeline" aria-hidden="true">
                 <div class="g-timeline__axis"></div>
-                <div class="g-timeline__seg" style="--a:0;--b:.34;--fi:0;--fo:.204"><span>Texto 1<b> · 0–0,34</b></span></div>
-                <div class="g-timeline__seg" style="--a:.5;--b:.83;--fi:.21;--fo:.21"><span>Texto 2<b> · 0,5–0,83</b></span></div>
-                <div class="g-timeline__seg g-timeline__seg--end" style="--a:.87;--b:1;--fi:.333;--fo:0"><span>Texto 3<b> · 0,87–1</b></span></div>
+                <div class="g-timeline__seg" style="--a:0;--b:.34;--fi:0;--fo:.204"><span>Texto 1<span class="g-timeline__range"> · 0–0,34</span></span></div>
+                <div class="g-timeline__seg" style="--a:.5;--b:.83;--fi:.21;--fo:.21"><span>Texto 2<span class="g-timeline__range"> · 0,5–0,83</span></span></div>
+                <div class="g-timeline__seg g-timeline__seg--end" style="--a:.87;--b:1;--fi:.333;--fo:0"><span>Texto 3<span class="g-timeline__range"> · 0,87–1</span></span></div>
                 <div class="g-timeline__ticks"><span>0</span><span>0,25</span><span>0,5</span><span>0,75</span><span>1 · progreso</span></div>
               </div>
               <p class="g-demo__caption">Los tramos de la escena de auraPad (<code>data-length="340"</code>: 2160 px de recorrido con una pantalla de 900 px). El texto 1 abajo (<code>data-pos="bottom"</code>), el 2 y el 3 a la izquierda (<code>left</code>); entre 0,34 y 0,5 la tableta se levanta sin ningún texto encima; el texto 2 termina de entrar cuando se enciende la pantalla y queda al 100 % unos 420 px; el 3, corto mientras la escena está pegada, sigue al 100 % mientras el escenario sale. Cada texto entra en los primeros 150 px de scroll de su tramo y se va en los 150 últimos (como mucho un tercio del tramo): opacidad 0 → 1 subiendo 40 px y 1 → 0 subiendo otros 40 px. Con <code>data-from="0"</code> el primero ya está a la vista y con <code>data-to="1"</code> el último se queda hasta que la escena se va. Los tramos no se solapan: un texto se va antes de que llegue el siguiente.</p>
@@ -2605,7 +2642,7 @@
 
           <hr class="g-rule">
           <div class="g-note">
-            <span class="g-note__icon"><i class="bi bi-film" aria-hidden="true"></i></span>
+            <span class="g-note__icon"><span class="bi bi-film" aria-hidden="true"></span></span>
             <p class="g-note__title">Nota de uso</p>
             <p class="g-note__text">Como mucho una o dos por página y nunca dos seguidas; a sangre, hija de <code>&lt;main&gt;</code>, justo tras el héroe o como héroe (entonces su primer texto lleva el <code>h1</code>). Comprueba: sección con <code>aria-labelledby</code>, jerarquía sin saltos, póster con <code>width</code>, <code>height</code> y <code>alt</code> real, lienzo <code>aria-hidden</code>, tramos sin solapar, versión estática revisada, sin desborde a 390 px, peso dentro del límite y crédito del vídeo si es de terceros.</p>
           </div>
@@ -2675,15 +2712,15 @@
             <div class="g-block">
               <div class="g-sub"><h3 class="g-sub__title">Criterios</h3><p class="g-sub__meta">Sí · No</p></div>
               <div class="g-grid g-grid--3">
-                <div class="g-card g-do"><p class="g-do__mark g-do__mark--yes"><i class="bi bi-check-lg" aria-hidden="true"></i>Sí</p><p class="g-card__title">Fondo #000 puro</p><p class="g-card__text">Negro exacto hasta el borde (0, 0, 0), sin viñeta, reflejo ni halo horneados. El halo azul lo pone el panel, sobre base #000, y la foto se funde con él con «aclarar» (<code>mix-blend-mode: lighten</code>).</p></div>
-                <div class="g-card g-do"><p class="g-do__mark g-do__mark--yes"><i class="bi bi-check-lg" aria-hidden="true"></i>Sí</p><p class="g-card__title">Igualadas</p><p class="g-card__text">Centradas y a la escala de su tipo, con exposición común (las luces del producto al mismo nivel en todas) y el mismo balance: un plateado no se ve gris junto a otro, ni el aparato crece al cambiar de color.</p></div>
-                <div class="g-card g-do"><p class="g-do__mark g-do__mark--yes"><i class="bi bi-check-lg" aria-hidden="true"></i>Sí</p><p class="g-card__title">Pantalla AURA común</p><p class="g-card__text">En las vistas con pantalla, la misma imagen AURA en todos los aparatos, con su isla o su muesca. Nunca la pantalla de la foto original ni textos de tienda.</p></div>
-                <div class="g-card g-do"><p class="g-do__mark g-do__mark--yes"><i class="bi bi-check-lg" aria-hidden="true"></i>Sí</p><p class="g-card__title">Fiel al acabado</p><p class="g-card__text">Cada color con su foto real. Si no hay una buena, se enseña otro acabado y se dice: «Imagen en plata · Tu acabado: negro». Nunca se recolorea una foto para fingir un color.</p></div>
-                <div class="g-card g-do"><p class="g-do__mark g-do__mark--yes"><i class="bi bi-check-lg" aria-hidden="true"></i>Sí</p><p class="g-card__title">Alt de lo que se ve</p><p class="g-card__text">Describe la foto real («auraPhone 18 Pro negro de espaldas…»), no lo que anuncia el texto; <code>alt=""</code> si es decorativa o la acompaña un nombre enlazado.</p></div>
-                <div class="g-card g-do"><p class="g-do__mark g-do__mark--no"><i class="bi bi-x-lg" aria-hidden="true"></i>No</p><p class="g-card__title">Logotipos, manos y cables</p><p class="g-card__text">Se borran o se recortan: ni logotipos ni marcas reconocibles, ni dedos, cables antirrobo, peanas de tienda o textos de pantalla en inglés.</p></div>
-                <div class="g-card g-do"><p class="g-do__mark g-do__mark--no"><i class="bi bi-x-lg" aria-hidden="true"></i>No</p><p class="g-card__title">Marcos y recortes a mano</p><p class="g-card__text">Sin marco alrededor de una foto real en héroes ni bloques texto + imagen. El encuadre, con <code>--photo-focus</code> o <code>.aura-photo-top</code> / <code>-bottom</code> / <code>-left</code> / <code>-right</code>, nunca <code>object-position</code>.</p></div>
-                <div class="g-card g-do"><p class="g-do__mark g-do__mark--no"><i class="bi bi-x-lg" aria-hidden="true"></i>No</p><p class="g-card__title">Imágenes sin licencia</p><p class="g-card__text">Solo licencias libres (Wikimedia Commons, Unsplash, Pexels), con autor, fuente, licencia y lo que se retocó en <code>legal.html#imagenes</code>.</p></div>
-                <div class="g-card g-do"><p class="g-do__mark g-do__mark--no"><i class="bi bi-x-lg" aria-hidden="true"></i>No</p><p class="g-card__title">Vistas que no casan</p><p class="g-card__text">Una foto que no comparte ángulo, escala o luz con sus hermanas no entra en la galería, aunque sea de ese color: mejor una vista menos.</p></div>
+                <div class="g-card g-do"><p class="g-do__mark g-do__mark--yes"><span class="bi bi-check-lg" aria-hidden="true"></span>Sí</p><p class="g-card__title">Fondo #000 puro</p><p class="g-card__text">Negro exacto hasta el borde (0, 0, 0), sin viñeta, reflejo ni halo horneados. El halo azul lo pone el panel, sobre base #000, y la foto se funde con él con «aclarar» (<code>mix-blend-mode: lighten</code>).</p></div>
+                <div class="g-card g-do"><p class="g-do__mark g-do__mark--yes"><span class="bi bi-check-lg" aria-hidden="true"></span>Sí</p><p class="g-card__title">Igualadas</p><p class="g-card__text">Centradas y a la escala de su tipo, con exposición común (las luces del producto al mismo nivel en todas) y el mismo balance: un plateado no se ve gris junto a otro, ni el aparato crece al cambiar de color.</p></div>
+                <div class="g-card g-do"><p class="g-do__mark g-do__mark--yes"><span class="bi bi-check-lg" aria-hidden="true"></span>Sí</p><p class="g-card__title">Pantalla AURA común</p><p class="g-card__text">En las vistas con pantalla, la misma imagen AURA en todos los aparatos, con su isla o su muesca. Nunca la pantalla de la foto original ni textos de tienda.</p></div>
+                <div class="g-card g-do"><p class="g-do__mark g-do__mark--yes"><span class="bi bi-check-lg" aria-hidden="true"></span>Sí</p><p class="g-card__title">Fiel al acabado</p><p class="g-card__text">Cada color con su foto real. Si no hay una buena, se enseña otro acabado y se dice: «Imagen en plata · Tu acabado: negro». Nunca se recolorea una foto para fingir un color.</p></div>
+                <div class="g-card g-do"><p class="g-do__mark g-do__mark--yes"><span class="bi bi-check-lg" aria-hidden="true"></span>Sí</p><p class="g-card__title">Alt de lo que se ve</p><p class="g-card__text">Describe la foto real («auraPhone 18 Pro negro de espaldas…»), no lo que anuncia el texto; <code>alt=""</code> si es decorativa o la acompaña un nombre enlazado.</p></div>
+                <div class="g-card g-do"><p class="g-do__mark g-do__mark--no"><span class="bi bi-x-lg" aria-hidden="true"></span>No</p><p class="g-card__title">Logotipos, manos y cables</p><p class="g-card__text">Se borran o se recortan: ni logotipos ni marcas reconocibles, ni dedos, cables antirrobo, peanas de tienda o textos de pantalla en inglés.</p></div>
+                <div class="g-card g-do"><p class="g-do__mark g-do__mark--no"><span class="bi bi-x-lg" aria-hidden="true"></span>No</p><p class="g-card__title">Marcos y recortes a mano</p><p class="g-card__text">Sin marco alrededor de una foto real en héroes ni bloques texto + imagen. El encuadre, con <code>--photo-focus</code> o <code>.aura-photo-top</code> / <code>-bottom</code> / <code>-left</code> / <code>-right</code>, nunca <code>object-position</code>.</p></div>
+                <div class="g-card g-do"><p class="g-do__mark g-do__mark--no"><span class="bi bi-x-lg" aria-hidden="true"></span>No</p><p class="g-card__title">Imágenes sin licencia</p><p class="g-card__text">Solo licencias libres (Wikimedia Commons, Unsplash, Pexels), con autor, fuente, licencia y lo que se retocó en <code>legal.html#imagenes</code>.</p></div>
+                <div class="g-card g-do"><p class="g-do__mark g-do__mark--no"><span class="bi bi-x-lg" aria-hidden="true"></span>No</p><p class="g-card__title">Vistas que no casan</p><p class="g-card__text">Una foto que no comparte ángulo, escala o luz con sus hermanas no entra en la galería, aunque sea de ese color: mejor una vista menos.</p></div>
               </div>
             </div>
 
@@ -2736,7 +2773,7 @@
                   <p class="g-card__text">Oculta mientras carga (<code>.is-pending</code>) y fundido de opacidad de 240 ms al decodificarse (<code>.is-loaded</code>), sin desplazamiento; sin fundido si ya estaba en caché o con «reducir movimiento». En las galerías la foto se ajusta entera a su caja (nunca se corta por abajo). Texto sobre foto: degradado estático <code>--photo-scrim</code>.</p>
                 </div>
                 <div class="g-card g-card--base" inert aria-hidden="true">
-                  <div class="aura-slot" style="--w:1600;--h:1200"><div class="aura-slot__inner"><i class="aura-slot__icon bi bi-image" aria-hidden="true"></i><span class="aura-slot__path">img/aurapods-5.webp</span><span class="aura-slot__size">1600 × 1200 px</span></div></div>
+                  <div class="aura-slot" style="--w:1600;--h:1200"><div class="aura-slot__inner"><span class="aura-slot__icon bi bi-image" aria-hidden="true"></span><span class="aura-slot__path">img/aurapods-5.webp</span><span class="aura-slot__size">1600 × 1200 px</span></div></div>
                   <p class="g-card__text">Marcador de hueco (<code>.aura-slot</code>): solo si ninguna ruta carga.</p>
                 </div>
                 <figure class="g-card g-card--base m-0">
@@ -2749,7 +2786,7 @@
 
           <hr class="g-rule">
           <div class="g-note">
-            <span class="g-note__icon"><i class="bi bi-camera" aria-hidden="true"></i></span>
+            <span class="g-note__icon"><span class="bi bi-camera" aria-hidden="true"></span></span>
             <p class="g-note__title">Nota de uso</p>
             <p class="g-note__text">Una foto de producto nueva se iguala antes de entrar (fondo, centrado, escala de su tipo, exposición, pantalla AURA y borrado), se guarda como <code>img/&lt;diseño&gt;-&lt;color&gt;-&lt;vista&gt;.webp</code> con sus variantes y se declara en <code>photos</code> de <code>data.js</code> con su <code>alt</code> real (el bloque entre <code>FOTOS:INICIO</code> y <code>FOTOS:FIN</code> es generado: no se edita a mano), y su crédito va en <code>js/creditos.js</code>. <code>image</code>, <code>imageColor</code> e <code>imageAlt</code> se quedan como respaldo. En JS, las rutas salen siempre de <code>AURA.catalog.image()</code> y <code>AURA.catalog.views()</code>: nunca se escriben a mano.</p>
           </div>
@@ -2795,11 +2832,33 @@
               <div class="g-sub"><h3 class="g-sub__title">Lista de comprobación</h3><p class="g-sub__meta">COMPONENTES.md §15</p></div>
               <div class="g-grid g-grid--3">
                 <div class="g-card"><p class="g-card__title">Estructura</p><ul class="aura-checklist mt-3" style="font-size:.8125rem"><li>«Saltar al contenido» primero y un solo <code>&lt;main id="contenido"&gt;</code></li><li>Un único <code>h1</code> y jerarquía sin saltos</li><li><code>section</code> con <code>aria-labelledby</code>; <code>article</code> y <code>aside</code> con sentido</li><li><code>ul</code>, <code>ol</code> y <code>dl</code> según su significado</li><li>Cada <code>nav</code> con su nombre</li></ul></div>
-                <div class="g-card"><p class="g-card__title">Enlaces e imágenes</p><ul class="aura-checklist mt-3" style="font-size:.8125rem"><li>El texto dice adónde lleva; si se repite, <code>aria-label</code> lo completa</li><li><code>title</code> solo si añade información</li><li>Externos con <code>target="_blank" rel="noopener noreferrer"</code></li><li><code>alt</code> real, <code>width</code> y <code>height</code>; <code>figure</code> + <code>figcaption</code></li><li>Iconos y lienzos decorativos con <code>aria-hidden</code></li></ul></div>
+                <div class="g-card"><p class="g-card__title">Enlaces e imágenes</p><ul class="aura-checklist mt-3" style="font-size:.8125rem"><li>El texto dice adónde lleva; si se repite con otro destino, lo completa un <code>.visually-hidden</code> dentro del enlace</li><li>Ningún enlace ni botón sin texto: los de solo icono, con su nombre oculto</li><li><code>title</code> solo si añade información</li><li>Externos con <code>target="_blank" rel="noopener noreferrer"</code></li><li><code>alt</code> real, <code>width</code> y <code>height</code>; <code>figure</code> + <code>figcaption</code></li><li>Iconos y lienzos decorativos con <code>aria-hidden</code></li></ul></div>
                 <div class="g-card"><p class="g-card__title">Tablas</p><ul class="aura-checklist mt-3" style="font-size:.8125rem"><li>Solo para datos, nunca para maquetar</li><li><code>&lt;caption&gt;</code> (oculto con <code>visually-hidden</code> si ya hay título)</li><li><code>thead</code> / <code>tbody</code> y <code>th</code> con <code>scope</code></li><li>Celda sin dato: «—» a la vista, «Sin dato» al oído</li><li>Sin roles ARIA redundantes</li></ul></div>
-                <div class="g-card"><p class="g-card__title">Formularios</p><ul class="aura-checklist mt-3" style="font-size:.8125rem"><li><code>&lt;label for&gt;</code> visible; el <code>placeholder</code> es un ejemplo</li><li>Grupos en <code>fieldset</code> + <code>legend</code> (o <code>role="radiogroup"</code>)</li><li><code>type</code>, <code>name</code> y <code>autocomplete</code> correctos</li><li><code>required</code>, <code>pattern</code>, <code>minlength</code>… y <code>novalidate</code></li><li>Error con <code>aria-describedby</code>, <code>aria-invalid</code>, icono y texto</li></ul></div>
-                <div class="g-card"><p class="g-card__title">ARIA y estados</p><ul class="aura-checklist mt-3" style="font-size:.8125rem"><li>Primero HTML nativo; sin roles redundantes</li><li><code>aria-label</code> en botones de icono, <code>aria-controls</code> en disparadores</li><li><code>aria-expanded</code>, <code>aria-current</code>, <code>aria-pressed</code>, <code>aria-busy</code> al día</li><li><code>role="status"</code> / <code>aria-live</code> para cambios; <code>role="alert"</code> para errores</li><li><code>hidden</code> para lo que no aplica</li></ul></div>
+                <div class="g-card"><p class="g-card__title">Formularios</p><ul class="aura-checklist mt-3" style="font-size:.8125rem"><li><code>&lt;label for&gt;</code> visible; el <code>placeholder</code> es un ejemplo</li><li><code>label for</code> también en radios, casillas y muestras envueltos por su etiqueta</li><li>Grupos en <code>fieldset</code> + <code>legend</code>, también el segmentado</li><li>Un <code>type="submit"</code> en cada <code>&lt;form&gt;</code></li><li><code>type</code>, <code>name</code> y <code>autocomplete</code> correctos</li><li><code>required</code>, <code>pattern</code>, <code>minlength</code>… y <code>novalidate</code></li><li>Error con <code>aria-describedby</code>, <code>aria-invalid</code>, icono y texto</li></ul></div>
+                <div class="g-card"><p class="g-card__title">ARIA y estados</p><ul class="aura-checklist mt-3" style="font-size:.8125rem"><li>Primero HTML nativo; sin roles redundantes</li><li>Botones de icono con texto oculto (no <code>aria-label</code>), <code>aria-controls</code> en disparadores</li><li><code>aria-expanded</code>, <code>aria-current</code>, <code>aria-pressed</code>, <code>aria-busy</code> al día</li><li><code>role="status"</code> / <code>aria-live</code> para cambios; <code>role="alert"</code> para errores</li><li><code>hidden</code> para lo que no aplica</li></ul></div>
                 <div class="g-card"><p class="g-card__title">Teclado y foco</p><ul class="aura-checklist mt-3" style="font-size:.8125rem"><li>Todo lo que se pulsa es <code>&lt;button&gt;</code> o <code>&lt;a href&gt;</code></li><li><code>tabindex</code> solo 0 (zonas desplazables) o −1; nunca mayor</li><li>El orden del foco sigue al visual</li><li>Los overlays atrapan el foco, se cierran con Esc y lo devuelven</li><li>Foco visible siempre (nunca <code>outline: none</code> sin sustituto)</li></ul></div>
+              </div>
+            </div>
+
+            <!-- V 2.1: las técnicas del test TAW que fallaban en la portada y cómo las cumple el sistema -->
+            <div class="g-block">
+              <div class="g-sub"><h3 class="g-sub__title">Test TAW</h3><p class="g-sub__meta">V 2.1 · tawdis.net · WCAG 2.x AA</p></div>
+              <p class="g-text">TAW analiza el HTML ya pintado y es más estricto que el lector de pantalla: lo que NVDA entiende por <code>aria-label</code>, por <code>role="radiogroup"</code> o por la etiqueta que envuelve un control, TAW lo da por falla. Cada página se publica con cero «Falla» y lo de «Revisar», mirado uno a uno.</p>
+              <div class="g-scroll">
+                <table class="g-table g-table--wide">
+                  <caption>Técnicas de TAW · qué comprueba y cómo se cumple</caption>
+                  <thead><tr><th scope="col">Técnica</th><th scope="col">Comprueba</th><th scope="col">En AURA</th></tr></thead>
+                  <tbody>
+                    <tr><th scope="row">H44 · H65</th><td>Cada control tiene un <code>&lt;label for&gt;</code> con texto o un <code>title</code></td><td><code>id</code> + <code>label for</code> siempre, también en los controles envueltos; sin etiqueta a la vista, <code>&lt;label class="visually-hidden" for&gt;</code> (capítulo 04)</td></tr>
+                    <tr><th scope="row">H71</th><td>Los radios, y las casillas con el mismo <code>name</code>, van en <code>fieldset</code> con <code>legend</code></td><td><code>fieldset.aura-segmented</code> con su leyenda oculta; cada casilla suelta con su <code>name</code></td></tr>
+                    <tr><th scope="row">F89</th><td>Ningún enlace sin texto ni imagen con <code>alt</code></td><td>Tarjeta de modelo con enlace estirado (la foto no es un enlace); botones y enlaces de icono con su nombre en <code>.visually-hidden</code> (capítulos 05 y 09)</td></tr>
+                    <tr><th scope="row">H2</th><td>Dos enlaces seguidos no llevan al mismo sitio</td><td>Iconos sociales a <code>#newsroom</code>, <code>#historia</code> y <code>#oportunidades</code>; título de la barra local sin enlace (<code>aria-current</code>, capítulo 08)</td></tr>
+                    <tr><th scope="row">H32</th><td>Todo <code>&lt;form&gt;</code> tiene un botón de envío</td><td><code>type="submit"</code> en el botón principal; la lupa del buscador; una muestra que no se envía no es un <code>&lt;form&gt;</code></td></tr>
+                    <tr><th scope="row">G140</th><td>Etiquetas de presentación (<code>&lt;i&gt;</code>, <code>&lt;b&gt;</code>…)</td><td>Iconos con <code>&lt;span class="bi"&gt;</code>; énfasis con <code>&lt;strong&gt;</code>; el CSS apunta a <code>.bi</code></td></tr>
+                    <tr><th scope="row">C28</th><td>Medidas en px en un <code>style</code> en línea</td><td><code>style</code> solo con variables; la pastilla del segmentado, en <code>rem</code></td></tr>
+                    <tr><th scope="row">H30</th><td>El mismo texto de enlace no lleva a destinos distintos</td><td>«Comprar», «Más información»… con el modelo o la familia en texto oculto, no en <code>aria-label</code></td></tr>
+                  </tbody>
+                </table>
               </div>
             </div>
 
@@ -2813,7 +2872,7 @@
                 </div>
                 <div class="g-card g-card--base">
                   <div class="d-flex align-items-end gap-4">
-                    <div class="g-size"><span style="display:grid;place-items:center;width:2.75rem;height:2.75rem;border:1px dashed var(--accent-link);border-radius:.5rem"><i class="bi bi-x-lg" aria-hidden="true"></i></span><span class="g-mono g-muted">44 px · táctil</span></div>
+                    <div class="g-size"><span style="display:grid;place-items:center;width:2.75rem;height:2.75rem;border:1px dashed var(--accent-link);border-radius:.5rem"><span class="bi bi-x-lg" aria-hidden="true"></span></span><span class="g-mono g-muted">44 px · táctil</span></div>
                     <div class="g-size"><span style="display:grid;place-items:center;width:1.5rem;height:1.5rem;border:1px dashed var(--gold);border-radius:.25rem;font-size:.75rem">1</span><span class="g-mono g-muted">24 px · ratón</span></div>
                   </div>
                   <p class="g-card__text mt-3">Botones, segmentado, puntos del carrusel, migas, enlaces del pie, llamadas a nota y enlaces sueltos miden 44 px en pantallas táctiles (<code>pointer: coarse</code>) y nunca menos de 24 px con ratón.</p>
@@ -2831,16 +2890,16 @@
                 <div class="g-card"><p class="g-card__title">Lighthouse</p><p class="g-card__text">Accesibilidad, buenas prácticas y SEO en Edge o Chrome; panel de accesibilidad de DevTools para el nombre de cada control.</p></div>
                 <div class="g-card"><p class="g-card__title">Teclado</p><p class="g-card__text">Tab y Mayús + Tab; Intro, Espacio y Esc para abrir y cerrar, sin quedarse atrapado.</p></div>
                 <div class="g-card"><p class="g-card__title">Lector de pantalla</p><p class="g-card__text">NVDA: encabezados, regiones, enlaces y tablas, cada uno con su nombre.</p></div>
-                <div class="g-card"><p class="g-card__title">Validadores</p><p class="g-card__text">W3C para el HTML, comprobador de contraste y una vista previa del enlace para Open Graph. Sin desborde a 390 px.</p></div>
+                <div class="g-card"><p class="g-card__title">Validadores</p><p class="g-card__text">TAW (tawdis.net) sin ninguna «Falla», W3C para el HTML, comprobador de contraste y una vista previa del enlace para Open Graph. Sin desborde a 390 px.</p></div>
               </div>
             </div>
           </div>
 
           <hr class="g-rule">
           <div class="g-note">
-            <span class="g-note__icon"><i class="bi bi-universal-access" aria-hidden="true"></i></span>
+            <span class="g-note__icon"><span class="bi bi-universal-access" aria-hidden="true"></span></span>
             <p class="g-note__title">Nota de uso</p>
-            <p class="g-note__text">Lo que pintan <code>aura-core.js</code> y <code>aura-ui.js</code> (cabecera, menú, pie, migas, tablas, avisos, hojas) ya cumple: cada página responde de su propio marcado. Se respetan «reducir movimiento», «reducir transparencia», «más contraste» y los colores forzados, y ninguna página los anula.</p>
+            <p class="g-note__text">Lo que pintan <code>aura-core.js</code> y <code>aura-ui.js</code> (cabecera, buscador, menú, pie, migas, tarjetas, tablas, carrusel, muestras de color, avisos, hojas) ya cumple, también el test TAW: cada página responde de su propio marcado. Se respetan «reducir movimiento», «reducir transparencia», «más contraste» y los colores forzados, y ninguna página los anula.</p>
           </div>
         </div>
       </div>
@@ -2877,10 +2936,10 @@
             <div class="g-block">
               <div class="g-sub"><h3 class="g-sub__title">Así, no así</h3><p class="g-sub__meta">Ejemplos del sitio</p></div>
               <div class="g-grid g-grid--2">
-                <div class="g-card"><p class="g-do__mark g-do__mark--yes"><i class="bi bi-check-lg" aria-hidden="true"></i>Titular</p><p class="g-quote">Se pliega. Pero no ante nadie.</p><p class="g-do__mark g-do__mark--no mt-3"><i class="bi bi-x-lg" aria-hidden="true"></i>No</p><p class="g-quote g-quote--no">El nuevo auraPhone Duo es un teléfono plegable con muchas funciones.</p></div>
-                <div class="g-card"><p class="g-do__mark g-do__mark--yes"><i class="bi bi-check-lg" aria-hidden="true"></i>Error de formulario</p><p class="g-quote" style="font-family:var(--font-ui);font-size:1.0625rem">Falta el dominio. Escribe una dirección como nombre@correo.com.</p><p class="g-do__mark g-do__mark--no mt-3"><i class="bi bi-x-lg" aria-hidden="true"></i>No</p><p class="g-quote g-quote--no" style="font-family:var(--font-ui);font-size:1.0625rem">Error: formato no válido.</p></div>
-                <div class="g-card"><p class="g-do__mark g-do__mark--yes"><i class="bi bi-check-lg" aria-hidden="true"></i>Llamada a la acción</p><p class="g-quote" style="font-family:var(--font-ui);font-size:1.0625rem">Comprar auraPods · Ver los modelos</p><p class="g-do__mark g-do__mark--no mt-3"><i class="bi bi-x-lg" aria-hidden="true"></i>No</p><p class="g-quote g-quote--no" style="font-family:var(--font-ui);font-size:1.0625rem">Haz clic aquí · Más · Aceptar</p></div>
-                <div class="g-card"><p class="g-do__mark g-do__mark--yes"><i class="bi bi-check-lg" aria-hidden="true"></i>Tarea (Trade In)</p><p class="g-quote" style="font-family:var(--font-ui);font-size:1.0625rem">¿Cuánto vale tu dispositivo actual?</p><p class="g-do__mark g-do__mark--no mt-3"><i class="bi bi-x-lg" aria-hidden="true"></i>No</p><p class="g-quote g-quote--no" style="font-family:var(--font-ui);font-size:1.0625rem">Descubre la frecuencia cuántica de tu terminal mundano.</p></div>
+                <div class="g-card"><p class="g-do__mark g-do__mark--yes"><span class="bi bi-check-lg" aria-hidden="true"></span>Titular</p><p class="g-quote">Se pliega. Pero no ante nadie.</p><p class="g-do__mark g-do__mark--no mt-3"><span class="bi bi-x-lg" aria-hidden="true"></span>No</p><p class="g-quote g-quote--no">El nuevo auraPhone Duo es un teléfono plegable con muchas funciones.</p></div>
+                <div class="g-card"><p class="g-do__mark g-do__mark--yes"><span class="bi bi-check-lg" aria-hidden="true"></span>Error de formulario</p><p class="g-quote" style="font-family:var(--font-ui);font-size:1.0625rem">Falta el dominio. Escribe una dirección como nombre@correo.com.</p><p class="g-do__mark g-do__mark--no mt-3"><span class="bi bi-x-lg" aria-hidden="true"></span>No</p><p class="g-quote g-quote--no" style="font-family:var(--font-ui);font-size:1.0625rem">Error: formato no válido.</p></div>
+                <div class="g-card"><p class="g-do__mark g-do__mark--yes"><span class="bi bi-check-lg" aria-hidden="true"></span>Llamada a la acción</p><p class="g-quote" style="font-family:var(--font-ui);font-size:1.0625rem">Comprar auraPods · Ver los modelos</p><p class="g-do__mark g-do__mark--no mt-3"><span class="bi bi-x-lg" aria-hidden="true"></span>No</p><p class="g-quote g-quote--no" style="font-family:var(--font-ui);font-size:1.0625rem">Haz clic aquí · Más · Aceptar</p></div>
+                <div class="g-card"><p class="g-do__mark g-do__mark--yes"><span class="bi bi-check-lg" aria-hidden="true"></span>Tarea (Trade In)</p><p class="g-quote" style="font-family:var(--font-ui);font-size:1.0625rem">¿Cuánto vale tu dispositivo actual?</p><p class="g-do__mark g-do__mark--no mt-3"><span class="bi bi-x-lg" aria-hidden="true"></span>No</p><p class="g-quote g-quote--no" style="font-family:var(--font-ui);font-size:1.0625rem">Descubre la frecuencia cuántica de tu terminal mundano.</p></div>
               </div>
             </div>
 
@@ -2907,7 +2966,7 @@
 
           <hr class="g-rule">
           <div class="g-note">
-            <span class="g-note__icon"><i class="bi bi-chat-quote" aria-hidden="true"></i></span>
+            <span class="g-note__icon"><span class="bi bi-chat-quote" aria-hidden="true"></span></span>
             <p class="g-note__title">Nota de uso</p>
             <p class="g-note__text">La marca es siempre AURA y sus nombres propios (auraPhone, auraPad, auraBook, auraPods, auraOS, AuraCare+, AURA Trade In, ID de AURA); nunca la marca original ni sus productos. «auraPods» va en plural en las frases («los auraPods», «tus nuevos auraPods»): los textos generados concuerdan solos. Fechas, precios, topes y estados de disponibilidad salen del catálogo, y ningún enlace queda muerto.</p>
           </div>
@@ -2977,10 +3036,10 @@
                   <caption>La gama en data.js · tres modelos por familia, ordenados por rank</caption>
                   <thead><tr><th scope="col">Familia</th><th scope="col">Modelos</th><th scope="col">Desde</th><th scope="col">Sistema</th><th scope="col">Icono</th><th scope="col">AuraCare+ · Trade In</th></tr></thead>
                   <tbody>
-                    <tr><th scope="row">auraPhone</th><td>auraPhone Duo · 18 Pro Max · 18 Pro</td><td class="g-num">1.469&nbsp;€</td><td>auraOS 27</td><td><i class="bi bi-phone" aria-hidden="true"></i> <code>phone</code></td><td class="g-num">229&nbsp;€ · hasta 800&nbsp;€</td></tr>
-                    <tr><th scope="row">auraPad</th><td>auraPad Pro 13″ · Pro 11″ · Air 13″</td><td class="g-num">999&nbsp;€</td><td>auraPadOS 27</td><td><i class="bi bi-tablet-landscape" aria-hidden="true"></i> <code>tablet-landscape</code></td><td class="g-num">149&nbsp;€ · hasta 640&nbsp;€</td></tr>
-                    <tr><th scope="row">auraBook</th><td>auraBook Pro 16″ · Pro 14″ · Air 15″</td><td class="g-num">1.729&nbsp;€</td><td>auraOS 27</td><td><i class="bi bi-laptop" aria-hidden="true"></i> <code>laptop</code></td><td class="g-num">399&nbsp;€ · hasta 800&nbsp;€</td></tr>
-                    <tr><th scope="row">auraPods <span class="aura-badge aura-badge--mono ms-1">Nuevo</span></th><td>auraPods Max 2 · Pro 3 · auraPods 5</td><td class="g-num">149&nbsp;€</td><td>auraOS 27 (con un auraPhone, auraPad o auraBook)</td><td><i class="bi bi-earbuds" aria-hidden="true"></i> <code>earbuds</code></td><td class="g-num">59&nbsp;€ · hasta 150&nbsp;€</td></tr>
+                    <tr><th scope="row">auraPhone</th><td>auraPhone Duo · 18 Pro Max · 18 Pro</td><td class="g-num">1.469&nbsp;€</td><td>auraOS 27</td><td><span class="bi bi-phone" aria-hidden="true"></span> <code>phone</code></td><td class="g-num">229&nbsp;€ · hasta 800&nbsp;€</td></tr>
+                    <tr><th scope="row">auraPad</th><td>auraPad Pro 13″ · Pro 11″ · Air 13″</td><td class="g-num">999&nbsp;€</td><td>auraPadOS 27</td><td><span class="bi bi-tablet-landscape" aria-hidden="true"></span> <code>tablet-landscape</code></td><td class="g-num">149&nbsp;€ · hasta 640&nbsp;€</td></tr>
+                    <tr><th scope="row">auraBook</th><td>auraBook Pro 16″ · Pro 14″ · Air 15″</td><td class="g-num">1.729&nbsp;€</td><td>auraOS 27</td><td><span class="bi bi-laptop" aria-hidden="true"></span> <code>laptop</code></td><td class="g-num">399&nbsp;€ · hasta 800&nbsp;€</td></tr>
+                    <tr><th scope="row">auraPods <span class="aura-badge aura-badge--mono ms-1">Nuevo</span></th><td>auraPods Max 2 · Pro 3 · auraPods 5</td><td class="g-num">149&nbsp;€</td><td>auraOS 27 (con un auraPhone, auraPad o auraBook)</td><td><span class="bi bi-earbuds" aria-hidden="true"></span> <code>earbuds</code></td><td class="g-num">59&nbsp;€ · hasta 150&nbsp;€</td></tr>
                   </tbody>
                 </table>
               </div>
@@ -3037,7 +3096,7 @@
                       <span class="aura-btn aura-btn--primary aura-btn--block">Iniciar sesión en AURA</span>
                     </div>
                     <div class="aura-auth-card__alt"><p>¿No tienes un ID de AURA?</p><span class="aura-btn aura-btn--secondary">Crear uno ahora</span></div>
-                    <p class="aura-auth-card__note"><i class="bi bi-lock" aria-hidden="true"></i> Tu ID de AURA se guarda solo en este navegador.</p>
+                    <p class="aura-auth-card__note"><span class="bi bi-lock" aria-hidden="true"></span> Tu ID de AURA se guarda solo en este navegador.</p>
                   </div>
                 </div>
                 <div class="d-grid gap-3 align-content-start">
@@ -3063,7 +3122,7 @@
 
           <hr class="g-rule">
           <div class="g-note">
-            <span class="g-note__icon"><i class="bi bi-collection" aria-hidden="true"></i></span>
+            <span class="g-note__icon"><span class="bi bi-collection" aria-hidden="true"></span></span>
             <p class="g-note__title">Nota de uso</p>
             <p class="g-note__text">Una página nueva parte de la plantilla de su tipo y de la lista del capítulo 15. Lo que parece igual se comporta igual y está en el mismo sitio en todas las páginas; una familia nueva (como auraPods) solo necesita su entrada en <code>data.js</code>, sus fotos y su página con la misma estructura: tarjetas, tabla, ventajas, buscador, bolsa y cinta se ponen al día solos.</p>
           </div>

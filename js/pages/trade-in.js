@@ -187,13 +187,18 @@
 
   /* Modelo y estado son obligatorios (las reglas de AURA.ui.form, abajo): el
      marcado lo declara con `required` en cada radio (temario DIW, validación
-     HTML5) y el lector anuncia «obligatorio»; los mensajes los pone AURA.ui.form. */
+     HTML5) y el lector anuncia «obligatorio»; los mensajes los pone AURA.ui.form.
+     Cada radio lleva id y su etiqueta for= (TAW solo cuenta <label for>, no la
+     que envuelve al control): «ti-» + pregunta + valor, único en la página. */
+  function idDe(grupo, valor) { return 'ti-' + grupo + '-' + String(valor).replace(/[^A-Za-z0-9_-]+/g, '-'); }
+
   function renderDevices() {
     var list = devicesOf(state.family);
     el.devices.innerHTML = list.map(function (d) {
       var n = splitName(d.name);
-      return '<label class="aura-option">' +
-        '<input class="aura-option__input" type="radio" name="dispositivo" value="' + esc(d.id) + '" required' + (d.id === state.deviceId ? ' checked' : '') + '>' +
+      var id = idDe('dispositivo', d.id);
+      return '<label class="aura-option" for="' + esc(id) + '">' +
+        '<input class="aura-option__input" id="' + esc(id) + '" type="radio" name="dispositivo" value="' + esc(d.id) + '" required' + (d.id === state.deviceId ? ' checked' : '') + '>' +
         '<span class="aura-option__card">' +
           '<span class="aura-option__body">' +
             '<span class="aura-option__title">' + esc(n.title) + '</span>' +
@@ -207,8 +212,9 @@
 
   function renderConditions() {
     el.conditions.innerHTML = CONDITIONS.map(function (c) {
-      return '<label class="aura-option">' +
-        '<input class="aura-option__input" type="radio" name="estado" value="' + esc(c.id) + '" required' + (c.id === state.conditionId ? ' checked' : '') + '>' +
+      var id = idDe('estado', c.id);
+      return '<label class="aura-option" for="' + esc(id) + '">' +
+        '<input class="aura-option__input" id="' + esc(id) + '" type="radio" name="estado" value="' + esc(c.id) + '" required' + (c.id === state.conditionId ? ' checked' : '') + '>' +
         '<span class="aura-option__card">' +
           '<span class="aura-option__body">' +
             '<span class="aura-option__title">' + esc(c.label) + '</span>' +
@@ -245,7 +251,7 @@
     for (var i = 0; i < applyButtons.length; i++) {
       var b = applyButtons[i];
       if (same) {
-        b.innerHTML = '<i class="bi bi-check2" aria-hidden="true"></i>' + label;
+        b.innerHTML = '<span class="bi bi-check2" aria-hidden="true"></span>' + label;
         b.setAttribute('aria-disabled', 'true');
       } else {
         b.textContent = label;
@@ -358,7 +364,7 @@
       ];
       el.notes.innerHTML = notes.map(function (n, i) {
         return '<li id="' + n.id + '">' + esc(n.text) +
-          ' <a class="aura-footnotes__back" href="#' + n.ref + '" aria-label="Volver al texto de la nota ' + (i + 1) + '"><i class="bi bi-arrow-return-left" aria-hidden="true"></i></a></li>';
+          ' <a class="aura-footnotes__back" href="#' + n.ref + '"><span class="bi bi-arrow-return-left" aria-hidden="true"></span><span class="visually-hidden">Volver al texto de la nota ' + (i + 1) + '</span></a></li>';
       }).join('');
     }
   }
