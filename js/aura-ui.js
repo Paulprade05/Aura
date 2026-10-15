@@ -3831,15 +3831,30 @@
     /* El menú no depende de IntersectionObserver: el chevrón del HTML funciona siempre. */
     safe(function () { initLocalnavMenu(nav); });
     /* El título sube arriba del todo (href="#top": sin JS ya lo hace el
-       navegador). Con JS, en un desplazamiento suave (inmediato con «reducir
-       movimiento») y sin dejar #top en la dirección. */
+       navegador). Con JS, rápido y sin dejar #top en la dirección: desde lejos
+       salta a pantalla y media del principio y anima solo ese último tramo
+       (el desplazamiento suave del navegador tardaría más de un segundo en
+       recorrer la página entera); con «reducir movimiento», inmediato. */
     var title = nav.querySelector('a.aura-localnav__title[href="#top"]');
     if (title && !title._auraTop) {
       title._auraTop = true;
       title.addEventListener('click', function (e) {
         if (e.defaultPrevented || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) { return; }
         e.preventDefault();
-        safe(function () { window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' }); });
+        safe(function () {
+          /* Salto sin animar: el «scroll-behavior: smooth» de Bootstrap en
+             :root animaría también scrollTo(x, y); en línea manda «auto». */
+          var jump = function (y) {
+            var prev = html.style.scrollBehavior;
+            html.style.scrollBehavior = 'auto';
+            window.scrollTo(0, y);
+            html.style.scrollBehavior = prev;
+          };
+          if (reduced) { jump(0); return; }
+          var near = Math.round((window.innerHeight || html.clientHeight || 800) * 1.5);
+          if ((window.pageYOffset || html.scrollTop || 0) > near) { jump(near); }
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
       });
     }
     if (typeof window.IntersectionObserver !== 'function') { return; }
