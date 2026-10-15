@@ -3830,6 +3830,18 @@
     if (!nav || nav._auraLocalnav) { return; }
     /* El menú no depende de IntersectionObserver: el chevrón del HTML funciona siempre. */
     safe(function () { initLocalnavMenu(nav); });
+    /* El título sube arriba del todo (href="#top": sin JS ya lo hace el
+       navegador). Con JS, en un desplazamiento suave (inmediato con «reducir
+       movimiento») y sin dejar #top en la dirección. */
+    var title = nav.querySelector('a.aura-localnav__title[href="#top"]');
+    if (title && !title._auraTop) {
+      title._auraTop = true;
+      title.addEventListener('click', function (e) {
+        if (e.defaultPrevented || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) { return; }
+        e.preventDefault();
+        safe(function () { window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' }); });
+      });
+    }
     if (typeof window.IntersectionObserver !== 'function') { return; }
     nav._auraLocalnav = true;
 

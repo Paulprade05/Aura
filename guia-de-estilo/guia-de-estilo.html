@@ -1658,7 +1658,7 @@
               <div class="g-demo g-demo--flush" inert aria-hidden="true">
                 <nav class="aura-localnav is-stuck" aria-label="auraPhone">
                   <div class="aura-container aura-localnav__inner">
-                    <span class="aura-localnav__title" aria-current="page">auraPhone</span>
+                    <a class="aura-localnav__title" href="#top">auraPhone<span class="visually-hidden">: volver arriba</span></a>
                     <div class="aura-localnav__links">
                       <span class="aura-localnav__link is-active" aria-current="true">Destacado</span>
                       <span class="aura-localnav__link">Diseño</span>
@@ -1671,7 +1671,7 @@
                 </nav>
                 <div style="height:3.5rem;background:linear-gradient(180deg,#121214,#000)"></div>
               </div>
-              <p class="g-demo__caption">Se pega arriba y marca la sección visible (también en los bloques sin enlace sigue el último). Su acción es el enlace contextual «Comprar ›» (nunca un botón: la única primaria azul a la vista es la del héroe). Mientras los enlaces no caben junto al título y la acción (por debajo de 992 px), se pliegan en un menú que abre un chevrón de 17 px; el título se recorta antes que la acción. El título no es un enlace: nombra la página actual (<code>span</code> con <code>aria-current="page"</code>; enlazado a su página repetía el enlace de la cabecera y a <code>#contenido</code> daba el mismo texto con dos destinos), el chevrón se nombra en texto oculto («Secciones de auraPhone») y «Comprar ›» dice de qué modelo, también oculto (<span class="g-gold">V 2.1</span>).</p>
+              <p class="g-demo__caption">Se pega arriba y marca la sección visible (también en los bloques sin enlace sigue el último). Su acción es el enlace contextual «Comprar ›» (nunca un botón: la única primaria azul a la vista es la del héroe). Mientras los enlaces no caben junto al título y la acción (por debajo de 992 px), se pliegan en un menú que abre un chevrón de 17 px; el título se recorta antes que la acción. El título sube arriba del todo (<code>href="#top"</code>, con desplazamiento suave y «: volver arriba» en texto oculto; no enlaza a su propia página, que repetiría el enlace de la cabecera), el chevrón se nombra en texto oculto («Secciones de auraPhone») y «Comprar ›» dice de qué modelo, también oculto (<span class="g-gold">V 2.1</span>).</p>
             </div>
 
             <div class="g-block">
@@ -2852,7 +2852,7 @@
                     <tr><th scope="row">H44 · H65</th><td>Cada control tiene un <code>&lt;label for&gt;</code> con texto o un <code>title</code></td><td><code>id</code> + <code>label for</code> siempre, también en los controles envueltos; sin etiqueta a la vista, <code>&lt;label class="visually-hidden" for&gt;</code> (capítulo 04)</td></tr>
                     <tr><th scope="row">H71</th><td>Los radios, y las casillas con el mismo <code>name</code>, van en <code>fieldset</code> con <code>legend</code></td><td><code>fieldset.aura-segmented</code> con su leyenda oculta; cada casilla suelta con su <code>name</code></td></tr>
                     <tr><th scope="row">F89</th><td>Ningún enlace sin texto ni imagen con <code>alt</code></td><td>Tarjeta de modelo con enlace estirado (la foto no es un enlace); botones y enlaces de icono con su nombre en <code>.visually-hidden</code> (capítulos 05 y 09)</td></tr>
-                    <tr><th scope="row">H2</th><td>Dos enlaces seguidos no llevan al mismo sitio</td><td>Iconos sociales a <code>#newsroom</code>, <code>#historia</code> y <code>#oportunidades</code>; título de la barra local sin enlace (<code>aria-current</code>, capítulo 08)</td></tr>
+                    <tr><th scope="row">H2</th><td>Dos enlaces seguidos no llevan al mismo sitio</td><td>Iconos sociales a <code>#newsroom</code>, <code>#historia</code> y <code>#oportunidades</code>; título de la barra local a <code>#top</code> con «volver arriba» oculto (capítulo 08)</td></tr>
                     <tr><th scope="row">H32</th><td>Todo <code>&lt;form&gt;</code> tiene un botón de envío</td><td><code>type="submit"</code> en el botón principal; la lupa del buscador; una muestra que no se envía no es un <code>&lt;form&gt;</code></td></tr>
                     <tr><th scope="row">G140</th><td>Etiquetas de presentación (<code>&lt;i&gt;</code>, <code>&lt;b&gt;</code>…)</td><td>Iconos con <code>&lt;span class="bi"&gt;</code>; énfasis con <code>&lt;strong&gt;</code>; el CSS apunta a <code>.bi</code></td></tr>
                     <tr><th scope="row">C28</th><td>Medidas en px en un <code>style</code> en línea</td><td><code>style</code> solo con variables; la pastilla del segmentado, en <code>rem</code></td></tr>

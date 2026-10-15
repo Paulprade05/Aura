@@ -1133,7 +1133,7 @@ html:has(.aura-ribbon) { --ribbon-h: 2.6875rem; }
 @media (max-width: 30em) {
   .aura-localnav__inner { gap: .5rem; }
 }
-/* El título (v2.1: el nombre de la página actual, sin enlace) ocupa todo el
+/* El título (v2.2: el nombre de la página; enlace a #top que sube arriba del todo) ocupa todo el
    alto de la barra (52 px).
    Es lo único que cede si no cabe todo (texto grande en el teléfono): se
    recorta con puntos suspensivos y «Comprar» nunca se sale de la pantalla. */
