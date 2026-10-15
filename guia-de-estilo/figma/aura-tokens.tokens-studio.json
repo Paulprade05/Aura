@@ -1,0 +1,4769 @@
+{
+  "AURA": {
+    "Color": {
+      "Fondo": {
+        "Principal": {
+          "type": "color",
+          "value": "#000000",
+          "description": "Lienzo principal y contraste máximo. · --bg-main"
+        },
+        "Secundario": {
+          "type": "color",
+          "value": "#161617",
+          "description": "Tarjetas, paneles y agrupación de contenido (Elevación / 01). · --bg-secondary"
+        },
+        "Elevado": {
+          "type": "color",
+          "value": "#1d1d1f",
+          "description": "Capas sobre una tarjeta; popover sólido; tarjeta elevada y de acceso. · --bg-elevated"
+        },
+        "Franja": {
+          "type": "color",
+          "value": "#0a0a0b",
+          "description": "Secciones alternas, casi negras (.aura-section--band). · --bg-band"
+        },
+        "Pie": {
+          "type": "color",
+          "value": "#111113",
+          "description": "Fondo del pie global. · --bg-footer"
+        }
+      },
+      "Acento": {
+        "Azul": {
+          "type": "color",
+          "value": "#0071e3",
+          "description": "Acciones, foco y estados interactivos: relleno del primario (blanco encima, 4,70:1) y contornos. Como texto no llega a AA (4,47:1). · --accent"
+        },
+        "Hover": {
+          "type": "color",
+          "value": "#0074e8",
+          "description": "Relleno del primario al pasar el ratón (4,50:1 con blanco). · --accent-hover"
+        },
+        "Texto": {
+          "type": "color",
+          "value": "#1787f7",
+          "description": "Azul para TEXTO: enlaces, iconos, foco y contorno del secundario en hover (5,85:1 sobre negro, 5,03:1 sobre tarjeta). · --accent-link"
+        },
+        "Texto hover": {
+          "type": "color",
+          "value": "#4aa3ff",
+          "description": "Etiqueta del secundario en hover y en foco, y enlaces sin clase (7,97:1 sobre negro). · --accent-link-hover"
+        },
+        "Brillante": {
+          "type": "color",
+          "value": "#1787f7",
+          "description": "Solo trazos: borde del secundario en hover. Hoy vale lo mismo que Color/Acento/Texto (#1787f7), pero es otro token en aura.css: cambiar uno no cambia el otro. · --accent-bright"
+        },
+        "Suave": {
+          "type": "color",
+          "value": "rgba(0, 113, 227, 0.16)",
+          "description": "Fondo de lo elegido (opción, chip activo, paso actual) y tinte del secundario. · --accent-soft"
+        },
+        "Anillo": {
+          "type": "color",
+          "value": "rgba(0, 113, 227, 0.4)",
+          "description": "Anillo de 4 px de los campos en foco (guía §04). · --accent-ring"
+        },
+        "Selección": {
+          "type": "color",
+          "value": "rgba(0, 113, 227, 0.6)",
+          "description": "Fondo del texto seleccionado (texto blanco encima). · ::selection"
+        }
+      },
+      "Dorado": {
+        "Base": {
+          "type": "color",
+          "value": "#e5a93c",
+          "description": "Distinción, metadatos y acentos selectivos: antetítulos, insignias, cronología (10,07:1 sobre negro). Nunca rellena una superficie. · --gold"
+        },
+        "Suave": {
+          "type": "color",
+          "value": "rgba(229, 169, 60, 0.14)",
+          "description": "Fondo de insignias, iconos de nota y de AuraCare+. · --gold-soft"
+        }
+      },
+      "Texto": {
+        "Primario": {
+          "type": "color",
+          "value": "#f5f5f7",
+          "description": "Títulos y contenido de alta prioridad (19,29:1 sobre negro). · --text-primary"
+        },
+        "Secundario": {
+          "type": "color",
+          "value": "#a1a1a6",
+          "description": "Cuerpo, notas y contexto auxiliar (8,16:1 sobre negro; 7,03:1 sobre tarjeta). · --text-secondary"
+        },
+        "Terciario": {
+          "type": "color",
+          "value": "#8e8e93",
+          "description": "Notas, metadatos y etiquetas mono (6,44:1 sobre negro). · --text-tertiary"
+        },
+        "Placeholder": {
+          "type": "color",
+          "value": "#98989d",
+          "description": "Ejemplo dentro del campo (6,30:1; ≥ 4,7:1 también en foco). · --text-placeholder"
+        },
+        "Desactivado": {
+          "type": "color",
+          "value": "#6e6e73",
+          "description": "Etiquetas de controles desactivados (3,01:1 sobre #252528). · --text-disabled"
+        },
+        "Blanco": {
+          "type": "color",
+          "value": "#ffffff",
+          "description": "Etiqueta sobre el azul, hover de enlaces de navegación y elementos activos. · --bs-emphasis-color"
+        },
+        "Negro": {
+          "type": "color",
+          "value": "#000000",
+          "description": "Etiqueta del botón inverso. · .aura-btn--inverse"
+        }
+      },
+      "Estado": {
+        "Completado": {
+          "type": "color",
+          "value": "#30d158",
+          "description": "Confirmaciones y requisitos cumplidos. Siempre con icono y texto. · --ok"
+        },
+        "Aviso": {
+          "type": "color",
+          "value": "#ffd60a",
+          "description": "Advertencias antes de un problema. · --warn"
+        },
+        "Error": {
+          "type": "color",
+          "value": "#ff453a",
+          "description": "Validación, sistema y acciones destructivas (6,16:1 sobre negro). · --error"
+        },
+        "Completado suave": {
+          "type": "color",
+          "value": "rgba(48, 209, 88, 0.14)",
+          "description": "Fondo de la insignia de completado. · .aura-badge--ok"
+        },
+        "Aviso suave": {
+          "type": "color",
+          "value": "rgba(255, 214, 10, 0.12)",
+          "description": "Fondo de la insignia de aviso. · .aura-badge--warn"
+        },
+        "Error suave": {
+          "type": "color",
+          "value": "rgba(255, 69, 58, 0.14)",
+          "description": "Fondo de la insignia de error y hover del botón destructivo. · .aura-badge--error"
+        },
+        "Completado borde": {
+          "type": "color",
+          "value": "rgba(48, 209, 88, 0.45)",
+          "description": "Borde del mensaje de confirmación. · .aura-alert--ok"
+        },
+        "Aviso borde": {
+          "type": "color",
+          "value": "rgba(255, 214, 10, 0.45)",
+          "description": "Borde del mensaje de aviso. · .aura-alert--warn"
+        },
+        "Error borde": {
+          "type": "color",
+          "value": "rgba(255, 69, 58, 0.55)",
+          "description": "Borde del mensaje de error. · .aura-alert--error"
+        },
+        "Válido borde": {
+          "type": "color",
+          "value": "rgba(48, 209, 88, 0.7)",
+          "description": "Borde del campo válido (.is-valid). · .aura-field.is-valid"
+        },
+        "Destructivo borde": {
+          "type": "color",
+          "value": "rgba(255, 69, 58, 0.7)",
+          "description": "Contorno del botón destructivo. · .aura-btn--destructive"
+        },
+        "Anillo de error": {
+          "type": "color",
+          "value": "rgba(255, 69, 58, 0.32)",
+          "description": "Anillo de 4 px de un campo con error en foco. · .aura-field.is-invalid :focus"
+        }
+      },
+      "Línea": {
+        "Fina": {
+          "type": "color",
+          "value": "rgba(255, 255, 255, 0.1)",
+          "description": "Separadores de lista y borde de tarjetas, teselas y tablas. · --hairline"
+        },
+        "Marcada": {
+          "type": "color",
+          "value": "rgba(255, 255, 255, 0.18)",
+          "description": "Bordes visibles: chips, insignias de tabla, pasos. · --hairline-strong"
+        },
+        "Filo de luz": {
+          "type": "color",
+          "value": "rgba(255, 255, 255, 0.16)",
+          "description": "Borde superior de un material: la luz lo toca. · --edge-light"
+        },
+        "Campo": {
+          "type": "color",
+          "value": "rgba(255, 255, 255, 0.36)",
+          "description": "Límite de campos, casillas y opciones (3,14:1 sobre negro; 3,35:1 sobre tarjeta). · --field-border"
+        },
+        "Campo hover": {
+          "type": "color",
+          "value": "rgba(255, 255, 255, 0.5)",
+          "description": "El mismo límite con el ratón encima (5,32:1). · --field-border-hover"
+        }
+      },
+      "Relleno": {
+        "1": {
+          "type": "color",
+          "value": "rgba(255, 255, 255, 0.04)",
+          "description": "Reposo: chips, opciones, casillas, cifras en tarjeta. · --fill-1"
+        },
+        "2": {
+          "type": "color",
+          "value": "rgba(255, 255, 255, 0.08)",
+          "description": "Segmentado, icono de característica, hover de filas. · --fill-2"
+        },
+        "3": {
+          "type": "color",
+          "value": "rgba(255, 255, 255, 0.12)",
+          "description": "Capa de hover del botón fantasma y del botón de icono; pulsado. · --fill-3"
+        },
+        "Elegido": {
+          "type": "color",
+          "value": "rgba(255, 255, 255, 0.16)",
+          "description": "Pastilla elegida del segmentado. · --fill-selected"
+        },
+        "Desactivado": {
+          "type": "color",
+          "value": "#252528",
+          "description": "Botón desactivado (primario, secundario e inverso). · --fill-disabled"
+        },
+        "Inverso hover": {
+          "type": "color",
+          "value": "#e8e8ed",
+          "description": "Hover del botón inverso. · --inverse-hover"
+        },
+        "Icono sólido hover": {
+          "type": "color",
+          "value": "rgba(255, 255, 255, 0.2)",
+          "description": "Hover del botón de icono sólido. · .aura-icon-btn--solid:hover"
+        },
+        "Tirador": {
+          "type": "color",
+          "value": "rgba(255, 255, 255, 0.32)",
+          "description": "Tirador de la hoja inferior. · .aura-sheet__grabber"
+        }
+      },
+      "Campo": {
+        "Fondo": {
+          "type": "color",
+          "value": "rgba(255, 255, 255, 0.085)",
+          "description": "Campo en reposo sobre la base negra (se ve #161617). · --field-bg"
+        },
+        "Fondo foco": {
+          "type": "color",
+          "value": "rgba(255, 255, 255, 0.12)",
+          "description": "Campo en foco: gana «cristal» (≈ #1f1f24). · --field-bg-focus"
+        },
+        "Fondo en superficie": {
+          "type": "color",
+          "value": "{Color.Relleno.1}",
+          "description": "Campo en reposo dentro de una tarjeta, hoja o popover (ya elevados). · --field-bg (en superficie)"
+        },
+        "Fondo foco en superficie": {
+          "type": "color",
+          "value": "rgba(255, 255, 255, 0.07)",
+          "description": "Campo en foco dentro de una superficie elevada. · --field-bg-focus (en superficie)"
+        },
+        "Borde": {
+          "type": "color",
+          "value": "{Color.Línea.Campo}",
+          "description": "Borde del campo en reposo. · .aura-input"
+        },
+        "Borde hover": {
+          "type": "color",
+          "value": "{Color.Línea.Campo hover}",
+          "description": "Borde del campo con el ratón encima. · .aura-input:hover"
+        },
+        "Borde foco": {
+          "type": "color",
+          "value": "{Color.Acento.Texto}",
+          "description": "Borde de 1 px del campo en foco. · .aura-input:focus"
+        },
+        "Borde error": {
+          "type": "color",
+          "value": "{Color.Estado.Error}",
+          "description": "Borde del campo con error. · .aura-field.is-invalid"
+        },
+        "Borde desactivado": {
+          "type": "color",
+          "value": "{Color.Línea.Fina}",
+          "description": "Borde del campo desactivado (fondo transparente). · .aura-input:disabled"
+        },
+        "Etiqueta": {
+          "type": "color",
+          "value": "{Color.Texto.Secundario}",
+          "description": "Etiqueta en reposo (Inter 13 / 500). · .aura-field__label"
+        },
+        "Etiqueta foco": {
+          "type": "color",
+          "value": "{Color.Acento.Texto}",
+          "description": "Etiqueta del campo en foco. · .aura-field:focus-within .aura-field__label"
+        },
+        "Etiqueta error": {
+          "type": "color",
+          "value": "{Color.Estado.Error}",
+          "description": "Etiqueta del campo con error (con el mensaje y su icono debajo). · .aura-field.is-invalid .aura-field__label"
+        },
+        "Icono": {
+          "type": "color",
+          "value": "{Color.Texto.Terciario}",
+          "description": "Icono de apoyo en reposo (azul en foco, rojo en error). · .aura-field__icon"
+        },
+        "Icono foco": {
+          "type": "color",
+          "value": "{Color.Acento.Texto}",
+          "description": "Icono de apoyo del campo en foco. · .aura-field:focus-within .aura-field__icon"
+        },
+        "Icono error": {
+          "type": "color",
+          "value": "{Color.Estado.Error}",
+          "description": "Icono de apoyo del campo con error. · .aura-field.is-invalid .aura-field__icon"
+        },
+        "Ayuda": {
+          "type": "color",
+          "value": "{Color.Texto.Terciario}",
+          "description": "Texto de ayuda bajo el campo. · .aura-field__help"
+        },
+        "Filo de foco": {
+          "type": "color",
+          "value": "{Color.Línea.Fina}",
+          "description": "Filo claro interior (inset 0 1px) del campo en foco. · .aura-input:focus"
+        }
+      },
+      "Botón": {
+        "Primario": {
+          "Fondo": {
+            "type": "color",
+            "value": "{Color.Acento.Azul}",
+            "description": "Relleno y borde del primario. · .aura-btn--primary"
+          },
+          "Fondo hover": {
+            "type": "color",
+            "value": "{Color.Acento.Hover}",
+            "description": "Relleno del primario en hover (el halo pasa de .55 a 1). · .aura-btn--primary:hover"
+          },
+          "Texto": {
+            "type": "color",
+            "value": "{Color.Texto.Blanco}",
+            "description": "Etiqueta del primario. · .aura-btn--primary"
+          }
+        },
+        "Secundario": {
+          "Borde": {
+            "type": "color",
+            "value": "{Color.Acento.Azul}",
+            "description": "Contorno del secundario en reposo (4,5:1 sobre negro como límite de control). · .aura-btn--secondary"
+          },
+          "Borde hover": {
+            "type": "color",
+            "value": "{Color.Acento.Brillante}",
+            "description": "Contorno del secundario en hover. · .aura-btn--secondary:hover"
+          },
+          "Texto": {
+            "type": "color",
+            "value": "{Color.Acento.Texto}",
+            "description": "Etiqueta del secundario. · .aura-btn--secondary"
+          },
+          "Texto hover": {
+            "type": "color",
+            "value": "{Color.Acento.Texto hover}",
+            "description": "Etiqueta del secundario en hover y en foco. · .aura-btn--secondary:hover"
+          },
+          "Fondo hover": {
+            "type": "color",
+            "value": "{Color.Acento.Suave}",
+            "description": "Tinte azul del secundario en hover y en foco. · .aura-btn--secondary:hover"
+          }
+        },
+        "Inverso": {
+          "Fondo": {
+            "type": "color",
+            "value": "{Color.Texto.Primario}",
+            "description": "Relleno y borde del inverso (tema claro). · .aura-btn--inverse"
+          },
+          "Fondo hover": {
+            "type": "color",
+            "value": "{Color.Relleno.Inverso hover}",
+            "description": "Relleno del inverso en hover. · .aura-btn--inverse:hover"
+          },
+          "Texto": {
+            "type": "color",
+            "value": "{Color.Texto.Negro}",
+            "description": "Etiqueta del inverso. · .aura-btn--inverse"
+          }
+        },
+        "Fantasma": {
+          "Texto": {
+            "type": "color",
+            "value": "{Color.Texto.Primario}",
+            "description": "Etiqueta del botón fantasma (terciaria: «Cancelar»). · .aura-btn--ghost"
+          },
+          "Fondo hover": {
+            "type": "color",
+            "value": "{Color.Relleno.3}",
+            "description": "Capa de hover del fantasma. · .aura-btn--ghost:hover"
+          }
+        },
+        "Destructivo": {
+          "Texto": {
+            "type": "color",
+            "value": "{Color.Estado.Error}",
+            "description": "Etiqueta del destructivo (solo lo irreversible). · .aura-btn--destructive"
+          },
+          "Borde": {
+            "type": "color",
+            "value": "{Color.Estado.Destructivo borde}",
+            "description": "Contorno del destructivo. · .aura-btn--destructive"
+          },
+          "Fondo hover": {
+            "type": "color",
+            "value": "{Color.Estado.Error suave}",
+            "description": "Capa de hover del destructivo. · .aura-btn--destructive:hover"
+          }
+        },
+        "Desactivado": {
+          "Fondo": {
+            "type": "color",
+            "value": "{Color.Relleno.Desactivado}",
+            "description": "Relleno de cualquier botón desactivado (sin borde). · .aura-btn:disabled"
+          },
+          "Texto": {
+            "type": "color",
+            "value": "{Color.Texto.Desactivado}",
+            "description": "Etiqueta de cualquier botón desactivado. · .aura-btn:disabled"
+          },
+          "Borde destructivo": {
+            "type": "color",
+            "value": "{Color.Línea.Marcada}",
+            "description": "El destructivo desactivado conserva un contorno neutro. · .aura-btn--destructive:disabled"
+          }
+        }
+      },
+      "Foco": {
+        "Contorno": {
+          "type": "color",
+          "value": "{Color.Acento.Texto}",
+          "description": "Contorno de foco de 2 px a 3 px del elemento (:focus-visible). · :focus-visible"
+        },
+        "Anillo": {
+          "type": "color",
+          "value": "{Color.Acento.Anillo}",
+          "description": "Anillo de foco de campos, casillas y muestras. · --accent-ring"
+        }
+      },
+      "Cristal": {
+        "Barra": {
+          "type": "color",
+          "value": "rgba(0, 0, 0, 0.72)",
+          "description": "Barra global (negra) con el filtro regular; etiqueta sobre una foto. · --glass-nav-bg"
+        },
+        "Menú": {
+          "type": "color",
+          "value": "rgba(0, 0, 0, 0.86)",
+          "description": "Menú móvil a pantalla completa (negro) con el filtro grueso. · --glass-nav-thick-bg"
+        },
+        "Fino": {
+          "type": "color",
+          "value": "rgba(29, 29, 31, 0.72)",
+          "description": "Material fino: avisos y tarjeta de cristal (desenfoque 16 px). · --glass-thin-bg"
+        },
+        "Regular": {
+          "type": "color",
+          "value": "rgba(22, 22, 23, 0.74)",
+          "description": "Material regular: popover, barra local, panel de cifras sobre foto (desenfoque 24 px). · --glass-regular-bg"
+        },
+        "Grueso": {
+          "type": "color",
+          "value": "rgba(22, 22, 23, 0.88)",
+          "description": "Material grueso: hoja, buscador, barra de compra (desenfoque 40 px). · --glass-thick-bg"
+        },
+        "Aviso sólido": {
+          "type": "color",
+          "value": "#2a2a2d",
+          "description": "Aviso con una tarea modal abierta (nunca cristal sobre cristal). · html.aura-lock .aura-toast"
+        },
+        "Velo": {
+          "type": "color",
+          "value": "rgba(0, 0, 0, 0.58)",
+          "description": "Velo de las tareas modales (hoja, buscador, menú). · --scrim"
+        }
+      },
+      "Vibrancia": {
+        "Etiqueta": {
+          "type": "color",
+          "value": "rgba(245, 245, 247, 0.82)",
+          "description": "Texto sobre material: controles y texto de apoyo con peso (enlaces de barra). · --vibrant-label"
+        },
+        "Secundario": {
+          "type": "color",
+          "value": "rgba(245, 245, 247, 0.74)",
+          "description": "Texto secundario dentro de un material. · --vibrant-secondary"
+        },
+        "Terciario": {
+          "type": "color",
+          "value": "rgba(245, 245, 247, 0.62)",
+          "description": "Texto terciario y placeholder dentro de un material. · --vibrant-tertiary"
+        }
+      },
+      "Luz": {
+        "Panel de producto": {
+          "type": "color",
+          "value": "rgba(0, 113, 227, 0.16)",
+          "description": "Halo radial (70 % × 60 % en 50 % 62 %) tras la foto de la tarjeta de modelo y de familia, sobre #000. · .aura-product-card__media"
+        },
+        "Galería": {
+          "type": "color",
+          "value": "rgba(0, 113, 227, 0.22)",
+          "description": "Halo radial (60 % × 55 % en 50 % 56 %) del configurador y de los héroes con halo. · .aura-gallery · .aura-media--halo"
+        },
+        "Sección": {
+          "type": "color",
+          "value": "rgba(0, 113, 227, 0.18)",
+          "description": "Resplandor de fondo de una sección (.aura-halo), hasta 30 rem de radio. · .aura-halo"
+        },
+        "Cifra": {
+          "type": "color",
+          "value": "rgba(0, 113, 227, 0.26)",
+          "description": "Resplandor circular de la gran cifra. · .aura-stat--xl"
+        },
+        "Hueco": {
+          "type": "color",
+          "value": "rgba(0, 113, 227, 0.24)",
+          "description": "Resplandor del hueco de imagen (sobre degradado #111113 → #08080a). · .aura-slot"
+        }
+      },
+      "Acabado": {
+        "auraPhone Duo": {
+          "Cielo nocturno": {
+            "type": "color",
+            "value": "#1f2530",
+            "description": "Muestra «Cielo nocturno» de auraPhone Duo. Sin foto propia: la web enseña la del acabado por defecto («Imagen en …»). · data.js · auraphone-duo/cielo-nocturno"
+          },
+          "Blanco estelar": {
+            "type": "color",
+            "value": "#f1eee7",
+            "description": "Muestra «Blanco estelar» de auraPhone Duo. · data.js · auraphone-duo/blanco-estelar"
+          }
+        },
+        "auraPhone 18 Pro Max": {
+          "Negro": {
+            "type": "color",
+            "value": "#1d1d1f",
+            "description": "Muestra «Negro» de auraPhone 18 Pro Max. · data.js · auraphone-18-pro-max/negro"
+          },
+          "Plata": {
+            "type": "color",
+            "value": "#e3e4e5",
+            "description": "Muestra «Plata» de auraPhone 18 Pro Max. · data.js · auraphone-18-pro-max/plata"
+          },
+          "Azul glacial": {
+            "type": "color",
+            "value": "#bcd0df",
+            "description": "Muestra «Azul glacial» de auraPhone 18 Pro Max. · data.js · auraphone-18-pro-max/azul-glacial"
+          },
+          "Burdeos": {
+            "type": "color",
+            "value": "#5a1a2a",
+            "description": "Muestra «Burdeos» de auraPhone 18 Pro Max. · data.js · auraphone-18-pro-max/burdeos"
+          }
+        },
+        "auraPhone 18 Pro": {
+          "Negro": {
+            "type": "color",
+            "value": "#1d1d1f",
+            "description": "Muestra «Negro» de auraPhone 18 Pro. · data.js · auraphone-18-pro/negro"
+          },
+          "Plata": {
+            "type": "color",
+            "value": "#e3e4e5",
+            "description": "Muestra «Plata» de auraPhone 18 Pro. · data.js · auraphone-18-pro/plata"
+          },
+          "Azul glacial": {
+            "type": "color",
+            "value": "#bcd0df",
+            "description": "Muestra «Azul glacial» de auraPhone 18 Pro. · data.js · auraphone-18-pro/azul-glacial"
+          },
+          "Burdeos": {
+            "type": "color",
+            "value": "#5a1a2a",
+            "description": "Muestra «Burdeos» de auraPhone 18 Pro. · data.js · auraphone-18-pro/burdeos"
+          }
+        },
+        "auraPad Pro 13″": {
+          "Negro espacial": {
+            "type": "color",
+            "value": "#2e2e30",
+            "description": "Muestra «Negro espacial» de auraPad Pro 13″. · data.js · aurapad-pro-13/negro-espacial"
+          },
+          "Plata": {
+            "type": "color",
+            "value": "#e3e4e5",
+            "description": "Muestra «Plata» de auraPad Pro 13″. · data.js · aurapad-pro-13/plata"
+          }
+        },
+        "auraPad Pro 11″": {
+          "Negro espacial": {
+            "type": "color",
+            "value": "#2e2e30",
+            "description": "Muestra «Negro espacial» de auraPad Pro 11″. · data.js · aurapad-pro-11/negro-espacial"
+          },
+          "Plata": {
+            "type": "color",
+            "value": "#e3e4e5",
+            "description": "Muestra «Plata» de auraPad Pro 11″. · data.js · aurapad-pro-11/plata"
+          }
+        },
+        "auraPad Air 13″": {
+          "Gris espacial": {
+            "type": "color",
+            "value": "#7d7e80",
+            "description": "Muestra «Gris espacial» de auraPad Air 13″. · data.js · aurapad-air-13/gris-espacial"
+          },
+          "Azul": {
+            "type": "color",
+            "value": "#c9d6e2",
+            "description": "Muestra «Azul» de auraPad Air 13″. · data.js · aurapad-air-13/azul"
+          },
+          "Púrpura": {
+            "type": "color",
+            "value": "#dad3e3",
+            "description": "Muestra «Púrpura» de auraPad Air 13″. · data.js · aurapad-air-13/purpura"
+          },
+          "Blanco estrella": {
+            "type": "color",
+            "value": "#f0e9de",
+            "description": "Muestra «Blanco estrella» de auraPad Air 13″. · data.js · aurapad-air-13/blanco-estrella"
+          }
+        },
+        "auraBook Pro 16″": {
+          "Negro espacial": {
+            "type": "color",
+            "value": "#2e2c2e",
+            "description": "Muestra «Negro espacial» de auraBook Pro 16″. · data.js · aurabook-pro-16/negro-espacial"
+          },
+          "Plata": {
+            "type": "color",
+            "value": "#e3e4e5",
+            "description": "Muestra «Plata» de auraBook Pro 16″. · data.js · aurabook-pro-16/plata"
+          }
+        },
+        "auraBook Pro 14″": {
+          "Negro espacial": {
+            "type": "color",
+            "value": "#2e2c2e",
+            "description": "Muestra «Negro espacial» de auraBook Pro 14″. · data.js · aurabook-pro-14/negro-espacial"
+          },
+          "Plata": {
+            "type": "color",
+            "value": "#e3e4e5",
+            "description": "Muestra «Plata» de auraBook Pro 14″. · data.js · aurabook-pro-14/plata"
+          }
+        },
+        "auraBook Air 15″": {
+          "Azul cielo": {
+            "type": "color",
+            "value": "#c8d8e6",
+            "description": "Muestra «Azul cielo» de auraBook Air 15″. · data.js · aurabook-air-15/azul-cielo"
+          },
+          "Plata": {
+            "type": "color",
+            "value": "#e3e4e5",
+            "description": "Muestra «Plata» de auraBook Air 15″. · data.js · aurabook-air-15/plata"
+          },
+          "Blanco estrella": {
+            "type": "color",
+            "value": "#f0e5d3",
+            "description": "Muestra «Blanco estrella» de auraBook Air 15″. · data.js · aurabook-air-15/blanco-estrella"
+          },
+          "Medianoche": {
+            "type": "color",
+            "value": "#2e3641",
+            "description": "Muestra «Medianoche» de auraBook Air 15″. · data.js · aurabook-air-15/medianoche"
+          }
+        },
+        "auraPods Max 2": {
+          "Medianoche": {
+            "type": "color",
+            "value": "#2c3038",
+            "description": "Muestra «Medianoche» de auraPods Max 2. · data.js · aurapods-max-2/medianoche"
+          },
+          "Blanco estrella": {
+            "type": "color",
+            "value": "#ebe6dc",
+            "description": "Muestra «Blanco estrella» de auraPods Max 2. · data.js · aurapods-max-2/blanco-estrella"
+          },
+          "Azul": {
+            "type": "color",
+            "value": "#3d6f99",
+            "description": "Muestra «Azul» de auraPods Max 2. Sin foto propia: la web enseña la del acabado por defecto («Imagen en …»). · data.js · aurapods-max-2/azul"
+          },
+          "Púrpura": {
+            "type": "color",
+            "value": "#c3b3d4",
+            "description": "Muestra «Púrpura» de auraPods Max 2. · data.js · aurapods-max-2/purpura"
+          },
+          "Naranja": {
+            "type": "color",
+            "value": "#e59a6e",
+            "description": "Muestra «Naranja» de auraPods Max 2. · data.js · aurapods-max-2/naranja"
+          }
+        },
+        "auraPods Pro 3": {
+          "Blanco": {
+            "type": "color",
+            "value": "#f2f2f0",
+            "description": "Muestra «Blanco» de auraPods Pro 3. · data.js · aurapods-pro-3/blanco"
+          }
+        },
+        "auraPods 5": {
+          "Blanco": {
+            "type": "color",
+            "value": "#f2f2f0",
+            "description": "Muestra «Blanco» de auraPods 5. · data.js · aurapods-5/blanco"
+          }
+        }
+      }
+    },
+    "Radio": {
+      "2XS": {
+        "type": "borderRadius",
+        "value": "6",
+        "description": "Solo la caja de las casillas de verificación (20 px de lado). · --radius-2xs"
+      },
+      "XS": {
+        "type": "borderRadius",
+        "value": "8",
+        "description": "Etiquetas, filas de lista, insignia mono, icono de nota y de AuraCare+. · --radius-xs"
+      },
+      "SM": {
+        "type": "borderRadius",
+        "value": "12",
+        "description": "Campos, tabla, tarjetas pequeñas y de cifra, mensajes, icono de característica. · --radius-sm"
+      },
+      "MD": {
+        "type": "borderRadius",
+        "value": "16",
+        "description": "Opciones, notas, avisos, miniaturas, hueco de imagen, panel de cifras sobre foto. · --radius-md"
+      },
+      "LG": {
+        "type": "borderRadius",
+        "value": "20",
+        "description": "Tarjetas, teselas, imágenes, popover, galería, tarjeta de acceso. · --radius-lg"
+      },
+      "XL": {
+        "type": "borderRadius",
+        "value": "28",
+        "description": "Solo hojas y buscador (overlays grandes). · --radius-xl"
+      },
+      "Píldora": {
+        "type": "borderRadius",
+        "value": "999",
+        "description": "Botones, chips, insignias, segmentado, contador. · --radius-pill"
+      }
+    },
+    "Espaciado": {
+      "Escala": {
+        "2": {
+          "type": "spacing",
+          "value": "2",
+          "description": "0.125 rem. · 0.125rem"
+        },
+        "4": {
+          "type": "spacing",
+          "value": "4",
+          "description": "0.25 rem. · 0.25rem"
+        },
+        "6": {
+          "type": "spacing",
+          "value": "6",
+          "description": "0.375 rem. · 0.375rem"
+        },
+        "8": {
+          "type": "spacing",
+          "value": "8",
+          "description": "0.5 rem. · 0.5rem"
+        },
+        "10": {
+          "type": "spacing",
+          "value": "10",
+          "description": "0.625 rem. · 0.625rem"
+        },
+        "12": {
+          "type": "spacing",
+          "value": "12",
+          "description": "0.75 rem. · 0.75rem"
+        },
+        "14": {
+          "type": "spacing",
+          "value": "14",
+          "description": "0.875 rem. · 0.875rem"
+        },
+        "16": {
+          "type": "spacing",
+          "value": "16",
+          "description": "1 rem. · 1rem"
+        },
+        "18": {
+          "type": "spacing",
+          "value": "18",
+          "description": "1.125 rem. · 1.125rem"
+        },
+        "20": {
+          "type": "spacing",
+          "value": "20",
+          "description": "1.25 rem. · 1.25rem"
+        },
+        "24": {
+          "type": "spacing",
+          "value": "24",
+          "description": "1.5 rem. · 1.5rem"
+        },
+        "28": {
+          "type": "spacing",
+          "value": "28",
+          "description": "1.75 rem. · 1.75rem"
+        },
+        "32": {
+          "type": "spacing",
+          "value": "32",
+          "description": "2 rem. · 2rem"
+        },
+        "40": {
+          "type": "spacing",
+          "value": "40",
+          "description": "2.5 rem. · 2.5rem"
+        },
+        "48": {
+          "type": "spacing",
+          "value": "48",
+          "description": "3 rem. · 3rem"
+        },
+        "56": {
+          "type": "spacing",
+          "value": "56",
+          "description": "3.5 rem. · 3.5rem"
+        },
+        "64": {
+          "type": "spacing",
+          "value": "64",
+          "description": "4 rem. · 4rem"
+        },
+        "72": {
+          "type": "spacing",
+          "value": "72",
+          "description": "4.5 rem. · 4.5rem"
+        },
+        "80": {
+          "type": "spacing",
+          "value": "80",
+          "description": "5 rem. · 5rem"
+        },
+        "104": {
+          "type": "spacing",
+          "value": "104",
+          "description": "6.5 rem. · 6.5rem"
+        },
+        "120": {
+          "type": "spacing",
+          "value": "120",
+          "description": "7.5 rem. · 7.5rem"
+        }
+      },
+      "Margen lateral": {
+        "type": "spacing",
+        "value": "{Espaciado.Escala.40}",
+        "description": "Margen lateral del contenedor: clamp(1.25rem, 4vw, 2.5rem) → 40 px a 1440. · --gutter"
+      },
+      "Hueco": {
+        "type": "spacing",
+        "value": "{Espaciado.Escala.20}",
+        "description": "Hueco de rejillas, bento, tarjetas y carrusel. · --gap"
+      },
+      "Sección": {
+        "type": "spacing",
+        "value": "{Espaciado.Escala.120}",
+        "description": "Relleno vertical de .aura-section: clamp(4rem, 9vw, 7.5rem). · .aura-section"
+      },
+      "Sección compacta": {
+        "type": "spacing",
+        "value": "{Espaciado.Escala.64}",
+        "description": "Relleno vertical de .aura-section--tight (tareas y notas al pie). · .aura-section--tight"
+      },
+      "Héroe": {
+        "type": "spacing",
+        "value": "115.2",
+        "description": "Relleno vertical del héroe: clamp(3.5rem, 8vw, 7.5rem) → 115,2 px a 1440. · .aura-hero"
+      },
+      "Bloque": {
+        "type": "spacing",
+        "value": "{Espaciado.Escala.104}",
+        "description": "Entre dos bloques de una misma sección: clamp(3.5rem, 8vw, 6.5rem). · --space-block"
+      },
+      "Cifras": {
+        "type": "spacing",
+        "value": "{Espaciado.Escala.64}",
+        "description": "Antes y después de una fila de cifras: clamp(2.5rem, 5vw, 4rem). · --space-stats"
+      },
+      "Cabecera de sección": {
+        "type": "spacing",
+        "value": "{Espaciado.Escala.14}",
+        "description": "Hueco entre antetítulo, titular y entradilla de la cabecera de sección. · .aura-section-head"
+      },
+      "Bajo la cabecera": {
+        "type": "spacing",
+        "value": "{Espaciado.Escala.56}",
+        "description": "Margen inferior de la cabecera de sección: clamp(2rem, 4vw, 3.5rem). · .aura-section-head"
+      },
+      "Columnas del héroe": {
+        "type": "spacing",
+        "value": "{Espaciado.Escala.72}",
+        "description": "Hueco entre texto e imagen del héroe y del bloque texto + imagen: clamp(2rem, 5vw, 5rem). · .aura-hero__inner · .aura-split"
+      },
+      "Columnas de tienda": {
+        "type": "spacing",
+        "value": "57.6",
+        "description": "Hueco entre contenido y columna lateral: clamp(2rem, 4vw, 4rem) → 57,6 px a 1440. · .aura-layout"
+      },
+      "Texto del héroe": {
+        "type": "spacing",
+        "value": "{Espaciado.Escala.20}",
+        "description": "Hueco entre las piezas del texto del héroe y del bloque texto + imagen. · .aura-hero__copy"
+      },
+      "Pila": {
+        "type": "spacing",
+        "value": "{Espaciado.Escala.16}",
+        "description": "Hueco por defecto de .aura-stack. · --stack"
+      },
+      "Grupo": {
+        "type": "spacing",
+        "value": "{Espaciado.Escala.12}",
+        "description": "Hueco por defecto de .aura-cluster (filas de botones). · --cluster"
+      },
+      "Formulario": {
+        "type": "spacing",
+        "value": "{Espaciado.Escala.18}",
+        "description": "Hueco entre campos de un formulario. · .aura-form"
+      },
+      "Columnas de formulario": {
+        "type": "spacing",
+        "value": "{Espaciado.Escala.12}",
+        "description": "Hueco entre las dos columnas de una fila de formulario. · .aura-form__row"
+      },
+      "Componente": {
+        "Botón horizontal": {
+          "type": "spacing",
+          "value": "{Espaciado.Escala.24}",
+          "description": "Relleno lateral del botón (48 / 999 / 24). · .aura-btn"
+        },
+        "Botón vertical": {
+          "type": "spacing",
+          "value": "{Espaciado.Escala.8}",
+          "description": "Relleno vertical del botón (el alto lo fija el mínimo de 48 px). · .aura-btn"
+        },
+        "Botón hueco": {
+          "type": "spacing",
+          "value": "{Espaciado.Escala.8}",
+          "description": "Hueco entre etiqueta e icono del botón. · .aura-btn"
+        },
+        "Campo horizontal": {
+          "type": "spacing",
+          "value": "{Espaciado.Escala.16}",
+          "description": "Relleno lateral del campo (44 px con icono, 48 px con el ojo). · .aura-input"
+        },
+        "Campo vertical": {
+          "type": "spacing",
+          "value": "15",
+          "description": "Relleno vertical del campo (alto mínimo 56 px). · .aura-input"
+        },
+        "Campo hueco": {
+          "type": "spacing",
+          "value": "{Espaciado.Escala.8}",
+          "description": "Hueco entre etiqueta, campo y ayuda. · .aura-field"
+        },
+        "Campo con icono": {
+          "type": "spacing",
+          "value": "44",
+          "description": "Relleno izquierdo del campo con icono de apoyo. · .aura-field__icon ~ .aura-input"
+        },
+        "Insignia horizontal": {
+          "type": "spacing",
+          "value": "{Espaciado.Escala.10}",
+          "description": "Relleno lateral de la insignia. · .aura-badge"
+        },
+        "Insignia vertical": {
+          "type": "spacing",
+          "value": "{Espaciado.Escala.4}",
+          "description": "Relleno vertical de la insignia. · .aura-badge"
+        },
+        "Chip horizontal": {
+          "type": "spacing",
+          "value": "{Espaciado.Escala.12}",
+          "description": "Relleno lateral del chip informativo (14 px si es pulsable). · .aura-chip"
+        },
+        "Segmentado marco": {
+          "type": "spacing",
+          "value": "{Espaciado.Escala.4}",
+          "description": "Relleno del carril del segmentado. · .aura-segmented"
+        },
+        "Segmentado ítem": {
+          "type": "spacing",
+          "value": "{Espaciado.Escala.18}",
+          "description": "Relleno lateral de cada opción del segmentado. · .aura-segmented__item"
+        },
+        "Segmentado hueco": {
+          "type": "spacing",
+          "value": "{Espaciado.Escala.2}",
+          "description": "Hueco entre opciones del segmentado. · .aura-segmented"
+        },
+        "Opción horizontal": {
+          "type": "spacing",
+          "value": "{Espaciado.Escala.20}",
+          "description": "Relleno lateral de la tarjeta-opción. · .aura-option__card"
+        },
+        "Opción vertical": {
+          "type": "spacing",
+          "value": "{Espaciado.Escala.14}",
+          "description": "Relleno vertical de la tarjeta-opción. · .aura-option__card"
+        },
+        "Tarjeta": {
+          "type": "spacing",
+          "value": "{Espaciado.Escala.32}",
+          "description": "Relleno de .aura-card: clamp(1.25rem, 2.5vw, 2rem). · .aura-card"
+        },
+        "Tesela": {
+          "type": "spacing",
+          "value": "{Espaciado.Escala.28}",
+          "description": "Relleno de la tesela: clamp(1.25rem, 2.4vw, 1.75rem). · .aura-tile"
+        },
+        "Tarjeta de producto": {
+          "type": "spacing",
+          "value": "{Espaciado.Escala.24}",
+          "description": "Relleno del cuerpo de la tarjeta de modelo y de familia: clamp(1.125rem, 2vw, 1.5rem). · .aura-product-card__body"
+        },
+        "Tarjeta de producto hueco": {
+          "type": "spacing",
+          "value": "{Espaciado.Escala.8}",
+          "description": "Hueco entre las piezas del cuerpo de la tarjeta de modelo. · .aura-product-card__body"
+        },
+        "Resumen": {
+          "type": "spacing",
+          "value": "{Espaciado.Escala.28}",
+          "description": "Relleno del resumen pegajoso: clamp(1.25rem, 2.5vw, 1.75rem). · .aura-summary"
+        },
+        "Acceso": {
+          "type": "spacing",
+          "value": "44",
+          "description": "Relleno de la tarjeta de inicio de sesión: clamp(1.5rem, 5vw, 2.75rem). · .aura-auth-card"
+        },
+        "Galería": {
+          "type": "spacing",
+          "value": "{Espaciado.Escala.48}",
+          "description": "Relleno de la galería del configurador: clamp(1rem, 4vw, 3rem). · .aura-gallery"
+        },
+        "Popover": {
+          "type": "spacing",
+          "value": "{Espaciado.Escala.16}",
+          "description": "Relleno del popover. · .aura-popover"
+        },
+        "Nota vertical": {
+          "type": "spacing",
+          "value": "{Espaciado.Escala.18}",
+          "description": "Relleno vertical de la nota de uso. · .aura-note"
+        },
+        "Nota horizontal": {
+          "type": "spacing",
+          "value": "{Espaciado.Escala.20}",
+          "description": "Relleno lateral de la nota de uso. · .aura-note"
+        },
+        "Mensaje horizontal": {
+          "type": "spacing",
+          "value": "{Espaciado.Escala.16}",
+          "description": "Relleno lateral del mensaje de formulario. · .aura-alert"
+        },
+        "Mensaje vertical": {
+          "type": "spacing",
+          "value": "{Espaciado.Escala.14}",
+          "description": "Relleno vertical del mensaje de formulario. · .aura-alert"
+        },
+        "Pie arriba": {
+          "type": "spacing",
+          "value": "{Espaciado.Escala.64}",
+          "description": "Relleno superior del pie: clamp(2.5rem, 5vw, 4rem). · .aura-footer"
+        },
+        "Pie abajo": {
+          "type": "spacing",
+          "value": "{Espaciado.Escala.32}",
+          "description": "Relleno inferior del pie. · .aura-footer"
+        },
+        "Enlace de barra": {
+          "type": "spacing",
+          "value": "{Espaciado.Escala.14}",
+          "description": "Relleno lateral de cada enlace de la barra global (12 px entre 992 y 1199). · .aura-nav__link"
+        },
+        "Enlace local": {
+          "type": "spacing",
+          "value": "{Espaciado.Escala.10}",
+          "description": "Relleno lateral de cada enlace de la barra local. · .aura-localnav__link"
+        }
+      },
+      "Móvil": {
+        "Margen lateral": {
+          "type": "spacing",
+          "value": "{Espaciado.Escala.20}",
+          "description": "clamp(1.25rem, 4vw, 2.5rem) a 390 px. · --gutter"
+        },
+        "Sección": {
+          "type": "spacing",
+          "value": "{Espaciado.Escala.64}",
+          "description": "Relleno vertical de .aura-section a 390 px. · .aura-section"
+        },
+        "Sección compacta": {
+          "type": "spacing",
+          "value": "{Espaciado.Escala.40}",
+          "description": "Relleno vertical de .aura-section--tight a 390 px. · .aura-section--tight"
+        },
+        "Héroe": {
+          "type": "spacing",
+          "value": "{Espaciado.Escala.56}",
+          "description": "Relleno vertical del héroe a 390 px. · .aura-hero"
+        },
+        "Bloque": {
+          "type": "spacing",
+          "value": "{Espaciado.Escala.56}",
+          "description": "Entre bloques de una sección a 390 px. · --space-block"
+        },
+        "Cifras": {
+          "type": "spacing",
+          "value": "{Espaciado.Escala.40}",
+          "description": "Antes y después de las cifras a 390 px. · --space-stats"
+        },
+        "Bajo la cabecera": {
+          "type": "spacing",
+          "value": "{Espaciado.Escala.32}",
+          "description": "Margen inferior de la cabecera de sección a 390 px. · .aura-section-head"
+        },
+        "Columnas del héroe": {
+          "type": "spacing",
+          "value": "{Espaciado.Escala.32}",
+          "description": "Hueco entre texto e imagen (apilados) a 390 px. · .aura-hero__inner"
+        },
+        "Columnas de tienda": {
+          "type": "spacing",
+          "value": "{Espaciado.Escala.32}",
+          "description": "Hueco entre contenido y resumen (apilados) a 390 px. · .aura-layout"
+        },
+        "Tarjeta": {
+          "type": "spacing",
+          "value": "{Espaciado.Escala.20}",
+          "description": "Relleno de .aura-card a 390 px. · .aura-card"
+        },
+        "Tesela": {
+          "type": "spacing",
+          "value": "{Espaciado.Escala.20}",
+          "description": "Relleno de la tesela a 390 px. · .aura-tile"
+        },
+        "Tarjeta de producto": {
+          "type": "spacing",
+          "value": "{Espaciado.Escala.18}",
+          "description": "Relleno del cuerpo de la tarjeta de modelo a 390 px. · .aura-product-card__body"
+        },
+        "Resumen": {
+          "type": "spacing",
+          "value": "{Espaciado.Escala.20}",
+          "description": "Relleno del resumen a 390 px. · .aura-summary"
+        },
+        "Acceso": {
+          "type": "spacing",
+          "value": "{Espaciado.Escala.24}",
+          "description": "Relleno de la tarjeta de acceso a 390 px. · .aura-auth-card"
+        },
+        "Galería": {
+          "type": "spacing",
+          "value": "{Espaciado.Escala.16}",
+          "description": "Relleno de la galería a 390 px. · .aura-gallery"
+        },
+        "Pie arriba": {
+          "type": "spacing",
+          "value": "{Espaciado.Escala.40}",
+          "description": "Relleno superior del pie a 390 px. · .aura-footer"
+        }
+      }
+    },
+    "Tamaño": {
+      "Alto": {
+        "Botón": {
+          "type": "sizing",
+          "value": "48",
+          "description": "Alto mínimo del botón: un solo tamaño (48 / 999 / 24), no hay --sm. · .aura-btn"
+        },
+        "Campo": {
+          "type": "sizing",
+          "value": "56",
+          "description": "Alto mínimo de campo y selector (texto de 16 px). · .aura-input"
+        },
+        "Área de texto": {
+          "type": "sizing",
+          "value": "120",
+          "description": "Alto mínimo del área de texto. · .aura-textarea"
+        },
+        "Botón de icono": {
+          "type": "sizing",
+          "value": "44",
+          "description": "Botón de icono (cerrar, flechas, ojo, cantidad): 44 × 44. · .aura-icon-btn"
+        },
+        "Objetivo táctil": {
+          "type": "sizing",
+          "value": "44",
+          "description": "Objetivo mínimo en pantallas táctiles. · (pointer: coarse)"
+        },
+        "Objetivo con ratón": {
+          "type": "sizing",
+          "value": "24",
+          "description": "Objetivo mínimo con puntero fino. · WCAG 2.5.8"
+        },
+        "Chip": {
+          "type": "sizing",
+          "value": "28",
+          "description": "Chip informativo. · .aura-chip"
+        },
+        "Chip pulsable": {
+          "type": "sizing",
+          "value": "36",
+          "description": "Chip que es un botón o enlace (44 px en táctil). · button.aura-chip"
+        },
+        "Segmentado ítem": {
+          "type": "sizing",
+          "value": "40",
+          "description": "Opción del segmentado (44 px en táctil); el carril mide 48. · .aura-segmented__item"
+        },
+        "Opción": {
+          "type": "sizing",
+          "value": "68",
+          "description": "Alto mínimo de la tarjeta-opción del configurador. · .aura-option__card"
+        },
+        "Barra global": {
+          "type": "sizing",
+          "value": "56",
+          "description": "Barra global. · --nav-h"
+        },
+        "Barra local": {
+          "type": "sizing",
+          "value": "52",
+          "description": "Barra local de las páginas de familia. · --localnav-h"
+        },
+        "Fila de acordeón": {
+          "type": "sizing",
+          "value": "64",
+          "description": "Alto mínimo de una pregunta del acordeón. · .aura-accordion__summary"
+        },
+        "Fila de menú": {
+          "type": "sizing",
+          "value": "56",
+          "description": "Enlace del menú móvil. · .aura-menu__link"
+        },
+        "Fila de lista": {
+          "type": "sizing",
+          "value": "44",
+          "description": "Fila pulsable de popover, buscador y menú secundario. · .aura-popover__links a"
+        },
+        "Enlace del pie": {
+          "type": "sizing",
+          "value": "30",
+          "description": "Enlace del directorio del pie con ratón (44 en táctil). · .aura-footer__list a"
+        }
+      },
+      "Icono": {
+        "Campo": {
+          "type": "sizing",
+          "value": "16",
+          "description": "Icono de apoyo del campo y tamaño mínimo de un icono suelto. · .aura-field__icon"
+        },
+        "Barra": {
+          "type": "sizing",
+          "value": "17",
+          "description": "Iconos de barras y botones de icono, dentro de su caja de 44 px. · .aura-nav__action .bi"
+        },
+        "Tarjeta": {
+          "type": "sizing",
+          "value": "18",
+          "description": "Icono de característica y de aviso. · .aura-feature__icon"
+        },
+        "Vacío": {
+          "type": "sizing",
+          "value": "28",
+          "description": "Icono del estado vacío. · .aura-empty__icon"
+        }
+      },
+      "Contenedor": {
+        "Característica": {
+          "type": "sizing",
+          "value": "40",
+          "description": "Pastilla del icono de característica (radio 12). · .aura-feature__icon"
+        },
+        "Nota": {
+          "type": "sizing",
+          "value": "36",
+          "description": "Icono de la nota de uso (radio 8, dorado suave). · .aura-note__icon"
+        },
+        "AuraCare": {
+          "type": "sizing",
+          "value": "32",
+          "description": "Icono de AuraCare+ en la bolsa (radio 8). · .aura-bag-line__care-icon"
+        },
+        "Acordeón": {
+          "type": "sizing",
+          "value": "32",
+          "description": "Círculo del «+» del acordeón. · .aura-accordion__icon"
+        },
+        "Hueco de imagen": {
+          "type": "sizing",
+          "value": "48",
+          "description": "Círculo del icono del hueco de imagen. · .aura-slot__icon"
+        },
+        "Vacío": {
+          "type": "sizing",
+          "value": "72",
+          "description": "Círculo del estado vacío. · .aura-empty__icon"
+        },
+        "Paso": {
+          "type": "sizing",
+          "value": "28",
+          "description": "Número de un paso del checkout. · .aura-steps__num"
+        }
+      },
+      "Control": {
+        "Casilla": {
+          "type": "sizing",
+          "value": "20",
+          "description": "Caja de casilla y radio (radio 6 / círculo). · .aura-check__box"
+        },
+        "Muestra": {
+          "type": "sizing",
+          "value": "32",
+          "description": "Punto de la muestra de color, dentro de un objetivo de 44 px. · .aura-swatch__dot"
+        },
+        "Muestra objetivo": {
+          "type": "sizing",
+          "value": "44",
+          "description": "Objetivo de la muestra de color. · .aura-swatch"
+        },
+        "Punto de color": {
+          "type": "sizing",
+          "value": "12",
+          "description": "Punto informativo de color de la tarjeta de modelo. · .aura-swatch-list__dot"
+        },
+        "Punto del carrusel": {
+          "type": "sizing",
+          "value": "8",
+          "description": "Punto del carrusel (×1,25 el activo). · .aura-carousel__dot"
+        },
+        "Contador": {
+          "type": "sizing",
+          "value": "18",
+          "description": "Contador de la bolsa. · .aura-nav__count"
+        },
+        "Tirador ancho": {
+          "type": "sizing",
+          "value": "36",
+          "description": "Tirador de la hoja inferior. · .aura-sheet__grabber"
+        },
+        "Tirador alto": {
+          "type": "sizing",
+          "value": "5",
+          "description": "Tirador de la hoja inferior. · .aura-sheet__grabber"
+        }
+      },
+      "Marca": {
+        "Normal": {
+          "type": "sizing",
+          "value": "28",
+          "description": "Logotipo en barra y pie (img/aura-72.png). · .aura-brand__mark"
+        },
+        "Grande": {
+          "type": "sizing",
+          "value": "36",
+          "description": "Logotipo en la tarjeta de acceso. · .aura-brand--lg .aura-brand__mark"
+        }
+      },
+      "Ancho": {
+        "Contenedor": {
+          "type": "sizing",
+          "value": "1180",
+          "description": "Ancho de contenido de .aura-container. · --container"
+        },
+        "Contenedor con márgenes": {
+          "type": "sizing",
+          "value": "1260",
+          "description": "Contenedor más los dos márgenes laterales a 1440 px. · .aura-container"
+        },
+        "Contenedor estrecho": {
+          "type": "sizing",
+          "value": "800",
+          "description": "Preguntas frecuentes, texto legal, buscador y formularios largos. · .aura-container--narrow"
+        },
+        "Contenedor ancho": {
+          "type": "sizing",
+          "value": "1440",
+          "description": "Bloques que piden más anchura; también el ancho de los marcos de la guía. · .aura-container--wide"
+        },
+        "Cabecera de sección": {
+          "type": "sizing",
+          "value": "736",
+          "description": "Ancho máximo de la cabecera de sección (46 rem). · .aura-section-head"
+        },
+        "Texto del héroe": {
+          "type": "sizing",
+          "value": "544",
+          "description": "Ancho máximo del texto del héroe partido (34 rem). · .aura-hero__copy"
+        },
+        "Héroe centrado": {
+          "type": "sizing",
+          "value": "832",
+          "description": "Ancho máximo del texto del héroe centrado y de la cita (52 rem). · .aura-hero--center .aura-hero__copy"
+        },
+        "Imagen centrada": {
+          "type": "sizing",
+          "value": "960",
+          "description": "Ancho máximo de la imagen del héroe centrado (60 rem). · .aura-hero--center .aura-hero__media"
+        },
+        "Columna lateral": {
+          "type": "sizing",
+          "value": "384",
+          "description": "Columna lateral de bolsa, checkout y cuenta (entre 320 y 384). · .aura-layout--aside"
+        },
+        "Columna lateral mínima": {
+          "type": "sizing",
+          "value": "320",
+          "description": "Mínimo de la columna lateral. · .aura-layout--aside"
+        },
+        "Popover mínimo": {
+          "type": "sizing",
+          "value": "256",
+          "description": "Ancho mínimo del popover. · .aura-popover"
+        },
+        "Popover máximo": {
+          "type": "sizing",
+          "value": "384",
+          "description": "Ancho máximo del popover. · .aura-popover"
+        },
+        "Popover de bolsa": {
+          "type": "sizing",
+          "value": "352",
+          "description": "Popover de la bolsa. · .aura-bag-popover"
+        },
+        "Avisos": {
+          "type": "sizing",
+          "value": "400",
+          "description": "Columna de avisos desde 576 px. · .aura-toasts"
+        },
+        "Hoja lateral": {
+          "type": "sizing",
+          "value": "448",
+          "description": "Cajón lateral desde 768 px. · .aura-sheet__panel"
+        },
+        "Hoja inferior": {
+          "type": "sizing",
+          "value": "640",
+          "description": "Hoja inferior centrada desde 768 px. · .aura-sheet--bottom"
+        },
+        "Acceso": {
+          "type": "sizing",
+          "value": "520",
+          "description": "Tarjeta de inicio de sesión. · .aura-auth-card"
+        },
+        "Acceso ancho": {
+          "type": "sizing",
+          "value": "560",
+          "description": "Tarjeta de registro. · .aura-auth-card--wide"
+        },
+        "Tabla mínima": {
+          "type": "sizing",
+          "value": "672",
+          "description": "Ancho mínimo de la tabla comparativa (544 por debajo de 576 px). · .aura-table"
+        },
+        "Diapositiva": {
+          "type": "sizing",
+          "value": "416",
+          "description": "Diapositiva del carrusel: min(84 %, 26 rem). · --aura-slide"
+        },
+        "Diapositiva ancha": {
+          "type": "sizing",
+          "value": "864",
+          "description": "Diapositiva del carrusel ancho: min(88 %, 54 rem). · .aura-carousel--wide"
+        }
+      },
+      "Punto de corte": {
+        "Teléfono": {
+          "type": "sizing",
+          "value": "390",
+          "description": "Teléfono de referencia: una columna, márgenes de 20 px. · 390 px"
+        },
+        "SM": {
+          "type": "sizing",
+          "value": "576",
+          "description": "Filas de formulario a dos columnas; avisos a la derecha. · ≥ 576 px (36 em)"
+        },
+        "MD": {
+          "type": "sizing",
+          "value": "768",
+          "description": "Hoja → cajón lateral; .aura-grid--3 a tres columnas. · ≥ 768 px (48 em)"
+        },
+        "LG": {
+          "type": "sizing",
+          "value": "992",
+          "description": "Héroe a dos columnas, barra global con enlaces, resumen pegajoso. · ≥ 992 px"
+        },
+        "XL": {
+          "type": "sizing",
+          "value": "1200",
+          "description": "«Iniciar sesión» visible, .aura-grid--4 en una fila. · ≥ 1200 px (75 em)"
+        },
+        "Escritorio": {
+          "type": "sizing",
+          "value": "1440",
+          "description": "Escritorio de referencia (los valores de estos tokens). · 1440 px"
+        }
+      }
+    },
+    "Borde": {
+      "Línea": {
+        "type": "borderWidth",
+        "value": "1",
+        "description": "Bordes de tarjetas, campos, botones y separadores. · border: 1px"
+      },
+      "Contorno de foco": {
+        "type": "borderWidth",
+        "value": "2",
+        "description": "Contorno de :focus-visible (3 px con «más contraste»). · :focus-visible"
+      },
+      "Separación del foco": {
+        "type": "dimension",
+        "value": "3px",
+        "description": "Separación entre el elemento y su contorno de foco. · outline-offset"
+      },
+      "Anillo de foco": {
+        "type": "borderWidth",
+        "value": "4",
+        "description": "Anillo azul al 40 % de los campos en foco. · .aura-input:focus"
+      }
+    },
+    "Opacidad": {
+      "Pulsado": {
+        "type": "opacity",
+        "value": "60%",
+        "description": "Enlaces, barras y filas se atenúan al instante en la pulsación. · .aura-link:active"
+      },
+      "Pulsado sin movimiento": {
+        "type": "opacity",
+        "value": "70%",
+        "description": "Pulsación de botones y controles con «reducir movimiento» (sin escala). · @media (prefers-reduced-motion)"
+      },
+      "Tarjeta pulsada": {
+        "type": "opacity",
+        "value": "80%",
+        "description": "Tarjeta, opción o muestra pulsada con «reducir movimiento». · @media (prefers-reduced-motion)"
+      },
+      "Halo en reposo": {
+        "type": "opacity",
+        "value": "55%",
+        "description": "Opacidad del halo del botón primario en reposo. · .aura-btn--primary::after"
+      },
+      "Halo en hover": {
+        "type": "opacity",
+        "value": "100%",
+        "description": "Opacidad del halo del botón primario en hover. · .aura-btn--primary:hover::after"
+      },
+      "Casilla desactivada": {
+        "type": "opacity",
+        "value": "45%",
+        "description": "Casilla o radio desactivados (y su etiqueta). · .aura-check__input:disabled ~ *"
+      },
+      "Punto inactivo": {
+        "type": "opacity",
+        "value": "40%",
+        "description": "Punto inactivo del carrusel (3,7:1 sobre negro). · .aura-carousel__dot::before"
+      }
+    },
+    "Capa": {
+      "Barra local": {
+        "type": "number",
+        "value": 1020,
+        "description": "Barra local. · --z-localnav"
+      },
+      "Barra de compra": {
+        "type": "number",
+        "value": 1025,
+        "description": "Barra de compra fija. · --z-buybar"
+      },
+      "Barra global": {
+        "type": "number",
+        "value": 1030,
+        "description": "Barra global. · --z-nav"
+      },
+      "Overlay": {
+        "type": "number",
+        "value": 1050,
+        "description": "Buscador y menú móvil. · --z-overlay"
+      },
+      "Hoja": {
+        "type": "number",
+        "value": 1060,
+        "description": "Hoja y cajón. · --z-sheet"
+      },
+      "Aviso": {
+        "type": "number",
+        "value": 1080,
+        "description": "Avisos. · --z-toast"
+      }
+    },
+    "Tipografía": {
+      "Familia": {
+        "Display": {
+          "type": "fontFamilies",
+          "value": "Kanit",
+          "description": "Titulares, cifras, precios y momentos de marca (pesos 500 y 600). · --font-display"
+        },
+        "Interfaz": {
+          "type": "fontFamilies",
+          "value": "Inter",
+          "description": "Cuerpo, etiquetas y controles (400–700, eje óptico 14–32). · --font-ui"
+        },
+        "Mono": {
+          "type": "fontFamilies",
+          "value": "Roboto Mono",
+          "description": "Etiquetas técnicas cortas en mayúsculas. La web usa la monoespaciada del sistema (ui-monospace; Consolas en Windows); en Figma, Roboto Mono. · --font-mono"
+        }
+      },
+      "Peso": {
+        "Kanit": {
+          "Medium": {
+            "type": "fontWeights",
+            "value": "Medium",
+            "description": "Kanit 500: titulares, cifras y precios."
+          },
+          "SemiBold": {
+            "type": "fontWeights",
+            "value": "SemiBold",
+            "description": "Kanit 600: palabra «AURA» de la marca."
+          }
+        },
+        "Inter": {
+          "Regular": {
+            "type": "fontWeights",
+            "value": "Regular",
+            "description": "Inter 400 (y 450 de la web: Figma no tiene ese peso)."
+          },
+          "Medium": {
+            "type": "fontWeights",
+            "value": "Medium",
+            "description": "Inter 500."
+          },
+          "Semi Bold": {
+            "type": "fontWeights",
+            "value": "Semi Bold",
+            "description": "Inter 600 (y 650 de antetítulo, insignia y chip)."
+          },
+          "Bold": {
+            "type": "fontWeights",
+            "value": "Bold",
+            "description": "Inter 700."
+          }
+        },
+        "Mono": {
+          "Regular": {
+            "type": "fontWeights",
+            "value": "Regular",
+            "description": "Roboto Mono 400."
+          },
+          "Medium": {
+            "type": "fontWeights",
+            "value": "Medium",
+            "description": "Roboto Mono 500."
+          }
+        }
+      },
+      "Tamaño": {
+        "Display": {
+          "type": "fontSizes",
+          "value": "72",
+          "description": "Tamaño de Display a 1440 px. · .aura-display"
+        },
+        "H1": {
+          "type": "fontSizes",
+          "value": "56",
+          "description": "Tamaño de H1 a 1440 px. · .aura-h1"
+        },
+        "H2": {
+          "type": "fontSizes",
+          "value": "42",
+          "description": "Tamaño de H2 a 1440 px. · .aura-h2"
+        },
+        "H3": {
+          "type": "fontSizes",
+          "value": "28",
+          "description": "Tamaño de H3 a 1440 px. · .aura-h3 · .aura-product-card__name"
+        },
+        "H4": {
+          "type": "fontSizes",
+          "value": "20",
+          "description": "Tamaño de H4 a 1440 px. · .aura-h4 · .aura-legend · .aura-table-card__title · .aura-summary__title"
+        },
+        "Lead": {
+          "type": "fontSizes",
+          "value": "21",
+          "description": "Tamaño de Lead a 1440 px. · .aura-lead"
+        },
+        "Body": {
+          "type": "fontSizes",
+          "value": "16",
+          "description": "Tamaño de Body a 1440 px. · .aura-body"
+        },
+        "Small": {
+          "type": "fontSizes",
+          "value": "14",
+          "description": "Tamaño de Small a 1440 px. · .aura-small · .aura-feature__text · .aura-product-card__text"
+        },
+        "Caption": {
+          "type": "fontSizes",
+          "value": "13",
+          "description": "Tamaño de Caption a 1440 px. · .aura-caption · .aura-field__help · .aura-ribbon__text"
+        },
+        "Nota": {
+          "type": "fontSizes",
+          "value": "12",
+          "description": "Tamaño de Nota a 1440 px. · .aura-footnotes__list · .aura-table__note"
+        },
+        "Eyebrow": {
+          "type": "fontSizes",
+          "value": "12",
+          "description": "Tamaño de Eyebrow a 1440 px. · .aura-eyebrow"
+        },
+        "Eyebrow mono": {
+          "type": "fontSizes",
+          "value": "11",
+          "description": "Tamaño de Eyebrow mono a 1440 px. · .aura-eyebrow--mono"
+        },
+        "Eyebrow grande": {
+          "type": "fontSizes",
+          "value": "22",
+          "description": "Tamaño de Eyebrow grande a 1440 px. · .aura-eyebrow--lg"
+        },
+        "Insignia": {
+          "type": "fontSizes",
+          "value": "12",
+          "description": "Tamaño de Insignia a 1440 px. · .aura-badge · .aura-chip"
+        },
+        "Insignia mono": {
+          "type": "fontSizes",
+          "value": "11",
+          "description": "Tamaño de Insignia mono a 1440 px. · .aura-badge--mono"
+        },
+        "Botón": {
+          "type": "fontSizes",
+          "value": "15",
+          "description": "Tamaño de Botón a 1440 px. · .aura-btn"
+        },
+        "Enlace": {
+          "type": "fontSizes",
+          "value": "16",
+          "description": "Tamaño de Enlace a 1440 px. · .aura-link"
+        },
+        "Precio": {
+          "type": "fontSizes",
+          "value": "20",
+          "description": "Tamaño de Precio a 1440 px. · .aura-price"
+        },
+        "Precio pequeño": {
+          "type": "fontSizes",
+          "value": "16",
+          "description": "Tamaño de Precio pequeño a 1440 px. · .aura-price--sm"
+        },
+        "Precio grande": {
+          "type": "fontSizes",
+          "value": "36",
+          "description": "Tamaño de Precio grande a 1440 px. · .aura-price--lg"
+        },
+        "Precio compacto": {
+          "type": "fontSizes",
+          "value": "14",
+          "description": "Tamaño de Precio compacto a 1440 px. · .aura-bag-line--compact .aura-price"
+        },
+        "Mono": {
+          "type": "fontSizes",
+          "value": "12",
+          "description": "Tamaño de Mono a 1440 px. · .aura-mono"
+        },
+        "Cifra": {
+          "type": "fontSizes",
+          "value": "38",
+          "description": "Tamaño de Cifra a 1440 px. · .aura-stat__value"
+        },
+        "Cifra grande": {
+          "type": "fontSizes",
+          "value": "79.2",
+          "description": "Tamaño de Cifra grande a 1440 px. · .aura-stat--lg .aura-stat__value"
+        },
+        "Cifra destacada": {
+          "type": "fontSizes",
+          "value": "76",
+          "description": "Tamaño de Cifra destacada a 1440 px. · .aura-stat--md .aura-stat__value"
+        },
+        "Cifra XL": {
+          "type": "fontSizes",
+          "value": "160",
+          "description": "Tamaño de Cifra XL a 1440 px. · .aura-stat--xl .aura-stat__value"
+        },
+        "Cifra de característica": {
+          "type": "fontSizes",
+          "value": "24",
+          "description": "Tamaño de Cifra de característica a 1440 px. · .aura-feature__value · .aura-summary__row--total dd"
+        },
+        "Etiqueta de cifra": {
+          "type": "fontSizes",
+          "value": "13",
+          "description": "Tamaño de Etiqueta de cifra a 1440 px. · .aura-stat__label"
+        },
+        "Etiqueta de cifra grande": {
+          "type": "fontSizes",
+          "value": "16",
+          "description": "Tamaño de Etiqueta de cifra grande a 1440 px. · .aura-stat--lg .aura-stat__label"
+        },
+        "Etiqueta de cifra XL": {
+          "type": "fontSizes",
+          "value": "12",
+          "description": "Tamaño de Etiqueta de cifra XL a 1440 px. · .aura-stat--xl .aura-stat__label"
+        },
+        "Navegación": {
+          "Enlace global": {
+            "type": "fontSizes",
+            "value": "13",
+            "description": "Tamaño de Navegación/Enlace global a 1440 px. · .aura-nav__link"
+          },
+          "Enlace local": {
+            "type": "fontSizes",
+            "value": "12",
+            "description": "Tamaño de Navegación/Enlace local a 1440 px. · .aura-localnav__link"
+          },
+          "Título local": {
+            "type": "fontSizes",
+            "value": "19",
+            "description": "Tamaño de Navegación/Título local a 1440 px. · .aura-localnav__title"
+          },
+          "Marca": {
+            "type": "fontSizes",
+            "value": "18",
+            "description": "Tamaño de Navegación/Marca a 1440 px. · .aura-brand__word"
+          },
+          "Marca grande": {
+            "type": "fontSizes",
+            "value": "22",
+            "description": "Tamaño de Navegación/Marca grande a 1440 px. · .aura-brand--lg .aura-brand__word"
+          },
+          "Menú móvil": {
+            "type": "fontSizes",
+            "value": "28",
+            "description": "Tamaño de Navegación/Menú móvil a 1440 px. · .aura-menu__link"
+          },
+          "Migas": {
+            "type": "fontSizes",
+            "value": "13",
+            "description": "Tamaño de Navegación/Migas a 1440 px. · .aura-crumbs"
+          }
+        },
+        "Formulario": {
+          "Etiqueta": {
+            "type": "fontSizes",
+            "value": "13",
+            "description": "Tamaño de Formulario/Etiqueta a 1440 px. · .aura-field__label"
+          },
+          "Pista": {
+            "type": "fontSizes",
+            "value": "13",
+            "description": "Tamaño de Formulario/Pista a 1440 px. · .aura-field__hint"
+          },
+          "Campo": {
+            "type": "fontSizes",
+            "value": "16",
+            "description": "Tamaño de Formulario/Campo a 1440 px. · .aura-input · .aura-select · .aura-textarea"
+          },
+          "Leyenda pequeña": {
+            "type": "fontSizes",
+            "value": "14",
+            "description": "Tamaño de Formulario/Leyenda pequeña a 1440 px. · .aura-legend--sm"
+          },
+          "Casilla": {
+            "type": "fontSizes",
+            "value": "14",
+            "description": "Tamaño de Formulario/Casilla a 1440 px. · .aura-check · .aura-radio"
+          },
+          "Opción": {
+            "type": "fontSizes",
+            "value": "16",
+            "description": "Tamaño de Formulario/Opción a 1440 px. · .aura-option__title"
+          },
+          "Nota de opción": {
+            "type": "fontSizes",
+            "value": "13",
+            "description": "Tamaño de Formulario/Nota de opción a 1440 px. · .aura-option__note · .aura-option__price"
+          },
+          "Buscador": {
+            "type": "fontSizes",
+            "value": "28",
+            "description": "Tamaño de Formulario/Buscador a 1440 px. · .aura-search__input"
+          },
+          "Segmentado": {
+            "type": "fontSizes",
+            "value": "14",
+            "description": "Tamaño de Formulario/Segmentado a 1440 px. · .aura-segmented__item"
+          }
+        },
+        "Contenido": {
+          "Tesela": {
+            "type": "fontSizes",
+            "value": "15",
+            "description": "Tamaño de Contenido/Tesela a 1440 px. · .aura-tile__text"
+          },
+          "Título de característica": {
+            "type": "fontSizes",
+            "value": "15",
+            "description": "Tamaño de Contenido/Título de característica a 1440 px. · .aura-feature__title"
+          },
+          "Acabado": {
+            "type": "fontSizes",
+            "value": "13",
+            "description": "Tamaño de Contenido/Acabado a 1440 px. · .aura-product-card__finish"
+          },
+          "Cita": {
+            "type": "fontSizes",
+            "value": "36",
+            "description": "Tamaño de Contenido/Cita a 1440 px. · .aura-quote__text"
+          },
+          "Pregunta": {
+            "type": "fontSizes",
+            "value": "20",
+            "description": "Tamaño de Contenido/Pregunta a 1440 px. · .aura-accordion__summary"
+          },
+          "Tabla": {
+            "type": "fontSizes",
+            "value": "14",
+            "description": "Tamaño de Contenido/Tabla a 1440 px. · .aura-table"
+          },
+          "Cabecera de tabla": {
+            "type": "fontSizes",
+            "value": "14",
+            "description": "Tamaño de Contenido/Cabecera de tabla a 1440 px. · .aura-table thead th"
+          },
+          "Etiqueta de tabla": {
+            "type": "fontSizes",
+            "value": "11",
+            "description": "Tamaño de Contenido/Etiqueta de tabla a 1440 px. · .aura-table thead th:first-child"
+          },
+          "Título de cronología": {
+            "type": "fontSizes",
+            "value": "22",
+            "description": "Tamaño de Contenido/Título de cronología a 1440 px. · .aura-timeline__title · .aura-sheet__title"
+          },
+          "Fecha de cronología": {
+            "type": "fontSizes",
+            "value": "12",
+            "description": "Tamaño de Contenido/Fecha de cronología a 1440 px. · .aura-timeline__when"
+          },
+          "Título de nota": {
+            "type": "fontSizes",
+            "value": "14",
+            "description": "Tamaño de Contenido/Título de nota a 1440 px. · .aura-note__title · .aura-bag-line__care-title"
+          },
+          "Texto de nota": {
+            "type": "fontSizes",
+            "value": "14",
+            "description": "Tamaño de Contenido/Texto de nota a 1440 px. · .aura-note__text"
+          },
+          "Título de mensaje": {
+            "type": "fontSizes",
+            "value": "14",
+            "description": "Tamaño de Contenido/Título de mensaje a 1440 px. · .aura-alert__title"
+          }
+        },
+        "Tienda": {
+          "Línea de bolsa": {
+            "type": "fontSizes",
+            "value": "19",
+            "description": "Tamaño de Tienda/Línea de bolsa a 1440 px. · .aura-bag-line__name"
+          },
+          "Título de acceso": {
+            "type": "fontSizes",
+            "value": "28",
+            "description": "Tamaño de Tienda/Título de acceso a 1440 px. · .aura-auth-card__title"
+          }
+        },
+        "Overlay": {
+          "Título de popover": {
+            "type": "fontSizes",
+            "value": "18",
+            "description": "Tamaño de Overlay/Título de popover a 1440 px. · .aura-popover__title"
+          },
+          "Título de aviso": {
+            "type": "fontSizes",
+            "value": "14",
+            "description": "Tamaño de Overlay/Título de aviso a 1440 px. · .aura-toast__title"
+          },
+          "Texto de aviso": {
+            "type": "fontSizes",
+            "value": "13",
+            "description": "Tamaño de Overlay/Texto de aviso a 1440 px. · .aura-toast__text"
+          }
+        },
+        "Pie": {
+          "Encabezado": {
+            "type": "fontSizes",
+            "value": "14",
+            "description": "Tamaño de Pie/Encabezado a 1440 px. · .aura-footer__heading"
+          },
+          "Texto": {
+            "type": "fontSizes",
+            "value": "13",
+            "description": "Tamaño de Pie/Texto a 1440 px. · .aura-footer · .aura-footer__list a"
+          },
+          "Lema": {
+            "type": "fontSizes",
+            "value": "14",
+            "description": "Tamaño de Pie/Lema a 1440 px. · .aura-footer__tagline"
+          },
+          "Legal": {
+            "type": "fontSizes",
+            "value": "12",
+            "description": "Tamaño de Pie/Legal a 1440 px. · .aura-footer__legal · .aura-footer__demo"
+          }
+        },
+        "Móvil": {
+          "Display": {
+            "type": "fontSizes",
+            "value": "40.28",
+            "description": "Tamaño de Display a 390 px. · .aura-display"
+          },
+          "H1": {
+            "type": "fontSizes",
+            "value": "34",
+            "description": "Tamaño de H1 a 390 px. · .aura-h1"
+          },
+          "H2": {
+            "type": "fontSizes",
+            "value": "28",
+            "description": "Tamaño de H2 a 390 px. · .aura-h2"
+          },
+          "H3": {
+            "type": "fontSizes",
+            "value": "22.125",
+            "description": "Tamaño de H3 a 390 px. · .aura-h3 · .aura-product-card__name"
+          },
+          "Lead": {
+            "type": "fontSizes",
+            "value": "17.56",
+            "description": "Tamaño de Lead a 390 px. · .aura-lead"
+          },
+          "Eyebrow grande": {
+            "type": "fontSizes",
+            "value": "18",
+            "description": "Tamaño de Eyebrow grande a 390 px. · .aura-eyebrow--lg"
+          },
+          "Precio grande": {
+            "type": "fontSizes",
+            "value": "28",
+            "description": "Tamaño de Precio grande a 390 px. · .aura-price--lg"
+          },
+          "Cifra": {
+            "type": "fontSizes",
+            "value": "26",
+            "description": "Tamaño de Cifra a 390 px. · .aura-stat__value"
+          },
+          "Cifra grande": {
+            "type": "fontSizes",
+            "value": "48",
+            "description": "Tamaño de Cifra grande a 390 px. · .aura-stat--lg .aura-stat__value"
+          },
+          "Cifra destacada": {
+            "type": "fontSizes",
+            "value": "56",
+            "description": "Tamaño de Cifra destacada a 390 px. · .aura-stat--md .aura-stat__value"
+          },
+          "Cifra XL": {
+            "type": "fontSizes",
+            "value": "86.8",
+            "description": "Tamaño de Cifra XL a 390 px. · .aura-stat--xl .aura-stat__value"
+          },
+          "Navegación": {
+            "Enlace local": {
+              "type": "fontSizes",
+              "value": "15",
+              "description": "Tamaño de Navegación/Enlace local a 390 px. · .aura-localnav__link"
+            }
+          },
+          "Formulario": {
+            "Buscador": {
+              "type": "fontSizes",
+              "value": "20.68",
+              "description": "Tamaño de Formulario/Buscador a 390 px. · .aura-search__input"
+            }
+          },
+          "Contenido": {
+            "Cita": {
+              "type": "fontSizes",
+              "value": "24.62",
+              "description": "Tamaño de Contenido/Cita a 390 px. · .aura-quote__text"
+            },
+            "Pregunta": {
+              "type": "fontSizes",
+              "value": "17.56",
+              "description": "Tamaño de Contenido/Pregunta a 390 px. · .aura-accordion__summary"
+            },
+            "Tabla": {
+              "type": "fontSizes",
+              "value": "13",
+              "description": "Tamaño de Contenido/Tabla a 390 px. · .aura-table"
+            },
+            "Cabecera de tabla": {
+              "type": "fontSizes",
+              "value": "13",
+              "description": "Tamaño de Contenido/Cabecera de tabla a 390 px. · .aura-table thead th"
+            }
+          },
+          "Tienda": {
+            "Título de acceso": {
+              "type": "fontSizes",
+              "value": "24.7",
+              "description": "Tamaño de Tienda/Título de acceso a 390 px. · .aura-auth-card__title"
+            }
+          }
+        }
+      },
+      "Interlineado": {
+        "Display": {
+          "type": "lineHeights",
+          "value": "105%",
+          "description": "Interlineado de Texto/Display."
+        },
+        "H1": {
+          "type": "lineHeights",
+          "value": "108%",
+          "description": "Interlineado de Texto/H1."
+        },
+        "H2": {
+          "type": "lineHeights",
+          "value": "114%",
+          "description": "Interlineado de Texto/H2."
+        },
+        "H3": {
+          "type": "lineHeights",
+          "value": "122%",
+          "description": "Interlineado de Texto/H3."
+        },
+        "H4": {
+          "type": "lineHeights",
+          "value": "130%",
+          "description": "Interlineado de Texto/H4."
+        },
+        "Lead": {
+          "type": "lineHeights",
+          "value": "150%",
+          "description": "Interlineado de Texto/Lead."
+        },
+        "Body": {
+          "type": "lineHeights",
+          "value": "160%",
+          "description": "Interlineado de Texto/Body."
+        },
+        "Small": {
+          "type": "lineHeights",
+          "value": "150%",
+          "description": "Interlineado de Texto/Small."
+        },
+        "Caption": {
+          "type": "lineHeights",
+          "value": "145%",
+          "description": "Interlineado de Texto/Caption."
+        },
+        "Nota": {
+          "type": "lineHeights",
+          "value": "155%",
+          "description": "Interlineado de Texto/Nota."
+        },
+        "Eyebrow": {
+          "type": "lineHeights",
+          "value": "135%",
+          "description": "Interlineado de Texto/Eyebrow."
+        },
+        "Eyebrow mono": {
+          "type": "lineHeights",
+          "value": "135%",
+          "description": "Interlineado de Texto/Eyebrow mono."
+        },
+        "Eyebrow grande": {
+          "type": "lineHeights",
+          "value": "120%",
+          "description": "Interlineado de Texto/Eyebrow grande."
+        },
+        "Insignia": {
+          "type": "lineHeights",
+          "value": "130%",
+          "description": "Interlineado de Texto/Insignia."
+        },
+        "Insignia mono": {
+          "type": "lineHeights",
+          "value": "130%",
+          "description": "Interlineado de Texto/Insignia mono."
+        },
+        "Botón": {
+          "type": "lineHeights",
+          "value": "120%",
+          "description": "Interlineado de Texto/Botón."
+        },
+        "Enlace": {
+          "type": "lineHeights",
+          "value": "160%",
+          "description": "Interlineado de Texto/Enlace."
+        },
+        "Precio": {
+          "type": "lineHeights",
+          "value": "120%",
+          "description": "Interlineado de Texto/Precio."
+        },
+        "Precio pequeño": {
+          "type": "lineHeights",
+          "value": "120%",
+          "description": "Interlineado de Texto/Precio pequeño."
+        },
+        "Precio grande": {
+          "type": "lineHeights",
+          "value": "110%",
+          "description": "Interlineado de Texto/Precio grande."
+        },
+        "Precio compacto": {
+          "type": "lineHeights",
+          "value": "120%",
+          "description": "Interlineado de Texto/Precio compacto."
+        },
+        "Mono": {
+          "type": "lineHeights",
+          "value": "160%",
+          "description": "Interlineado de Texto/Mono."
+        },
+        "Cifra": {
+          "type": "lineHeights",
+          "value": "105%",
+          "description": "Interlineado de Texto/Cifra."
+        },
+        "Cifra grande": {
+          "type": "lineHeights",
+          "value": "100%",
+          "description": "Interlineado de Texto/Cifra grande."
+        },
+        "Cifra destacada": {
+          "type": "lineHeights",
+          "value": "100%",
+          "description": "Interlineado de Texto/Cifra destacada."
+        },
+        "Cifra XL": {
+          "type": "lineHeights",
+          "value": "90%",
+          "description": "Interlineado de Texto/Cifra XL."
+        },
+        "Cifra de característica": {
+          "type": "lineHeights",
+          "value": "115%",
+          "description": "Interlineado de Texto/Cifra de característica."
+        },
+        "Etiqueta de cifra": {
+          "type": "lineHeights",
+          "value": "140%",
+          "description": "Interlineado de Texto/Etiqueta de cifra."
+        },
+        "Etiqueta de cifra grande": {
+          "type": "lineHeights",
+          "value": "145%",
+          "description": "Interlineado de Texto/Etiqueta de cifra grande."
+        },
+        "Etiqueta de cifra XL": {
+          "type": "lineHeights",
+          "value": "140%",
+          "description": "Interlineado de Texto/Etiqueta de cifra XL."
+        },
+        "Navegación": {
+          "Enlace global": {
+            "type": "lineHeights",
+            "value": "160%",
+            "description": "Interlineado de Texto/Navegación/Enlace global."
+          },
+          "Enlace local": {
+            "type": "lineHeights",
+            "value": "160%",
+            "description": "Interlineado de Texto/Navegación/Enlace local."
+          },
+          "Título local": {
+            "type": "lineHeights",
+            "value": "52",
+            "description": "Interlineado de Texto/Navegación/Título local (px)."
+          },
+          "Marca": {
+            "type": "lineHeights",
+            "value": "100%",
+            "description": "Interlineado de Texto/Navegación/Marca."
+          },
+          "Marca grande": {
+            "type": "lineHeights",
+            "value": "100%",
+            "description": "Interlineado de Texto/Navegación/Marca grande."
+          },
+          "Menú móvil": {
+            "type": "lineHeights",
+            "value": "120%",
+            "description": "Interlineado de Texto/Navegación/Menú móvil."
+          },
+          "Migas": {
+            "type": "lineHeights",
+            "value": "150%",
+            "description": "Interlineado de Texto/Navegación/Migas."
+          }
+        },
+        "Formulario": {
+          "Etiqueta": {
+            "type": "lineHeights",
+            "value": "140%",
+            "description": "Interlineado de Texto/Formulario/Etiqueta."
+          },
+          "Pista": {
+            "type": "lineHeights",
+            "value": "140%",
+            "description": "Interlineado de Texto/Formulario/Pista."
+          },
+          "Campo": {
+            "type": "lineHeights",
+            "value": "150%",
+            "description": "Interlineado de Texto/Formulario/Campo."
+          },
+          "Leyenda pequeña": {
+            "type": "lineHeights",
+            "value": "150%",
+            "description": "Interlineado de Texto/Formulario/Leyenda pequeña."
+          },
+          "Casilla": {
+            "type": "lineHeights",
+            "value": "22",
+            "description": "Interlineado de Texto/Formulario/Casilla (px)."
+          },
+          "Opción": {
+            "type": "lineHeights",
+            "value": "135%",
+            "description": "Interlineado de Texto/Formulario/Opción."
+          },
+          "Nota de opción": {
+            "type": "lineHeights",
+            "value": "140%",
+            "description": "Interlineado de Texto/Formulario/Nota de opción."
+          },
+          "Buscador": {
+            "type": "lineHeights",
+            "value": "160%",
+            "description": "Interlineado de Texto/Formulario/Buscador."
+          },
+          "Segmentado": {
+            "type": "lineHeights",
+            "value": "160%",
+            "description": "Interlineado de Texto/Formulario/Segmentado."
+          }
+        },
+        "Contenido": {
+          "Tesela": {
+            "type": "lineHeights",
+            "value": "150%",
+            "description": "Interlineado de Texto/Contenido/Tesela."
+          },
+          "Título de característica": {
+            "type": "lineHeights",
+            "value": "135%",
+            "description": "Interlineado de Texto/Contenido/Título de característica."
+          },
+          "Acabado": {
+            "type": "lineHeights",
+            "value": "160%",
+            "description": "Interlineado de Texto/Contenido/Acabado."
+          },
+          "Cita": {
+            "type": "lineHeights",
+            "value": "120%",
+            "description": "Interlineado de Texto/Contenido/Cita."
+          },
+          "Pregunta": {
+            "type": "lineHeights",
+            "value": "130%",
+            "description": "Interlineado de Texto/Contenido/Pregunta."
+          },
+          "Tabla": {
+            "type": "lineHeights",
+            "value": "150%",
+            "description": "Interlineado de Texto/Contenido/Tabla."
+          },
+          "Cabecera de tabla": {
+            "type": "lineHeights",
+            "value": "150%",
+            "description": "Interlineado de Texto/Contenido/Cabecera de tabla."
+          },
+          "Etiqueta de tabla": {
+            "type": "lineHeights",
+            "value": "150%",
+            "description": "Interlineado de Texto/Contenido/Etiqueta de tabla."
+          },
+          "Título de cronología": {
+            "type": "lineHeights",
+            "value": "125%",
+            "description": "Interlineado de Texto/Contenido/Título de cronología."
+          },
+          "Fecha de cronología": {
+            "type": "lineHeights",
+            "value": "160%",
+            "description": "Interlineado de Texto/Contenido/Fecha de cronología."
+          },
+          "Título de nota": {
+            "type": "lineHeights",
+            "value": "140%",
+            "description": "Interlineado de Texto/Contenido/Título de nota."
+          },
+          "Texto de nota": {
+            "type": "lineHeights",
+            "value": "155%",
+            "description": "Interlineado de Texto/Contenido/Texto de nota."
+          },
+          "Título de mensaje": {
+            "type": "lineHeights",
+            "value": "150%",
+            "description": "Interlineado de Texto/Contenido/Título de mensaje."
+          }
+        },
+        "Tienda": {
+          "Línea de bolsa": {
+            "type": "lineHeights",
+            "value": "125%",
+            "description": "Interlineado de Texto/Tienda/Línea de bolsa."
+          },
+          "Título de acceso": {
+            "type": "lineHeights",
+            "value": "122%",
+            "description": "Interlineado de Texto/Tienda/Título de acceso."
+          }
+        },
+        "Overlay": {
+          "Título de popover": {
+            "type": "lineHeights",
+            "value": "130%",
+            "description": "Interlineado de Texto/Overlay/Título de popover."
+          },
+          "Título de aviso": {
+            "type": "lineHeights",
+            "value": "135%",
+            "description": "Interlineado de Texto/Overlay/Título de aviso."
+          },
+          "Texto de aviso": {
+            "type": "lineHeights",
+            "value": "140%",
+            "description": "Interlineado de Texto/Overlay/Texto de aviso."
+          }
+        },
+        "Pie": {
+          "Encabezado": {
+            "type": "lineHeights",
+            "value": "130%",
+            "description": "Interlineado de Texto/Pie/Encabezado."
+          },
+          "Texto": {
+            "type": "lineHeights",
+            "value": "150%",
+            "description": "Interlineado de Texto/Pie/Texto."
+          },
+          "Lema": {
+            "type": "lineHeights",
+            "value": "155%",
+            "description": "Interlineado de Texto/Pie/Lema."
+          },
+          "Legal": {
+            "type": "lineHeights",
+            "value": "150%",
+            "description": "Interlineado de Texto/Pie/Legal."
+          }
+        },
+        "Móvil": {
+          "Display": {
+            "type": "lineHeights",
+            "value": "105%",
+            "description": "Interlineado de Texto/Móvil/Display."
+          },
+          "H1": {
+            "type": "lineHeights",
+            "value": "108%",
+            "description": "Interlineado de Texto/Móvil/H1."
+          },
+          "H2": {
+            "type": "lineHeights",
+            "value": "114%",
+            "description": "Interlineado de Texto/Móvil/H2."
+          },
+          "H3": {
+            "type": "lineHeights",
+            "value": "122%",
+            "description": "Interlineado de Texto/Móvil/H3."
+          },
+          "Lead": {
+            "type": "lineHeights",
+            "value": "150%",
+            "description": "Interlineado de Texto/Móvil/Lead."
+          },
+          "Eyebrow grande": {
+            "type": "lineHeights",
+            "value": "120%",
+            "description": "Interlineado de Texto/Móvil/Eyebrow grande."
+          },
+          "Precio grande": {
+            "type": "lineHeights",
+            "value": "110%",
+            "description": "Interlineado de Texto/Móvil/Precio grande."
+          },
+          "Cifra": {
+            "type": "lineHeights",
+            "value": "105%",
+            "description": "Interlineado de Texto/Móvil/Cifra."
+          },
+          "Cifra grande": {
+            "type": "lineHeights",
+            "value": "100%",
+            "description": "Interlineado de Texto/Móvil/Cifra grande."
+          },
+          "Cifra destacada": {
+            "type": "lineHeights",
+            "value": "100%",
+            "description": "Interlineado de Texto/Móvil/Cifra destacada."
+          },
+          "Cifra XL": {
+            "type": "lineHeights",
+            "value": "90%",
+            "description": "Interlineado de Texto/Móvil/Cifra XL."
+          },
+          "Navegación": {
+            "Enlace local": {
+              "type": "lineHeights",
+              "value": "160%",
+              "description": "Interlineado de Texto/Móvil/Navegación/Enlace local."
+            }
+          },
+          "Formulario": {
+            "Buscador": {
+              "type": "lineHeights",
+              "value": "160%",
+              "description": "Interlineado de Texto/Móvil/Formulario/Buscador."
+            }
+          },
+          "Contenido": {
+            "Cita": {
+              "type": "lineHeights",
+              "value": "120%",
+              "description": "Interlineado de Texto/Móvil/Contenido/Cita."
+            },
+            "Pregunta": {
+              "type": "lineHeights",
+              "value": "130%",
+              "description": "Interlineado de Texto/Móvil/Contenido/Pregunta."
+            },
+            "Tabla": {
+              "type": "lineHeights",
+              "value": "150%",
+              "description": "Interlineado de Texto/Móvil/Contenido/Tabla."
+            },
+            "Cabecera de tabla": {
+              "type": "lineHeights",
+              "value": "150%",
+              "description": "Interlineado de Texto/Móvil/Contenido/Cabecera de tabla."
+            }
+          },
+          "Tienda": {
+            "Título de acceso": {
+              "type": "lineHeights",
+              "value": "122%",
+              "description": "Interlineado de Texto/Móvil/Tienda/Título de acceso."
+            }
+          }
+        }
+      },
+      "Tracking": {
+        "Display": {
+          "type": "letterSpacing",
+          "value": "-2.5%",
+          "description": "Tracking de Texto/Display (-0.025 em)."
+        },
+        "H1": {
+          "type": "letterSpacing",
+          "value": "-2%",
+          "description": "Tracking de Texto/H1 (-0.02 em)."
+        },
+        "H2": {
+          "type": "letterSpacing",
+          "value": "-1.5%",
+          "description": "Tracking de Texto/H2 (-0.015 em)."
+        },
+        "H3": {
+          "type": "letterSpacing",
+          "value": "-0.8%",
+          "description": "Tracking de Texto/H3 (-0.008 em)."
+        },
+        "H4": {
+          "type": "letterSpacing",
+          "value": "-0.4%",
+          "description": "Tracking de Texto/H4 (-0.004 em)."
+        },
+        "Lead": {
+          "type": "letterSpacing",
+          "value": "-0.3%",
+          "description": "Tracking de Texto/Lead (-0.003 em)."
+        },
+        "Body": {
+          "type": "letterSpacing",
+          "value": "0%",
+          "description": "Tracking de Texto/Body (0 em)."
+        },
+        "Small": {
+          "type": "letterSpacing",
+          "value": "0%",
+          "description": "Tracking de Texto/Small (0 em)."
+        },
+        "Caption": {
+          "type": "letterSpacing",
+          "value": "0.6%",
+          "description": "Tracking de Texto/Caption (0.006 em)."
+        },
+        "Nota": {
+          "type": "letterSpacing",
+          "value": "1.2%",
+          "description": "Tracking de Texto/Nota (0.012 em)."
+        },
+        "Eyebrow": {
+          "type": "letterSpacing",
+          "value": "4%",
+          "description": "Tracking de Texto/Eyebrow (0.04 em)."
+        },
+        "Eyebrow mono": {
+          "type": "letterSpacing",
+          "value": "12%",
+          "description": "Tracking de Texto/Eyebrow mono (0.12 em)."
+        },
+        "Eyebrow grande": {
+          "type": "letterSpacing",
+          "value": "-0.4%",
+          "description": "Tracking de Texto/Eyebrow grande (-0.004 em)."
+        },
+        "Insignia": {
+          "type": "letterSpacing",
+          "value": "2%",
+          "description": "Tracking de Texto/Insignia (0.02 em)."
+        },
+        "Insignia mono": {
+          "type": "letterSpacing",
+          "value": "10%",
+          "description": "Tracking de Texto/Insignia mono (0.1 em)."
+        },
+        "Botón": {
+          "type": "letterSpacing",
+          "value": "0%",
+          "description": "Tracking de Texto/Botón (0 em)."
+        },
+        "Enlace": {
+          "type": "letterSpacing",
+          "value": "0%",
+          "description": "Tracking de Texto/Enlace (0 em)."
+        },
+        "Precio": {
+          "type": "letterSpacing",
+          "value": "-0.5%",
+          "description": "Tracking de Texto/Precio (-0.005 em)."
+        },
+        "Precio pequeño": {
+          "type": "letterSpacing",
+          "value": "0%",
+          "description": "Tracking de Texto/Precio pequeño (0 em)."
+        },
+        "Precio grande": {
+          "type": "letterSpacing",
+          "value": "-1.4%",
+          "description": "Tracking de Texto/Precio grande (-0.014 em)."
+        },
+        "Precio compacto": {
+          "type": "letterSpacing",
+          "value": "0%",
+          "description": "Tracking de Texto/Precio compacto (0 em)."
+        },
+        "Mono": {
+          "type": "letterSpacing",
+          "value": "8%",
+          "description": "Tracking de Texto/Mono (0.08 em)."
+        },
+        "Cifra": {
+          "type": "letterSpacing",
+          "value": "-1.6%",
+          "description": "Tracking de Texto/Cifra (-0.016 em)."
+        },
+        "Cifra grande": {
+          "type": "letterSpacing",
+          "value": "-3%",
+          "description": "Tracking de Texto/Cifra grande (-0.03 em)."
+        },
+        "Cifra destacada": {
+          "type": "letterSpacing",
+          "value": "-3.5%",
+          "description": "Tracking de Texto/Cifra destacada (-0.035 em)."
+        },
+        "Cifra XL": {
+          "type": "letterSpacing",
+          "value": "-4%",
+          "description": "Tracking de Texto/Cifra XL (-0.04 em)."
+        },
+        "Cifra de característica": {
+          "type": "letterSpacing",
+          "value": "-1%",
+          "description": "Tracking de Texto/Cifra de característica (-0.01 em)."
+        },
+        "Etiqueta de cifra": {
+          "type": "letterSpacing",
+          "value": "0.6%",
+          "description": "Tracking de Texto/Etiqueta de cifra (0.006 em)."
+        },
+        "Etiqueta de cifra grande": {
+          "type": "letterSpacing",
+          "value": "0%",
+          "description": "Tracking de Texto/Etiqueta de cifra grande (0 em)."
+        },
+        "Etiqueta de cifra XL": {
+          "type": "letterSpacing",
+          "value": "14%",
+          "description": "Tracking de Texto/Etiqueta de cifra XL (0.14 em)."
+        },
+        "Navegación": {
+          "Enlace global": {
+            "type": "letterSpacing",
+            "value": "1%",
+            "description": "Tracking de Texto/Navegación/Enlace global (0.01 em)."
+          },
+          "Enlace local": {
+            "type": "letterSpacing",
+            "value": "1.2%",
+            "description": "Tracking de Texto/Navegación/Enlace local (0.012 em)."
+          },
+          "Título local": {
+            "type": "letterSpacing",
+            "value": "-0.4%",
+            "description": "Tracking de Texto/Navegación/Título local (-0.004 em)."
+          },
+          "Marca": {
+            "type": "letterSpacing",
+            "value": "6%",
+            "description": "Tracking de Texto/Navegación/Marca (0.06 em)."
+          },
+          "Marca grande": {
+            "type": "letterSpacing",
+            "value": "6%",
+            "description": "Tracking de Texto/Navegación/Marca grande (0.06 em)."
+          },
+          "Menú móvil": {
+            "type": "letterSpacing",
+            "value": "-1.2%",
+            "description": "Tracking de Texto/Navegación/Menú móvil (-0.012 em)."
+          },
+          "Migas": {
+            "type": "letterSpacing",
+            "value": "0.6%",
+            "description": "Tracking de Texto/Navegación/Migas (0.006 em)."
+          }
+        },
+        "Formulario": {
+          "Etiqueta": {
+            "type": "letterSpacing",
+            "value": "0.6%",
+            "description": "Tracking de Texto/Formulario/Etiqueta (0.006 em)."
+          },
+          "Pista": {
+            "type": "letterSpacing",
+            "value": "0.6%",
+            "description": "Tracking de Texto/Formulario/Pista (0.006 em)."
+          },
+          "Campo": {
+            "type": "letterSpacing",
+            "value": "0%",
+            "description": "Tracking de Texto/Formulario/Campo (0 em)."
+          },
+          "Leyenda pequeña": {
+            "type": "letterSpacing",
+            "value": "0.4%",
+            "description": "Tracking de Texto/Formulario/Leyenda pequeña (0.004 em)."
+          },
+          "Casilla": {
+            "type": "letterSpacing",
+            "value": "0.2%",
+            "description": "Tracking de Texto/Formulario/Casilla (0.002 em)."
+          },
+          "Opción": {
+            "type": "letterSpacing",
+            "value": "0%",
+            "description": "Tracking de Texto/Formulario/Opción (0 em)."
+          },
+          "Nota de opción": {
+            "type": "letterSpacing",
+            "value": "0.6%",
+            "description": "Tracking de Texto/Formulario/Nota de opción (0.006 em)."
+          },
+          "Buscador": {
+            "type": "letterSpacing",
+            "value": "-1%",
+            "description": "Tracking de Texto/Formulario/Buscador (-0.01 em)."
+          },
+          "Segmentado": {
+            "type": "letterSpacing",
+            "value": "0.2%",
+            "description": "Tracking de Texto/Formulario/Segmentado (0.002 em)."
+          }
+        },
+        "Contenido": {
+          "Tesela": {
+            "type": "letterSpacing",
+            "value": "0%",
+            "description": "Tracking de Texto/Contenido/Tesela (0 em)."
+          },
+          "Título de característica": {
+            "type": "letterSpacing",
+            "value": "0%",
+            "description": "Tracking de Texto/Contenido/Título de característica (0 em)."
+          },
+          "Acabado": {
+            "type": "letterSpacing",
+            "value": "0.6%",
+            "description": "Tracking de Texto/Contenido/Acabado (0.006 em)."
+          },
+          "Cita": {
+            "type": "letterSpacing",
+            "value": "-1.4%",
+            "description": "Tracking de Texto/Contenido/Cita (-0.014 em)."
+          },
+          "Pregunta": {
+            "type": "letterSpacing",
+            "value": "-0.4%",
+            "description": "Tracking de Texto/Contenido/Pregunta (-0.004 em)."
+          },
+          "Tabla": {
+            "type": "letterSpacing",
+            "value": "0%",
+            "description": "Tracking de Texto/Contenido/Tabla (0 em)."
+          },
+          "Cabecera de tabla": {
+            "type": "letterSpacing",
+            "value": "0%",
+            "description": "Tracking de Texto/Contenido/Cabecera de tabla (0 em)."
+          },
+          "Etiqueta de tabla": {
+            "type": "letterSpacing",
+            "value": "12%",
+            "description": "Tracking de Texto/Contenido/Etiqueta de tabla (0.12 em)."
+          },
+          "Título de cronología": {
+            "type": "letterSpacing",
+            "value": "-0.6%",
+            "description": "Tracking de Texto/Contenido/Título de cronología (-0.006 em)."
+          },
+          "Fecha de cronología": {
+            "type": "letterSpacing",
+            "value": "12%",
+            "description": "Tracking de Texto/Contenido/Fecha de cronología (0.12 em)."
+          },
+          "Título de nota": {
+            "type": "letterSpacing",
+            "value": "0%",
+            "description": "Tracking de Texto/Contenido/Título de nota (0 em)."
+          },
+          "Texto de nota": {
+            "type": "letterSpacing",
+            "value": "0%",
+            "description": "Tracking de Texto/Contenido/Texto de nota (0 em)."
+          },
+          "Título de mensaje": {
+            "type": "letterSpacing",
+            "value": "0%",
+            "description": "Tracking de Texto/Contenido/Título de mensaje (0 em)."
+          }
+        },
+        "Tienda": {
+          "Línea de bolsa": {
+            "type": "letterSpacing",
+            "value": "-0.4%",
+            "description": "Tracking de Texto/Tienda/Línea de bolsa (-0.004 em)."
+          },
+          "Título de acceso": {
+            "type": "letterSpacing",
+            "value": "-1%",
+            "description": "Tracking de Texto/Tienda/Título de acceso (-0.01 em)."
+          }
+        },
+        "Overlay": {
+          "Título de popover": {
+            "type": "letterSpacing",
+            "value": "0%",
+            "description": "Tracking de Texto/Overlay/Título de popover (0 em)."
+          },
+          "Título de aviso": {
+            "type": "letterSpacing",
+            "value": "0%",
+            "description": "Tracking de Texto/Overlay/Título de aviso (0 em)."
+          },
+          "Texto de aviso": {
+            "type": "letterSpacing",
+            "value": "0.8%",
+            "description": "Tracking de Texto/Overlay/Texto de aviso (0.008 em)."
+          }
+        },
+        "Pie": {
+          "Encabezado": {
+            "type": "letterSpacing",
+            "value": "0.4%",
+            "description": "Tracking de Texto/Pie/Encabezado (0.004 em)."
+          },
+          "Texto": {
+            "type": "letterSpacing",
+            "value": "0.6%",
+            "description": "Tracking de Texto/Pie/Texto (0.006 em)."
+          },
+          "Lema": {
+            "type": "letterSpacing",
+            "value": "0.2%",
+            "description": "Tracking de Texto/Pie/Lema (0.002 em)."
+          },
+          "Legal": {
+            "type": "letterSpacing",
+            "value": "1.2%",
+            "description": "Tracking de Texto/Pie/Legal (0.012 em)."
+          }
+        },
+        "Móvil": {
+          "Display": {
+            "type": "letterSpacing",
+            "value": "-1.6%",
+            "description": "Tracking de Texto/Móvil/Display (-0.016 em)."
+          },
+          "H1": {
+            "type": "letterSpacing",
+            "value": "-1.2%",
+            "description": "Tracking de Texto/Móvil/H1 (-0.012 em)."
+          },
+          "H2": {
+            "type": "letterSpacing",
+            "value": "-1%",
+            "description": "Tracking de Texto/Móvil/H2 (-0.01 em)."
+          },
+          "H3": {
+            "type": "letterSpacing",
+            "value": "-0.8%",
+            "description": "Tracking de Texto/Móvil/H3 (-0.008 em)."
+          },
+          "Lead": {
+            "type": "letterSpacing",
+            "value": "-0.3%",
+            "description": "Tracking de Texto/Móvil/Lead (-0.003 em)."
+          },
+          "Eyebrow grande": {
+            "type": "letterSpacing",
+            "value": "-0.4%",
+            "description": "Tracking de Texto/Móvil/Eyebrow grande (-0.004 em)."
+          },
+          "Precio grande": {
+            "type": "letterSpacing",
+            "value": "-1.4%",
+            "description": "Tracking de Texto/Móvil/Precio grande (-0.014 em)."
+          },
+          "Cifra": {
+            "type": "letterSpacing",
+            "value": "-1.6%",
+            "description": "Tracking de Texto/Móvil/Cifra (-0.016 em)."
+          },
+          "Cifra grande": {
+            "type": "letterSpacing",
+            "value": "-3%",
+            "description": "Tracking de Texto/Móvil/Cifra grande (-0.03 em)."
+          },
+          "Cifra destacada": {
+            "type": "letterSpacing",
+            "value": "-3.5%",
+            "description": "Tracking de Texto/Móvil/Cifra destacada (-0.035 em)."
+          },
+          "Cifra XL": {
+            "type": "letterSpacing",
+            "value": "-4%",
+            "description": "Tracking de Texto/Móvil/Cifra XL (-0.04 em)."
+          },
+          "Navegación": {
+            "Enlace local": {
+              "type": "letterSpacing",
+              "value": "0%",
+              "description": "Tracking de Texto/Móvil/Navegación/Enlace local (0 em)."
+            }
+          },
+          "Formulario": {
+            "Buscador": {
+              "type": "letterSpacing",
+              "value": "-1%",
+              "description": "Tracking de Texto/Móvil/Formulario/Buscador (-0.01 em)."
+            }
+          },
+          "Contenido": {
+            "Cita": {
+              "type": "letterSpacing",
+              "value": "-1.4%",
+              "description": "Tracking de Texto/Móvil/Contenido/Cita (-0.014 em)."
+            },
+            "Pregunta": {
+              "type": "letterSpacing",
+              "value": "-0.4%",
+              "description": "Tracking de Texto/Móvil/Contenido/Pregunta (-0.004 em)."
+            },
+            "Tabla": {
+              "type": "letterSpacing",
+              "value": "0%",
+              "description": "Tracking de Texto/Móvil/Contenido/Tabla (0 em)."
+            },
+            "Cabecera de tabla": {
+              "type": "letterSpacing",
+              "value": "0%",
+              "description": "Tracking de Texto/Móvil/Contenido/Cabecera de tabla (0 em)."
+            }
+          },
+          "Tienda": {
+            "Título de acceso": {
+              "type": "letterSpacing",
+              "value": "-1%",
+              "description": "Tracking de Texto/Móvil/Tienda/Título de acceso (-0.01 em)."
+            }
+          }
+        }
+      }
+    },
+    "Texto": {
+      "Display": {
+        "type": "typography",
+        "value": {
+          "fontFamily": "{Tipografía.Familia.Display}",
+          "fontWeight": "{Tipografía.Peso.Kanit.Medium}",
+          "fontSize": "{Tipografía.Tamaño.Display}",
+          "lineHeight": "{Tipografía.Interlineado.Display}",
+          "letterSpacing": "{Tipografía.Tracking.Display}",
+          "paragraphSpacing": "0",
+          "textCase": "none",
+          "textDecoration": "none"
+        },
+        "description": "Momento héroe: 36 → 72 px (40 a 390). Un solo Display por página. · .aura-display"
+      },
+      "H1": {
+        "type": "typography",
+        "value": {
+          "fontFamily": "{Tipografía.Familia.Display}",
+          "fontWeight": "{Tipografía.Peso.Kanit.Medium}",
+          "fontSize": "{Tipografía.Tamaño.H1}",
+          "lineHeight": "{Tipografía.Interlineado.H1}",
+          "letterSpacing": "{Tipografía.Tracking.H1}",
+          "paragraphSpacing": "0",
+          "textCase": "none",
+          "textDecoration": "none"
+        },
+        "description": "Hero Title: 34 → 56 px. · .aura-h1"
+      },
+      "H2": {
+        "type": "typography",
+        "value": {
+          "fontFamily": "{Tipografía.Familia.Display}",
+          "fontWeight": "{Tipografía.Peso.Kanit.Medium}",
+          "fontSize": "{Tipografía.Tamaño.H2}",
+          "lineHeight": "{Tipografía.Interlineado.H2}",
+          "letterSpacing": "{Tipografía.Tracking.H2}",
+          "paragraphSpacing": "0",
+          "textCase": "none",
+          "textDecoration": "none"
+        },
+        "description": "Section Title: 28 → 42 px. · .aura-h2"
+      },
+      "H3": {
+        "type": "typography",
+        "value": {
+          "fontFamily": "{Tipografía.Familia.Display}",
+          "fontWeight": "{Tipografía.Peso.Kanit.Medium}",
+          "fontSize": "{Tipografía.Tamaño.H3}",
+          "lineHeight": "{Tipografía.Interlineado.H3}",
+          "letterSpacing": "{Tipografía.Tracking.H3}",
+          "paragraphSpacing": "0",
+          "textCase": "none",
+          "textDecoration": "none"
+        },
+        "description": "Card Title: 22 → 28 px. También el nombre de la tarjeta de modelo. · .aura-h3 · .aura-product-card__name"
+      },
+      "H4": {
+        "type": "typography",
+        "value": {
+          "fontFamily": "{Tipografía.Familia.Display}",
+          "fontWeight": "{Tipografía.Peso.Kanit.Medium}",
+          "fontSize": "{Tipografía.Tamaño.H4}",
+          "lineHeight": "{Tipografía.Interlineado.H4}",
+          "letterSpacing": "{Tipografía.Tracking.H4}",
+          "paragraphSpacing": "0",
+          "textCase": "none",
+          "textDecoration": "none"
+        },
+        "description": "Subtitle: 20 px. También leyenda, título de tabla y de resumen. · .aura-h4 · .aura-legend · .aura-table-card__title · .aura-summary__title"
+      },
+      "Lead": {
+        "type": "typography",
+        "value": {
+          "fontFamily": "{Tipografía.Familia.Interfaz}",
+          "fontWeight": "{Tipografía.Peso.Inter.Regular}",
+          "fontSize": "{Tipografía.Tamaño.Lead}",
+          "lineHeight": "{Tipografía.Interlineado.Lead}",
+          "letterSpacing": "{Tipografía.Tracking.Lead}",
+          "paragraphSpacing": "0",
+          "textCase": "none",
+          "textDecoration": "none"
+        },
+        "description": "Entradilla: 17 → 21 px, 44ch ≈ 56 caracteres. · .aura-lead"
+      },
+      "Body": {
+        "type": "typography",
+        "value": {
+          "fontFamily": "{Tipografía.Familia.Interfaz}",
+          "fontWeight": "{Tipografía.Peso.Inter.Regular}",
+          "fontSize": "{Tipografía.Tamaño.Body}",
+          "lineHeight": "{Tipografía.Interlineado.Body}",
+          "letterSpacing": "{Tipografía.Tracking.Body}",
+          "paragraphSpacing": "0",
+          "textCase": "none",
+          "textDecoration": "none"
+        },
+        "description": "Cuerpo: 16 px, 53ch ≈ 68 caracteres. · .aura-body"
+      },
+      "Small": {
+        "type": "typography",
+        "value": {
+          "fontFamily": "{Tipografía.Familia.Interfaz}",
+          "fontWeight": "{Tipografía.Peso.Inter.Regular}",
+          "fontSize": "{Tipografía.Tamaño.Small}",
+          "lineHeight": "{Tipografía.Interlineado.Small}",
+          "letterSpacing": "{Tipografía.Tracking.Small}",
+          "paragraphSpacing": "0",
+          "textCase": "none",
+          "textDecoration": "none"
+        },
+        "description": "Texto de componente (tarjetas y características). · .aura-small · .aura-feature__text · .aura-product-card__text"
+      },
+      "Caption": {
+        "type": "typography",
+        "value": {
+          "fontFamily": "{Tipografía.Familia.Interfaz}",
+          "fontWeight": "{Tipografía.Peso.Inter.Regular}",
+          "fontSize": "{Tipografía.Tamaño.Caption}",
+          "lineHeight": "{Tipografía.Interlineado.Caption}",
+          "letterSpacing": "{Tipografía.Tracking.Caption}",
+          "paragraphSpacing": "0",
+          "textCase": "none",
+          "textDecoration": "none"
+        },
+        "description": "Pies, ayudas de campo y cinta. · .aura-caption · .aura-field__help · .aura-ribbon__text"
+      },
+      "Nota": {
+        "type": "typography",
+        "value": {
+          "fontFamily": "{Tipografía.Familia.Interfaz}",
+          "fontWeight": "{Tipografía.Peso.Inter.Regular}",
+          "fontSize": "{Tipografía.Tamaño.Nota}",
+          "lineHeight": "{Tipografía.Interlineado.Nota}",
+          "letterSpacing": "{Tipografía.Tracking.Nota}",
+          "paragraphSpacing": "0",
+          "textCase": "none",
+          "textDecoration": "none"
+        },
+        "description": "Notas al pie y disponibilidad bajo un precio (65ch). · .aura-footnotes__list · .aura-table__note"
+      },
+      "Eyebrow": {
+        "type": "typography",
+        "value": {
+          "fontFamily": "{Tipografía.Familia.Interfaz}",
+          "fontWeight": "{Tipografía.Peso.Inter.Semi Bold}",
+          "fontSize": "{Tipografía.Tamaño.Eyebrow}",
+          "lineHeight": "{Tipografía.Interlineado.Eyebrow}",
+          "letterSpacing": "{Tipografía.Tracking.Eyebrow}",
+          "paragraphSpacing": "0",
+          "textCase": "none",
+          "textDecoration": "none"
+        },
+        "description": "Antetítulo con punto dorado de 6 px (anillo de 3 px al 24 %). · .aura-eyebrow"
+      },
+      "Eyebrow mono": {
+        "type": "typography",
+        "value": {
+          "fontFamily": "{Tipografía.Familia.Mono}",
+          "fontWeight": "{Tipografía.Peso.Mono.Medium}",
+          "fontSize": "{Tipografía.Tamaño.Eyebrow mono}",
+          "lineHeight": "{Tipografía.Interlineado.Eyebrow mono}",
+          "letterSpacing": "{Tipografía.Tracking.Eyebrow mono}",
+          "paragraphSpacing": "0",
+          "textCase": "uppercase",
+          "textDecoration": "none"
+        },
+        "description": "Cabecera de sección y etiquetas técnicas («Novedades / 2026»). · .aura-eyebrow--mono"
+      },
+      "Eyebrow grande": {
+        "type": "typography",
+        "value": {
+          "fontFamily": "{Tipografía.Familia.Display}",
+          "fontWeight": "{Tipografía.Peso.Kanit.Medium}",
+          "fontSize": "{Tipografía.Tamaño.Eyebrow grande}",
+          "lineHeight": "{Tipografía.Interlineado.Eyebrow grande}",
+          "letterSpacing": "{Tipografía.Tracking.Eyebrow grande}",
+          "paragraphSpacing": "0",
+          "textCase": "none",
+          "textDecoration": "none"
+        },
+        "description": "Nombre de producto sobre un titular héroe: 18 → 22 px, sin punto. · .aura-eyebrow--lg"
+      },
+      "Insignia": {
+        "type": "typography",
+        "value": {
+          "fontFamily": "{Tipografía.Familia.Interfaz}",
+          "fontWeight": "{Tipografía.Peso.Inter.Semi Bold}",
+          "fontSize": "{Tipografía.Tamaño.Insignia}",
+          "lineHeight": "{Tipografía.Interlineado.Insignia}",
+          "letterSpacing": "{Tipografía.Tracking.Insignia}",
+          "paragraphSpacing": "0",
+          "textCase": "none",
+          "textDecoration": "none"
+        },
+        "description": "Insignia (píldora de 24 px, dorado suave) y chip. · .aura-badge · .aura-chip"
+      },
+      "Insignia mono": {
+        "type": "typography",
+        "value": {
+          "fontFamily": "{Tipografía.Familia.Mono}",
+          "fontWeight": "{Tipografía.Peso.Mono.Medium}",
+          "fontSize": "{Tipografía.Tamaño.Insignia mono}",
+          "lineHeight": "{Tipografía.Interlineado.Insignia mono}",
+          "letterSpacing": "{Tipografía.Tracking.Insignia mono}",
+          "paragraphSpacing": "0",
+          "textCase": "uppercase",
+          "textDecoration": "none"
+        },
+        "description": "Estados de pedido y «Demostración» (radio 8); el color lo da la variante (--neutral, --ok…). · .aura-badge--mono"
+      },
+      "Botón": {
+        "type": "typography",
+        "value": {
+          "fontFamily": "{Tipografía.Familia.Interfaz}",
+          "fontWeight": "{Tipografía.Peso.Inter.Semi Bold}",
+          "fontSize": "{Tipografía.Tamaño.Botón}",
+          "lineHeight": "{Tipografía.Interlineado.Botón}",
+          "letterSpacing": "{Tipografía.Tracking.Botón}",
+          "paragraphSpacing": "0",
+          "textCase": "none",
+          "textDecoration": "none"
+        },
+        "description": "Etiqueta del botón: Inter 15 / 600 (sustituye al 14 / 400 de la v1). · .aura-btn"
+      },
+      "Enlace": {
+        "type": "typography",
+        "value": {
+          "fontFamily": "{Tipografía.Familia.Interfaz}",
+          "fontWeight": "{Tipografía.Peso.Inter.Medium}",
+          "fontSize": "{Tipografía.Tamaño.Enlace}",
+          "lineHeight": "{Tipografía.Interlineado.Enlace}",
+          "letterSpacing": "{Tipografía.Tracking.Enlace}",
+          "paragraphSpacing": "0",
+          "textCase": "none",
+          "textDecoration": "none"
+        },
+        "description": "Enlace contextual «›»: Inter 500 al tamaño del texto que acompaña (aquí, el cuerpo). · .aura-link"
+      },
+      "Precio": {
+        "type": "typography",
+        "value": {
+          "fontFamily": "{Tipografía.Familia.Display}",
+          "fontWeight": "{Tipografía.Peso.Kanit.Medium}",
+          "fontSize": "{Tipografía.Tamaño.Precio}",
+          "lineHeight": "{Tipografía.Interlineado.Precio}",
+          "letterSpacing": "{Tipografía.Tracking.Precio}",
+          "paragraphSpacing": "0",
+          "textCase": "none",
+          "textDecoration": "none"
+        },
+        "description": "Precio: cifras tabulares, sin partir. · .aura-price"
+      },
+      "Precio pequeño": {
+        "type": "typography",
+        "value": {
+          "fontFamily": "{Tipografía.Familia.Display}",
+          "fontWeight": "{Tipografía.Peso.Kanit.Medium}",
+          "fontSize": "{Tipografía.Tamaño.Precio pequeño}",
+          "lineHeight": "{Tipografía.Interlineado.Precio pequeño}",
+          "letterSpacing": "{Tipografía.Tracking.Precio pequeño}",
+          "paragraphSpacing": "0",
+          "textCase": "none",
+          "textDecoration": "none"
+        },
+        "description": "Cuota mensual. · .aura-price--sm"
+      },
+      "Precio grande": {
+        "type": "typography",
+        "value": {
+          "fontFamily": "{Tipografía.Familia.Display}",
+          "fontWeight": "{Tipografía.Peso.Kanit.Medium}",
+          "fontSize": "{Tipografía.Tamaño.Precio grande}",
+          "lineHeight": "{Tipografía.Interlineado.Precio grande}",
+          "letterSpacing": "{Tipografía.Tracking.Precio grande}",
+          "paragraphSpacing": "0",
+          "textCase": "none",
+          "textDecoration": "none"
+        },
+        "description": "Precio del configurador: 28 → 36 px. · .aura-price--lg"
+      },
+      "Precio compacto": {
+        "type": "typography",
+        "value": {
+          "fontFamily": "{Tipografía.Familia.Interfaz}",
+          "fontWeight": "{Tipografía.Peso.Inter.Semi Bold}",
+          "fontSize": "{Tipografía.Tamaño.Precio compacto}",
+          "lineHeight": "{Tipografía.Interlineado.Precio compacto}",
+          "letterSpacing": "{Tipografía.Tracking.Precio compacto}",
+          "paragraphSpacing": "0",
+          "textCase": "none",
+          "textDecoration": "none"
+        },
+        "description": "Precio en la línea compacta (bolsa, checkout, popover), a juego con el nombre. · .aura-bag-line--compact .aura-price"
+      },
+      "Mono": {
+        "type": "typography",
+        "value": {
+          "fontFamily": "{Tipografía.Familia.Mono}",
+          "fontWeight": "{Tipografía.Peso.Mono.Regular}",
+          "fontSize": "{Tipografía.Tamaño.Mono}",
+          "lineHeight": "{Tipografía.Interlineado.Mono}",
+          "letterSpacing": "{Tipografía.Tracking.Mono}",
+          "paragraphSpacing": "0",
+          "textCase": "uppercase",
+          "textDecoration": "none"
+        },
+        "description": "Etiquetas técnicas cortas («AU-2026-000123»). Nunca para leer un párrafo. · .aura-mono"
+      },
+      "Cifra": {
+        "type": "typography",
+        "value": {
+          "fontFamily": "{Tipografía.Familia.Display}",
+          "fontWeight": "{Tipografía.Peso.Kanit.Medium}",
+          "fontSize": "{Tipografía.Tamaño.Cifra}",
+          "lineHeight": "{Tipografía.Interlineado.Cifra}",
+          "letterSpacing": "{Tipografía.Tracking.Cifra}",
+          "paragraphSpacing": "0",
+          "textCase": "none",
+          "textDecoration": "none"
+        },
+        "description": "Cifra: 26 → 38 px. · .aura-stat__value"
+      },
+      "Cifra grande": {
+        "type": "typography",
+        "value": {
+          "fontFamily": "{Tipografía.Familia.Display}",
+          "fontWeight": "{Tipografía.Peso.Kanit.Medium}",
+          "fontSize": "{Tipografía.Tamaño.Cifra grande}",
+          "lineHeight": "{Tipografía.Interlineado.Cifra grande}",
+          "letterSpacing": "{Tipografía.Tracking.Cifra grande}",
+          "paragraphSpacing": "0",
+          "textCase": "none",
+          "textDecoration": "none"
+        },
+        "description": "Cifra destacada de página de producto: clamp(3rem, 2.25rem + 3cqi, 5rem) → 79,2 px a 1440 (máx. 80). · .aura-stat--lg .aura-stat__value"
+      },
+      "Cifra destacada": {
+        "type": "typography",
+        "value": {
+          "fontFamily": "{Tipografía.Familia.Display}",
+          "fontWeight": "{Tipografía.Peso.Kanit.Medium}",
+          "fontSize": "{Tipografía.Tamaño.Cifra destacada}",
+          "lineHeight": "{Tipografía.Interlineado.Cifra destacada}",
+          "letterSpacing": "{Tipografía.Tracking.Cifra destacada}",
+          "paragraphSpacing": "0",
+          "textCase": "none",
+          "textDecoration": "none"
+        },
+        "description": "La gran cifra en una columna estrecha: 56 → 76 px. · .aura-stat--md .aura-stat__value"
+      },
+      "Cifra XL": {
+        "type": "typography",
+        "value": {
+          "fontFamily": "{Tipografía.Familia.Display}",
+          "fontWeight": "{Tipografía.Peso.Kanit.Medium}",
+          "fontSize": "{Tipografía.Tamaño.Cifra XL}",
+          "lineHeight": "{Tipografía.Interlineado.Cifra XL}",
+          "letterSpacing": "{Tipografía.Tracking.Cifra XL}",
+          "paragraphSpacing": "0",
+          "textCase": "none",
+          "textDecoration": "none"
+        },
+        "description": "La gran cifra («22 horas»): 80 → 160 px, sobre un resplandor circular. · .aura-stat--xl .aura-stat__value"
+      },
+      "Cifra de característica": {
+        "type": "typography",
+        "value": {
+          "fontFamily": "{Tipografía.Familia.Display}",
+          "fontWeight": "{Tipografía.Peso.Kanit.Medium}",
+          "fontSize": "{Tipografía.Tamaño.Cifra de característica}",
+          "lineHeight": "{Tipografía.Interlineado.Cifra de característica}",
+          "letterSpacing": "{Tipografía.Tracking.Cifra de característica}",
+          "paragraphSpacing": "0",
+          "textCase": "none",
+          "textDecoration": "none"
+        },
+        "description": "Valor de característica («AURA H2») y total del resumen. · .aura-feature__value · .aura-summary__row--total dd"
+      },
+      "Etiqueta de cifra": {
+        "type": "typography",
+        "value": {
+          "fontFamily": "{Tipografía.Familia.Interfaz}",
+          "fontWeight": "{Tipografía.Peso.Inter.Regular}",
+          "fontSize": "{Tipografía.Tamaño.Etiqueta de cifra}",
+          "lineHeight": "{Tipografía.Interlineado.Etiqueta de cifra}",
+          "letterSpacing": "{Tipografía.Tracking.Etiqueta de cifra}",
+          "paragraphSpacing": "0",
+          "textCase": "none",
+          "textDecoration": "none"
+        },
+        "description": "Lo que explica una cifra. · .aura-stat__label"
+      },
+      "Etiqueta de cifra grande": {
+        "type": "typography",
+        "value": {
+          "fontFamily": "{Tipografía.Familia.Interfaz}",
+          "fontWeight": "{Tipografía.Peso.Inter.Regular}",
+          "fontSize": "{Tipografía.Tamaño.Etiqueta de cifra grande}",
+          "lineHeight": "{Tipografía.Interlineado.Etiqueta de cifra grande}",
+          "letterSpacing": "{Tipografía.Tracking.Etiqueta de cifra grande}",
+          "paragraphSpacing": "0",
+          "textCase": "none",
+          "textDecoration": "none"
+        },
+        "description": "Texto bajo la cifra destacada (máx. 18 rem). · .aura-stat--lg .aura-stat__label"
+      },
+      "Etiqueta de cifra XL": {
+        "type": "typography",
+        "value": {
+          "fontFamily": "{Tipografía.Familia.Mono}",
+          "fontWeight": "{Tipografía.Peso.Mono.Regular}",
+          "fontSize": "{Tipografía.Tamaño.Etiqueta de cifra XL}",
+          "lineHeight": "{Tipografía.Interlineado.Etiqueta de cifra XL}",
+          "letterSpacing": "{Tipografía.Tracking.Etiqueta de cifra XL}",
+          "paragraphSpacing": "0",
+          "textCase": "uppercase",
+          "textDecoration": "none"
+        },
+        "description": "Etiqueta mono dorada de la gran cifra. · .aura-stat--xl .aura-stat__label"
+      },
+      "Navegación": {
+        "Enlace global": {
+          "type": "typography",
+          "value": {
+            "fontFamily": "{Tipografía.Familia.Interfaz}",
+            "fontWeight": "{Tipografía.Peso.Inter.Regular}",
+            "fontSize": "{Tipografía.Tamaño.Navegación.Enlace global}",
+            "lineHeight": "{Tipografía.Interlineado.Navegación.Enlace global}",
+            "letterSpacing": "{Tipografía.Tracking.Navegación.Enlace global}",
+            "paragraphSpacing": "0",
+            "textCase": "none",
+            "textDecoration": "none"
+          },
+          "description": "Enlaces de la barra global (activo: blanco, 600, raya azul de 2 px). · .aura-nav__link"
+        },
+        "Enlace local": {
+          "type": "typography",
+          "value": {
+            "fontFamily": "{Tipografía.Familia.Interfaz}",
+            "fontWeight": "{Tipografía.Peso.Inter.Regular}",
+            "fontSize": "{Tipografía.Tamaño.Navegación.Enlace local}",
+            "lineHeight": "{Tipografía.Interlineado.Navegación.Enlace local}",
+            "letterSpacing": "{Tipografía.Tracking.Navegación.Enlace local}",
+            "paragraphSpacing": "0",
+            "textCase": "none",
+            "textDecoration": "none"
+          },
+          "description": "Enlaces de la barra local (activo: blanco, 600). Por debajo de 992 px se pliegan en un menú: 15 px, sin tracking, interlineado 24, filas de 44 px. · .aura-localnav__link"
+        },
+        "Título local": {
+          "type": "typography",
+          "value": {
+            "fontFamily": "{Tipografía.Familia.Display}",
+            "fontWeight": "{Tipografía.Peso.Kanit.Medium}",
+            "fontSize": "{Tipografía.Tamaño.Navegación.Título local}",
+            "lineHeight": "{Tipografía.Interlineado.Navegación.Título local}",
+            "letterSpacing": "{Tipografía.Tracking.Navegación.Título local}",
+            "paragraphSpacing": "0",
+            "textCase": "none",
+            "textDecoration": "none"
+          },
+          "description": "Nombre de la página en la barra local; ocupa todo su alto (interlineado = 52 px). · .aura-localnav__title"
+        },
+        "Marca": {
+          "type": "typography",
+          "value": {
+            "fontFamily": "{Tipografía.Familia.Display}",
+            "fontWeight": "{Tipografía.Peso.Kanit.SemiBold}",
+            "fontSize": "{Tipografía.Tamaño.Navegación.Marca}",
+            "lineHeight": "{Tipografía.Interlineado.Navegación.Marca}",
+            "letterSpacing": "{Tipografía.Tracking.Navegación.Marca}",
+            "paragraphSpacing": "0",
+            "textCase": "none",
+            "textDecoration": "none"
+          },
+          "description": "Palabra «AURA» junto al logotipo de 28 px. · .aura-brand__word"
+        },
+        "Marca grande": {
+          "type": "typography",
+          "value": {
+            "fontFamily": "{Tipografía.Familia.Display}",
+            "fontWeight": "{Tipografía.Peso.Kanit.SemiBold}",
+            "fontSize": "{Tipografía.Tamaño.Navegación.Marca grande}",
+            "lineHeight": "{Tipografía.Interlineado.Navegación.Marca grande}",
+            "letterSpacing": "{Tipografía.Tracking.Navegación.Marca grande}",
+            "paragraphSpacing": "0",
+            "textCase": "none",
+            "textDecoration": "none"
+          },
+          "description": "Palabra «AURA» junto al logotipo de 36 px (tarjeta de acceso). · .aura-brand--lg .aura-brand__word"
+        },
+        "Menú móvil": {
+          "type": "typography",
+          "value": {
+            "fontFamily": "{Tipografía.Familia.Display}",
+            "fontWeight": "{Tipografía.Peso.Kanit.Medium}",
+            "fontSize": "{Tipografía.Tamaño.Navegación.Menú móvil}",
+            "lineHeight": "{Tipografía.Interlineado.Navegación.Menú móvil}",
+            "letterSpacing": "{Tipografía.Tracking.Navegación.Menú móvil}",
+            "paragraphSpacing": "0",
+            "textCase": "none",
+            "textDecoration": "none"
+          },
+          "description": "Enlaces del menú móvil a pantalla completa (filas de 56 px). · .aura-menu__link"
+        },
+        "Migas": {
+          "type": "typography",
+          "value": {
+            "fontFamily": "{Tipografía.Familia.Interfaz}",
+            "fontWeight": "{Tipografía.Peso.Inter.Regular}",
+            "fontSize": "{Tipografía.Tamaño.Navegación.Migas}",
+            "lineHeight": "{Tipografía.Interlineado.Navegación.Migas}",
+            "letterSpacing": "{Tipografía.Tracking.Navegación.Migas}",
+            "paragraphSpacing": "0",
+            "textCase": "none",
+            "textDecoration": "none"
+          },
+          "description": "Migas de pan del pie (separador «›» terciario). · .aura-crumbs"
+        }
+      },
+      "Formulario": {
+        "Etiqueta": {
+          "type": "typography",
+          "value": {
+            "fontFamily": "{Tipografía.Familia.Interfaz}",
+            "fontWeight": "{Tipografía.Peso.Inter.Medium}",
+            "fontSize": "{Tipografía.Tamaño.Formulario.Etiqueta}",
+            "lineHeight": "{Tipografía.Interlineado.Formulario.Etiqueta}",
+            "letterSpacing": "{Tipografía.Tracking.Formulario.Etiqueta}",
+            "paragraphSpacing": "0",
+            "textCase": "none",
+            "textDecoration": "none"
+          },
+          "description": "Etiqueta persistente del campo (azul en foco, roja con error). · .aura-field__label"
+        },
+        "Pista": {
+          "type": "typography",
+          "value": {
+            "fontFamily": "{Tipografía.Familia.Interfaz}",
+            "fontWeight": "{Tipografía.Peso.Inter.Regular}",
+            "fontSize": "{Tipografía.Tamaño.Formulario.Pista}",
+            "lineHeight": "{Tipografía.Interlineado.Formulario.Pista}",
+            "letterSpacing": "{Tipografía.Tracking.Formulario.Pista}",
+            "paragraphSpacing": "0",
+            "textCase": "none",
+            "textDecoration": "none"
+          },
+          "description": "Pista a la derecha de la etiqueta («Opcional», «8 caracteres como mínimo»). · .aura-field__hint"
+        },
+        "Campo": {
+          "type": "typography",
+          "value": {
+            "fontFamily": "{Tipografía.Familia.Interfaz}",
+            "fontWeight": "{Tipografía.Peso.Inter.Regular}",
+            "fontSize": "{Tipografía.Tamaño.Formulario.Campo}",
+            "lineHeight": "{Tipografía.Interlineado.Formulario.Campo}",
+            "letterSpacing": "{Tipografía.Tracking.Formulario.Campo}",
+            "paragraphSpacing": "0",
+            "textCase": "none",
+            "textDecoration": "none"
+          },
+          "description": "Valor y placeholder del campo: 16 px (sin zoom automático en móvil). · .aura-input · .aura-select · .aura-textarea"
+        },
+        "Leyenda pequeña": {
+          "type": "typography",
+          "value": {
+            "fontFamily": "{Tipografía.Familia.Interfaz}",
+            "fontWeight": "{Tipografía.Peso.Inter.Regular}",
+            "fontSize": "{Tipografía.Tamaño.Formulario.Leyenda pequeña}",
+            "lineHeight": "{Tipografía.Interlineado.Formulario.Leyenda pequeña}",
+            "letterSpacing": "{Tipografía.Tracking.Formulario.Leyenda pequeña}",
+            "paragraphSpacing": "0",
+            "textCase": "none",
+            "textDecoration": "none"
+          },
+          "description": "Leyenda de un grupo de radios o casillas. · .aura-legend--sm"
+        },
+        "Casilla": {
+          "type": "typography",
+          "value": {
+            "fontFamily": "{Tipografía.Familia.Interfaz}",
+            "fontWeight": "{Tipografía.Peso.Inter.Regular}",
+            "fontSize": "{Tipografía.Tamaño.Formulario.Casilla}",
+            "lineHeight": "{Tipografía.Interlineado.Formulario.Casilla}",
+            "letterSpacing": "{Tipografía.Tracking.Formulario.Casilla}",
+            "paragraphSpacing": "0",
+            "textCase": "none",
+            "textDecoration": "none"
+          },
+          "description": "Etiqueta de casilla y radio (fila de 44 px). · .aura-check · .aura-radio"
+        },
+        "Opción": {
+          "type": "typography",
+          "value": {
+            "fontFamily": "{Tipografía.Familia.Interfaz}",
+            "fontWeight": "{Tipografía.Peso.Inter.Semi Bold}",
+            "fontSize": "{Tipografía.Tamaño.Formulario.Opción}",
+            "lineHeight": "{Tipografía.Interlineado.Formulario.Opción}",
+            "letterSpacing": "{Tipografía.Tracking.Formulario.Opción}",
+            "paragraphSpacing": "0",
+            "textCase": "none",
+            "textDecoration": "none"
+          },
+          "description": "Título de la tarjeta-opción del configurador. · .aura-option__title"
+        },
+        "Nota de opción": {
+          "type": "typography",
+          "value": {
+            "fontFamily": "{Tipografía.Familia.Interfaz}",
+            "fontWeight": "{Tipografía.Peso.Inter.Regular}",
+            "fontSize": "{Tipografía.Tamaño.Formulario.Nota de opción}",
+            "lineHeight": "{Tipografía.Interlineado.Formulario.Nota de opción}",
+            "letterSpacing": "{Tipografía.Tracking.Formulario.Nota de opción}",
+            "paragraphSpacing": "0",
+            "textCase": "none",
+            "textDecoration": "none"
+          },
+          "description": "Nota y precio de la tarjeta-opción. · .aura-option__note · .aura-option__price"
+        },
+        "Buscador": {
+          "type": "typography",
+          "value": {
+            "fontFamily": "{Tipografía.Familia.Display}",
+            "fontWeight": "{Tipografía.Peso.Kanit.Medium}",
+            "fontSize": "{Tipografía.Tamaño.Formulario.Buscador}",
+            "lineHeight": "{Tipografía.Interlineado.Formulario.Buscador}",
+            "letterSpacing": "{Tipografía.Tracking.Formulario.Buscador}",
+            "paragraphSpacing": "0",
+            "textCase": "none",
+            "textDecoration": "none"
+          },
+          "description": "Campo del buscador: 20 → 28 px. · .aura-search__input"
+        },
+        "Segmentado": {
+          "type": "typography",
+          "value": {
+            "fontFamily": "{Tipografía.Familia.Interfaz}",
+            "fontWeight": "{Tipografía.Peso.Inter.Medium}",
+            "fontSize": "{Tipografía.Tamaño.Formulario.Segmentado}",
+            "lineHeight": "{Tipografía.Interlineado.Formulario.Segmentado}",
+            "letterSpacing": "{Tipografía.Tracking.Formulario.Segmentado}",
+            "paragraphSpacing": "0",
+            "textCase": "none",
+            "textDecoration": "none"
+          },
+          "description": "Opción del segmentado (elegida: blanco). · .aura-segmented__item"
+        }
+      },
+      "Contenido": {
+        "Tesela": {
+          "type": "typography",
+          "value": {
+            "fontFamily": "{Tipografía.Familia.Interfaz}",
+            "fontWeight": "{Tipografía.Peso.Inter.Regular}",
+            "fontSize": "{Tipografía.Tamaño.Contenido.Tesela}",
+            "lineHeight": "{Tipografía.Interlineado.Contenido.Tesela}",
+            "letterSpacing": "{Tipografía.Tracking.Contenido.Tesela}",
+            "paragraphSpacing": "0",
+            "textCase": "none",
+            "textDecoration": "none"
+          },
+          "description": "Texto de una tesela del bento (52ch). · .aura-tile__text"
+        },
+        "Título de característica": {
+          "type": "typography",
+          "value": {
+            "fontFamily": "{Tipografía.Familia.Interfaz}",
+            "fontWeight": "{Tipografía.Peso.Inter.Semi Bold}",
+            "fontSize": "{Tipografía.Tamaño.Contenido.Título de característica}",
+            "lineHeight": "{Tipografía.Interlineado.Contenido.Título de característica}",
+            "letterSpacing": "{Tipografía.Tracking.Contenido.Título de característica}",
+            "paragraphSpacing": "0",
+            "textCase": "none",
+            "textDecoration": "none"
+          },
+          "description": "Título de una característica. · .aura-feature__title"
+        },
+        "Acabado": {
+          "type": "typography",
+          "value": {
+            "fontFamily": "{Tipografía.Familia.Interfaz}",
+            "fontWeight": "{Tipografía.Peso.Inter.Regular}",
+            "fontSize": "{Tipografía.Tamaño.Contenido.Acabado}",
+            "lineHeight": "{Tipografía.Interlineado.Contenido.Acabado}",
+            "letterSpacing": "{Tipografía.Tracking.Contenido.Acabado}",
+            "paragraphSpacing": "0",
+            "textCase": "none",
+            "textDecoration": "none"
+          },
+          "description": "Acabado de la tarjeta de modelo: la única excepción azul sin ser pulsable. · .aura-product-card__finish"
+        },
+        "Cita": {
+          "type": "typography",
+          "value": {
+            "fontFamily": "{Tipografía.Familia.Display}",
+            "fontWeight": "{Tipografía.Peso.Kanit.Medium}",
+            "fontSize": "{Tipografía.Tamaño.Contenido.Cita}",
+            "lineHeight": "{Tipografía.Interlineado.Contenido.Cita}",
+            "letterSpacing": "{Tipografía.Tracking.Contenido.Cita}",
+            "paragraphSpacing": "0",
+            "textCase": "none",
+            "textDecoration": "none"
+          },
+          "description": "Cita: 24 → 36 px, con comilla dorada. · .aura-quote__text"
+        },
+        "Pregunta": {
+          "type": "typography",
+          "value": {
+            "fontFamily": "{Tipografía.Familia.Display}",
+            "fontWeight": "{Tipografía.Peso.Kanit.Medium}",
+            "fontSize": "{Tipografía.Tamaño.Contenido.Pregunta}",
+            "lineHeight": "{Tipografía.Interlineado.Contenido.Pregunta}",
+            "letterSpacing": "{Tipografía.Tracking.Contenido.Pregunta}",
+            "paragraphSpacing": "0",
+            "textCase": "none",
+            "textDecoration": "none"
+          },
+          "description": "Pregunta del acordeón: 17 → 20 px (fila mínima de 64 px). · .aura-accordion__summary"
+        },
+        "Tabla": {
+          "type": "typography",
+          "value": {
+            "fontFamily": "{Tipografía.Familia.Interfaz}",
+            "fontWeight": "{Tipografía.Peso.Inter.Regular}",
+            "fontSize": "{Tipografía.Tamaño.Contenido.Tabla}",
+            "lineHeight": "{Tipografía.Interlineado.Contenido.Tabla}",
+            "letterSpacing": "{Tipografía.Tracking.Contenido.Tabla}",
+            "paragraphSpacing": "0",
+            "textCase": "none",
+            "textDecoration": "none"
+          },
+          "description": "Celdas de la tabla comparativa (13 px por debajo de 576). · .aura-table"
+        },
+        "Cabecera de tabla": {
+          "type": "typography",
+          "value": {
+            "fontFamily": "{Tipografía.Familia.Interfaz}",
+            "fontWeight": "{Tipografía.Peso.Inter.Semi Bold}",
+            "fontSize": "{Tipografía.Tamaño.Contenido.Cabecera de tabla}",
+            "lineHeight": "{Tipografía.Interlineado.Contenido.Cabecera de tabla}",
+            "letterSpacing": "{Tipografía.Tracking.Contenido.Cabecera de tabla}",
+            "paragraphSpacing": "0",
+            "textCase": "none",
+            "textDecoration": "none"
+          },
+          "description": "Nombre de modelo en la cabecera (destacado: dorado). 13 px por debajo de 576. · .aura-table thead th"
+        },
+        "Etiqueta de tabla": {
+          "type": "typography",
+          "value": {
+            "fontFamily": "{Tipografía.Familia.Mono}",
+            "fontWeight": "{Tipografía.Peso.Mono.Medium}",
+            "fontSize": "{Tipografía.Tamaño.Contenido.Etiqueta de tabla}",
+            "lineHeight": "{Tipografía.Interlineado.Contenido.Etiqueta de tabla}",
+            "letterSpacing": "{Tipografía.Tracking.Contenido.Etiqueta de tabla}",
+            "paragraphSpacing": "0",
+            "textCase": "uppercase",
+            "textDecoration": "none"
+          },
+          "description": "Primera celda de la cabecera de la tabla. · .aura-table thead th:first-child"
+        },
+        "Título de cronología": {
+          "type": "typography",
+          "value": {
+            "fontFamily": "{Tipografía.Familia.Display}",
+            "fontWeight": "{Tipografía.Peso.Kanit.Medium}",
+            "fontSize": "{Tipografía.Tamaño.Contenido.Título de cronología}",
+            "lineHeight": "{Tipografía.Interlineado.Contenido.Título de cronología}",
+            "letterSpacing": "{Tipografía.Tracking.Contenido.Título de cronología}",
+            "paragraphSpacing": "0",
+            "textCase": "none",
+            "textDecoration": "none"
+          },
+          "description": "Hito de la cronología y título de la hoja. · .aura-timeline__title · .aura-sheet__title"
+        },
+        "Fecha de cronología": {
+          "type": "typography",
+          "value": {
+            "fontFamily": "{Tipografía.Familia.Mono}",
+            "fontWeight": "{Tipografía.Peso.Mono.Medium}",
+            "fontSize": "{Tipografía.Tamaño.Contenido.Fecha de cronología}",
+            "lineHeight": "{Tipografía.Interlineado.Contenido.Fecha de cronología}",
+            "letterSpacing": "{Tipografía.Tracking.Contenido.Fecha de cronología}",
+            "paragraphSpacing": "0",
+            "textCase": "uppercase",
+            "textDecoration": "none"
+          },
+          "description": "Fecha de un hito. · .aura-timeline__when"
+        },
+        "Título de nota": {
+          "type": "typography",
+          "value": {
+            "fontFamily": "{Tipografía.Familia.Interfaz}",
+            "fontWeight": "{Tipografía.Peso.Inter.Semi Bold}",
+            "fontSize": "{Tipografía.Tamaño.Contenido.Título de nota}",
+            "lineHeight": "{Tipografía.Interlineado.Contenido.Título de nota}",
+            "letterSpacing": "{Tipografía.Tracking.Contenido.Título de nota}",
+            "paragraphSpacing": "0",
+            "textCase": "none",
+            "textDecoration": "none"
+          },
+          "description": "Título de la nota de uso y de AuraCare+ en la bolsa. · .aura-note__title · .aura-bag-line__care-title"
+        },
+        "Texto de nota": {
+          "type": "typography",
+          "value": {
+            "fontFamily": "{Tipografía.Familia.Interfaz}",
+            "fontWeight": "{Tipografía.Peso.Inter.Regular}",
+            "fontSize": "{Tipografía.Tamaño.Contenido.Texto de nota}",
+            "lineHeight": "{Tipografía.Interlineado.Contenido.Texto de nota}",
+            "letterSpacing": "{Tipografía.Tracking.Contenido.Texto de nota}",
+            "paragraphSpacing": "0",
+            "textCase": "none",
+            "textDecoration": "none"
+          },
+          "description": "Texto de la nota de uso (60ch). · .aura-note__text"
+        },
+        "Título de mensaje": {
+          "type": "typography",
+          "value": {
+            "fontFamily": "{Tipografía.Familia.Interfaz}",
+            "fontWeight": "{Tipografía.Peso.Inter.Semi Bold}",
+            "fontSize": "{Tipografía.Tamaño.Contenido.Título de mensaje}",
+            "lineHeight": "{Tipografía.Interlineado.Contenido.Título de mensaje}",
+            "letterSpacing": "{Tipografía.Tracking.Contenido.Título de mensaje}",
+            "paragraphSpacing": "0",
+            "textCase": "none",
+            "textDecoration": "none"
+          },
+          "description": "Título del mensaje de formulario o de página (siempre con icono y texto). · .aura-alert__title"
+        }
+      },
+      "Tienda": {
+        "Línea de bolsa": {
+          "type": "typography",
+          "value": {
+            "fontFamily": "{Tipografía.Familia.Display}",
+            "fontWeight": "{Tipografía.Peso.Kanit.Medium}",
+            "fontSize": "{Tipografía.Tamaño.Tienda.Línea de bolsa}",
+            "lineHeight": "{Tipografía.Interlineado.Tienda.Línea de bolsa}",
+            "letterSpacing": "{Tipografía.Tracking.Tienda.Línea de bolsa}",
+            "paragraphSpacing": "0",
+            "textCase": "none",
+            "textDecoration": "none"
+          },
+          "description": "Nombre del producto en la bolsa. · .aura-bag-line__name"
+        },
+        "Título de acceso": {
+          "type": "typography",
+          "value": {
+            "fontFamily": "{Tipografía.Familia.Display}",
+            "fontWeight": "{Tipografía.Peso.Kanit.Medium}",
+            "fontSize": "{Tipografía.Tamaño.Tienda.Título de acceso}",
+            "lineHeight": "{Tipografía.Interlineado.Tienda.Título de acceso}",
+            "letterSpacing": "{Tipografía.Tracking.Tienda.Título de acceso}",
+            "paragraphSpacing": "0",
+            "textCase": "none",
+            "textDecoration": "none"
+          },
+          "description": "Título de la tarjeta de inicio de sesión y registro: 24 → 28 px. · .aura-auth-card__title"
+        }
+      },
+      "Overlay": {
+        "Título de popover": {
+          "type": "typography",
+          "value": {
+            "fontFamily": "{Tipografía.Familia.Display}",
+            "fontWeight": "{Tipografía.Peso.Kanit.Medium}",
+            "fontSize": "{Tipografía.Tamaño.Overlay.Título de popover}",
+            "lineHeight": "{Tipografía.Interlineado.Overlay.Título de popover}",
+            "letterSpacing": "{Tipografía.Tracking.Overlay.Título de popover}",
+            "paragraphSpacing": "0",
+            "textCase": "none",
+            "textDecoration": "none"
+          },
+          "description": "Título del popover (bolsa). · .aura-popover__title"
+        },
+        "Título de aviso": {
+          "type": "typography",
+          "value": {
+            "fontFamily": "{Tipografía.Familia.Interfaz}",
+            "fontWeight": "{Tipografía.Peso.Inter.Semi Bold}",
+            "fontSize": "{Tipografía.Tamaño.Overlay.Título de aviso}",
+            "lineHeight": "{Tipografía.Interlineado.Overlay.Título de aviso}",
+            "letterSpacing": "{Tipografía.Tracking.Overlay.Título de aviso}",
+            "paragraphSpacing": "0",
+            "textCase": "none",
+            "textDecoration": "none"
+          },
+          "description": "Título de un aviso. · .aura-toast__title"
+        },
+        "Texto de aviso": {
+          "type": "typography",
+          "value": {
+            "fontFamily": "{Tipografía.Familia.Interfaz}",
+            "fontWeight": "{Tipografía.Peso.Inter.Regular}",
+            "fontSize": "{Tipografía.Tamaño.Overlay.Texto de aviso}",
+            "lineHeight": "{Tipografía.Interlineado.Overlay.Texto de aviso}",
+            "letterSpacing": "{Tipografía.Tracking.Overlay.Texto de aviso}",
+            "paragraphSpacing": "0",
+            "textCase": "none",
+            "textDecoration": "none"
+          },
+          "description": "Texto de un aviso (vibrancia: algo más de peso sobre cristal). · .aura-toast__text"
+        }
+      },
+      "Pie": {
+        "Encabezado": {
+          "type": "typography",
+          "value": {
+            "fontFamily": "{Tipografía.Familia.Interfaz}",
+            "fontWeight": "{Tipografía.Peso.Inter.Semi Bold}",
+            "fontSize": "{Tipografía.Tamaño.Pie.Encabezado}",
+            "lineHeight": "{Tipografía.Interlineado.Pie.Encabezado}",
+            "letterSpacing": "{Tipografía.Tracking.Pie.Encabezado}",
+            "paragraphSpacing": "0",
+            "textCase": "none",
+            "textDecoration": "none"
+          },
+          "description": "Etiqueta de columna del pie (Inter, como el prototipo). · .aura-footer__heading"
+        },
+        "Texto": {
+          "type": "typography",
+          "value": {
+            "fontFamily": "{Tipografía.Familia.Interfaz}",
+            "fontWeight": "{Tipografía.Peso.Inter.Regular}",
+            "fontSize": "{Tipografía.Tamaño.Pie.Texto}",
+            "lineHeight": "{Tipografía.Interlineado.Pie.Texto}",
+            "letterSpacing": "{Tipografía.Tracking.Pie.Texto}",
+            "paragraphSpacing": "0",
+            "textCase": "none",
+            "textDecoration": "none"
+          },
+          "description": "Enlaces y texto del pie. · .aura-footer · .aura-footer__list a"
+        },
+        "Lema": {
+          "type": "typography",
+          "value": {
+            "fontFamily": "{Tipografía.Familia.Interfaz}",
+            "fontWeight": "{Tipografía.Peso.Inter.Regular}",
+            "fontSize": "{Tipografía.Tamaño.Pie.Lema}",
+            "lineHeight": "{Tipografía.Interlineado.Pie.Lema}",
+            "letterSpacing": "{Tipografía.Tracking.Pie.Lema}",
+            "paragraphSpacing": "0",
+            "textCase": "none",
+            "textDecoration": "none"
+          },
+          "description": "Lema bajo la marca del pie. · .aura-footer__tagline"
+        },
+        "Legal": {
+          "type": "typography",
+          "value": {
+            "fontFamily": "{Tipografía.Familia.Interfaz}",
+            "fontWeight": "{Tipografía.Peso.Inter.Regular}",
+            "fontSize": "{Tipografía.Tamaño.Pie.Legal}",
+            "lineHeight": "{Tipografía.Interlineado.Pie.Legal}",
+            "letterSpacing": "{Tipografía.Tracking.Pie.Legal}",
+            "paragraphSpacing": "0",
+            "textCase": "none",
+            "textDecoration": "none"
+          },
+          "description": "Copyright, enlaces legales y aviso de demostración. · .aura-footer__legal · .aura-footer__demo"
+        }
+      },
+      "Móvil": {
+        "Display": {
+          "type": "typography",
+          "value": {
+            "fontFamily": "{Tipografía.Familia.Display}",
+            "fontWeight": "{Tipografía.Peso.Kanit.Medium}",
+            "fontSize": "{Tipografía.Tamaño.Móvil.Display}",
+            "lineHeight": "{Tipografía.Interlineado.Móvil.Display}",
+            "letterSpacing": "{Tipografía.Tracking.Móvil.Display}",
+            "paragraphSpacing": "0",
+            "textCase": "none",
+            "textDecoration": "none"
+          },
+          "description": "A 390 px. Momento héroe: 36 → 72 px (40 a 390). Un solo Display por página. · .aura-display"
+        },
+        "H1": {
+          "type": "typography",
+          "value": {
+            "fontFamily": "{Tipografía.Familia.Display}",
+            "fontWeight": "{Tipografía.Peso.Kanit.Medium}",
+            "fontSize": "{Tipografía.Tamaño.Móvil.H1}",
+            "lineHeight": "{Tipografía.Interlineado.Móvil.H1}",
+            "letterSpacing": "{Tipografía.Tracking.Móvil.H1}",
+            "paragraphSpacing": "0",
+            "textCase": "none",
+            "textDecoration": "none"
+          },
+          "description": "A 390 px. Hero Title: 34 → 56 px. · .aura-h1"
+        },
+        "H2": {
+          "type": "typography",
+          "value": {
+            "fontFamily": "{Tipografía.Familia.Display}",
+            "fontWeight": "{Tipografía.Peso.Kanit.Medium}",
+            "fontSize": "{Tipografía.Tamaño.Móvil.H2}",
+            "lineHeight": "{Tipografía.Interlineado.Móvil.H2}",
+            "letterSpacing": "{Tipografía.Tracking.Móvil.H2}",
+            "paragraphSpacing": "0",
+            "textCase": "none",
+            "textDecoration": "none"
+          },
+          "description": "A 390 px. Section Title: 28 → 42 px. · .aura-h2"
+        },
+        "H3": {
+          "type": "typography",
+          "value": {
+            "fontFamily": "{Tipografía.Familia.Display}",
+            "fontWeight": "{Tipografía.Peso.Kanit.Medium}",
+            "fontSize": "{Tipografía.Tamaño.Móvil.H3}",
+            "lineHeight": "{Tipografía.Interlineado.Móvil.H3}",
+            "letterSpacing": "{Tipografía.Tracking.Móvil.H3}",
+            "paragraphSpacing": "0",
+            "textCase": "none",
+            "textDecoration": "none"
+          },
+          "description": "A 390 px. Card Title: 22 → 28 px. También el nombre de la tarjeta de modelo. · .aura-h3 · .aura-product-card__name"
+        },
+        "Lead": {
+          "type": "typography",
+          "value": {
+            "fontFamily": "{Tipografía.Familia.Interfaz}",
+            "fontWeight": "{Tipografía.Peso.Inter.Regular}",
+            "fontSize": "{Tipografía.Tamaño.Móvil.Lead}",
+            "lineHeight": "{Tipografía.Interlineado.Móvil.Lead}",
+            "letterSpacing": "{Tipografía.Tracking.Móvil.Lead}",
+            "paragraphSpacing": "0",
+            "textCase": "none",
+            "textDecoration": "none"
+          },
+          "description": "A 390 px. Entradilla: 17 → 21 px, 44ch ≈ 56 caracteres. · .aura-lead"
+        },
+        "Eyebrow grande": {
+          "type": "typography",
+          "value": {
+            "fontFamily": "{Tipografía.Familia.Display}",
+            "fontWeight": "{Tipografía.Peso.Kanit.Medium}",
+            "fontSize": "{Tipografía.Tamaño.Móvil.Eyebrow grande}",
+            "lineHeight": "{Tipografía.Interlineado.Móvil.Eyebrow grande}",
+            "letterSpacing": "{Tipografía.Tracking.Móvil.Eyebrow grande}",
+            "paragraphSpacing": "0",
+            "textCase": "none",
+            "textDecoration": "none"
+          },
+          "description": "A 390 px. Nombre de producto sobre un titular héroe: 18 → 22 px, sin punto. · .aura-eyebrow--lg"
+        },
+        "Precio grande": {
+          "type": "typography",
+          "value": {
+            "fontFamily": "{Tipografía.Familia.Display}",
+            "fontWeight": "{Tipografía.Peso.Kanit.Medium}",
+            "fontSize": "{Tipografía.Tamaño.Móvil.Precio grande}",
+            "lineHeight": "{Tipografía.Interlineado.Móvil.Precio grande}",
+            "letterSpacing": "{Tipografía.Tracking.Móvil.Precio grande}",
+            "paragraphSpacing": "0",
+            "textCase": "none",
+            "textDecoration": "none"
+          },
+          "description": "A 390 px. Precio del configurador: 28 → 36 px. · .aura-price--lg"
+        },
+        "Cifra": {
+          "type": "typography",
+          "value": {
+            "fontFamily": "{Tipografía.Familia.Display}",
+            "fontWeight": "{Tipografía.Peso.Kanit.Medium}",
+            "fontSize": "{Tipografía.Tamaño.Móvil.Cifra}",
+            "lineHeight": "{Tipografía.Interlineado.Móvil.Cifra}",
+            "letterSpacing": "{Tipografía.Tracking.Móvil.Cifra}",
+            "paragraphSpacing": "0",
+            "textCase": "none",
+            "textDecoration": "none"
+          },
+          "description": "A 390 px. Cifra: 26 → 38 px. · .aura-stat__value"
+        },
+        "Cifra grande": {
+          "type": "typography",
+          "value": {
+            "fontFamily": "{Tipografía.Familia.Display}",
+            "fontWeight": "{Tipografía.Peso.Kanit.Medium}",
+            "fontSize": "{Tipografía.Tamaño.Móvil.Cifra grande}",
+            "lineHeight": "{Tipografía.Interlineado.Móvil.Cifra grande}",
+            "letterSpacing": "{Tipografía.Tracking.Móvil.Cifra grande}",
+            "paragraphSpacing": "0",
+            "textCase": "none",
+            "textDecoration": "none"
+          },
+          "description": "A 390 px. Cifra destacada de página de producto: clamp(3rem, 2.25rem + 3cqi, 5rem) → 79,2 px a 1440 (máx. 80). · .aura-stat--lg .aura-stat__value"
+        },
+        "Cifra destacada": {
+          "type": "typography",
+          "value": {
+            "fontFamily": "{Tipografía.Familia.Display}",
+            "fontWeight": "{Tipografía.Peso.Kanit.Medium}",
+            "fontSize": "{Tipografía.Tamaño.Móvil.Cifra destacada}",
+            "lineHeight": "{Tipografía.Interlineado.Móvil.Cifra destacada}",
+            "letterSpacing": "{Tipografía.Tracking.Móvil.Cifra destacada}",
+            "paragraphSpacing": "0",
+            "textCase": "none",
+            "textDecoration": "none"
+          },
+          "description": "A 390 px. La gran cifra en una columna estrecha: 56 → 76 px. · .aura-stat--md .aura-stat__value"
+        },
+        "Cifra XL": {
+          "type": "typography",
+          "value": {
+            "fontFamily": "{Tipografía.Familia.Display}",
+            "fontWeight": "{Tipografía.Peso.Kanit.Medium}",
+            "fontSize": "{Tipografía.Tamaño.Móvil.Cifra XL}",
+            "lineHeight": "{Tipografía.Interlineado.Móvil.Cifra XL}",
+            "letterSpacing": "{Tipografía.Tracking.Móvil.Cifra XL}",
+            "paragraphSpacing": "0",
+            "textCase": "none",
+            "textDecoration": "none"
+          },
+          "description": "A 390 px. La gran cifra («22 horas»): 80 → 160 px, sobre un resplandor circular. · .aura-stat--xl .aura-stat__value"
+        },
+        "Navegación": {
+          "Enlace local": {
+            "type": "typography",
+            "value": {
+              "fontFamily": "{Tipografía.Familia.Interfaz}",
+              "fontWeight": "{Tipografía.Peso.Inter.Regular}",
+              "fontSize": "{Tipografía.Tamaño.Móvil.Navegación.Enlace local}",
+              "lineHeight": "{Tipografía.Interlineado.Móvil.Navegación.Enlace local}",
+              "letterSpacing": "{Tipografía.Tracking.Móvil.Navegación.Enlace local}",
+              "paragraphSpacing": "0",
+              "textCase": "none",
+              "textDecoration": "none"
+            },
+            "description": "A 390 px. Enlaces de la barra local (activo: blanco, 600). Por debajo de 992 px se pliegan en un menú: 15 px, sin tracking, interlineado 24, filas de 44 px. · .aura-localnav__link"
+          }
+        },
+        "Formulario": {
+          "Buscador": {
+            "type": "typography",
+            "value": {
+              "fontFamily": "{Tipografía.Familia.Display}",
+              "fontWeight": "{Tipografía.Peso.Kanit.Medium}",
+              "fontSize": "{Tipografía.Tamaño.Móvil.Formulario.Buscador}",
+              "lineHeight": "{Tipografía.Interlineado.Móvil.Formulario.Buscador}",
+              "letterSpacing": "{Tipografía.Tracking.Móvil.Formulario.Buscador}",
+              "paragraphSpacing": "0",
+              "textCase": "none",
+              "textDecoration": "none"
+            },
+            "description": "A 390 px. Campo del buscador: 20 → 28 px. · .aura-search__input"
+          }
+        },
+        "Contenido": {
+          "Cita": {
+            "type": "typography",
+            "value": {
+              "fontFamily": "{Tipografía.Familia.Display}",
+              "fontWeight": "{Tipografía.Peso.Kanit.Medium}",
+              "fontSize": "{Tipografía.Tamaño.Móvil.Contenido.Cita}",
+              "lineHeight": "{Tipografía.Interlineado.Móvil.Contenido.Cita}",
+              "letterSpacing": "{Tipografía.Tracking.Móvil.Contenido.Cita}",
+              "paragraphSpacing": "0",
+              "textCase": "none",
+              "textDecoration": "none"
+            },
+            "description": "A 390 px. Cita: 24 → 36 px, con comilla dorada. · .aura-quote__text"
+          },
+          "Pregunta": {
+            "type": "typography",
+            "value": {
+              "fontFamily": "{Tipografía.Familia.Display}",
+              "fontWeight": "{Tipografía.Peso.Kanit.Medium}",
+              "fontSize": "{Tipografía.Tamaño.Móvil.Contenido.Pregunta}",
+              "lineHeight": "{Tipografía.Interlineado.Móvil.Contenido.Pregunta}",
+              "letterSpacing": "{Tipografía.Tracking.Móvil.Contenido.Pregunta}",
+              "paragraphSpacing": "0",
+              "textCase": "none",
+              "textDecoration": "none"
+            },
+            "description": "A 390 px. Pregunta del acordeón: 17 → 20 px (fila mínima de 64 px). · .aura-accordion__summary"
+          },
+          "Tabla": {
+            "type": "typography",
+            "value": {
+              "fontFamily": "{Tipografía.Familia.Interfaz}",
+              "fontWeight": "{Tipografía.Peso.Inter.Regular}",
+              "fontSize": "{Tipografía.Tamaño.Móvil.Contenido.Tabla}",
+              "lineHeight": "{Tipografía.Interlineado.Móvil.Contenido.Tabla}",
+              "letterSpacing": "{Tipografía.Tracking.Móvil.Contenido.Tabla}",
+              "paragraphSpacing": "0",
+              "textCase": "none",
+              "textDecoration": "none"
+            },
+            "description": "A 390 px. Celdas de la tabla comparativa (13 px por debajo de 576). · .aura-table"
+          },
+          "Cabecera de tabla": {
+            "type": "typography",
+            "value": {
+              "fontFamily": "{Tipografía.Familia.Interfaz}",
+              "fontWeight": "{Tipografía.Peso.Inter.Semi Bold}",
+              "fontSize": "{Tipografía.Tamaño.Móvil.Contenido.Cabecera de tabla}",
+              "lineHeight": "{Tipografía.Interlineado.Móvil.Contenido.Cabecera de tabla}",
+              "letterSpacing": "{Tipografía.Tracking.Móvil.Contenido.Cabecera de tabla}",
+              "paragraphSpacing": "0",
+              "textCase": "none",
+              "textDecoration": "none"
+            },
+            "description": "A 390 px. Nombre de modelo en la cabecera (destacado: dorado). 13 px por debajo de 576. · .aura-table thead th"
+          }
+        },
+        "Tienda": {
+          "Título de acceso": {
+            "type": "typography",
+            "value": {
+              "fontFamily": "{Tipografía.Familia.Display}",
+              "fontWeight": "{Tipografía.Peso.Kanit.Medium}",
+              "fontSize": "{Tipografía.Tamaño.Móvil.Tienda.Título de acceso}",
+              "lineHeight": "{Tipografía.Interlineado.Móvil.Tienda.Título de acceso}",
+              "letterSpacing": "{Tipografía.Tracking.Móvil.Tienda.Título de acceso}",
+              "paragraphSpacing": "0",
+              "textCase": "none",
+              "textDecoration": "none"
+            },
+            "description": "A 390 px. Título de la tarjeta de inicio de sesión y registro: 24 → 28 px. · .aura-auth-card__title"
+          }
+        }
+      }
+    },
+    "Sombra": {
+      "1": {
+        "type": "boxShadow",
+        "value": [{ "x": "0", "y": "1", "blur": "2", "spread": "0", "color": "rgba(0, 0, 0, 0.5)", "type": "dropShadow" }],
+        "description": "Pastilla del segmentado. · --shadow-1"
+      },
+      "2": {
+        "type": "boxShadow",
+        "value": [
+          { "x": "0", "y": "14", "blur": "36", "spread": "-10", "color": "rgba(0, 0, 0, 0.7)", "type": "dropShadow" },
+          { "x": "0", "y": "2", "blur": "8", "spread": "0", "color": "rgba(0, 0, 0, 0.4)", "type": "dropShadow" }
+        ],
+        "description": "Lo que flota a la altura de la página: popover, tarjeta elevada, tarjeta de acceso, paneles de cristal, avisos. · --shadow-2"
+      },
+      "3": {
+        "type": "boxShadow",
+        "value": [
+          { "x": "0", "y": "36", "blur": "90", "spread": "-16", "color": "rgba(0, 0, 0, 0.85)", "type": "dropShadow" },
+          { "x": "0", "y": "10", "blur": "28", "spread": "0", "color": "rgba(0, 0, 0, 0.55)", "type": "dropShadow" }
+        ],
+        "description": "Lo que tapa la página: hoja y buscador. · --shadow-3"
+      },
+      "Halo primario": {
+        "type": "boxShadow",
+        "value": [
+          { "x": "0", "y": "0", "blur": "0", "spread": "1", "color": "rgba(23, 135, 247, 0.22)", "type": "dropShadow" },
+          {
+            "x": "0",
+            "y": "10",
+            "blur": "30",
+            "spread": "-6",
+            "color": "rgba(0, 113, 227, 0.85)",
+            "type": "dropShadow"
+          }
+        ],
+        "description": "Halo de energía del botón primario: al 55 % en reposo y al 100 % en hover (es una capa con opacidad). · --glow-accent"
+      },
+      "Foco de campo": {
+        "type": "boxShadow",
+        "value": [
+          { "x": "0", "y": "0", "blur": "0", "spread": "4", "color": "{Color.Acento.Anillo}", "type": "dropShadow" },
+          { "x": "0", "y": "1", "blur": "0", "spread": "0", "color": "rgba(255, 255, 255, 0.1)", "type": "innerShadow" }
+        ],
+        "description": "Campo en foco: anillo azul de 4 px pegado al borde + filo claro interior. · .aura-input:focus"
+      },
+      "Foco de error": {
+        "type": "boxShadow",
+        "value": [
+          {
+            "x": "0",
+            "y": "0",
+            "blur": "0",
+            "spread": "4",
+            "color": "{Color.Estado.Anillo de error}",
+            "type": "dropShadow"
+          },
+          { "x": "0", "y": "1", "blur": "0", "spread": "0", "color": "rgba(255, 255, 255, 0.1)", "type": "innerShadow" }
+        ],
+        "description": "Campo con error en foco. · .aura-field.is-invalid .aura-input:focus"
+      },
+      "Foco de control": {
+        "type": "boxShadow",
+        "value": [{ "x": "0", "y": "0", "blur": "0", "spread": "5", "color": "{Color.Acento.Anillo}", "type": "dropShadow" }],
+        "description": "Casilla o radio con foco de teclado (además del contorno de 2 px). · .aura-check__input:focus-visible + .aura-check__box"
+      },
+      "Pastilla": {
+        "type": "boxShadow",
+        "value": [
+          {
+            "x": "0",
+            "y": "1",
+            "blur": "0",
+            "spread": "0",
+            "color": "rgba(255, 255, 255, 0.12)",
+            "type": "innerShadow"
+          },
+          { "x": "0", "y": "1", "blur": "2", "spread": "0", "color": "rgba(0, 0, 0, 0.5)", "type": "dropShadow" }
+        ],
+        "description": "Pastilla elegida del segmentado: filo de luz + --shadow-1. · .aura-segmented__thumb"
+      },
+      "Filo de luz": {
+        "type": "boxShadow",
+        "value": [
+          {
+            "x": "0",
+            "y": "1",
+            "blur": "0",
+            "spread": "0",
+            "color": "{Color.Línea.Filo de luz}",
+            "type": "innerShadow"
+          }
+        ],
+        "description": "Filo superior interior del icono de característica. · .aura-feature__icon"
+      },
+      "Muestra": {
+        "type": "boxShadow",
+        "value": [
+          {
+            "x": "0",
+            "y": "0",
+            "blur": "0",
+            "spread": "1",
+            "color": "rgba(255, 255, 255, 0.42)",
+            "type": "innerShadow"
+          },
+          {
+            "x": "0",
+            "y": "3",
+            "blur": "4",
+            "spread": "0",
+            "color": "rgba(255, 255, 255, 0.14)",
+            "type": "innerShadow"
+          }
+        ],
+        "description": "Aro (≥ 3:1 con acabados negros) y brillo de la muestra de color. · .aura-swatch__dot"
+      },
+      "Barra de compra": {
+        "type": "boxShadow",
+        "value": [{ "x": "0", "y": "-12", "blur": "32", "spread": "-12", "color": "rgba(0, 0, 0, 0.7)", "type": "dropShadow" }],
+        "description": "Sombra hacia arriba de la barra de compra fija. · .aura-buybar"
+      }
+    },
+    "Material": {
+      "Fino": {
+        "Fondo": {
+          "type": "color",
+          "value": "{Color.Cristal.Fino}",
+          "description": "Fondo del material fino. · --glass-thin-bg"
+        },
+        "Desenfoque": {
+          "type": "dimension",
+          "value": "16px",
+          "description": "blur(16px) saturate(180%). · --glass-thin-filter"
+        },
+        "Desenfoque Figma": {
+          "type": "dimension",
+          "value": "32px",
+          "description": "Radio del desenfoque de fondo en Figma. · --glass-thin-filter"
+        }
+      },
+      "Regular": {
+        "Fondo": {
+          "type": "color",
+          "value": "{Color.Cristal.Regular}",
+          "description": "Fondo del material regular. · --glass-regular-bg"
+        },
+        "Desenfoque": {
+          "type": "dimension",
+          "value": "24px",
+          "description": "blur(24px) saturate(180%). · --glass-regular-filter"
+        },
+        "Desenfoque Figma": {
+          "type": "dimension",
+          "value": "48px",
+          "description": "Radio del desenfoque de fondo en Figma. · --glass-regular-filter"
+        }
+      },
+      "Grueso": {
+        "Fondo": {
+          "type": "color",
+          "value": "{Color.Cristal.Grueso}",
+          "description": "Fondo del material grueso. · --glass-thick-bg"
+        },
+        "Desenfoque": {
+          "type": "dimension",
+          "value": "40px",
+          "description": "blur(40px) saturate(180%). · --glass-thick-filter"
+        },
+        "Desenfoque Figma": {
+          "type": "dimension",
+          "value": "80px",
+          "description": "Radio del desenfoque de fondo en Figma. · --glass-thick-filter"
+        }
+      },
+      "Saturación": {
+        "type": "number",
+        "value": 1.8,
+        "description": "saturate(180%) de los tres materiales (no se traslada a Figma). · --glass-*-filter"
+      }
+    },
+    "Degradado": {
+      "Protección de foto": {
+        "type": "color",
+        "value": "linear-gradient(0deg, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.55) 34%, rgba(0, 0, 0, 0) 64%)",
+        "description": "De abajo arriba: protege el texto sobre una foto (tesela --cover, escena con texto abajo). · --photo-scrim"
+      },
+      "Efecto de borde": {
+        "type": "color",
+        "value": "linear-gradient(180deg, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0) 100%)",
+        "description": "De arriba abajo, 16 px bajo una barra pegada (con el desenfoque regular que se desvanece). · .aura-nav::after"
+      },
+      "Hueco de imagen": {
+        "type": "color",
+        "value": "linear-gradient(180deg, #111113 0%, #08080a 100%)",
+        "description": "De arriba abajo: fondo del hueco de imagen (con el resplandor Color/Luz/Hueco encima). · .aura-slot"
+      }
+    },
+    "Movimiento": {
+      "Duración": {
+        "Pulsación": {
+          "type": "other",
+          "value": "100ms",
+          "description": "Respuesta en pointerdown: scale() inmediato. · --dur-press"
+        },
+        "Marca": {
+          "type": "other",
+          "value": "120ms",
+          "description": "Marca de casilla y radio. · --dur-check"
+        },
+        "Reducir movimiento": {
+          "type": "other",
+          "value": "150ms",
+          "description": "Fundido de los overlays con «reducir movimiento». · --dur-rm"
+        },
+        "Corta": {
+          "type": "other",
+          "value": "160ms",
+          "description": "Halo, capa de hover, «›» del enlace. · --dur-1"
+        },
+        "Salida": {
+          "type": "other",
+          "value": "200ms",
+          "description": "Salida de popover, aviso, buscador y menú; fundido de la galería. · --dur-exit"
+        },
+        "Media": {
+          "type": "other",
+          "value": "240ms",
+          "description": "Foto que llega, tarjetas, menú de la barra local. · --dur-2"
+        },
+        "Entrada": {
+          "type": "other",
+          "value": "320ms",
+          "description": "Desplazamiento de entrada de aviso, buscador y menú. · --dur-enter"
+        },
+        "Aparición": {
+          "type": "other",
+          "value": "400ms",
+          "description": "Opacidad de data-aura-reveal. · [data-aura-reveal]"
+        },
+        "Desplazamiento de aparición": {
+          "type": "other",
+          "value": "600ms",
+          "description": "Desplazamiento de data-aura-reveal (con la curva de entrada). · [data-aura-reveal]"
+        },
+        "Larga": {
+          "type": "other",
+          "value": "560ms",
+          "description": "Cifras que aparecen por partes (=\"stat\"). · --dur-3"
+        }
+      },
+      "Curva": {
+        "Entrada": {
+          "type": "other",
+          "value": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+          "description": "Entrada. · --ease-out"
+        },
+        "Salida": {
+          "type": "other",
+          "value": "cubic-bezier(0.8, 0, 0.8, 0.2)",
+          "description": "Salida: la de entrada espejada. · --ease-in"
+        },
+        "Pulsación": {
+          "type": "other",
+          "value": "cubic-bezier(0, 0, 0.58, 1)",
+          "description": "ease-out de CSS: la pulsación (transform 100 ms). · ease-out"
+        },
+        "Fundido": {
+          "type": "other",
+          "value": "cubic-bezier(0.25, 0.1, 0.25, 1)",
+          "description": "ease de CSS: fundidos de opacidad (halo, capa de hover). · ease"
+        }
+      },
+      "Transición": {
+        "Pulsación": {
+          "type": "other",
+          "value": "{Movimiento.Duración.Pulsación} {Movimiento.Curva.Pulsación}",
+          "description": "transform 100 ms ease-out. · .aura-btn"
+        },
+        "Hover": {
+          "type": "other",
+          "value": "{Movimiento.Duración.Corta} {Movimiento.Curva.Fundido}",
+          "description": "Capa de hover y halo: opacity 160 ms ease. · .aura-btn::before"
+        },
+        "Entrada": {
+          "type": "other",
+          "value": "{Movimiento.Duración.Entrada} {Movimiento.Curva.Entrada}",
+          "description": "Entrada de aviso, buscador y menú. · .aura-toast.is-visible"
+        },
+        "Salida": {
+          "type": "other",
+          "value": "{Movimiento.Duración.Salida} {Movimiento.Curva.Salida}",
+          "description": "Salida por el mismo camino. · .aura-toast"
+        }
+      },
+      "Muelle": {
+        "Por defecto": {
+          "Amortiguación": {
+            "type": "number",
+            "value": 1,
+            "description": "damping de AURA.ui.spring (1 = crítico, sin rebote). · AURA.ui.spring"
+          },
+          "Respuesta": {
+            "type": "number",
+            "value": 0.35,
+            "description": "response de AURA.ui.spring (s); no es una duración. · AURA.ui.spring"
+          },
+          "Rigidez Figma": {
+            "type": "number",
+            "value": 322.273,
+            "description": "Stiffness del muelle personalizado de Figma (masa 1): (2π / response)². · AURA.ui.spring"
+          },
+          "Amortiguación Figma": {
+            "type": "number",
+            "value": 35.904,
+            "description": "Damping del muelle personalizado de Figma (masa 1): 4π · damping / response. · AURA.ui.spring"
+          }
+        },
+        "Hoja": {
+          "Amortiguación": {
+            "type": "number",
+            "value": 1,
+            "description": "damping de AURA.ui.spring (1 = crítico, sin rebote). · AURA.ui.spring"
+          },
+          "Respuesta": {
+            "type": "number",
+            "value": 0.3,
+            "description": "response de AURA.ui.spring (s); no es una duración. · AURA.ui.spring"
+          },
+          "Rigidez Figma": {
+            "type": "number",
+            "value": 438.649,
+            "description": "Stiffness del muelle personalizado de Figma (masa 1): (2π / response)². · AURA.ui.spring"
+          },
+          "Amortiguación Figma": {
+            "type": "number",
+            "value": 41.888,
+            "description": "Damping del muelle personalizado de Figma (masa 1): 4π · damping / response. · AURA.ui.spring"
+          }
+        },
+        "Hoja con impulso": {
+          "Amortiguación": {
+            "type": "number",
+            "value": 0.8,
+            "description": "damping de AURA.ui.spring (1 = crítico, sin rebote). · AURA.ui.spring"
+          },
+          "Respuesta": {
+            "type": "number",
+            "value": 0.3,
+            "description": "response de AURA.ui.spring (s); no es una duración. · AURA.ui.spring"
+          },
+          "Rigidez Figma": {
+            "type": "number",
+            "value": 438.649,
+            "description": "Stiffness del muelle personalizado de Figma (masa 1): (2π / response)². · AURA.ui.spring"
+          },
+          "Amortiguación Figma": {
+            "type": "number",
+            "value": 33.51,
+            "description": "Damping del muelle personalizado de Figma (masa 1): 4π · damping / response. · AURA.ui.spring"
+          }
+        },
+        "Carrusel con impulso": {
+          "Amortiguación": {
+            "type": "number",
+            "value": 0.8,
+            "description": "damping de AURA.ui.spring (1 = crítico, sin rebote). · AURA.ui.spring"
+          },
+          "Respuesta": {
+            "type": "number",
+            "value": 0.4,
+            "description": "response de AURA.ui.spring (s); no es una duración. · AURA.ui.spring"
+          },
+          "Rigidez Figma": {
+            "type": "number",
+            "value": 246.74,
+            "description": "Stiffness del muelle personalizado de Figma (masa 1): (2π / response)². · AURA.ui.spring"
+          },
+          "Amortiguación Figma": {
+            "type": "number",
+            "value": 25.133,
+            "description": "Damping del muelle personalizado de Figma (masa 1): 4π · damping / response. · AURA.ui.spring"
+          }
+        },
+        "Carrusel": {
+          "Amortiguación": {
+            "type": "number",
+            "value": 1,
+            "description": "damping de AURA.ui.spring (1 = crítico, sin rebote). · AURA.ui.spring"
+          },
+          "Respuesta": {
+            "type": "number",
+            "value": 0.4,
+            "description": "response de AURA.ui.spring (s); no es una duración. · AURA.ui.spring"
+          },
+          "Rigidez Figma": {
+            "type": "number",
+            "value": 246.74,
+            "description": "Stiffness del muelle personalizado de Figma (masa 1): (2π / response)². · AURA.ui.spring"
+          },
+          "Amortiguación Figma": {
+            "type": "number",
+            "value": 31.416,
+            "description": "Damping del muelle personalizado de Figma (masa 1): 4π · damping / response. · AURA.ui.spring"
+          }
+        }
+      },
+      "Escala de pulsación": {
+        "Botón": {
+          "type": "number",
+          "value": 0.97,
+          "description": "scale(.97) del botón. · .aura-btn:active"
+        },
+        "Botón de icono": {
+          "type": "number",
+          "value": 0.92,
+          "description": "scale(.92) de botones de icono y acciones de barra. · .aura-icon-btn:active"
+        },
+        "Chip": {
+          "type": "number",
+          "value": 0.96,
+          "description": "scale(.96) de chips y segmentado. · button.aura-chip:active"
+        },
+        "Tarjeta": {
+          "type": "number",
+          "value": 0.985,
+          "description": "scale(.985) de tarjetas y opciones. · a.aura-card:active"
+        },
+        "Casilla": {
+          "type": "number",
+          "value": 0.88,
+          "description": "scale(.88) de casillas, radios y cantidad. · .aura-check:active"
+        },
+        "Muestra": {
+          "type": "number",
+          "value": 0.9,
+          "description": "scale(.9) de la muestra de color. · .aura-swatch:active"
+        }
+      },
+      "Aparición": {
+        "Desplazamiento": {
+          "type": "dimension",
+          "value": "20px",
+          "description": "Desplazamiento vertical inicial de data-aura-reveal (1,25 rem). · [data-aura-reveal]"
+        },
+        "Escala": {
+          "type": "number",
+          "value": 0.96,
+          "description": "Escala inicial de data-aura-reveal=\"scale\". · [data-aura-reveal=\"scale\"]"
+        },
+        "Escalonado": {
+          "type": "other",
+          "value": "60ms",
+          "description": "Retraso por elemento de una fila: el índice del elemento (--i = 0, 1, 2…) por 60 ms, como mucho dos (120 ms); en el teléfono, 0. · calc(min(var(--i, 0), 2) * 60ms)"
+        }
+      },
+      "Física": {
+        "Deceleración": {
+          "type": "number",
+          "value": 0.998,
+          "description": "Proyección del impulso como el desplazamiento normal. · AURA.ui.project"
+        },
+        "Deceleración ágil": {
+          "type": "number",
+          "value": 0.99,
+          "description": "Proyección para lo que encaja por puntos (carrusel, segmentado). · AURA.ui.project"
+        },
+        "Goma": {
+          "type": "number",
+          "value": 0.55,
+          "description": "Constante del efecto goma en los bordes. · AURA.ui.rubberband"
+        },
+        "Umbral": {
+          "type": "dimension",
+          "value": "10px",
+          "description": "Distancia antes de decidir la dirección de un arrastre. · aura-ui.js"
+        },
+        "Retroceso": {
+          "type": "number",
+          "value": 0.965,
+          "description": "Escala de la página que retrocede bajo una hoja o el buscador. · html.aura-recede"
+        }
+      }
+    }
+  },
+  "$themes": [{ "id": "aura-oscuro", "name": "Oscuro", "group": "AURA", "selectedTokenSets": { "AURA": "enabled" } }],
+  "$metadata": { "tokenSetOrder": ["AURA"] }
+}

@@ -101,3 +101,7 @@ La guía de estilo completa es la **v2**: [`guia-de-estilo/guia-de-estilo.html`]
   - «Deshacer» en lugar de confirmaciones.
   - Validación en línea.
   - Soporte de *reducir movimiento*, *reducir transparencia* y *más contraste*.
+
+## Figma
+
+La guía de estilo también está preparada para Figma (plugin que crea variables, estilos, componentes y la guía; tokens en JSON): [`guia-de-estilo/figma/LEEME.md`](guia-de-estilo/figma/LEEME.md).

@@ -1,0 +1,12 @@
+{
+  "name": "AURA — Guía de estilo",
+  "id": "aura-guia-de-estilo-v2",
+  "api": "1.0.0",
+  "main": "code.js",
+  "editorType": ["figma"],
+  "documentAccess": "dynamic-page",
+  "networkAccess": {
+    "allowedDomains": ["https://aura-lyart-beta.vercel.app"],
+    "reasoning": "Carga el logotipo y las fotos reales de producto de la web publicada de AURA."
+  }
+}
