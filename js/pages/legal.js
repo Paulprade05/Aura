@@ -190,6 +190,12 @@
     { id: 'otras', titulo: 'Soporte y otras páginas', test: function () { return true; } }
   ];
   var porGrupo = {};
+  /* Autores con más de un enlace (cada uno, a la página de una foto suya):
+     su nombre se repetiría con destinos distintos (TAW, H30). */
+  var enlacesAutor = {};
+  lista.forEach(function (c) {
+    if (c && c.autor && url(c.autorUrl)) { (enlacesAutor[c.autor] = enlacesAutor[c.autor] || {})[c.autorUrl] = true; }
+  });
   lista.forEach(function (c) {
     if (!c || !c.slot) { return; }
     /* Las secuencias de las escenas (seq-auraphone-intro…) van con la página de su familia. */
@@ -222,8 +228,12 @@
       '<div class="legal-credito__body">' +
         '<p class="legal-credito__desc">' + esc(desc) + '</p>' +
         '<dl class="legal-credito__meta">' +
-          '<div><dt>Autor</dt><dd>' + enlace(c.autorUrl, c.autor || 'Sin nombre') + '</dd></div>' +
-          '<div><dt>Fuente</dt><dd>' + enlace(c.url, c.fuente || 'Original', '<span class="visually-hidden">: foto original</span>') + '</dd></div>' +
+          /* Si ese autor tiene varios enlaces, el texto oculto dice de qué foto es este. */
+          '<div><dt>Autor</dt><dd>' + enlace(c.autorUrl, c.autor || 'Sin nombre',
+            c.autor && Object.keys(enlacesAutor[c.autor] || {}).length > 1 ? '<span class="visually-hidden">: autor de «' + esc(desc) + '»</span>' : '') + '</dd></div>' +
+          /* «Wikimedia Commons», «Unsplash»… se repiten con destinos distintos: el
+             texto oculto dice de qué foto es el original (TAW, H30). */
+          '<div><dt>Fuente</dt><dd>' + enlace(c.url, c.fuente || 'Original', '<span class="visually-hidden">: original de «' + esc(desc) + '»</span>') + '</dd></div>' +
           '<div><dt>Licencia</dt><dd>' + enlace(c.licenciaUrl, c.licencia || 'Licencia libre') + '</dd></div>' +
           (c.modificada !== false ? '<div><dt>Cambios</dt><dd>' + esc(cambios) + '</dd></div>' : '') +
         '</dl>' +

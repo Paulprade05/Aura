@@ -1453,7 +1453,7 @@
     }
     div.innerHTML =
       '<div class="aura-slot__inner">' +
-        '<i class="aura-slot__icon bi bi-image" aria-hidden="true"></i>' +
+        '<span class="aura-slot__icon bi bi-image" aria-hidden="true"></span>' +
         '<span class="aura-slot__path">' + esc(dir + main + '.webp') + '</span>' +
         (optional ? '<span class="aura-slot__optional">' + esc(optional) + '</span>' : '') +
         '<span class="aura-slot__size">' + esc(w) + ' × ' + esc(h) + ' px</span>' +
@@ -1661,6 +1661,10 @@
    * productCard(producto | id, { heading: 'h3', colorId, eager }) → cadena HTML ('' si no existe).
    * La foto es la vista de tarjeta (la primera de catalog.views). `eager: true`
    * para las tarjetas de la primera pantalla (la imagen LCP no va diferida).
+   * Un solo enlace por destino: la foto no es un enlace (sería uno vacío, F89
+   * de TAW); el del nombre es un «enlace estirado» (su ::after cubre la
+   * tarjeta, ver aura.css) y el botón queda encima, con el nombre del modelo
+   * en texto oculto (no en aria-label: «Comprar» ×11 con destinos distintos, H30).
    */
   var CARD_SIZES = '(min-width: 1024px) 380px, 90vw';
   var FAMILY_CARD_SIZES = '(min-width: 1200px) 280px, (min-width: 576px) 50vw, calc(100vw - 32px)';
@@ -1680,9 +1684,9 @@
     var image = catalog.image(p, shown ? shown.id : '');
     var price = toNumber(p.basePrice);     // sin precio válido (0, texto…) no se enseña «Desde 0 €»
     return '<article class="aura-product-card" data-product="' + esc(p.id) + '" data-status="' + a.status + '">' +
-      '<a class="aura-product-card__media" href="' + href + '" tabindex="-1" aria-hidden="true">' +
+      '<div class="aura-product-card__media">' +
         (image.slot ? imgHTML(image.slot, { fallback: image.fallback, sizes: CARD_SIZES, eager: !!opts.eager }) : '') +
-      '</a>' +
+      '</div>' +
       '<div class="aura-product-card__body">' +
         (p.badge ? '<p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">' + esc(p.badge) + '</p>' : '') +
         '<' + tag + ' class="aura-product-card__name"><a href="' + href + '">' + esc(p.name) + '</a></' + tag + '>' +
@@ -1696,7 +1700,7 @@
         '<p class="aura-product-card__text">' + esc(p.tagline || '') + '</p>' +
         '<div class="aura-product-card__foot">' +
           (a.text
-            ? '<p class="aura-product-card__status"><i class="bi bi-calendar-event" aria-hidden="true"></i><span>' + a.html + '</span></p>'
+            ? '<p class="aura-product-card__status"><span class="bi bi-calendar-event" aria-hidden="true"></span><span>' + a.html + '</span></p>'
             : '') +
           (price > 0
             ? '<p class="aura-product-card__price">' +
@@ -1704,7 +1708,7 @@
                 '<span class="aura-caption">o ' + esc(fmt.mes(price)) + ' durante ' + months() + NBSP + 'meses</span>' +
               '</p>'
             : '') +
-          '<a class="aura-btn aura-btn--primary" href="' + href + '" aria-label="' + esc(cta + ' ' + p.name) + '">' + esc(cta) + '</a>' +
+          '<a class="aura-btn aura-btn--primary" href="' + href + '">' + esc(cta) + '<span class="visually-hidden"> ' + esc(p.name) + '</span></a>' +
         '</div>' +
       '</div>' +
     '</article>';
@@ -1760,7 +1764,7 @@
     ];
     return cards.map(function (c, i) {
       return '<div class="aura-feature aura-feature--card" data-aura-reveal style="--i:' + i + '">' +
-        '<span class="aura-feature__icon"><i class="bi ' + c.icon + '" aria-hidden="true"></i></span>' +
+        '<span class="aura-feature__icon"><span class="bi ' + c.icon + '" aria-hidden="true"></span></span>' +
         (c.value ? '<p class="aura-feature__value">' + esc(c.value) + '</p>' : '') +
         '<' + tag + ' class="aura-feature__title">' + esc(c.title) + '</' + tag + '>' +
         '<p class="aura-feature__text">' + esc(c.text) + '</p>' +
@@ -1950,7 +1954,7 @@
         r.products.forEach(function (p) {
           var a = availabilityOf(p);
           out += '<li><a class="aura-search__item" href="' + esc(catalog.url(p)) + '">' +
-            '<i class="bi ' + (FAMILY_ICON[p.family] || 'bi-box') + '" aria-hidden="true"></i>' +
+            '<span class="bi ' + (FAMILY_ICON[p.family] || 'bi-box') + '" aria-hidden="true"></span>' +
             '<span class="aura-search__item-title">' + esc(p.name) +
               (a.text ? '<span class="aura-search__item-status">' + a.html + '</span>' : '') + '</span>' +
             '<span class="aura-search__item-meta">Desde ' + esc(fmt.eur0(p.basePrice)) + '</span></a></li>';
@@ -1961,7 +1965,7 @@
         out += '<p class="aura-search__heading">Accesos rápidos</p><ul class="aura-search__list">';
         r.links.forEach(function (l) {
           out += '<li><a class="aura-search__item" href="' + esc(l.href) + '">' +
-            '<i class="bi bi-arrow-right-short" aria-hidden="true"></i>' +
+            '<span class="bi bi-arrow-right-short" aria-hidden="true"></span>' +
             '<span class="aura-search__item-title">' + esc(l.title) + '</span></a></li>';
         });
         out += '</ul>';
@@ -2049,13 +2053,13 @@
       return '<div class="aura-popover__header"><h2 class="aura-popover__title">Bolsa</h2></div>' +
         '<p class="aura-popover__empty">Tu bolsa está vacía.</p>' +
         '<ul class="aura-popover__links">' +
-          '<li><a href="' + resolvePageUrl('auraphone.html') + '"><i class="bi bi-phone" aria-hidden="true"></i>Ver auraPhone</a></li>' +
-          '<li><a href="' + resolvePageUrl('aurapad.html') + '"><i class="bi bi-tablet-landscape" aria-hidden="true"></i>Ver auraPad</a></li>' +
-          '<li><a href="' + resolvePageUrl('aurabook.html') + '"><i class="bi bi-laptop" aria-hidden="true"></i>Ver auraBook</a></li>' +
-          '<li><a href="' + resolvePageUrl('aurapods.html') + '"><i class="bi bi-earbuds" aria-hidden="true"></i>Ver auraPods</a></li>' +
+          '<li><a href="' + resolvePageUrl('auraphone.html') + '"><span class="bi bi-phone" aria-hidden="true"></span>Ver auraPhone</a></li>' +
+          '<li><a href="' + resolvePageUrl('aurapad.html') + '"><span class="bi bi-tablet-landscape" aria-hidden="true"></span>Ver auraPad</a></li>' +
+          '<li><a href="' + resolvePageUrl('aurabook.html') + '"><span class="bi bi-laptop" aria-hidden="true"></span>Ver auraBook</a></li>' +
+          '<li><a href="' + resolvePageUrl('aurapods.html') + '"><span class="bi bi-earbuds" aria-hidden="true"></span>Ver auraPods</a></li>' +
           (user
-            ? '<li><a href="' + resolvePageUrl('cuenta.html') + '"><i class="bi bi-person-circle" aria-hidden="true"></i>Tu cuenta</a></li>'
-            : '<li><a href="' + resolvePageUrl('login.html') + '"><i class="bi bi-person-circle" aria-hidden="true"></i>Iniciar sesión</a></li>') +
+            ? '<li><a href="' + resolvePageUrl('cuenta.html') + '"><span class="bi bi-person-circle" aria-hidden="true"></span>Tu cuenta</a></li>'
+            : '<li><a href="' + resolvePageUrl('login.html') + '"><span class="bi bi-person-circle" aria-hidden="true"></span>Iniciar sesión</a></li>') +
         '</ul>';
     }
     var out = '<div class="aura-popover__header"><h2 class="aura-popover__title">Bolsa</h2>' +
@@ -2064,8 +2068,10 @@
     items.forEach(function (line) {
       var href = esc(catalog.url(line.productId));
       var img = lineImageInfo(line);
+      /* La miniatura no es un enlace: el del nombre ya lleva al modelo (un
+         enlace sin texto al mismo sitio, justo antes, era F89 y H2 en TAW). */
       out += '<li class="aura-bag-line aura-bag-line--compact">' +
-        '<a class="aura-bag-line__media" href="' + href + '" tabindex="-1" aria-hidden="true">' + lineImage(img) + '</a>' +
+        '<div class="aura-bag-line__media">' + lineImage(img) + '</div>' +
         '<div class="aura-bag-line__info">' +
           '<p class="aura-bag-line__name"><a href="' + href + '">' + esc(line.name) + '</a></p>' +
           '<p class="aura-bag-line__meta">' + esc(lineMeta(line)) + '</p>' +
@@ -2090,10 +2096,10 @@
     var count = bag.count();
     var n = NAV.length;   // el escalonado sigue al de los enlaces principales (--i: 0 … n − 1)
     return (user
-        ? '<li style="--i:' + n + '"><a href="' + resolvePageUrl('cuenta.html') + '"><i class="bi bi-person-circle" aria-hidden="true"></i>Tu cuenta, ' + esc(user.nombre) + '</a></li>'
-        : '<li style="--i:' + n + '"><a href="' + resolvePageUrl('login.html') + '"><i class="bi bi-person-circle" aria-hidden="true"></i>Iniciar sesión</a></li>') +
-      '<li style="--i:' + (n + 1) + '"><a href="' + resolvePageUrl('bolsa.html') + '"><i class="bi bi-bag" aria-hidden="true"></i>Bolsa' + (count ? ' (' + count + ')' : '') + '</a></li>' +
-      '<li style="--i:' + (n + 2) + '"><a href="' + resolvePageUrl('acerca.html') + '"><i class="bi bi-info-circle" aria-hidden="true"></i>Acerca de AURA</a></li>';
+        ? '<li style="--i:' + n + '"><a href="' + resolvePageUrl('cuenta.html') + '"><span class="bi bi-person-circle" aria-hidden="true"></span>Tu cuenta, ' + esc(user.nombre) + '</a></li>'
+        : '<li style="--i:' + n + '"><a href="' + resolvePageUrl('login.html') + '"><span class="bi bi-person-circle" aria-hidden="true"></span>Iniciar sesión</a></li>') +
+      '<li style="--i:' + (n + 1) + '"><a href="' + resolvePageUrl('bolsa.html') + '"><span class="bi bi-bag" aria-hidden="true"></span>Bolsa' + (count ? ' (' + count + ')' : '') + '</a></li>' +
+      '<li style="--i:' + (n + 2) + '"><a href="' + resolvePageUrl('acerca.html') + '"><span class="bi bi-info-circle" aria-hidden="true"></span>Acerca de AURA</a></li>';
   }
 
   /* «auraPhone, auraPad o auraBook» */
@@ -2132,14 +2138,18 @@
               return '<a class="aura-nav__link" href="' + n.href + '" data-aura-key="' + n.key + '"' + titleAttr(n.title) + '>' + n.label + '</a>';
             }).join('') +
           '</nav>' +
+          /* Los botones de icono llevan su nombre como texto oculto (no en
+             aria-label): lo leen los lectores de pantalla y las herramientas
+             que solo cuentan el texto (TAW). La cuenta, «Iniciar sesión» o
+             el nombre, con «Tu cuenta, » delante solo para el lector. */
           '<div class="aura-nav__actions">' +
-            '<button class="aura-nav__action" type="button" data-aura-search-open aria-label="Buscar" aria-haspopup="dialog" aria-expanded="false" aria-controls="aura-search"><i class="bi bi-search" aria-hidden="true"></i></button>' +
-            '<a class="aura-nav__action aura-nav__account" href="' + resolvePageUrl('login.html') + '" data-aura-account><i class="bi bi-person-circle" aria-hidden="true"></i><span class="aura-nav__action-label">Iniciar sesión</span></a>' +
+            '<button class="aura-nav__action" type="button" data-aura-search-open aria-haspopup="dialog" aria-expanded="false" aria-controls="aura-search"><span class="bi bi-search" aria-hidden="true"></span><span class="visually-hidden">Buscar</span></button>' +
+            '<a class="aura-nav__action aura-nav__account" href="' + resolvePageUrl('login.html') + '" data-aura-account><span class="bi bi-person-circle" aria-hidden="true"></span><span class="aura-nav__action-label">Iniciar sesión</span></a>' +
             '<div class="aura-nav__bag-wrap">' +
-              '<button class="aura-nav__action aura-nav__bag" type="button" data-aura-popover-toggle="aura-bag-popover" aria-label="Bolsa, vacía" aria-haspopup="dialog" aria-expanded="false" aria-controls="aura-bag-popover"><i class="bi bi-bag" aria-hidden="true"></i><span class="aura-nav__count" data-aura-bag-count aria-hidden="true"></span></button>' +
+              '<button class="aura-nav__action aura-nav__bag" type="button" data-aura-popover-toggle="aura-bag-popover" aria-haspopup="dialog" aria-expanded="false" aria-controls="aura-bag-popover"><span class="bi bi-bag" aria-hidden="true"></span><span class="visually-hidden" data-aura-bag-label>' + bagLabel(0) + '</span><span class="aura-nav__count" data-aura-bag-count aria-hidden="true"></span></button>' +
               '<div class="aura-popover aura-popover--end aura-bag-popover" id="aura-bag-popover" role="dialog" aria-label="Bolsa" tabindex="-1" aria-hidden="true"></div>' +
             '</div>' +
-            '<button class="aura-nav__action aura-nav__toggle" type="button" data-aura-menu-open aria-label="Abrir el menú" aria-haspopup="dialog" aria-expanded="false" aria-controls="aura-menu"><i class="bi bi-list" aria-hidden="true"></i></button>' +
+            '<button class="aura-nav__action aura-nav__toggle" type="button" data-aura-menu-open aria-haspopup="dialog" aria-expanded="false" aria-controls="aura-menu"><span class="bi bi-list" aria-hidden="true"></span><span class="visually-hidden">Abrir el menú</span></button>' +
           '</div>' +
         '</div>' +
       '</header>';
@@ -2161,10 +2171,14 @@
         '<div class="aura-scrim" data-aura-search-close></div>' +
         '<div class="aura-search__panel">' +
           '<div class="aura-container aura-container--narrow">' +
+            /* La lupa es el botón de envío (todo formulario tiene uno: H32 de
+               TAW). Al enviar, aura-ui.js abre el resultado marcado o el primero;
+               sin JS, comparar.html recibe ?q= y deduce la familia. */
             '<form class="aura-search__form" role="search" action="' + resolvePageUrl('comparar.html') + '">' +
-              '<i class="bi bi-search" aria-hidden="true"></i>' +
-              '<input class="aura-search__input" id="aura-search-input" type="search" name="q" placeholder="Buscar en AURA" aria-label="Buscar productos y páginas" autocomplete="off" autocapitalize="off" spellcheck="false">' +
-              '<button class="aura-icon-btn" type="button" data-aura-search-close aria-label="Cerrar el buscador"><i class="bi bi-x-lg" aria-hidden="true"></i></button>' +
+              '<button class="aura-search__submit" type="submit"><span class="bi bi-search" aria-hidden="true"></span><span class="visually-hidden">Buscar</span></button>' +
+              '<label class="visually-hidden" for="aura-search-input">Buscar productos y páginas</label>' +
+              '<input class="aura-search__input" id="aura-search-input" type="search" name="q" placeholder="Buscar en AURA" autocomplete="off" autocapitalize="off" spellcheck="false">' +
+              '<button class="aura-icon-btn" type="button" data-aura-search-close><span class="bi bi-x-lg" aria-hidden="true"></span><span class="visually-hidden">Cerrar el buscador</span></button>' +
             '</form>' +
             '<div class="aura-search__results" data-aura-search-results></div>' +
             '<p class="visually-hidden" role="status" aria-live="polite" data-aura-search-status></p>' +
@@ -2175,12 +2189,12 @@
       '<div class="aura-menu" id="aura-menu" role="dialog" aria-modal="true" aria-label="Menú" aria-hidden="true">' +
         '<div class="aura-container aura-menu__bar">' +
           BRAND +
-          '<button class="aura-icon-btn" type="button" data-aura-menu-close aria-label="Cerrar el menú"><i class="bi bi-x-lg" aria-hidden="true"></i></button>' +
+          '<button class="aura-icon-btn" type="button" data-aura-menu-close><span class="bi bi-x-lg" aria-hidden="true"></span><span class="visually-hidden">Cerrar el menú</span></button>' +
         '</div>' +
         '<nav class="aura-container aura-menu__nav" aria-label="Principal">' +
           '<ul class="aura-menu__list">' +
             NAV.map(function (n, i) {
-              return '<li style="--i:' + i + '"><a class="aura-menu__link" href="' + n.href + '" data-aura-key="' + n.key + '"' + titleAttr(n.title) + '>' + n.label + '<i class="bi bi-chevron-right" aria-hidden="true"></i></a></li>';
+              return '<li style="--i:' + i + '"><a class="aura-menu__link" href="' + n.href + '" data-aura-key="' + n.key + '"' + titleAttr(n.title) + '>' + n.label + '<span class="bi bi-chevron-right" aria-hidden="true"></span></a></li>';
             }).join('') +
           '</ul>' +
           '<ul class="aura-menu__secondary" data-aura-menu-secondary></ul>' +
@@ -2207,13 +2221,14 @@
     var link = host.querySelector('[data-aura-account]');
     if (link) {
       var label = link.querySelector('.aura-nav__action-label');
+      /* A la vista, el nombre; al lector, «Tu cuenta, Nombre» (lo que falta, en texto oculto). */
+      var hidden = function (t) { return '<span class="visually-hidden">' + esc(t) + '</span>'; };
+      link.removeAttribute('aria-label');
       if (user) {
         link.setAttribute('href', resolvePageUrl('cuenta.html'));
-        link.setAttribute('aria-label', 'Tu cuenta, ' + (user.nombre || user.email));
-        if (label) { label.textContent = user.nombre || 'Tu cuenta'; }
+        if (label) { label.innerHTML = user.nombre ? hidden('Tu cuenta, ') + esc(user.nombre) : 'Tu cuenta' + (user.email ? hidden(', ' + user.email) : ''); }
       } else {
         link.setAttribute('href', resolvePageUrl('login.html'));
-        link.removeAttribute('aria-label');
         if (label) { label.textContent = 'Iniciar sesión'; }
       }
     }
@@ -2223,9 +2238,9 @@
 
   function paintBag(host, bump) {
     var count = bag.count();
-    var button = host.querySelector('.aura-nav__bag');
+    var name = host.querySelector('[data-aura-bag-label]');
     var badge = host.querySelector('[data-aura-bag-count]');
-    if (button) { button.setAttribute('aria-label', bagLabel(count)); }
+    if (name) { name.textContent = bagLabel(count); }   // el nombre del botón, en su texto oculto
     if (badge) {
       var text = count ? String(count) : '';
       var changed = badge.textContent !== text;
@@ -2313,6 +2328,17 @@
     '</nav>';
   }
 
+  /* Redes del pie: AURA no tiene perfiles reales, así que cada icono lleva a
+     la sección de acerca.html que contaría esa red (novedades, historia,
+     empleo). Destinos distintos: tres enlaces seguidos al mismo sitio son el
+     H2 de TAW. El nombre va como texto oculto y en `title` (el texto
+     emergente, que a la vista no tiene otra etiqueta). */
+  var SOCIAL = [
+    { icon: 'bi-instagram', label: 'AURA en Instagram: novedades', href: 'acerca.html#newsroom' },
+    { icon: 'bi-youtube', label: 'AURA en YouTube: nuestra historia', href: 'acerca.html#historia' },
+    { icon: 'bi-linkedin', label: 'AURA en LinkedIn: empleo', href: 'acerca.html#oportunidades' }
+  ];
+
   function footerHTML(host) {
     var year = '2026';
     var out = '<footer class="aura-footer"><div class="aura-container">';
@@ -2323,9 +2349,10 @@
           BRAND +
           '<p class="aura-footer__tagline">Tecnología inmersiva diseñada para ampliar lo que imaginas. Precisión, profundidad y energía' + NBSP + 'AURA.</p>' +
           '<ul class="aura-footer__social">' +
-            '<li><a class="aura-footer__social-link" href="' + resolvePageUrl('acerca.html#newsroom') + '" aria-label="AURA en Instagram: novedades" title="AURA en Instagram: novedades"><i class="bi bi-instagram" aria-hidden="true"></i></a></li>' +
-            '<li><a class="aura-footer__social-link" href="' + resolvePageUrl('acerca.html#newsroom') + '" aria-label="AURA en YouTube: novedades" title="AURA en YouTube: novedades"><i class="bi bi-youtube" aria-hidden="true"></i></a></li>' +
-            '<li><a class="aura-footer__social-link" href="' + resolvePageUrl('acerca.html#newsroom') + '" aria-label="AURA en LinkedIn: novedades" title="AURA en LinkedIn: novedades"><i class="bi bi-linkedin" aria-hidden="true"></i></a></li>' +
+            SOCIAL.map(function (s) {
+              return '<li><a class="aura-footer__social-link" href="' + resolvePageUrl(s.href) + '" title="' + esc(s.label) + '">' +
+                '<span class="bi ' + s.icon + '" aria-hidden="true"></span><span class="visually-hidden">' + esc(s.label) + '</span></a></li>';
+            }).join('') +
           '</ul>' +
         '</div>' +
         '<nav class="aura-footer__directory" aria-label="Pie de página">' +

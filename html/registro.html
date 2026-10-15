@@ -76,7 +76,7 @@
       <form class="aura-form" id="registro-form" novalidate>
         <!-- Aviso si ya hay una sesión iniciada (lo muestra registro.js; role="status" lo anuncia sin interrumpir) -->
         <div class="aura-alert" id="registro-sesion" role="status" hidden>
-          <i class="bi bi-person-check-fill" aria-hidden="true"></i>
+          <span class="bi bi-person-check-fill" aria-hidden="true"></span>
           <p class="aura-alert__title">Ya has iniciado sesión como <span data-registro-quien>tu ID de AURA</span></p>
           <p class="aura-alert__text">Si creas otro ID de AURA, cerraremos esta sesión. <a href="cuenta.html">Ir&nbsp;a&nbsp;tu&nbsp;cuenta</a></p>
         </div>
@@ -109,7 +109,7 @@
             <div class="aura-field">
               <label class="aura-field__label" for="registro-email">Correo electrónico</label>
               <div class="aura-field__control">
-                <i class="aura-field__icon bi bi-envelope" aria-hidden="true"></i>
+                <span class="aura-field__icon bi bi-envelope" aria-hidden="true"></span>
                 <input class="aura-input" id="registro-email" name="email" type="email" inputmode="email" placeholder="nombre@correo.com" required maxlength="254" pattern="[^\s@]+@[^\s@]+\.[^\s@]{2,}" autocomplete="email" autocapitalize="off" spellcheck="false" aria-describedby="registro-email-error">
               </div>
               <p class="aura-field__error" id="registro-email-error"></p>
@@ -118,10 +118,10 @@
             <div class="aura-field aura-field--toggle">
               <label class="aura-field__label" for="registro-password">Contraseña</label>
               <div class="aura-field__control">
-                <i class="aura-field__icon bi bi-lock" aria-hidden="true"></i>
+                <span class="aura-field__icon bi bi-lock" aria-hidden="true"></span>
                 <input class="aura-input" id="registro-password" name="password" type="password" required minlength="8" pattern="(?=.*[A-ZÁÉÍÓÚÜÑ])(?=.*\d).{8,}" autocomplete="new-password" aria-describedby="registro-password-reglas registro-password-error">
-                <!-- Botón de icono: su nombre (aria-label) y su estado (aria-pressed) los actualiza aura-ui.js al pulsarlo -->
-                <button class="aura-field__toggle" type="button" data-aura-password-toggle aria-label="Mostrar la contraseña" aria-pressed="false"><i class="bi bi-eye" aria-hidden="true"></i></button>
+                <!-- Botón de icono: su nombre (el texto oculto) y su estado (aria-pressed) los actualiza aura-ui.js al pulsarlo -->
+                <button class="aura-field__toggle" type="button" data-aura-password-toggle aria-pressed="false"><span class="bi bi-eye" aria-hidden="true"></span><span class="visually-hidden">Mostrar la contraseña</span></button>
               </div>
               <!-- Requisitos: cada uno dice su estado en texto oculto («Pendiente» / «Cumplido»), no solo con el color -->
               <ul class="aura-rules" id="registro-password-reglas" aria-label="Requisitos de la contraseña">
@@ -146,7 +146,7 @@
         <a class="aura-btn aura-btn--secondary" href="login.html" data-registro-login>Iniciar sesión</a>
       </div>
 
-      <p class="aura-auth-card__note"><i class="bi bi-lock" aria-hidden="true"></i> Tu ID de AURA se guarda solo en este navegador.</p>
+      <p class="aura-auth-card__note"><span class="bi bi-lock" aria-hidden="true"></span> Tu ID de AURA se guarda solo en este navegador.</p>
     </div>
   </main>
 

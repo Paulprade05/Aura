@@ -47,6 +47,14 @@
   .bolsa-line.is-entering { scale: none; transition: none; }
 }
 
+/* La foto de la línea no es un enlace (el del nombre ya lleva al producto):
+   bolsa.js sigue ese enlace al pulsarla. Responde como antes: se atenúa. */
+.bolsa-line > .aura-bag-line__media[data-b-media] {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.bolsa-line > .aura-bag-line__media[data-b-media]:active { opacity: .8; }
+
 /* Configuración de la línea: cada dato, un bloque que no se parte */
 .bolsa-line__part { display: inline-block; max-width: 100%; }
 
@@ -62,7 +70,7 @@
   color: var(--text-secondary);
 }
 .bolsa-line__ship > .bi { flex: none; color: var(--text-tertiary); }
-.bolsa-line__ship > span { min-width: 0; }
+.bolsa-line__ship > span:not(.bi) { min-width: 0; }
 .bolsa-line__ship.is-reserva > .bi { color: var(--gold); }
 .bolsa-line__ship.is-blocked { color: var(--text-primary); }
 .bolsa-line__ship.is-blocked > .bi { color: var(--warn); }

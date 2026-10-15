@@ -291,10 +291,10 @@
        de un «·», nunca dentro de un dato ni con el «·» al principio. */
     var metaTexto = meta.filter(Boolean).join(' · ').split(' · ').map(entero).join(' · ');
     var media = img && img.slot ? AURA.html.img(img.slot, { alt: '', fallback: img.fallback, sizes: '56px' }) : '';
+    /* La foto no es un segundo enlace al mismo sitio que el nombre (TAW, H2):
+       al pulsarla se sigue el enlace del nombre (pintarPedidos, delegación). */
     return '<li class="aura-bag-line aura-bag-line--compact">' +
-      (url
-        ? '<a class="aura-bag-line__media" href="' + esc(url) + '" tabindex="-1" aria-hidden="true">' + media + '</a>'
-        : '<div class="aura-bag-line__media" aria-hidden="true">' + media + '</div>') +
+      '<div class="aura-bag-line__media"' + (url ? ' data-cuenta-foto' : '') + ' aria-hidden="true">' + media + '</div>' +
       '<div class="aura-bag-line__info">' +
         '<p class="aura-bag-line__name">' + (url ? '<a href="' + esc(url) + '">' + nombre + '</a>' : nombre) + '</p>' +
         '<p class="aura-bag-line__meta">' + esc(metaTexto) + '</p>' +
@@ -373,7 +373,7 @@
         '<a class="aura-btn aura-btn--secondary" href="comparar.html">Comparar todos los modelos</a>';
     return '<div class="aura-card">' +
       '<div class="aura-empty">' +
-        '<span class="aura-empty__icon"><i class="bi bi-box-seam" aria-hidden="true"></i></span>' +
+        '<span class="aura-empty__icon"><span class="bi bi-box-seam" aria-hidden="true"></span></span>' +
         '<h3 class="aura-h3 aura-empty__title">Aún no tienes pedidos</h3>' +
         '<p class="aura-empty__text">Cuando compres ' + esc(nombresFamilias()) + ', aquí podrás seguir su estado paso a paso.</p>' +
         '<div class="aura-empty__actions">' + acciones + '</div>' +
@@ -397,6 +397,15 @@
     resumenPedidos.hidden = !pedidos.length;
     listaPedidos.innerHTML = pedidos.length ? pedidos.map(pedidoHTML).join('') : vacioPedidosHTML();
   }
+
+  /* La foto de una línea lleva a su producto: el mismo enlace del nombre
+     (con Ctrl, Cmd o Mayús, en otra pestaña, como un enlace). */
+  listaPedidos.addEventListener('click', function (e) {
+    var foto = e.target && e.target.closest ? e.target.closest('[data-cuenta-foto]') : null;
+    var enlace = foto && foto.parentNode ? foto.parentNode.querySelector('.aura-bag-line__name a') : null;
+    if (!enlace) { return; }
+    if (e.ctrlKey || e.metaKey || e.shiftKey) { window.open(enlace.href, '_blank', 'noopener'); } else { enlace.click(); }
+  });
 
   /* ---- Datos personales ------------------------------------------------- */
 
@@ -498,7 +507,7 @@
       cajaTradeIn.innerHTML =
         '<div class="aura-card">' +
           '<div class="aura-empty">' +
-            '<span class="aura-empty__icon"><i class="bi bi-arrow-repeat" aria-hidden="true"></i></span>' +
+            '<span class="aura-empty__icon"><span class="bi bi-arrow-repeat" aria-hidden="true"></span></span>' +
             '<h3 class="aura-h3 aura-empty__title">Sin crédito activo</h3>' +
             '<p class="aura-empty__text">Entrega tu dispositivo actual' +
               (hasta > 0 ? ' y llévate hasta ' + esc(AURA.fmt.eur0(hasta)) + ' de descuento' : ' y llévate un descuento') +
@@ -532,7 +541,7 @@
     var html;
     if (tipo === 'eliminado') {
       html =
-        '<span class="aura-empty__icon"><i class="bi bi-check-lg" aria-hidden="true"></i></span>' +
+        '<span class="aura-empty__icon"><span class="bi bi-check-lg" aria-hidden="true"></span></span>' +
         '<h1 class="aura-h2 aura-empty__title" id="cuenta-estado-titulo" tabindex="-1">Tu ID de AURA se ha eliminado</h1>' +
         '<p class="aura-empty__text">Hemos borrado ' + (email ? '<strong class="cuenta-cortar">' + esc(email) + '</strong>' : 'tu ID de AURA') +
           ' y sus pedidos de este navegador. Si vuelves, crear un ID nuevo lleva menos de un minuto.</p>' +
@@ -542,11 +551,11 @@
         '</div>';
     } else {
       html =
-        '<span class="aura-empty__icon"><i class="bi bi-box-arrow-right" aria-hidden="true"></i></span>' +
+        '<span class="aura-empty__icon"><span class="bi bi-box-arrow-right" aria-hidden="true"></span></span>' +
         '<h1 class="aura-h2 aura-empty__title" id="cuenta-estado-titulo" tabindex="-1">Has cerrado sesión</h1>' +
         '<p class="aura-empty__text">Tu bolsa sigue aquí. Inicia sesión cuando quieras volver a ver tus pedidos y tus datos.</p>' +
         '<div class="aura-empty__actions">' +
-          '<a class="aura-btn aura-btn--primary" href="login.html?volver=cuenta.html">Iniciar sesión</a>' +
+          '<a class="aura-btn aura-btn--primary" href="login.html?volver=cuenta.html">Iniciar sesión<span class="visually-hidden"> y volver a tu cuenta</span></a>' +
           '<a class="aura-btn aura-btn--secondary" href="../index.html">Ir al inicio</a>' +
         '</div>';
     }

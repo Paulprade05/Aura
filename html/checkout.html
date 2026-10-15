@@ -109,7 +109,7 @@
                     </div>
                   </div>
                   <div class="checkout-contact__intro" data-co="invitado">
-                    <span class="checkout-contact__icon" aria-hidden="true"><i class="bi bi-bag-check"></i></span>
+                    <span class="checkout-contact__icon" aria-hidden="true"><span class="bi bi-bag-check" aria-hidden="true"></span></span>
                     <h3 class="aura-h4">Continuar como invitado</h3>
                     <p class="aura-caption">Solo necesitamos tu correo para enviarte la confirmación y el seguimiento del pedido.</p>
                   </div>
@@ -120,7 +120,7 @@
                     <div class="aura-field">
                       <label class="aura-field__label" for="co-email">Correo electrónico</label>
                       <div class="aura-field__control">
-                        <i class="aura-field__icon bi bi-envelope" aria-hidden="true"></i>
+                        <span class="aura-field__icon bi bi-envelope" aria-hidden="true"></span>
                         <input class="aura-input" id="co-email" name="email" type="email" required maxlength="254" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" placeholder="nombre@correo.com" aria-describedby="co-email-error">
                       </div>
                       <p class="aura-field__error" id="co-email-error"></p>
@@ -130,10 +130,10 @@
                 </div>
 
                 <div class="aura-card checkout-contact__card" data-co="login">
-                  <span class="checkout-contact__icon" aria-hidden="true"><i class="bi bi-person-circle"></i></span>
+                  <span class="checkout-contact__icon" aria-hidden="true"><span class="bi bi-person-circle" aria-hidden="true"></span></span>
                   <h3 class="aura-h4">¿Tienes ID de AURA?</h3>
                   <p class="aura-caption">Inicia sesión para tramitar más rápido y seguir el pedido desde Tu cuenta.</p>
-                  <a class="aura-btn aura-btn--secondary aura-btn--block" href="login.html?volver=checkout.html">Iniciar sesión</a>
+                  <a class="aura-btn aura-btn--secondary aura-btn--block" href="login.html?volver=checkout.html">Iniciar sesión<span class="visually-hidden"> y volver al pedido</span></a>
                   <a class="aura-link" href="registro.html?volver=checkout.html">Crear un ID de AURA</a>
                 </div>
               </div>
@@ -147,7 +147,7 @@
 
               <!-- Solo si el pedido incluye una reserva (checkout.js lo rellena con las fechas del catálogo) -->
               <div class="aura-alert checkout-reserva" data-co="reserva-aviso" hidden>
-                <i class="bi bi-calendar-event" aria-hidden="true"></i>
+                <span class="bi bi-calendar-event" aria-hidden="true"></span>
                 <p class="aura-alert__title" data-co="reserva-titulo"></p>
                 <p class="aura-alert__text" data-co="reserva-texto"></p>
               </div>
@@ -159,8 +159,8 @@
                 <fieldset class="aura-fieldset">
                   <legend class="aura-legend">Método de entrega</legend>
                   <div class="aura-option-group">
-                    <label class="aura-option">
-                      <input class="aura-option__input" type="radio" name="metodo" value="estandar" required checked>
+                    <label class="aura-option" for="co-metodo-estandar">
+                      <input class="aura-option__input" id="co-metodo-estandar" type="radio" name="metodo" value="estandar" required checked>
                       <span class="aura-option__card">
                         <span class="aura-option__body">
                           <span class="aura-option__title">Envío estándar</span>
@@ -169,8 +169,8 @@
                         <span class="aura-option__price" data-co="precio-estandar"></span>
                       </span>
                     </label>
-                    <label class="aura-option" data-co="opcion-expres">
-                      <input class="aura-option__input" type="radio" name="metodo" value="expres" required>
+                    <label class="aura-option" for="co-metodo-expres" data-co="opcion-expres">
+                      <input class="aura-option__input" id="co-metodo-expres" type="radio" name="metodo" value="expres" required>
                       <span class="aura-option__card">
                         <span class="aura-option__body">
                           <span class="aura-option__title">Envío exprés</span>
@@ -179,8 +179,8 @@
                         <span class="aura-option__price" data-co="precio-expres"></span>
                       </span>
                     </label>
-                    <label class="aura-option">
-                      <input class="aura-option__input" type="radio" name="metodo" value="recogida" required>
+                    <label class="aura-option" for="co-metodo-recogida">
+                      <input class="aura-option__input" id="co-metodo-recogida" type="radio" name="metodo" value="recogida" required>
                       <span class="aura-option__card">
                         <span class="aura-option__body">
                           <span class="aura-option__title">Recogida en AURA Store</span>
@@ -197,8 +197,8 @@
                 <fieldset class="aura-fieldset checkout-bloque" data-co-bloque="tienda" hidden>
                   <legend class="aura-legend">Elige tu AURA Store</legend>
                   <div class="aura-option-group aura-option-group--2">
-                    <label class="aura-option">
-                      <input class="aura-option__input" type="radio" name="tienda" value="madrid-sol" required>
+                    <label class="aura-option" for="co-tienda-madrid-sol">
+                      <input class="aura-option__input" id="co-tienda-madrid-sol" type="radio" name="tienda" value="madrid-sol" required>
                       <span class="aura-option__card">
                         <span class="aura-option__body">
                           <span class="aura-option__title">AURA Store Madrid</span>
@@ -206,8 +206,8 @@
                         </span>
                       </span>
                     </label>
-                    <label class="aura-option">
-                      <input class="aura-option__input" type="radio" name="tienda" value="barcelona-gracia" required>
+                    <label class="aura-option" for="co-tienda-barcelona-gracia">
+                      <input class="aura-option__input" id="co-tienda-barcelona-gracia" type="radio" name="tienda" value="barcelona-gracia" required>
                       <span class="aura-option__card">
                         <span class="aura-option__body">
                           <span class="aura-option__title">AURA Store Barcelona</span>
@@ -215,8 +215,8 @@
                         </span>
                       </span>
                     </label>
-                    <label class="aura-option">
-                      <input class="aura-option__input" type="radio" name="tienda" value="valencia-colon" required>
+                    <label class="aura-option" for="co-tienda-valencia-colon">
+                      <input class="aura-option__input" id="co-tienda-valencia-colon" type="radio" name="tienda" value="valencia-colon" required>
                       <span class="aura-option__card">
                         <span class="aura-option__body">
                           <span class="aura-option__title">AURA Store Valencia</span>
@@ -224,8 +224,8 @@
                         </span>
                       </span>
                     </label>
-                    <label class="aura-option">
-                      <input class="aura-option__input" type="radio" name="tienda" value="sevilla-nervion" required>
+                    <label class="aura-option" for="co-tienda-sevilla-nervion">
+                      <input class="aura-option__input" id="co-tienda-sevilla-nervion" type="radio" name="tienda" value="sevilla-nervion" required>
                       <span class="aura-option__card">
                         <span class="aura-option__body">
                           <span class="aura-option__title">AURA Store Sevilla</span>
@@ -262,7 +262,7 @@
                     <div class="aura-field">
                       <label class="aura-field__label" for="co-direccion">Dirección</label>
                       <div class="aura-field__control">
-                        <i class="aura-field__icon bi bi-geo-alt" aria-hidden="true"></i>
+                        <span class="aura-field__icon bi bi-geo-alt" aria-hidden="true"></span>
                         <input class="aura-input" id="co-direccion" name="direccion" type="text" required minlength="5" autocomplete="address-line1" placeholder="Calle y número" aria-describedby="co-direccion-error">
                       </div>
                       <p class="aura-field__error" id="co-direccion-error"></p>
@@ -358,7 +358,7 @@
                   <div class="aura-field">
                     <label class="aura-field__label" for="co-telefono">Teléfono</label>
                     <div class="aura-field__control">
-                      <i class="aura-field__icon bi bi-telephone" aria-hidden="true"></i>
+                      <span class="aura-field__icon bi bi-telephone" aria-hidden="true"></span>
                       <input class="aura-input" id="co-telefono" name="telefono" type="tel" required pattern="[\s\(\)\.\-]*(\+34|0034)?[\s\(\)\.\-]*[6789]([\s\(\)\.\-]*[0-9]){8}[\s\(\)\.\-]*" inputmode="tel" autocomplete="tel" title="9 cifras que empiezan por 6, 7, 8 o 9, con o sin +34" aria-describedby="co-telefono-ayuda co-telefono-error">
                     </div>
                     <p class="aura-field__help" id="co-telefono-ayuda">Solo para avisarte de la entrega.</p>
@@ -386,30 +386,30 @@
                 <fieldset class="aura-fieldset">
                   <legend class="aura-legend">Método de pago</legend>
                   <div class="aura-option-group checkout-pay">
-                    <label class="aura-option">
-                      <input class="aura-option__input" type="radio" name="pago" value="aura-pay" required checked>
+                    <label class="aura-option" for="co-pago-aura-pay">
+                      <input class="aura-option__input" id="co-pago-aura-pay" type="radio" name="pago" value="aura-pay" required checked>
                       <span class="aura-option__card">
-                        <span class="checkout-pay__icon" aria-hidden="true"><i class="bi bi-wallet2"></i></span>
+                        <span class="checkout-pay__icon" aria-hidden="true"><span class="bi bi-wallet2" aria-hidden="true"></span></span>
                         <span class="aura-option__body">
                           <span class="aura-option__title">AURA Pay</span>
                           <span class="aura-option__note">Confírmalo con Face ID o Touch ID en un instante.</span>
                         </span>
                       </span>
                     </label>
-                    <label class="aura-option">
-                      <input class="aura-option__input" type="radio" name="pago" value="tarjeta" required>
+                    <label class="aura-option" for="co-pago-tarjeta">
+                      <input class="aura-option__input" id="co-pago-tarjeta" type="radio" name="pago" value="tarjeta" required>
                       <span class="aura-option__card">
-                        <span class="checkout-pay__icon" aria-hidden="true"><i class="bi bi-credit-card"></i></span>
+                        <span class="checkout-pay__icon" aria-hidden="true"><span class="bi bi-credit-card" aria-hidden="true"></span></span>
                         <span class="aura-option__body">
                           <span class="aura-option__title">Tarjeta de crédito o débito</span>
                           <span class="aura-option__note">Visa, Mastercard o American Express.</span>
                         </span>
                       </span>
                     </label>
-                    <label class="aura-option">
-                      <input class="aura-option__input" type="radio" name="pago" value="financiacion" required>
+                    <label class="aura-option" for="co-pago-financiacion">
+                      <input class="aura-option__input" id="co-pago-financiacion" type="radio" name="pago" value="financiacion" required>
                       <span class="aura-option__card">
-                        <span class="checkout-pay__icon" aria-hidden="true"><i class="bi bi-calendar2-check"></i></span>
+                        <span class="checkout-pay__icon" aria-hidden="true"><span class="bi bi-calendar2-check" aria-hidden="true"></span></span>
                         <span class="aura-option__body">
                           <span class="aura-option__title">Financiación a <span data-co="meses"></span> meses</span>
                           <span class="aura-option__note">Sin intereses (0&nbsp;% TAE). Las cuotas se cargan en tu tarjeta.</span>
@@ -423,7 +423,7 @@
 
                 <!-- Solo con AURA Pay -->
                 <div class="aura-note checkout-bloque" data-co-bloque="aurapay">
-                  <span class="aura-note__icon"><i class="bi bi-wallet2" aria-hidden="true"></i></span>
+                  <span class="aura-note__icon"><span class="bi bi-wallet2" aria-hidden="true"></span></span>
                   <p class="aura-note__title">Lo confirmarás al final</p>
                   <p class="aura-note__text">Al realizar el pedido se abrirá AURA Pay para que lo confirmes. Es una simulación: no se cobra nada.</p>
                 </div>
@@ -432,7 +432,7 @@
                      Formulario de DEMOSTRACIÓN: comprueba el formato aquí mismo y nunca guarda ni envía los datos. -->
                 <div class="checkout-card checkout-bloque" data-co-bloque="tarjeta" hidden>
                   <div class="aura-alert aura-alert--warn">
-                    <i class="bi bi-exclamation-triangle-fill" aria-hidden="true"></i>
+                    <span class="bi bi-exclamation-triangle-fill" aria-hidden="true"></span>
                     <p class="aura-alert__title">Pago simulado: no escribas los datos de una tarjeta real</p>
                     <p class="aura-alert__text">Usa la tarjeta de prueba 4242 4242 4242 4242, cualquier fecha futura y cualquier CVC. Solo comprobamos el formato en tu navegador: los datos de la tarjeta nunca se guardan ni se envían.</p>
                   </div>
@@ -443,7 +443,7 @@
                     <div class="aura-field">
                       <label class="aura-field__label" for="co-numero">Número de tarjeta <span class="aura-field__hint" data-co="marca"></span></label>
                       <div class="aura-field__control">
-                        <i class="aura-field__icon bi bi-credit-card" aria-hidden="true"></i>
+                        <span class="aura-field__icon bi bi-credit-card" aria-hidden="true"></span>
                         <input class="aura-input" id="co-numero" name="numero" type="text" required pattern="[\s\-]*([0-9][\s\-]*){13,19}" inputmode="numeric" autocomplete="off" autocorrect="off" spellcheck="false" maxlength="23" placeholder="1234 1234 1234 1234" title="De 13 a 19 cifras (15 en American Express)" aria-describedby="co-numero-error">
                       </div>
                       <p class="aura-field__error" id="co-numero-error"></p>
@@ -466,7 +466,7 @@
                       <div class="aura-field">
                         <label class="aura-field__label" for="co-cvc">Código de seguridad (CVC)</label>
                         <div class="aura-field__control">
-                          <i class="aura-field__icon bi bi-lock" aria-hidden="true"></i>
+                          <span class="aura-field__icon bi bi-lock" aria-hidden="true"></span>
                           <input class="aura-input" id="co-cvc" name="cvc" type="text" required pattern="[0-9]{3,4}" inputmode="numeric" autocomplete="off" maxlength="4" placeholder="123" title="3 cifras (4 en American Express)" aria-describedby="co-cvc-ayuda co-cvc-error">
                         </div>
                         <p class="aura-field__help" id="co-cvc-ayuda" data-co="cvc-ayuda">Las 3 cifras del dorso de la tarjeta.</p>
@@ -484,7 +484,7 @@
             </section>
 
             <!-- ============ Paso 4 · Revisión ============
-                 Cada dato con su h3 y un «Editar» cuyo aria-label dice qué se edita (los cuatro botones dicen lo mismo a la vista). -->
+                 Cada dato con su h3 y un «Editar» cuyo texto oculto dice qué se edita (los cuatro botones dicen lo mismo a la vista). -->
             <section class="checkout-step" id="paso-4" data-co-panel="4" aria-labelledby="paso-4-titulo" hidden>
               <header class="checkout-step__head">
                 <h2 class="aura-h3" id="paso-4-titulo" tabindex="-1">Revisa tu pedido.</h2>
@@ -495,22 +495,22 @@
                 <div class="checkout-review__row">
                   <h3 class="checkout-review__label">Contacto</h3>
                   <div class="checkout-review__value" data-co="rev-contacto"></div>
-                  <button class="aura-link aura-link--plain" type="button" data-co-edit="1" aria-label="Editar el contacto">Editar</button>
+                  <button class="aura-link aura-link--plain" type="button" data-co-edit="1">Editar<span class="visually-hidden"> el contacto</span></button>
                 </div>
                 <div class="checkout-review__row">
                   <h3 class="checkout-review__label">Entrega</h3>
                   <div class="checkout-review__value" data-co="rev-entrega"></div>
-                  <button class="aura-link aura-link--plain" type="button" data-co-edit="2" aria-label="Editar la entrega">Editar</button>
+                  <button class="aura-link aura-link--plain" type="button" data-co-edit="2">Editar<span class="visually-hidden"> la entrega</span></button>
                 </div>
                 <div class="checkout-review__row">
                   <h3 class="checkout-review__label">Pago</h3>
                   <div class="checkout-review__value" data-co="rev-pago"></div>
-                  <button class="aura-link aura-link--plain" type="button" data-co-edit="3" aria-label="Editar el pago">Editar</button>
+                  <button class="aura-link aura-link--plain" type="button" data-co-edit="3">Editar<span class="visually-hidden"> el pago</span></button>
                 </div>
                 <div class="checkout-review__row">
                   <h3 class="checkout-review__label">Artículos</h3>
                   <div class="checkout-review__value" data-co="rev-articulos"></div>
-                  <a class="aura-link aura-link--plain" href="bolsa.html" data-co-hoy aria-label="Editar los artículos en la bolsa">Editar</a>
+                  <a class="aura-link aura-link--plain" href="bolsa.html" data-co-hoy>Editar<span class="visually-hidden"> los artículos en la bolsa</span></a>
                 </div>
               </div>
 
@@ -520,7 +520,7 @@
                 <button class="aura-link aura-link--plain aura-link--control checkout-back" type="button" data-co-back="3">Volver al pago</button>
                 <button class="aura-btn aura-btn--primary" type="button" data-co="realizar">Realizar pedido</button>
               </div>
-              <p class="aura-caption checkout-demo"><i class="bi bi-info-circle" aria-hidden="true"></i><span>Pedido de demostración: no se cobra nada ni se envía nada.</span></p>
+              <p class="aura-caption checkout-demo"><span class="bi bi-info-circle" aria-hidden="true"></span><span>Pedido de demostración: no se cobra nada ni se envía nada.</span></p>
             </section>
 
           </div>
@@ -571,7 +571,7 @@
         <div class="aura-sheet__grabber" aria-hidden="true"></div>
         <header class="aura-sheet__header">
           <h2 class="aura-sheet__title" id="aurapay-titulo">AURA Pay</h2>
-          <button class="aura-icon-btn" type="button" data-aura-sheet-close aria-label="Cancelar el pago"><i class="bi bi-x-lg" aria-hidden="true"></i></button>
+          <button class="aura-icon-btn" type="button" data-aura-sheet-close><span class="bi bi-x-lg" aria-hidden="true"></span><span class="visually-hidden">Cancelar el pago</span></button>
         </header>
         <div class="aura-sheet__body">
           <dl class="aura-summary__rows checkout-pay-sheet__rows">
@@ -582,7 +582,7 @@
           </dl>
         </div>
         <footer class="aura-sheet__footer">
-          <button class="aura-btn aura-btn--primary aura-btn--block" type="button" data-co="pay-confirmar"><i class="bi bi-person-bounding-box" aria-hidden="true"></i>Confirmar con Face ID</button>
+          <button class="aura-btn aura-btn--primary aura-btn--block" type="button" data-co="pay-confirmar"><span class="bi bi-person-bounding-box" aria-hidden="true"></span>Confirmar con Face ID</button>
           <p class="aura-caption text-center m-0">Simulación: no se cobra nada.</p>
         </footer>
       </section>

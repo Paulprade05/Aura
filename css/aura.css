@@ -1133,7 +1133,8 @@ html:has(.aura-ribbon) { --ribbon-h: 2.6875rem; }
 @media (max-width: 30em) {
   .aura-localnav__inner { gap: .5rem; }
 }
-/* El título ocupa todo el alto de la barra (52 px): objetivo táctil de sobra.
+/* El título (v2.1: el nombre de la página actual, sin enlace) ocupa todo el
+   alto de la barra (52 px).
    Es lo único que cede si no cabe todo (texto grande en el teléfono): se
    recorta con puntos suspensivos y «Comprar» nunca se sale de la pantalla. */
 .aura-localnav__title {
@@ -1325,7 +1326,7 @@ body:has(.aura-localnav) .aura-nav .aura-popover {
   color: var(--text-secondary);
 }
 .aura-crumbs > li { display: inline-flex; align-items: center; gap: .5rem; }
-.aura-crumbs > li + li::before { content: "›"; color: var(--text-tertiary); }
+.aura-crumbs > li + li::before { content: "›"; content: "›" / ""; color: var(--text-tertiary); }   /* separador mudo */
 .aura-crumbs a { display: inline-flex; align-items: center; min-height: 1.5rem; color: var(--text-secondary); }   /* 24 px con puntero fino */
 .aura-crumbs > li:first-child > a { justify-content: center; min-width: 1.5rem; margin-left: -.125rem; }
 @media (hover: hover) {
@@ -1561,6 +1562,7 @@ body:has(.aura-localnav) .aura-nav .aura-popover {
 }
 .aura-link::after {
   content: "›";
+  content: "›" / "";                    /* decorativo: no entra en el nombre del enlace («Comprar auraPods 5», sin «›») */
   display: inline-block;
   margin-left: .3em;
   transition: transform var(--dur-1) var(--ease-out);
@@ -1710,6 +1712,12 @@ button.aura-chip:active, a.aura-chip:active, .aura-chip.is-pressed { transform: 
   overflow-x: auto;
   scrollbar-width: none;
 }
+/* Variante de radios: un <fieldset> con su <legend class="visually-hidden">
+   de primer hijo (agrupa los radios: H71 de TAW). Sin el marco, el margen ni
+   el ancho mínimo del navegador, se ve igual que el <div> de las variantes de
+   enlaces y botones; el relleno es el de arriba. Con especificidad 0 (:where)
+   para no pisar el margen que le dé la página. */
+:where(fieldset.aura-segmented) { min-width: 0; margin: 0; border: 0; }
 /* Repartido en varias filas (lo marca aura-ui.js al medir): la píldora pasa a
    rectángulo redondeado; los ítems y la pastilla conservan su radio. */
 .aura-segmented.is-wrapped { border-radius: var(--radius-lg); }
@@ -1725,7 +1733,7 @@ button.aura-chip:active, a.aura-chip:active, .aura-chip.is-pressed { transform: 
    un ítem a otro con un muelle y se puede arrastrar. aura-ui.js la mueve solo
    con transform (translate3d para el avance, también entre filas, y scaleX
    para el ancho mientras viaja); width y height en línea se escriben en
-   reposo. El ítem elegido deja de pintar su propio fondo: lo pone la
+   reposo, en rem. El ítem elegido deja de pintar su propio fondo: lo pone la
    pastilla, con el mismo blanco translúcido. */
 .aura-segmented__thumb {
   position: absolute;
@@ -2265,10 +2273,22 @@ a.aura-card:active, .aura-card--interactive:active, .aura-card.is-pressed {
   text-align: left;
   transition: transform var(--dur-2) var(--ease-out);
 }
-/* La tarjeta responde entera al tocar su foto o su nombre (los dos llevan al
-   configurador), igual que a.aura-card: al instante, en pointerdown. */
-.aura-product-card:has(> .aura-product-card__media:active, .aura-product-card__name a:active),
-.aura-product-card:has(> .aura-product-card__media.is-pressed, .aura-product-card__name a.is-pressed) {
+/* Enlace estirado: la tarjeta entera lleva al configurador con un solo
+   enlace, el del nombre, cuyo ::after la cubre (foto incluida: la foto no es
+   un enlace, sería uno sin texto, F89 de TAW). El botón queda por encima y
+   sigue siendo su propio objetivo. Ningún contenedor entre la tarjeta y el
+   enlace va posicionado: el ::after se mide contra la tarjeta. */
+.aura-product-card .aura-product-card__name a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+.aura-product-card .aura-product-card__foot > .aura-btn { z-index: 2; }   /* ya es position: relative */
+/* La tarjeta responde entera al tocarla (el enlace estirado), igual que
+   a.aura-card: al instante, en pointerdown. El botón responde solo. */
+.aura-product-card:has(.aura-product-card__name a:active),
+.aura-product-card:has(.aura-product-card__name a.is-pressed) {
   transform: scale(.985);
   transition-duration: var(--dur-press);
 }
@@ -4067,6 +4087,10 @@ body.has-buybar:not(:has(.aura-footer)) { padding-bottom: var(--buybar-h, calc(4
   border: 0;
 }
 .aura-bag-line--compact .aura-bag-line__media { border-radius: var(--radius-sm); }
+/* En el popover de la bolsa, la línea entera lleva al modelo: el enlace del
+   nombre se estira sobre ella (la miniatura ya no es un enlace propio). */
+.aura-bag-popover .aura-bag-line { position: relative; }
+.aura-bag-popover .aura-bag-line__name a::after { content: ""; position: absolute; inset: 0; }
 .aura-bag-line--compact .aura-bag-line__info { gap: .125rem; }
 .aura-bag-line--compact .aura-bag-line__name {
   font-family: var(--font-ui);
@@ -5491,6 +5515,37 @@ html.aura-lock .aura-toast {
 }
 .aura-search__form:focus-within { border-bottom-color: var(--accent-link); color: var(--accent-link); }
 .aura-search__form > .bi { font-size: 1.25rem; line-height: 1; }
+/* La lupa es el botón de envío del formulario: la misma caja y el mismo
+   color que el icono suelto (sigue al foco del campo), con un área
+   invisible de 44 px alrededor, como las llamadas de las notas. */
+.aura-search__submit {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex: none;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: inherit;
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--dur-press) ease-out;
+}
+.aura-search__submit::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2.75rem;
+  height: 2.75rem;
+  transform: translate(-50%, -50%);
+}
+.aura-search__submit:active,
+.aura-search__submit.is-pressed { transform: scale(.92); }
 .aura-search__input {
   flex: 1 1 auto;
   min-width: 0;
@@ -5782,6 +5837,7 @@ html.aura-lock .aura-toast {
   .aura-btn:active, .aura-btn.is-pressed,
   .aura-icon-btn:active:not(:disabled), .aura-icon-btn.is-pressed,
   .aura-nav__action:active, .aura-nav__action.is-pressed,
+  .aura-search__submit:active, .aura-search__submit.is-pressed,
   .aura-stepper__btn:active:not(:disabled), .aura-stepper__btn.is-pressed,
   .aura-field__toggle:active, .aura-field__toggle.is-pressed,
   .aura-toast__action:active, .aura-toast__action.is-pressed,
@@ -5807,8 +5863,8 @@ html.aura-lock .aura-toast {
     transition: none;
   }
   .aura-product-card { transition: none; }
-  .aura-product-card:has(> .aura-product-card__media:active, .aura-product-card__name a:active),
-  .aura-product-card:has(> .aura-product-card__media.is-pressed, .aura-product-card__name a.is-pressed) {
+  .aura-product-card:has(.aura-product-card__name a:active),
+  .aura-product-card:has(.aura-product-card__name a.is-pressed) {
     transform: none;
     opacity: .8;
   }

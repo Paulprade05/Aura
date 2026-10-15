@@ -70,12 +70,13 @@
     <!-- ================= Barra local =================
          Segundo <nav>, con nombre propio (aria-label): salta a los capítulos de esta página y lleva a comprar.
          aura-ui.js la fija arriba al desplazarse y marca el capítulo visible; el «Comprar» corto completa su nombre
-         con el modelo (aria-label). Llega ya plegable (.has-menu y el chevrón en el HTML, sin salto al cargar):
-         mientras los enlaces no caben (teléfono y tableta), el chevrón los despliega en un menú. -->
+         con el modelo (texto oculto) y el título no es un enlace (es esta página: aria-current). Llega ya plegable
+         (.has-menu y el chevrón en el HTML, sin salto al cargar): mientras los enlaces no caben (teléfono y tableta),
+         el chevrón los despliega en un menú. -->
     <nav class="aura-localnav has-menu" aria-label="auraPad" data-aura-localnav>
       <div class="aura-container aura-localnav__inner">
-        <a class="aura-localnav__title" href="aurapad.html">auraPad</a>
-        <button type="button" class="aura-localnav__toggle" aria-expanded="false" aria-controls="localnav-secciones" aria-label="Secciones de auraPad"><i class="bi bi-chevron-down" aria-hidden="true"></i></button>
+        <span class="aura-localnav__title" aria-current="page">auraPad</span>
+        <button type="button" class="aura-localnav__toggle" aria-expanded="false" aria-controls="localnav-secciones"><span class="bi bi-chevron-down" aria-hidden="true"></span><span class="visually-hidden">Secciones de auraPad</span></button>
         <div class="aura-localnav__links" id="localnav-secciones">
           <a class="aura-localnav__link" href="#modelos">Modelos</a>
           <a class="aura-localnav__link" href="#diseno">Diseño</a>
@@ -84,9 +85,9 @@
           <a class="aura-localnav__link" href="#camaras">Cámaras</a>
           <a class="aura-localnav__link" href="#crear">auraPadOS</a>
           <a class="aura-localnav__link" href="#accesorios">Accesorios</a>
-          <a class="aura-localnav__link" href="#comparar">Comparar</a>
+          <a class="aura-localnav__link" href="#comparar">Comparar<span class="visually-hidden"> los modelos de auraPad</span></a>
         </div>
-        <a class="aura-link aura-localnav__action" href="comprar.html?producto=aurapad-air-13" data-aura-buy="aurapad" data-aura-buy-short aria-label="Comprar auraPad Air 13″">Comprar</a>
+        <a class="aura-link aura-localnav__action" href="comprar.html?producto=aurapad-air-13" data-aura-buy="aurapad" data-aura-buy-short>Comprar<span class="visually-hidden"> auraPad Air 13″</span></a>
       </div>
     </nav>
 
@@ -277,12 +278,12 @@
 
         <div class="aura-grid aura-grid--2 aurapad-fila">
           <div class="aura-feature aura-feature--inline" data-aura-reveal style="--i:0">
-            <span class="aura-feature__icon"><i class="bi bi-brightness-alt-high" aria-hidden="true"></i></span>
+            <span class="aura-feature__icon"><span class="bi bi-brightness-alt-high" aria-hidden="true"></span></span>
             <h3 class="aura-feature__title">Vidrio nanotexturizado</h3>
             <p class="aura-feature__text">Opcional en los auraPad Pro con 1&nbsp;TB o 2&nbsp;TB: menos reflejos bajo una luz intensa y un tacto que recuerda al papel.</p>
           </div>
           <div class="aura-feature aura-feature--inline" data-aura-reveal style="--i:1">
-            <span class="aura-feature__icon"><i class="bi bi-display" aria-hidden="true"></i></span>
+            <span class="aura-feature__icon"><span class="bi bi-display" aria-hidden="true"></span></span>
             <h3 class="aura-feature__title">Liquid Retina en el auraPad Air</h3>
             <p class="aura-feature__text">Una gran pantalla de 13 pulgadas con 600&nbsp;nits y gama de color P3, para leer, dibujar y ver series con espacio de sobra.</p>
           </div>
@@ -345,17 +346,17 @@
 
         <div class="aura-grid aura-grid--3 aurapad-fila">
           <div class="aura-feature aura-feature--card" data-aura-reveal style="--i:0">
-            <span class="aura-feature__icon"><i class="bi bi-bounding-box-circles" aria-hidden="true"></i></span>
+            <span class="aura-feature__icon"><span class="bi bi-bounding-box-circles" aria-hidden="true"></span></span>
             <h3 class="aura-feature__title">Escáner LiDAR</h3>
             <p class="aura-feature__text">Mide la distancia a cada superficie para colocar muebles y maquetas a escala, incluso con poca luz. En los auraPad Pro.</p>
           </div>
           <div class="aura-feature aura-feature--card" data-aura-reveal style="--i:1">
-            <span class="aura-feature__icon"><i class="bi bi-person-video3" aria-hidden="true"></i></span>
+            <span class="aura-feature__icon"><span class="bi bi-person-video3" aria-hidden="true"></span></span>
             <h3 class="aura-feature__title">Center Stage en horizontal</h3>
             <p class="aura-feature__text">La cámara frontal de 12&nbsp;Mpx te sigue si te mueves y te encuadra de frente en las videollamadas. En toda la gama.</p>
           </div>
           <div class="aura-feature aura-feature--card" data-aura-reveal style="--i:2">
-            <span class="aura-feature__icon"><i class="bi bi-camera" aria-hidden="true"></i></span>
+            <span class="aura-feature__icon"><span class="bi bi-camera" aria-hidden="true"></span></span>
             <h3 class="aura-feature__title">Gran angular de 12&nbsp;Mpx</h3>
             <p class="aura-feature__text">Documentos escaneados que parecen recién impresos y texturas nítidas para tus modelos 3D. En toda la gama.</p>
           </div>
@@ -487,7 +488,7 @@
               <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">AURA Pencil Pro</p>
               <h3 class="aura-h3">Precisión de píxel. Tacto de pincel.</h3>
               <p class="aura-tile__text">Aprieta para abrir la paleta de herramientas, gíralo para orientar el trazo y nota cada gesto con una respuesta háptica sutil. Se empareja y se carga con un clic magnético en el lateral.</p>
-              <p class="aura-caption aurapad-compat" data-aurapad-compat="AURA Pencil Pro"><i class="bi bi-check2-circle" aria-hidden="true"></i><span>Compatible con toda la gama auraPad.</span></p>
+              <p class="aura-caption aurapad-compat" data-aurapad-compat="AURA Pencil Pro"><span class="bi bi-check2-circle" aria-hidden="true"></span><span>Compatible con toda la gama auraPad.</span></p>
             </div>
             <div class="aura-tile__media">
               <img class="aura-img" src="../img/aurapad-accesorios-pencil.webp" srcset="../img/400/aurapad-accesorios-pencil.webp 400w, ../img/800/aurapad-accesorios-pencil.webp 800w, ../img/aurapad-accesorios-pencil.webp 1600w" sizes="auto, (max-width: 767.98px) 80vw, (max-width: 991.98px) 41vw, (max-width: 1199.98px) 24vw, 322px" data-slot="aurapad-accesorios-pencil" width="1600" height="1200" alt="AURA Pencil Pro al final de un trazo dorado recién dibujado en la pantalla de un auraPad Pro, en perspectiva sobre fondo negro" loading="lazy" decoding="async">
@@ -498,7 +499,7 @@
               <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">Magic Keyboard</p>
               <h3 class="aura-h3">Escribe como en un portátil. Flota como una idea.</h3>
               <p class="aura-tile__text">Teclas retroiluminadas, fila de funciones y una bisagra que sostiene el auraPad con imanes, como si levitara. En los auraPad Pro, además, un trackpad háptico de vidrio.</p>
-              <p class="aura-caption aurapad-compat" data-aurapad-compat="Magic Keyboard"><i class="bi bi-check2-circle" aria-hidden="true"></i><span>Compatible con toda la gama auraPad.</span></p>
+              <p class="aura-caption aurapad-compat" data-aurapad-compat="Magic Keyboard"><span class="bi bi-check2-circle" aria-hidden="true"></span><span>Compatible con toda la gama auraPad.</span></p>
             </div>
             <div class="aura-tile__media">
               <img class="aura-img" src="../img/aurapad-accesorios-teclado.webp" srcset="../img/400/aurapad-accesorios-teclado.webp 400w, ../img/800/aurapad-accesorios-teclado.webp 800w, ../img/aurapad-accesorios-teclado.webp 1600w" sizes="auto, (max-width: 767.98px) 80vw, (max-width: 991.98px) 41vw, (max-width: 1199.98px) 24vw, 322px" data-slot="aurapad-accesorios-teclado" width="1600" height="1200" alt="auraPad Pro acoplado a un Magic Keyboard blanco, abierto como un portátil, con ondas de luz azules y violetas en la pantalla" loading="lazy" decoding="async">
@@ -602,11 +603,11 @@
       <div class="aura-container">
         <h2 class="visually-hidden" id="notas-titulo">Notas</h2>
         <ol class="aura-footnotes__list">
-          <li id="nota-1">Grosor y peso del auraPad Pro 13″ con Wi-Fi. El peso real varía según la configuración y el proceso de fabricación. <a class="aura-footnotes__back" href="#ref-1" aria-label="Volver al texto de la nota 1" title="Volver al texto de la nota 1"><i class="bi bi-arrow-return-left" aria-hidden="true"></i></a></li>
-          <li id="nota-2">Brillo máximo con contenido HDR en los auraPad Pro. El brillo a pantalla completa con contenido estándar es menor. <a class="aura-footnotes__back" href="#ref-2" aria-label="Volver al texto de la nota 2" title="Volver al texto de la nota 2"><i class="bi bi-arrow-return-left" aria-hidden="true"></i></a></li>
-          <li id="nota-3"><span data-aura-legal="cifras">La autonomía, el rendimiento y el resto de cifras técnicas son orientativos y dependen de la configuración y del uso. Las imágenes son ilustrativas.</span> <a class="aura-footnotes__back" href="#ref-3" aria-label="Volver al texto de la nota 3" title="Volver al texto de la nota 3"><i class="bi bi-arrow-return-left" aria-hidden="true"></i></a></li>
-          <li id="nota-4">AURA Intelligence y algunas funciones de auraPadOS&nbsp;27 pueden no estar disponibles en todos los idiomas o regiones. <a class="aura-footnotes__back" href="#ref-4" aria-label="Volver al texto de la nota 4" title="Volver al texto de la nota 4"><i class="bi bi-arrow-return-left" aria-hidden="true"></i></a></li>
-          <li id="nota-5">AURA Pencil Pro, Magic Keyboard y la funda Folio se venden por separado. El trackpad háptico solo está en el Magic Keyboard para auraPad Pro. <a class="aura-footnotes__back" href="#ref-5" aria-label="Volver al texto de la nota 5" title="Volver al texto de la nota 5"><i class="bi bi-arrow-return-left" aria-hidden="true"></i></a></li>
+          <li id="nota-1">Grosor y peso del auraPad Pro 13″ con Wi-Fi. El peso real varía según la configuración y el proceso de fabricación. <a class="aura-footnotes__back" href="#ref-1" title="Volver al texto de la nota 1"><span class="bi bi-arrow-return-left" aria-hidden="true"></span><span class="visually-hidden">Volver al texto de la nota 1</span></a></li>
+          <li id="nota-2">Brillo máximo con contenido HDR en los auraPad Pro. El brillo a pantalla completa con contenido estándar es menor. <a class="aura-footnotes__back" href="#ref-2" title="Volver al texto de la nota 2"><span class="bi bi-arrow-return-left" aria-hidden="true"></span><span class="visually-hidden">Volver al texto de la nota 2</span></a></li>
+          <li id="nota-3"><span data-aura-legal="cifras">La autonomía, el rendimiento y el resto de cifras técnicas son orientativos y dependen de la configuración y del uso. Las imágenes son ilustrativas.</span> <a class="aura-footnotes__back" href="#ref-3" title="Volver al texto de la nota 3"><span class="bi bi-arrow-return-left" aria-hidden="true"></span><span class="visually-hidden">Volver al texto de la nota 3</span></a></li>
+          <li id="nota-4">AURA Intelligence y algunas funciones de auraPadOS&nbsp;27 pueden no estar disponibles en todos los idiomas o regiones. <a class="aura-footnotes__back" href="#ref-4" title="Volver al texto de la nota 4"><span class="bi bi-arrow-return-left" aria-hidden="true"></span><span class="visually-hidden">Volver al texto de la nota 4</span></a></li>
+          <li id="nota-5">AURA Pencil Pro, Magic Keyboard y la funda Folio se venden por separado. El trackpad háptico solo está en el Magic Keyboard para auraPad Pro. <a class="aura-footnotes__back" href="#ref-5" title="Volver al texto de la nota 5"><span class="bi bi-arrow-return-left" aria-hidden="true"></span><span class="visually-hidden">Volver al texto de la nota 5</span></a></li>
         </ol>
         <ul class="aura-footnotes__list mt-3">
           <li data-aura-legal="precios">Precios de venta recomendados en España, IVA incluido.</li>
@@ -627,24 +628,24 @@
         <div class="aura-sheet__grabber" aria-hidden="true"></div>
         <header class="aura-sheet__header">
           <h2 class="aura-sheet__title" id="caso-ilustrar-titulo">Ilustrar con auraPad</h2>
-          <button class="aura-icon-btn" type="button" data-aura-sheet-close aria-label="Cerrar" title="Cerrar"><i class="bi bi-x-lg" aria-hidden="true"></i></button>
+          <button class="aura-icon-btn" type="button" data-aura-sheet-close title="Cerrar"><span class="bi bi-x-lg" aria-hidden="true"></span><span class="visually-hidden">Cerrar</span></button>
         </header>
         <div class="aura-sheet__body">
           <div class="aura-stack" style="--stack:1.5rem">
             <p class="aura-body">Del primer garabato al arte final sin cambiar de herramienta. La pantalla reacciona a la presión, a la inclinación y al giro de AURA Pencil Pro, y cada capa responde al instante.</p>
             <div class="aura-stack" style="--stack:1.125rem">
               <div class="aura-feature aura-feature--inline">
-                <span class="aura-feature__icon"><i class="bi bi-pencil" aria-hidden="true"></i></span>
+                <span class="aura-feature__icon"><span class="bi bi-pencil" aria-hidden="true"></span></span>
                 <h3 class="aura-feature__title">AURA Pencil Pro</h3>
                 <p class="aura-feature__text">Aprieta para cambiar de herramienta y gira el cuerpo para orientar pinceles planos y caligráficos.</p>
               </div>
               <div class="aura-feature aura-feature--inline">
-                <span class="aura-feature__icon"><i class="bi bi-palette" aria-hidden="true"></i></span>
+                <span class="aura-feature__icon"><span class="bi bi-palette" aria-hidden="true"></span></span>
                 <h3 class="aura-feature__title">Color de referencia</h3>
                 <p class="aura-feature__text">Ultra Retina XDR con OLED en tándem: negros perfectos y gama P3 para que lo que pintas sea lo que se imprime.</p>
               </div>
               <div class="aura-feature aura-feature--inline">
-                <span class="aura-feature__icon"><i class="bi bi-brightness-alt-high" aria-hidden="true"></i></span>
+                <span class="aura-feature__icon"><span class="bi bi-brightness-alt-high" aria-hidden="true"></span></span>
                 <h3 class="aura-feature__title">Vidrio nanotexturizado</h3>
                 <p class="aura-feature__text">Opcional en los auraPad Pro con 1 TB o 2 TB: menos reflejos y un tacto que recuerda al papel.</p>
               </div>
@@ -663,24 +664,24 @@
         <div class="aura-sheet__grabber" aria-hidden="true"></div>
         <header class="aura-sheet__header">
           <h2 class="aura-sheet__title" id="caso-video-titulo">Editar vídeo con auraPad</h2>
-          <button class="aura-icon-btn" type="button" data-aura-sheet-close aria-label="Cerrar" title="Cerrar"><i class="bi bi-x-lg" aria-hidden="true"></i></button>
+          <button class="aura-icon-btn" type="button" data-aura-sheet-close title="Cerrar"><span class="bi bi-x-lg" aria-hidden="true"></span><span class="visually-hidden">Cerrar</span></button>
         </header>
         <div class="aura-sheet__body">
           <div class="aura-stack" style="--stack:1.5rem">
             <p class="aura-body">Graba, monta, etalona y exporta en el mismo sitio. El chip AURA&nbsp;M5 se encarga del trabajo pesado mientras la batería aguanta la sesión entera.</p>
             <div class="aura-stack" style="--stack:1.125rem">
               <div class="aura-feature aura-feature--inline">
-                <span class="aura-feature__icon"><i class="bi bi-cpu" aria-hidden="true"></i></span>
+                <span class="aura-feature__icon"><span class="bi bi-cpu" aria-hidden="true"></span></span>
                 <h3 class="aura-feature__title">AURA M5</h3>
                 <p class="aura-feature__text">GPU de 10 núcleos para efectos, estabilización y renderizado en tiempo real, sin ventilador.</p>
               </div>
               <div class="aura-feature aura-feature--inline">
-                <span class="aura-feature__icon"><i class="bi bi-brightness-high" aria-hidden="true"></i></span>
+                <span class="aura-feature__icon"><span class="bi bi-brightness-high" aria-hidden="true"></span></span>
                 <h3 class="aura-feature__title">HDR de verdad</h3>
                 <p class="aura-feature__text">Hasta 1.600 nits de pico para etalonar contenido HDR con la confianza de un monitor de referencia.</p>
               </div>
               <div class="aura-feature aura-feature--inline">
-                <span class="aura-feature__icon"><i class="bi bi-usb-symbol" aria-hidden="true"></i></span>
+                <span class="aura-feature__icon"><span class="bi bi-usb-symbol" aria-hidden="true"></span></span>
                 <h3 class="aura-feature__title">Thunderbolt / USB 4</h3>
                 <p class="aura-feature__text">Conecta discos y monitores externos a 40 Gb/s y guarda hasta 2 TB de material dentro del propio auraPad.</p>
               </div>
@@ -699,24 +700,24 @@
         <div class="aura-sheet__grabber" aria-hidden="true"></div>
         <header class="aura-sheet__header">
           <h2 class="aura-sheet__title" id="caso-estudiar-titulo">Estudiar con auraPad</h2>
-          <button class="aura-icon-btn" type="button" data-aura-sheet-close aria-label="Cerrar" title="Cerrar"><i class="bi bi-x-lg" aria-hidden="true"></i></button>
+          <button class="aura-icon-btn" type="button" data-aura-sheet-close title="Cerrar"><span class="bi bi-x-lg" aria-hidden="true"></span><span class="visually-hidden">Cerrar</span></button>
         </header>
         <div class="aura-sheet__body">
           <div class="aura-stack" style="--stack:1.5rem">
             <p class="aura-body">Libros, apuntes y calculadora en una sola lámina que pesa menos que la mochila vacía. Y un compañero de estudio que no se distrae con el móvil.</p>
             <div class="aura-stack" style="--stack:1.125rem">
               <div class="aura-feature aura-feature--inline">
-                <span class="aura-feature__icon"><i class="bi bi-journal-text" aria-hidden="true"></i></span>
+                <span class="aura-feature__icon"><span class="bi bi-journal-text" aria-hidden="true"></span></span>
                 <h3 class="aura-feature__title">Escritura a mano, buscable</h3>
                 <p class="aura-feature__text">AURA Intelligence reconoce tu letra, la convierte en texto y te deja buscar en todos tus cuadernos a la vez.</p>
               </div>
               <div class="aura-feature aura-feature--inline">
-                <span class="aura-feature__icon"><i class="bi bi-stars" aria-hidden="true"></i></span>
+                <span class="aura-feature__icon"><span class="bi bi-stars" aria-hidden="true"></span></span>
                 <h3 class="aura-feature__title">Resúmenes y repaso</h3>
                 <p class="aura-feature__text">Pide un resumen del tema o un test de repaso generado a partir de tus propios apuntes, en el dispositivo.</p>
               </div>
               <div class="aura-feature aura-feature--inline">
-                <span class="aura-feature__icon"><i class="bi bi-battery-full" aria-hidden="true"></i></span>
+                <span class="aura-feature__icon"><span class="bi bi-battery-full" aria-hidden="true"></span></span>
                 <h3 class="aura-feature__title">Todo el día de clase</h3>
                 <p class="aura-feature__text">Hasta 10 horas de batería y una gran pantalla de 13 pulgadas para tener el libro y los apuntes lado a lado.</p>
               </div>
@@ -735,24 +736,24 @@
         <div class="aura-sheet__grabber" aria-hidden="true"></div>
         <header class="aura-sheet__header">
           <h2 class="aura-sheet__title" id="caso-trabajar-titulo">Trabajar con auraPadOS&nbsp;27</h2>
-          <button class="aura-icon-btn" type="button" data-aura-sheet-close aria-label="Cerrar" title="Cerrar"><i class="bi bi-x-lg" aria-hidden="true"></i></button>
+          <button class="aura-icon-btn" type="button" data-aura-sheet-close title="Cerrar"><span class="bi bi-x-lg" aria-hidden="true"></span><span class="visually-hidden">Cerrar</span></button>
         </header>
         <div class="aura-sheet__body">
           <div class="aura-stack" style="--stack:1.5rem">
             <p class="aura-body">Por la mañana, tableta. Por la tarde, puesto de trabajo completo. auraPadOS&nbsp;27 cambia de papel en cuanto acoplas el teclado o conectas una pantalla.</p>
             <div class="aura-stack" style="--stack:1.125rem">
               <div class="aura-feature aura-feature--inline">
-                <span class="aura-feature__icon"><i class="bi bi-window-stack" aria-hidden="true"></i></span>
+                <span class="aura-feature__icon"><span class="bi bi-window-stack" aria-hidden="true"></span></span>
                 <h3 class="aura-feature__title">Ventanas de verdad</h3>
                 <p class="aura-feature__text">Abre varias apps a la vez, colócalas donde quieras y cambia su tamaño con el trackpad o con el dedo.</p>
               </div>
               <div class="aura-feature aura-feature--inline">
-                <span class="aura-feature__icon"><i class="bi bi-keyboard" aria-hidden="true"></i></span>
+                <span class="aura-feature__icon"><span class="bi bi-keyboard" aria-hidden="true"></span></span>
                 <h3 class="aura-feature__title">Magic Keyboard</h3>
                 <p class="aura-feature__text">Teclas retroiluminadas y trackpad háptico de vidrio en los auraPad Pro. Escribir correos largos deja de ser un castigo.</p>
               </div>
               <div class="aura-feature aura-feature--inline">
-                <span class="aura-feature__icon"><i class="bi bi-display" aria-hidden="true"></i></span>
+                <span class="aura-feature__icon"><span class="bi bi-display" aria-hidden="true"></span></span>
                 <h3 class="aura-feature__title">Monitor externo</h3>
                 <p class="aura-feature__text">Thunderbolt / USB 4 para extender el escritorio a una pantalla grande y conectar discos a 40 Gb/s.</p>
               </div>
@@ -771,24 +772,24 @@
         <div class="aura-sheet__grabber" aria-hidden="true"></div>
         <header class="aura-sheet__header">
           <h2 class="aura-sheet__title" id="caso-medir-titulo">Medir el mundo con auraPad Pro</h2>
-          <button class="aura-icon-btn" type="button" data-aura-sheet-close aria-label="Cerrar" title="Cerrar"><i class="bi bi-x-lg" aria-hidden="true"></i></button>
+          <button class="aura-icon-btn" type="button" data-aura-sheet-close title="Cerrar"><span class="bi bi-x-lg" aria-hidden="true"></span><span class="visually-hidden">Cerrar</span></button>
         </header>
         <div class="aura-sheet__body">
           <div class="aura-stack" style="--stack:1.5rem">
             <p class="aura-body">Apunta, recorre la estancia y en unos segundos tienes un plano en 3D con medidas. Ideal para reformas, interiorismo o para demostrar por fin que el sofá sí cabía.</p>
             <div class="aura-stack" style="--stack:1.125rem">
               <div class="aura-feature aura-feature--inline">
-                <span class="aura-feature__icon"><i class="bi bi-bounding-box-circles" aria-hidden="true"></i></span>
+                <span class="aura-feature__icon"><span class="bi bi-bounding-box-circles" aria-hidden="true"></span></span>
                 <h3 class="aura-feature__title">Escáner LiDAR</h3>
                 <p class="aura-feature__text">Mide la distancia a cada superficie para colocar objetos virtuales con precisión, incluso con poca luz.</p>
               </div>
               <div class="aura-feature aura-feature--inline">
-                <span class="aura-feature__icon"><i class="bi bi-camera" aria-hidden="true"></i></span>
+                <span class="aura-feature__icon"><span class="bi bi-camera" aria-hidden="true"></span></span>
                 <h3 class="aura-feature__title">Gran angular de 12 Mpx</h3>
                 <p class="aura-feature__text">Texturas nítidas para tus modelos 3D y documentos escaneados que parecen recién salidos de la impresora.</p>
               </div>
               <div class="aura-feature aura-feature--inline">
-                <span class="aura-feature__icon"><i class="bi bi-feather" aria-hidden="true"></i></span>
+                <span class="aura-feature__icon"><span class="bi bi-feather" aria-hidden="true"></span></span>
                 <h3 class="aura-feature__title">Ligero en la mano</h3>
                 <p class="aura-feature__text">Con 444 gramos, el auraPad Pro 11″ se sujeta con una mano mientras recorres la obra.</p>
               </div>

@@ -130,9 +130,9 @@
     <!-- Barra local (navegación secundaria con su propio nombre): anclas a cada sección de la guía -->
     <nav class="aura-localnav has-menu" aria-label="Secciones del sistema de diseño" data-aura-localnav>
       <div class="aura-container aura-localnav__inner">
-        <a class="aura-localnav__title" href="#contenido">Sistema de diseño</a>
+        <span class="aura-localnav__title" aria-current="page">Sistema de diseño</span>
         <!-- El chevrón ya en el HTML (como en las familias): mientras los enlaces no caben, abre la lista; aura-ui.js solo engancha los eventos -->
-        <button type="button" class="aura-localnav__toggle" aria-expanded="false" aria-controls="localnav-secciones" aria-label="Secciones de Sistema de diseño"><i class="bi bi-chevron-down" aria-hidden="true"></i></button>
+        <button type="button" class="aura-localnav__toggle" aria-expanded="false" aria-controls="localnav-secciones"><span class="bi bi-chevron-down" aria-hidden="true"></span><span class="visually-hidden">Secciones de Sistema de diseño</span></button>
         <div class="aura-localnav__links" id="localnav-secciones">
           <a class="aura-localnav__link" href="#color">Color</a>
           <a class="aura-localnav__link" href="#tipografia">Tipografía</a>
@@ -193,7 +193,7 @@
             </div>
           </div>
           <div class="aura-note">
-            <span class="aura-note__icon"><i class="bi bi-lightbulb" aria-hidden="true"></i></span>
+            <span class="aura-note__icon"><span class="bi bi-lightbulb" aria-hidden="true"></span></span>
             <p class="aura-note__title">Nota de uso</p>
             <p class="aura-note__text">El azul eléctrico comunica interacción; el dorado aporta valor premium. Evita usarlos como superficies extensas o competir por la misma jerarquía.</p>
           </div>
@@ -238,7 +238,7 @@
 
         <div class="ds-block">
           <div class="aura-note">
-            <span class="aura-note__icon"><i class="bi bi-type" aria-hidden="true"></i></span>
+            <span class="aura-note__icon"><span class="bi bi-type" aria-hidden="true"></span></span>
             <p class="aura-note__title">Nota de uso</p>
             <p class="aura-note__text">Usa Kanit para condensar intención y ritmo en titulares. Inter sostiene lecturas largas y controles; conserva una longitud de línea cómoda y contraste alto.</p>
           </div>
@@ -295,10 +295,10 @@
           <div>
             <span class="aura-mono ds-label">Destructivo · .aura-btn--destructive (solo lo irreversible, tras confirmar)</span>
             <div class="ds-states">
-              <div class="ds-state"><button class="aura-btn aura-btn--destructive" type="button"><i class="bi bi-trash3" aria-hidden="true"></i>Borrar datos</button><span class="aura-caption aura-caption--muted">Normal</span></div>
-              <div class="ds-state"><button class="aura-btn aura-btn--destructive is-hover" type="button"><i class="bi bi-trash3" aria-hidden="true"></i>Borrar datos</button><span class="aura-caption aura-caption--muted">Hover</span></div>
-              <div class="ds-state"><button class="aura-btn aura-btn--destructive is-pressed" type="button"><i class="bi bi-trash3" aria-hidden="true"></i>Borrar datos</button><span class="aura-caption aura-caption--muted">Pulsado</span></div>
-              <div class="ds-state"><button class="aura-btn aura-btn--destructive" type="button" disabled><i class="bi bi-trash3" aria-hidden="true"></i>Borrar datos</button><span class="aura-caption aura-caption--muted">Desactivado</span></div>
+              <div class="ds-state"><button class="aura-btn aura-btn--destructive" type="button"><span class="bi bi-trash3" aria-hidden="true"></span>Borrar datos</button><span class="aura-caption aura-caption--muted">Normal</span></div>
+              <div class="ds-state"><button class="aura-btn aura-btn--destructive is-hover" type="button"><span class="bi bi-trash3" aria-hidden="true"></span>Borrar datos</button><span class="aura-caption aura-caption--muted">Hover</span></div>
+              <div class="ds-state"><button class="aura-btn aura-btn--destructive is-pressed" type="button"><span class="bi bi-trash3" aria-hidden="true"></span>Borrar datos</button><span class="aura-caption aura-caption--muted">Pulsado</span></div>
+              <div class="ds-state"><button class="aura-btn aura-btn--destructive" type="button" disabled><span class="bi bi-trash3" aria-hidden="true"></span>Borrar datos</button><span class="aura-caption aura-caption--muted">Desactivado</span></div>
             </div>
           </div>
         </div>
@@ -310,8 +310,8 @@
           <div class="aura-cluster">
             <button class="aura-btn aura-btn--primary" type="button">Comprar</button>
             <button class="aura-btn aura-btn--secondary" type="button">Comparar</button>
-            <button class="aura-btn aura-btn--primary" type="button">Valorar mi dispositivo <i class="bi bi-arrow-right" aria-hidden="true"></i></button>
-            <button class="aura-btn aura-btn--secondary" type="button">Ver la película <i class="bi bi-play" aria-hidden="true"></i></button>
+            <button class="aura-btn aura-btn--primary" type="button">Valorar mi dispositivo <span class="bi bi-arrow-right" aria-hidden="true"></span></button>
+            <button class="aura-btn aura-btn--secondary" type="button">Ver la película <span class="bi bi-play" aria-hidden="true"></span></button>
             <button class="aura-btn aura-btn--primary is-loading" type="button" aria-busy="true"><span class="aura-spinner" aria-hidden="true"></span>Procesando…</button>
           </div>
           <div class="ds-frame ds-frame--narrow">
@@ -323,20 +323,20 @@
         <div class="ds-block">
           <div class="ds-block__head">
             <h3 class="aura-h3">Enlace contextual y botones de icono</h3>
-            <p class="aura-caption">Acción de baja intensidad dentro del flujo. Un enlace suelto (como estos, en un <code>.aura-cluster</code>) mide 44 px de alto en pantallas táctiles; dentro de una frase sigue la línea. Si va solo dentro de un <code>&lt;p&gt;</code>, lleva <code>.aura-link--control</code>. Es también la acción de la barra local (<code>.aura-localnav__action</code>: «Comprar ›» en las familias, «Contactar ›» en soporte), que ocupa todo el alto de la barra. Los botones de icono miden 44 px.</p>
+            <p class="aura-caption">Acción de baja intensidad dentro del flujo. Un enlace suelto (como estos, en un <code>.aura-cluster</code>) mide 44 px de alto en pantallas táctiles; dentro de una frase sigue la línea. Si va solo dentro de un <code>&lt;p&gt;</code>, lleva <code>.aura-link--control</code>. Es también la acción de la barra local (<code>.aura-localnav__action</code>: «Comprar ›» en las familias, «Contactar ›» en soporte), que ocupa todo el alto de la barra. Los botones de icono miden 44 px y llevan su nombre como texto oculto dentro (<code>&lt;span class="visually-hidden"&gt;</code>), no en <code>aria-label</code> (v2.1). Un enlace genérico que se repite con otro destino («Más información», «Comparar todos los modelos») dice de qué en texto oculto.</p>
           </div>
           <div class="aura-cluster" style="--cluster:1rem 2rem">
             <a class="aura-link" href="trade-in.html">Comprobar valor cuántico</a>
-            <a class="aura-link aura-link--plain" href="login.html">¿Has olvidado tu ID de AURA o la contraseña?</a>
+            <a class="aura-link aura-link--plain" href="soporte.html#contacto">¿Has olvidado tu ID de AURA o la contraseña?</a>
             <button class="aura-link aura-link--plain aura-link--muted" type="button">Eliminar</button>
           </div>
           <p class="aura-body">Dentro de una frase: entrega tu teléfono mundano y <a class="aura-link aura-link--plain" href="trade-in.html">comprueba su valor</a> antes de comprar.</p>
           <p class="m-0"><a class="aura-link aura-link--control" href="comparar.html">Comparar todos los modelos</a></p>
           <div class="aura-cluster">
-            <button class="aura-icon-btn" type="button" aria-label="Cerrar"><i class="bi bi-x-lg" aria-hidden="true"></i></button>
-            <button class="aura-icon-btn aura-icon-btn--solid" type="button" aria-label="Anterior"><i class="bi bi-chevron-left" aria-hidden="true"></i></button>
-            <button class="aura-icon-btn aura-icon-btn--solid" type="button" aria-label="Siguiente"><i class="bi bi-chevron-right" aria-hidden="true"></i></button>
-            <button class="aura-icon-btn aura-icon-btn--solid" type="button" aria-label="Siguiente (desactivado)" disabled><i class="bi bi-chevron-right" aria-hidden="true"></i></button>
+            <button class="aura-icon-btn" type="button"><span class="bi bi-x-lg" aria-hidden="true"></span><span class="visually-hidden">Cerrar</span></button>
+            <button class="aura-icon-btn aura-icon-btn--solid" type="button"><span class="bi bi-chevron-left" aria-hidden="true"></span><span class="visually-hidden">Anterior</span></button>
+            <button class="aura-icon-btn aura-icon-btn--solid" type="button"><span class="bi bi-chevron-right" aria-hidden="true"></span><span class="visually-hidden">Siguiente</span></button>
+            <button class="aura-icon-btn aura-icon-btn--solid" type="button" disabled><span class="bi bi-chevron-right" aria-hidden="true"></span><span class="visually-hidden">Siguiente (desactivado)</span></button>
           </div>
         </div>
 
@@ -346,7 +346,7 @@
           </div>
           <div class="aura-cluster">
             <span class="aura-chip">auraPhone 18 Pro</span>
-            <span class="aura-chip"><i class="bi bi-truck" aria-hidden="true"></i> Envío gratis</span>
+            <span class="aura-chip"><span class="bi bi-truck" aria-hidden="true"></span> Envío gratis</span>
             <button class="aura-chip is-active" type="button" aria-pressed="true">Todos</button>
             <button class="aura-chip" type="button" aria-pressed="false">Pedidos</button>
             <button class="aura-chip" type="button" aria-pressed="false">Garantías</button>
@@ -361,18 +361,19 @@
             <span class="aura-badge aura-badge--mono aura-badge--ok">Entregado</span>
             <span class="aura-badge aura-badge--mono aura-badge--neutral">AU-2026-000123</span>
           </div>
-          <p class="aura-caption">Segmentado (v1.3, v1.4): la selección es una sola pastilla (<code>.aura-segmented__thumb</code>, la crea <code>aura-ui.js</code>) que se desliza de un ítem a otro con un muelle crítico y se puede interrumpir; solo anima <code>transform</code> (avance y <code>scaleX</code> del ancho). En radios y botones también se arrastra: 1:1 con el dedo, goma en los extremos y, al soltar, el ítem más cercano a donde iba. La pastilla sigue al estado (<code>:checked</code> —también <code>input.checked = …</code> desde JS—, <code>.is-active</code>, <code>aria-current</code>, <code>aria-pressed</code>, <code>aria-selected</code>) lo ponga quien lo ponga. Si no cabe en una fila (texto grande, el ejemplo estrecho de abajo), se reparte en filas (<code>.is-wrapped</code>) y la pastilla viaja también en vertical. Con «reducir movimiento», aparece en su sitio con un fundido.</p>
+          <p class="aura-caption">Segmentado (v1.3, v1.4): la selección es una sola pastilla (<code>.aura-segmented__thumb</code>, la crea <code>aura-ui.js</code>) que se desliza de un ítem a otro con un muelle crítico y se puede interrumpir; solo anima <code>transform</code> (avance y <code>scaleX</code> del ancho). En radios y botones también se arrastra: 1:1 con el dedo, goma en los extremos y, al soltar, el ítem más cercano a donde iba. La pastilla sigue al estado (<code>:checked</code> —también <code>input.checked = …</code> desde JS—, <code>.is-active</code>, <code>aria-current</code>, <code>aria-pressed</code>, <code>aria-selected</code>) lo ponga quien lo ponga. Si no cabe en una fila (texto grande, el ejemplo estrecho de abajo), se reparte en filas (<code>.is-wrapped</code>) y la pastilla viaja también en vertical. Con «reducir movimiento», aparece en su sitio con un fundido. Con radios (v2.1) el segmentado es un <code>&lt;fieldset&gt;</code> con su <code>&lt;legend class="visually-hidden"&gt;</code> de primer hijo (la pastilla va detrás), cada radio con <code>for</code> + <code>id</code>, y la pastilla mide en <code>rem</code>; las flechas del teclado cambian de opción igual.</p>
           <div class="aura-stack">
             <span class="aura-mono">Segmentado · radios · enlaces · botones (pestañas)</span>
-            <div class="aura-segmented" role="radiogroup" aria-label="Familia para comparar">
-              <label class="aura-segmented__item"><input type="radio" name="ds-familia" value="auraphone" checked><span>auraPhone</span></label>
-              <label class="aura-segmented__item"><input type="radio" name="ds-familia" value="aurapad"><span>auraPad</span></label>
-              <label class="aura-segmented__item"><input type="radio" name="ds-familia" value="aurabook"><span>auraBook</span></label>
-            </div>
+            <fieldset class="aura-segmented">
+              <legend class="visually-hidden">Familia para comparar</legend>
+              <label class="aura-segmented__item" for="ds-familia-auraphone"><input id="ds-familia-auraphone" type="radio" name="ds-familia" value="auraphone" checked><span>auraPhone</span></label>
+              <label class="aura-segmented__item" for="ds-familia-aurapad"><input id="ds-familia-aurapad" type="radio" name="ds-familia" value="aurapad"><span>auraPad</span></label>
+              <label class="aura-segmented__item" for="ds-familia-aurabook"><input id="ds-familia-aurabook" type="radio" name="ds-familia" value="aurabook"><span>auraBook</span></label>
+            </fieldset>
             <nav class="aura-segmented" aria-label="Comparar por familia">
-              <a class="aura-segmented__item is-active" aria-current="true" href="comparar.html?familia=auraphone">auraPhone</a>
-              <a class="aura-segmented__item" href="comparar.html?familia=aurapad">auraPad</a>
-              <a class="aura-segmented__item" href="comparar.html?familia=aurabook">auraBook</a>
+              <a class="aura-segmented__item is-active" aria-current="true" href="comparar.html?familia=auraphone"><span class="visually-hidden">Comparar </span>auraPhone</a>
+              <a class="aura-segmented__item" href="comparar.html?familia=aurapad"><span class="visually-hidden">Comparar </span>auraPad</a>
+              <a class="aura-segmented__item" href="comparar.html?familia=aurabook"><span class="visually-hidden">Comparar </span>auraBook</a>
             </nav>
             <div class="aura-segmented" role="group" aria-label="Vista de ejemplo" data-ds-toggle>
               <button class="aura-segmented__item" type="button" aria-pressed="true">Pedidos</button>
@@ -381,11 +382,12 @@
             </div>
             <span class="aura-mono">Repartido en filas (no cabe en una: <code>.is-wrapped</code>)</span>
             <div style="max-width:15rem">
-              <div class="aura-segmented" role="radiogroup" aria-label="Familia (ejemplo estrecho)">
-                <label class="aura-segmented__item"><input type="radio" name="ds-familia-filas" value="auraphone"><span>auraPhone</span></label>
-                <label class="aura-segmented__item"><input type="radio" name="ds-familia-filas" value="aurapad" checked><span>auraPad</span></label>
-                <label class="aura-segmented__item"><input type="radio" name="ds-familia-filas" value="aurabook"><span>auraBook</span></label>
-              </div>
+              <fieldset class="aura-segmented">
+                <legend class="visually-hidden">Familia (ejemplo estrecho)</legend>
+                <label class="aura-segmented__item" for="ds-familia-filas-auraphone"><input id="ds-familia-filas-auraphone" type="radio" name="ds-familia-filas" value="auraphone"><span>auraPhone</span></label>
+                <label class="aura-segmented__item" for="ds-familia-filas-aurapad"><input id="ds-familia-filas-aurapad" type="radio" name="ds-familia-filas" value="aurapad" checked><span>auraPad</span></label>
+                <label class="aura-segmented__item" for="ds-familia-filas-aurabook"><input id="ds-familia-filas-aurabook" type="radio" name="ds-familia-filas" value="aurabook"><span>auraBook</span></label>
+              </fieldset>
             </div>
           </div>
         </div>
@@ -396,7 +398,8 @@
             <p class="aura-caption">Muestra estática de lo que genera <code>&lt;aura-header&gt;</code>. La barra es un material translúcido; el borde inferior solo aparece al hacer scroll.</p>
           </div>
           <!-- Vista estática (inert + aria-hidden): copia el marcado accesible que genera aura-core.js, con el nombre de
-               cada botón de icono (aria-label), el de cada nav y el texto emergente (title) del logotipo -->
+               cada botón de icono en texto oculto (.visually-hidden, no aria-label), el de cada nav y el texto emergente
+               (title) del logotipo -->
           <div class="ds-frame ds-frame--flush" inert aria-hidden="true">
             <header class="aura-nav is-scrolled">
               <div class="aura-container aura-nav__inner">
@@ -410,10 +413,10 @@
                   <a class="aura-nav__link" href="soporte.html">Soporte</a>
                 </nav>
                 <div class="aura-nav__actions">
-                  <button class="aura-nav__action" type="button" aria-label="Buscar"><i class="bi bi-search" aria-hidden="true"></i></button>
-                  <a class="aura-nav__action aura-nav__account" href="login.html"><i class="bi bi-person-circle" aria-hidden="true"></i><span class="aura-nav__action-label">Iniciar sesión</span></a>
-                  <div class="aura-nav__bag-wrap"><button class="aura-nav__action aura-nav__bag" type="button" aria-label="Bolsa, 2 artículos"><i class="bi bi-bag" aria-hidden="true"></i><span class="aura-nav__count" aria-hidden="true">2</span></button></div>
-                  <button class="aura-nav__action aura-nav__toggle" type="button" aria-label="Abrir el menú"><i class="bi bi-list" aria-hidden="true"></i></button>
+                  <button class="aura-nav__action" type="button"><span class="bi bi-search" aria-hidden="true"></span><span class="visually-hidden">Buscar</span></button>
+                  <a class="aura-nav__action aura-nav__account" href="login.html"><span class="bi bi-person-circle" aria-hidden="true"></span><span class="aura-nav__action-label">Iniciar sesión</span></a>
+                  <div class="aura-nav__bag-wrap"><button class="aura-nav__action aura-nav__bag" type="button"><span class="bi bi-bag" aria-hidden="true"></span><span class="visually-hidden">Bolsa, 2 artículos</span><span class="aura-nav__count" aria-hidden="true">2</span></button></div>
+                  <button class="aura-nav__action aura-nav__toggle" type="button"><span class="bi bi-list" aria-hidden="true"></span><span class="visually-hidden">Abrir el menú</span></button>
                 </div>
               </div>
             </header>
@@ -431,7 +434,7 @@
             </div>
           </div>
           <div class="aura-note">
-            <span class="aura-note__icon"><i class="bi bi-hand-index-thumb" aria-hidden="true"></i></span>
+            <span class="aura-note__icon"><span class="bi bi-hand-index-thumb" aria-hidden="true"></span></span>
             <p class="aura-note__title">Nota de uso</p>
             <p class="aura-note__text">Mantén una sola acción primaria por contexto. El estado hover aumenta la luminosidad; el desactivado reduce el contraste sin perder la etiqueta. Las migas del pie admiten varios niveles: <code>&lt;aura-footer crumbs="auraPhone|auraphone.html;auraPhone 18 Pro Max"&gt;</code> (las de esta página, abajo, son de dos niveles). La barra local de esta página es viva: por debajo de 768 px sus enlaces se pliegan en un menú que abre el chevrón.</p>
           </div>
@@ -448,11 +451,11 @@
           <p class="aura-lead">Campos legibles que ganan profundidad y energía únicamente cuando se activan. Los errores se explican junto al campo, mientras se escribe.</p>
         </div>
 
-        <form class="aura-grid aura-grid--2" data-ds-demo novalidate>
+        <div class="aura-grid aura-grid--2">
           <div class="aura-field">
             <label class="aura-field__label" for="ds-reposo">Correo electrónico</label>
             <div class="aura-field__control">
-              <i class="aura-field__icon bi bi-envelope" aria-hidden="true"></i>
+              <span class="aura-field__icon bi bi-envelope" aria-hidden="true"></span>
               <input class="aura-input" id="ds-reposo" type="email" placeholder="tu@correo.com" autocomplete="off" aria-describedby="ds-reposo-ayuda">
             </div>
             <p class="aura-field__help" id="ds-reposo-ayuda">Estado en reposo</p>
@@ -461,7 +464,7 @@
           <div class="aura-field is-focused">
             <label class="aura-field__label" for="ds-foco">Correo electrónico</label>
             <div class="aura-field__control">
-              <i class="aura-field__icon bi bi-envelope" aria-hidden="true"></i>
+              <span class="aura-field__icon bi bi-envelope" aria-hidden="true"></span>
               <input class="aura-input" id="ds-foco" type="email" placeholder="tu@correo.com" autocomplete="off" aria-describedby="ds-foco-ayuda">
             </div>
             <p class="aura-field__help" id="ds-foco-ayuda">Estado en foco: borde azul, anillo al 40 % y cristal</p>
@@ -470,7 +473,7 @@
           <div class="aura-field is-invalid">
             <label class="aura-field__label" for="ds-error">Correo electrónico</label>
             <div class="aura-field__control">
-              <i class="aura-field__icon bi bi-envelope" aria-hidden="true"></i>
+              <span class="aura-field__icon bi bi-envelope" aria-hidden="true"></span>
               <input class="aura-input" id="ds-error" type="email" value="lucia@correo" autocomplete="off" aria-invalid="true" aria-describedby="ds-error-msg">
             </div>
             <p class="aura-field__help">Estado de error</p>
@@ -480,7 +483,7 @@
           <div class="aura-field is-valid">
             <label class="aura-field__label" for="ds-valido">Correo electrónico</label>
             <div class="aura-field__control">
-              <i class="aura-field__icon bi bi-envelope" aria-hidden="true"></i>
+              <span class="aura-field__icon bi bi-envelope" aria-hidden="true"></span>
               <input class="aura-input" id="ds-valido" type="email" value="lucia@correo.com" autocomplete="off" aria-describedby="ds-valido-ayuda">
             </div>
             <p class="aura-field__help" id="ds-valido-ayuda">Estado válido</p>
@@ -489,9 +492,9 @@
           <div class="aura-field aura-field--toggle">
             <label class="aura-field__label" for="ds-clave">Contraseña</label>
             <div class="aura-field__control">
-              <i class="aura-field__icon bi bi-lock" aria-hidden="true"></i>
+              <span class="aura-field__icon bi bi-lock" aria-hidden="true"></span>
               <input class="aura-input" id="ds-clave" type="password" value="AuraCosmos" autocomplete="off" aria-describedby="ds-clave-reglas">
-              <button class="aura-field__toggle" type="button" data-aura-password-toggle aria-label="Mostrar la contraseña" aria-pressed="false"><i class="bi bi-eye" aria-hidden="true"></i></button>
+              <button class="aura-field__toggle" type="button" data-aura-password-toggle aria-pressed="false"><span class="bi bi-eye" aria-hidden="true"></span><span class="visually-hidden">Mostrar la contraseña</span></button>
             </div>
             <ul class="aura-rules" id="ds-clave-reglas" aria-label="Requisitos de la contraseña">
               <li class="aura-rules__item is-met" data-rule="length"><span class="visually-hidden">Cumplido: </span>8 caracteres</li>
@@ -503,7 +506,7 @@
           <div class="aura-field">
             <label class="aura-field__label" for="ds-select">Dispositivo que entregas <span class="aura-field__hint">Opcional</span></label>
             <div class="aura-field__control">
-              <i class="aura-field__icon bi bi-phone" aria-hidden="true"></i>
+              <span class="aura-field__icon bi bi-phone" aria-hidden="true"></span>
               <select class="aura-select" id="ds-select">
                 <option>auraPhone 16 Pro</option>
                 <option>auraPhone 15 Pro</option>
@@ -524,12 +527,12 @@
                (aquí con la leyenda oculta y la misma separación de .25rem que el resto de la columna) -->
           <div class="aura-stack" style="--stack:.25rem">
             <label class="aura-check" for="ds-check-sesion">
-              <input class="aura-check__input" id="ds-check-sesion" type="checkbox" checked>
+              <input class="aura-check__input" id="ds-check-sesion" type="checkbox" name="ds-sesion" checked>
               <span class="aura-check__box" aria-hidden="true"></span>
               <span class="aura-check__label">Mantener la sesión iniciada en este dispositivo</span>
             </label>
             <label class="aura-check" for="ds-check-novedades">
-              <input class="aura-check__input" id="ds-check-novedades" type="checkbox">
+              <input class="aura-check__input" id="ds-check-novedades" type="checkbox" name="ds-novedades">
               <span class="aura-check__box" aria-hidden="true"></span>
               <span class="aura-check__label">Quiero recibir novedades de AURA</span>
             </label>
@@ -547,17 +550,18 @@
               </label>
             </fieldset>
           </div>
-        </form>
+        </div>
 
         <div class="ds-block">
           <div class="ds-block__head">
             <h3 class="aura-h3">Agrupación, campo desactivado y errores de casillas y grupos</h3>
-            <p class="aura-caption"><code>.aura-form__row</code> reparte los campos en columnas desde 576 px y <code>.aura-fieldset</code> los agrupa bajo su leyenda. Una casilla obligatoria va dentro de <code>.aura-field</code>, con su mensaje como hermano de la etiqueta (nunca dentro); un grupo de radios u opciones lleva el estado y el mensaje en su <code>.aura-fieldset</code>. El error se ve con icono y texto, no solo con color.</p>
+            <p class="aura-caption"><code>.aura-form__row</code> reparte los campos en columnas desde 576 px y <code>.aura-fieldset</code> los agrupa bajo su leyenda. Una casilla obligatoria va dentro de <code>.aura-field</code>, con su mensaje como hermano de la etiqueta (nunca dentro); un grupo de radios u opciones lleva el estado y el mensaje en su <code>.aura-fieldset</code>. El error se ve con icono y texto, no solo con color. Cada control lleva <code>id</code> y su <code>&lt;label for&gt;</code>, también los radios y casillas que su etiqueta ya envuelve; cada grupo de radios va en su <code>&lt;fieldset&gt;</code>, y un formulario de verdad tiene su botón <code>type="submit"</code> (v2.1, test TAW).</p>
           </div>
           <!-- Muestra estática de agrupación y errores. Las reglas van declaradas en HTML5 (required, pattern de 5 cifras
-               en el código postal, el grupo de radios y la casilla obligatorios); novalidate, porque los mensajes los
-               pinta AURA.ui.form (aquí, ya escritos para ver el estado de error) -->
-          <form class="aura-form" data-ds-demo novalidate style="max-width:42rem">
+               en el código postal, el grupo de radios y la casilla obligatorios); los mensajes los pinta AURA.ui.form
+               (aquí, ya escritos para ver el estado de error). No se envía, así que no es un <form>: en una página,
+               <form novalidate> con su botón de envío (H32 de TAW: todo formulario tiene uno) -->
+          <div class="aura-form" style="max-width:42rem">
             <fieldset class="aura-fieldset">
               <legend class="aura-legend">Dirección de envío</legend>
               <div class="aura-form__row">
@@ -610,7 +614,7 @@
               </label>
               <p class="aura-field__error" id="ds-acepto-error">Acepta las condiciones para continuar.</p>
             </div>
-          </form>
+          </div>
         </div>
 
         <div class="ds-block">
@@ -651,7 +655,7 @@
             <div class="aura-field">
               <label class="aura-field__label" for="ds-cond-buscar">Buscar una tienda <span class="aura-field__hint">Opcional · sin aspa nativa</span></label>
               <div class="aura-field__control">
-                <i class="aura-field__icon bi bi-search" aria-hidden="true"></i>
+                <span class="aura-field__icon bi bi-search" aria-hidden="true"></span>
                 <input class="aura-input" id="ds-cond-buscar" name="ds-buscar" type="search" placeholder="Ciudad o código postal" autocomplete="off">
               </div>
             </div>
@@ -668,22 +672,22 @@
           </div>
           <div class="aura-grid aura-grid--2">
             <div class="aura-alert aura-alert--error" role="alert">
-              <i class="bi bi-exclamation-octagon-fill" aria-hidden="true"></i>
+              <span class="bi bi-exclamation-octagon-fill" aria-hidden="true"></span>
               <p class="aura-alert__title">No hemos podido iniciar sesión</p>
               <p class="aura-alert__text">El ID de AURA o la contraseña no coinciden. Revisa los datos e inténtalo de nuevo.</p>
             </div>
             <div class="aura-alert aura-alert--ok" role="status">
-              <i class="bi bi-check-circle-fill" aria-hidden="true"></i>
+              <span class="bi bi-check-circle-fill" aria-hidden="true"></span>
               <p class="aura-alert__title">Datos guardados</p>
               <p class="aura-alert__text">Tu dirección de envío se ha actualizado.</p>
             </div>
             <div class="aura-alert aura-alert--warn" role="status">
-              <i class="bi bi-exclamation-triangle-fill" aria-hidden="true"></i>
+              <span class="bi bi-exclamation-triangle-fill" aria-hidden="true"></span>
               <p class="aura-alert__title">Entrega en 2–3 semanas</p>
               <p class="aura-alert__text">El auraPhone 18 Pro Max en burdeos con 2 TB tiene más demanda de la prevista.</p>
             </div>
             <div class="aura-alert" role="status">
-              <i class="bi bi-info-circle-fill" aria-hidden="true"></i>
+              <span class="bi bi-info-circle-fill" aria-hidden="true"></span>
               <p class="aura-alert__title">Pedido de demostración</p>
               <p class="aura-alert__text">Los pagos son simulados: no se cobra nada y nunca se guardan datos de tarjeta.</p>
             </div>
@@ -716,7 +720,7 @@
                   <label class="aura-field__label" for="ds-login-clave">Contraseña</label>
                   <div class="aura-field__control">
                     <input class="aura-input" id="ds-login-clave" name="password" type="password" placeholder="••••••••••••" required minlength="8" autocomplete="off" aria-describedby="ds-login-clave-error">
-                    <button class="aura-field__toggle" type="button" data-aura-password-toggle aria-label="Mostrar la contraseña" aria-pressed="false"><i class="bi bi-eye" aria-hidden="true"></i></button>
+                    <button class="aura-field__toggle" type="button" data-aura-password-toggle aria-pressed="false"><span class="bi bi-eye" aria-hidden="true"></span><span class="visually-hidden">Mostrar la contraseña</span></button>
                   </div>
                   <p class="aura-field__error" id="ds-login-clave-error"></p>
                 </div>
@@ -732,11 +736,11 @@
                 <p>¿No tienes un ID de AURA?</p>
                 <a class="aura-btn aura-btn--secondary" href="registro.html">Crear uno ahora</a>
               </div>
-              <p class="aura-auth-card__note"><i class="bi bi-lock" aria-hidden="true"></i> Tu ID de AURA se guarda solo en este navegador.</p>
+              <p class="aura-auth-card__note"><span class="bi bi-lock" aria-hidden="true"></span> Tu ID de AURA se guarda solo en este navegador.</p>
             </div>
           </div>
           <div class="aura-note">
-            <span class="aura-note__icon"><i class="bi bi-input-cursor-text" aria-hidden="true"></i></span>
+            <span class="aura-note__icon"><span class="bi bi-input-cursor-text" aria-hidden="true"></span></span>
             <p class="aura-note__title">Nota de uso</p>
             <p class="aura-note__text">El efecto cristal aparece al enfocar y no sustituye el borde azul. La etiqueta permanece visible para mantener orientación y accesibilidad.</p>
           </div>
@@ -760,25 +764,25 @@
           </div>
           <div class="aura-grid aura-grid--4">
             <div class="aura-feature aura-feature--card">
-              <span class="aura-feature__icon"><i class="bi bi-feather" aria-hidden="true"></i></span>
+              <span class="aura-feature__icon"><span class="bi bi-feather" aria-hidden="true"></span></span>
               <p class="aura-feature__value">5,1 mm</p>
               <h4 class="aura-feature__title">Diseño ultraligero</h4>
               <p class="aura-feature__text">Una estructura de aluminio reciclado que casi desaparece en tus manos.</p>
             </div>
             <div class="aura-feature aura-feature--card">
-              <span class="aura-feature__icon"><i class="bi bi-brightness-high" aria-hidden="true"></i></span>
+              <span class="aura-feature__icon"><span class="bi bi-brightness-high" aria-hidden="true"></span></span>
               <p class="aura-feature__value">1.600 nits</p>
               <h4 class="aura-feature__title">Liquid Retina XDR</h4>
               <p class="aura-feature__text">Contraste extremo, negros profundos y color de referencia.</p>
             </div>
             <div class="aura-feature aura-feature--card">
-              <span class="aura-feature__icon"><i class="bi bi-cpu" aria-hidden="true"></i></span>
+              <span class="aura-feature__icon"><span class="bi bi-cpu" aria-hidden="true"></span></span>
               <p class="aura-feature__value">AURA M5</p>
               <h4 class="aura-feature__title">Rendimiento de estudio</h4>
               <p class="aura-feature__text">Modelado 3D, vídeo ProRes y flujos creativos exigentes.</p>
             </div>
             <div class="aura-feature aura-feature--card">
-              <span class="aura-feature__icon"><i class="bi bi-camera" aria-hidden="true"></i></span>
+              <span class="aura-feature__icon"><span class="bi bi-camera" aria-hidden="true"></span></span>
               <p class="aura-feature__value">LiDAR</p>
               <h4 class="aura-feature__title">Cámaras Pro</h4>
               <p class="aura-feature__text">Gran angular y escáner espacial para capturar y medir el mundo.</p>
@@ -791,17 +795,17 @@
                 <h4 class="aura-h3">Todo funciona. Todo fluye.</h4>
                 <div class="aura-stack" style="--stack:1.125rem">
                   <div class="aura-feature aura-feature--inline">
-                    <span class="aura-feature__icon"><i class="bi bi-arrow-left-right" aria-hidden="true"></i></span>
+                    <span class="aura-feature__icon"><span class="bi bi-arrow-left-right" aria-hidden="true"></span></span>
                     <h5 class="aura-feature__title">Continuidad total</h5>
                     <p class="aura-feature__text">Empieza un documento en auraPhone y termínalo en auraBook.</p>
                   </div>
                   <div class="aura-feature aura-feature--inline">
-                    <span class="aura-feature__icon"><i class="bi bi-shield-check" aria-hidden="true"></i></span>
+                    <span class="aura-feature__icon"><span class="bi bi-shield-check" aria-hidden="true"></span></span>
                     <h5 class="aura-feature__title">Privacidad integrada</h5>
                     <p class="aura-feature__text">Tus datos se procesan en el dispositivo siempre que es posible.</p>
                   </div>
                   <div class="aura-feature aura-feature--inline">
-                    <span class="aura-feature__icon aura-feature__icon--gold"><i class="bi bi-stars" aria-hidden="true"></i></span>
+                    <span class="aura-feature__icon aura-feature__icon--gold"><span class="bi bi-stars" aria-hidden="true"></span></span>
                     <h5 class="aura-feature__title">AuraCare+ · .aura-feature__icon--gold</h5>
                     <p class="aura-feature__text">Valor premium: el dorado como acento pequeño, nunca como superficie.</p>
                   </div>
@@ -865,7 +869,7 @@
                   <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">auraBook Air</p>
                   <h4 class="aura-h3">Listo para volar.</h4>
                   <p class="aura-tile__text">Superligero, silencioso y rápido. Hasta 18 horas de batería para que nada te pare.</p>
-                  <a class="aura-link" href="aurabook.html">Más información</a>
+                  <a class="aura-link" href="aurabook.html">Más información<span class="visually-hidden"> sobre auraBook Air</span></a>
                 </div>
               </article>
             </div>
@@ -875,7 +879,7 @@
                   <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">auraPad Air</p>
                   <h4 class="aura-h3">Ligero de llevar.</h4>
                   <p class="aura-tile__text">Una gran pantalla de 13 pulgadas en 6,1 mm.</p>
-                  <a class="aura-link" href="aurapad.html">Más información</a>
+                  <a class="aura-link" href="aurapad.html">Más información<span class="visually-hidden"> sobre auraPad Air</span></a>
                 </div>
               </article>
               <article class="aura-tile aura-tile--cover aura-tile--tall">
@@ -895,13 +899,13 @@
         <div class="ds-block">
           <div class="ds-block__head">
             <h3 class="aura-h3">Tarjetas de modelo</h3>
-            <p class="aura-caption"><code>[data-aura-lineup="auraphone"]</code>: el JS sustituye este contenido de muestra por los tres mejores modelos del catálogo, con <code>AURA.html.productCard</code> (la misma tarjeta que usa el carrusel de inicio). Un modelo anunciado enseña su disponibilidad sobre el precio y su botón cambia con la fecha: «Configurar» (próximamente), «Reservar» o «Comprar». Prueba esta página con <code>?hoy=2026-10-20</code> o <code>?hoy=2026-10-25</code>.</p>
+            <p class="aura-caption"><code>[data-aura-lineup="auraphone"]</code>: el JS sustituye este contenido de muestra por los tres mejores modelos del catálogo, con <code>AURA.html.productCard</code> (la misma tarjeta que usa el carrusel de inicio). Un modelo anunciado enseña su disponibilidad sobre el precio y su botón cambia con la fecha: «Configurar» (próximamente), «Reservar» o «Comprar». Prueba esta página con <code>?hoy=2026-10-20</code> o <code>?hoy=2026-10-25</code>. La foto no es un enlace (v2.1): la tarjeta entera lleva al configurador por el enlace estirado del nombre y el botón, con el modelo en texto oculto, queda encima.</p>
           </div>
           <div class="aura-lineup" data-aura-lineup="auraphone" data-aura-heading="h4">
             <article class="aura-product-card" data-product="auraphone-duo" data-status="proximamente">
-              <a class="aura-product-card__media" href="comprar.html?producto=auraphone-duo" tabindex="-1" aria-hidden="true">
+              <div class="aura-product-card__media">
                 <img class="aura-img" src="../img/auraphone-duo-blanco-estelar-trasera.webp" data-slot="auraphone-duo-blanco-estelar-trasera" width="1600" height="1200" alt="" loading="lazy" decoding="async">
-              </a>
+              </div>
               <div class="aura-product-card__body">
                 <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">Nuevo · Plegable</p>
                 <h4 class="aura-product-card__name"><a href="comprar.html?producto=auraphone-duo">auraPhone Duo</a></h4>
@@ -912,16 +916,16 @@
                 </p>
                 <p class="aura-product-card__text">Dos pantallas. Un solo gesto.</p>
                 <div class="aura-product-card__foot">
-                  <p class="aura-product-card__status"><i class="bi bi-calendar-event" aria-hidden="true"></i><span>Próximamente · Reserva a partir del 16 de octubre</span></p>
+                  <p class="aura-product-card__status"><span class="bi bi-calendar-event" aria-hidden="true"></span><span>Próximamente · Reserva a partir del 16 de octubre</span></p>
                   <p class="aura-product-card__price"><span class="aura-price">Desde 2.339 €</span><span class="aura-caption">o 97,46 €/mes durante 24 meses</span></p>
-                  <a class="aura-btn aura-btn--primary" href="comprar.html?producto=auraphone-duo" aria-label="Configurar auraPhone Duo">Configurar</a>
+                  <a class="aura-btn aura-btn--primary" href="comprar.html?producto=auraphone-duo">Configurar<span class="visually-hidden"> auraPhone Duo</span></a>
                 </div>
               </div>
             </article>
             <article class="aura-product-card">
-              <a class="aura-product-card__media" href="comprar.html?producto=auraphone-18-pro-max" tabindex="-1" aria-hidden="true">
+              <div class="aura-product-card__media">
                 <img class="aura-img" src="../img/auraphone-18-pro-plata-trasera.webp" data-slot="auraphone-18-pro-plata-trasera" width="1600" height="1200" alt="" loading="lazy" decoding="async">
-              </a>
+              </div>
               <div class="aura-product-card__body">
                 <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">El más Pro</p>
                 <h4 class="aura-product-card__name"><a href="comprar.html?producto=auraphone-18-pro-max">auraPhone 18 Pro Max</a></h4>
@@ -935,14 +939,14 @@
                 <p class="aura-product-card__text">El Pro más grande. La luz, a tus órdenes.</p>
                 <div class="aura-product-card__foot">
                   <p class="aura-product-card__price"><span class="aura-price">Desde 1.619 €</span><span class="aura-caption">o 67,46 €/mes durante 24 meses</span></p>
-                  <a class="aura-btn aura-btn--primary" href="comprar.html?producto=auraphone-18-pro-max" aria-label="Comprar auraPhone 18 Pro Max">Comprar</a>
+                  <a class="aura-btn aura-btn--primary" href="comprar.html?producto=auraphone-18-pro-max">Comprar<span class="visually-hidden"> auraPhone 18 Pro Max</span></a>
                 </div>
               </div>
             </article>
             <article class="aura-product-card">
-              <a class="aura-product-card__media" href="comprar.html?producto=auraphone-18-pro" tabindex="-1" aria-hidden="true">
+              <div class="aura-product-card__media">
                 <img class="aura-img" src="../img/auraphone-18-pro-negro-trasera.webp" data-slot="auraphone-18-pro-negro-trasera" width="1600" height="1200" alt="" loading="lazy" decoding="async">
-              </a>
+              </div>
               <div class="aura-product-card__body">
                 <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain">Nuevo</p>
                 <h4 class="aura-product-card__name"><a href="comprar.html?producto=auraphone-18-pro">auraPhone 18 Pro</a></h4>
@@ -956,7 +960,7 @@
                 <p class="aura-product-card__text">Todo lo Pro. En la medida justa.</p>
                 <div class="aura-product-card__foot">
                   <p class="aura-product-card__price"><span class="aura-price">Desde 1.469 €</span><span class="aura-caption">o 61,21 €/mes durante 24 meses</span></p>
-                  <a class="aura-btn aura-btn--primary" href="comprar.html?producto=auraphone-18-pro" aria-label="Comprar auraPhone 18 Pro">Comprar</a>
+                  <a class="aura-btn aura-btn--primary" href="comprar.html?producto=auraphone-18-pro">Comprar<span class="visually-hidden"> auraPhone 18 Pro</span></a>
                 </div>
               </div>
             </article>
@@ -996,9 +1000,9 @@
                     <tr class="aura-table__row--price"><th scope="row">Precio</th><td class="is-featured">Desde 2.339 €<span class="aura-table__note">Próximamente · Reserva a partir del 16 de octubre</span></td><td>Desde 1.619 €</td><td>Desde 1.469 €</td></tr>
                     <tr class="aura-table__row--actions">
                       <th scope="row"><span class="visually-hidden">Comprar</span></th>
-                      <td class="is-featured"><a class="aura-btn aura-btn--primary" href="comprar.html?producto=auraphone-duo" aria-label="Configurar auraPhone Duo">Configurar</a></td>
-                      <td><a class="aura-btn aura-btn--secondary" href="comprar.html?producto=auraphone-18-pro-max" aria-label="Comprar auraPhone 18 Pro Max">Comprar</a></td>
-                      <td><a class="aura-btn aura-btn--secondary" href="comprar.html?producto=auraphone-18-pro" aria-label="Comprar auraPhone 18 Pro">Comprar</a></td>
+                      <td class="is-featured"><a class="aura-btn aura-btn--primary" href="comprar.html?producto=auraphone-duo">Configurar<span class="visually-hidden"> auraPhone Duo</span></a></td>
+                      <td><a class="aura-btn aura-btn--secondary" href="comprar.html?producto=auraphone-18-pro-max">Comprar<span class="visually-hidden"> auraPhone 18 Pro Max</span></a></td>
+                      <td><a class="aura-btn aura-btn--secondary" href="comprar.html?producto=auraphone-18-pro">Comprar<span class="visually-hidden"> auraPhone 18 Pro</span></a></td>
                     </tr>
                   </tbody>
                 </table>
@@ -1112,7 +1116,7 @@
         <div class="ds-block">
           <div class="ds-block__head">
             <h3 class="aura-h3">Notas al pie</h3>
-            <p class="aura-caption"><code>.aura-footnotes</code>: la letra pequeña al final de la página, siempre sobre negro. Un solo patrón: <code>&lt;ol&gt;</code> con «volver» para las notas con llamada y, debajo, <code>&lt;ul&gt;</code> sin números (o con <code>data-mark</code>) para la general, con el mismo sangrado. Los textos comunes salen de <code>AURA.legal</code> con <code>data-aura-legal="clave"</code>: <code>precios</code>, <code>financiacion</code>, <code>tradein</code>, <code>reservas</code>, <code>envio</code>, <code>cifras</code> o <code>demo</code>. La llamada (<code>&lt;sup class="aura-footnote-ref"&gt;</code>) va pegada a la palabra, en el texto de apoyo y nunca en la cifra de un precio.</p>
+            <p class="aura-caption"><code>.aura-footnotes</code>: la letra pequeña al final de la página, siempre sobre negro. Un solo patrón: <code>&lt;ol&gt;</code> con «volver» para las notas con llamada y, debajo, <code>&lt;ul&gt;</code> sin números (o con <code>data-mark</code>) para la general, con el mismo sangrado. Los textos comunes salen de <code>AURA.legal</code> con <code>data-aura-legal="clave"</code>: <code>precios</code>, <code>financiacion</code>, <code>tradein</code>, <code>reservas</code>, <code>envio</code>, <code>cifras</code> o <code>demo</code>. La llamada (<code>&lt;sup class="aura-footnote-ref"&gt;</code>) va pegada a la palabra, en el texto de apoyo y nunca en la cifra de un precio. El «volver» es solo una flecha: su nombre va en texto oculto y en <code>title</code> (v2.1).</p>
           </div>
           <p class="aura-body">Hasta 24 horas de autonomía<sup class="aura-footnote-ref"><a href="#ds-nota-1" id="ds-ref-1" aria-label="Nota 1">1</a></sup> y financiación a 24 meses sin intereses<sup class="aura-footnote-ref"><a href="#ds-nota-2" id="ds-ref-2" aria-label="Nota 2">2</a></sup>.</p>
           <div class="ds-frame ds-frame--flush">
@@ -1120,8 +1124,8 @@
               <div class="aura-container">
                 <h4 class="visually-hidden" id="ds-notas-titulo">Notas</h4>
                 <ol class="aura-footnotes__list">
-                  <li id="ds-nota-1">Autonomía del auraBook Pro 16″ en reproducción de vídeo. La duración real depende del uso y la configuración. <a class="aura-footnotes__back" href="#ds-ref-1" aria-label="Volver al texto de la nota 1"><i class="bi bi-arrow-return-left" aria-hidden="true"></i></a></li>
-                  <li id="ds-nota-2"><span data-aura-legal="financiacion">Financiación sin intereses, sujeta a aprobación.</span> <a href="soporte.html#preguntas">Consulta las condiciones</a>. <a class="aura-footnotes__back" href="#ds-ref-2" aria-label="Volver al texto de la nota 2"><i class="bi bi-arrow-return-left" aria-hidden="true"></i></a></li>
+                  <li id="ds-nota-1">Autonomía del auraBook Pro 16″ en reproducción de vídeo. La duración real depende del uso y la configuración. <a class="aura-footnotes__back" href="#ds-ref-1" title="Volver al texto de la nota 1"><span class="bi bi-arrow-return-left" aria-hidden="true"></span><span class="visually-hidden">Volver al texto de la nota 1</span></a></li>
+                  <li id="ds-nota-2"><span data-aura-legal="financiacion">Financiación sin intereses, sujeta a aprobación.</span> <a href="soporte.html#preguntas">Consulta las condiciones</a>. <a class="aura-footnotes__back" href="#ds-ref-2" title="Volver al texto de la nota 2"><span class="bi bi-arrow-return-left" aria-hidden="true"></span><span class="visually-hidden">Volver al texto de la nota 2</span></a></li>
                 </ol>
                 <ul class="aura-footnotes__list mt-3">
                   <li data-aura-legal="precios">Precios de venta recomendados en España, IVA incluido.</li>
@@ -1147,7 +1151,7 @@
               <p class="aura-lead" data-aura-from="aurapad" hidden></p>
               <div class="aura-cluster aura-cluster--stack-sm justify-content-center mt-2">
                 <a class="aura-btn aura-btn--primary" href="comprar.html?producto=aurapad-air-13" data-aura-buy="aurapad">Comprar auraPad</a>
-                <a class="aura-btn aura-btn--secondary" href="comparar.html?familia=aurapad">Comparar todos los modelos</a>
+                <a class="aura-btn aura-btn--secondary" href="comparar.html?familia=aurapad">Comparar todos los modelos<span class="visually-hidden"> de auraPad</span></a>
               </div>
             </div>
           </div>
@@ -1165,7 +1169,7 @@
               <p class="aura-eyebrow aura-eyebrow--mono">Comparativa técnica</p>
               <p class="aura-h2">Elige la potencia que encaja contigo.</p>
             </div>
-            <a class="aura-link" href="comparar.html?familia=auraphone">Comparar todos los modelos</a>
+            <a class="aura-link" href="comparar.html?familia=auraphone">Comparar todos los modelos<span class="visually-hidden"> de auraPhone</span></a>
           </div>
 
           <span class="aura-mono">.aura-split + .aura-media--fill --halo + .aura-media__overlay</span>
@@ -1199,8 +1203,8 @@
                   <p class="aura-h1" id="ds-hero-centro"><span class="ds-lema-largo">Increíblemente fino. Asombrosamente AURA.</span><span class="ds-lema-corto">Increíblemente fino. Tan AURA.</span></p>
                   <p class="aura-lead">AURA Silicon transforma cada tarea con potencia silenciosa y hasta 24 horas de autonomía.</p>
                   <div class="aura-hero__actions">
-                    <a class="aura-btn aura-btn--secondary" href="aurabook.html">Más información</a>
-                    <a class="aura-btn aura-btn--primary" href="comprar.html?producto=aurabook-air-15">Comprar</a>
+                    <a class="aura-btn aura-btn--secondary" href="aurabook.html">Más información<span class="visually-hidden"> sobre auraBook</span></a>
+                    <a class="aura-btn aura-btn--primary" href="comprar.html?producto=aurabook-air-15">Comprar<span class="visually-hidden"> auraBook Air 15″</span></a>
                   </div>
                 </div>
               </div>
@@ -1211,21 +1215,21 @@
           <div class="aura-grid aura-grid--3">
             <a class="aura-card" href="soporte.html#contacto">
               <div class="aura-stack" style="--stack:.5rem">
-                <span class="aura-feature__icon"><i class="bi bi-chat-dots" aria-hidden="true"></i></span>
+                <span class="aura-feature__icon"><span class="bi bi-chat-dots" aria-hidden="true"></span></span>
                 <p class="aura-h4">Habla con un especialista</p>
                 <p class="aura-caption">Chat y teléfono, todos los días.</p>
               </div>
             </a>
             <a class="aura-card" href="trade-in.html">
               <div class="aura-stack" style="--stack:.5rem">
-                <span class="aura-feature__icon"><i class="bi bi-arrow-repeat" aria-hidden="true"></i></span>
+                <span class="aura-feature__icon"><span class="bi bi-arrow-repeat" aria-hidden="true"></span></span>
                 <p class="aura-h4">Valora tu dispositivo</p>
                 <p class="aura-caption">Hasta <span data-ds-tradein-max>800&nbsp;€</span> con AURA Trade In.</p>
               </div>
             </a>
             <article class="aura-card aura-card--interactive">
               <div class="aura-stack" style="--stack:.5rem">
-                <span class="aura-feature__icon"><i class="bi bi-shield-check" aria-hidden="true"></i></span>
+                <span class="aura-feature__icon"><span class="bi bi-shield-check" aria-hidden="true"></span></span>
                 <h4 class="aura-h4"><a class="stretched-link aura-text-primary" href="soporte.html#preguntas">AuraCare+</a></h4>
                 <p class="aura-caption">Tarjeta con contenido propio y un enlace que la cubre entera.</p>
               </div>
@@ -1263,37 +1267,37 @@
             <p class="aura-gallery__caption" aria-hidden="true" data-ds-gallery-caption>Burdeos</p>
           </div>
 
-          <form class="aura-stack aura-stack--stretch" style="--stack:2rem" data-ds-demo novalidate>
+          <div class="aura-stack aura-stack--stretch" style="--stack:2rem">
             <fieldset class="aura-fieldset">
               <legend class="aura-legend">Acabado</legend>
               <p class="aura-legend aura-legend--sm">Color: <strong data-ds-color-name>Burdeos</strong></p>
               <div class="aura-swatches">
-                <label class="aura-swatch" style="--swatch:#1d1d1f"><input class="aura-swatch__input" type="radio" name="ds-color" value="negro"><span class="aura-swatch__dot" aria-hidden="true"></span><span class="visually-hidden">Negro</span></label>
-                <label class="aura-swatch" style="--swatch:#e3e4e5"><input class="aura-swatch__input" type="radio" name="ds-color" value="plata"><span class="aura-swatch__dot" aria-hidden="true"></span><span class="visually-hidden">Plata</span></label>
-                <label class="aura-swatch" style="--swatch:#bcd0df"><input class="aura-swatch__input" type="radio" name="ds-color" value="azul-glacial"><span class="aura-swatch__dot" aria-hidden="true"></span><span class="visually-hidden">Azul glacial</span></label>
-                <label class="aura-swatch" style="--swatch:#5a1a2a"><input class="aura-swatch__input" type="radio" name="ds-color" value="burdeos" checked><span class="aura-swatch__dot" aria-hidden="true"></span><span class="visually-hidden">Burdeos</span></label>
+                <label class="aura-swatch" for="ds-color-negro" style="--swatch:#1d1d1f"><input class="aura-swatch__input" id="ds-color-negro" type="radio" name="ds-color" value="negro"><span class="aura-swatch__dot" aria-hidden="true"></span><span class="visually-hidden">Negro</span></label>
+                <label class="aura-swatch" for="ds-color-plata" style="--swatch:#e3e4e5"><input class="aura-swatch__input" id="ds-color-plata" type="radio" name="ds-color" value="plata"><span class="aura-swatch__dot" aria-hidden="true"></span><span class="visually-hidden">Plata</span></label>
+                <label class="aura-swatch" for="ds-color-azul-glacial" style="--swatch:#bcd0df"><input class="aura-swatch__input" id="ds-color-azul-glacial" type="radio" name="ds-color" value="azul-glacial"><span class="aura-swatch__dot" aria-hidden="true"></span><span class="visually-hidden">Azul glacial</span></label>
+                <label class="aura-swatch" for="ds-color-burdeos" style="--swatch:#5a1a2a"><input class="aura-swatch__input" id="ds-color-burdeos" type="radio" name="ds-color" value="burdeos" checked><span class="aura-swatch__dot" aria-hidden="true"></span><span class="visually-hidden">Burdeos</span></label>
               </div>
             </fieldset>
 
             <fieldset class="aura-fieldset">
               <legend class="aura-legend">Almacenamiento</legend>
               <div class="aura-option-group">
-                <label class="aura-option">
-                  <input class="aura-option__input" type="radio" name="ds-almacenamiento" value="256gb" checked>
+                <label class="aura-option" for="ds-almacenamiento-256gb">
+                  <input class="aura-option__input" id="ds-almacenamiento-256gb" type="radio" name="ds-almacenamiento" value="256gb" checked>
                   <span class="aura-option__card">
                     <span class="aura-option__body"><span class="aura-option__title">256 GB</span><span class="aura-option__note">Para fotos, apps y el día a día</span></span>
                     <span class="aura-option__price">Incluido</span>
                   </span>
                 </label>
-                <label class="aura-option">
-                  <input class="aura-option__input" type="radio" name="ds-almacenamiento" value="512gb">
+                <label class="aura-option" for="ds-almacenamiento-512gb">
+                  <input class="aura-option__input" id="ds-almacenamiento-512gb" type="radio" name="ds-almacenamiento" value="512gb">
                   <span class="aura-option__card">
                     <span class="aura-option__body"><span class="aura-option__title">512 GB</span><span class="aura-option__note">Para vídeo en 4K y grandes bibliotecas</span></span>
                     <span class="aura-option__price">+ 250,00 €</span>
                   </span>
                 </label>
-                <label class="aura-option">
-                  <input class="aura-option__input" type="radio" name="ds-almacenamiento" value="1tb" disabled>
+                <label class="aura-option" for="ds-almacenamiento-1tb">
+                  <input class="aura-option__input" id="ds-almacenamiento-1tb" type="radio" name="ds-almacenamiento" value="1tb" disabled>
                   <span class="aura-option__card">
                     <span class="aura-option__body"><span class="aura-option__title">1 TB</span><span class="aura-option__note">Agotado temporalmente</span></span>
                     <span class="aura-option__price">+ 750,00 €</span>
@@ -1305,12 +1309,12 @@
             <fieldset class="aura-fieldset">
               <legend class="aura-legend">AuraCare+</legend>
               <div class="aura-option-group aura-option-group--2">
-                <label class="aura-option">
-                  <input class="aura-option__input" type="radio" name="ds-care" value="no" checked>
+                <label class="aura-option" for="ds-care-no">
+                  <input class="aura-option__input" id="ds-care-no" type="radio" name="ds-care" value="no" checked>
                   <span class="aura-option__card"><span class="aura-option__body"><span class="aura-option__title">Sin AuraCare+</span></span></span>
                 </label>
-                <label class="aura-option">
-                  <input class="aura-option__input" type="radio" name="ds-care" value="si">
+                <label class="aura-option" for="ds-care-si">
+                  <input class="aura-option__input" id="ds-care-si" type="radio" name="ds-care" value="si">
                   <span class="aura-option__card"><span class="aura-option__body"><span class="aura-option__title">Con AuraCare+</span></span><span class="aura-option__price">+ 229,00 €</span></span>
                 </label>
               </div>
@@ -1318,16 +1322,16 @@
 
             <div class="aura-cluster" style="--cluster:1rem 1.5rem">
               <div class="aura-stepper" role="group" aria-label="Cantidad" data-aura-stepper data-max="10">
-                <button class="aura-stepper__btn" type="button" data-aura-step="-1" aria-label="Quitar una unidad" disabled><i class="bi bi-dash" aria-hidden="true"></i></button>
+                <button class="aura-stepper__btn" type="button" data-aura-step="-1" disabled><span class="bi bi-dash" aria-hidden="true"></span><span class="visually-hidden">Quitar una unidad</span></button>
                 <output class="aura-stepper__value" aria-live="polite">1</output>
-                <button class="aura-stepper__btn" type="button" data-aura-step="1" aria-label="Añadir una unidad"><i class="bi bi-plus" aria-hidden="true"></i></button>
+                <button class="aura-stepper__btn" type="button" data-aura-step="1"><span class="bi bi-plus" aria-hidden="true"></span><span class="visually-hidden">Añadir una unidad</span></button>
               </div>
               <div>
                 <p class="aura-price aura-price--lg">1.619,00 €</p>
                 <p class="aura-caption">o 67,46 €/mes durante 24 meses</p>
               </div>
             </div>
-          </form>
+          </div>
         </div>
 
         <div class="ds-block">
@@ -1345,19 +1349,19 @@
           <div class="aura-layout aura-layout--aside">
             <ul class="aura-bag-list" data-ds-bag>
               <li class="aura-bag-line" data-ds-line data-ds-unit="2098">
-                <a class="aura-bag-line__media" href="comprar.html?producto=auraphone-18-pro-max" tabindex="-1" aria-hidden="true">
+                <div class="aura-bag-line__media">
                   <img class="aura-img" src="../img/auraphone-18-pro-negro-trasera.webp" srcset="../img/400/auraphone-18-pro-negro-trasera.webp 400w, ../img/800/auraphone-18-pro-negro-trasera.webp 800w, ../img/auraphone-18-pro-negro-trasera.webp 1600w" sizes="auto, (max-width: 575.98px) 23vw, (max-width: 991.98px) 17vw, (max-width: 1199.98px) 13vw, 128px" data-slot="auraphone-18-pro-negro-trasera" data-fallback="auraphone-18-pro-max" data-ds-foto="auraphone-18-pro-max:negro" width="1600" height="1200" alt="" loading="lazy" decoding="async">
-                </a>
+                </div>
                 <div class="aura-bag-line__info">
                   <h4 class="aura-bag-line__name"><a href="comprar.html?producto=auraphone-18-pro-max">auraPhone 18 Pro Max</a></h4>
                   <p class="aura-bag-line__meta">Negro · 512 GB · AuraCare+</p>
                   <div class="aura-bag-line__actions">
                     <div class="aura-stepper" role="group" aria-label="Cantidad de auraPhone 18 Pro Max" data-aura-stepper data-min="1" data-max="10">
-                      <button class="aura-stepper__btn" type="button" data-aura-step="-1" aria-label="Quitar una unidad"><i class="bi bi-dash" aria-hidden="true"></i></button>
+                      <button class="aura-stepper__btn" type="button" data-aura-step="-1"><span class="bi bi-dash" aria-hidden="true"></span><span class="visually-hidden">Quitar una unidad</span></button>
                       <output class="aura-stepper__value" aria-live="polite">2</output>
-                      <button class="aura-stepper__btn" type="button" data-aura-step="1" aria-label="Añadir una unidad"><i class="bi bi-plus" aria-hidden="true"></i></button>
+                      <button class="aura-stepper__btn" type="button" data-aura-step="1"><span class="bi bi-plus" aria-hidden="true"></span><span class="visually-hidden">Añadir una unidad</span></button>
                     </div>
-                    <button class="aura-link aura-link--plain" type="button" data-ds-remove>Eliminar</button>
+                    <button class="aura-link aura-link--plain" type="button" data-ds-remove>Eliminar<span class="visually-hidden"> auraPhone 18 Pro Max de la bolsa</span></button>
                   </div>
                 </div>
                 <div class="aura-bag-line__price">
@@ -1365,26 +1369,26 @@
                   <span class="aura-caption">2.098,00 € por unidad</span>
                 </div>
                 <div class="aura-bag-line__care is-on">
-                  <span class="aura-bag-line__care-icon"><i class="bi bi-shield-fill-check" aria-hidden="true"></i></span>
+                  <span class="aura-bag-line__care-icon"><span class="bi bi-shield-fill-check" aria-hidden="true"></span></span>
                   <p class="aura-bag-line__care-title">AuraCare+ incluido</p>
                   <p class="aura-bag-line__care-text">229,00 € por unidad, ya sumado al precio. Dos años de cobertura con reparaciones por daños accidentales.</p>
-                  <button class="aura-link aura-link--plain" type="button" aria-label="Quitar AuraCare+ de auraPhone 18 Pro Max">Quitar AuraCare+</button>
+                  <button class="aura-link aura-link--plain" type="button">Quitar AuraCare+<span class="visually-hidden"> de auraPhone 18 Pro Max</span></button>
                 </div>
               </li>
               <li class="aura-bag-line" data-ds-line data-ds-unit="5749">
-                <a class="aura-bag-line__media" href="comprar.html?producto=aurabook-pro-16" tabindex="-1" aria-hidden="true">
+                <div class="aura-bag-line__media">
                   <img class="aura-img" src="../img/aurabook-pro-negro-espacial-tres-cuartos.webp" srcset="../img/400/aurabook-pro-negro-espacial-tres-cuartos.webp 400w, ../img/800/aurabook-pro-negro-espacial-tres-cuartos.webp 800w, ../img/aurabook-pro-negro-espacial-tres-cuartos.webp 1600w" sizes="auto, (max-width: 575.98px) 23vw, (max-width: 991.98px) 17vw, (max-width: 1199.98px) 13vw, 128px" data-slot="aurabook-pro-negro-espacial-tres-cuartos" data-fallback="aurabook-pro-16" data-ds-foto="aurabook-pro-16:negro-espacial" width="1600" height="1200" alt="" loading="lazy" decoding="async">
-                </a>
+                </div>
                 <div class="aura-bag-line__info">
                   <h4 class="aura-bag-line__name"><a href="comprar.html?producto=aurabook-pro-16">auraBook Pro 16″</a></h4>
                   <p class="aura-bag-line__meta">Negro espacial · AURA M5 Max · CPU 18 núcleos · GPU 40 núcleos · 48 GB · 2 TB</p>
                   <div class="aura-bag-line__actions">
                     <div class="aura-stepper" role="group" aria-label="Cantidad de auraBook Pro 16 pulgadas" data-aura-stepper data-min="1" data-max="10">
-                      <button class="aura-stepper__btn" type="button" data-aura-step="-1" aria-label="Quitar una unidad" disabled><i class="bi bi-dash" aria-hidden="true"></i></button>
+                      <button class="aura-stepper__btn" type="button" data-aura-step="-1" disabled><span class="bi bi-dash" aria-hidden="true"></span><span class="visually-hidden">Quitar una unidad</span></button>
                       <output class="aura-stepper__value" aria-live="polite">1</output>
-                      <button class="aura-stepper__btn" type="button" data-aura-step="1" aria-label="Añadir una unidad"><i class="bi bi-plus" aria-hidden="true"></i></button>
+                      <button class="aura-stepper__btn" type="button" data-aura-step="1"><span class="bi bi-plus" aria-hidden="true"></span><span class="visually-hidden">Añadir una unidad</span></button>
                     </div>
-                    <button class="aura-link aura-link--plain" type="button" data-ds-remove>Eliminar</button>
+                    <button class="aura-link aura-link--plain" type="button" data-ds-remove>Eliminar<span class="visually-hidden"> auraBook Pro 16 pulgadas de la bolsa</span></button>
                   </div>
                 </div>
                 <div class="aura-bag-line__price">
@@ -1392,10 +1396,10 @@
                   <span class="aura-caption">5.749,00 € por unidad</span>
                 </div>
                 <div class="aura-bag-line__care">
-                  <span class="aura-bag-line__care-icon"><i class="bi bi-shield-check" aria-hidden="true"></i></span>
+                  <span class="aura-bag-line__care-icon"><span class="bi bi-shield-check" aria-hidden="true"></span></span>
                   <p class="aura-bag-line__care-title">Añade AuraCare+ por 399,00 €</p>
                   <p class="aura-bag-line__care-text">Dos años de cobertura con reparaciones por daños accidentales y asistencia prioritaria.</p>
-                  <button class="aura-link" type="button" aria-label="Añadir AuraCare+ a auraBook Pro 16 pulgadas">Añadir AuraCare+</button>
+                  <button class="aura-link" type="button">Añadir AuraCare+<span class="visually-hidden"> a auraBook Pro 16 pulgadas</span></button>
                 </div>
               </li>
             </ul>
@@ -1422,7 +1426,7 @@
           <div class="aura-grid aura-grid--2">
             <div class="aura-card">
               <div class="aura-empty">
-                <span class="aura-empty__icon"><i class="bi bi-bag" aria-hidden="true"></i></span>
+                <span class="aura-empty__icon"><span class="bi bi-bag" aria-hidden="true"></span></span>
                 <h4 class="aura-h3 aura-empty__title">Tu bolsa está vacía</h4>
                 <p class="aura-empty__text">Cuando añadas un producto aparecerá aquí, listo para tramitar.</p>
                 <div class="aura-empty__actions">
@@ -1462,7 +1466,7 @@
             </div>
             <div class="aura-cluster" style="justify-content:space-between">
               <div class="aura-anchor">
-                <button class="aura-btn aura-btn--secondary" type="button" data-aura-popover-toggle="ds-popover" aria-haspopup="dialog" aria-expanded="false" aria-controls="ds-popover">Financiación <i class="bi bi-info-circle" aria-hidden="true"></i></button>
+                <button class="aura-btn aura-btn--secondary" type="button" data-aura-popover-toggle="ds-popover" aria-haspopup="dialog" aria-expanded="false" aria-controls="ds-popover">Financiación <span class="bi bi-info-circle" aria-hidden="true"></span></button>
                 <div class="aura-popover" id="ds-popover" role="dialog" aria-label="Financiación" tabindex="-1" aria-hidden="true">
                   <div class="aura-popover__header"><h4 class="aura-popover__title">Financiación a 24 meses</h4></div>
                   <p class="aura-popover__empty">Paga en 24 cuotas sin intereses. El importe mensual se calcula sobre el precio final de tu configuración.</p>
@@ -1481,7 +1485,7 @@
                   <div class="aura-popover__header"><h4 class="aura-popover__title">Envío gratuito</h4></div>
                   <p class="aura-popover__empty">Estándar en 2–3 días laborables o exprés al día siguiente.</p>
                   <ul class="aura-popover__links">
-                    <li><a href="soporte.html#preguntas"><i class="bi bi-truck" aria-hidden="true"></i>Plazos y seguimiento</a></li>
+                    <li><a href="soporte.html#preguntas"><span class="bi bi-truck" aria-hidden="true"></span>Plazos y seguimiento</a></li>
                   </ul>
                 </div>
               </div>
@@ -1526,7 +1530,7 @@
                   <div class="aura-sheet__grabber" aria-hidden="true"></div>
                   <header class="aura-sheet__header">
                     <h4 class="aura-sheet__title">¿Qué incluye AuraCare+?</h4>
-                    <button class="aura-icon-btn" type="button" aria-label="Cerrar"><i class="bi bi-x-lg" aria-hidden="true"></i></button>
+                    <button class="aura-icon-btn" type="button"><span class="bi bi-x-lg" aria-hidden="true"></span><span class="visually-hidden">Cerrar</span></button>
                   </header>
                   <div class="aura-sheet__body">
                     <ul class="aura-checklist">
@@ -1557,26 +1561,26 @@
           </div>
           <div class="aura-toasts aura-toasts--static" style="max-width:26rem" inert aria-hidden="true">
             <div class="aura-toast aura-toast--status is-visible">
-              <i class="aura-toast__icon bi bi-info-circle-fill" aria-hidden="true"></i>
+              <span class="aura-toast__icon bi bi-info-circle-fill" aria-hidden="true"></span>
               <div class="aura-toast__body"><p class="aura-toast__title">Sesión iniciada</p><p class="aura-toast__text">Hola de nuevo, Lucía.</p></div>
-              <button class="aura-toast__close" type="button" aria-label="Cerrar el aviso"><i class="bi bi-x" aria-hidden="true"></i></button>
+              <button class="aura-toast__close" type="button"><span class="bi bi-x" aria-hidden="true"></span><span class="visually-hidden">Cerrar el aviso</span></button>
             </div>
             <div class="aura-toast aura-toast--ok is-visible">
-              <i class="aura-toast__icon bi bi-check-circle-fill" aria-hidden="true"></i>
+              <span class="aura-toast__icon bi bi-check-circle-fill" aria-hidden="true"></span>
               <div class="aura-toast__body"><p class="aura-toast__title">Añadido a la bolsa</p><p class="aura-toast__text">auraPhone 18 Pro Max · Negro</p></div>
               <button class="aura-toast__action" type="button">Ver bolsa</button>
-              <button class="aura-toast__close" type="button" aria-label="Cerrar el aviso"><i class="bi bi-x" aria-hidden="true"></i></button>
+              <button class="aura-toast__close" type="button"><span class="bi bi-x" aria-hidden="true"></span><span class="visually-hidden">Cerrar el aviso</span></button>
             </div>
             <div class="aura-toast aura-toast--warn is-visible">
-              <i class="aura-toast__icon bi bi-exclamation-triangle-fill" aria-hidden="true"></i>
+              <span class="aura-toast__icon bi bi-exclamation-triangle-fill" aria-hidden="true"></span>
               <div class="aura-toast__body"><p class="aura-toast__title">Artículo eliminado</p><p class="aura-toast__text">auraPad Pro 13″ ya no está en tu bolsa.</p></div>
               <button class="aura-toast__action" type="button">Deshacer</button>
-              <button class="aura-toast__close" type="button" aria-label="Cerrar el aviso"><i class="bi bi-x" aria-hidden="true"></i></button>
+              <button class="aura-toast__close" type="button"><span class="bi bi-x" aria-hidden="true"></span><span class="visually-hidden">Cerrar el aviso</span></button>
             </div>
             <div class="aura-toast aura-toast--error is-visible">
-              <i class="aura-toast__icon bi bi-x-octagon-fill" aria-hidden="true"></i>
+              <span class="aura-toast__icon bi bi-x-octagon-fill" aria-hidden="true"></span>
               <div class="aura-toast__body"><p class="aura-toast__title">No se ha podido guardar</p><p class="aura-toast__text">Este navegador no permite almacenar datos.</p></div>
-              <button class="aura-toast__close" type="button" aria-label="Cerrar el aviso"><i class="bi bi-x" aria-hidden="true"></i></button>
+              <button class="aura-toast__close" type="button"><span class="bi bi-x" aria-hidden="true"></span><span class="visually-hidden">Cerrar el aviso</span></button>
             </div>
           </div>
         </div>
@@ -1584,34 +1588,36 @@
         <div class="ds-block">
           <div class="ds-block__head">
             <h3 class="aura-h3">Buscador y menú móvil</h3>
-            <p class="aura-caption">Vistas estáticas. El buscador se materializa desde la lupa (baja, crece y se enfoca) mientras la página retrocede; el menú ocupa la pantalla por debajo de 992 px y nace del botón que lo abre. Los reales están en la barra de esta página: pruébalos ahí o con este botón.</p>
+            <p class="aura-caption">Vistas estáticas. El buscador se materializa desde la lupa (baja, crece y se enfoca) mientras la página retrocede; el menú ocupa la pantalla por debajo de 992 px y nace del botón que lo abre. Los reales están en la barra de esta página: pruébalos ahí o con este botón. La lupa es el botón de envío del buscador (v2.1): Intro o un clic en ella abren el resultado marcado o el primero.</p>
           </div>
           <div>
-            <button class="aura-btn aura-btn--secondary" type="button" data-aura-search-open aria-haspopup="dialog" aria-expanded="false" aria-controls="aura-search">Abrir el buscador <i class="bi bi-search" aria-hidden="true"></i></button>
+            <button class="aura-btn aura-btn--secondary" type="button" data-aura-search-open aria-haspopup="dialog" aria-expanded="false" aria-controls="aura-search">Abrir el buscador <span class="bi bi-search" aria-hidden="true"></span></button>
           </div>
           <!-- Vistas estáticas (inert + aria-hidden) con el mismo marcado accesible que el buscador y el menú reales:
-               campo con nombre (aria-label), botones de icono con aria-label e iconos decorativos con aria-hidden -->
+               campo con su <label for> oculta, la lupa como botón de envío, el nombre de cada botón de icono en texto
+               oculto (.visually-hidden) e iconos decorativos (<span class="bi"> con aria-hidden) -->
           <div class="aura-grid aura-grid--2">
             <div class="ds-frame ds-frame--photo ds-frame--flush" inert aria-hidden="true">
               <div class="aura-search is-open ds-static">
                 <div class="aura-search__panel">
                   <div class="aura-container">
                     <div class="aura-search__form">
-                      <i class="bi bi-search" aria-hidden="true"></i>
-                      <input class="aura-search__input" type="search" name="q" value="pro" tabindex="-1" aria-label="Buscar productos y páginas">
-                      <button class="aura-icon-btn" type="button" aria-label="Cerrar el buscador"><i class="bi bi-x-lg" aria-hidden="true"></i></button>
+                      <button class="aura-search__submit" type="submit"><span class="bi bi-search" aria-hidden="true"></span><span class="visually-hidden">Buscar</span></button>
+                      <label class="visually-hidden" for="ds-buscador">Buscar productos y páginas</label>
+                      <input class="aura-search__input" id="ds-buscador" type="search" name="q" value="pro" tabindex="-1">
+                      <button class="aura-icon-btn" type="button"><span class="bi bi-x-lg" aria-hidden="true"></span><span class="visually-hidden">Cerrar el buscador</span></button>
                     </div>
                     <div class="aura-search__results">
                       <p class="aura-search__heading">Productos</p>
                       <ul class="aura-search__list">
-                        <li><a class="aura-search__item is-active" href="comprar.html?producto=auraphone-18-pro-max"><i class="bi bi-phone" aria-hidden="true"></i><span class="aura-search__item-title">auraPhone 18 Pro Max</span><span class="aura-search__item-meta">Desde 1.619 €</span></a></li>
-                        <li><a class="aura-search__item" href="comprar.html?producto=aurapad-pro-13"><i class="bi bi-tablet-landscape" aria-hidden="true"></i><span class="aura-search__item-title">auraPad Pro 13″</span><span class="aura-search__item-meta">Desde 1.649 €</span></a></li>
-                        <li><a class="aura-search__item" href="comprar.html?producto=aurabook-pro-16"><i class="bi bi-laptop" aria-hidden="true"></i><span class="aura-search__item-title">auraBook Pro 16″</span><span class="aura-search__item-meta">Desde 3.449 €</span></a></li>
+                        <li><a class="aura-search__item is-active" href="comprar.html?producto=auraphone-18-pro-max"><span class="bi bi-phone" aria-hidden="true"></span><span class="aura-search__item-title">auraPhone 18 Pro Max</span><span class="aura-search__item-meta">Desde 1.619 €</span></a></li>
+                        <li><a class="aura-search__item" href="comprar.html?producto=aurapad-pro-13"><span class="bi bi-tablet-landscape" aria-hidden="true"></span><span class="aura-search__item-title">auraPad Pro 13″</span><span class="aura-search__item-meta">Desde 1.649 €</span></a></li>
+                        <li><a class="aura-search__item" href="comprar.html?producto=aurabook-pro-16"><span class="bi bi-laptop" aria-hidden="true"></span><span class="aura-search__item-title">auraBook Pro 16″</span><span class="aura-search__item-meta">Desde 3.449 €</span></a></li>
                       </ul>
                       <p class="aura-search__heading">Accesos rápidos</p>
                       <ul class="aura-search__list">
-                        <li><a class="aura-search__item" href="comparar.html"><i class="bi bi-arrow-right-short" aria-hidden="true"></i><span class="aura-search__item-title">Comparar modelos</span></a></li>
-                        <li><a class="aura-search__item" href="trade-in.html"><i class="bi bi-arrow-right-short" aria-hidden="true"></i><span class="aura-search__item-title">AURA Trade In</span></a></li>
+                        <li><a class="aura-search__item" href="comparar.html"><span class="bi bi-arrow-right-short" aria-hidden="true"></span><span class="aura-search__item-title">Comparar modelos</span></a></li>
+                        <li><a class="aura-search__item" href="trade-in.html"><span class="bi bi-arrow-right-short" aria-hidden="true"></span><span class="aura-search__item-title">AURA Trade In</span></a></li>
                       </ul>
                     </div>
                   </div>
@@ -1622,18 +1628,18 @@
               <div class="aura-menu is-open ds-static">
                 <div class="aura-container aura-menu__bar">
                   <span class="aura-brand"><img class="aura-brand__mark" src="../img/aura.png" width="28" height="28" alt=""><span class="aura-brand__word">AURA</span></span>
-                  <button class="aura-icon-btn" type="button" aria-label="Cerrar el menú"><i class="bi bi-x-lg" aria-hidden="true"></i></button>
+                  <button class="aura-icon-btn" type="button"><span class="bi bi-x-lg" aria-hidden="true"></span><span class="visually-hidden">Cerrar el menú</span></button>
                 </div>
                 <nav class="aura-container aura-menu__nav" aria-label="Principal">
                   <ul class="aura-menu__list">
-                    <li style="--i:0"><a class="aura-menu__link is-active" href="auraphone.html">auraPhone <i class="bi bi-chevron-right" aria-hidden="true"></i></a></li>
-                    <li style="--i:1"><a class="aura-menu__link" href="aurapad.html">auraPad <i class="bi bi-chevron-right" aria-hidden="true"></i></a></li>
-                    <li style="--i:2"><a class="aura-menu__link" href="aurabook.html">auraBook <i class="bi bi-chevron-right" aria-hidden="true"></i></a></li>
-                    <li style="--i:3"><a class="aura-menu__link" href="comparar.html" title="Compara los modelos de cada familia frente a frente">Comparar <i class="bi bi-chevron-right" aria-hidden="true"></i></a></li>
+                    <li style="--i:0"><a class="aura-menu__link is-active" href="auraphone.html">auraPhone <span class="bi bi-chevron-right" aria-hidden="true"></span></a></li>
+                    <li style="--i:1"><a class="aura-menu__link" href="aurapad.html">auraPad <span class="bi bi-chevron-right" aria-hidden="true"></span></a></li>
+                    <li style="--i:2"><a class="aura-menu__link" href="aurabook.html">auraBook <span class="bi bi-chevron-right" aria-hidden="true"></span></a></li>
+                    <li style="--i:3"><a class="aura-menu__link" href="comparar.html" title="Compara los modelos de cada familia frente a frente">Comparar <span class="bi bi-chevron-right" aria-hidden="true"></span></a></li>
                   </ul>
                   <ul class="aura-menu__secondary">
-                    <li style="--i:4"><a href="login.html"><i class="bi bi-person-circle" aria-hidden="true"></i> Iniciar sesión</a></li>
-                    <li style="--i:5"><a href="bolsa.html"><i class="bi bi-bag" aria-hidden="true"></i> Bolsa (2)</a></li>
+                    <li style="--i:4"><a href="login.html"><span class="bi bi-person-circle" aria-hidden="true"></span> Iniciar sesión</a></li>
+                    <li style="--i:5"><a href="bolsa.html"><span class="bi bi-bag" aria-hidden="true"></span> Bolsa (2)</a></li>
                   </ul>
                 </nav>
               </div>
@@ -1724,11 +1730,11 @@
           <div class="aura-grid aura-grid--2">
             <img class="aura-img" src="../img/aurapad-air-13-gris-espacial-trasera.webp" srcset="../img/400/aurapad-air-13-gris-espacial-trasera.webp 400w, ../img/800/aurapad-air-13-gris-espacial-trasera.webp 800w, ../img/aurapad-air-13-gris-espacial-trasera.webp 1600w" sizes="auto, (max-width: 575.98px) 90vw, (max-width: 991.98px) 44vw, (max-width: 1199.98px) 44vw, 580px" data-slot="aurapad-air-13-gris-espacial-trasera" data-fallback="aurapad-air-13" width="1600" height="1200" alt="Trasera gris espacial del auraPad Air 13″, con su única cámara en la esquina, sobre fondo negro" loading="lazy" decoding="async">
             <div class="aura-stack aura-stack--stretch">
-              <div class="aura-slot" role="img" aria-label="Marcador panorámico de ejemplo" data-slot="inicio-hero-auraphone" style="--w:1920;--h:1080"><div class="aura-slot__inner"><i class="aura-slot__icon bi bi-image" aria-hidden="true"></i><span class="aura-slot__path">img/inicio-hero-auraphone.webp</span><span class="aura-slot__size">1920 × 1080 px</span></div></div>
+              <div class="aura-slot" role="img" aria-label="Marcador panorámico de ejemplo" data-slot="inicio-hero-auraphone" style="--w:1920;--h:1080"><div class="aura-slot__inner"><span class="aura-slot__icon bi bi-image" aria-hidden="true"></span><span class="aura-slot__path">img/inicio-hero-auraphone.webp</span><span class="aura-slot__size">1920 × 1080 px</span></div></div>
               <div class="aura-cluster" style="--cluster:1rem">
-                <div style="width:10rem"><div class="aura-slot" role="img" aria-label="Marcador mediano de ejemplo" data-slot="miniatura" style="--w:1;--h:1"><div class="aura-slot__inner"><i class="aura-slot__icon bi bi-image" aria-hidden="true"></i><span class="aura-slot__path">img/miniatura.webp</span><span class="aura-slot__size">800 × 800 px</span></div></div></div>
-                <div style="width:5.5rem"><div class="aura-slot" role="img" aria-label="Marcador pequeño de ejemplo" data-slot="miniatura" style="--w:1;--h:1"><div class="aura-slot__inner"><i class="aura-slot__icon bi bi-image" aria-hidden="true"></i><span class="aura-slot__path">img/miniatura.webp</span><span class="aura-slot__size">800 × 800 px</span></div></div></div>
-                <div style="width:3.5rem"><div class="aura-slot" role="img" aria-label="Marcador mínimo de ejemplo" data-slot="miniatura" style="--w:1;--h:1"><div class="aura-slot__inner"><i class="aura-slot__icon bi bi-image" aria-hidden="true"></i><span class="aura-slot__path">img/miniatura.webp</span><span class="aura-slot__size">800 × 800 px</span></div></div></div>
+                <div style="width:10rem"><div class="aura-slot" role="img" aria-label="Marcador mediano de ejemplo" data-slot="miniatura" style="--w:1;--h:1"><div class="aura-slot__inner"><span class="aura-slot__icon bi bi-image" aria-hidden="true"></span><span class="aura-slot__path">img/miniatura.webp</span><span class="aura-slot__size">800 × 800 px</span></div></div></div>
+                <div style="width:5.5rem"><div class="aura-slot" role="img" aria-label="Marcador pequeño de ejemplo" data-slot="miniatura" style="--w:1;--h:1"><div class="aura-slot__inner"><span class="aura-slot__icon bi bi-image" aria-hidden="true"></span><span class="aura-slot__path">img/miniatura.webp</span><span class="aura-slot__size">800 × 800 px</span></div></div></div>
+                <div style="width:3.5rem"><div class="aura-slot" role="img" aria-label="Marcador mínimo de ejemplo" data-slot="miniatura" style="--w:1;--h:1"><div class="aura-slot__inner"><span class="aura-slot__icon bi bi-image" aria-hidden="true"></span><span class="aura-slot__path">img/miniatura.webp</span><span class="aura-slot__size">800 × 800 px</span></div></div></div>
               </div>
             </div>
           </div>
@@ -1862,7 +1868,7 @@
         <div class="aura-sheet__grabber" aria-hidden="true"></div>
         <header class="aura-sheet__header">
           <h2 class="aura-sheet__title" id="ds-hoja-titulo">¿Qué incluye AuraCare+?</h2>
-          <button class="aura-icon-btn" type="button" data-aura-sheet-close aria-label="Cerrar"><i class="bi bi-x-lg" aria-hidden="true"></i></button>
+          <button class="aura-icon-btn" type="button" data-aura-sheet-close><span class="bi bi-x-lg" aria-hidden="true"></span><span class="visually-hidden">Cerrar</span></button>
         </header>
         <div class="aura-sheet__body">
           <ul class="aura-checklist">
@@ -1953,12 +1959,6 @@
           bloque.hidden = e.target.value !== 'casa';
           if (bloque.hidden) { condicional.clear('ds-direccion'); condicional.clear('ds-cp'); }
         });
-      }
-
-      /* Los formularios de muestra no se envían. */
-      var formularios = document.querySelectorAll('form[data-ds-demo]');
-      for (var i = 0; i < formularios.length; i++) {
-        formularios[i].addEventListener('submit', function (e) { e.preventDefault(); });
       }
 
       /* Validación en línea con reglas declarativas. */

@@ -92,6 +92,25 @@
     return node && typeof node.closest === 'function' ? node.closest(selector) : null;
   }
 
+  /* id válido y libre en la página a partir de un texto: «aura-colorway-1-negro». */
+  function uniqueId(base) {
+    var id = String(base == null ? '' : base).toLowerCase().replace(/[^a-z0-9_-]+/g, '-').replace(/^-+|-+$/g, '');
+    if (!/^[a-z]/.test(id)) { id = 'aura-' + id; }
+    var out = id;
+    for (var n = 2; document.getElementById(out); n++) { out = id + '-' + n; }
+    return out;
+  }
+
+  /* Control dentro de su <label> (radios, muestras, opciones): TAW solo
+     cuenta <label for="id">, así que se le pone id y a la etiqueta, for=
+     (solo si no los traía; nunca cambia lo que escribió la página). */
+  function labelFor(input, base) {
+    var label = closest(input, 'label');
+    if (!label || label.htmlFor) { return; }
+    if (!input.id) { input.id = uniqueId(base); }
+    label.htmlFor = input.id;
+  }
+
   function $(target) {
     if (!target) { return null; }
     if (typeof target !== 'string') { return target; }
@@ -517,14 +536,24 @@
     '.aura-stepper__btn, .aura-field__toggle, .aura-option, .aura-swatch, a.aura-card, .aura-card--interactive, ' +
     '.aura-segmented__item, .aura-check, .aura-radio, .aura-carousel__dot, .aura-toast__action, .aura-toast__close, ' +
     '.aura-link, .aura-nav__link, a.aura-localnav__title, .aura-localnav__link, .aura-menu__link, .aura-menu__secondary a, ' +
-    '.aura-popover__links a, .aura-search__item, .aura-footer__social-link, .aura-localnav__toggle, ' +
+    '.aura-popover__links a, .aura-search__item, .aura-search__submit, .aura-footer__social-link, .aura-localnav__toggle, ' +
     /* Enlaces grandes y de texto (v1.3): la tarjeta de modelo responde entera
-       al tocar su foto o su nombre; los enlaces de texto se atenúan. */
+       al tocarla (el enlace de su nombre la cubre); los enlaces de texto se atenúan. */
     '.aura-product-card__media, .aura-product-card__name a, a.aura-bag-line__media, .aura-bag-line__name a, ' +
     '.aura-accordion__summary, .aura-accordion__panel a, .aura-prose a, .aura-footer__list a, .aura-footer__legal-links a, ' +
     '.aura-crumbs a, .aura-brand, .aura-footnote-ref > a, .aura-footnotes__back';
+  /* Enlaces estirados (su ::after cubre la tarjeta o la línea): la pulsación
+     se mide contra la caja que cubren, no contra la del texto. */
+  var STRETCHED = { '.aura-product-card .aura-product-card__name a': '.aura-product-card', '.aura-bag-popover .aura-bag-line__name a': '.aura-bag-line' };
   var PRESS_SLOP = 10;   // px de margen: se puede salir y volver sin perder la pulsación
   var pressed = null;
+
+  function pressArea(el) {
+    for (var sel in STRETCHED) {
+      if (Object.prototype.hasOwnProperty.call(STRETCHED, sel) && safe(function () { return el.matches(sel); })) { return closest(el, STRETCHED[sel]) || el; }
+    }
+    return el;
+  }
 
   function releasePress() {
     if (!pressed) { return; }
@@ -535,7 +564,7 @@
 
   function onPressMove(e) {
     if (!pressed || e.pointerId !== pressed.id) { return; }
-    var r = pressed.el.getBoundingClientRect();
+    var r = pressed.area.getBoundingClientRect();
     var inside = e.clientX >= r.left - PRESS_SLOP && e.clientX <= r.right + PRESS_SLOP &&
       e.clientY >= r.top - PRESS_SLOP && e.clientY <= r.bottom + PRESS_SLOP;
     pressed.el.classList.toggle('is-pressed', inside);
@@ -550,7 +579,7 @@
       if (!el || el.disabled || el.getAttribute('aria-disabled') === 'true' || el.classList.contains('is-disabled')) { return; }
       /* Una etiqueta (opción, casilla, muestra) cuyo control está desactivado no responde. */
       if (el.tagName === 'LABEL' && el.control && el.control.disabled) { return; }
-      pressed = { el: el, id: e.pointerId };
+      pressed = { el: el, area: pressArea(el), id: e.pointerId };
       el.classList.add('is-pressed');
       window.addEventListener('pointermove', onPressMove, true);
     }, true);
@@ -1426,8 +1455,8 @@
       controls.className = 'aura-carousel__controls';
       controls.innerHTML =
         '<div class="aura-carousel__dots"></div>' +
-        '<button class="aura-icon-btn aura-icon-btn--solid" type="button" data-aura-carousel-prev aria-label="Anterior"><i class="bi bi-chevron-left" aria-hidden="true"></i></button>' +
-        '<button class="aura-icon-btn aura-icon-btn--solid" type="button" data-aura-carousel-next aria-label="Siguiente"><i class="bi bi-chevron-right" aria-hidden="true"></i></button>';
+        '<button class="aura-icon-btn aura-icon-btn--solid" type="button" data-aura-carousel-prev><span class="bi bi-chevron-left" aria-hidden="true"></span><span class="visually-hidden">Anterior</span></button>' +
+        '<button class="aura-icon-btn aura-icon-btn--solid" type="button" data-aura-carousel-next><span class="bi bi-chevron-right" aria-hidden="true"></span><span class="visually-hidden">Siguiente</span></button>';
       root.appendChild(controls);
     }
     dotsBox = controls.querySelector('.aura-carousel__dots');
@@ -1507,8 +1536,9 @@
       if (dots.length === total && dotsBox.children.length === total) { return; }
       var out = '';
       for (var i = 0; i < total; i++) {
-        out += '<button class="aura-carousel__dot" type="button" aria-label="Ir a la ' +
-          (total === c.slides.length ? 'diapositiva ' : 'posición ') + (i + 1) + ' de ' + total + '"></button>';
+        /* El nombre de cada punto va en texto oculto (el punto lo dibuja ::before). */
+        out += '<button class="aura-carousel__dot" type="button"><span class="visually-hidden">Ir a la ' +
+          (total === c.slides.length ? 'diapositiva ' : 'posición ') + (i + 1) + ' de ' + total + '</span></button>';
       }
       dotsBox.innerHTML = out;
       dots = toArray(dotsBox.children);
@@ -1884,6 +1914,9 @@
      pastilla sigue al estado, lo ponga quien lo ponga (:checked —también
      `input.checked = …` desde JS—, .is-active, aria-current, aria-pressed,
      aria-selected). Sin JS, el ítem activo pinta su propio fondo, como antes.
+     La variante de radios es un <fieldset class="aura-segmented"> con su
+     <legend class="visually-hidden"> (TAW pide agrupar los radios, H71): la
+     leyenda no es un ítem y la pastilla se coloca detrás de ella.
 
      Solo se anima transform (skill §11): el avance es translate3d y el ancho
      que acompaña al avance (los ítems no miden lo mismo) es un scaleX sobre
@@ -1899,6 +1932,19 @@
 
   function segItems(el) {
     return toArray(el.children).filter(function (c) { return c.classList && c.classList.contains('aura-segmented__item') && !c.hidden; });
+  }
+  /* La pastilla va la primera, salvo en la variante de radios, que es un
+     <fieldset> con su <legend> de primer hijo (así lo pide el HTML): detrás. */
+  function segPlaceThumb(el, thumb) {
+    var first = el.firstElementChild;
+    var after = first && first !== thumb && first.tagName === 'LEGEND' ? first : null;
+    el.insertBefore(thumb, after ? after.nextSibling : el.firstChild);
+  }
+  /* Medidas en línea en rem, no en px (C28 de TAW: el texto grande del
+     navegador las escala); la cuenta parte del tamaño real de la raíz. */
+  function toRem(px) {
+    var root = num(parseFloat(safe(function () { return window.getComputedStyle(html).fontSize; })), 16) || 16;
+    return (px / root).toFixed(4) + 'rem';
   }
   function segActive(el) {
     var items = segItems(el);
@@ -1916,7 +1962,7 @@
     var thumb = document.createElement('span');
     thumb.className = 'aura-segmented__thumb';
     thumb.setAttribute('aria-hidden', 'true');
-    el.insertBefore(thumb, el.firstChild);
+    segPlaceThumb(el, thumb);
     el.classList.add('has-thumb');
     var draggable = !el.querySelector('a.aura-segmented__item');
 
@@ -1924,7 +1970,7 @@
     function setBase(w) {
       if (Math.abs(w - st.base) < 0.01) { return; }
       st.base = w;
-      thumb.style.width = w.toFixed(2) + 'px';
+      thumb.style.width = toRem(w);
     }
     /* Pinta con transform: avance (x, y) y ancho visible (scaleX sobre el
        ancho de la caja, con origen en el centro: se compensa en la x). */
@@ -1973,7 +2019,7 @@
       st.active = item;
       if (!item || !item.offsetWidth) { thumb.style.visibility = 'hidden'; st.placed = false; return; }
       thumb.style.visibility = '';
-      thumb.style.height = item.offsetHeight + 'px';
+      thumb.style.height = toRem(item.offsetHeight);
       var x = item.offsetLeft;
       var y = item.offsetTop;
       var w = item.offsetWidth;
@@ -2006,7 +2052,7 @@
     }
 
     function sync(animate) {
-      if (thumb.parentNode !== el) { el.insertBefore(thumb, el.firstChild); }   // la página repintó el control
+      if (thumb.parentNode !== el) { segPlaceThumb(el, thumb); }   // la página repintó el control
       watchInputs();
       if (el.classList.contains('is-dragging')) { return; }                     // mientras se arrastra manda el dedo
       var item = segActive(el);
@@ -2028,9 +2074,9 @@
       if (window.Promise) { window.Promise.resolve().then(run); } else { window.setTimeout(run, 0); }
     }
     function watchInputs() {
-      if (!CHECKED || !CHECKED.set) { return; }
       each(el.querySelectorAll('input[type="radio"], input[type="checkbox"]'), function (input) {
-        if (input._auraSegWatch) { return; }
+        labelFor(input, 'aura-seg-' + (input.name || 'opcion') + '-' + input.value);   // si el HTML no trae id/for
+        if (!CHECKED || !CHECKED.set || input._auraSegWatch) { return; }
         input._auraSegWatch = true;
         safe(function () {
           Object.defineProperty(input, 'checked', {
@@ -2801,19 +2847,24 @@
     var nameEl = root.querySelector('.aura-colorway__name');
     var group = 'aura-colorway-' + (++colorwayCount);
 
-    /* Sin muestras escritas, se pintan las del catálogo (en su orden). */
+    /* Sin muestras escritas, se pintan las del catálogo (en su orden). Cada
+       radio lleva id y su etiqueta for= (TAW solo cuenta <label for>, no la
+       que envuelve al control): grupo + valor, único en la página. */
     if (p && !box.querySelector('input')) {
       var wanted = root.getAttribute('data-color');
       var start = (wanted && cat.color(p, wanted)) || cat.color(p);
       box.innerHTML = (Array.isArray(p.colors) ? p.colors : []).map(function (c) {
-        return '<label class="aura-swatch" style="--swatch:' + esc(c.hex || '#888') + '">' +
-          '<input class="aura-swatch__input" type="radio" name="' + group + '" value="' + esc(c.id) + '"' + (start && start.id === c.id ? ' checked' : '') + '>' +
+        var inputId = uniqueId(group + '-' + c.id);
+        return '<label class="aura-swatch" for="' + inputId + '" style="--swatch:' + esc(c.hex || '#888') + '">' +
+          '<input class="aura-swatch__input" id="' + inputId + '" type="radio" name="' + group + '" value="' + esc(c.id) + '"' + (start && start.id === c.id ? ' checked' : '') + '>' +
           '<span class="aura-swatch__dot" aria-hidden="true"></span>' +
           '<span class="visually-hidden">' + esc(c.name) + '</span></label>';
       }).join('');
     }
     var inputs = toArray(box.querySelectorAll('input[type="radio"]'));
     if (!inputs.length) { return null; }
+    /* Las muestras escritas en el HTML sin id ni for= también se enlazan. */
+    inputs.forEach(function (input) { labelFor(input, (input.name || group) + '-' + input.value); });
     if (!inputs.some(function (i) { return i.checked; })) { inputs[0].checked = true; }
     var gallery = initGallery(media);
 
@@ -3009,7 +3060,7 @@
                    en todas las columnas (la destacada ya la marca su color), igual
                    que la fila final de comparar.html. La primaria es la de la tarjeta
                    o la cabecera de cada modelo. */
-                return '<td' + featured(i) + '><a class="aura-btn aura-btn--secondary" href="' + esc(cat.url(p)) + '" aria-label="' + esc(cta + ' ' + p.name) + '">' + esc(cta) + '</a></td>';
+                return '<td' + featured(i) + '><a class="aura-btn aura-btn--secondary" href="' + esc(cat.url(p)) + '">' + esc(cta) + '<span class="visually-hidden"> ' + esc(p.name) + '</span></a></td>';
               }).join('') +
             '</tr>' +
           '</tbody>' +
@@ -3098,10 +3149,10 @@
     el.setAttribute('aria-live', kind.live);
     el.setAttribute('aria-atomic', 'true');
     el.innerHTML =
-      '<i class="aura-toast__icon bi ' + kind.icon + '" aria-hidden="true"></i>' +
+      '<span class="aura-toast__icon bi ' + kind.icon + '" aria-hidden="true"></span>' +
       '<div class="aura-toast__body"><p class="aura-toast__title"></p>' + (options.text ? '<p class="aura-toast__text"></p>' : '') + '</div>' +
       (hasAction ? '<button class="aura-toast__action" type="button"></button>' : '') +
-      '<button class="aura-toast__close" type="button" aria-label="Cerrar el aviso"><i class="bi bi-x" aria-hidden="true"></i></button>';
+      '<button class="aura-toast__close" type="button"><span class="bi bi-x" aria-hidden="true"></span><span class="visually-hidden">Cerrar el aviso</span></button>';
 
     var timer = 0;
     var remaining = duration;
@@ -3627,7 +3678,10 @@
       var show = input.type === 'password';
       input.type = show ? 'text' : 'password';
       button.setAttribute('aria-pressed', show ? 'true' : 'false');
-      button.setAttribute('aria-label', show ? 'Ocultar la contraseña' : 'Mostrar la contraseña');
+      /* El nombre va en el texto oculto del botón si lo trae (si no, en aria-label). */
+      var name = button.querySelector('.visually-hidden');
+      if (name) { name.textContent = show ? 'Ocultar la contraseña' : 'Mostrar la contraseña'; button.removeAttribute('aria-label'); }
+      else { button.setAttribute('aria-label', show ? 'Ocultar la contraseña' : 'Mostrar la contraseña'); }
       var icon = button.querySelector('.bi');
       if (icon) { icon.classList.toggle('bi-eye', !show); icon.classList.toggle('bi-eye-slash', show); }
     });
@@ -3737,8 +3791,7 @@
       toggle.type = 'button';
       toggle.className = 'aura-localnav__toggle';
       toggle.setAttribute('aria-expanded', 'false');
-      toggle.setAttribute('aria-label', name ? 'Secciones de ' + name : 'Secciones');
-      toggle.innerHTML = '<i class="bi bi-chevron-down" aria-hidden="true"></i>';
+      toggle.innerHTML = '<span class="bi bi-chevron-down" aria-hidden="true"></span><span class="visually-hidden">' + esc(name ? 'Secciones de ' + name : 'Secciones') + '</span>';
       inner.insertBefore(toggle, strip);
     }
     toggle.setAttribute('aria-controls', strip.id);
@@ -3914,11 +3967,11 @@
       if (!p) { return; }
       el.setAttribute('href', cat.url(p));
       /* Botón corto («Comprar» de la barra local): el verbo según la
-         disponibilidad y el nombre del modelo en aria-label. */
+         disponibilidad y el nombre del modelo en texto oculto (no en
+         aria-label: el texto del enlace dice ya a qué modelo lleva, H30). */
       if (el.hasAttribute('data-aura-buy-short')) {
-        var verb = cat.cta(p);
-        el.textContent = verb;
-        el.setAttribute('aria-label', verb + ' ' + p.name);
+        el.innerHTML = esc(cat.cta(p)) + '<span class="visually-hidden"> ' + esc(p.name) + '</span>';
+        el.removeAttribute('aria-label');
       }
     });
   }

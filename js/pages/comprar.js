@@ -367,7 +367,7 @@
 
     if (a.status !== 'disponible' && a.text) {
       /* El mismo icono que la línea de entrega del resumen para ese estado. */
-      el.estado.innerHTML = '<i class="bi ' + (a.status === 'reserva' ? 'bi-calendar-check' : 'bi-calendar-event') + '" aria-hidden="true"></i>' +
+      el.estado.innerHTML = '<span class="bi ' + (a.status === 'reserva' ? 'bi-calendar-check' : 'bi-calendar-event') + '" aria-hidden="true"></span>' +
         '<span>' + (a.html || esc(junto(a.text))) + '</span>';   // la fecha, en <time datetime>
       el.estado.hidden = false;
     } else {
@@ -375,13 +375,15 @@
       el.estado.innerHTML = '';
     }
 
+    /* El nombre de la familia completa el texto del enlace, oculto a la vista
+       (no en aria-label: así el texto ya dice adónde lleva). */
     el.comparar.setAttribute('href', 'comparar.html?familia=' + encodeURIComponent(f.id));
-    el.comparar.setAttribute('aria-label', 'Comparar todos los modelos de ' + f.name);
+    el.comparar.innerHTML = 'Comparar todos los modelos<span class="visually-hidden"> de ' + esc(f.name) + '</span>';
     el.gama.setAttribute('href', paginaFamilia(f));
-    el.gama.setAttribute('aria-label', 'Ver la gama ' + f.name);
+    el.gama.innerHTML = 'Ver la gama<span class="visually-hidden"> ' + esc(f.name) + '</span>';
     if (el.seguir) {
       el.seguir.setAttribute('href', paginaFamilia(f));
-      el.seguir.setAttribute('aria-label', 'Seguir comprando: gama ' + f.name);
+      el.seguir.innerHTML = 'Seguir comprando<span class="visually-hidden">: gama ' + esc(f.name) + '</span>';
     }
 
     /* Título descriptivo y único por modelo (40–65 caracteres, temario DIW):
@@ -425,7 +427,7 @@
         texto = esc('Añadir a la bolsa');
         nombre = 'Añadir a la bolsa: ' + p.name;
       }
-      b.innerHTML = (icono ? '<i class="bi ' + icono + '" aria-hidden="true"></i>' : '') + texto;
+      b.innerHTML = (icono ? '<span class="bi ' + icono + '" aria-hidden="true"></span>' : '') + texto;
       b.setAttribute('aria-label', nombre);
       b.setAttribute('data-modo', avisado ? 'avisado' : m);
       b.classList.toggle('aura-btn--primary', !avisado);
@@ -435,16 +437,27 @@
     pintarAnadido();
   }
 
+  /* Cada radio lleva id y su etiqueta for= (TAW solo cuenta <label for>, no la
+     que envuelve al control): «comprar-» + pregunta + valor, único en la página. */
+  function idDe(grupo, valor) { return 'comprar-' + String(grupo + '-' + valor).replace(/[^A-Za-z0-9_-]+/g, '-'); }
+  function radioHTML(clase, grupo, valor, extra) {
+    var id = idDe(grupo, valor);
+    return '<input' + (clase ? ' class="' + clase + '"' : '') + ' id="' + esc(id) + '" type="radio" name="' + esc(grupo) + '" value="' + esc(valor) + '"' + (extra || '') + '>';
+  }
+
+  /* Familia: el segmentado de radios del sistema, un <fieldset> con su
+     <legend> oculta; el rótulo visible «Familia» es solo para la vista. */
   function pintarFamilias() {
     var actual = estado.producto.family;
     el.familias.innerHTML =
-      '<p class="aura-legend aura-legend--sm" id="comprar-familia-etiqueta">Familia</p>' +
-      '<div class="aura-segmented" role="radiogroup" aria-labelledby="comprar-familia-etiqueta">' +
+      '<p class="aura-legend aura-legend--sm" aria-hidden="true">Familia</p>' +
+      '<fieldset class="aura-segmented">' +
+      '<legend class="visually-hidden">Familia</legend>' +
       cat.families().map(function (f) {
-        return '<label class="aura-segmented__item"><input type="radio" name="familia" value="' + esc(f.id) + '"' +
-          (f.id === actual ? ' checked' : '') + '><span>' + esc(f.name) + '</span></label>';
+        return '<label class="aura-segmented__item" for="' + esc(idDe('familia', f.id)) + '">' +
+          radioHTML('', 'familia', f.id, f.id === actual ? ' checked' : '') + '<span>' + esc(f.name) + '</span></label>';
       }).join('') +
-      '</div>';
+      '</fieldset>';
     el.familias.hidden = false;
   }
 
@@ -458,8 +471,8 @@
   function pintarModelos() {
     var p = estado.producto;
     el.modelos.innerHTML = cat.products(p.family).map(function (m) {
-      return '<label class="aura-option comprar-modelo">' +
-        '<input class="aura-option__input" type="radio" name="producto" value="' + esc(m.id) + '"' + (m.id === p.id ? ' checked' : '') + '>' +
+      return '<label class="aura-option comprar-modelo" for="' + esc(idDe('producto', m.id)) + '">' +
+        radioHTML('aura-option__input', 'producto', m.id, m.id === p.id ? ' checked' : '') +
         '<span class="aura-option__card">' +
           '<span class="aura-option__body">' +
             '<span class="aura-option__title">' + esc(m.name) + insigniaDe(m) + '</span>' +
@@ -476,8 +489,8 @@
     var colores = list(p.colors);
     if (el.pasoAcabado) { el.pasoAcabado.hidden = !colores.length; }
     el.colores.innerHTML = colores.map(function (c) {
-      return '<label class="aura-swatch" style="--swatch:' + esc(c.hex) + '">' +
-        '<input class="aura-swatch__input" type="radio" name="color" value="' + esc(c.id) + '"' + (c.id === estado.colorId ? ' checked' : '') + '>' +
+      return '<label class="aura-swatch" for="' + esc(idDe('color', c.id)) + '" style="--swatch:' + esc(c.hex) + '">' +
+        radioHTML('aura-swatch__input', 'color', c.id, c.id === estado.colorId ? ' checked' : '') +
         '<span class="aura-swatch__dot" aria-hidden="true"></span>' +
         '<span class="visually-hidden">' + esc(c.name) + '</span>' +
       '</label>';
@@ -487,9 +500,8 @@
   function opcionHTML(p, g, c) {
     var t = partes(c.label);
     var nota = notaDe(p, g, c);
-    return '<label class="aura-option">' +
-      '<input class="aura-option__input" type="radio" name="' + esc(g.id) + '" value="' + esc(c.id) + '"' +
-        (c.selected ? ' checked' : '') + (c.available ? '' : ' disabled') + '>' +
+    return '<label class="aura-option" for="' + esc(idDe(g.id, c.id)) + '">' +
+      radioHTML('aura-option__input', g.id, c.id, (c.selected ? ' checked' : '') + (c.available ? '' : ' disabled')) +
       '<span class="aura-option__card">' +
         '<span class="aura-option__body">' +
           '<span class="aura-option__title">' + esc(t.titulo) + '</span>' +
@@ -556,8 +568,8 @@
     el.careTexto.textContent = care.description || '';
     el.careTexto.hidden = !care.description;
     var opcion = function (valor, titulo, nota, precioTxt, marcado) {
-      return '<label class="aura-option">' +
-        '<input class="aura-option__input" type="radio" name="auracare" value="' + valor + '"' + (marcado ? ' checked' : '') + '>' +
+      return '<label class="aura-option" for="' + esc(idDe('auracare', valor)) + '">' +
+        radioHTML('aura-option__input', 'auracare', valor, marcado ? ' checked' : '') +
         '<span class="aura-option__card">' +
           '<span class="aura-option__body">' +
             '<span class="aura-option__title">' + esc(titulo) + '</span>' +
@@ -582,7 +594,7 @@
       var origen = t.deviceName ? 'Por ' + (dTrade ? gram(dTrade.family).tu : 'tu') + ' ' + t.deviceName + (t.conditionLabel ? ' (' + t.conditionLabel.toLowerCase() + ')' : '') + '. ' : '';
       el.trade.innerHTML =
         '<div class="aura-note comprar-trade">' +
-          '<span class="aura-note__icon"><i class="bi bi-arrow-repeat" aria-hidden="true"></i></span>' +
+          '<span class="aura-note__icon"><span class="bi bi-arrow-repeat" aria-hidden="true"></span></span>' +
           '<p class="aura-note__title">Tienes ' + esc(fmt.eur0(t.value)) + ' de crédito' + ref(2) + '</p>' +
           '<p class="aura-note__text">' + esc(origen) + 'Se descuenta del total al tramitar el pedido.</p>' +
           '<p class="aura-note__text comprar-trade__acciones">' +
@@ -594,7 +606,7 @@
       var tope = topeTradeIn();
       el.trade.innerHTML =
         '<div class="aura-note comprar-trade">' +
-          '<span class="aura-note__icon"><i class="bi bi-arrow-repeat" aria-hidden="true"></i></span>' +
+          '<span class="aura-note__icon"><span class="bi bi-arrow-repeat" aria-hidden="true"></span></span>' +
           '<p class="aura-note__title">' + (tope > 0 ? 'Hasta ' + esc(fmt.eur0(tope)) + ' por tu dispositivo actual' : 'Tu dispositivo actual vale más de lo que crees') + ref(2) + '</p>' +
           '<p class="aura-note__text">Valóralo en un minuto. El crédito se guarda y se descuenta del total al tramitar el pedido.</p>' +
           '<p class="aura-note__text comprar-trade__acciones"><a class="aura-link aura-link--control" href="trade-in.html">Valorar mi dispositivo</a></p>' +
@@ -636,7 +648,7 @@
       : esc((tipo === 'invalido' && pedidoCorto ? '«' + pedidoCorto + '» no está en la gama actual. ' : '') + cambia);
     el.aviso.innerHTML =
       '<div class="aura-alert' + (aviso ? ' aura-alert--warn' : '') + '" role="status">' +
-        '<i class="bi ' + (aviso ? 'bi-exclamation-triangle-fill' : 'bi-info-circle-fill') + '" aria-hidden="true"></i>' +
+        '<span class="bi ' + (aviso ? 'bi-exclamation-triangle-fill' : 'bi-info-circle-fill') + '" aria-hidden="true"></span>' +
         '<p class="aura-alert__title">' + esc(titulo) + '</p>' +
         '<p class="aura-alert__text">' + texto + '</p>' +
       '</div>';
@@ -717,11 +729,13 @@
     el.vistas.classList.toggle('is-off', !varias);
     el.vistas.setAttribute('aria-label', 'Vistas ' + gram(p).del + ' ' + p.name);
     el.vistas.innerHTML = !varias ? '' : vistas.map(function (v, i) {
-      /* La miniatura de 240 × 180 (img/thumbs/); si aún no existe, la foto grande. */
+      /* La miniatura de 240 × 180 (img/thumbs/); si aún no existe, la foto grande.
+         Es decorativa (alt vacío): el nombre de la vista va en texto oculto. */
       return '<button class="comprar-vista" type="button" data-c-vista="' + i + '" aria-pressed="' + (i === vistaActual) + '"' +
-          ' tabindex="' + (i === vistaActual ? '0' : '-1') + '" aria-label="' + esc(nombreVista(v, i)) + '">' +
+          ' tabindex="' + (i === vistaActual ? '0' : '-1') + '">' +
           '<img class="comprar-vista__img" src="' + IMG + 'thumbs/' + esc(v.slot) + '.webp" data-c-vista-hueco="' + esc(v.slot) + '"' +
             ' width="240" height="180" alt="" loading="lazy" decoding="async">' +
+          '<span class="visually-hidden">' + esc(nombreVista(v, i)) + '</span>' +
         '</button>';
     }).join('');
   }
@@ -1140,7 +1154,15 @@
   }
 
   function enlazar() {
+    /* La acción principal es el botón de envío del formulario: su clic la hace
+       (abajo) y el envío no sale de la página. Intro sobre una opción no envía
+       el formulario (no añade a la bolsa sin querer): las opciones se eligen
+       con las flechas, la barra espaciadora o el clic, como antes. */
     el.form.addEventListener('submit', function (e) { e.preventDefault(); });
+    el.form.addEventListener('keydown', function (e) {
+      var t = e.target;
+      if (e.key === 'Enter' && t && (t.type === 'radio' || t.type === 'checkbox')) { e.preventDefault(); }
+    });
     el.form.addEventListener('change', alCambiar);
     document.addEventListener('click', function (e) {
       var t = e.target && e.target.closest ? e.target : null;

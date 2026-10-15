@@ -302,7 +302,7 @@
       var ports = spec(p, 'puertos');
       if (!ports) { return ''; }
       return '<div class="aura-feature aura-feature--card">' +
-        '<span class="aura-feature__icon"><i class="bi bi-usb-c" aria-hidden="true"></i></span>' +
+        '<span class="aura-feature__icon"><span class="bi bi-usb-c" aria-hidden="true"></span></span>' +
         '<dt class="aura-feature__title">' + AURA.html.esc(keepTail(p.name)) + '</dt>' +
         '<dd class="aura-feature__text">' + AURA.html.esc(AURA.fmt.units(ports)) + '</dd>' +
       '</div>';

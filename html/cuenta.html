@@ -67,7 +67,7 @@
       <section class="aura-section" aria-labelledby="cuenta-sin-js">
         <div class="aura-container aura-container--narrow">
           <div class="aura-empty">
-            <span class="aura-empty__icon"><i class="bi bi-person-circle" aria-hidden="true"></i></span>
+            <span class="aura-empty__icon"><span class="bi bi-person-circle" aria-hidden="true"></span></span>
             <h1 class="aura-h3 aura-empty__title" id="cuenta-sin-js">Tu cuenta necesita JavaScript</h1>
             <p class="aura-empty__text">Tu ID de AURA y tus pedidos se guardan en este navegador. Activa JavaScript para verlos.</p>
           </div>
@@ -145,7 +145,7 @@
                 <div class="aura-field">
                   <label class="aura-field__label" for="datos-email">Correo electrónico</label>
                   <div class="aura-field__control">
-                    <i class="aura-field__icon bi bi-envelope" aria-hidden="true"></i>
+                    <span class="aura-field__icon bi bi-envelope" aria-hidden="true"></span>
                     <input class="aura-input" id="datos-email" type="email" disabled autocomplete="email" aria-describedby="datos-email-ayuda">
                   </div>
                   <p class="aura-field__help" id="datos-email-ayuda">Es tu ID de AURA, así que no se puede cambiar.</p>
@@ -177,18 +177,18 @@
             <div class="aura-stack aura-stack--stretch" style="--stack:1.25rem">
               <div class="aura-card cuenta-filas">
                 <div class="aura-feature aura-feature--inline">
-                  <span class="aura-feature__icon"><i class="bi bi-person-badge" aria-hidden="true"></i></span>
+                  <span class="aura-feature__icon"><span class="bi bi-person-badge" aria-hidden="true"></span></span>
                   <h3 class="aura-feature__title">ID de AURA</h3>
                   <p class="aura-feature__text cuenta-cortar" data-cuenta-email-texto></p>
                   <p class="aura-feature__text cuenta-fila__dato" data-cuenta-alta hidden></p>
                 </div>
                 <div class="aura-feature aura-feature--inline">
-                  <span class="aura-feature__icon"><i class="bi bi-key" aria-hidden="true"></i></span>
+                  <span class="aura-feature__icon"><span class="bi bi-key" aria-hidden="true"></span></span>
                   <h3 class="aura-feature__title">Contraseña</h3>
                   <p class="aura-feature__text">Se guarda cifrada, nunca tal como la escribes. Ni siquiera AURA puede leerla.</p>
                 </div>
                 <div class="aura-feature aura-feature--inline">
-                  <span class="aura-feature__icon"><i class="bi bi-laptop" aria-hidden="true" data-cuenta-sesion-icono></i></span>
+                  <span class="aura-feature__icon"><span class="bi bi-laptop" aria-hidden="true" data-cuenta-sesion-icono></span></span>
                   <h3 class="aura-feature__title">Sesión en este navegador</h3>
                   <p class="aura-feature__text" data-cuenta-sesion>Si compartes este dispositivo, cierra la sesión al terminar. Tu bolsa se conserva.</p>
                   <p class="aura-feature__text cuenta-fila__dato" data-cuenta-sesion-desde hidden></p>
@@ -198,7 +198,7 @@
 
               <div class="aura-card cuenta-filas">
                 <div class="aura-feature aura-feature--inline">
-                  <span class="aura-feature__icon cuenta-icono-peligro"><i class="bi bi-trash3" aria-hidden="true"></i></span>
+                  <span class="aura-feature__icon cuenta-icono-peligro"><span class="bi bi-trash3" aria-hidden="true"></span></span>
                   <h3 class="aura-feature__title">Eliminar ID de AURA</h3>
                   <p class="aura-feature__text">Borra de este navegador tu ID de AURA, tu nombre y tus pedidos. No se puede deshacer.</p>
                   <button class="aura-btn aura-btn--destructive cuenta-fila__accion" type="button" data-aura-sheet-open="eliminar-id" aria-haspopup="dialog" aria-expanded="false" aria-controls="eliminar-id">Eliminar ID de AURA…</button>
@@ -218,13 +218,13 @@
         <div class="aura-sheet__grabber" aria-hidden="true"></div>
         <header class="aura-sheet__header">
           <h2 class="aura-sheet__title" id="eliminar-titulo">¿Eliminar tu ID de AURA?</h2>
-          <button class="aura-icon-btn" type="button" data-aura-sheet-close aria-label="Cerrar"><i class="bi bi-x-lg" aria-hidden="true"></i></button>
+          <button class="aura-icon-btn" type="button" data-aura-sheet-close><span class="bi bi-x-lg" aria-hidden="true"></span><span class="visually-hidden">Cerrar</span></button>
         </header>
         <div class="aura-sheet__body">
           <div class="aura-stack aura-stack--stretch">
             <p class="mb-0" id="eliminar-texto">Se borrarán de este navegador el ID de AURA <strong class="cuenta-cortar" data-eliminar-email>actual</strong>, tu nombre y <span data-eliminar-pedidos>tus pedidos</span>. Tu bolsa y tu crédito de AURA Trade In se conservan.</p>
             <div class="aura-alert aura-alert--warn">
-              <i class="bi bi-exclamation-triangle-fill" aria-hidden="true"></i>
+              <span class="bi bi-exclamation-triangle-fill" aria-hidden="true"></span>
               <p class="aura-alert__title">No se puede deshacer</p>
               <p class="aura-alert__text">Tus pedidos no se podrán recuperar. Para volver a iniciar sesión tendrás que crear un ID de AURA nuevo.</p>
             </div>

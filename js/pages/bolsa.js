@@ -193,12 +193,12 @@
     var actions = user
       ? '<a class="aura-btn aura-btn--primary" href="../index.html">Seguir comprando</a>' +
         '<a class="aura-btn aura-btn--secondary" href="cuenta.html">Ver mis pedidos</a>'
-      : '<a class="aura-btn aura-btn--primary" href="login.html?volver=bolsa.html">Iniciar sesión</a>' +
+      : '<a class="aura-btn aura-btn--primary" href="login.html?volver=bolsa.html">Iniciar sesión<span class="visually-hidden"> y volver a la bolsa</span></a>' +
         '<a class="aura-btn aura-btn--secondary" href="../index.html">Seguir comprando</a>';
 
     view.innerHTML =
       '<div class="aura-empty bolsa-empty">' +
-        '<span class="aura-empty__icon"><i class="bi bi-bag" aria-hidden="true"></i></span>' +
+        '<span class="aura-empty__icon"><span class="bi bi-bag" aria-hidden="true"></span></span>' +
         '<h1 class="aura-h1 aura-empty__title" id="bolsa-titulo" tabindex="-1">Tu bolsa está vacía.</h1>' +
         '<p class="aura-empty__text">' + esc(text) + '</p>' +
         '<div class="aura-empty__actions">' + actions + '</div>' +
@@ -253,7 +253,7 @@
             '<div class="aura-summary__row aura-summary__row--total"><dt>Total</dt><dd data-b="total"></dd></div>' +
           '</dl>' +
           '<p class="aura-summary__note"><span data-b="iva"></span>' + ref(1, 'ref-1') + '. <span data-b="cuota"></span>' + ref(2, 'ref-2') + '.</p>' +
-          '<p class="bolsa-bloqueo" id="bolsa-bloqueo" data-b="bloqueo" hidden><i class="bi bi-exclamation-circle" aria-hidden="true"></i><span data-b="bloqueo-texto"></span></p>' +
+          '<p class="bolsa-bloqueo" id="bolsa-bloqueo" data-b="bloqueo" hidden><span class="bi bi-exclamation-circle" aria-hidden="true"></span><span data-b="bloqueo-texto"></span></p>' +
           '<a class="aura-btn aura-btn--primary aura-btn--block" href="checkout.html" data-b="cta" data-bolsa-cta>Tramitar pedido</a>' +
           '<div class="bolsa-trade-cta" data-b="trade-cta">' +
             '<a class="aura-link" href="trade-in.html">Añadir crédito de AURA Trade In</a>' +
@@ -319,7 +319,7 @@
     if (el._key === key) { return; }
     el._key = key;
     el.className = 'bolsa-line__ship' + (info.kind ? ' ' + info.kind : '');
-    el.innerHTML = '<i class="bi ' + info.icon + '" aria-hidden="true"></i><span>' + info.html + '</span>';
+    el.innerHTML = '<span class="bi ' + info.icon + '" aria-hidden="true"></span><span>' + info.html + '</span>';
   }
 
   function careHTML(line) {
@@ -328,17 +328,17 @@
     var price = fmt.eur(catalog.carePrice(line.productId));
     if (line.care) {
       return '<div class="aura-bag-line__care is-on">' +
-          '<span class="aura-bag-line__care-icon"><i class="bi bi-shield-fill-check" aria-hidden="true"></i></span>' +
+          '<span class="aura-bag-line__care-icon"><span class="bi bi-shield-fill-check" aria-hidden="true"></span></span>' +
           '<p class="aura-bag-line__care-title">' + esc(name) + ' incluido</p>' +
           '<p class="aura-bag-line__care-text">Dos años de cobertura por ' + esc(price) + ' la unidad, ya sumados al precio.</p>' +
-          '<button class="aura-link aura-link--plain" type="button" data-b-care aria-label="Quitar ' + esc(name) + ' de ' + esc(line.name) + '">Quitar ' + esc(name) + '</button>' +
+          '<button class="aura-link aura-link--plain" type="button" data-b-care>Quitar ' + esc(name) + '<span class="visually-hidden"> de ' + esc(line.name) + '</span></button>' +
         '</div>';
     }
     return '<div class="aura-bag-line__care">' +
-        '<span class="aura-bag-line__care-icon"><i class="bi bi-shield-check" aria-hidden="true"></i></span>' +
+        '<span class="aura-bag-line__care-icon"><span class="bi bi-shield-check" aria-hidden="true"></span></span>' +
         '<p class="aura-bag-line__care-title">Añade ' + esc(name) + ' por ' + esc(price) + '</p>' +
         '<p class="aura-bag-line__care-text">' + esc(careInfo().description || '') + '</p>' +
-        '<button class="aura-link" type="button" data-b-care aria-label="Añadir ' + esc(name) + ' a ' + esc(line.name) + '">Añadir ' + esc(name) + '</button>' +
+        '<button class="aura-link" type="button" data-b-care>Añadir ' + esc(name) + '<span class="visually-hidden"> a ' + esc(line.name) + '</span></button>' +
       '</div>';
   }
 
@@ -351,16 +351,18 @@
     /* Lo que aún no se puede pedir no lleva cantidad: solo «Eliminar». */
     var stepper = blocked ? '' :
       '<div class="aura-stepper" role="group" aria-label="Cantidad de ' + esc(line.name) + '" data-aura-stepper data-min="1" data-max="' + max + '">' +
-        '<button class="aura-stepper__btn" type="button" data-aura-step="-1" aria-label="Quitar una unidad"><i class="bi bi-dash" aria-hidden="true"></i></button>' +
+        '<button class="aura-stepper__btn" type="button" data-aura-step="-1"><span class="bi bi-dash" aria-hidden="true"></span><span class="visually-hidden">Quitar una unidad</span></button>' +
         '<output class="aura-stepper__value" aria-live="polite" data-b-qty></output>' +
-        '<button class="aura-stepper__btn" type="button" data-aura-step="1" aria-label="Añadir una unidad"><i class="bi bi-plus" aria-hidden="true"></i></button>' +
+        '<button class="aura-stepper__btn" type="button" data-aura-step="1"><span class="bi bi-plus" aria-hidden="true"></span><span class="visually-hidden">Añadir una unidad</span></button>' +
       '</div>';
     return '<li class="aura-bag-line bolsa-line' + (blocked ? ' is-blocked' : '') + '" data-line-id="' + esc(line.lineId) + '">' +
-        /* Enlace duplicado del nombre (fuera del árbol de accesibilidad); el alt
-           describe igualmente la foto real. */
-        '<a class="aura-bag-line__media" href="' + href + '" tabindex="-1" aria-hidden="true">' +
+        /* La foto no es un segundo enlace al mismo sitio que el nombre (TAW,
+           H2): al pulsarla con el ratón o el dedo se sigue el enlace del nombre
+           (delegación, abajo), como antes; fuera del árbol de accesibilidad,
+           el alt describe igualmente la foto real. */
+        '<div class="aura-bag-line__media" data-b-media aria-hidden="true">' +
           (img.slot ? AURA.html.img(img.slot, { fallback: img.fallback, alt: img.alt || line.name, sizes: '(max-width: 575.98px) 88px, 128px' }) : '') +
-        '</a>' +
+        '</div>' +
         '<div class="aura-bag-line__info">' +
           '<h2 class="aura-bag-line__name"><a href="' + href + '">' + esc(line.name) + '</a></h2>' +
           (meta ? '<p class="aura-bag-line__meta">' + meta + '</p>' : '') +
@@ -369,7 +371,7 @@
           '<p class="bolsa-line__ship" data-b-ship></p>' +
           '<div class="aura-bag-line__actions">' +
             stepper +
-            '<button class="aura-link aura-link--plain" type="button" data-b-remove aria-label="Eliminar ' + esc(line.name) + ' de la bolsa">Eliminar</button>' +
+            '<button class="aura-link aura-link--plain" type="button" data-b-remove>Eliminar<span class="visually-hidden"> ' + esc(line.name) + ' de la bolsa</span></button>' +
           '</div>' +
         '</div>' +
         '<div class="aura-bag-line__price">' +
@@ -471,6 +473,13 @@
     });
   }
 
+  /* Ancho en línea en rem, no en px (TAW, C28: el texto grande del navegador
+     lo escala); la cuenta parte del tamaño real de la raíz. */
+  function rem(px) {
+    var raiz = parseFloat(window.getComputedStyle(document.documentElement).fontSize) || 16;
+    return (px / raiz).toFixed(4) + 'rem';
+  }
+
   /* La línea que se va: fuera del flujo, en el sitio exacto donde estaba (las
      de debajo suben por debajo de ella), y se funde. Sin movimiento: se funde
      en su sitio y después se retira. */
@@ -485,7 +494,7 @@
       li.style.position = 'absolute';
       li.style.top = li.offsetTop + 'px';
       li.style.left = li.offsetLeft + 'px';
-      li.style.width = li.offsetWidth + 'px';
+      li.style.width = rem(li.offsetWidth);
       li.style.paddingTop = cs.paddingTop;
       list.appendChild(li);              // la siguiente pasa a ser la primera (sin su relleno superior) desde ya
     }
@@ -857,6 +866,14 @@
   /* Delegación: el marco se repinta con innerHTML, el contenedor no. */
   view.addEventListener('click', function (e) {
     var t = e.target;
+    /* La foto de una línea lleva a su producto: el mismo enlace del nombre
+       (con Ctrl, Cmd o Mayús, en otra pestaña, como un enlace). */
+    var foto = t && t.closest ? t.closest('[data-b-media]') : null;
+    var enlace = foto && foto.parentNode ? foto.parentNode.querySelector('.aura-bag-line__name a') : null;
+    if (enlace) {
+      if (e.ctrlKey || e.metaKey || e.shiftKey) { window.open(enlace.href, '_blank', 'noopener'); } else { enlace.click(); }
+      return;
+    }
     var btn = t && t.closest ? t.closest('[data-b-remove], [data-b-care], [data-b-trade-remove]') : null;
     if (!btn) { return; }
     var li = btn.closest('[data-line-id]');
