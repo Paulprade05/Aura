@@ -29,6 +29,22 @@ Los plugins en desarrollo solo se pueden importar en **la aplicación de escrito
 3. Elige `guia-de-estilo/figma/plugin/manifest.json` de esta carpeta.
 4. El plugin aparece en **Plugins → Desarrollo → AURA — Guía de estilo**.
 
+#### Si Figma no acepta el manifiesto
+
+El formato del manifiesto ha cambiado entre versiones de Figma. Este lleva `"api": 1` (número), porque versiones recientes de la aplicación de escritorio lo exigen: con `"api": "1.0.0"` (texto, como en la documentación antigua) da «invalid type: string "1.0.0", expected u32 at line 4». Si tu Figma dice lo contrario («Expected manifest.api to have type string»), cambia en `plugin/manifest.json` la línea 4 a `"api": "1.0.0",` y vuelve a importarlo.
+
+Si da otro error de manifiesto, haz que lo escriba el propio Figma, que siempre usa el formato de tu versión:
+
+1. **Plugins → Desarrollo → Nuevo plugin…** → elige **Figma design**, ponle el nombre «AURA — Guía de estilo», elige la plantilla más sencilla (sin interfaz) y guárdalo en una carpeta.
+2. En esa carpeta, sustituye su `code.js` por el `plugin/code.js` de aquí.
+3. Abre el `manifest.json` que ha creado Figma y, sin tocar sus campos `api` ni `id`, deja `"main": "code.js"` y añade (o cambia) estas dos entradas:
+   ```json
+   "documentAccess": "dynamic-page",
+   "networkAccess": { "allowedDomains": ["https://aura-lyart-beta.vercel.app"], "reasoning": "Carga el logotipo y las fotos reales de producto de la web publicada de AURA." }
+   ```
+   Si el `manifest.json` de Figma tiene un campo `ui`, bórralo (este plugin crea su propia ventana oculta).
+4. Ejecuta **Plugins → Desarrollo → AURA — Guía de estilo**.
+
 ### Ejecutarlo
 
 1. En un archivo **nuevo** (mejor), ve a **Plugins → Desarrollo → AURA — Guía de estilo**.
