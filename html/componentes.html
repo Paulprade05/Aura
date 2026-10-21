@@ -57,7 +57,7 @@
     @media (min-width: 576px) { .ds-lema-corto { display: none; } }
     .ds-frame { min-width: 0; padding: clamp(1rem, 3vw, 2rem); border: 1px dashed var(--hairline-strong); border-radius: var(--radius-lg); }
     .ds-frame--flush { padding: 0; overflow: hidden; }
-    .ds-frame--photo { border-style: solid; background: radial-gradient(40% 60% at 22% 30%, rgba(0, 113, 227, .55), transparent 70%), radial-gradient(35% 50% at 80% 75%, rgba(229, 169, 60, .35), transparent 70%), #060608; }
+    .ds-frame--photo { border-style: solid; background: radial-gradient(40% 60% at 22% 30%, rgba(0, 115, 230, .55), transparent 70%), radial-gradient(35% 50% at 80% 75%, rgba(229, 169, 60, .35), transparent 70%), #060608; }
     .ds-frame--narrow { max-width: 26rem; }
     .ds-label { display: block; margin-bottom: .75rem; }
     .ds-swatches { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 13rem), 1fr)); }
@@ -89,7 +89,7 @@
     .ds-reveal { display: grid; place-items: center; min-height: 7rem; text-align: center; }
     .ds-spring { position: relative; height: 4.5rem; border: 1px solid var(--hairline); border-radius: var(--radius-pill); background: var(--bg-secondary); overflow: hidden; touch-action: pan-y; cursor: grab; }
     .ds-spring.is-dragging { cursor: grabbing; }
-    .ds-spring__dot { position: absolute; top: .5rem; left: .5rem; width: 3.5rem; height: 3.5rem; border-radius: 50%; background: radial-gradient(circle at 32% 28%, #7cc0ff, var(--accent) 58%, #003a78); box-shadow: 0 0 28px rgba(0, 113, 227, .55); will-change: transform; }
+    .ds-spring__dot { position: absolute; top: .5rem; left: .5rem; width: 3.5rem; height: 3.5rem; border-radius: 50%; background: radial-gradient(circle at 32% 28%, #7cc0ff, var(--accent) 58%, #003a78); box-shadow: 0 0 28px rgba(0, 115, 230, .55); will-change: transform; }
     .ds-readout { font-variant-numeric: tabular-nums; }
   </style>
 
@@ -161,7 +161,7 @@
           <div class="ds-swatch" style="--c:#0a0a0b"><div class="ds-swatch__chip"></div><div class="ds-swatch__meta"><p class="ds-swatch__name">Franja <span>#0a0a0b</span></p><p class="ds-swatch__use">Secciones alternas, casi negras.</p><span class="ds-swatch__var">var(--bg-band)</span></div></div>
           <div class="ds-swatch" style="--c:#161617"><div class="ds-swatch__chip"></div><div class="ds-swatch__meta"><p class="ds-swatch__name">Fondo secundario <span>#161617</span></p><p class="ds-swatch__use">Tarjetas, paneles y agrupación.</p><span class="ds-swatch__var">var(--bg-secondary)</span></div></div>
           <div class="ds-swatch" style="--c:#1d1d1f"><div class="ds-swatch__chip"></div><div class="ds-swatch__meta"><p class="ds-swatch__name">Elevado <span>#1d1d1f</span></p><p class="ds-swatch__use">Capas que flotan sobre una tarjeta.</p><span class="ds-swatch__var">var(--bg-elevated)</span></div></div>
-          <div class="ds-swatch" style="--c:#0071e3"><div class="ds-swatch__chip"></div><div class="ds-swatch__meta"><p class="ds-swatch__name">Acento azul <span>#0071e3</span></p><p class="ds-swatch__use">Acciones, foco y estados interactivos.</p><span class="ds-swatch__var">var(--accent)</span></div></div>
+          <div class="ds-swatch" style="--c:#0073e6"><div class="ds-swatch__chip"></div><div class="ds-swatch__meta"><p class="ds-swatch__name">Acento azul <span>#0073e6</span></p><p class="ds-swatch__use">Rellenos con texto blanco (AA: 4,57:1) y contornos; nunca texto (4,59:1 sobre negro).</p><span class="ds-swatch__var">var(--accent)</span></div></div>
           <div class="ds-swatch" style="--c:#1787f7"><div class="ds-swatch__chip"></div><div class="ds-swatch__meta"><p class="ds-swatch__name">Azul de texto <span>#1787f7</span></p><p class="ds-swatch__use">Enlaces y texto azul (AA: 5,85:1 sobre negro, 5,03:1 sobre tarjeta).</p><span class="ds-swatch__var">var(--accent-link)</span></div></div>
           <div class="ds-swatch" style="--c:#e5a93c"><div class="ds-swatch__chip"></div><div class="ds-swatch__meta"><p class="ds-swatch__name">Dorado premium <span>#e5a93c</span></p><p class="ds-swatch__use">Distinción, metadatos y acentos selectivos.</p><span class="ds-swatch__var">var(--gold)</span></div></div>
           <div class="ds-swatch" style="--c:#f5f5f7"><div class="ds-swatch__chip"></div><div class="ds-swatch__meta"><p class="ds-swatch__name">Texto primario <span>#f5f5f7</span></p><p class="ds-swatch__use">Títulos y contenido de alta prioridad.</p><span class="ds-swatch__var">var(--text-primary)</span></div></div>
@@ -467,7 +467,7 @@
               <span class="aura-field__icon bi bi-envelope" aria-hidden="true"></span>
               <input class="aura-input" id="ds-foco" type="email" placeholder="tu@correo.com" autocomplete="off" aria-describedby="ds-foco-ayuda">
             </div>
-            <p class="aura-field__help" id="ds-foco-ayuda">Estado en foco: borde azul, anillo al 40 % y cristal</p>
+            <p class="aura-field__help" id="ds-foco-ayuda">Estado en foco: borde azul, anillo al 30 % y cristal</p>
           </div>
 
           <div class="aura-field is-invalid">

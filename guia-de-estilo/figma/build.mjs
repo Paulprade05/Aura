@@ -1352,24 +1352,24 @@ const PIEZAS = ['capturas/piezas-auraphone-1440.json', 'capturas/piezas-auraphon
 const CAPTURA_GUIA = leerJSON('capturas/guia-captura.json');
 
 const DEFINICION = {
-  'Botón': { orden: ['Tipo', 'Estado'], prefs: ['Color/Botón/', 'Color/Foco/'], d: 'Botón de AURA: 48 px de alto, píldora (radio 999) y 24 px a los lados; Inter 15 / 600. Una sola primaria por contexto; desactivado legible (3,01:1). Pulsado = escala .97 (en la web, al instante, en pointerdown). Enlace: acción de baja intensidad con «›».' },
+  'Botón': { orden: ['Tipo', 'Estado'], prefs: ['Color/Botón/', 'Color/Foco/'], d: 'Botón de AURA: 48 px de alto, píldora (radio 999) y 24 px a los lados; Inter 15 / 600. Una sola primaria por contexto; desactivado legible (3,01:1). Pulsado = escala .97 (en la web, al instante, en pointerdown; con «reducir movimiento», capa de hover encendida y, en el primario, relleno más oscuro: nunca atenuado). Enlace: acción de baja intensidad con «›».' },
   'Botón de icono': { orden: ['Estilo', 'Estado'], d: 'Botón de icono de 44 px (objetivo táctil). Su nombre va como texto oculto en la web. Pulsado = escala .92.' },
   'Insignia': { orden: ['Estilo', 'Tipo'], d: 'Insignia: píldora de 24 px con dorado suave (Inter 12 / 650) o etiqueta técnica mono en mayúsculas (radio 8). El color lo da el tipo.' },
   'Chip': { orden: ['Tipo', 'Estado'], d: 'Chip: 28 px (etiqueta) o 36 px (pulsable, 44 px en táctil). Activo: contorno azul de texto y tinte azul.' },
-  'Campo de texto': { orden: ['Tipo', 'Estado'], prefs: ['Color/Campo/', 'Color/Foco/'], d: 'Campo de 56 px con etiqueta persistente (13 / 500), icono de apoyo, ayuda y error con icono. Foco: borde azul de texto + anillo de 4 px al 40 % + cristal.' },
+  'Campo de texto': { orden: ['Tipo', 'Estado'], prefs: ['Color/Campo/', 'Color/Foco/'], d: 'Campo de 56 px con etiqueta persistente (13 / 500), icono de apoyo, ayuda y error con icono. Foco: borde azul de texto + anillo de 4 px al 30 % (el borde conserva 3:1 contra él) + cristal.' },
   'Casilla': { orden: ['Tipo', 'Estado'], d: 'Casilla y radio de 20 px en una fila de 44 px; el orden es control → etiqueta.' },
   'Muestra de color': { orden: ['Tamaño', 'Estado'], prefs: ['Color/Acabado/'], d: 'Muestra de acabado: 32 px en un objetivo de 44 (elegida con anillo azul de 2 px separado 3) o punto informativo de 12 px. Cambia el color en la capa «Color».' },
-  'Opción de segmentado': { orden: ['Estado'], d: 'Opción del control segmentado: 40 px (44 en táctil), Inter 14 / 500.' },
+  'Opción de segmentado': { orden: ['Estado'], d: 'Opción del control segmentado: 40 px (44 en táctil), Inter 14 / 500. Foco: contorno en Color/Acento/Texto hover (pisa la pastilla vecina).' },
   'Segmentado': { d: 'Control segmentado de cuatro opciones: una sola pastilla elegida sobre Relleno 2.' },
   'Nota': { orden: ['Tipo'], d: 'Nota de uso de las páginas: icono dorado sobre dorado suave (o azul, informativa).' },
-  'Aviso': { orden: ['Tipo'], d: 'Aviso (toast) de material fino: estado, completado, aviso y error; con acción opcional.' },
+  'Aviso': { orden: ['Tipo'], d: 'Aviso (toast) de material grueso (su acción es texto azul y pasa sobre cualquier foto): estado, completado, aviso y error; con acción opcional en Color/Acento/Texto hover.' },
   'Alerta': { orden: ['Tipo'], d: 'Mensaje dentro del formulario o de la página: siempre icono + texto.' },
   'Nota al pie': { d: 'Nota al pie numerada con «volver al texto».' },
   'Tarjeta de producto': { d: 'Tarjeta de modelo: foto real (la primera vista del acabado por defecto) sobre el halo azul, antetítulo, nombre, acabado en azul, puntos de color, texto, disponibilidad, precio y botón.' },
   'Tarjeta de familia': { d: 'Tarjeta de familia: foto, antetítulo de familia, lema, texto, «Desde» y enlace a la familia.' },
   'Barra global': { orden: ['Tamaño'], d: 'Barra global: material regular negro de 56 px, marca, familias y acciones (buscar, bolsa, cuenta).' },
   'Cinta': { orden: ['Tamaño'], d: 'Cinta de aviso bajo la barra global (Inter 13).' },
-  'Barra local': { orden: ['Tamaño'], d: 'Barra local de familia: material regular de 52 px, título (sube arriba del todo), secciones y «Comprar ›».' },
+  'Barra local': { orden: ['Tamaño'], d: 'Barra local de familia: material regular de 52 px, título (sube arriba del todo), secciones y «Comprar ›» (en Color/Acento/Texto hover: texto azul sobre cristal).' },
   'Pie': { orden: ['Tamaño'], d: 'Pie global sobre --bg-footer: marca, lema, directorio, redes y legal.' },
 };
 
@@ -1829,7 +1829,7 @@ function compilarAnexoFotos() {
     const hex = t.$value.hex;
     const fotosNodos = fotos.slice(0, 3).map((f, i) => ({ k: 'IMG', n: 'Foto · ' + f.vista, src: claveImagen(f.archivo), w: i === 0 ? 300 : 146, h: i === 0 ? 225 : 109.5, fit: 'FIT', bm: 'LIGHTEN' }));
     const media = { k: 'F', n: 'Fotos', lm: 'V', w: 300, h: 340, sw: 'F', sh: 'H', gap: 8, pad: [0, 0, 0, 0], c: [
-      { k: 'F', n: 'Principal', lm: 'N', w: 300, h: 225, sw: 'F', sh: 'F', r: 12, cl: 1, fi: [pintura([0, 0, 0, 1], 'fondo'), { g: 'R', m: [[0.714, 0, 0.143], [0, 0.833, -0.017]], s: [[0, 0, 113, 227, 0.16], [0.7, 0, 113, 227, 0]] }], c: fotosNodos[0] ? [Object.assign(fotosNodos[0], { x: 0, y: 0 })] : [] },
+      { k: 'F', n: 'Principal', lm: 'N', w: 300, h: 225, sw: 'F', sh: 'F', r: 12, cl: 1, fi: [pintura([0, 0, 0, 1], 'fondo'), { g: 'R', m: [[0.714, 0, 0.143], [0, 0.833, -0.017]], s: [[0, 0, 115, 230, 0.16], [0.7, 0, 115, 230, 0]] }], c: fotosNodos[0] ? [Object.assign(fotosNodos[0], { x: 0, y: 0 })] : [] },
       { k: 'F', n: 'Otras vistas', lm: 'H', w: 300, h: 109.5, sw: 'F', sh: 'H', gap: 8, pad: [0, 0, 0, 0], c: fotosNodos.slice(1).map((n) => ({ k: 'F', n: 'Vista', lm: 'N', w: 146, h: 109.5, sw: 'F', sh: 'F', r: 8, cl: 1, fi: [pintura([10, 10, 11, 1], 'fondo')], c: [Object.assign(n, { x: 0, y: 0 })] })) },
     ] };
     const muestra = { k: 'I', comp: 'Muestra de color', v: { 'Tamaño': 'Punto', Estado: 'Normal' }, w: 12, h: 12, ov: [{ n: 'Color', fi: { v: 'Color/Acabado/' + producto + '/' + acabado } }] };

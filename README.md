@@ -89,7 +89,8 @@ guia-de-estilo/                guía de estilo v2 (HTML y PDF), la v1 original e
 La guía de estilo completa es la **v2**: [`guia-de-estilo/guia-de-estilo.html`](guia-de-estilo/guia-de-estilo.html) (también en [PDF](<guia-de-estilo/AURA — Guía de estilo v2.pdf>)). Recoge los 17 capítulos del sistema: amplía los 4 de la v1 y añade 13 nuevos con todo lo que ha traído la web (iconografía, materiales, layout, navegación, componentes de contenido, tienda, overlays, movimiento, escena con scroll, imagen, accesibilidad, voz y familias). La v1 original, `AURA — Guía de estilo.pdf`, se conserva tal cual.
 
 - **Guía de estilo AURA:**
-  - Fondo `#000` y `#161617`, azul `#0071e3` solo para lo interactivo y dorado `#e5a93c` para los acentos.
+  - Fondo `#000` y `#161617`, azul `#0073e6` solo para lo interactivo y dorado `#e5a93c` para los acentos.
+  - Azul accesible (WCAG 2.x AA): `#0073e6` da 4,59:1 sobre negro y 4,57:1 con texto blanco encima, y va solo en rellenos con texto blanco y en contornos; el texto azul (enlaces, etiquetas, cifras) usa `#1787f7`, 5,85:1 sobre negro y 5,03:1 sobre tarjeta.
   - Kanit en los titulares (56/42/28) e Inter en el texto.
   - Botones de 48 px con radio completo y campos con anillo azul al enfocar.
 - **Skill apple-design:**
