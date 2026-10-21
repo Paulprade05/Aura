@@ -37,26 +37,26 @@
     "Acento": {
       "Azul": {
         "$type": "color",
-        "$value": { "colorSpace": "srgb", "components": [0, 0.443137, 0.890196], "alpha": 1, "hex": "#0071e3" },
-        "$description": "Acciones, foco y estados interactivos: relleno del primario (blanco encima, 4,70:1) y contornos. Como texto no llega a AA (4,47:1).",
+        "$value": { "colorSpace": "srgb", "components": [0, 0.45098, 0.901961], "alpha": 1, "hex": "#0073e6" },
+        "$description": "Azul de marca: SOLO relleno con texto blanco encima (primario, contador: 4,57:1) y componentes no textuales (contornos, casillas, pasos: 4,59:1 sobre negro, 3,96:1 sobre tarjeta). Nunca texto: el texto azul es Color/Acento/Texto.",
         "$extensions": { "com.aura": { "css": "--accent" } }
       },
       "Hover": {
         "$type": "color",
-        "$value": { "colorSpace": "srgb", "components": [0, 0.454902, 0.909804], "alpha": 1, "hex": "#0074e8" },
-        "$description": "Relleno del primario al pasar el ratón (4,50:1 con blanco).",
+        "$value": { "colorSpace": "srgb", "components": [0, 0.45098, 0.909804], "alpha": 1, "hex": "#0073e8" },
+        "$description": "Relleno del primario al pasar el ratón (4,55:1 con blanco, 4,62:1 sobre negro).",
         "$extensions": { "com.aura": { "css": "--accent-hover" } }
       },
       "Texto": {
         "$type": "color",
         "$value": { "colorSpace": "srgb", "components": [0.090196, 0.529412, 0.968627], "alpha": 1, "hex": "#1787f7" },
-        "$description": "Azul para TEXTO: enlaces, iconos, foco y contorno del secundario en hover (5,85:1 sobre negro, 5,03:1 sobre tarjeta).",
+        "$description": "Azul para TEXTO: enlaces, etiquetas, cifras e iconos que informan, foco y contorno del secundario en hover (5,85:1 sobre negro, 5,03:1 sobre tarjeta, 4,68:1 sobre elevado).",
         "$extensions": { "com.aura": { "css": "--accent-link" } }
       },
       "Texto hover": {
         "$type": "color",
         "$value": { "colorSpace": "srgb", "components": [0.290196, 0.639216, 1], "alpha": 1, "hex": "#4aa3ff" },
-        "$description": "Etiqueta del secundario en hover y en foco, y enlaces sin clase (7,97:1 sobre negro).",
+        "$description": "Etiqueta del secundario en hover, en foco y pulsado, enlaces sin clase y todo texto azul sobre un tinte azul (insignia azul), sobre cristal o sobre una foto (acción del aviso, «Comprar ›» de la barra local, enlace de tesela con foto): 7,97:1 sobre negro, ≥ 5,49:1 sobre el tinte, ≥ 4,67:1 sobre cristal. También el contorno de foco del segmentado (3,7:1 contra la pastilla vecina).",
         "$extensions": { "com.aura": { "css": "--accent-link-hover" } }
       },
       "Brillante": {
@@ -67,19 +67,19 @@
       },
       "Suave": {
         "$type": "color",
-        "$value": { "colorSpace": "srgb", "components": [0, 0.443137, 0.890196], "alpha": 0.16, "hex": "#0071e3" },
+        "$value": { "colorSpace": "srgb", "components": [0, 0.45098, 0.901961], "alpha": 0.16, "hex": "#0073e6" },
         "$description": "Fondo de lo elegido (opción, chip activo, paso actual) y tinte del secundario.",
         "$extensions": { "com.aura": { "css": "--accent-soft" } }
       },
       "Anillo": {
         "$type": "color",
-        "$value": { "colorSpace": "srgb", "components": [0, 0.443137, 0.890196], "alpha": 0.4, "hex": "#0071e3" },
-        "$description": "Anillo de 4 px de los campos en foco (guía §04).",
+        "$value": { "colorSpace": "srgb", "components": [0, 0.45098, 0.901961], "alpha": 0.3, "hex": "#0073e6" },
+        "$description": "Anillo de 4 px de los campos en foco (guía §04). Al 30 % (la v1, 40 %): el contorno #1787f7 pegado a él conserva 3:1 sobre elevado (3,39:1; al 40 %, 2,96:1).",
         "$extensions": { "com.aura": { "css": "--accent-ring" } }
       },
       "Selección": {
         "$type": "color",
-        "$value": { "colorSpace": "srgb", "components": [0, 0.443137, 0.890196], "alpha": 0.6, "hex": "#0071e3" },
+        "$value": { "colorSpace": "srgb", "components": [0, 0.45098, 0.901961], "alpha": 0.6, "hex": "#0073e6" },
         "$description": "Fondo del texto seleccionado (texto blanco encima).",
         "$extensions": { "com.aura": { "css": "::selection" } }
       }
@@ -427,7 +427,7 @@
         "Borde": {
           "$type": "color",
           "$value": "{Color.Acento.Azul}",
-          "$description": "Contorno del secundario en reposo (4,5:1 sobre negro como límite de control).",
+          "$description": "Contorno del secundario en reposo (4,59:1 sobre negro, 3,96:1 sobre tarjeta: límite de control ≥ 3:1).",
           "$extensions": { "com.aura": { "css": ".aura-btn--secondary" } }
         },
         "Borde hover": {
@@ -534,7 +534,7 @@
       "Contorno": {
         "$type": "color",
         "$value": "{Color.Acento.Texto}",
-        "$description": "Contorno de foco de 2 px a 3 px del elemento (:focus-visible).",
+        "$description": "Contorno de foco de 2 px a 3 px del elemento (:focus-visible). En el segmentado, Color/Acento/Texto hover.",
         "$extensions": { "com.aura": { "css": ":focus-visible" } }
       },
       "Anillo": {
@@ -560,7 +560,7 @@
       "Fino": {
         "$type": "color",
         "$value": { "colorSpace": "srgb", "components": [0.113725, 0.113725, 0.121569], "alpha": 0.72, "hex": "#1d1d1f" },
-        "$description": "Material fino: avisos y tarjeta de cristal (desenfoque 16 px).",
+        "$description": "Material fino: tarjeta de cristal y botón secundario sobre la escena (desenfoque 16 px).",
         "$extensions": { "com.aura": { "css": "--glass-thin-bg" } }
       },
       "Regular": {
@@ -572,7 +572,7 @@
       "Grueso": {
         "$type": "color",
         "$value": { "colorSpace": "srgb", "components": [0.086275, 0.086275, 0.090196], "alpha": 0.88, "hex": "#161617" },
-        "$description": "Material grueso: hoja, buscador, barra de compra (desenfoque 40 px).",
+        "$description": "Material grueso: avisos, hoja, buscador, barra de compra (desenfoque 40 px). El aviso va en grueso: su acción es texto azul y pasa sobre cualquier foto.",
         "$extensions": { "com.aura": { "css": "--glass-thick-bg" } }
       },
       "Aviso sólido": {
@@ -611,31 +611,31 @@
     "Luz": {
       "Panel de producto": {
         "$type": "color",
-        "$value": { "colorSpace": "srgb", "components": [0, 0.443137, 0.890196], "alpha": 0.16, "hex": "#0071e3" },
+        "$value": { "colorSpace": "srgb", "components": [0, 0.45098, 0.901961], "alpha": 0.16, "hex": "#0073e6" },
         "$description": "Halo radial (70 % × 60 % en 50 % 62 %) tras la foto de la tarjeta de modelo y de familia, sobre #000.",
         "$extensions": { "com.aura": { "css": ".aura-product-card__media" } }
       },
       "Galería": {
         "$type": "color",
-        "$value": { "colorSpace": "srgb", "components": [0, 0.443137, 0.890196], "alpha": 0.22, "hex": "#0071e3" },
+        "$value": { "colorSpace": "srgb", "components": [0, 0.45098, 0.901961], "alpha": 0.22, "hex": "#0073e6" },
         "$description": "Halo radial (60 % × 55 % en 50 % 56 %) del configurador y de los héroes con halo.",
         "$extensions": { "com.aura": { "css": ".aura-gallery · .aura-media--halo" } }
       },
       "Sección": {
         "$type": "color",
-        "$value": { "colorSpace": "srgb", "components": [0, 0.443137, 0.890196], "alpha": 0.18, "hex": "#0071e3" },
+        "$value": { "colorSpace": "srgb", "components": [0, 0.45098, 0.901961], "alpha": 0.18, "hex": "#0073e6" },
         "$description": "Resplandor de fondo de una sección (.aura-halo), hasta 30 rem de radio.",
         "$extensions": { "com.aura": { "css": ".aura-halo" } }
       },
       "Cifra": {
         "$type": "color",
-        "$value": { "colorSpace": "srgb", "components": [0, 0.443137, 0.890196], "alpha": 0.26, "hex": "#0071e3" },
+        "$value": { "colorSpace": "srgb", "components": [0, 0.45098, 0.901961], "alpha": 0.26, "hex": "#0073e6" },
         "$description": "Resplandor circular de la gran cifra.",
         "$extensions": { "com.aura": { "css": ".aura-stat--xl" } }
       },
       "Hueco": {
         "$type": "color",
-        "$value": { "colorSpace": "srgb", "components": [0, 0.443137, 0.890196], "alpha": 0.24, "hex": "#0071e3" },
+        "$value": { "colorSpace": "srgb", "components": [0, 0.45098, 0.901961], "alpha": 0.24, "hex": "#0073e6" },
         "$description": "Resplandor del hueco de imagen (sobre degradado #111113 → #08080a).",
         "$extensions": { "com.aura": { "css": ".aura-slot" } }
       }
@@ -2205,7 +2205,7 @@
     "Anillo de foco": {
       "$type": "dimension",
       "$value": { "value": 4, "unit": "px" },
-      "$description": "Anillo azul al 40 % de los campos en foco.",
+      "$description": "Anillo azul al 30 % de los campos en foco.",
       "$extensions": { "com.aura": { "css": ".aura-input:focus" } }
     }
   },
@@ -5336,7 +5336,7 @@
           "inset": false
         },
         {
-          "color": { "colorSpace": "srgb", "components": [0, 0.443137, 0.890196], "alpha": 0.85, "hex": "#0071e3" },
+          "color": { "colorSpace": "srgb", "components": [0, 0.45098, 0.901961], "alpha": 0.85, "hex": "#0073e6" },
           "offsetX": { "value": 0, "unit": "px" },
           "offsetY": { "value": 10, "unit": "px" },
           "blur": { "value": 30, "unit": "px" },

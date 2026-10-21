@@ -72,13 +72,22 @@
   --bg-band: #0a0a0b;
   --bg-footer: #111113;
 
-  --accent: #0071e3;
-  --accent-hover: #0074e8;            /* más luminoso y aún AA con texto blanco */
-  --accent-link: #1787f7;             /* azul para TEXTO (el de la v1 y del prototipo de Inicio): 5,85:1 sobre negro, 5,03:1 sobre tarjeta */
+  /* Azul de marca: SOLO rellenos con texto blanco encima y componentes no
+     textuales (contornos, casillas, pasos). #0073e6 es el azul de la guía
+     algo más claro (el de antes se quedaba en 4,47:1 sobre negro) y cumple AA
+     en las dos direcciones: 4,59:1 sobre negro y 4,57:1 con texto blanco
+     encima (3,96:1 sobre tarjeta, ≥ 3:1 como límite de control). Más claro ya
+     no podría llevar texto blanco. El texto azul va en --accent-link. */
+  --accent: #0073e6;
+  --accent-hover: #0073e8;            /* más luminoso y aún AA: 4,62:1 sobre negro y 4,55:1 con texto blanco */
+  --accent-link: #1787f7;             /* azul para TEXTO (enlaces, etiquetas, cifras e iconos que informan; el de la v1 y del prototipo de Inicio): 5,85:1 sobre negro, 5,03:1 sobre tarjeta, 4,68:1 sobre #1d1d1f */
   --accent-link-hover: #4aa3ff;       /* hover del texto azul: más luminoso (7,97:1 sobre negro; 5,5:1 aun con el tinte --accent-soft encima de una tarjeta) */
   --accent-bright: #1787f7;           /* hover de la guía §03: solo trazos (borde del secundario), nunca relleno con texto blanco. Hoy coincide con --accent-link */
-  --accent-soft: rgba(0, 113, 227, .16);
-  --accent-ring: rgba(0, 113, 227, .4);
+  --accent-soft: rgba(0, 115, 230, .16);
+  /* Anillo de foco al 30 % (la v1 dice 40 %): el borde o contorno #1787f7 va
+     pegado a él y, al 40 %, sobre una superficie elevada (#1d1d1f) se quedaba
+     en 2,96:1 contra el anillo; al 30 %, 3,39:1 (3,64:1 sobre tarjeta). */
+  --accent-ring: rgba(0, 115, 230, .3);
   --gold: #e5a93c;
   --gold-soft: rgba(229, 169, 60, .14);
 
@@ -124,9 +133,12 @@
   /* Materiales: cuanto mayor la superficie, más grueso (más desenfoque).
      Cada nivel es una pareja fondo + filtro; no se mezclan niveles ni se
      escribe un blur() a mano.
-       fino     → avisos, tarjeta de cristal
+       fino     → tarjeta de cristal, botón secundario sobre la escena
        regular  → popover, barra global, barra local
-       grueso   → hoja, buscador, menú móvil, barra de compra */
+       grueso   → avisos, hoja, buscador, menú móvil, barra de compra
+     El aviso es pequeño pero va en grueso: lleva una acción azul (texto) y
+     flota sobre cualquier foto; con el fino, sobre una foto clara, se quedaba
+     por debajo de 4,5:1. */
   --glass-nav-bg: rgba(0, 0, 0, .72);       /* la barra global es negra, con el filtro regular */
   --glass-nav-thick-bg: rgba(0, 0, 0, .86); /* el menú móvil: negro como la barra, con el filtro grueso */
   --glass-thin-bg: rgba(29, 29, 31, .72);
@@ -159,7 +171,7 @@
   --shadow-1: 0 1px 2px rgba(0, 0, 0, .5);
   --shadow-2: 0 14px 36px -10px rgba(0, 0, 0, .7), 0 2px 8px rgba(0, 0, 0, .4);
   --shadow-3: 0 36px 90px -16px rgba(0, 0, 0, .85), 0 10px 28px rgba(0, 0, 0, .55);
-  --glow-accent: 0 0 0 1px rgba(23, 135, 247, .22), 0 10px 30px -6px rgba(0, 113, 227, .85);
+  --glow-accent: 0 0 0 1px rgba(23, 135, 247, .22), 0 10px 30px -6px rgba(0, 115, 230, .85);
 
   /* Tipografía. Detrás de cada fuente web, su reserva con métricas ajustadas
      (ver «Fuentes de reserva», arriba): mientras llegan Inter y Kanit el texto
@@ -233,7 +245,7 @@
   --bs-tertiary-bg: var(--bg-elevated);
   --bs-tertiary-bg-rgb: 29, 29, 31;
   --bs-primary: var(--accent);
-  --bs-primary-rgb: 0, 113, 227;
+  --bs-primary-rgb: 0, 115, 230;
   --bs-link-color: var(--accent-link);
   --bs-link-color-rgb: 23, 135, 247;
   --bs-link-hover-color: var(--accent-link-hover);
@@ -339,7 +351,7 @@ hr {
 }
 
 ::selection {
-  background: rgba(0, 113, 227, .6);
+  background: rgba(0, 115, 230, .6);
   color: #fff;
 }
 
@@ -1207,7 +1219,11 @@ html:has(.aura-ribbon) { --ribbon-h: 2.6875rem; }
    contextual de la guía, no un botón: la barra es cromo de cristal y la
    única primaria azul de la vista es la del héroe (guía §03: una primaria por
    contexto; botones solo de 48 px). Ocupa todo el alto de la barra (objetivo
-   táctil de sobra), no se parte y nunca cede: cede el título. */
+   táctil de sobra), no se parte y nunca cede: cede el título. Es texto azul
+   sobre cristal (regular, 74 %) que deja pasar las fotos de la página: va en
+   --accent-link-hover, ≥ 4,67:1 con la foto más clara que pasa por detrás
+   (#1787f7 bajaba a 3,8:1 en el auraPhone a 390 px; ahí da 5,15:1). Con el
+   ratón encima no cambia de color: se subraya. */
 .aura-localnav__inner > a.aura-link.aura-localnav__action {
   display: inline-flex;
   align-items: center;
@@ -1215,6 +1231,7 @@ html:has(.aura-ribbon) { --ribbon-h: 2.6875rem; }
   flex: none;
   min-height: 0;
   padding-block: 0;
+  color: var(--accent-link-hover);
   font-size: .875rem;
   letter-spacing: 0;
   white-space: nowrap;
@@ -1421,7 +1438,7 @@ body:has(.aura-localnav) .aura-nav .aura-popover {
   pointer-events: none;
   transition: opacity var(--dur-1) ease;
 }
-/* Contorno en el azul de la guía (#0071e3: 4,5:1 sobre negro y 3,9:1 sobre
+/* Contorno en el azul de la guía (#0073e6: 4,59:1 sobre negro y 3,96:1 sobre
    #161617 como límite de control); al pasar el ratón, el borde gana
    luminosidad (#1787f7, guía §03) y el fondo, el tinte azul. Etiqueta en el
    azul para texto (--accent-link), que es el que llega a AA; con el tinte
@@ -1692,7 +1709,9 @@ button.aura-chip:active, a.aura-chip:active, .aura-chip.is-pressed { transform: 
   letter-spacing: .1em;
   text-transform: uppercase;
 }
-.aura-badge--blue { background: var(--accent-soft); color: var(--accent-link); }
+/* Texto azul sobre el tinte azul: --accent-link-hover, que da ≥ 5,49:1 sobre
+   cualquier superficie (#1787f7 sobre el tinte de una tarjeta baja a 4,34:1). */
+.aura-badge--blue { background: var(--accent-soft); color: var(--accent-link-hover); }
 .aura-badge--ok { background: rgba(48, 209, 88, .14); color: var(--ok); }
 .aura-badge--warn { background: rgba(255, 214, 10, .12); color: var(--warn); }
 .aura-badge--error { background: rgba(255, 69, 58, .14); color: var(--error); }
@@ -1814,6 +1833,12 @@ button.aura-segmented__item[aria-selected="true"] {
   outline: 2px solid var(--accent-link);
   outline-offset: 2px;
 }
+/* El contorno de foco de un ítem pisa la pastilla del ítem vecino (blanco al
+   16 %), contra la que #1787f7 se queda en 2,7:1: en el segmentado va en
+   --accent-link-hover, 3,7:1 contra la pastilla y ≥ 3:1 contra la pista. */
+.aura-segmented__item > input:focus-visible + span,
+a.aura-segmented__item:focus-visible,
+button.aura-segmented__item:focus-visible { outline-color: var(--accent-link-hover); }
 @media (hover: hover) {
   .aura-segmented__item:hover > input + span,
   a.aura-segmented__item:hover,
@@ -1870,7 +1895,7 @@ a.aura-card:active, .aura-card--interactive:active, .aura-card.is-pressed {
 }
 .aura-media--halo {
   background:
-    radial-gradient(60% 55% at 50% 55%, rgba(0, 113, 227, .22), transparent 70%),
+    radial-gradient(60% 55% at 50% 55%, rgba(0, 115, 230, .22), transparent 70%),
     var(--bg-main);
 }
 .aura-media--frame { border: 1px solid var(--hairline); }
@@ -2014,7 +2039,7 @@ a.aura-card:active, .aura-card--interactive:active, .aura-card.is-pressed {
   box-shadow: none;
 }
 .aura-media--halo:is(.aura-hero__media, .aura-split__media):has(> .aura-img.is-loaded):not(:has(> .aura-media__caption, > .aura-media__overlay)) {
-  background: radial-gradient(60% 55% at 50% 55%, rgba(0, 113, 227, .22), transparent 70%);
+  background: radial-gradient(60% 55% at 50% 55%, rgba(0, 115, 230, .22), transparent 70%);
 }
 /* Además, «aclarar»: sobre la franja (#0a0a0b) o el halo, el negro de la foto
    toma el del fondo y no queda un parche más oscuro en el centro. Sobre el
@@ -2038,7 +2063,7 @@ a.aura-card:active, .aura-card--interactive:active, .aura-card.is-pressed {
   border: 1px solid var(--hairline);
   border-radius: var(--radius-md);
   background:
-    radial-gradient(closest-side at 50% 46%, rgba(0, 113, 227, .24), transparent 72%),
+    radial-gradient(closest-side at 50% 46%, rgba(0, 115, 230, .24), transparent 72%),
     linear-gradient(180deg, #111113, #08080a);
   color: var(--text-secondary);
 }
@@ -2057,9 +2082,11 @@ a.aura-card:active, .aura-card--interactive:active, .aura-card.is-pressed {
   height: 3rem;
   border: 1px solid rgba(23, 135, 247, .5);
   border-radius: 50%;
-  color: var(--accent-link);
+  /* Decorativo (aria-hidden: el nombre lo lleva el hueco, role="img"), pero
+     sobre su propio halo azul #1787f7 quedaba en 2,9:1; más claro se lee. */
+  color: var(--accent-link-hover);
   font-size: 1.125rem;
-  box-shadow: 0 0 0 6px rgba(0, 113, 227, .09), 0 0 28px rgba(0, 113, 227, .4);
+  box-shadow: 0 0 0 6px rgba(0, 115, 230, .09), 0 0 28px rgba(0, 115, 230, .4);
 }
 .aura-slot__path {
   font-family: var(--font-mono);
@@ -2212,6 +2239,11 @@ a.aura-card:active, .aura-card--interactive:active, .aura-card.is-pressed {
    tamaño y el peso. Con el 82 % de antes, sobre zonas claras de la foto
    quedaba en 4,3:1. */
 .aura-tile--cover .aura-tile__text { color: var(--text-primary); }
+/* Lo mismo con el enlace azul: sobre la foto, aun con la protección, #1787f7
+   bajaba a 4,1:1 en las zonas claras («Revela miles de RAW», auraBook). Va en
+   --accent-link-hover (≥ 5,39:1 ahí), también con el ratón encima. */
+.aura-tile--cover .aura-link,
+.aura-tile--cover .aura-link:hover { color: var(--accent-link-hover); }
 /* La etiqueta va arriba, donde no llega el degradado del texto: tiene su
    propia protección (--photo-scrim-top), solo si la tesela lleva etiqueta. */
 .aura-tile--cover:has(> .aura-tile__tag) .aura-tile__media::before {
@@ -2299,7 +2331,7 @@ a.aura-card:active, .aura-card--interactive:active, .aura-card.is-pressed {
   overflow: hidden;
   isolation: isolate;
   background:
-    radial-gradient(70% 60% at 50% 62%, rgba(0, 113, 227, .16), transparent 70%),
+    radial-gradient(70% 60% at 50% 62%, rgba(0, 115, 230, .16), transparent 70%),
     var(--bg-main);
 }
 .aura-product-card__media > .aura-img,
@@ -2522,7 +2554,7 @@ a.aura-card:active, .aura-card--interactive:active, .aura-card.is-pressed {
   isolation: isolate;
   border-bottom: 1px solid var(--hairline);
   background:
-    radial-gradient(70% 60% at 50% 62%, rgba(0, 113, 227, .16), transparent 70%),
+    radial-gradient(70% 60% at 50% 62%, rgba(0, 115, 230, .16), transparent 70%),
     var(--bg-main);
 }
 .aura-family-card__media > .aura-img,
@@ -2603,7 +2635,7 @@ a.aura-card:active, .aura-card--interactive:active, .aura-card.is-pressed {
   margin-inline: auto;
   padding: clamp(1.5rem, 5vw, 3rem);
   text-align: center;
-  background: radial-gradient(closest-side, rgba(0, 113, 227, .26), transparent 78%);
+  background: radial-gradient(closest-side, rgba(0, 115, 230, .26), transparent 78%);
 }
 .aura-stat--xl .aura-stat__value {
   font-size: clamp(5rem, 2.5rem + 12vw, 10rem);
@@ -2630,7 +2662,7 @@ a.aura-card:active, .aura-card--interactive:active, .aura-card.is-pressed {
   margin-inline: 0;
   padding: 1.5rem .5rem 1.25rem;
   text-align: center;
-  background: radial-gradient(closest-side, rgba(0, 113, 227, .22), transparent 80%);
+  background: radial-gradient(closest-side, rgba(0, 115, 230, .22), transparent 80%);
 }
 .aura-stat--md .aura-stat__value,
 .aura-summary .aura-stat--xl .aura-stat__value {
@@ -3051,7 +3083,7 @@ ul.aura-footnotes__list { list-style: none; }
   border-radius: 50%;
   background:
     radial-gradient(circle at 82% 16%, var(--gold) 0 1.1%, transparent 1.9%),
-    radial-gradient(closest-side, rgba(0, 113, 227, .3), transparent 92%);
+    radial-gradient(closest-side, rgba(0, 115, 230, .3), transparent 92%);
   pointer-events: none;
 }
 .aura-glow::before {
@@ -3060,7 +3092,7 @@ ul.aura-footnotes__list { list-style: none; }
   inset: 21%;
   border: 1px solid rgba(23, 135, 247, .4);
   border-radius: 50%;
-  background: radial-gradient(closest-side, rgba(0, 113, 227, .28), transparent);
+  background: radial-gradient(closest-side, rgba(0, 115, 230, .28), transparent);
 }
 .aura-glow::after {
   content: "";
@@ -3068,7 +3100,7 @@ ul.aura-footnotes__list { list-style: none; }
   inset: 40%;
   border-radius: 50%;
   background: radial-gradient(circle at 38% 32%, #63b8ff, var(--accent) 62%);
-  box-shadow: 0 0 2.5rem rgba(0, 113, 227, .85), 0 0 0 .375rem rgba(0, 113, 227, .2);
+  box-shadow: 0 0 2.5rem rgba(0, 115, 230, .85), 0 0 0 .375rem rgba(0, 115, 230, .2);
 }
 .aura-glow--sm { --size: 8rem; }
 .aura-glow--lg { --size: 24rem; }
@@ -3081,8 +3113,8 @@ ul.aura-footnotes__list { list-style: none; }
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: radial-gradient(45% 50% at 50% 50%, rgba(0, 113, 227, .18), transparent);
-  background: radial-gradient(min(30rem, 45%) min(30rem, 50%) at 50% 50%, rgba(0, 113, 227, .18), transparent);
+  background: radial-gradient(45% 50% at 50% 50%, rgba(0, 115, 230, .18), transparent);
+  background: radial-gradient(min(30rem, 45%) min(30rem, 50%) at 50% 50%, rgba(0, 115, 230, .18), transparent);
   pointer-events: none;
 }
 .aura-halo ~ * { position: relative; z-index: 1; }
@@ -3214,7 +3246,7 @@ ul.aura-footnotes__list { list-style: none; }
   .aura-input:hover, .aura-select:hover, .aura-textarea:hover { border-color: var(--field-border-hover); }
 }
 
-/* Foco (guía §04): borde azul + anillo azul al 40 % pegado + «cristal» (el
+/* Foco (guía §04): borde azul + anillo azul al 30 % pegado + «cristal» (el
    fondo gana luz y un filo claro arriba). El cristal se suma al borde azul,
    nunca lo sustituye; el cambio es instantáneo. Sin resplandor exterior. */
 .aura-input:focus,
@@ -3939,7 +3971,7 @@ body.has-buybar:not(:has(.aura-footer)) { padding-bottom: var(--buybar-h, calc(4
   overflow: hidden;
   border-radius: var(--radius-md);
   background:
-    radial-gradient(closest-side, rgba(0, 113, 227, .18), transparent),
+    radial-gradient(closest-side, rgba(0, 115, 230, .18), transparent),
     var(--bg-main);
 }
 .aura-bag-line__media > .aura-img,
@@ -4251,7 +4283,7 @@ body.has-buybar:not(:has(.aura-footer)) { padding-bottom: var(--buybar-h, calc(4
   border: 1px solid var(--hairline);
   border-radius: var(--radius-lg);
   background:
-    radial-gradient(60% 55% at 50% 56%, rgba(0, 113, 227, .22), transparent 70%),
+    radial-gradient(60% 55% at 50% 56%, rgba(0, 115, 230, .22), transparent 70%),
     var(--bg-main);                     /* base de los paneles de foto: #000, como la tarjeta de modelo */
 }
 @media (min-width: 992px) {
@@ -4916,7 +4948,7 @@ body.has-buybar:not(:has(.aura-footer)) { padding-bottom: var(--buybar-h, calc(4
   max-width: min(100%, 50rem);
   border: 0;
   border-radius: 0;
-  background: radial-gradient(55% 50% at 50% 56%, rgba(0, 113, 227, .16), transparent 72%);
+  background: radial-gradient(55% 50% at 50% 56%, rgba(0, 115, 230, .16), transparent 72%);
 }
 .aura-colorway__picker {
   display: grid;
@@ -4989,9 +5021,9 @@ body.has-buybar:not(:has(.aura-footer)) { padding-bottom: var(--buybar-h, calc(4
 /* ==========================================================================
    6. OVERLAYS
    Jerarquía de materiales (tokens de §1, fondo y filtro del mismo nivel):
-   aviso (fino) < popover y barras (regular) < hoja, buscador, menú y barra de
-   compra (grueso, sombra profunda). Velo solo en tareas modales (hoja,
-   buscador, menú); el popover y los avisos no bloquean.
+   popover y barras (regular) < aviso, hoja, buscador, menú y barra de compra
+   (grueso; la hoja y el buscador, con sombra profunda). Velo solo en tareas
+   modales (hoja, buscador, menú); el popover y los avisos no bloquean.
    ========================================================================== */
 
 /* Vibrancia: dentro de un material, el texto secundario no es gris plano.
@@ -5242,9 +5274,12 @@ body.has-buybar:not(:has(.aura-footer)) { padding-bottom: var(--buybar-h, calc(4
   border: 1px solid var(--hairline);
   border-top-color: var(--edge-light);
   border-radius: var(--radius-md);
-  background: var(--glass-thin-bg);                 /* la superficie más pequeña: material fino */
-  -webkit-backdrop-filter: var(--glass-thin-filter);
-  backdrop-filter: var(--glass-thin-filter);
+  /* Material grueso, aunque sea la superficie más pequeña: su acción es texto
+     azul y el aviso pasa sobre cualquier foto. Con el fino (72 %), sobre una
+     foto clara, la acción bajaba a 3,4:1 y el icono a 2:1. */
+  background: var(--glass-thick-bg);
+  -webkit-backdrop-filter: var(--glass-thick-filter);
+  backdrop-filter: var(--glass-thick-filter);
   box-shadow: var(--shadow-2);
   color: var(--text-primary);
   pointer-events: auto;
@@ -5296,7 +5331,10 @@ body.has-buybar:not(:has(.aura-footer)) { padding-bottom: var(--buybar-h, calc(4
   border: 0;
   border-radius: var(--radius-pill);
   background: none;
-  color: var(--accent-link);
+  /* Texto azul sobre cristal: --accent-link-hover, que da 4,86:1 aun con una
+     foto blanca detrás del material grueso y 5,43:1 sobre la capa sólida de
+     abajo (#1787f7 se quedaría en 3,6:1 y 3,98:1). */
+  color: var(--accent-link-hover);
   font-size: .8125rem;
   font-weight: 600;
   white-space: nowrap;
@@ -5834,7 +5872,6 @@ html.aura-lock .aura-toast {
   }
 
   /* La pulsación sigue respondiendo, al instante, pero sin escala: se atenúa. */
-  .aura-btn:active, .aura-btn.is-pressed,
   .aura-icon-btn:active:not(:disabled), .aura-icon-btn.is-pressed,
   .aura-nav__action:active, .aura-nav__action.is-pressed,
   .aura-search__submit:active, .aura-search__submit.is-pressed,
@@ -5850,6 +5887,14 @@ html.aura-lock .aura-toast {
     transform: none;
     opacity: .7;
   }
+  /* Los botones no se atenúan enteros: su etiqueta perdería contraste (el
+     blanco sobre --accent va justo, 4,57:1, y al 70 % bajaba a 3,7:1). Se
+     enciende al instante su capa de hover y la primaria oscurece el relleno:
+     la etiqueta gana contraste (6,28:1), no lo pierde. */
+  .aura-btn:active, .aura-btn.is-pressed { transform: none; }
+  .aura-btn:active::before, .aura-btn.is-pressed::before { opacity: 1; transition: none; }
+  .aura-btn--primary:active, .aura-btn--primary.is-pressed { --btn-hover: rgba(0, 0, 0, .18); }
+  .aura-btn--secondary:active, .aura-btn--secondary.is-pressed { --btn-fg: var(--accent-link-hover); }
   .aura-check:active .aura-check__input:not(:disabled) + .aura-check__box,
   .aura-check.is-pressed .aura-check__box,
   .aura-radio:active .aura-radio__input:not(:disabled) + .aura-radio__box,

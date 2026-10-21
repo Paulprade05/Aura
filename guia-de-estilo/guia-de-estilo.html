@@ -62,7 +62,7 @@
       --g-line: #2d2d31;
       --g-line-2: #45454b;
       --g-gold-tint: rgba(229, 169, 60, .1);
-      --g-blue-tint: rgba(0, 113, 227, .12);
+      --g-blue-tint: rgba(0, 115, 230, .12);
       --g-pad: clamp(1rem, 5vw, 4.5rem);
       --g-max: 81rem;
       --g-mono: var(--font-mono);
@@ -103,11 +103,11 @@
     .g-orb__c { position: absolute; left: 50%; top: 50%; width: 0; height: 0; }
     .g-orb__c > span { position: absolute; border-radius: 50%; transform: translate(-50%, -50%); }
     .g-orb__vignette { width: 32rem; height: 32rem; background: radial-gradient(closest-side, rgba(30, 30, 33, .55), rgba(12, 12, 13, .35) 55%, transparent); }
-    .g-orb__disc { width: 16.25rem; height: 16.25rem; border: 1px solid rgba(0, 113, 227, .42); background: rgba(255, 255, 255, .035); }
-    .g-orb__glow { width: 22rem; height: 20rem; margin-left: .5rem; background: radial-gradient(closest-side, rgba(0, 113, 227, .95) 0, rgba(0, 113, 227, .62) 24%, rgba(0, 113, 227, .26) 52%, rgba(0, 113, 227, .06) 80%, transparent); }
+    .g-orb__disc { width: 16.25rem; height: 16.25rem; border: 1px solid rgba(0, 115, 230, .42); background: rgba(255, 255, 255, .035); }
+    .g-orb__glow { width: 22rem; height: 20rem; margin-left: .5rem; background: radial-gradient(closest-side, rgba(0, 115, 230, .95) 0, rgba(0, 115, 230, .62) 24%, rgba(0, 115, 230, .26) 52%, rgba(0, 115, 230, .06) 80%, transparent); }
     .g-orb__mid { width: 11.25rem; height: 11.25rem; border: 1px solid rgba(255, 255, 255, .2); }
     .g-orb__ring { width: 5.25rem; height: 5.25rem; border: 2px solid var(--gold); }
-    .g-orb__core { width: 2.25rem; height: 2.25rem; background: radial-gradient(circle, #0a78ea 62%, rgba(0, 113, 227, .6)); }
+    .g-orb__core { width: 2.25rem; height: 2.25rem; background: radial-gradient(circle, #0a78ea 62%, rgba(0, 115, 230, .6)); }
     .g-orb__dot { width: .625rem; height: .625rem; left: 6.6875rem; top: -5.875rem; background: var(--gold); }
     .g-orb__label { position: absolute; left: calc(50% - 11.5rem); top: calc(50% + 8.75rem); margin: 0; font-family: var(--g-mono); font-size: .6875rem; letter-spacing: .06em; text-transform: uppercase; color: var(--text-tertiary); }
 
@@ -273,7 +273,7 @@
     .g-demo { position: relative; min-width: 0; padding: 1.5rem; border: 1px solid var(--g-line); border-radius: .75rem; background: var(--g-bg); }
     .g-demo--flush { padding: 0; overflow: hidden; }
     .g-demo--clip { overflow: hidden; }
-    .g-demo--photo { overflow: hidden; background: radial-gradient(40% 60% at 22% 30%, rgba(0, 113, 227, .55), transparent 70%), radial-gradient(35% 50% at 80% 75%, rgba(229, 169, 60, .35), transparent 70%), #060608; }
+    .g-demo--photo { overflow: hidden; background: radial-gradient(40% 60% at 22% 30%, rgba(0, 115, 230, .55), transparent 70%), radial-gradient(35% 50% at 80% 75%, rgba(229, 169, 60, .35), transparent 70%), #060608; }
     .g-demo__bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
     .g-demo__caption { margin: .875rem 0 0; font-size: .75rem; line-height: 1.5; color: var(--text-tertiary); }
     .g-static { position: relative !important; inset: auto !important; z-index: 0 !important; visibility: visible !important; opacity: 1 !important; transform: none !important; filter: none !important; translate: none !important; }
@@ -527,14 +527,15 @@
                   <caption>Desviaciones de la v1 · qué cambia y por qué</caption>
                   <thead><tr><th scope="col">Pieza</th><th scope="col">v1</th><th scope="col">v2 y la web</th><th scope="col">Motivo</th><th scope="col">Cap.</th></tr></thead>
                   <tbody>
+                    <tr><th scope="row">Azul de marca</th><td class="g-num">#0071e3 (4,47:1 sobre negro)</td><td><code>--accent</code> #0073e6: el mismo matiz, algo más claro</td><td>4,59:1 sobre negro y 4,57:1 con texto blanco encima: AA en las dos direcciones (más claro ya no admitiría texto blanco)</td><td class="g-num">01</td></tr>
                     <tr><th scope="row">Azul de texto</th><td class="g-num">#1787f7</td><td><code>--accent-link</code> #1787f7 (igual que la v1; la primera v2 usaba #2997ff)</td><td>5,85:1 sobre negro y 5,03:1 sobre tarjeta: cumple AA sin cambiarlo</td><td class="g-num">01</td></tr>
-                    <tr><th scope="row">Hover del primario</th><td>Relleno #1787f7, más claro</td><td>Relleno <code>--accent-hover</code> #0074e8 y el halo de .55 a 1</td><td>Blanco sobre #1787f7 da 3,59:1 (no AA); sobre #0074e8, 4,50:1</td><td class="g-num">01 · 03</td></tr>
+                    <tr><th scope="row">Hover del primario</th><td>Relleno #1787f7, más claro</td><td>Relleno <code>--accent-hover</code> #0073e8 y el halo de .55 a 1</td><td>Blanco sobre #1787f7 da 3,59:1 (no AA); sobre #0073e8, 4,55:1</td><td class="g-num">01 · 03</td></tr>
                     <tr><th scope="row">Etiqueta del botón</th><td>Inter 14 / 400, relleno plano</td><td>Inter 15 / 600 y halo <code>--glow-accent</code> al .55 en reposo</td><td>Es lo que dibuja el prototipo de Inicio («Más información», 120 px)</td><td class="g-num">03</td></tr>
                     <tr><th scope="row">Botón desactivado</th><td>Etiqueta #4d4d51 (1,82:1)</td><td><code>--text-disabled</code> #6e6e73 sobre #252528 (3,01:1), igual en primario, secundario e inverso</td><td>Desactivado no es invisible: la etiqueta se tiene que leer</td><td class="g-num">03</td></tr>
                     <tr><th scope="row">Hover del secundario</th><td>Tinte azul ≈ 12 %</td><td><code>--accent-soft</code> 16 % y contorno #1787f7</td><td>El mismo tinte que lo elegido (opciones, segmentado)</td><td class="g-num">03</td></tr>
                     <tr><th scope="row">Enlace contextual</th><td>Inter 16 / 600</td><td>Inter 500, al tamaño del texto que acompaña (13 en cinta y cabeceras, 16 en el cuerpo)</td><td>Acompaña al texto: no compite con la primaria</td><td class="g-num">03</td></tr>
                     <tr><th scope="row">Campo en reposo</th><td>Borde #45454b (2,21:1) · placeholder #6e6e73</td><td>Borde <code>--field-border</code> 36 % (3,14:1) · placeholder #98989d (6,30:1)</td><td>AA: 3:1 para el límite de un control y 4,5:1 para el texto</td><td class="g-num">04</td></tr>
-                    <tr><th scope="row">Campo en foco</th><td>Borde #0071e3 de 1,5 px, etiqueta blanca (dibujo)</td><td>Borde <code>--accent-link</code>, anillo <code>--accent-ring</code> de 4 px al 40 % y etiqueta azul 13 / 500</td><td>La v1 escribe «Ring / Blue 40%»: manda su texto sobre su dibujo</td><td class="g-num">04</td></tr>
+                    <tr><th scope="row">Campo en foco</th><td>Borde de acento de 1,5 px, etiqueta blanca (dibujo)</td><td>Borde <code>--accent-link</code>, anillo <code>--accent-ring</code> de 4 px al 30 % y etiqueta azul 13 / 500</td><td>La v1 escribe «Ring / Blue 40%»: manda su texto sobre su dibujo; el anillo baja al 30 % para que el borde azul conserve 3:1 contra él sobre una superficie elevada (2,96:1 al 40 %)</td><td class="g-num">04</td></tr>
                     <tr><th scope="row">Titular de héroe</th><td>Hero Title (H1) Kanit 56</td><td>Nivel nuevo Display, Kanit 36–72 (el H1 sigue en 34–56)</td><td>Héroes a pantalla completa; el prototipo de Inicio ronda los 60 px</td><td class="g-num">02</td></tr>
                     <tr><th scope="row">Insignia</th><td>Píldora de 30 px con borde dorado al 35 % y peso medio</td><td>Píldora rellena de 24 px (<code>--gold-soft</code>), sin borde, Inter 12 / 650</td><td>La v1 escribe «Eyebrow / Badge · 12 / 650» para las dos piezas: se sigue el texto</td><td class="g-num">02 · 03</td></tr>
                     <tr><th scope="row">Iconos pequeños</th><td>Nunca por debajo de 16 px</td><td>Igual, salvo en línea con un texto menor: 1em (12–13 px en notas y estados)</td><td>Un icono de 16 px junto a un texto de 12 se desalinea</td><td class="g-num">05</td></tr>
@@ -590,7 +591,7 @@
               <div class="g-grid g-grid--3">
                 <div class="g-swatch" style="--c:#000000"><div class="g-swatch__chip"></div><div class="g-swatch__body"><div class="g-swatch__row"><p class="g-swatch__name">Fondo Principal</p><span class="g-swatch__hex">#000000</span></div><p class="g-swatch__use">Lienzo principal y contraste máximo.</p><span class="g-swatch__var">var(--bg-main)</span></div></div>
                 <div class="g-swatch" style="--c:#161617"><div class="g-swatch__chip"></div><div class="g-swatch__body"><div class="g-swatch__row"><p class="g-swatch__name">Fondo Secundario</p><span class="g-swatch__hex">#161617</span></div><p class="g-swatch__use">Tarjetas, paneles y agrupación de contenido.</p><span class="g-swatch__var">var(--bg-secondary)</span></div></div>
-                <div class="g-swatch" style="--c:#0071e3"><div class="g-swatch__chip"></div><div class="g-swatch__body"><div class="g-swatch__row"><p class="g-swatch__name">Acento Azul</p><span class="g-swatch__hex">#0071e3</span></div><p class="g-swatch__use">Acciones, foco y estados interactivos.</p><span class="g-swatch__var">var(--accent)</span></div></div>
+                <div class="g-swatch" style="--c:#0073e6"><div class="g-swatch__chip"></div><div class="g-swatch__body"><div class="g-swatch__row"><p class="g-swatch__name">Acento Azul</p><span class="g-swatch__hex">#0073e6</span></div><p class="g-swatch__use">Rellenos con texto blanco y contornos.</p><span class="g-swatch__var">var(--accent)</span></div></div>
                 <div class="g-swatch" style="--c:#e5a93c"><div class="g-swatch__chip"></div><div class="g-swatch__body"><div class="g-swatch__row"><p class="g-swatch__name">Dorado Premium</p><span class="g-swatch__hex">#e5a93c</span></div><p class="g-swatch__use">Distinción, metadatos y acentos selectivos.</p><span class="g-swatch__var g-swatch__var--gold">var(--gold)</span></div></div>
                 <div class="g-swatch" style="--c:#f5f5f7"><div class="g-swatch__chip"></div><div class="g-swatch__body"><div class="g-swatch__row"><p class="g-swatch__name">Texto Primario</p><span class="g-swatch__hex">#f5f5f7</span></div><p class="g-swatch__use">Títulos y contenido de alta prioridad.</p><span class="g-swatch__var">var(--text-primary)</span></div></div>
                 <div class="g-swatch" style="--c:#a1a1a6"><div class="g-swatch__chip"></div><div class="g-swatch__body"><div class="g-swatch__row"><p class="g-swatch__name">Texto Secundario</p><span class="g-swatch__hex">#a1a1a6</span></div><p class="g-swatch__use">Cuerpo, notas y contexto auxiliar.</p><span class="g-swatch__var">var(--text-secondary)</span></div></div>
@@ -605,9 +606,9 @@
                 <div class="g-swatch g-swatch--sm" style="--c:#111113"><div class="g-swatch__chip"></div><div class="g-swatch__body"><div class="g-swatch__row"><p class="g-swatch__name">Pie</p><span class="g-swatch__hex">#111113</span></div><p class="g-swatch__use">Fondo del pie global.</p><span class="g-swatch__var">--bg-footer</span></div></div>
                 <div class="g-swatch g-swatch--sm" style="--c:#1787f7"><div class="g-swatch__chip"></div><div class="g-swatch__body"><div class="g-swatch__row"><p class="g-swatch__name">Azul de texto</p><span class="g-swatch__hex">#1787f7</span></div><p class="g-swatch__use">Enlaces, iconos, foco y contorno del secundario en hover: 5,85:1 sobre negro, 5,03:1 sobre tarjeta. El de la v1.</p><span class="g-swatch__var">--accent-link · --accent-bright</span></div></div>
                 <div class="g-swatch g-swatch--sm" style="--c:#4aa3ff"><div class="g-swatch__chip"></div><div class="g-swatch__body"><div class="g-swatch__row"><p class="g-swatch__name">Azul de texto hover</p><span class="g-swatch__hex">#4aa3ff</span></div><p class="g-swatch__use">Etiqueta del secundario en hover y en foco, y enlaces sin clase: más luz, nunca menos contraste (7,97:1).</p><span class="g-swatch__var">--accent-link-hover</span></div></div>
-                <div class="g-swatch g-swatch--sm" style="--c:#0074e8"><div class="g-swatch__chip"></div><div class="g-swatch__body"><div class="g-swatch__row"><p class="g-swatch__name">Acento hover</p><span class="g-swatch__hex">#0074e8</span></div><p class="g-swatch__use">Relleno primario al pasar el ratón (4,50:1 con blanco). La v1 aclaraba a #1787f7: 3,59:1, no AA.</p><span class="g-swatch__var">--accent-hover</span></div></div>
-                <div class="g-swatch g-swatch--sm"><div class="g-swatch__chip g-chip-checker" style="--c:rgba(0,113,227,.16)"><span></span></div><div class="g-swatch__body"><div class="g-swatch__row"><p class="g-swatch__name">Azul suave</p><span class="g-swatch__hex">16 %</span></div><p class="g-swatch__use">Fondo de lo elegido y tinte del secundario.</p><span class="g-swatch__var">--accent-soft</span></div></div>
-                <div class="g-swatch g-swatch--sm"><div class="g-swatch__chip g-chip-checker" style="--c:rgba(0,113,227,.4)"><span></span></div><div class="g-swatch__body"><div class="g-swatch__row"><p class="g-swatch__name">Anillo de foco</p><span class="g-swatch__hex">40 %</span></div><p class="g-swatch__use">Anillo de los campos en foco (guía §04).</p><span class="g-swatch__var">--accent-ring</span></div></div>
+                <div class="g-swatch g-swatch--sm" style="--c:#0073e8"><div class="g-swatch__chip"></div><div class="g-swatch__body"><div class="g-swatch__row"><p class="g-swatch__name">Acento hover</p><span class="g-swatch__hex">#0073e8</span></div><p class="g-swatch__use">Relleno primario al pasar el ratón (4,55:1 con blanco). La v1 aclaraba a #1787f7: 3,59:1, no AA.</p><span class="g-swatch__var">--accent-hover</span></div></div>
+                <div class="g-swatch g-swatch--sm"><div class="g-swatch__chip g-chip-checker" style="--c:rgba(0,115,230,.16)"><span></span></div><div class="g-swatch__body"><div class="g-swatch__row"><p class="g-swatch__name">Azul suave</p><span class="g-swatch__hex">16 %</span></div><p class="g-swatch__use">Fondo de lo elegido y tinte del secundario.</p><span class="g-swatch__var">--accent-soft</span></div></div>
+                <div class="g-swatch g-swatch--sm"><div class="g-swatch__chip g-chip-checker" style="--c:rgba(0,115,230,.3)"><span></span></div><div class="g-swatch__body"><div class="g-swatch__row"><p class="g-swatch__name">Anillo de foco</p><span class="g-swatch__hex">30 %</span></div><p class="g-swatch__use">Anillo de los campos en foco (guía §04; la v1, 40 %).</p><span class="g-swatch__var">--accent-ring</span></div></div>
                 <div class="g-swatch g-swatch--sm"><div class="g-swatch__chip g-chip-checker" style="--c:rgba(229,169,60,.14)"><span></span></div><div class="g-swatch__body"><div class="g-swatch__row"><p class="g-swatch__name">Dorado suave</p><span class="g-swatch__hex">14 %</span></div><p class="g-swatch__use">Fondo de insignias e iconos de nota.</p><span class="g-swatch__var g-swatch__var--gold">--gold-soft</span></div></div>
                 <div class="g-swatch g-swatch--sm" style="--c:#8e8e93"><div class="g-swatch__chip"></div><div class="g-swatch__body"><div class="g-swatch__row"><p class="g-swatch__name">Texto terciario</p><span class="g-swatch__hex">#8e8e93</span></div><p class="g-swatch__use">Notas, metadatos y etiquetas mono.</p><span class="g-swatch__var">--text-tertiary</span></div></div>
                 <div class="g-swatch g-swatch--sm" style="--c:#98989d"><div class="g-swatch__chip"></div><div class="g-swatch__body"><div class="g-swatch__row"><p class="g-swatch__name">Placeholder</p><span class="g-swatch__hex">#98989d</span></div><p class="g-swatch__use">Ejemplo dentro del campo (5,7:1 en foco).</p><span class="g-swatch__var">--text-placeholder</span></div></div>
@@ -660,6 +661,24 @@
             </div>
 
             <div class="g-block">
+              <div class="g-sub"><h3 class="g-sub__title">Qué azul va dónde</h3><p class="g-sub__meta">WCAG 2.x AA · texto 4,5:1 · controles 3:1</p></div>
+              <div class="g-scroll">
+                <table class="g-table g-table--wide">
+                  <caption>Los dos azules de AURA y dónde va cada uno</caption>
+                  <thead><tr><th scope="col">Uso</th><th scope="col">Token</th><th scope="col">Contraste</th><th scope="col">Por qué</th></tr></thead>
+                  <tbody>
+                    <tr><th scope="row">Relleno con texto blanco encima</th><td><code>--accent</code> #0073e6 · hover <code>--accent-hover</code> #0073e8</td><td class="g-num g-white">4,57:1 · 4,55:1</td><td>Botón primario y contador de la bolsa: la etiqueta blanca pide 4,5:1 y un azul más claro ya no llega</td></tr>
+                    <tr><th scope="row">Componente no textual</th><td><code>--accent</code> #0073e6</td><td class="g-num g-white">4,59:1 · 3,96:1</td><td>Contorno del secundario, casilla y radio marcados, paso hecho: límite de un control ≥ 3:1 sobre negro y sobre tarjeta</td></tr>
+                    <tr><th scope="row">Texto azul: enlaces, etiquetas, cifras e iconos que informan</th><td><code>--accent-link</code> #1787f7</td><td class="g-num g-white">5,85:1 · 5,03:1 · 4,68:1</td><td>≥ 4,5:1 sobre negro, tarjeta y elevado. Nunca <code>--accent</code> para un texto</td></tr>
+                    <tr><th scope="row">Texto azul sobre un tinte azul o una capa más clara</th><td><code>--accent-link-hover</code> #4aa3ff</td><td class="g-num g-white">5,92:1 · 5,49:1 · 5,43:1</td><td>#1787f7 baja a 4,34:1 sobre <code>--accent-soft</code> en una tarjeta y a 3,98:1 sobre el aviso sólido (#2a2a2d): etiqueta del secundario en hover, foco y pulsado, insignia azul, acción del aviso y el enlace bajo un primario, al que llega su halo</td></tr>
+                    <tr><th scope="row">Texto azul sobre cristal o sobre una foto</th><td><code>--accent-link-hover</code> #4aa3ff</td><td class="g-num g-white">≥ 4,67:1</td><td>Lo que pasa por detrás cambia: con #1787f7, «Comprar ›» de la barra local bajaba a 3,8:1, el enlace de una tesela con foto a 4,1:1 y la acción del aviso a 3,4:1. El aviso, además, pasa a material grueso</td></tr>
+                    <tr><th scope="row">Foco</th><td><code>--accent-link</code> #1787f7 · <span class="text-nowrap">anillo <code>--accent-ring</code></span> 30 %</td><td class="g-num g-white">5,85:1 · 4,68:1 · 3,39:1</td><td>Contorno de 2 px de <code>:focus-visible</code>, ≥ 3:1 en cualquier superficie, también contra el anillo pegado de campos y casillas (por eso al 30 %: al 40 % se quedaba en 2,96:1 sobre elevado). En el segmentado, <code>--accent-link-hover</code>: el contorno pisa la pastilla vecina (3,7:1)</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="g-block">
               <div class="g-scroll">
                 <table class="g-table g-table--wide">
                   <caption>Pares de contraste (WCAG 2.2)</caption>
@@ -670,8 +689,8 @@
                     <tr><th scope="row">Texto terciario sobre negro</th><td class="g-num">#8e8e93 / #000</td><td class="g-num g-white">6,44:1</td><td>AA · metadatos y etiquetas</td></tr>
                     <tr><th scope="row">Azul de texto sobre tarjeta</th><td class="g-num">#1787f7 / #161617</td><td class="g-num g-white">5,03:1</td><td>AA · enlaces (5,85:1 sobre negro, 5,51:1 sobre franja, 4,68:1 sobre elevado)</td></tr>
                     <tr><th scope="row">Azul de texto en hover</th><td class="g-num">#4aa3ff / #000</td><td class="g-num g-white">7,97:1</td><td>AA · etiqueta del secundario sobre su tinte (5,92:1 en una tarjeta)</td></tr>
-                    <tr><th scope="row">Blanco sobre acento</th><td class="g-num">#fff / #0071e3</td><td class="g-num g-white">4,70:1</td><td>AA · etiqueta del botón primario (4,50:1 en hover)</td></tr>
-                    <tr><th scope="row">Acento como texto</th><td class="g-num">#0071e3 / #000</td><td class="g-num" style="color:var(--error)">4,47:1</td><td>No llega a AA como texto: solo rellenos y contornos (≥ 3:1)</td></tr>
+                    <tr><th scope="row">Blanco sobre acento</th><td class="g-num">#fff / #0073e6</td><td class="g-num g-white">4,57:1</td><td>AA · etiqueta del botón primario (4,55:1 en hover, sobre #0073e8)</td></tr>
+                    <tr><th scope="row">Acento sobre negro</th><td class="g-num">#0073e6 / #000</td><td class="g-num g-white">4,59:1</td><td>AA (la v1 se quedaba en 4,47:1) · solo rellenos y contornos, nunca texto</td></tr>
                     <tr><th scope="row">Dorado sobre negro</th><td class="g-num">#e5a93c / #000</td><td class="g-num g-white">10,07:1</td><td>AAA · antetítulos y metadatos premium</td></tr>
                     <tr><th scope="row">Error sobre negro</th><td class="g-num">#ff453a / #000</td><td class="g-num g-white">6,16:1</td><td>AA · mensajes y botón destructivo</td></tr>
                     <tr><th scope="row">Borde de campo sobre negro</th><td class="g-num">36 % / #000</td><td class="g-num g-white">3,14:1</td><td>Límite de control ≥ 3:1 (5,32:1 en hover, con el 50 %)</td></tr>
@@ -686,7 +705,7 @@
             <span class="g-note__icon"><span class="bi bi-circle-half" aria-hidden="true"></span></span>
             <p class="g-note__title">Nota de uso</p>
             <p class="g-note__text">El azul eléctrico comunica interacción; el dorado aporta valor premium. Evita usarlos como superficies extensas o competir por la misma jerarquía.</p>
-            <p class="g-note__text">Texto azul sobre negro siempre en <code>--accent-link</code> (#1787f7, el de la v1); <code>--accent</code> (#0071e3) es para rellenos con texto blanco y contornos. Lo que no se pulsa no va en azul, con una sola excepción: el acabado de la tarjeta de modelo (capítulo 09), que refleja la muestra elegida como en el prototipo. Un estado nunca se comunica solo con color.</p>
+            <p class="g-note__text">Texto azul (enlaces, etiquetas, cifras e iconos que informan) siempre en <code>--accent-link</code> (#1787f7, el de la v1), y en <code>--accent-link-hover</code> si va sobre un tinte azul, un cristal o una foto (lo que hay detrás cambia); <code>--accent</code> (#0073e6) solo como relleno con texto blanco encima o como componente no textual (contornos, casillas, pasos). Lo que no se pulsa no va en azul, con una sola excepción: el acabado de la tarjeta de modelo (capítulo 09), que refleja la muestra elegida como en el prototipo. Un estado nunca se comunica solo con color.</p>
           </div>
         </div>
       </div>
@@ -838,7 +857,7 @@
                   </div>
                 </div>
                 <div class="g-matrix__row">
-                  <div><p class="g-matrix__name">Botón Secundario</p><p class="g-matrix__meta">48H / 999R / 24PX</p><p class="g-matrix__meta">Contorno #0071e3 → #1787f7</p></div>
+                  <div><p class="g-matrix__name">Botón Secundario</p><p class="g-matrix__meta">48H / 999R / 24PX</p><p class="g-matrix__meta">Contorno #0073e6 → #1787f7</p></div>
                   <div class="g-matrix__cells">
                     <div class="g-state"><span class="g-state__label">Normal</span><div class="g-state__cell"><button class="aura-btn aura-btn--secondary" type="button">Más información</button></div></div>
                     <div class="g-state"><span class="g-state__label g-state__label--hover">Hover</span><div class="g-state__cell"><button class="aura-btn aura-btn--secondary is-hover" type="button">Más información</button></div></div>
@@ -870,7 +889,7 @@
                   </div>
                 </div>
               </div>
-              <p class="g-demo__caption">Etiqueta en Inter 15 / 600 y halo <code>--glow-accent</code> al .55 en reposo, como el prototipo de Inicio: sustituyen al 14 / 400 con relleno plano de la v1 (capítulo 00). En hover el halo pasa a 1 y el relleno a <code>--accent-hover</code> #0074e8; la v1 aclaraba a #1787f7, pero el blanco sobre ese azul da 3,59:1. Desactivado: relleno <code>--fill-disabled</code> #252528 y etiqueta <code>--text-disabled</code> #6e6e73 (3,01:1; la v1 usaba #4d4d51, 1,82:1).</p>
+              <p class="g-demo__caption">Etiqueta en Inter 15 / 600 y halo <code>--glow-accent</code> al .55 en reposo, como el prototipo de Inicio: sustituyen al 14 / 400 con relleno plano de la v1 (capítulo 00). En hover el halo pasa a 1 y el relleno a <code>--accent-hover</code> #0073e8; la v1 aclaraba a #1787f7, pero el blanco sobre ese azul da 3,59:1. Desactivado: relleno <code>--fill-disabled</code> #252528 y etiqueta <code>--text-disabled</code> #6e6e73 (3,01:1; la v1 usaba #4d4d51, 1,82:1).</p>
             </div>
 
             <div class="g-block">
@@ -981,7 +1000,7 @@
           <div class="g-note">
             <span class="g-note__icon"><span class="bi bi-hand-index" aria-hidden="true"></span></span>
             <p class="g-note__title">Nota de uso</p>
-            <p class="g-note__text">Mantén una sola acción primaria por contexto. El estado hover gana luminosidad con el halo (de .55 a 1) y el relleno #0074e8, sin bajar del 4,5:1 de la etiqueta; disabled reduce contraste sin perder la etiqueta.</p>
+            <p class="g-note__text">Mantén una sola acción primaria por contexto. El estado hover gana luminosidad con el halo (de .55 a 1) y el relleno #0073e8, sin bajar del 4,5:1 de la etiqueta; disabled reduce contraste sin perder la etiqueta.</p>
             <p class="g-note__text">Desactivado igual en primario, secundario e inverso (relleno <code>--fill-disabled</code> #252528, etiqueta <code>--text-disabled</code>); el destructivo conserva su contorno. Hover del secundario: contorno <code>--accent-bright</code> (#1787f7), tinte <code>--accent-soft</code> y etiqueta <code>--accent-link-hover</code> (también con el foco: #1787f7 sobre el tinte de una tarjeta se queda en 4,3:1); del inverso, <code>--inverse-hover</code> #e8e8ed. El color de base no se anima: la capa de hover y el halo se funden en 160 ms (<code>--dur-1</code>).</p>
           </div>
         </div>
@@ -1051,7 +1070,7 @@
                   <ol class="g-steps-list">
                     <li>Etiqueta persistente y descriptiva (<code>label for</code>), nunca solo el placeholder</li>
                     <li>Icono de apoyo, nunca decorativo, siempre antes del control</li>
-                    <li>Anillo azul + cristal en estado focus: borde <code>--accent-link</code> de 1 px, anillo <code>--accent-ring</code> de 4 px al 40 % pegado al borde, fondo <code>--field-bg-focus</code> y la etiqueta en azul (Inter 13 / 500)</li>
+                    <li>Anillo azul + cristal en estado focus: borde <code>--accent-link</code> de 1 px, anillo <code>--accent-ring</code> de 4 px al 30 % pegado al borde (el contorno conserva 3:1 contra él), fondo <code>--field-bg-focus</code> y la etiqueta en azul (Inter 13 / 500)</li>
                     <li>Ayuda opcional (<code>.aura-field__help</code>) y pista a la derecha de la etiqueta</li>
                     <li>Mensaje de error siempre en el DOM y vacío, enlazado con <code>aria-describedby</code></li>
                   </ol>
@@ -1392,8 +1411,8 @@
                 <div class="g-grid g-grid--3" style="position:relative">
                   <div class="aura-material aura-material--thin" style="padding:1.25rem 1.5rem;border-radius:var(--radius-lg);border-top:1px solid var(--edge-light);box-shadow:var(--shadow-2)">
                     <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain aura-text-primary">Fino</p>
-                    <p class="aura-h4 mt-2">Avisos</p>
-                    <p class="aura-caption mt-2">rgba(29, 29, 31, .72) · blur 16 px · saturate 180 %. Avisos y tarjeta de cristal.</p>
+                    <p class="aura-h4 mt-2">Tarjeta de cristal</p>
+                    <p class="aura-caption mt-2">rgba(29, 29, 31, .72) · blur 16 px · saturate 180 %. Tarjeta de cristal y botón secundario sobre la escena.</p>
                   </div>
                   <div class="aura-material" style="padding:1.25rem 1.5rem;border-radius:var(--radius-lg);border-top:1px solid var(--edge-light);box-shadow:var(--shadow-2)">
                     <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain aura-text-primary">Regular</p>
@@ -1402,8 +1421,8 @@
                   </div>
                   <div class="aura-material aura-material--thick" style="padding:1.25rem 1.5rem;border-radius:var(--radius-xl);border-top:1px solid var(--edge-light);box-shadow:var(--shadow-3)">
                     <p class="aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain aura-text-primary">Grueso</p>
-                    <p class="aura-h4 mt-2">Hojas y tareas</p>
-                    <p class="aura-caption mt-2">rgba(22, 22, 23, .88) · blur 40 px. Hoja, buscador, menú y barra de compra.</p>
+                    <p class="aura-h4 mt-2">Hojas, tareas y avisos</p>
+                    <p class="aura-caption mt-2">rgba(22, 22, 23, .88) · blur 40 px. Hoja, buscador, menú, barra de compra y avisos (su acción es texto azul sobre cualquier foto).</p>
                   </div>
                 </div>
               </div>
@@ -1416,7 +1435,7 @@
                   <caption>Materiales, velo y efecto de borde</caption>
                   <thead><tr><th scope="col">Pieza</th><th scope="col">Material</th><th scope="col">Velo</th><th scope="col">Página detrás</th></tr></thead>
                   <tbody>
-                    <tr><th scope="row">Aviso</th><td>Fino (sólido si hay una tarea modal abierta)</td><td>No</td><td>Sigue igual</td></tr>
+                    <tr><th scope="row">Aviso</th><td>Grueso, aunque sea pequeño: su acción es texto azul y pasa sobre cualquier foto (sólido si hay una tarea modal abierta)</td><td>No</td><td>Sigue igual</td></tr>
                     <tr><th scope="row">Popover · barra global · barra local</th><td>Regular (el de la bolsa, sólido <code>--bg-elevated</code> sobre la barra local)</td><td>No</td><td>Sigue igual</td></tr>
                     <tr><th scope="row">Hoja inferior · buscador</th><td>Grueso, sombra <code>--shadow-3</code></td><td><code>--scrim</code> 58 %</td><td>Retrocede al 96,5 %</td></tr>
                     <tr><th scope="row">Cajón lateral · menú móvil</th><td>Grueso (el menú, en negro como la barra global: <code>--glass-nav-thick-bg</code> 86 %)</td><td>Sí</td><td>Se bloquea el scroll (<code>html.aura-lock</code>)</td></tr>
@@ -2358,7 +2377,7 @@
                       <tr><th scope="row"><span style="color:var(--error)">●</span> Error</th><td><code>alert</code> · <code>assertive</code></td><td>Nunca solo</td></tr>
                     </tbody>
                   </table>
-                  <p class="g-card__text mt-3">Material fino (sólido si hay una tarea modal abierta). Máximo tres a la vez. Llegan desde arriba materializándose (escala, desenfoque de 6 px y opacidad), los demás se deslizan a su sitio (FLIP, 320 ms) y se apartan con el dedo: hacia arriba en el teléfono, a la derecha desde 576 px. El temporizador se pausa con el puntero encima o el foco dentro.</p>
+                  <p class="g-card__text mt-3">Material grueso (sólido si hay una tarea modal abierta) y acción en <code>--accent-link-hover</code>: es texto azul que pasa sobre cualquier foto. Máximo tres a la vez. Llegan desde arriba materializándose (escala, desenfoque de 6 px y opacidad), los demás se deslizan a su sitio (FLIP, 320 ms) y se apartan con el dedo: hacia arriba en el teléfono, a la derecha desde 576 px. El temporizador se pausa con el puntero encima o el foco dentro.</p>
                 </div>
               </div>
             </div>
@@ -2410,7 +2429,7 @@
             <div class="g-block">
               <div class="g-sub"><h3 class="g-sub__title">Principios</h3><p class="g-sub__meta">Lo que hace que se sienta vivo</p></div>
               <div class="g-grid g-grid--3">
-                <div class="g-card"><p class="g-card__title">Respuesta en la pulsación</p><p class="g-card__text">En <code>pointerdown</code>, no al soltar: botones, chips y opciones escalan (<code>scale(.97)</code> en 100 ms); enlaces y filas se atenúan al instante. Se apaga si el puntero se aleja más de 10 px y se cancela en cuanto gana un arrastre.</p></div>
+                <div class="g-card"><p class="g-card__title">Respuesta en la pulsación</p><p class="g-card__text">En <code>pointerdown</code>, no al soltar: botones, chips y opciones escalan (<code>scale(.97)</code> en 100 ms); enlaces y filas se atenúan al instante. Con «reducir movimiento», sin escala: se atenúan, salvo los botones, que encienden su capa de hover (el primario oscurece el relleno) para que la etiqueta no pierda contraste. Se apaga si el puntero se aleja más de 10 px y se cancela en cuanto gana un arrastre.</p></div>
                 <div class="g-card"><p class="g-card__title">Seguimiento 1:1</p><p class="g-card__text">Lo que se arrastra (carrusel, hoja, pastilla, aviso) va pegado al dedo desde el punto de agarre, tras 10 px de umbral para decidir la dirección.</p></div>
                 <div class="g-card"><p class="g-card__title">Interrumpible</p><p class="g-card__text">Todo se puede volver a coger en pleno vuelo: un nuevo objetivo cambia el destino del mismo muelle y conserva su velocidad. Nunca se bloquea la entrada.</p></div>
                 <div class="g-card"><p class="g-card__title">Herencia de velocidad</p><p class="g-card__text">Al soltar, el muelle arranca a la velocidad del dedo (medida con la hora de cada evento), sin costura entre arrastre y animación.</p></div>

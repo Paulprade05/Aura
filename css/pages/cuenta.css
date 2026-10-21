@@ -21,7 +21,10 @@
   margin: 0;
   text-align: center;
 }
-.cuenta-acceso__olvido .aura-link { text-align: center; text-wrap: balance; }
+/* El halo azul del botón primario de encima llega a su primera línea: sobre
+   ese tinte #1787f7 bajaba a 4,1:1 en el teléfono. Texto azul sobre un tinte
+   azul: --accent-link-hover (también con el ratón encima). */
+.cuenta-acceso__olvido .aura-link { color: var(--accent-link-hover); text-align: center; text-wrap: balance; }
 
 /* Vista «ya has iniciado sesión» del login */
 .cuenta-acceso__sesion > p { margin: 0; text-align: center; }
