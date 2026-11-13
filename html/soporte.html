@@ -53,8 +53,16 @@
   <!-- Scripts: catálogo y núcleo de AURA, síncronos y en este orden (definen <aura-header> y <aura-footer> antes del cuerpo) -->
   <script src="../js/data.js"></script>
   <script src="../js/aura-core.js"></script>
+
+  <!-- SEO internacional: una sola versión en español de España (hreflang con x-default) -->
+  <link rel="alternate" hreflang="es-ES" href="https://aura-lyart-beta.vercel.app/html/soporte.html">
+  <link rel="alternate" hreflang="x-default" href="https://aura-lyart-beta.vercel.app/html/soporte.html">
+
+  <!-- Datos estructurados (JSON-LD, schema.org): ayudan a buscadores y a asistentes de IA a entender la página -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Inicio","item":"https://aura-lyart-beta.vercel.app/"},{"@type":"ListItem","position":2,"name":"Soporte","item":"https://aura-lyart-beta.vercel.app/html/soporte.html"}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://aura-lyart-beta.vercel.app/html/soporte.html","name":"Soporte: ayuda con tu dispositivo, pedidos y Trade In","inLanguage":"es-ES","isPartOf":{"@id":"https://aura-lyart-beta.vercel.app/#sitio"}}</script>
 </head>
-<body class="has-localnav">
+<body class="has-localnav" id="top">
   <!-- Cabecera global: enlace para saltar al contenido (primer elemento enfocable) y barra de navegación que genera aura-core.js -->
   <a class="aura-skip" href="#contenido">Saltar al contenido</a>
   <aura-header active="soporte" ribbon="off"></aura-header>

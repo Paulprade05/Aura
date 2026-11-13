@@ -1,0 +1,2303 @@
+[
+ {
+  "page": "index.html",
+  "issues": [
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > a > span",
+    "context": "<span class=\"aura-brand__word\">AURA</span>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(1)",
+    "context": "<a class=\"aura-nav__link\" href=\"html/auraphone.html\" data-aura-key=\"auraphone\">auraPhone</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(2)",
+    "context": "<a class=\"aura-nav__link\" href=\"html/aurapad.html\" data-aura-key=\"aurapad\">auraPad</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(3)",
+    "context": "<a class=\"aura-nav__link\" href=\"html/aurabook.html\" data-aura-key=\"aurabook\">auraBook</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(4)",
+    "context": "<a class=\"aura-nav__link\" href=\"html/aurapods.html\" data-aura-key=\"aurapods\">auraPods</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(5)",
+    "context": "<a class=\"aura-nav__link\" href=\"html/comparar.html\" data-aura-key=\"comparar\" title=\"Compara los modelos de cada familia frente a frente\">Comparar</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(6)",
+    "context": "<a class=\"aura-nav__link\" href=\"html/trade-in.html\" data-aura-key=\"tradein\" title=\"AURA Trade In: entrega tu dispositivo anterior y consigue un descuento\">Trade",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(7)",
+    "context": "<a class=\"aura-nav__link\" href=\"html/soporte.html\" data-aura-key=\"soporte\">Soporte</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > div > a > span:nth-child(2)",
+    "context": "<span class=\"aura-nav__action-label\">Iniciar sesión</span>",
+    "runner": "axe"
+   }
+  ]
+ },
+ {
+  "page": "html/auraphone.html",
+  "issues": [
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > a > span",
+    "context": "<span class=\"aura-brand__word\">AURA</span>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > nav > a:nth-child(1)",
+    "context": "<a class=\"aura-nav__link is-active\" href=\"auraphone.html\" data-aura-key=\"auraphone\" aria-current=\"page\">auraPhone</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > nav > a:nth-child(2)",
+    "context": "<a class=\"aura-nav__link\" href=\"aurapad.html\" data-aura-key=\"aurapad\">auraPad</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > nav > a:nth-child(3)",
+    "context": "<a class=\"aura-nav__link\" href=\"aurabook.html\" data-aura-key=\"aurabook\">auraBook</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > nav > a:nth-child(4)",
+    "context": "<a class=\"aura-nav__link\" href=\"aurapods.html\" data-aura-key=\"aurapods\">auraPods</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > nav > a:nth-child(5)",
+    "context": "<a class=\"aura-nav__link\" href=\"comparar.html\" data-aura-key=\"comparar\" title=\"Compara los modelos de cada familia frente a frente\">Comparar</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > nav > a:nth-child(6)",
+    "context": "<a class=\"aura-nav__link\" href=\"trade-in.html\" data-aura-key=\"tradein\" title=\"AURA Trade In: entrega tu dispositivo anterior y consigue un descuento\">Trade In</",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > nav > a:nth-child(7)",
+    "context": "<a class=\"aura-nav__link\" href=\"soporte.html\" data-aura-key=\"soporte\">Soporte</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > div > a > span:nth-child(2)",
+    "context": "<span class=\"aura-nav__action-label\">Iniciar sesión</span>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#contenido > nav > div > a:nth-child(1)",
+    "context": "<a class=\"aura-localnav__title\" href=\"#top\">auraPhone<span class=\"visually-...</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#localnav-secciones > a:nth-child(1)",
+    "context": "<a class=\"aura-localnav__link is-active\" href=\"#descripcion\" aria-current=\"true\">Descripción</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#localnav-secciones > a:nth-child(2)",
+    "context": "<a class=\"aura-localnav__link\" href=\"#duo\">Duo</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#localnav-secciones > a:nth-child(3)",
+    "context": "<a class=\"aura-localnav__link\" href=\"#diseno\">Diseño</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#localnav-secciones > a:nth-child(4)",
+    "context": "<a class=\"aura-localnav__link\" href=\"#camaras\">Cámaras</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#localnav-secciones > a:nth-child(5)",
+    "context": "<a class=\"aura-localnav__link\" href=\"#rendimiento\">Rendimiento</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#localnav-secciones > a:nth-child(6)",
+    "context": "<a class=\"aura-localnav__link\" href=\"#auraos\">auraOS</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#localnav-secciones > a:nth-child(7)",
+    "context": "<a class=\"aura-localnav__link\" href=\"#modelos\">Modelos</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#localnav-secciones > a:nth-child(8)",
+    "context": "<a class=\"aura-localnav__link\" href=\"#comparativa\">Especificaciones</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#contenido > nav > div > a:nth-child(4)",
+    "context": "<a class=\"aura-link aura-localnav__action\" href=\"comprar.html?producto=auraphone-18-pro\" data-aura-buy=\"auraphone\" data-aura-buy-short=\"\">Comprar<span class=\"vi",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#contenido > section:nth-child(3) > div > div:nth-child(3) > p:nth-child(1)",
+    "context": "<p class=\"aura-eyebrow aura-eyebrow--lg\">auraPhone 18 Pro</p>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#escena-titulo",
+    "context": "<h2 class=\"aura-h1\" id=\"escena-titulo\">Pro de lado a&nbsp;lado.</h2>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#contenido > section:nth-child(3) > div > div:nth-child(3) > p:nth-child(3)",
+    "context": "<p class=\"aura-lead\">Una meseta de cámaras que cruza...</p>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#comprar > div:nth-child(2) > div > p:nth-child(1)",
+    "context": "<p class=\"aura-eyebrow aura-eyebrow--mono\">auraPhone</p>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#comprar-titulo",
+    "context": "<h2 class=\"aura-h1\" id=\"comprar-titulo\">¿Cuál será tu auraPhone?</h2>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#comprar > div:nth-child(2) > div > p:nth-child(3)",
+    "context": "<p class=\"aura-lead\" data-aura-from=\"auraphone\">Desde 1.469&nbsp;€ o 61,21&nbsp...</p>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#comprar > div:nth-child(2) > div > div > a:nth-child(2)",
+    "context": "<a class=\"aura-btn aura-btn--secondary\" href=\"comparar.html?familia=auraphone\">Comparar todos los modelos</a>",
+    "runner": "axe"
+   }
+  ]
+ },
+ {
+  "page": "html/aurapad.html",
+  "issues": [
+   {
+    "type": "error",
+    "code": "aria-valid-attr-value",
+    "message": "ARIA attributes must conform to valid values (https://dequeuniversity.com/rules/axe/4.13/aria-valid-attr-value?application=axeAPI)",
+    "selector": "#camaras > div > div:nth-child(1) > div:nth-child(1) > button",
+    "context": "<button class=\"aura-link\" type=\"button\" data-aura-sheet-open=\"caso-medir\" aria-haspopup=\"dialog\" aria-expanded=\"false\" aria-controls=\"caso-medir\">Ver cómo<span ",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "aria-valid-attr-value",
+    "message": "ARIA attributes must conform to valid values (https://dequeuniversity.com/rules/axe/4.13/aria-valid-attr-value?application=axeAPI)",
+    "selector": "#crear > div > div > div:nth-child(1) > ul > li:nth-child(1) > article > div:nth-child(1) > button",
+    "context": "<button class=\"aura-link\" type=\"button\" data-aura-sheet-open=\"caso-ilustrar\" aria-haspopup=\"dialog\" aria-expanded=\"false\" aria-controls=\"caso-ilustrar\">Ver cómo",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "aria-valid-attr-value",
+    "message": "ARIA attributes must conform to valid values (https://dequeuniversity.com/rules/axe/4.13/aria-valid-attr-value?application=axeAPI)",
+    "selector": "#crear > div > div > div:nth-child(1) > ul > li:nth-child(2) > article > div:nth-child(1) > button",
+    "context": "<button class=\"aura-link\" type=\"button\" data-aura-sheet-open=\"caso-video\" aria-haspopup=\"dialog\" aria-expanded=\"false\" aria-controls=\"caso-video\">Ver cómo<span ",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "aria-valid-attr-value",
+    "message": "ARIA attributes must conform to valid values (https://dequeuniversity.com/rules/axe/4.13/aria-valid-attr-value?application=axeAPI)",
+    "selector": "#crear > div > div > div:nth-child(1) > ul > li:nth-child(3) > article > div:nth-child(1) > button",
+    "context": "<button class=\"aura-link\" type=\"button\" data-aura-sheet-open=\"caso-estudiar\" aria-haspopup=\"dialog\" aria-expanded=\"false\" aria-controls=\"caso-estudiar\">Ver cómo",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "aria-valid-attr-value",
+    "message": "ARIA attributes must conform to valid values (https://dequeuniversity.com/rules/axe/4.13/aria-valid-attr-value?application=axeAPI)",
+    "selector": "#crear > div > div > div:nth-child(1) > ul > li:nth-child(4) > article > div:nth-child(1) > button",
+    "context": "<button class=\"aura-link\" type=\"button\" data-aura-sheet-open=\"caso-trabajar\" aria-haspopup=\"dialog\" aria-expanded=\"false\" aria-controls=\"caso-trabajar\">Ver cómo",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > a > span",
+    "context": "<span class=\"aura-brand__word\">AURA</span>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > nav > a:nth-child(1)",
+    "context": "<a class=\"aura-nav__link\" href=\"auraphone.html\" data-aura-key=\"auraphone\">auraPhone</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > nav > a:nth-child(2)",
+    "context": "<a class=\"aura-nav__link is-active\" href=\"aurapad.html\" data-aura-key=\"aurapad\" aria-current=\"page\">auraPad</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > nav > a:nth-child(3)",
+    "context": "<a class=\"aura-nav__link\" href=\"aurabook.html\" data-aura-key=\"aurabook\">auraBook</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > nav > a:nth-child(4)",
+    "context": "<a class=\"aura-nav__link\" href=\"aurapods.html\" data-aura-key=\"aurapods\">auraPods</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > nav > a:nth-child(5)",
+    "context": "<a class=\"aura-nav__link\" href=\"comparar.html\" data-aura-key=\"comparar\" title=\"Compara los modelos de cada familia frente a frente\">Comparar</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > nav > a:nth-child(6)",
+    "context": "<a class=\"aura-nav__link\" href=\"trade-in.html\" data-aura-key=\"tradein\" title=\"AURA Trade In: entrega tu dispositivo anterior y consigue un descuento\">Trade In</",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > nav > a:nth-child(7)",
+    "context": "<a class=\"aura-nav__link\" href=\"soporte.html\" data-aura-key=\"soporte\">Soporte</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > div > a > span:nth-child(2)",
+    "context": "<span class=\"aura-nav__action-label\">Iniciar sesión</span>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#contenido > nav > div > a:nth-child(1)",
+    "context": "<a class=\"aura-localnav__title\" href=\"#top\">auraPad<span class=\"visually-hi...</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#localnav-secciones > a:nth-child(1)",
+    "context": "<a class=\"aura-localnav__link\" href=\"#modelos\">Modelos</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#localnav-secciones > a:nth-child(2)",
+    "context": "<a class=\"aura-localnav__link\" href=\"#diseno\">Diseño</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#localnav-secciones > a:nth-child(3)",
+    "context": "<a class=\"aura-localnav__link\" href=\"#pantalla\">Pantalla</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#localnav-secciones > a:nth-child(4)",
+    "context": "<a class=\"aura-localnav__link\" href=\"#rendimiento\">Rendimiento</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#localnav-secciones > a:nth-child(5)",
+    "context": "<a class=\"aura-localnav__link\" href=\"#camaras\">Cámaras</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#localnav-secciones > a:nth-child(6)",
+    "context": "<a class=\"aura-localnav__link\" href=\"#crear\">auraPadOS</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#localnav-secciones > a:nth-child(7)",
+    "context": "<a class=\"aura-localnav__link\" href=\"#accesorios\">Accesorios</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#localnav-secciones > a:nth-child(8)",
+    "context": "<a class=\"aura-localnav__link\" href=\"#comparar\">Comparar<span class=\"visually-h...</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#contenido > nav > div > a:nth-child(4)",
+    "context": "<a class=\"aura-link aura-localnav__action\" href=\"comprar.html?producto=aurapad-air-13\" data-aura-buy=\"aurapad\" data-aura-buy-short=\"\">Comprar<span class=\"visual",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#intro > div > div:nth-child(3) > p:nth-child(1)",
+    "context": "<p class=\"aura-eyebrow aura-eyebrow--lg\">auraPad Pro</p>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#intro-titulo",
+    "context": "<h2 class=\"aura-h1\" id=\"intro-titulo\">Una lámina de luz.</h2>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#intro > div > div:nth-child(3) > p:nth-child(3)",
+    "context": "<p class=\"aura-lead\">5,1&nbsp;mm de grosor y 579&nbs...</p>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#comprar > div:nth-child(2) > div > p:nth-child(1)",
+    "context": "<p class=\"aura-eyebrow aura-eyebrow--mono\">auraPad</p>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#comprar-titulo",
+    "context": "<h2 class=\"aura-h1\" id=\"comprar-titulo\">¿Cuál será tu auraPad?</h2>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#comprar > div:nth-child(2) > div > p:nth-child(3)",
+    "context": "<p class=\"aura-lead\" data-aura-from=\"aurapad\">Desde 999&nbsp;€ o 41,63&nbsp;€...</p>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#comprar > div:nth-child(2) > div > div > a:nth-child(2)",
+    "context": "<a class=\"aura-btn aura-btn--secondary\" href=\"comparar.html?familia=aurapad\">Comparar todos los modelos</a>",
+    "runner": "axe"
+   }
+  ]
+ },
+ {
+  "page": "html/aurabook.html",
+  "issues": [
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > a > span",
+    "context": "<span class=\"aura-brand__word\">AURA</span>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > nav > a:nth-child(1)",
+    "context": "<a class=\"aura-nav__link\" href=\"auraphone.html\" data-aura-key=\"auraphone\">auraPhone</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > nav > a:nth-child(2)",
+    "context": "<a class=\"aura-nav__link\" href=\"aurapad.html\" data-aura-key=\"aurapad\">auraPad</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > nav > a:nth-child(3)",
+    "context": "<a class=\"aura-nav__link is-active\" href=\"aurabook.html\" data-aura-key=\"aurabook\" aria-current=\"page\">auraBook</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > nav > a:nth-child(4)",
+    "context": "<a class=\"aura-nav__link\" href=\"aurapods.html\" data-aura-key=\"aurapods\">auraPods</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > nav > a:nth-child(5)",
+    "context": "<a class=\"aura-nav__link\" href=\"comparar.html\" data-aura-key=\"comparar\" title=\"Compara los modelos de cada familia frente a frente\">Comparar</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > nav > a:nth-child(6)",
+    "context": "<a class=\"aura-nav__link\" href=\"trade-in.html\" data-aura-key=\"tradein\" title=\"AURA Trade In: entrega tu dispositivo anterior y consigue un descuento\">Trade In</",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > nav > a:nth-child(7)",
+    "context": "<a class=\"aura-nav__link\" href=\"soporte.html\" data-aura-key=\"soporte\">Soporte</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > div > a > span:nth-child(2)",
+    "context": "<span class=\"aura-nav__action-label\">Iniciar sesión</span>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#contenido > nav > div > a:nth-child(1)",
+    "context": "<a class=\"aura-localnav__title\" href=\"#top\">auraBook<span class=\"visually-h...</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#localnav-secciones > a:nth-child(1)",
+    "context": "<a class=\"aura-localnav__link\" href=\"#modelos\">Modelos</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#localnav-secciones > a:nth-child(2)",
+    "context": "<a class=\"aura-localnav__link\" href=\"#diseno\">Diseño</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#localnav-secciones > a:nth-child(3)",
+    "context": "<a class=\"aura-localnav__link\" href=\"#rendimiento\">Rendimiento</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#localnav-secciones > a:nth-child(4)",
+    "context": "<a class=\"aura-localnav__link\" href=\"#pantalla\">Pantalla</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#localnav-secciones > a:nth-child(5)",
+    "context": "<a class=\"aura-localnav__link\" href=\"#autonomia\">Autonomía</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#localnav-secciones > a:nth-child(6)",
+    "context": "<a class=\"aura-localnav__link\" href=\"#comparar\">Comparar<span class=\"visually-h...</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#contenido > nav > div > a:nth-child(4)",
+    "context": "<a class=\"aura-link aura-localnav__action\" href=\"comprar.html?producto=aurabook-air-15\" data-aura-buy=\"aurabook\" data-aura-buy-short=\"\">Comprar<span class=\"visu",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#descripcion > div > div:nth-child(3) > p:nth-child(1)",
+    "context": "<p class=\"aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain\">Gama auraBook</p>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#hero-titulo > span:nth-child(1)",
+    "context": "<span class=\"aurabook-lema\" data-ab=\"family-tagline\">Increíblemente fino. Asombrosam...</span>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#descripcion > div > div:nth-child(3) > p:nth-child(3)",
+    "context": "<p class=\"aura-lead\">auraBook Pro y auraBook Air, co...</p>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#descripcion > div > div:nth-child(3) > div > a:nth-child(1)",
+    "context": "<a class=\"aura-btn aura-btn--primary\" href=\"comprar.html?producto=aurabook-air-15\" data-aura-buy=\"aurabook\">Comprar auraBook</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#descripcion > div > div:nth-child(3) > div > a:nth-child(2)",
+    "context": "<a class=\"aura-btn aura-btn--secondary\" href=\"#modelos\">Ver los modelos</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#comprar > div:nth-child(2) > div > p:nth-child(1)",
+    "context": "<p class=\"aura-eyebrow aura-eyebrow--mono\">auraBook</p>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#comprar-titulo",
+    "context": "<h2 class=\"aura-h1\" id=\"comprar-titulo\">¿Cuál será tu auraBook?</h2>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#comprar > div:nth-child(2) > div > p:nth-child(3)",
+    "context": "<p class=\"aura-lead\" data-aura-from=\"aurabook\">Desde 1.729&nbsp;€ o 72,04&nbsp...</p>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#comprar > div:nth-child(2) > div > div > a:nth-child(2)",
+    "context": "<a class=\"aura-btn aura-btn--secondary\" href=\"comparar.html?familia=aurabook\">Comparar todos los modelos</a>",
+    "runner": "axe"
+   }
+  ]
+ },
+ {
+  "page": "html/aurapods.html",
+  "issues": [
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > a > span",
+    "context": "<span class=\"aura-brand__word\">AURA</span>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > nav > a:nth-child(1)",
+    "context": "<a class=\"aura-nav__link\" href=\"auraphone.html\" data-aura-key=\"auraphone\">auraPhone</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > nav > a:nth-child(2)",
+    "context": "<a class=\"aura-nav__link\" href=\"aurapad.html\" data-aura-key=\"aurapad\">auraPad</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > nav > a:nth-child(3)",
+    "context": "<a class=\"aura-nav__link\" href=\"aurabook.html\" data-aura-key=\"aurabook\">auraBook</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > nav > a:nth-child(4)",
+    "context": "<a class=\"aura-nav__link is-active\" href=\"aurapods.html\" data-aura-key=\"aurapods\" aria-current=\"page\">auraPods</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > nav > a:nth-child(5)",
+    "context": "<a class=\"aura-nav__link\" href=\"comparar.html\" data-aura-key=\"comparar\" title=\"Compara los modelos de cada familia frente a frente\">Comparar</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > nav > a:nth-child(6)",
+    "context": "<a class=\"aura-nav__link\" href=\"trade-in.html\" data-aura-key=\"tradein\" title=\"AURA Trade In: entrega tu dispositivo anterior y consigue un descuento\">Trade In</",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > nav > a:nth-child(7)",
+    "context": "<a class=\"aura-nav__link\" href=\"soporte.html\" data-aura-key=\"soporte\">Soporte</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > div > a > span:nth-child(2)",
+    "context": "<span class=\"aura-nav__action-label\">Iniciar sesión</span>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#contenido > nav > div > a:nth-child(1)",
+    "context": "<a class=\"aura-localnav__title\" href=\"#top\">auraPods<span class=\"visually-h...</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#localnav-secciones > a:nth-child(1)",
+    "context": "<a class=\"aura-localnav__link\" href=\"#modelos\">Modelos</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#localnav-secciones > a:nth-child(2)",
+    "context": "<a class=\"aura-localnav__link\" href=\"#cancelacion\">Cancelación</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#localnav-secciones > a:nth-child(3)",
+    "context": "<a class=\"aura-localnav__link\" href=\"#audio\">Audio</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#localnav-secciones > a:nth-child(4)",
+    "context": "<a class=\"aura-localnav__link\" href=\"#salud\">Salud</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#localnav-secciones > a:nth-child(5)",
+    "context": "<a class=\"aura-localnav__link\" href=\"#autonomia\">Autonomía</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#localnav-secciones > a:nth-child(6)",
+    "context": "<a class=\"aura-localnav__link\" href=\"#diseno\">Diseño</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#localnav-secciones > a:nth-child(7)",
+    "context": "<a class=\"aura-localnav__link\" href=\"#max\">Max</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#localnav-secciones > a:nth-child(8)",
+    "context": "<a class=\"aura-localnav__link\" href=\"#comparativa\">Especificaciones</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#contenido > nav > div > a:nth-child(4)",
+    "context": "<a class=\"aura-link aura-localnav__action\" href=\"comprar.html?producto=aurapods-5\" data-aura-buy=\"aurapods\" data-aura-buy-short=\"\">Comprar<span class=\"visually-",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#descripcion > div > div:nth-child(3) > p:nth-child(1)",
+    "context": "<p class=\"aura-eyebrow aura-eyebrow--mono aura-eyebrow--plain\">Gama auraPods</p>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#hero-titulo > span:nth-child(1)",
+    "context": "<span>Escucha lo que quieres.</span>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#hero-titulo > span:nth-child(2)",
+    "context": "<span>Silencia lo demás.</span>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#descripcion > div > div:nth-child(3) > p:nth-child(3)",
+    "context": "<p class=\"aura-lead\">Tres auraPods con el chip AURA&...</p>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#descripcion > div > div:nth-child(3) > div > a:nth-child(1)",
+    "context": "<a class=\"aura-btn aura-btn--primary\" href=\"comprar.html?producto=aurapods-5\" data-aura-buy=\"aurapods\">Comprar auraPods</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#descripcion > div > div:nth-child(3) > div > a:nth-child(2)",
+    "context": "<a class=\"aura-btn aura-btn--secondary\" href=\"#modelos\">Ver los modelos</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#comprar > div:nth-child(2) > div > p:nth-child(1)",
+    "context": "<p class=\"aura-eyebrow aura-eyebrow--mono\">auraPods</p>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#comprar-titulo",
+    "context": "<h2 class=\"aura-h1\" id=\"comprar-titulo\">¿Cuáles serán tus auraPods?</h2>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#comprar > div:nth-child(2) > div > p:nth-child(3)",
+    "context": "<p class=\"aura-lead\" data-aura-from=\"aurapods\">Desde 149&nbsp;€ o 6,21&nbsp;€/...</p>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#comprar > div:nth-child(2) > div > div > a:nth-child(2)",
+    "context": "<a class=\"aura-btn aura-btn--secondary\" href=\"comparar.html?familia=aurapods\">Comparar todos los modelos</a>",
+    "runner": "axe"
+   }
+  ]
+ },
+ {
+  "page": "html/comprar.html?producto=auraphone-duo",
+  "issues": [
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > a > span",
+    "context": "<span class=\"aura-brand__word\">AURA</span>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(1)",
+    "context": "<a class=\"aura-nav__link is-active\" href=\"auraphone.html\" data-aura-key=\"auraphone\" aria-current=\"page\">auraPhone</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(2)",
+    "context": "<a class=\"aura-nav__link\" href=\"aurapad.html\" data-aura-key=\"aurapad\">auraPad</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(3)",
+    "context": "<a class=\"aura-nav__link\" href=\"aurabook.html\" data-aura-key=\"aurabook\">auraBook</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(4)",
+    "context": "<a class=\"aura-nav__link\" href=\"aurapods.html\" data-aura-key=\"aurapods\">auraPods</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(5)",
+    "context": "<a class=\"aura-nav__link\" href=\"comparar.html\" data-aura-key=\"comparar\" title=\"Compara los modelos de cada familia frente a frente\">Comparar</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(6)",
+    "context": "<a class=\"aura-nav__link\" href=\"trade-in.html\" data-aura-key=\"tradein\" title=\"AURA Trade In: entrega tu dispositivo anterior y consigue un descuento\">Trade In</",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(7)",
+    "context": "<a class=\"aura-nav__link\" href=\"soporte.html\" data-aura-key=\"soporte\">Soporte</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > div > a > span:nth-child(2)",
+    "context": "<span class=\"aura-nav__action-label\">Iniciar sesión</span>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#contenido > section:nth-child(1) > div > div:nth-child(3) > div > div:nth-child(1) > p",
+    "context": "<p class=\"aura-gallery__caption\" aria-hidden=\"true\" data-c-galeria-pie=\"\">Blanco estelar</p>",
+    "runner": "axe"
+   }
+  ]
+ },
+ {
+  "page": "html/bolsa.html",
+  "issues": [
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > a > span",
+    "context": "<span class=\"aura-brand__word\">AURA</span>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(1)",
+    "context": "<a class=\"aura-nav__link\" href=\"auraphone.html\" data-aura-key=\"auraphone\">auraPhone</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(2)",
+    "context": "<a class=\"aura-nav__link\" href=\"aurapad.html\" data-aura-key=\"aurapad\">auraPad</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(3)",
+    "context": "<a class=\"aura-nav__link\" href=\"aurabook.html\" data-aura-key=\"aurabook\">auraBook</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(4)",
+    "context": "<a class=\"aura-nav__link\" href=\"aurapods.html\" data-aura-key=\"aurapods\">auraPods</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(5)",
+    "context": "<a class=\"aura-nav__link\" href=\"comparar.html\" data-aura-key=\"comparar\" title=\"Compara los modelos de cada familia frente a frente\">Comparar</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(6)",
+    "context": "<a class=\"aura-nav__link\" href=\"trade-in.html\" data-aura-key=\"tradein\" title=\"AURA Trade In: entrega tu dispositivo anterior y consigue un descuento\">Trade In</",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(7)",
+    "context": "<a class=\"aura-nav__link\" href=\"soporte.html\" data-aura-key=\"soporte\">Soporte</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > div > a > span:nth-child(2)",
+    "context": "<span class=\"aura-nav__action-label\">Iniciar sesión</span>",
+    "runner": "axe"
+   }
+  ]
+ },
+ {
+  "page": "html/checkout.html",
+  "issues": [
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > a > span",
+    "context": "<span class=\"aura-brand__word\">AURA</span>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(1)",
+    "context": "<a class=\"aura-nav__link\" href=\"auraphone.html\" data-aura-key=\"auraphone\">auraPhone</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(2)",
+    "context": "<a class=\"aura-nav__link\" href=\"aurapad.html\" data-aura-key=\"aurapad\">auraPad</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(3)",
+    "context": "<a class=\"aura-nav__link\" href=\"aurabook.html\" data-aura-key=\"aurabook\">auraBook</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(4)",
+    "context": "<a class=\"aura-nav__link\" href=\"aurapods.html\" data-aura-key=\"aurapods\">auraPods</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(5)",
+    "context": "<a class=\"aura-nav__link\" href=\"comparar.html\" data-aura-key=\"comparar\" title=\"Compara los modelos de cada familia frente a frente\">Comparar</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(6)",
+    "context": "<a class=\"aura-nav__link\" href=\"trade-in.html\" data-aura-key=\"tradein\" title=\"AURA Trade In: entrega tu dispositivo anterior y consigue un descuento\">Trade In</",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(7)",
+    "context": "<a class=\"aura-nav__link\" href=\"soporte.html\" data-aura-key=\"soporte\">Soporte</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > div > a > span:nth-child(2)",
+    "context": "<span class=\"aura-nav__action-label\">Iniciar sesión</span>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#aura-toasts > div > div > p:nth-child(1)",
+    "context": "<p class=\"aura-toast__title\">No hay nada que tramitar</p>",
+    "runner": "axe"
+   }
+  ]
+ },
+ {
+  "page": "html/login.html",
+  "issues": [
+   {
+    "type": "error",
+    "code": "WCAG2AA.Principle1.Guideline1_3.1_3_5.H98",
+    "message": "Invalid autocomplete value: username. Element does not belong to Text control group.",
+    "selector": "#login-email",
+    "context": "<input class=\"aura-input\" id=\"login-email\" name=\"email\" type=\"email\" inputmode=\"email\" placeholder=\"nombre@correo.com\" required=\"\" maxlength=\"254\" pattern=\"[^\\s",
+    "runner": "htmlcs"
+   },
+   {
+    "type": "error",
+    "code": "aria-valid-attr-value",
+    "message": "ARIA attributes must conform to valid values (https://dequeuniversity.com/rules/axe/4.13/aria-valid-attr-value?application=axeAPI)",
+    "selector": "#login-form > p > button",
+    "context": "<button class=\"aura-link aura-link--plain\" type=\"button\" data-aura-sheet-open=\"recuperar\" aria-haspopup=\"dialog\" aria-expanded=\"false\" aria-controls=\"recuperar\"",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > a > span",
+    "context": "<span class=\"aura-brand__word\">AURA</span>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(1)",
+    "context": "<a class=\"aura-nav__link\" href=\"auraphone.html\" data-aura-key=\"auraphone\">auraPhone</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(2)",
+    "context": "<a class=\"aura-nav__link\" href=\"aurapad.html\" data-aura-key=\"aurapad\">auraPad</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(3)",
+    "context": "<a class=\"aura-nav__link\" href=\"aurabook.html\" data-aura-key=\"aurabook\">auraBook</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(4)",
+    "context": "<a class=\"aura-nav__link\" href=\"aurapods.html\" data-aura-key=\"aurapods\">auraPods</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(5)",
+    "context": "<a class=\"aura-nav__link\" href=\"comparar.html\" data-aura-key=\"comparar\" title=\"Compara los modelos de cada familia frente a frente\">Comparar</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(6)",
+    "context": "<a class=\"aura-nav__link\" href=\"trade-in.html\" data-aura-key=\"tradein\" title=\"AURA Trade In: entrega tu dispositivo anterior y consigue un descuento\">Trade In</",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(7)",
+    "context": "<a class=\"aura-nav__link\" href=\"soporte.html\" data-aura-key=\"soporte\">Soporte</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > div > a > span:nth-child(2)",
+    "context": "<span class=\"aura-nav__action-label\">Iniciar sesión</span>",
+    "runner": "axe"
+   }
+  ]
+ },
+ {
+  "page": "html/registro.html",
+  "issues": [
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > a > span",
+    "context": "<span class=\"aura-brand__word\">AURA</span>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(1)",
+    "context": "<a class=\"aura-nav__link\" href=\"auraphone.html\" data-aura-key=\"auraphone\">auraPhone</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(2)",
+    "context": "<a class=\"aura-nav__link\" href=\"aurapad.html\" data-aura-key=\"aurapad\">auraPad</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(3)",
+    "context": "<a class=\"aura-nav__link\" href=\"aurabook.html\" data-aura-key=\"aurabook\">auraBook</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(4)",
+    "context": "<a class=\"aura-nav__link\" href=\"aurapods.html\" data-aura-key=\"aurapods\">auraPods</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(5)",
+    "context": "<a class=\"aura-nav__link\" href=\"comparar.html\" data-aura-key=\"comparar\" title=\"Compara los modelos de cada familia frente a frente\">Comparar</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(6)",
+    "context": "<a class=\"aura-nav__link\" href=\"trade-in.html\" data-aura-key=\"tradein\" title=\"AURA Trade In: entrega tu dispositivo anterior y consigue un descuento\">Trade In</",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(7)",
+    "context": "<a class=\"aura-nav__link\" href=\"soporte.html\" data-aura-key=\"soporte\">Soporte</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > div > a > span:nth-child(2)",
+    "context": "<span class=\"aura-nav__action-label\">Iniciar sesión</span>",
+    "runner": "axe"
+   }
+  ]
+ },
+ {
+  "page": "html/cuenta.html",
+  "issues": [
+   {
+    "type": "error",
+    "code": "WCAG2AA.Principle1.Guideline1_3.1_3_5.H98",
+    "message": "Invalid autocomplete value: username. Element does not belong to Text control group.",
+    "selector": "#login-email",
+    "context": "<input class=\"aura-input\" id=\"login-email\" name=\"email\" type=\"email\" inputmode=\"email\" placeholder=\"nombre@correo.com\" required=\"\" maxlength=\"254\" pattern=\"[^\\s",
+    "runner": "htmlcs"
+   },
+   {
+    "type": "error",
+    "code": "aria-valid-attr-value",
+    "message": "ARIA attributes must conform to valid values (https://dequeuniversity.com/rules/axe/4.13/aria-valid-attr-value?application=axeAPI)",
+    "selector": "#login-form > p > button",
+    "context": "<button class=\"aura-link aura-link--plain\" type=\"button\" data-aura-sheet-open=\"recuperar\" aria-haspopup=\"dialog\" aria-expanded=\"false\" aria-controls=\"recuperar\"",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > a > span",
+    "context": "<span class=\"aura-brand__word\">AURA</span>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(1)",
+    "context": "<a class=\"aura-nav__link\" href=\"auraphone.html\" data-aura-key=\"auraphone\">auraPhone</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(2)",
+    "context": "<a class=\"aura-nav__link\" href=\"aurapad.html\" data-aura-key=\"aurapad\">auraPad</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(3)",
+    "context": "<a class=\"aura-nav__link\" href=\"aurabook.html\" data-aura-key=\"aurabook\">auraBook</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(4)",
+    "context": "<a class=\"aura-nav__link\" href=\"aurapods.html\" data-aura-key=\"aurapods\">auraPods</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(5)",
+    "context": "<a class=\"aura-nav__link\" href=\"comparar.html\" data-aura-key=\"comparar\" title=\"Compara los modelos de cada familia frente a frente\">Comparar</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(6)",
+    "context": "<a class=\"aura-nav__link\" href=\"trade-in.html\" data-aura-key=\"tradein\" title=\"AURA Trade In: entrega tu dispositivo anterior y consigue un descuento\">Trade In</",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(7)",
+    "context": "<a class=\"aura-nav__link\" href=\"soporte.html\" data-aura-key=\"soporte\">Soporte</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > div > a > span:nth-child(2)",
+    "context": "<span class=\"aura-nav__action-label\">Iniciar sesión</span>",
+    "runner": "axe"
+   }
+  ]
+ },
+ {
+  "page": "html/comparar.html?familia=auraphone",
+  "issues": [
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > a > span",
+    "context": "<span class=\"aura-brand__word\">AURA</span>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(1)",
+    "context": "<a class=\"aura-nav__link\" href=\"auraphone.html\" data-aura-key=\"auraphone\">auraPhone</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(2)",
+    "context": "<a class=\"aura-nav__link\" href=\"aurapad.html\" data-aura-key=\"aurapad\">auraPad</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(3)",
+    "context": "<a class=\"aura-nav__link\" href=\"aurabook.html\" data-aura-key=\"aurabook\">auraBook</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(4)",
+    "context": "<a class=\"aura-nav__link\" href=\"aurapods.html\" data-aura-key=\"aurapods\">auraPods</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(5)",
+    "context": "<a class=\"aura-nav__link is-active\" href=\"comparar.html\" data-aura-key=\"comparar\" title=\"Compara los modelos de cada familia frente a frente\" aria-current=\"page",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(6)",
+    "context": "<a class=\"aura-nav__link\" href=\"trade-in.html\" data-aura-key=\"tradein\" title=\"AURA Trade In: entrega tu dispositivo anterior y consigue un descuento\">Trade In</",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(7)",
+    "context": "<a class=\"aura-nav__link\" href=\"soporte.html\" data-aura-key=\"soporte\">Soporte</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > div > a > span:nth-child(2)",
+    "context": "<span class=\"aura-nav__action-label\">Iniciar sesión</span>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#contenido > section:nth-child(1) > div:nth-child(2) > div:nth-child(1) > p:nth-child(1)",
+    "context": "<p class=\"aura-eyebrow aura-eyebrow--mono\">Comparar modelos</p>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#cmp-titulo",
+    "context": "<h1 class=\"aura-h1\" id=\"cmp-titulo\">Compara los modelos.</h1>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#contenido > section:nth-child(1) > div:nth-child(2) > div:nth-child(1) > p:nth-child(3)",
+    "context": "<p class=\"aura-lead\" data-cmp-lead=\"\">Tres auraPhone con el chip AURA...</p>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#contenido > section:nth-child(1) > div:nth-child(2) > div:nth-child(2) > nav > a:nth-child(2)",
+    "context": "<a class=\"aura-segmented__item is-active\" aria-current=\"page\" href=\"comparar.html?familia=auraphone\" data-family=\"auraphone\"><span class=\"visually-hidden\">C...<",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#contenido > section:nth-child(1) > div:nth-child(2) > div:nth-child(2) > nav > a:nth-child(3)",
+    "context": "<a class=\"aura-segmented__item\" href=\"comparar.html?familia=aurapad\" data-family=\"aurapad\"><span class=\"visually-hidden\">C...</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#contenido > section:nth-child(1) > div:nth-child(2) > div:nth-child(2) > nav > a:nth-child(4)",
+    "context": "<a class=\"aura-segmented__item\" href=\"comparar.html?familia=aurabook\" data-family=\"aurabook\"><span class=\"visually-hidden\">C...</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#contenido > section:nth-child(1) > div:nth-child(2) > div:nth-child(2) > nav > a:nth-child(5)",
+    "context": "<a class=\"aura-segmented__item\" href=\"comparar.html?familia=aurapods\" data-family=\"aurapods\"><span class=\"visually-hidden\">C...</a>",
+    "runner": "axe"
+   }
+  ]
+ },
+ {
+  "page": "html/trade-in.html",
+  "issues": [
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > a > span",
+    "context": "<span class=\"aura-brand__word\">AURA</span>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(1)",
+    "context": "<a class=\"aura-nav__link\" href=\"auraphone.html\" data-aura-key=\"auraphone\">auraPhone</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(2)",
+    "context": "<a class=\"aura-nav__link\" href=\"aurapad.html\" data-aura-key=\"aurapad\">auraPad</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(3)",
+    "context": "<a class=\"aura-nav__link\" href=\"aurabook.html\" data-aura-key=\"aurabook\">auraBook</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(4)",
+    "context": "<a class=\"aura-nav__link\" href=\"aurapods.html\" data-aura-key=\"aurapods\">auraPods</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(5)",
+    "context": "<a class=\"aura-nav__link\" href=\"comparar.html\" data-aura-key=\"comparar\" title=\"Compara los modelos de cada familia frente a frente\">Comparar</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(6)",
+    "context": "<a class=\"aura-nav__link is-active\" href=\"trade-in.html\" data-aura-key=\"tradein\" title=\"AURA Trade In: entrega tu dispositivo anterior y consigue un descuento\" ",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(7)",
+    "context": "<a class=\"aura-nav__link\" href=\"soporte.html\" data-aura-key=\"soporte\">Soporte</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > div > a > span:nth-child(2)",
+    "context": "<span class=\"aura-nav__action-label\">Iniciar sesión</span>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#ti-form > div > fieldset:nth-child(1) > legend > span",
+    "context": "<span class=\"ti-step__num\" aria-hidden=\"true\">1</span>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#ti-form > aside > div:nth-child(2) > p:nth-child(1)",
+    "context": "<p class=\"aura-stat__label\" data-ti-value-prefix=\"\">Hasta</p>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#ti-form > aside > div:nth-child(2) > p:nth-child(2)",
+    "context": "<p class=\"aura-stat__value\" data-ti-value=\"\">800&nbsp;€</p>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#ti-form > aside > div:nth-child(2) > p:nth-child(3)",
+    "context": "<p class=\"aura-stat__label\" data-ti-value-label=\"\">según el modelo</p>",
+    "runner": "axe"
+   }
+  ]
+ },
+ {
+  "page": "html/acerca.html",
+  "issues": [
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > a > span",
+    "context": "<span class=\"aura-brand__word\">AURA</span>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > nav > a:nth-child(1)",
+    "context": "<a class=\"aura-nav__link\" href=\"auraphone.html\" data-aura-key=\"auraphone\">auraPhone</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > nav > a:nth-child(2)",
+    "context": "<a class=\"aura-nav__link\" href=\"aurapad.html\" data-aura-key=\"aurapad\">auraPad</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > nav > a:nth-child(3)",
+    "context": "<a class=\"aura-nav__link\" href=\"aurabook.html\" data-aura-key=\"aurabook\">auraBook</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > nav > a:nth-child(4)",
+    "context": "<a class=\"aura-nav__link\" href=\"aurapods.html\" data-aura-key=\"aurapods\">auraPods</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > nav > a:nth-child(5)",
+    "context": "<a class=\"aura-nav__link\" href=\"comparar.html\" data-aura-key=\"comparar\" title=\"Compara los modelos de cada familia frente a frente\">Comparar</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > nav > a:nth-child(6)",
+    "context": "<a class=\"aura-nav__link\" href=\"trade-in.html\" data-aura-key=\"tradein\" title=\"AURA Trade In: entrega tu dispositivo anterior y consigue un descuento\">Trade In</",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > nav > a:nth-child(7)",
+    "context": "<a class=\"aura-nav__link\" href=\"soporte.html\" data-aura-key=\"soporte\">Soporte</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > div > a > span:nth-child(2)",
+    "context": "<span class=\"aura-nav__action-label\">Iniciar sesión</span>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#contenido > nav > div > a",
+    "context": "<a class=\"aura-localnav__title\" href=\"#top\">Acerca de AURA<span class=\"visu...</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#localnav-secciones > a:nth-child(1)",
+    "context": "<a class=\"aura-localnav__link\" href=\"#historia\">Historia</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#localnav-secciones > a:nth-child(2)",
+    "context": "<a class=\"aura-localnav__link\" href=\"#valores\">Valores</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#localnav-secciones > a:nth-child(3)",
+    "context": "<a class=\"aura-localnav__link\" href=\"#newsroom\">Newsroom</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#localnav-secciones > a:nth-child(4)",
+    "context": "<a class=\"aura-localnav__link\" href=\"#oportunidades\">Oportunidades</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#contenido > section:nth-child(2) > div > figure > span",
+    "context": "<span class=\"aura-media__tag\">Cupertino / 37,3349°&nbsp;N</span>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#contenido > section:nth-child(2) > div > figure > figcaption > ul > li:nth-child(1) > p:nth-child(1) > time",
+    "context": "<time datetime=\"1976\">1976</time>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#contenido > section:nth-child(2) > div > figure > figcaption > ul > li:nth-child(1) > p:nth-child(2)",
+    "context": "<p class=\"aura-stat__label\">Año de fundación</p>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#contenido > section:nth-child(2) > div > figure > figcaption > ul > li:nth-child(2) > p:nth-child(1)",
+    "context": "<p class=\"aura-stat__value\">+2000&nbsp;M</p>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#contenido > section:nth-child(2) > div > figure > figcaption > ul > li:nth-child(2) > p:nth-child(2)",
+    "context": "<p class=\"aura-stat__label\">Dispositivos activos<sup class=...</p>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#ref-1",
+    "context": "<a href=\"#nota-1\" id=\"ref-1\" aria-label=\"Nota 1\">1</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#contenido > section:nth-child(2) > div > figure > figcaption > ul > li:nth-child(3) > p:nth-child(1)",
+    "context": "<p class=\"aura-stat__value\">100&nbsp;%</p>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#contenido > section:nth-child(2) > div > figure > figcaption > ul > li:nth-child(3) > p:nth-child(2)",
+    "context": "<p class=\"aura-stat__label\">Energía renovable<sup class=\"au...</p>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#ref-2",
+    "context": "<a href=\"#nota-2\" id=\"ref-2\" aria-label=\"Nota 2\">2</a>",
+    "runner": "axe"
+   }
+  ]
+ },
+ {
+  "page": "html/soporte.html",
+  "issues": [
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > a > span",
+    "context": "<span class=\"aura-brand__word\">AURA</span>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > nav > a:nth-child(1)",
+    "context": "<a class=\"aura-nav__link\" href=\"auraphone.html\" data-aura-key=\"auraphone\">auraPhone</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > nav > a:nth-child(2)",
+    "context": "<a class=\"aura-nav__link\" href=\"aurapad.html\" data-aura-key=\"aurapad\">auraPad</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > nav > a:nth-child(3)",
+    "context": "<a class=\"aura-nav__link\" href=\"aurabook.html\" data-aura-key=\"aurabook\">auraBook</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > nav > a:nth-child(4)",
+    "context": "<a class=\"aura-nav__link\" href=\"aurapods.html\" data-aura-key=\"aurapods\">auraPods</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > nav > a:nth-child(5)",
+    "context": "<a class=\"aura-nav__link\" href=\"comparar.html\" data-aura-key=\"comparar\" title=\"Compara los modelos de cada familia frente a frente\">Comparar</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > nav > a:nth-child(6)",
+    "context": "<a class=\"aura-nav__link\" href=\"trade-in.html\" data-aura-key=\"tradein\" title=\"AURA Trade In: entrega tu dispositivo anterior y consigue un descuento\">Trade In</",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > nav > a:nth-child(7)",
+    "context": "<a class=\"aura-nav__link is-active\" href=\"soporte.html\" data-aura-key=\"soporte\" aria-current=\"page\">Soporte</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#top > aura-header > header > div > div > a > span:nth-child(2)",
+    "context": "<span class=\"aura-nav__action-label\">Iniciar sesión</span>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#contenido > nav > div > a:nth-child(1)",
+    "context": "<a class=\"aura-localnav__title\" href=\"#top\">Soporte<span class=\"visually-hi...</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#localnav-secciones > a:nth-child(1)",
+    "context": "<a class=\"aura-localnav__link\" href=\"#temas\">Temas</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#localnav-secciones > a:nth-child(2)",
+    "context": "<a class=\"aura-localnav__link\" href=\"#preguntas\">Preguntas</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#contenido > nav > div > a:nth-child(4)",
+    "context": "<a class=\"aura-link aura-localnav__action\" href=\"#contacto\">Contactar</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#contenido > section:nth-child(2) > div:nth-child(2) > div > p:nth-child(1)",
+    "context": "<p class=\"aura-eyebrow aura-eyebrow--mono\">Ayuda / AURA Store España</p>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#soporte-titulo",
+    "context": "<h1 class=\"aura-display\" id=\"soporte-titulo\">Soporte de&nbsp;AURA.</h1>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#contenido > section:nth-child(2) > div:nth-child(2) > div > p:nth-child(3)",
+    "context": "<p class=\"aura-lead\">Estamos aquí para ayudarte. Bus...</p>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#soporte-buscador > div:nth-child(1) > label",
+    "context": "<label class=\"aura-field__label\" for=\"soporte-q\">¿En qué podemos ayudarte?</label>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#soporte-q",
+    "context": "<input class=\"aura-input\" id=\"soporte-q\" name=\"q\" type=\"search\" placeholder=\"Devolución, reserva, Trade In…\" maxlength=\"120\" autocomplete=\"off\" autocapitalize=\"",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#soporte-q-estado",
+    "context": "<p class=\"aura-field__help\" id=\"soporte-q-estado\" role=\"status\" aria-live=\"polite\">Filtra al instante los temas y ...</p>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#soporte-sugerencias-titulo",
+    "context": "<p class=\"aura-caption aura-caption--muted\" id=\"soporte-sugerencias-titulo\">Lo más buscado</p>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#soporte-buscador > div:nth-child(2) > div > button:nth-child(1)",
+    "context": "<button class=\"aura-chip\" type=\"button\" data-soporte-sugerencia=\"devolución\" aria-pressed=\"false\">Devoluciones</button>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#soporte-buscador > div:nth-child(2) > div > button:nth-child(3)",
+    "context": "<button class=\"aura-chip\" type=\"button\" data-soporte-sugerencia=\"Trade In\" aria-pressed=\"false\">Trade In</button>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#soporte-buscador > div:nth-child(2) > div > button:nth-child(4)",
+    "context": "<button class=\"aura-chip\" type=\"button\" data-soporte-sugerencia=\"garantía\" aria-pressed=\"false\">Garantía</button>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#contacto-producto",
+    "context": "<select class=\"aura-select\" id=\"contacto-producto\" name=\"producto\" data-soporte-productos=\"\">\n                          <opt...</select>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "#contacto-tema",
+    "context": "<select class=\"aura-select\" id=\"contacto-tema\" name=\"tema\" required=\"\" aria-describedby=\"contacto-tema-error\">\n                          <opt...</select>",
+    "runner": "axe"
+   }
+  ]
+ },
+ {
+  "page": "html/legal.html",
+  "issues": [
+   {
+    "type": "error",
+    "code": "aria-valid-attr-value",
+    "message": "ARIA attributes must conform to valid values (https://dequeuniversity.com/rules/axe/4.13/aria-valid-attr-value?application=axeAPI)",
+    "selector": "#tus-datos > div > div:nth-child(4) > button",
+    "context": "<button class=\"aura-btn aura-btn--destructive\" type=\"button\" data-aura-sheet-open=\"legal-borrar\" aria-haspopup=\"dialog\" aria-expanded=\"false\" aria-controls=\"leg",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > a > span",
+    "context": "<span class=\"aura-brand__word\">AURA</span>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(1)",
+    "context": "<a class=\"aura-nav__link\" href=\"auraphone.html\" data-aura-key=\"auraphone\">auraPhone</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(2)",
+    "context": "<a class=\"aura-nav__link\" href=\"aurapad.html\" data-aura-key=\"aurapad\">auraPad</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(3)",
+    "context": "<a class=\"aura-nav__link\" href=\"aurabook.html\" data-aura-key=\"aurabook\">auraBook</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(4)",
+    "context": "<a class=\"aura-nav__link\" href=\"aurapods.html\" data-aura-key=\"aurapods\">auraPods</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(5)",
+    "context": "<a class=\"aura-nav__link\" href=\"comparar.html\" data-aura-key=\"comparar\" title=\"Compara los modelos de cada familia frente a frente\">Comparar</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(6)",
+    "context": "<a class=\"aura-nav__link\" href=\"trade-in.html\" data-aura-key=\"tradein\" title=\"AURA Trade In: entrega tu dispositivo anterior y consigue un descuento\">Trade In</",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(7)",
+    "context": "<a class=\"aura-nav__link\" href=\"soporte.html\" data-aura-key=\"soporte\">Soporte</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > div > a > span:nth-child(2)",
+    "context": "<span class=\"aura-nav__action-label\">Iniciar sesión</span>",
+    "runner": "axe"
+   }
+  ]
+ },
+ {
+  "page": "404.html",
+  "issues": [
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > a > span",
+    "context": "<span class=\"aura-brand__word\">AURA</span>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(1)",
+    "context": "<a class=\"aura-nav__link\" href=\"html/auraphone.html\" data-aura-key=\"auraphone\">auraPhone</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(2)",
+    "context": "<a class=\"aura-nav__link\" href=\"html/aurapad.html\" data-aura-key=\"aurapad\">auraPad</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(3)",
+    "context": "<a class=\"aura-nav__link\" href=\"html/aurabook.html\" data-aura-key=\"aurabook\">auraBook</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(4)",
+    "context": "<a class=\"aura-nav__link\" href=\"html/aurapods.html\" data-aura-key=\"aurapods\">auraPods</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(5)",
+    "context": "<a class=\"aura-nav__link\" href=\"html/comparar.html\" data-aura-key=\"comparar\" title=\"Compara los modelos de cada familia frente a frente\">Comparar</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(6)",
+    "context": "<a class=\"aura-nav__link\" href=\"html/trade-in.html\" data-aura-key=\"tradein\" title=\"AURA Trade In: entrega tu dispositivo anterior y consigue un descuento\">Trade",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > nav > a:nth-child(7)",
+    "context": "<a class=\"aura-nav__link\" href=\"html/soporte.html\" data-aura-key=\"soporte\">Soporte</a>",
+    "runner": "axe"
+   },
+   {
+    "type": "error",
+    "code": "color-contrast",
+    "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI)",
+    "selector": "html > body > aura-header > header > div > div > a > span:nth-child(2)",
+    "context": "<span class=\"aura-nav__action-label\">Iniciar sesión</span>",
+    "runner": "axe"
+   }
+  ]
+ }
+]

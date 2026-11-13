@@ -1,6 +1,16 @@
-# AURA: todos los buscadores pueden rastrear el sitio.
+# AURA: todos los buscadores y los rastreadores de IA (GEO) pueden leer el sitio.
 # Las páginas transaccionales (bolsa, pago, cuenta…) llevan <meta name="robots" content="noindex, follow">.
 User-agent: *
+Allow: /
+
+# Rastreadores de asistentes de IA permitidos de forma explícita (Tutorial SEO y GEO, clave 1)
+User-agent: GPTBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: CCBot
 Allow: /
 
 Sitemap: https://aura-lyart-beta.vercel.app/sitemap.xml

@@ -2143,13 +2143,13 @@
              que solo cuentan el texto (TAW). La cuenta, «Iniciar sesión» o
              el nombre, con «Tu cuenta, » delante solo para el lector. */
           '<div class="aura-nav__actions">' +
-            '<button class="aura-nav__action" type="button" data-aura-search-open aria-haspopup="dialog" aria-expanded="false" aria-controls="aura-search"><span class="bi bi-search" aria-hidden="true"></span><span class="visually-hidden">Buscar</span></button>' +
+            '<button class="aura-nav__action" type="button" data-aura-search-open aria-haspopup="dialog" aria-expanded="false"><span class="bi bi-search" aria-hidden="true"></span><span class="visually-hidden">Buscar</span></button>' +
             '<a class="aura-nav__action aura-nav__account" href="' + resolvePageUrl('login.html') + '" data-aura-account><span class="bi bi-person-circle" aria-hidden="true"></span><span class="aura-nav__action-label">Iniciar sesión</span></a>' +
             '<div class="aura-nav__bag-wrap">' +
-              '<button class="aura-nav__action aura-nav__bag" type="button" data-aura-popover-toggle="aura-bag-popover" aria-haspopup="dialog" aria-expanded="false" aria-controls="aura-bag-popover"><span class="bi bi-bag" aria-hidden="true"></span><span class="visually-hidden" data-aura-bag-label>' + bagLabel(0) + '</span><span class="aura-nav__count" data-aura-bag-count aria-hidden="true"></span></button>' +
+              '<button class="aura-nav__action aura-nav__bag" type="button" data-aura-popover-toggle="aura-bag-popover" aria-haspopup="dialog" aria-expanded="false"><span class="bi bi-bag" aria-hidden="true"></span><span class="visually-hidden" data-aura-bag-label>' + bagLabel(0) + '</span><span class="aura-nav__count" data-aura-bag-count aria-hidden="true"></span></button>' +
               '<div class="aura-popover aura-popover--end aura-bag-popover" id="aura-bag-popover" role="dialog" aria-label="Bolsa" tabindex="-1" aria-hidden="true"></div>' +
             '</div>' +
-            '<button class="aura-nav__action aura-nav__toggle" type="button" data-aura-menu-open aria-haspopup="dialog" aria-expanded="false" aria-controls="aura-menu"><span class="bi bi-list" aria-hidden="true"></span><span class="visually-hidden">Abrir el menú</span></button>' +
+            '<button class="aura-nav__action aura-nav__toggle" type="button" data-aura-menu-open aria-haspopup="dialog" aria-expanded="false"><span class="bi bi-list" aria-hidden="true"></span><span class="visually-hidden">Abrir el menú</span></button>' +
           '</div>' +
         '</div>' +
       '</header>';

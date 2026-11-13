@@ -1,0 +1,54 @@
+/* ==========================================================================
+   AURA — Reseñas (css/resenas.css)
+   Usa solo los tokens de aura.css. Contrastes sobre --bg-secondary (#161617):
+   estrellas --gold 8,6:1 · texto --text-secondary 6,9:1 · nota --text-tertiary 5,4:1
+   ========================================================================== */
+.aura-reviews__summary {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-block-end: clamp(1.5rem, 3vw, 2.5rem);
+}
+.aura-reviews__avg {
+  margin: 0;
+  font-family: Kanit, sans-serif;
+  font-weight: 600;
+  font-size: clamp(2.5rem, 6vw, 3.5rem);
+  line-height: 1;
+  color: var(--text-primary);
+}
+.aura-reviews__avg span { font-size: .45em; color: var(--text-secondary); }
+.aura-reviews__count { margin: .25rem 0 0; color: var(--text-secondary); }
+.aura-stars { color: var(--gold); letter-spacing: .12em; }
+
+.aura-reviews__list {
+  display: grid;
+  gap: 1.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
+}
+.aura-review__card { height: 100%; display: flex; flex-direction: column; gap: .75rem; }
+.aura-review__head { display: flex; align-items: center; gap: .75rem; }
+.aura-review__avatar {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  flex: none;
+  border-radius: var(--radius-pill);
+  background: var(--accent-soft);
+  color: var(--text-primary);
+  font-weight: 650;
+}
+.aura-review__name { margin: 0; font-weight: 600; color: var(--text-primary); }
+.aura-review__meta { margin: 0; font-size: .875rem; color: var(--text-secondary); }
+.aura-review__rating { margin: 0; }
+.aura-review__text { margin: 0; color: var(--text-secondary); line-height: 1.55; flex: 1; }
+.aura-review__origin { margin: 0; font-size: .8125rem; color: var(--text-tertiary); }
+.aura-reviews__note { margin-block: 1.5rem 0; font-size: .875rem; color: var(--text-secondary); max-width: 46rem; }
+
+@media (max-width: 575.98px) {
+  .aura-reviews__summary { flex-direction: column; align-items: flex-start; gap: .5rem; }
+}

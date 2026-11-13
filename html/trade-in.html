@@ -53,6 +53,14 @@
   <!-- Scripts: catálogo y núcleo de AURA, síncronos y en este orden (definen <aura-header> y <aura-footer> antes del cuerpo) -->
   <script src="../js/data.js"></script>
   <script src="../js/aura-core.js"></script>
+
+  <!-- SEO internacional: una sola versión en español de España (hreflang con x-default) -->
+  <link rel="alternate" hreflang="es-ES" href="https://aura-lyart-beta.vercel.app/html/trade-in.html">
+  <link rel="alternate" hreflang="x-default" href="https://aura-lyart-beta.vercel.app/html/trade-in.html">
+
+  <!-- Datos estructurados (JSON-LD, schema.org): ayudan a buscadores y a asistentes de IA a entender la página -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Inicio","item":"https://aura-lyart-beta.vercel.app/"},{"@type":"ListItem","position":2,"name":"Trade In","item":"https://aura-lyart-beta.vercel.app/html/trade-in.html"}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://aura-lyart-beta.vercel.app/html/trade-in.html","name":"Trade In: entrega tu dispositivo y ahorra en uno nuevo","inLanguage":"es-ES","isPartOf":{"@id":"https://aura-lyart-beta.vercel.app/#sitio"}}</script>
 </head>
 <body class="has-buybar">
   <!-- Enlace «Saltar al contenido»: primer foco con el teclado (solo se ve al recibirlo) y lleva directo al <main> -->

@@ -53,8 +53,17 @@
   <!-- Scripts: catálogo y núcleo de AURA, síncronos y en este orden (definen <aura-header> y <aura-footer> antes del cuerpo) -->
   <script src="../js/data.js"></script>
   <script src="../js/aura-core.js"></script>
+
+  <!-- SEO internacional: una sola versión en español de España (hreflang con x-default) -->
+  <link rel="alternate" hreflang="es-ES" href="https://aura-lyart-beta.vercel.app/html/aurabook.html">
+  <link rel="alternate" hreflang="x-default" href="https://aura-lyart-beta.vercel.app/html/aurabook.html">
+
+  <!-- Datos estructurados (JSON-LD, schema.org): ayudan a buscadores y a asistentes de IA a entender la página -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Inicio","item":"https://aura-lyart-beta.vercel.app/"},{"@type":"ListItem","position":2,"name":"auraBook","item":"https://aura-lyart-beta.vercel.app/html/aurabook.html"}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://aura-lyart-beta.vercel.app/html/aurabook.html","name":"auraBook Pro y auraBook Air con AURA M5: compra online","inLanguage":"es-ES","isPartOf":{"@id":"https://aura-lyart-beta.vercel.app/#sitio"}}</script>
+  <link href="../css/resenas.css" rel="stylesheet">
 </head>
-<body class="has-localnav">
+<body class="has-localnav" id="top">
   <!-- Enlace «Saltar al contenido»: lo primero que se enfoca con el tabulador; lleva al <main> sin recorrer el menú -->
   <a class="aura-skip" href="#contenido">Saltar al contenido</a>
 
@@ -556,6 +565,22 @@
 
     <!-- Notas al pie: su <h2> está oculto a la vista, pero da nombre a la sección para el lector de pantalla.
          Cada nota tiene un enlace de vuelta (solo icono: su texto oculto y el title dicen adónde lleva). -->
+    <!-- ================= Reseñas =================
+         resenas.js pinta la valoración media y las opiniones, y añade el JSON-LD (AggregateRating + Review) con las mismas reseñas. -->
+    <section class="aura-section" id="resenas" data-aura-reviews="aurabook" aria-labelledby="resenas-titulo">
+      <div class="aura-container">
+        <header class="aura-section-head">
+          <div class="aura-section-head__text">
+            <p class="aura-eyebrow aura-eyebrow--mono">Reseñas</p>
+            <h2 class="aura-h2" id="resenas-titulo">Lo que opinan de auraBook.</h2>
+          </div>
+        </header>
+        <div data-aura-reviews-out aria-busy="true">
+          <p class="aura-body">Cargando reseñas…</p>
+        </div>
+      </div>
+    </section>
+
     <section class="aura-section aura-section--tight aura-footnotes" aria-labelledby="notas-titulo">
       <div class="aura-container">
         <h2 class="visually-hidden" id="notas-titulo">Notas</h2>
@@ -581,6 +606,7 @@
   <!-- Scripts al final del cuerpo: Bootstrap, los componentes de AURA (aura-ui.js) y, si la hay, la lógica de esta página -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="../js/aura-ui.js"></script>
+  <script src="../js/resenas.js"></script>
   <script src="../js/pages/aurabook.js"></script>
 </body>
 </html>

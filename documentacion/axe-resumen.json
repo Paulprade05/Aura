@@ -1,0 +1,59 @@
+{
+ "viol": {},
+ "agg": {
+  "color-contrast | pseudoContent": {
+   "n": 217,
+   "ex": [
+    "<span class=\"aura-brand__word\">AURA</span>",
+    "<a class=\"aura-nav__link\" href=\"html/auraphone.html\" data-aura-key=\"auraphone\">a"
+   ]
+  },
+  "color-contrast | bgGradient": {
+   "n": 37,
+   "ex": [
+    "<p class=\"aura-eyebrow aura-eyebrow--mono\">auraPhone</p>",
+    "<h2 class=\"aura-h1\" id=\"comprar-titulo\">¿Cuál será tu auraPhone?</h2>"
+   ]
+  },
+  "aria-valid-attr-value | ": {
+   "n": 8,
+   "ex": [
+    "<button class=\"aura-link\" type=\"button\" data-aura-sheet-open=\"caso-medir\" aria-h",
+    "<button class=\"aura-link\" type=\"button\" data-aura-sheet-open=\"caso-ilustrar\" ari"
+   ]
+  },
+  "color-contrast | elmPartiallyObscured": {
+   "n": 1,
+   "ex": [
+    "<p class=\"aura-toast__title\">No hay nada que tramitar</p>"
+   ]
+  },
+  "color-contrast | equalRatio": {
+   "n": 1,
+   "ex": [
+    "1 #0073e6 / #0073e6 <span class=\"ti-step__num\" aria-hidden=\"true\">1</span>"
+   ]
+  },
+  "color-contrast | imgNode": {
+   "n": 7,
+   "ex": [
+    "<span class=\"aura-media__tag\">Cupertino / 37,3349°&nbsp;N</span>",
+    "<time datetime=\"1976\">1976</time>"
+   ]
+  },
+  "color-contrast | shortTextContent": {
+   "n": 2,
+   "ex": [
+    "<a href=\"#nota-1\" id=\"ref-1\" aria-label=\"Nota 1\">1</a>",
+    "<a href=\"#nota-2\" id=\"ref-2\" aria-label=\"Nota 2\">2</a>"
+   ]
+  },
+  "color-contrast | bgImage": {
+   "n": 2,
+   "ex": [
+    "<select class=\"aura-select\" id=\"contacto-producto\" name=\"producto\" data-soporte-",
+    "<select class=\"aura-select\" id=\"contacto-tema\" name=\"tema\" required=\"\" aria-desc"
+   ]
+  }
+ }
+}
