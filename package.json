@@ -1,0 +1,10 @@
+{
+  "name": "aura",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AURA: tienda de demostración. Sitio estático + API en /api (Vercel Functions + Neon Postgres) para cuentas, bolsa y pedidos entre dispositivos.",
+  "engines": { "node": ">=20" },
+  "dependencies": {
+    "@neondatabase/serverless": "^1.0.0"
+  }
+}
