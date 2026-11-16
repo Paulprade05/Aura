@@ -32,6 +32,11 @@ function init() {
       await q`CREATE TABLE IF NOT EXISTS aura_sessions (
         token_hash text PRIMARY KEY, email text NOT NULL REFERENCES aura_users(email) ON DELETE CASCADE,
         expires timestamptz NOT NULL)`;
+      await q`CREATE TABLE IF NOT EXISTS aura_reviews (
+        id bigserial PRIMARY KEY, email text NOT NULL REFERENCES aura_users(email) ON DELETE CASCADE,
+        autor text NOT NULL, familia text NOT NULL, producto text NOT NULL,
+        nota smallint NOT NULL CHECK (nota BETWEEN 1 AND 5), texto text NOT NULL,
+        creado timestamptz NOT NULL DEFAULT now(), UNIQUE (email, producto))`;
       await q`CREATE TABLE IF NOT EXISTS aura_state (
         email text PRIMARY KEY REFERENCES aura_users(email) ON DELETE CASCADE,
         bag jsonb NOT NULL DEFAULT '[]', orders jsonb NOT NULL DEFAULT '[]',
